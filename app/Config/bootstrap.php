@@ -2,7 +2,7 @@
 /**
  * This file is loaded automatically by the app/webroot/index.php file after core.php
  *
- * This file should load/create any application wide configuration settings, such as 
+ * This file should load/create any application wide configuration settings, such as
  * Caching, Logging, loading additional configuration files.
  *
  * You should also use this file to include any files that provide global functions/constants
@@ -54,6 +54,8 @@ Cache::config('default', array('engine' => 'File'));
  *
  */
 
+Inflector::rules('singular', array('rules' => array('/([r|d|j|n|l|m|y|z])es$/i' => '\1', '/as$/i' => 'a', '/([ti])a$/i' => '\1a'), 'irregular' => array('aprendiz' => 'aprendices'), 'uninflected' => array()));
+Inflector::rules('plural', array('rules' => array('/([r|d|j|n|l|m|y|z])$/i' => '\1es', '/a$/i' => '\1as'), 'irregular' => array(), 'uninflected' => array()));
 /**
  * Plugins need to be loaded manually, you can either load them one by one or all of them in a single call
  * Uncomment one of the lines below, as you need. make sure you read the documentation on CakePlugin to use more
