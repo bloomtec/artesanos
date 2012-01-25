@@ -41,10 +41,10 @@ class MaterialesController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Material->create();
 			if ($this->Material->save($this->request->data)) {
-				$this->Session->setFlash(__('The material has been saved'));
+				$this->Session->setFlash(__('The material has been saved'),'crud/success');
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The material could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The material could not be saved. Please, try again.'),'crud/error');
 			}
 		}
 		$locales = $this->Material->Local->find('list');
@@ -65,10 +65,10 @@ class MaterialesController extends AppController {
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Material->save($this->request->data)) {
-				$this->Session->setFlash(__('The material has been saved'));
+				$this->Session->setFlash(__('The material has been saved'),'crud/success');
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The material could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The material could not be saved. Please, try again.'),'crud/error');
 			}
 		} else {
 			$this->request->data = $this->Material->read(null, $id);
@@ -93,101 +93,10 @@ class MaterialesController extends AppController {
 			throw new NotFoundException(__('Invalid material'));
 		}
 		if ($this->Material->delete()) {
-			$this->Session->setFlash(__('Material deleted'));
-			$this->redirect(array('action' => 'index'));
+			$this->Session->setFlash(__('Material deleted'),'crud/success');
+			$this->redirect(array('action'=>'index'));
 		}
-		$this->Session->setFlash(__('Material was not deleted'));
-		$this->redirect(array('action' => 'index'));
-	}
-/**
- * admin_index method
- *
- * @return void
- */
-	public function admin_index() {
-		$this->Material->recursive = 0;
-		$this->set('materiales', $this->paginate());
-	}
-
-/**
- * admin_view method
- *
- * @param string $id
- * @return void
- */
-	public function admin_view($id = null) {
-		$this->Material->id = $id;
-		if (!$this->Material->exists()) {
-			throw new NotFoundException(__('Invalid material'));
-		}
-		$this->set('material', $this->Material->read(null, $id));
-	}
-
-/**
- * admin_add method
- *
- * @return void
- */
-	public function admin_add() {
-		if ($this->request->is('post')) {
-			$this->Material->create();
-			if ($this->Material->save($this->request->data)) {
-				$this->Session->setFlash(__('The material has been saved'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The material could not be saved. Please, try again.'));
-			}
-		}
-		$locales = $this->Material->Local->find('list');
-		$talleres = $this->Material->Taller->find('list');
-		$this->set(compact('locales', 'talleres'));
-	}
-
-/**
- * admin_edit method
- *
- * @param string $id
- * @return void
- */
-	public function admin_edit($id = null) {
-		$this->Material->id = $id;
-		if (!$this->Material->exists()) {
-			throw new NotFoundException(__('Invalid material'));
-		}
-		if ($this->request->is('post') || $this->request->is('put')) {
-			if ($this->Material->save($this->request->data)) {
-				$this->Session->setFlash(__('The material has been saved'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The material could not be saved. Please, try again.'));
-			}
-		} else {
-			$this->request->data = $this->Material->read(null, $id);
-		}
-		$locales = $this->Material->Local->find('list');
-		$talleres = $this->Material->Taller->find('list');
-		$this->set(compact('locales', 'talleres'));
-	}
-
-/**
- * admin_delete method
- *
- * @param string $id
- * @return void
- */
-	public function admin_delete($id = null) {
-		if (!$this->request->is('post')) {
-			throw new MethodNotAllowedException();
-		}
-		$this->Material->id = $id;
-		if (!$this->Material->exists()) {
-			throw new NotFoundException(__('Invalid material'));
-		}
-		if ($this->Material->delete()) {
-			$this->Session->setFlash(__('Material deleted'));
-			$this->redirect(array('action' => 'index'));
-		}
-		$this->Session->setFlash(__('Material was not deleted'));
+		$this->Session->setFlash(__('Material was not deleted'),'crud/error');
 		$this->redirect(array('action' => 'index'));
 	}
 }

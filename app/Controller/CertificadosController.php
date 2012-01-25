@@ -41,10 +41,10 @@ class CertificadosController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Certificado->create();
 			if ($this->Certificado->save($this->request->data)) {
-				$this->Session->setFlash(__('The certificado has been saved'));
+				$this->Session->setFlash(__('The certificado has been saved'),'crud/success');
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The certificado could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The certificado could not be saved. Please, try again.'),'crud/error');
 			}
 		}
 	}
@@ -62,10 +62,10 @@ class CertificadosController extends AppController {
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Certificado->save($this->request->data)) {
-				$this->Session->setFlash(__('The certificado has been saved'));
+				$this->Session->setFlash(__('The certificado has been saved'),'crud/success');
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The certificado could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The certificado could not be saved. Please, try again.'),'crud/error');
 			}
 		} else {
 			$this->request->data = $this->Certificado->read(null, $id);
@@ -87,95 +87,10 @@ class CertificadosController extends AppController {
 			throw new NotFoundException(__('Invalid certificado'));
 		}
 		if ($this->Certificado->delete()) {
-			$this->Session->setFlash(__('Certificado deleted'));
-			$this->redirect(array('action' => 'index'));
+			$this->Session->setFlash(__('Certificado deleted'),'crud/success');
+			$this->redirect(array('action'=>'index'));
 		}
-		$this->Session->setFlash(__('Certificado was not deleted'));
-		$this->redirect(array('action' => 'index'));
-	}
-/**
- * admin_index method
- *
- * @return void
- */
-	public function admin_index() {
-		$this->Certificado->recursive = 0;
-		$this->set('certificados', $this->paginate());
-	}
-
-/**
- * admin_view method
- *
- * @param string $id
- * @return void
- */
-	public function admin_view($id = null) {
-		$this->Certificado->id = $id;
-		if (!$this->Certificado->exists()) {
-			throw new NotFoundException(__('Invalid certificado'));
-		}
-		$this->set('certificado', $this->Certificado->read(null, $id));
-	}
-
-/**
- * admin_add method
- *
- * @return void
- */
-	public function admin_add() {
-		if ($this->request->is('post')) {
-			$this->Certificado->create();
-			if ($this->Certificado->save($this->request->data)) {
-				$this->Session->setFlash(__('The certificado has been saved'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The certificado could not be saved. Please, try again.'));
-			}
-		}
-	}
-
-/**
- * admin_edit method
- *
- * @param string $id
- * @return void
- */
-	public function admin_edit($id = null) {
-		$this->Certificado->id = $id;
-		if (!$this->Certificado->exists()) {
-			throw new NotFoundException(__('Invalid certificado'));
-		}
-		if ($this->request->is('post') || $this->request->is('put')) {
-			if ($this->Certificado->save($this->request->data)) {
-				$this->Session->setFlash(__('The certificado has been saved'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The certificado could not be saved. Please, try again.'));
-			}
-		} else {
-			$this->request->data = $this->Certificado->read(null, $id);
-		}
-	}
-
-/**
- * admin_delete method
- *
- * @param string $id
- * @return void
- */
-	public function admin_delete($id = null) {
-		if (!$this->request->is('post')) {
-			throw new MethodNotAllowedException();
-		}
-		$this->Certificado->id = $id;
-		if (!$this->Certificado->exists()) {
-			throw new NotFoundException(__('Invalid certificado'));
-		}
-		if ($this->Certificado->delete()) {
-			$this->Session->setFlash(__('Certificado deleted'));
-			$this->redirect(array('action' => 'index'));
-		}
-		$this->Session->setFlash(__('Certificado was not deleted'));
+		$this->Session->setFlash(__('Certificado was not deleted'),'crud/error');
 		$this->redirect(array('action' => 'index'));
 	}
 }

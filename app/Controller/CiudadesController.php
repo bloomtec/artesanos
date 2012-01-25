@@ -41,10 +41,10 @@ class CiudadesController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Ciudad->create();
 			if ($this->Ciudad->save($this->request->data)) {
-				$this->Session->setFlash(__('The ciudad has been saved'));
+				$this->Session->setFlash(__('The ciudad has been saved'),'crud/success');
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The ciudad could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The ciudad could not be saved. Please, try again.'),'crud/error');
 			}
 		}
 	}
@@ -62,10 +62,10 @@ class CiudadesController extends AppController {
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Ciudad->save($this->request->data)) {
-				$this->Session->setFlash(__('The ciudad has been saved'));
+				$this->Session->setFlash(__('The ciudad has been saved'),'crud/success');
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The ciudad could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The ciudad could not be saved. Please, try again.'),'crud/error');
 			}
 		} else {
 			$this->request->data = $this->Ciudad->read(null, $id);
@@ -87,95 +87,10 @@ class CiudadesController extends AppController {
 			throw new NotFoundException(__('Invalid ciudad'));
 		}
 		if ($this->Ciudad->delete()) {
-			$this->Session->setFlash(__('Ciudad deleted'));
-			$this->redirect(array('action' => 'index'));
+			$this->Session->setFlash(__('Ciudad deleted'),'crud/success');
+			$this->redirect(array('action'=>'index'));
 		}
-		$this->Session->setFlash(__('Ciudad was not deleted'));
-		$this->redirect(array('action' => 'index'));
-	}
-/**
- * admin_index method
- *
- * @return void
- */
-	public function admin_index() {
-		$this->Ciudad->recursive = 0;
-		$this->set('ciudades', $this->paginate());
-	}
-
-/**
- * admin_view method
- *
- * @param string $id
- * @return void
- */
-	public function admin_view($id = null) {
-		$this->Ciudad->id = $id;
-		if (!$this->Ciudad->exists()) {
-			throw new NotFoundException(__('Invalid ciudad'));
-		}
-		$this->set('ciudad', $this->Ciudad->read(null, $id));
-	}
-
-/**
- * admin_add method
- *
- * @return void
- */
-	public function admin_add() {
-		if ($this->request->is('post')) {
-			$this->Ciudad->create();
-			if ($this->Ciudad->save($this->request->data)) {
-				$this->Session->setFlash(__('The ciudad has been saved'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The ciudad could not be saved. Please, try again.'));
-			}
-		}
-	}
-
-/**
- * admin_edit method
- *
- * @param string $id
- * @return void
- */
-	public function admin_edit($id = null) {
-		$this->Ciudad->id = $id;
-		if (!$this->Ciudad->exists()) {
-			throw new NotFoundException(__('Invalid ciudad'));
-		}
-		if ($this->request->is('post') || $this->request->is('put')) {
-			if ($this->Ciudad->save($this->request->data)) {
-				$this->Session->setFlash(__('The ciudad has been saved'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The ciudad could not be saved. Please, try again.'));
-			}
-		} else {
-			$this->request->data = $this->Ciudad->read(null, $id);
-		}
-	}
-
-/**
- * admin_delete method
- *
- * @param string $id
- * @return void
- */
-	public function admin_delete($id = null) {
-		if (!$this->request->is('post')) {
-			throw new MethodNotAllowedException();
-		}
-		$this->Ciudad->id = $id;
-		if (!$this->Ciudad->exists()) {
-			throw new NotFoundException(__('Invalid ciudad'));
-		}
-		if ($this->Ciudad->delete()) {
-			$this->Session->setFlash(__('Ciudad deleted'));
-			$this->redirect(array('action' => 'index'));
-		}
-		$this->Session->setFlash(__('Ciudad was not deleted'));
+		$this->Session->setFlash(__('Ciudad was not deleted'),'crud/error');
 		$this->redirect(array('action' => 'index'));
 	}
 }
