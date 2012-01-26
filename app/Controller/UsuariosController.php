@@ -57,7 +57,7 @@ class UsuariosController extends AppController {
 	public function view($id = null) {
 		$this -> Usuario -> id = $id;
 		if (!$this -> Usuario -> exists()) {
-			throw new NotFoundException(__('Invalid usuario'));
+			throw new NotFoundException(__('Usuario no válido'));
 		}
 		$this -> set('usuario', $this -> Usuario -> read(null, $id));
 	}
@@ -71,10 +71,10 @@ class UsuariosController extends AppController {
 		if ($this -> request -> is('post')) {
 			$this -> Usuario -> create();
 			if ($this -> Usuario -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The usuario has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se guardó el usuario'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The usuario could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo guardar el usuario. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
 		$ciudades = $this -> Usuario -> Ciudad -> find('list');
@@ -93,7 +93,7 @@ class UsuariosController extends AppController {
 	public function edit($id = null) {
 		$this -> Usuario -> id = $id;
 		if (!$this -> Usuario -> exists()) {
-			throw new NotFoundException(__('Invalid usuario'));
+			throw new NotFoundException(__('Usuario no válido'));
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			if ($this -> Usuario -> save($this -> request -> data)) {
@@ -133,7 +133,7 @@ class UsuariosController extends AppController {
 		$this -> Session -> setFlash(__('No se eliminó el usuario'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
 	}
-	
+
 	/**
 	 * initAcl method
 	 *
@@ -143,25 +143,35 @@ class UsuariosController extends AppController {
 		$this -> autoRender = false;
 
 		/**
-		 * Roles
+		 * Limpiar las tablas
 		 */
 
+		// Limpiar usuarios
+		$this -> Usuario -> query('TRUNCATE TABLE usuarios;');
 		// Limpiar roles
 		$this -> Usuario -> Rol -> query('TRUNCATE TABLE roles;');
+
+		/**
+		 * Roles
+		 */
 
 		// Administrador
 		$this -> Usuario -> Rol -> create();
 		$rol = array();
-		$rol['Rol']['nombre'] = 'admin';
+		$rol['Rol']['nombre'] = 'Administrador';
+		$rol['Rol']['descripcion'] = '';
+		$this -> Usuario -> Rol -> save($rol);
+		
+		// Administrador
+		$this -> Usuario -> Rol -> create();
+		$rol = array();
+		$rol['Rol']['nombre'] = 'Operador';
 		$rol['Rol']['descripcion'] = '';
 		$this -> Usuario -> Rol -> save($rol);
 
 		/**
 		 * Usuarios
 		 */
-
-		// Limpiar roles
-		$this -> Usuario -> query('TRUNCATE TABLE usuarios;');
 
 		// Administrador
 		$this -> Usuario -> create();
@@ -172,7 +182,7 @@ class UsuariosController extends AppController {
 		$usuario['Usuario']['rol_id'] = 1;
 		$this -> Usuario -> save($usuario);
 
-		echo 'ACL inicializado';
+		echo 'Usuarios Y Permisos Inicializados';
 	}
 
 }
