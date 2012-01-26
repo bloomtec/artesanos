@@ -97,10 +97,10 @@ class UsuariosController extends AppController {
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			if ($this -> Usuario -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The usuario has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se guardó el usuario'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The usuario could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo guardar el usuario. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		} else {
 			$this -> request -> data = $this -> Usuario -> read(null, $id);
@@ -124,16 +124,21 @@ class UsuariosController extends AppController {
 		}
 		$this -> Usuario -> id = $id;
 		if (!$this -> Usuario -> exists()) {
-			throw new NotFoundException(__('Invalid usuario'));
+			throw new NotFoundException(__('Usuario no válido'));
 		}
 		if ($this -> Usuario -> delete()) {
-			$this -> Session -> setFlash(__('Usuario deleted'), 'crud/success');
+			$this -> Session -> setFlash(__('Se eliminó el usuario'), 'crud/success');
 			$this -> redirect(array('action' => 'index'));
 		}
-		$this -> Session -> setFlash(__('Usuario was not deleted'), 'crud/error');
+		$this -> Session -> setFlash(__('No se eliminó el usuario'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
 	}
-
+	
+	/**
+	 * initAcl method
+	 *
+	 * @return void
+	 */
 	public function initAcl() {
 		$this -> autoRender = false;
 
