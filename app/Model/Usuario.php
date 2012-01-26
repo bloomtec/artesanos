@@ -1,5 +1,6 @@
 <?php
 App::uses('AppModel', 'Model');
+App::uses('AuthComponent', 'Controller/Component');
 /**
  * Usuario Model
  *
@@ -75,5 +76,15 @@ class Usuario extends AppModel {
 			'counterQuery' => ''
 		)
 	);
+	
+/**
+ * beforeSave method
+ */
+	public function beforeSave() {
+	    if (isset($this->data[$this->alias]['contrasena'])) {
+	        $this->data[$this->alias]['contrasena'] = AuthComponent::password($this->data[$this->alias]['contrasena']);
+	    }
+	    return true;
+	}
 
 }
