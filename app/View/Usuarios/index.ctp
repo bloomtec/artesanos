@@ -8,11 +8,12 @@
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 									<th><?php echo $this->Paginator->sort('usuario');?></th>
-							<th><?php echo $this->Paginator->sort('contraseña');?></th>
+							<th><?php echo $this->Paginator->sort('contrasena');?></th>
 							<th><?php echo $this->Paginator->sort('ciudad_id');?></th>
 							<th><?php echo $this->Paginator->sort('ubicacion_id');?></th>
 							<th><?php echo $this->Paginator->sort('sector_id');?></th>
 							<th><?php echo $this->Paginator->sort('rol_id');?></th>
+							<th><?php echo $this->Paginator->sort('con_acceso');?></th>
 							<th><?php echo $this->Paginator->sort('created');?></th>
 							<th><?php echo $this->Paginator->sort('modified');?></th>
 					<th class="actions"><?php echo __('Actions');?></th>
@@ -22,7 +23,7 @@
 	foreach ($usuarios as $usuario): ?>
 	<tr>
 		<td><?php echo h($usuario['Usuario']['usuario']); ?>&nbsp;</td>
-		<td><?php echo h($usuario['Usuario']['contraseña']); ?>&nbsp;</td>
+		<td><?php echo h($usuario['Usuario']['contrasena']); ?>&nbsp;</td>
 		<td>
 			<?php echo $this->Html->link($usuario['Ciudad']['nombre'], array('controller' => 'ciudades', 'action' => 'view', $usuario['Ciudad']['id'])); ?>
 		</td>
@@ -35,6 +36,7 @@
 		<td>
 			<?php echo $this->Html->link($usuario['Rol']['nombre'], array('controller' => 'roles', 'action' => 'view', $usuario['Rol']['id'])); ?>
 		</td>
+		<td><?php echo h($usuario['Usuario']['con_acceso']); ?>&nbsp;</td>
 		<td><?php echo h($usuario['Usuario']['created']); ?>&nbsp;</td>
 		<td><?php echo h($usuario['Usuario']['modified']); ?>&nbsp;</td>
 		<td class="actions">

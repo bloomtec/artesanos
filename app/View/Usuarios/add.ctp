@@ -4,11 +4,12 @@
 		<h2><?php echo __('Agregar Usuario'); ?></h2>
 	<?php
 		echo $this->Form->input('usuario');
-		echo $this->Form->input('contraseña');
+		echo $this->Form->input('contrasena');
 		echo $this->Form->input('ciudad_id');
 		echo $this->Form->input('ubicacion_id');
 		echo $this->Form->input('sector_id');
 		echo $this->Form->input('rol_id');
+		echo $this->Form->input('con_acceso');
 	?>
 	</fieldset>
 <?php echo $this->Html->link(__('Cancelar'),array('action'=>'index'),array('class'=>'cancelar'));?>

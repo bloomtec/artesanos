@@ -5,9 +5,9 @@
 			<?php echo h($usuario['Usuario']['usuario']); ?>
 			&nbsp;
 		</h3>
-		<label><?php echo __('Contraseña'); ?></label>
+		<label><?php echo __('Contrasena'); ?></label>
 		<h3>
-			<?php echo h($usuario['Usuario']['contraseña']); ?>
+			<?php echo h($usuario['Usuario']['contrasena']); ?>
 			&nbsp;
 		</h3>
 		<label><?php echo __('Ciudad'); ?></label>
@@ -28,6 +28,11 @@
 		<label><?php echo __('Rol'); ?></label>
 		<h3>
 			<?php echo $this->Html->link($usuario['Rol']['nombre'], array('controller' => 'roles', 'action' => 'view', $usuario['Rol']['id'])); ?>
+			&nbsp;
+		</h3>
+		<label><?php echo __('Con Acceso'); ?></label>
+		<h3>
+			<?php echo h($usuario['Usuario']['con_acceso']); ?>
 			&nbsp;
 		</h3>
 		<label><?php echo __('Modified'); ?></label>
