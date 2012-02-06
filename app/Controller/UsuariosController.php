@@ -89,17 +89,19 @@ class UsuariosController extends AppController {
 		if ($this -> request -> is('post')) {
 			$this -> Usuario -> create();
 			if ($this -> Usuario -> save($this -> request -> data)) {
+				// tratando de arreglar lo del alias en la tabla aros
+				$user_id = $this -> Usuario -> id;
+				$user_alias = $this -> request -> data['Usuario']['usu_nombre_de_usuario'];
+				$this -> Usuario -> query("UPDATE `aros` SET `alias`='$user_alias' WHERE `model`='Usuario' AND `foreign_key`=$user_id");
+
 				$this -> Session -> setFlash(__('Se guardó el usuario'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
 				$this -> Session -> setFlash(__('No se pudo guardar el usuario. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
-		$ciudades = $this -> Usuario -> Ciudad -> find('list');
-		$ubicaciones = $this -> Usuario -> Ubicacion -> find('list');
-		$sectores = $this -> Usuario -> Sector -> find('list');
 		$roles = $this -> Usuario -> Rol -> find('list');
-		$this -> set(compact('ciudades', 'ubicaciones', 'sectores', 'roles'));
+		$this -> set(compact('roles'));
 	}
 
 	/**
@@ -115,6 +117,10 @@ class UsuariosController extends AppController {
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			if ($this -> Usuario -> save($this -> request -> data)) {
+				// tratando de arreglar lo del alias en la tabla aros
+				$user_id = $this -> request -> data['Usuario']['id'];
+				$user_alias = $this -> request -> data['Usuario']['usu_nombre_de_usuario'];
+				$this -> Usuario -> query("UPDATE `aros` SET `alias`='$user_alias' WHERE `model`='Usuario' AND `foreign_key`=$user_id");
 				$this -> Session -> setFlash(__('Se guardó el usuario'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
@@ -123,11 +129,8 @@ class UsuariosController extends AppController {
 		} else {
 			$this -> request -> data = $this -> Usuario -> read(null, $id);
 		}
-		$ciudades = $this -> Usuario -> Ciudad -> find('list');
-		$ubicaciones = $this -> Usuario -> Ubicacion -> find('list');
-		$sectores = $this -> Usuario -> Sector -> find('list');
 		$roles = $this -> Usuario -> Rol -> find('list');
-		$this -> set(compact('ciudades', 'ubicaciones', 'sectores', 'roles'));
+		$this -> set(compact('roles'));
 	}
 
 	/**
@@ -172,7 +175,7 @@ class UsuariosController extends AppController {
 		$this -> Usuario -> query('TRUNCATE TABLE acos;');
 		// Limpiar Usuarios
 		$this -> Usuario -> query('TRUNCATE TABLE usuarios;');
-		
+
 		exec('/var/www/artesanos/app/Console/cake -app /var/www/artesanos/app/ AclExtras.AclExtras aco_sync');
 
 		/**
@@ -204,7 +207,7 @@ class UsuariosController extends AppController {
 		$usuario['Usuario']['usu_activo'] = true;
 		$usuario['Usuario']['rol_id'] = 1;
 		$this -> Usuario -> save($usuario);
-		
+
 		// tratando de arreglar lo del alias en la tabla aros
 		$admin_id = $this -> Usuario -> id;
 		$admin_alias = $usuario['Usuario']['usu_nombre_de_usuario'];
@@ -212,13 +215,13 @@ class UsuariosController extends AppController {
 
 		// Se permite acceso total
 		$this -> Acl -> allow($admin_alias, 'controllers');
-		
+
 		/*
-		// Módulo usuarios
-		$this -> Acl -> deny('Operador', 'controllers');
-		$this -> Acl -> allow('Operador', 'Pages/display');
-		$this -> Acl -> allow('Operador', 'Usuarios/logout');
-		$this -> Acl -> allow('Operador', 'Usuarios/verificarAcceso');
+		 // Módulo usuarios
+		 $this -> Acl -> deny('Operador', 'controllers');
+		 $this -> Acl -> allow('Operador', 'Pages/display');
+		 $this -> Acl -> allow('Operador', 'Usuarios/logout');
+		 $this -> Acl -> allow('Operador', 'Usuarios/verificarAcceso');
 		 */
 
 		/**

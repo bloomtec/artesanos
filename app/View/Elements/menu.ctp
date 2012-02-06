@@ -1,5 +1,5 @@
 <div id="main-menu">
-	<a class="logo" href="/"><img src="/img/logo_menu.png" /></a>
+	<!-- <a class="logo" href="/"><img src="/img/logo_menu.png" /></a> -->
 	<ul>
 		<?php //if($this -> requestAction('/users/verificarAcceso/' , array('ruta'=>array('controllers', 'Usuarios', 'index')))) : ?>
 		<li class="usuarios">

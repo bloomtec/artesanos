@@ -4,13 +4,11 @@
 		<h2><?php echo __('Modificar Usuario'); ?></h2>
 	<?php
 		echo $this->Form->input('id');
-		echo $this->Form->input('usuario');
-		echo $this->Form->input('contrasena');
-		echo $this->Form->input('ciudad_id');
-		echo $this->Form->input('ubicacion_id');
-		echo $this->Form->input('sector_id');
-		echo $this->Form->input('rol_id');
-		echo $this->Form->input('con_acceso');
+		echo $this->Form->input('rol_id', array('label' => 'Rol'));
+		echo $this->Form->input('usu_nombre_de_usuario', array('label' => 'Nombre De Usuario'));
+		echo $this->Form->input('usu_cedula', array('label' => 'Cédula'));
+		echo $this->Form->input('usu_nombres_y_apellidos', array('label' => 'Nombres Y Apellidos'));
+		echo $this->Form->input('usu_activo', array('label' => 'Activo'));
 	?>
 	</fieldset>
 <?php echo $this->Html->link(__('Cancelar'),array('action'=>'index'),array('class'=>'cancelar'));?>

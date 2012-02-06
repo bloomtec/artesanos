@@ -7,32 +7,28 @@
 	</div>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-		<th><?php echo $this->Paginator->sort('usuario');?></th>
-		<th><?php echo $this->Paginator->sort('ciudad_id');?></th>
-		<th><?php echo $this->Paginator->sort('ubicacion_id');?></th>
-		<th><?php echo $this->Paginator->sort('sector_id');?></th>
 		<th><?php echo $this->Paginator->sort('rol_id');?></th>
-		<th><?php echo $this->Paginator->sort('con_acceso');?></th>
-		<th class="actions"><?php echo __('Opciones');?></th>
+		<th><?php echo $this->Paginator->sort('usu_nombre_de_usuario', 'Nombre De Usuario');?></th>
+		<th><?php echo $this->Paginator->sort('usu_nombres_y_apellidos', 'Nombres Y Apellidos');?></th>
+		<th><?php echo $this->Paginator->sort('usu_cedula', 'Cedula');?></th>
+		<th><?php echo $this->Paginator->sort('usu_activo', 'Activo');?></th>
+		<th class="actions"><?php echo __('Acciones');?></th>
 	</tr>
 	<?php
 	$i = 0;
 	foreach ($usuarios as $usuario): ?>
 	<tr>
-		<td><?php echo h($usuario['Usuario']['usuario']); ?>&nbsp;</td>
+		<td><?php echo h($usuario['Rol']['rol_nombre']); ?>&nbsp;</td>
+		<td><?php echo h($usuario['Usuario']['usu_nombre_de_usuario']); ?>&nbsp;</td>
+		<td><?php echo h($usuario['Usuario']['usu_nombres_y_apellidos']); ?>&nbsp;</td>
+		<td><?php echo h($usuario['Usuario']['usu_cedula']); ?>&nbsp;</td>
 		<td>
-			<?php echo $this->Html->link($usuario['Ciudad']['nombre'], array('controller' => 'ciudades', 'action' => 'view', $usuario['Ciudad']['id'])); ?>
+			<?php if($usuario['Usuario']['usu_activo']) { ?> 
+				 <input type='checkbox' checked='checked' disabled='true' class='checkbox'/> 
+			 <?php } else { ?> 
+				 <input type='checkbox' disabled='true' class='checkbox'/>
+			 <?php } ?>
 		</td>
-		<td>
-			<?php echo $this->Html->link($usuario['Ubicacion']['nombre'], array('controller' => 'ubicaciones', 'action' => 'view', $usuario['Ubicacion']['id'])); ?>
-		</td>
-		<td>
-			<?php echo $this->Html->link($usuario['Sector']['nombre'], array('controller' => 'sectores', 'action' => 'view', $usuario['Sector']['id'])); ?>
-		</td>
-		<td>
-			<?php echo $this->Html->link($usuario['Rol']['nombre'], array('controller' => 'roles', 'action' => 'view', $usuario['Rol']['id'])); ?>
-		</td>
-		<td><?php echo h($usuario['Usuario']['con_acceso']); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $usuario['Usuario']['id']),array('class'=>'view')); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $usuario['Usuario']['id']),array('class'=>'edit')); ?>
