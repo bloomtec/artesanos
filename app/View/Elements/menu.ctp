@@ -25,9 +25,9 @@
 			<?php endif; ?>
 		</li>
 		<?php endif; ?>
-		<?php if($this -> requestAction('/users/verificarAcceso/' , array('ruta'=>array('controllers', 'Auditorias', 'index')))) : ?>
+		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Auditorias', 'index')))) : ?>
 		<li class="auditorias">
-			<a href="">AUDITORIAS</a>
+			<a href="/auditorias">AUDITORIAS</a>
 		</li>
 		<?php endif; ?>
 		<?php //if($this -> requestAction('/users/verificarAcceso/' , array('ruta'=>array('controllers', 'Artesanos', 'index')))) : ?>

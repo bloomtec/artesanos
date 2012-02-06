@@ -23,6 +23,11 @@ class UsuariosController extends AppController {
 		}
 		return $this -> Acl -> check($this -> Session -> read('Auth.User.usu_nombre_de_usuario'), $ruta);
 	}
+	
+	public function getNombreDeUsuario($id) {
+		$data = $this -> Usuario -> read('usu_nombre_de_usuario', $id);
+		return $data['Usuario']['usu_nombre_de_usuario'];
+	}
 
 	/**
 	 * login method
@@ -71,7 +76,7 @@ class UsuariosController extends AppController {
 			throw new NotFoundException(__('Usuario no válido'));
 		}
 		$this -> set('usuario', $this -> Usuario -> read(null, $id));
-		$permisos['Permisos'] = $this -> _getInfoPermisos($id);
+		$permisos['Permisos'] = $this -> getValoresPermisos($id);
 		$this -> set(compact('permisos'));
 	}
 
@@ -81,6 +86,7 @@ class UsuariosController extends AppController {
 	 * @return void
 	 */
 	public function add() {
+		$this -> Usuario -> currentUsrId = $this -> Auth -> Usuario('id');
 		if ($this -> request -> is('post')) {
 			$this -> Usuario -> create();
 			if ($this -> Usuario -> save($this -> request -> data)) {
@@ -88,9 +94,9 @@ class UsuariosController extends AppController {
 				$user_id = $this -> Usuario -> id;
 				$user_alias = $this -> request -> data['Usuario']['usu_nombre_de_usuario'];
 				$this -> Usuario -> query("UPDATE `aros` SET `alias`='$user_alias' WHERE `model`='Usuario' AND `foreign_key`=$user_id");
-				$this -> _setInfoPermisos($this -> Usuario -> id, $this -> request -> data['Permisos']);
+				$this -> setInfoPermisos($this -> Usuario -> id, $this -> request -> data['Permisos']);
 				$this -> Session -> setFlash(__('Se guardó el usuario'), 'crud/success');
-				$this -> redirect(array('action' => 'index'));
+				//$this -> redirect(array('action' => 'index'));
 			} else {
 				$this -> Session -> setFlash(__('No se pudo guardar el usuario. Por favor, intente de nuevo.'), 'crud/error');
 			}
@@ -106,6 +112,7 @@ class UsuariosController extends AppController {
 	 * @return void
 	 */
 	public function edit($id = null) {
+		$this -> Usuario -> currentUsrId = $this -> Auth -> user('id');
 		$this -> Usuario -> id = $id;
 		if (!$this -> Usuario -> exists()) {
 			throw new NotFoundException(__('Usuario no válido'));
@@ -116,9 +123,9 @@ class UsuariosController extends AppController {
 				$user_id = $this -> request -> data['Usuario']['id'];
 				$user_alias = $this -> request -> data['Usuario']['usu_nombre_de_usuario'];
 				$this -> Usuario -> query("UPDATE `aros` SET `alias`='$user_alias' WHERE `model`='Usuario' AND `foreign_key`=$user_id");
-				$this -> _setInfoPermisos($this -> request -> data['Usuario']['id'], $this -> request -> data['Permisos']);
+				$this -> setInfoPermisos($this -> request -> data['Usuario']['id'], $this -> request -> data['Permisos']);
 				$this -> Session -> setFlash(__('Se guardó el usuario'), 'crud/success');
-				$this -> redirect(array('action' => 'index'));
+				//$this -> redirect(array('action' => 'index'));
 			} else {
 				$this -> Session -> setFlash(__('No se pudo guardar el usuario. Por favor, intente de nuevo.'), 'crud/error');
 			}
@@ -126,7 +133,7 @@ class UsuariosController extends AppController {
 			$this -> request -> data = $this -> Usuario -> read(null, $id);
 		}
 		$roles = $this -> Usuario -> Rol -> find('list');
-		$permisos['Permisos'] = $this -> _getInfoPermisos($id);
+		$permisos['Permisos'] = $this -> getValoresPermisos($id);
 		$this -> set(compact('roles', 'permisos'));
 	}
 
@@ -153,14 +160,14 @@ class UsuariosController extends AppController {
 	}
 
 	public function getInfoPermisos() {
-		return $this -> info_permisos;
+		return $this -> Usuario -> info_permisos;
 	}
-
-	private function _getInfoPermisos($id_usuario = null) {
+	
+	public function getValoresPermisos($id_usuario = null) {
 		$data = array();
-		$this -> Usuario -> recursive = -1;
-		$usuario = $this -> Usuario -> read(null, $id_usuario);
-		foreach ($this -> info_permisos as $key => $modulo) {
+		$this -> recursive = -1;
+		$usuario = $this -> Usuario -> find('first', array('conditions' => array('Usuario.id' => $id_usuario)));
+		foreach ($this -> Usuario -> info_permisos as $key => $modulo) {
 			foreach ($modulo[key($modulo)] as $key => $accion) {
 				$ruta = 'controllers/' . key($modulo) . '/' . $key;
 				$data[key($modulo)][$key] = $this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], $ruta);
@@ -169,9 +176,9 @@ class UsuariosController extends AppController {
 		return $data;
 	}
 
-	private function _setInfoPermisos($id_usuario = null, $permisos = null) {
-		$this -> Usuario -> recursive = -1;
-		$usuario = $this -> Usuario -> read(null, $id_usuario);
+	public function setInfoPermisos($id_usuario = null, $permisos = null) {
+		$this -> recursive = -1;
+		$usuario = $this -> Usuario -> find('first', array('conditions' => array('Usuario.id' => $id_usuario)));
 		if($usuario['Usuario']['rol_id'] == 2) {
 			// Se es operador. Asignar acorde los permisos asignados.
 			$aro_id = $this -> Usuario -> query("SELECT `id` FROM `aros` WHERE `model`='Usuario' AND `foreign_key`=$id_usuario");
@@ -189,12 +196,6 @@ class UsuariosController extends AppController {
 			// Caso en que se es administrador. No se requiere hacer algo por lo que se tiene acceso a todo.
 		}
 	}
-
-	private $info_permisos = array(0 => array('Usuarios' => array('add' => 'Agregar Usuario', 'edit' => 'Editar Usuario', 'view' => 'Ver Usuario',
-	//'delete' => 'Eliminar Usuario',
-		'index' => 'Listar Usuarios')), 1 => array('Artesanos' => array('add' => 'Registrar Artesano', 'edit' => 'Editar Artesano', 'view' => 'Ver Artesano',
-	//'delete' => 'Eliminar Artesano',
-		'index' => 'Listar Artesanos')));
 
 	/**
 	 * initAcl method
@@ -214,6 +215,8 @@ class UsuariosController extends AppController {
 		$this -> Usuario -> query('TRUNCATE TABLE aros;');
 		// Limpiar ACO's
 		$this -> Usuario -> query('TRUNCATE TABLE acos;');
+		// Limpiar Auditorias
+		$this -> Usuario -> query('TRUNCATE TABLE auditorias;');
 		// Limpiar Usuarios
 		$this -> Usuario -> query('TRUNCATE TABLE usuarios;');
 
@@ -225,7 +228,18 @@ class UsuariosController extends AppController {
 		$aro = &$this -> Acl -> Aro;
 
 		// Here's all of our group info in an array we can iterate through
-		$roles = array(0 => array('foreign_key' => 1, 'model' => 'Rol', 'alias' => 'Administrador'), 1 => array('foreign_key' => 2, 'model' => 'Rol', 'alias' => 'Operador'));
+		$roles = array(
+			0 => array(
+				'foreign_key' => 1,
+				'model' => 'Rol',
+				'alias' => 'Administrador'
+			),
+			1 => array(
+				'foreign_key' => 2,
+				'model' => 'Rol',
+				'alias' => 'Operador'
+			)
+		);
 
 		// Iterate and create ARO groups
 		foreach ($roles as $data) {
@@ -284,8 +298,11 @@ class UsuariosController extends AppController {
 		// Modulo Usuarios
 		$this -> Acl -> allow('Operador', 'controllers/Usuarios/logout');
 		$this -> Acl -> allow('Operador', 'controllers/Usuarios/verificarAcceso');
+		$this -> Acl -> allow('Operador', 'controllers/Usuarios/getNombreDeUsuario');
+		$this -> Acl -> allow('Operador', 'controllers/Usuarios/getInfoPermisos');
+		$this -> Acl -> allow('Operador', 'controllers/Usuarios/getValoresPermisos');
+		$this -> Acl -> allow('Operador', 'controllers/Usuarios/setInfoPermisos');
 		
-
 		/**
 		 * Finished
 		 */

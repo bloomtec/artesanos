@@ -25,6 +25,21 @@
 			<?php echo h($auditoria['Auditoria']['aud_datos_nuevos']); ?>
 			&nbsp;
 		</h3>
+		<label><?php echo __('Aud Add'); ?></label>
+		<h3>
+			<?php echo h($auditoria['Auditoria']['aud_add']); ?>
+			&nbsp;
+		</h3>
+		<label><?php echo __('Aud Edit'); ?></label>
+		<h3>
+			<?php echo h($auditoria['Auditoria']['aud_edit']); ?>
+			&nbsp;
+		</h3>
+		<label><?php echo __('Aud Delete'); ?></label>
+		<h3>
+			<?php echo h($auditoria['Auditoria']['aud_delete']); ?>
+			&nbsp;
+		</h3>
 		<label><?php echo __('Modified'); ?></label>
 		<h3>
 			<?php echo h($auditoria['Auditoria']['modified']); ?>

@@ -7,14 +7,14 @@
 	</div>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-									<th><?php echo $this->Paginator->sort('usuario_id');?></th>
-							<th><?php echo $this->Paginator->sort('aud_nombre_modelo');?></th>
-							<th><?php echo $this->Paginator->sort('aud_llave_foranea');?></th>
-							<th><?php echo $this->Paginator->sort('aud_datos_previos');?></th>
-							<th><?php echo $this->Paginator->sort('aud_datos_nuevos');?></th>
-							<th><?php echo $this->Paginator->sort('created');?></th>
-							<th><?php echo $this->Paginator->sort('modified');?></th>
-					<th class="actions"><?php echo __('Actions');?></th>
+		<th><?php echo $this->Paginator->sort('usuario_id', 'Usuario');?></th>
+		<th><?php echo $this->Paginator->sort('aud_nombre_modelo', 'Módulo');?></th>
+		<th><?php echo $this->Paginator->sort('aud_llave_foranea', 'Registro');?></th>
+		<th><?php echo $this->Paginator->sort('aud_add', 'Añadir');?></th>
+		<th><?php echo $this->Paginator->sort('aud_edit', 'Modificar');?></th>
+		<th><?php echo $this->Paginator->sort('aud_delete', 'Eliminar');?></th>
+		<th><?php echo $this->Paginator->sort('created', 'Fecha De La Acción');?></th>
+		<th class="actions"><?php echo __('Acciones');?></th>
 	</tr>
 	<?php
 	$i = 0;
@@ -25,14 +25,16 @@
 		</td>
 		<td><?php echo h($auditoria['Auditoria']['aud_nombre_modelo']); ?>&nbsp;</td>
 		<td><?php echo h($auditoria['Auditoria']['aud_llave_foranea']); ?>&nbsp;</td>
-		<td><?php echo h($auditoria['Auditoria']['aud_datos_previos']); ?>&nbsp;</td>
-		<td><?php echo h($auditoria['Auditoria']['aud_datos_nuevos']); ?>&nbsp;</td>
+		<td><?php echo h($auditoria['Auditoria']['aud_add']); ?>&nbsp;</td>
+		<td><?php echo h($auditoria['Auditoria']['aud_edit']); ?>&nbsp;</td>
+		<td><?php echo h($auditoria['Auditoria']['aud_delete']); ?>&nbsp;</td>
 		<td><?php echo h($auditoria['Auditoria']['created']); ?>&nbsp;</td>
-		<td><?php echo h($auditoria['Auditoria']['modified']); ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $auditoria['Auditoria']['id']),array('class'=>'view')); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $auditoria['Auditoria']['id']),array('class'=>'edit')); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $auditoria['Auditoria']['id']), array('class'=>'delete'), __('Esta seguro que quiere eliminar el registro?', $auditoria['Auditoria']['id'])); ?>
+			<?php
+				if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Auditorias', 'view')))) {
+					echo $this->Html->link(__('View'), array('action' => 'view', $auditoria['Auditoria']['id']),array('class'=>'view'));
+				}
+			?>
 		</td>
 	</tr>
 <?php endforeach; ?>

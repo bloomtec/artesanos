@@ -9,7 +9,7 @@
 		echo $this -> Form -> input('usu_unidad', array('label' => 'Unidad', 'type' => 'select'));
 		echo $this -> Form -> input('usu_cedula', array('label' => 'Cédula'));
 		echo $this -> Form -> input('usu_nombres_y_apellidos', array('label' => 'Nombres Y Apellidos'));
-		echo $this -> Form -> input('rol_id', array('label' => 'Rol'));
+		echo $this -> Form -> input('rol_id', array('label' => 'Rol', 'empty' => 'Seleccione...'));
 		echo $this -> Form -> input('usu_activo', array('label' => 'Activo'));
 		?>
 		<div class="permisos-acl">
