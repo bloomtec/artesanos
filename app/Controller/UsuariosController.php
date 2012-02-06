@@ -13,13 +13,6 @@ class UsuariosController extends AppController {
 	}
 
 	public function verificarAcceso() {
-		$rol = (int)$this -> Session -> read('Auth.User.rol_id');
-		if ($rol === 1) {
-			$rol = 'Administrador';
-		} elseif ($rol === 2) {
-			$role = 'Operador';
-		}
-
 		// Armar la ruta
 		$ruta = '';
 		for ($i = 0; $i < count($this -> params['ruta']); $i++) {
@@ -28,7 +21,7 @@ class UsuariosController extends AppController {
 				$ruta .= '/';
 			}
 		}
-		return $this -> Acl -> check($role, $ruta);
+		return $this -> Acl -> check($this -> Session -> read('Auth.User.usu_nombre_de_usuario'), $ruta);
 	}
 
 	/**
@@ -179,16 +172,21 @@ class UsuariosController extends AppController {
 	private function _setInfoPermisos($id_usuario = null, $permisos = null) {
 		$this -> Usuario -> recursive = -1;
 		$usuario = $this -> Usuario -> read(null, $id_usuario);
-		$aro_id = $this -> Usuario -> query("SELECT `id` FROM `aros` WHERE `model`='Usuario' AND `foreign_key`=$id_usuario");
-		$aro_id = $aro_id[0]['aros']['id'];
-		$this -> Usuario -> query("DELETE FROM `aros_acos` WHERE `aro_id`=$aro_id");
-		foreach ($permisos as $modulo => $acciones) {
-			foreach ($acciones as $accion => $valor) {
-				if($valor) {
-					$ruta = 'controllers/' . $modulo . '/' . $accion;
-					$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], $ruta);
+		if($usuario['Usuario']['rol_id'] == 2) {
+			// Se es operador. Asignar acorde los permisos asignados.
+			$aro_id = $this -> Usuario -> query("SELECT `id` FROM `aros` WHERE `model`='Usuario' AND `foreign_key`=$id_usuario");
+			$aro_id = $aro_id[0]['aros']['id'];
+			$this -> Usuario -> query("DELETE FROM `aros_acos` WHERE `aro_id`=$aro_id");
+			foreach ($permisos as $modulo => $acciones) {
+				foreach ($acciones as $accion => $valor) {
+					if($valor) {
+						$ruta = 'controllers/' . $modulo . '/' . $accion;
+						$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], $ruta);
+					}
 				}
 			}
+		} elseif($usuario['Usuario']['rol_id'] == 1) {
+			// Caso en que se es administrador. No se requiere hacer algo por lo que se tiene acceso a todo.
 		}
 	}
 
@@ -285,6 +283,8 @@ class UsuariosController extends AppController {
 		$this -> Acl -> allow('Operador', 'controllers/Pages/display');
 		// Modulo Usuarios
 		$this -> Acl -> allow('Operador', 'controllers/Usuarios/logout');
+		$this -> Acl -> allow('Operador', 'controllers/Usuarios/verificarAcceso');
+		
 
 		/**
 		 * Finished

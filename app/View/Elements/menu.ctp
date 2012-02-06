@@ -1,33 +1,33 @@
 <div id="main-menu">
 	<!-- <a class="logo" href="/"><img src="/img/logo_menu.png" /></a> -->
 	<ul>
-		<?php //if($this -> requestAction('/users/verificarAcceso/' , array('ruta'=>array('controllers', 'Usuarios', 'index')))) : ?>
+		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Usuarios', 'index')))) : ?>
 		<li class="usuarios">
 			<a href="/usuarios">USUARIOS</a>
-			<?php //if($this -> requestAction('/users/verificarAcceso/' , array('ruta'=>array('controllers', 'Usuarios', 'add')))) : ?>
+			<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Usuarios', 'add')))) : ?>
 			<ul>
 				<li>
 					<a href="/usuarios/add">Agregar</a>
 				</li>
 			</ul>
-			<?php //endif; ?>
+			<?php endif; ?>
 		</li>
-		<?php //endif; ?>
-		<?php //if($this -> requestAction('/users/verificarAcceso/' , array('ruta'=>array('controllers', 'Artesanos', 'index')))) : ?>
+		<?php endif; ?>
+		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Artesanos', 'index')))) : ?>
 		<li class="artesanos">
 			<a href="/artesanos">ARTESANOS</a>
-			<?php //if($this -> requestAction('/users/verificarAcceso/' , array('ruta'=>array('controllers', 'Artesanos', 'add')))) : ?>
+			<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Artesanos', 'add')))) : ?>
 			<ul>
 				<li>
 					<a href="/artesanos/add">Agregar</a>
 				</li>
 			</ul>
-			<?php //endif; ?>
+			<?php endif; ?>
 		</li>
-		<?php //endif; ?>
-		<?php //if($this -> requestAction('/users/verificarAcceso/' , array('ruta'=>array('controllers', 'Artesanos', 'index')))) : ?>
-		<li class="registro-logs">
-			<a href="">REGISTRO DE LOGS</a>
+		<?php endif; ?>
+		<?php if($this -> requestAction('/users/verificarAcceso/' , array('ruta'=>array('controllers', 'Auditorias', 'index')))) : ?>
+		<li class="auditorias">
+			<a href="">AUDITORIAS</a>
 		</li>
 		<?php //endif; ?>
 		<?php //if($this -> requestAction('/users/verificarAcceso/' , array('ruta'=>array('controllers', 'Artesanos', 'index')))) : ?>

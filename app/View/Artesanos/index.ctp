@@ -16,9 +16,17 @@
 	<tr>
 		<td><?php echo h($artesano['Artesano']['art_cedula']); ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $artesano['Artesano']['id']),array('class'=>'view')); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $artesano['Artesano']['id']),array('class'=>'edit')); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $artesano['Artesano']['id']), array('class'=>'delete'), __('Esta seguro que quiere eliminar el registro?', $artesano['Artesano']['id'])); ?>
+			<?php
+				if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Artesanos', 'view')))) {
+					echo $this->Html->link(__('View'), array('action' => 'view', $artesano['Artesano']['id']),array('class'=>'view'));
+				}
+				if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Artesanos', 'edit')))) {
+					echo $this->Html->link(__('Edit'), array('action' => 'edit', $artesano['Artesano']['id']),array('class'=>'edit'));
+				}
+				if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Artesanos', 'delete')))) {
+					echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $artesano['Artesano']['id']), array('class'=>'delete'), __('Esta seguro que quiere eliminar el registro?', $artesano['Artesano']['id']));
+				}
+			?>
 		</td>
 	</tr>
 <?php endforeach; ?>
