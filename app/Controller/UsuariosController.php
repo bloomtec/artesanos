@@ -123,7 +123,7 @@ class UsuariosController extends AppController {
 				$this -> Usuario -> query("UPDATE `aros` SET `alias`='$user_alias' WHERE `model`='Usuario' AND `foreign_key`=$user_id");
 				$this -> _setInfoPermisos($this -> request -> data['Usuario']['id'], $this -> request -> data['Permisos']);
 				$this -> Session -> setFlash(__('Se guardó el usuario'), 'crud/success');
-				//$this -> redirect(array('action' => 'index'));
+				$this -> redirect(array('action' => 'index'));
 			} else {
 				$this -> Session -> setFlash(__('No se pudo guardar el usuario. Por favor, intente de nuevo.'), 'crud/error');
 			}
