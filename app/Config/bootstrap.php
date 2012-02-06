@@ -65,3 +65,4 @@ Inflector::rules('plural', array('rules' => array('/([r|d|j|n|l|m|y|z])$/i' => '
  * CakePlugin::load('DebugKit'); //Loads a single plugin named DebugKit
  *
  */
+CakePlugin::load('AclExtras');

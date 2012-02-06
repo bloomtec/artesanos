@@ -9,7 +9,26 @@ class UsuariosController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('initAcl');
+		$this -> Auth -> allow('inicializarAcl');
+	}
+
+	public function verificarAcceso() {
+		$rol = (int)$this -> Session -> read('Auth.User.rol_id');
+		if ($rol === 1) {
+			$rol = 'Administrador';
+		} elseif ($rol === 2) {
+			$role = 'Operador';
+		}
+
+		// Armar la ruta
+		$ruta = '';
+		for ($i = 0; $i < count($this -> params['ruta']); $i++) {
+			$ruta .= $this -> params['ruta'][$i];
+			if ($i != count($this -> params['ruta']) - 1) {
+				$ruta .= '/';
+			}
+		}
+		return $this -> Acl -> check($role, $ruta);
 	}
 
 	/**
@@ -138,35 +157,40 @@ class UsuariosController extends AppController {
 	 *
 	 * @return void
 	 */
-	public function initAcl() {
+	public function inicializarAcl() {
 		$this -> autoRender = false;
 
 		/**
 		 * Limpiar las tablas
 		 */
 
-		// Limpiar usuarios
+		// Limpiar ARO's vs ACO's
+		$this -> Usuario -> query('TRUNCATE TABLE aros_acos;');
+		// Limpiar ARO's
+		$this -> Usuario -> query('TRUNCATE TABLE aros;');
+		// Limpiar ACO's
+		$this -> Usuario -> query('TRUNCATE TABLE acos;');
+		// Limpiar Usuarios
 		$this -> Usuario -> query('TRUNCATE TABLE usuarios;');
-		// Limpiar roles
-		$this -> Usuario -> Rol -> query('TRUNCATE TABLE roles;');
+		
+		exec('/var/www/artesanos/app/Console/cake -app /var/www/artesanos/app/ AclExtras.AclExtras aco_sync');
 
 		/**
-		 * Roles
+		 * Agregar Aro's
 		 */
+		$aro = &$this -> Acl -> Aro;
 
-		// Administrador
-		$this -> Usuario -> Rol -> create();
-		$rol = array();
-		$rol['Rol']['nombre'] = 'Administrador';
-		$rol['Rol']['descripcion'] = '';
-		$this -> Usuario -> Rol -> save($rol);
-		
-		// Administrador
-		$this -> Usuario -> Rol -> create();
-		$rol = array();
-		$rol['Rol']['nombre'] = 'Operador';
-		$rol['Rol']['descripcion'] = '';
-		$this -> Usuario -> Rol -> save($rol);
+		// Here's all of our group info in an array we can iterate through
+		$roles = array(0 => array('foreign_key' => 1, 'model' => 'Rol', 'alias' => 'Administrador'), 1 => array('foreign_key' => 2, 'model' => 'Rol', 'alias' => 'Operador'));
+
+		// Iterate and create ARO groups
+		foreach ($roles as $data) {
+			// Remember to call create() when saving in loops...
+			$aro -> create();
+
+			// Save data
+			$aro -> save($data);
+		}
 
 		/**
 		 * Usuarios
@@ -175,13 +199,36 @@ class UsuariosController extends AppController {
 		// Administrador
 		$this -> Usuario -> create();
 		$usuario = array();
-		$usuario['Usuario']['usuario'] = 'admin';
-		$usuario['Usuario']['contrasena'] = 'admin';
-		$usuario['Usuario']['con_acceso'] = true;
+		$usuario['Usuario']['usu_nombre_de_usuario'] = 'admin';
+		$usuario['Usuario']['usu_contrasena'] = 'admin';
+		$usuario['Usuario']['usu_activo'] = true;
 		$usuario['Usuario']['rol_id'] = 1;
 		$this -> Usuario -> save($usuario);
 
-		echo 'Usuarios Y Permisos Inicializados';
+		/**
+		 * Permisos
+		 */
+		$rol = &$this -> Usuario -> Rol;
+
+		// Permisos para administradores
+		$rol -> id = 1;
+
+		// Se permite acceso total
+		$this -> Acl -> allow($rol, 'controllers');
+
+		// Permisos para usuarios
+		$role -> id = 2;
+
+		// Módulo usuarios
+		$this -> Acl -> deny($rol, 'controllers');
+		$this -> Acl -> allow($rol, 'Usuarios/logout');
+		$this -> Acl -> allow($rol, 'Usuarios/verificarAcceso');
+
+		/**
+		 * Finished
+		 */
+		echo 'Usuario Administrativo Y Permisos Inicializados';
+		exit ;
 	}
 
 }

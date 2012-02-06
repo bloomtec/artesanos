@@ -37,16 +37,14 @@ class AppController extends Controller {
 
 	public $cacheAction = true;
 
-	// public $components = array('Auth', 'Acl', 'Session');
+	public $components = array('Auth', 'Acl', 'Session');
 	
-	// temp
-	public $components = array('Auth', 'Session');
-
 	public function beforeFilter() {
-		// $this -> Auth -> authorize = array('Actions' => array('actionPath' => 'controllers'));
-		$this -> Auth -> authenticate = array('Form' => array('userModel' => 'Usuario', 'fields' => array('username' => 'usuario', 'password' => 'contrasena')));
-		$this -> Auth -> scope = array('con_acceso' => true);
+		$this -> Auth -> authorize = array('Actions' => array('actionPath' => 'controllers'));
+		$this -> Auth -> authenticate = array('Form' => array('scope' => array('usu_activo' => 1), 'userModel' => 'Usuario', 'fields' => array('username' => 'usu_nombre_de_usuario', 'password' => 'usu_contrasena')));
 		$this -> Auth -> loginAction = array('controller' => 'usuarios', 'action' => 'login');
+		$this -> Auth -> loginRedirect = array('controller' => 'pages', 'action' => 'display', 'home');
+		$this -> Auth -> logoutRedirect = array('controller' => 'usuarios', 'action' => 'login');
 		// $this -> Auth -> Allow('*');
 	}
 
