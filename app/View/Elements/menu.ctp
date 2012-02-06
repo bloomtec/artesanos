@@ -29,7 +29,7 @@
 		<li class="auditorias">
 			<a href="">AUDITORIAS</a>
 		</li>
-		<?php //endif; ?>
+		<?php endif; ?>
 		<?php //if($this -> requestAction('/users/verificarAcceso/' , array('ruta'=>array('controllers', 'Artesanos', 'index')))) : ?>
 		<li class="informes-reportes">
 			<a href="">INFORMES Y REPORTES</a>
