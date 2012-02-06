@@ -46,7 +46,7 @@
 			&nbsp;
 		</h3>
 </div>
-<?php if($usuario['Usuario']['rol_id'] != 1) : ?>
+<?php // if($usuario['Usuario']['rol_id'] != 1) : ?>
 <div class="permisos-acl" style="margin-top: 280px;">
 	<h4><?php echo __('Permisos');?></h4>
 	<?php
@@ -57,7 +57,11 @@
 		echo '<table class="tabla-permisos"><tr>';
 		foreach($modulo[key($modulo)] as $key => $accion) {
 			echo '<td class="accion-permiso">';
-			echo $this -> Form -> input('Permisos.'.key($modulo).'.'.$key, array('type'=>'checkbox', 'label'=>$accion));
+			if($permisos['Permisos'][key($modulo)][$key]) {
+				echo $this -> Form -> input('Permisos.'.key($modulo).'.'.$key, array('type'=>'checkbox', 'label'=>$accion, 'checked'=>'checked'));
+			} else {
+				echo $this -> Form -> input('Permisos.'.key($modulo).'.'.$key, array('type'=>'checkbox', 'label'=>$accion));
+			}
 			echo '</td>';
 		}
 		echo '</tr></table>';
@@ -72,7 +76,7 @@
 		});
 	});
 </script>
-<?php endif; ?>
+<?php // endif; ?>
 <div class="actions">
 	<ul>
 		<li><?php echo $this->Html->link(__('Volver Usuarios'), array('action' => 'index')); ?> </li>

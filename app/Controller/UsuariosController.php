@@ -78,6 +78,8 @@ class UsuariosController extends AppController {
 			throw new NotFoundException(__('Usuario no válido'));
 		}
 		$this -> set('usuario', $this -> Usuario -> read(null, $id));
+		$permisos['Permisos'] = $this -> _getInfoPermisos($id);
+		$this -> set(compact('permisos'));
 	}
 
 	/**
@@ -93,7 +95,7 @@ class UsuariosController extends AppController {
 				$user_id = $this -> Usuario -> id;
 				$user_alias = $this -> request -> data['Usuario']['usu_nombre_de_usuario'];
 				$this -> Usuario -> query("UPDATE `aros` SET `alias`='$user_alias' WHERE `model`='Usuario' AND `foreign_key`=$user_id");
-
+				$this -> _setInfoPermisos($this -> Usuario -> id, $this -> request -> data['Permisos']);
 				$this -> Session -> setFlash(__('Se guardó el usuario'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
