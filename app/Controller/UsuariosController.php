@@ -121,8 +121,9 @@ class UsuariosController extends AppController {
 				$user_id = $this -> request -> data['Usuario']['id'];
 				$user_alias = $this -> request -> data['Usuario']['usu_nombre_de_usuario'];
 				$this -> Usuario -> query("UPDATE `aros` SET `alias`='$user_alias' WHERE `model`='Usuario' AND `foreign_key`=$user_id");
+				$this -> _setInfoPermisos($this -> request -> data['Usuario']['id'], $this -> request -> data['Permisos']);
 				$this -> Session -> setFlash(__('Se guardó el usuario'), 'crud/success');
-				$this -> redirect(array('action' => 'index'));
+				//$this -> redirect(array('action' => 'index'));
 			} else {
 				$this -> Session -> setFlash(__('No se pudo guardar el usuario. Por favor, intente de nuevo.'), 'crud/error');
 			}
@@ -130,7 +131,8 @@ class UsuariosController extends AppController {
 			$this -> request -> data = $this -> Usuario -> read(null, $id);
 		}
 		$roles = $this -> Usuario -> Rol -> find('list');
-		$this -> set(compact('roles'));
+		$permisos['Permisos'] = $this -> _getInfoPermisos($id);
+		$this -> set(compact('roles', 'permisos'));
 	}
 
 	/**
@@ -154,6 +156,45 @@ class UsuariosController extends AppController {
 		$this -> Session -> setFlash(__('No se eliminó el usuario'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
 	}
+
+	public function getInfoPermisos() {
+		return $this -> info_permisos;
+	}
+
+	private function _getInfoPermisos($id_usuario = null) {
+		$data = array();
+		$this -> Usuario -> recursive = -1;
+		$usuario = $this -> Usuario -> read(null, $id_usuario);
+		foreach ($this -> info_permisos as $key => $modulo) {
+			foreach ($modulo[key($modulo)] as $key => $accion) {
+				$ruta = 'controllers/' . key($modulo) . '/' . $key;
+				$data[key($modulo)][$key] = $this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], $ruta);
+			}
+		}
+		return $data;
+	}
+
+	private function _setInfoPermisos($id_usuario = null, $permisos = null) {
+		$this -> Usuario -> recursive = -1;
+		$usuario = $this -> Usuario -> read(null, $id_usuario);
+		$aro_id = $this -> Usuario -> query("SELECT `id` FROM `aros` WHERE `model`='Usuario' AND `foreign_key`=$id_usuario");
+		$aro_id = $aro_id[0]['aros']['id'];
+		$this -> Usuario -> query("DELETE FROM `aros_acos` WHERE `aro_id`=$aro_id");
+		foreach ($permisos as $modulo => $acciones) {
+			foreach ($acciones as $accion => $valor) {
+				if($valor) {
+					$ruta = 'controllers/' . $modulo . '/' . $accion;
+					$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], $ruta);
+				}
+			}
+		}
+	}
+
+	private $info_permisos = array(0 => array('Usuarios' => array('add' => 'Agregar Usuario', 'edit' => 'Editar Usuario', 'view' => 'Ver Usuario',
+	//'delete' => 'Eliminar Usuario',
+		'index' => 'Listar Usuarios')), 1 => array('Artesanos' => array('add' => 'Registrar Artesano', 'edit' => 'Editar Artesano', 'view' => 'Ver Artesano',
+	//'delete' => 'Eliminar Artesano',
+		'index' => 'Listar Artesanos')));
 
 	/**
 	 * initAcl method
@@ -204,25 +245,44 @@ class UsuariosController extends AppController {
 		$usuario = array();
 		$usuario['Usuario']['usu_nombre_de_usuario'] = 'admin';
 		$usuario['Usuario']['usu_contrasena'] = 'admin';
+		$usuario['Usuario']['usu_cedula'] = 'admin';
+		$usuario['Usuario']['usu_nombres_y_apellidos'] = 'admin';
 		$usuario['Usuario']['usu_activo'] = true;
 		$usuario['Usuario']['rol_id'] = 1;
 		$this -> Usuario -> save($usuario);
-
+		
 		// tratando de arreglar lo del alias en la tabla aros
-		$admin_id = $this -> Usuario -> id;
-		$admin_alias = $usuario['Usuario']['usu_nombre_de_usuario'];
-		$this -> Usuario -> query("UPDATE `aros` SET `alias`='$admin_alias' WHERE `model`='Usuario' AND `foreign_key`=$admin_id");
+		$id_usuario = $this -> Usuario -> id;
+		$alias_usuario = $usuario['Usuario']['usu_nombre_de_usuario'];
+		$this -> Usuario -> query("UPDATE `aros` SET `alias`='$alias_usuario' WHERE `model`='Usuario' AND `foreign_key`=$id_usuario");
+		
+		// Operador
+		$this -> Usuario -> create();
+		$usuario = array();
+		$usuario['Usuario']['usu_nombre_de_usuario'] = 'otro';
+		$usuario['Usuario']['usu_contrasena'] = 'otro';
+		$usuario['Usuario']['usu_cedula'] = 'otro';
+		$usuario['Usuario']['usu_nombres_y_apellidos'] = 'otro';
+		$usuario['Usuario']['usu_activo'] = true;
+		$usuario['Usuario']['rol_id'] = 2;
+		$this -> Usuario -> save($usuario);
+		
+		// tratando de arreglar lo del alias en la tabla aros
+		$id_usuario = $this -> Usuario -> id;
+		$alias_usuario = $usuario['Usuario']['usu_nombre_de_usuario'];
+		$this -> Usuario -> query("UPDATE `aros` SET `alias`='$alias_usuario' WHERE `model`='Usuario' AND `foreign_key`=$id_usuario");
 
-		// Se permite acceso total
-		$this -> Acl -> allow($admin_alias, 'controllers');
+		// Se permite acceso total a los administradores
+		$this -> Acl -> allow('Administrador', 'controllers');
 
-		/*
-		 // Módulo usuarios
-		 $this -> Acl -> deny('Operador', 'controllers');
-		 $this -> Acl -> allow('Operador', 'Pages/display');
-		 $this -> Acl -> allow('Operador', 'Usuarios/logout');
-		 $this -> Acl -> allow('Operador', 'Usuarios/verificarAcceso');
-		 */
+		// Se le niega totalmente el acceso a los operadores de manera inicial
+		$this -> Acl -> deny('Operador', 'controllers');
+		
+		// Se permite el acceso a ciertas acciones por defecto para los operadores
+		// Modulo Pages
+		$this -> Acl -> allow('Operador', 'controllers/Pages/display');
+		// Modulo Usuarios
+		$this -> Acl -> allow('Operador', 'controllers/Usuarios/logout');
 
 		/**
 		 * Finished
