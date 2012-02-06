@@ -204,25 +204,22 @@ class UsuariosController extends AppController {
 		$usuario['Usuario']['usu_activo'] = true;
 		$usuario['Usuario']['rol_id'] = 1;
 		$this -> Usuario -> save($usuario);
-
-		/**
-		 * Permisos
-		 */
-		$rol = &$this -> Usuario -> Rol;
-
-		// Permisos para administradores
-		$rol -> id = 1;
+		
+		// tratando de arreglar lo del alias en la tabla aros
+		$admin_id = $this -> Usuario -> id;
+		$admin_alias = $usuario['Usuario']['usu_nombre_de_usuario'];
+		$this -> Usuario -> query("UPDATE `aros` SET `alias`='$admin_alias' WHERE `model`='Usuario' AND `foreign_key`=$admin_id");
 
 		// Se permite acceso total
-		$this -> Acl -> allow($rol, 'controllers');
-
-		// Permisos para usuarios
-		$role -> id = 2;
-
+		$this -> Acl -> allow($admin_alias, 'controllers');
+		
+		/*
 		// Módulo usuarios
-		$this -> Acl -> deny($rol, 'controllers');
-		$this -> Acl -> allow($rol, 'Usuarios/logout');
-		$this -> Acl -> allow($rol, 'Usuarios/verificarAcceso');
+		$this -> Acl -> deny('Operador', 'controllers');
+		$this -> Acl -> allow('Operador', 'Pages/display');
+		$this -> Acl -> allow('Operador', 'Usuarios/logout');
+		$this -> Acl -> allow('Operador', 'Usuarios/verificarAcceso');
+		 */
 
 		/**
 		 * Finished

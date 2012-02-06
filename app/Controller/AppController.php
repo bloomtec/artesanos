@@ -40,7 +40,7 @@ class AppController extends Controller {
 	public $components = array('Auth', 'Acl', 'Session');
 	
 	public function beforeFilter() {
-		$this -> Auth -> authorize = array('Actions' => array('actionPath' => 'controllers'));
+		$this -> Auth -> authorize = array('Actions' => array('actionPath' => 'controllers', 'userModel' => 'Usuario'));
 		$this -> Auth -> authenticate = array('Form' => array('scope' => array('usu_activo' => 1), 'userModel' => 'Usuario', 'fields' => array('username' => 'usu_nombre_de_usuario', 'password' => 'usu_contrasena')));
 		$this -> Auth -> loginAction = array('controller' => 'usuarios', 'action' => 'login');
 		$this -> Auth -> loginRedirect = array('controller' => 'pages', 'action' => 'display', 'home');
