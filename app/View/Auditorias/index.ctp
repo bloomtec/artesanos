@@ -9,7 +9,7 @@
 	<tr>
 		<th><?php echo $this->Paginator->sort('usuario_id', 'Usuario');?></th>
 		<th><?php echo $this->Paginator->sort('aud_nombre_modelo', 'Módulo');?></th>
-		<th><?php echo $this->Paginator->sort('aud_llave_foranea', 'Registro');?></th>
+		<th>Registro</th>
 		<th><?php echo $this->Paginator->sort('aud_add', 'Añadir');?></th>
 		<th><?php echo $this->Paginator->sort('aud_edit', 'Modificar');?></th>
 		<th><?php echo $this->Paginator->sort('aud_delete', 'Eliminar');?></th>
@@ -24,10 +24,49 @@
 			<?php echo $this->Html->link($auditoria['Usuario']['usu_nombre_de_usuario'], array('controller' => 'usuarios', 'action' => 'view', $auditoria['Usuario']['id'])); ?>
 		</td>
 		<td><?php echo h($auditoria['Auditoria']['aud_nombre_modelo']); ?>&nbsp;</td>
-		<td><?php echo h($auditoria['Auditoria']['aud_llave_foranea']); ?>&nbsp;</td>
-		<td><?php echo h($auditoria['Auditoria']['aud_add']); ?>&nbsp;</td>
-		<td><?php echo h($auditoria['Auditoria']['aud_edit']); ?>&nbsp;</td>
-		<td><?php echo h($auditoria['Auditoria']['aud_delete']); ?>&nbsp;</td>
+		<td>
+			<?php // echo h($auditoria['Auditoria']['aud_llave_foranea']); ?>
+			<?php
+				switch ($auditoria['Auditoria']['aud_nombre_modelo']) {
+					case 'Usuario':
+						echo $this -> requestAction('/usuarios/getNombreDeUsuario/'.$auditoria['Auditoria']['aud_llave_foranea']);
+						break;
+					
+					default:
+						
+						break;
+				}
+			?>
+			&nbsp;
+		</td>
+		<td>
+			<?php // echo h($auditoria['Auditoria']['aud_add']); ?>
+			<?php if($auditoria['Auditoria']['aud_add']) { ?> 
+				 <input type='checkbox' checked='checked' disabled='true' class='checkbox'/> 
+			 <?php } else { ?> 
+				 <input type='checkbox' disabled='true' class='checkbox'/>
+			 <?php } ?>
+			&nbsp;
+		</td>
+		
+		<td>
+			<?php // echo h($auditoria['Auditoria']['aud_edit']); ?>
+			<?php if($auditoria['Auditoria']['aud_edit']) { ?> 
+				 <input type='checkbox' checked='checked' disabled='true' class='checkbox'/> 
+			 <?php } else { ?> 
+				 <input type='checkbox' disabled='true' class='checkbox'/>
+			 <?php } ?>
+			&nbsp;
+		</td>
+		<td>
+			<?php // echo h($auditoria['Auditoria']['aud_delete']); ?>
+			<?php if($auditoria['Auditoria']['aud_delete']) { ?> 
+				 <input type='checkbox' checked='checked' disabled='true' class='checkbox'/> 
+			 <?php } else { ?> 
+				 <input type='checkbox' disabled='true' class='checkbox'/>
+			 <?php } ?>
+			&nbsp;
+		</td>
 		<td><?php echo h($auditoria['Auditoria']['created']); ?>&nbsp;</td>
 		<td class="actions">
 			<?php
@@ -54,9 +93,4 @@
 		echo $this->Paginator->next(__('Siguiente') . ' >', array(), null, array('class' => 'next disabled'));
 	?>
 	</div>
-</div>
-<div class="actions">
-	<ul>
-		<li><?php echo $this->Html->link(__('Agregar Auditoria'), array('action' => 'add')); ?></li>
-	</ul>
 </div>
