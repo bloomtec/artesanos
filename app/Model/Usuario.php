@@ -38,6 +38,22 @@ class Usuario extends AppModel {
 			)
 		),
 		2 => array(
+			'ParametrosInformativos' => array(
+				'index' => 'Listar Parámetros Informativos',
+				'view' => 'Ver Parámetro Informativo',
+				'add' => 'Agregar Parámetro Informativo',
+				'edit' => 'Editar Parámetro Informativo'
+			)
+		),
+		3 => array(
+			'Valores' => array(
+				'index' => 'Listar Valores De Parámetros Informativos',
+				'view' => 'Ver Valor De Parámetro Informativo',
+				'add' => 'Agregar Valor De Parámetro Informativo',
+				'edit' => 'Editar Valor De Parámetro Informativo'
+			)
+		),
+		4 => array(
 			'Auditorias' => array(
 				'index' => 'Listar Auditorias',
 				'view' => 'Ver Auditoria'

@@ -341,7 +341,7 @@ div.actions a:hover,  a.cancelar:hover{
     bottom: 0;
     clear: both;
     left: 0;
-    padding: 6px 10px;
+    padding: 6px 0px;
     position: absolute;
     text-align: center;
     width: 100%;
@@ -1216,4 +1216,20 @@ a.caldisabled {
 #caltoday {
 	background-color:#333;
 	color:#fff;
+}
+
+/* tabla de información de permisos */
+table.tabla-permisos {
+	background: none repeat scroll 0 0 AliceBlue;
+	width: 80%;
+}
+table.tabla-permisos * {
+	padding: 0;
+}
+table.tabla-permisos tr td.accion-permiso div * {
+	height: 0;
+	float: left;
+	clear: none;
+	margin: 0;
+	display: table;
 }

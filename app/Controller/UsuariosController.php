@@ -137,28 +137,6 @@ class UsuariosController extends AppController {
 		$this -> set(compact('roles', 'permisos'));
 	}
 
-	/**
-	 * delete method
-	 *
-	 * @param string $id
-	 * @return void
-	 */
-	public function delete($id = null) {
-		if (!$this -> request -> is('post')) {
-			throw new MethodNotAllowedException();
-		}
-		$this -> Usuario -> id = $id;
-		if (!$this -> Usuario -> exists()) {
-			throw new NotFoundException(__('Usuario no válido'));
-		}
-		if ($this -> Usuario -> delete()) {
-			$this -> Session -> setFlash(__('Se eliminó el usuario'), 'crud/success');
-			$this -> redirect(array('action' => 'index'));
-		}
-		$this -> Session -> setFlash(__('No se eliminó el usuario'), 'crud/error');
-		$this -> redirect(array('action' => 'index'));
-	}
-
 	public function getInfoPermisos() {
 		return $this -> Usuario -> info_permisos;
 	}

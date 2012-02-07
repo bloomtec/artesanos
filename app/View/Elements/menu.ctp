@@ -25,6 +25,11 @@
 			<?php endif; ?>
 		</li>
 		<?php endif; ?>
+		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'ParametrosInformativos', 'index')))) : ?>
+		<li class="parametros">
+			<a href="/pages/display/parametros">PARAMETROS</a>
+		</li>
+		<?php endif; ?>
 		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Auditorias', 'index')))) : ?>
 		<li class="auditorias">
 			<a href="/auditorias">AUDITORIAS</a>

@@ -45,7 +45,6 @@ class AppController extends Controller {
 		$this -> Auth -> loginAction = array('controller' => 'usuarios', 'action' => 'login');
 		$this -> Auth -> loginRedirect = array('controller' => 'pages', 'action' => 'display', 'home');
 		$this -> Auth -> logoutRedirect = array('controller' => 'usuarios', 'action' => 'login');
-		// $this -> Auth -> Allow('*');
 	}
 
 	public function CSVExport() {

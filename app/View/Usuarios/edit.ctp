@@ -13,7 +13,9 @@
 		echo $this -> Form -> input('usu_activo', array('label' => 'Activo'));
 		?>
 		<div class="permisos-acl">
-			<h4><?php echo __('Permisos');?></h4>
+			<h2><?php echo __('Permisos');?></h2>
+			<br />
+			<br />
 			<?php
 			$modulos = $this -> requestAction('/usuarios/getInfoPermisos');
 			foreach ($modulos as $key => $modulo) {
@@ -21,6 +23,7 @@
 				echo '<p><b>'. key($modulo) .'</b></p>';
 				echo '<table class="tabla-permisos"><tr>';
 				foreach($modulo[key($modulo)] as $key => $accion) {
+					//echo '<td class="accion-permiso" valign="top">';
 					echo '<td class="accion-permiso">';
 					if($permisos['Permisos'][key($modulo)][$key]) {
 						echo $this -> Form -> input('Permisos.'.key($modulo).'.'.$key, array('type'=>'checkbox', 'label'=>$accion, 'checked'=>'checked'));

@@ -37,9 +37,6 @@
 				if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Usuarios', 'edit')))) {
 					echo $this->Html->link(__('Edit'), array('action' => 'edit', $usuario['Usuario']['id']),array('class'=>'edit'));
 				}
-				if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Usuarios', 'delete')))) {
-					echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $usuario['Usuario']['id']), array('class'=>'delete'), __('Esta seguro que quiere eliminar el registro?', $usuario['Usuario']['id']));
-				}
 			?>
 		</td>
 	</tr>

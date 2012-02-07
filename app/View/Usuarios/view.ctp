@@ -48,7 +48,9 @@
 </div>
 <?php // if($usuario['Usuario']['rol_id'] != 1) : ?>
 <div class="permisos-acl" style="margin-top: 280px;">
-	<h4><?php echo __('Permisos');?></h4>
+	<h2><?php echo __('Permisos');?></h2>
+	<br />
+	<br />
 	<?php
 	$modulos = $this -> requestAction('/usuarios/getInfoPermisos');
 	foreach ($modulos as $key => $modulo) {
