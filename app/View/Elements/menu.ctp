@@ -19,7 +19,7 @@
 			<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Artesanos', 'add')))) : ?>
 			<ul>
 				<li>
-					<a href="/artesanos/add">Agregar</a>
+					<a href="/artesanos/add">Registrar</a>
 				</li>
 			</ul>
 			<?php endif; ?>

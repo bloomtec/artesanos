@@ -1,21 +1,21 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * Artesano Model
+ * Balance Model
  *
  * @property Calificacion $Calificacion
  */
-class Artesano extends AppModel {
+class Balance extends AppModel {
 /**
  * Validation rules
  *
  * @var array
  */
 	public $validate = array(
-		'art_cedula' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				'message' => 'Debe ingresar el dato de identificación.',
+		'calificacion_id' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
+				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -27,24 +27,17 @@ class Artesano extends AppModel {
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 /**
- * hasMany associations
+ * belongsTo associations
  *
  * @var array
  */
-	public $hasMany = array(
+	public $belongsTo = array(
 		'Calificacion' => array(
 			'className' => 'Calificacion',
-			'foreignKey' => 'artesano_id',
-			'dependent' => false,
+			'foreignKey' => 'calificacion_id',
 			'conditions' => '',
 			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
+			'order' => ''
 		)
 	);
-
 }
