@@ -86,7 +86,7 @@ class UsuariosController extends AppController {
 	 * @return void
 	 */
 	public function add() {
-		$this -> Usuario -> currentUsrId = $this -> Auth -> Usuario('id');
+		$this -> Usuario -> currentUsrId = $this -> Auth -> user('id');
 		if ($this -> request -> is('post')) {
 			$this -> Usuario -> create();
 			if ($this -> Usuario -> save($this -> request -> data)) {
@@ -96,7 +96,7 @@ class UsuariosController extends AppController {
 				$this -> Usuario -> query("UPDATE `aros` SET `alias`='$user_alias' WHERE `model`='Usuario' AND `foreign_key`=$user_id");
 				$this -> setInfoPermisos($this -> Usuario -> id, $this -> request -> data['Permisos']);
 				$this -> Session -> setFlash(__('Se guardó el usuario'), 'crud/success');
-				//$this -> redirect(array('action' => 'index'));
+				$this -> redirect(array('action' => 'index'));
 			} else {
 				$this -> Session -> setFlash(__('No se pudo guardar el usuario. Por favor, intente de nuevo.'), 'crud/error');
 			}
@@ -125,7 +125,7 @@ class UsuariosController extends AppController {
 				$this -> Usuario -> query("UPDATE `aros` SET `alias`='$user_alias' WHERE `model`='Usuario' AND `foreign_key`=$user_id");
 				$this -> setInfoPermisos($this -> request -> data['Usuario']['id'], $this -> request -> data['Permisos']);
 				$this -> Session -> setFlash(__('Se guardó el usuario'), 'crud/success');
-				//$this -> redirect(array('action' => 'index'));
+				$this -> redirect(array('action' => 'index'));
 			} else {
 				$this -> Session -> setFlash(__('No se pudo guardar el usuario. Por favor, intente de nuevo.'), 'crud/error');
 			}
