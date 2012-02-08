@@ -36,6 +36,26 @@
 						echo '<b>:: único :: </b>';
 						break;
 					
+					case 'Provincia' :
+						echo $this -> requestAction('/provincias/getNombre/'.$auditoria['Auditoria']['aud_llave_foranea']);
+						break;
+						
+					case 'Canton' :
+						echo $this -> requestAction('/cantones/getNombre/'.$auditoria['Auditoria']['aud_llave_foranea']);
+						break;
+						
+					case 'Ciudad' :
+						echo $this -> requestAction('/ciudades/getNombre/'.$auditoria['Auditoria']['aud_llave_foranea']);
+						break;
+					
+					case 'Sector' :
+						echo $this -> requestAction('/sectores/getNombre/'.$auditoria['Auditoria']['aud_llave_foranea']);
+						break;
+					
+					case 'Parroquia' :
+						echo $this -> requestAction('/parroquias/getNombre/'.$auditoria['Auditoria']['aud_llave_foranea']);
+						break;
+					
 					default:
 						
 						break;

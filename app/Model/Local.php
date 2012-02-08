@@ -7,6 +7,7 @@ App::uses('AppModel', 'Model');
  * @property Provincia $Provincia
  * @property Canton $Canton
  * @property Ciudad $Ciudad
+ * @property Sector $Sector
  * @property Parroquia $Parroquia
  */
 class Local extends AppModel {
@@ -60,6 +61,13 @@ class Local extends AppModel {
 		'Ciudad' => array(
 			'className' => 'Ciudad',
 			'foreignKey' => 'ciudad_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'Sector' => array(
+			'className' => 'Sector',
+			'foreignKey' => 'sector_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''

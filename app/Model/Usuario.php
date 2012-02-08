@@ -54,12 +54,47 @@ class Usuario extends AppModel {
 			)
 		),
 		4 => array(
+			'Provincias' => array(
+				'view' => 'Ver Provincias',
+				'add' => 'Añadir Provincia',
+				'edit' => 'Modificar Provincia'
+			)
+		),
+		5 => array(
+			'Cantones' => array(
+				'view' => 'Ver Cantones',
+				'add' => 'Añadir Canton',
+				'edit' => 'Modificar Canton'
+			)
+		),
+		6 => array(
+			'Ciudades' => array(
+				'view' => 'Ver Ciudades',
+				'add' => 'Añadir Ciudad',
+				'edit' => 'Modificar Ciudad'
+			)
+		),
+		7 => array(
+			'Sectores' => array(
+				'view' => 'Ver Sectores',
+				'add' => 'Añadir Sector',
+				'edit' => 'Modificar Sector'
+			)
+		),
+		8 => array(
+			'Parroquias' => array(
+				'view' => 'Ver Parroquias',
+				'add' => 'Añadir Parroquia',
+				'edit' => 'Modificar Parroquia'
+			)
+		),
+		9 => array(
 			'Configuraciones' => array(
 				'index' => 'Listar Parámetros De Configuración',
 				'edit' => 'Modificar Parámetros De Configuración'
 			)
 		),
-		5 => array(
+		10 => array(
 			'Auditorias' => array(
 				'index' => 'Listar Auditorias',
 				'view' => 'Ver Auditoria'

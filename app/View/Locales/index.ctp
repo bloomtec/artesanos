@@ -7,22 +7,22 @@
 	</div>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-									<th><?php echo $this->Paginator->sort('calificacion_id');?></th>
-							<th><?php echo $this->Paginator->sort('provincia_id');?></th>
-							<th><?php echo $this->Paginator->sort('canton_id');?></th>
-							<th><?php echo $this->Paginator->sort('ciudad_id');?></th>
-							<th><?php echo $this->Paginator->sort('parroquia_id');?></th>
-							<th><?php echo $this->Paginator->sort('loc_calle_o_avenida');?></th>
-							<th><?php echo $this->Paginator->sort('loc_numero');?></th>
-							<th><?php echo $this->Paginator->sort('loc_interseccion');?></th>
-							<th><?php echo $this->Paginator->sort('loc_barrio');?></th>
-							<th><?php echo $this->Paginator->sort('loc_telefono_celular');?></th>
-							<th><?php echo $this->Paginator->sort('loc_telefono_convencional');?></th>
-							<th><?php echo $this->Paginator->sort('loc_referencia');?></th>
-							<th><?php echo $this->Paginator->sort('loc_email');?></th>
-							<th><?php echo $this->Paginator->sort('created');?></th>
-							<th><?php echo $this->Paginator->sort('modified');?></th>
-					<th class="actions"><?php echo __('Actions');?></th>
+		<th><?php echo $this->Paginator->sort('calificacion_id');?></th>
+		<th><?php echo $this->Paginator->sort('provincia_id');?></th>
+		<th><?php echo $this->Paginator->sort('canton_id');?></th>
+		<th><?php echo $this->Paginator->sort('ciudad_id');?></th>
+		<th><?php echo $this->Paginator->sort('parroquia_id');?></th>
+		<th><?php echo $this->Paginator->sort('loc_calle_o_avenida');?></th>
+		<th><?php echo $this->Paginator->sort('loc_numero');?></th>
+		<th><?php echo $this->Paginator->sort('loc_interseccion');?></th>
+		<th><?php echo $this->Paginator->sort('loc_barrio');?></th>
+		<th><?php echo $this->Paginator->sort('loc_telefono_celular');?></th>
+		<th><?php echo $this->Paginator->sort('loc_telefono_convencional');?></th>
+		<th><?php echo $this->Paginator->sort('loc_referencia');?></th>
+		<th><?php echo $this->Paginator->sort('loc_email');?></th>
+		<th><?php echo $this->Paginator->sort('created');?></th>
+		<th><?php echo $this->Paginator->sort('modified');?></th>
+		<th class="actions"><?php echo __('Actions');?></th>
 	</tr>
 	<?php
 	$i = 0;
