@@ -10,6 +10,11 @@ class ParametrosInformativosController extends AppController {
 	public function beforeRender() {
 		$this -> layout = "parametros";
 	}
+	
+	public function getNombre($id) {
+		$parametro = $this -> ParametrosInformativo -> read('par_nombre', $id);
+		return $parametro['ParametrosInformativo']['par_nombre'];
+	}
 
 	/**
 	 * index method
@@ -24,11 +29,6 @@ class ParametrosInformativosController extends AppController {
 			)
 		);
 		$this -> set('parametrosInformativos', $this -> paginate());
-	}
-	
-	public function getNombre($id) {
-		$parametro = $this -> ParametrosInformativo -> read('par_nombre', $id);
-		return $parametro['ParametrosInformativo']['par_nombre'];
 	}
 
 	/**

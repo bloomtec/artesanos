@@ -18,7 +18,13 @@
 			<td><?php echo h($configuracion['Configuracion']['con_anos_renovacion_artesanos_normales']);?>&nbsp;</td>
 			<td><?php echo h($configuracion['Configuracion']['con_anos_pasar_de_aprendiz_a_operario']);?>&nbsp;</td>
 			<td><?php echo h($configuracion['Configuracion']['con_anos_operario_se_pueda_calificar']);?>&nbsp;</td>
-			<td class="actions"><?php echo $this -> Html -> link(__('Edit'), array('action' => 'edit', $configuracion['Configuracion']['id']), array('class' => 'edit'));?></td>
+			<td class="actions">
+				<?php
+					if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Configuraciones', 'edit')))) {
+						echo $this -> Html -> link(__('Edit'), array('action' => 'edit', $configuracion['Configuracion']['id']), array('class' => 'edit'));
+					}
+				?>
+			</td>
 		</tr>
 		<?php endforeach;?>
 	</table>

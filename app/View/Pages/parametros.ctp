@@ -6,11 +6,7 @@
 			<a href="#">PARÁMETROS INFORMATIVOS</a>
 		</li>
 		<?php endif; ?>
-		<?php
-			if(
-				$this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Configuraciones', 'index')))
-			) :
-		?>
+		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Geograficos', 'index')))) : ?>
 		<li>
 			<a href="#">PARÁMETROS GEOGRÁFICOS</a>
 		</li>
@@ -28,11 +24,7 @@
 			<iframe src="/parametros_informativos"></iframe>
 		</div>
 		<?php endif; ?>
-		<?php
-			if(
-				$this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Configuraciones', 'index')))
-			) :
-		?>
+		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Geograficos', 'index')))) : ?>
 		<div>
 			<iframe src="/geograficos"></iframe>
 		</div>

@@ -58,7 +58,7 @@ class Configuracion extends AppModel {
 	
 	public function beforeSave($model) {
 	    if(isset($this -> data['Configuracion']['id'])) {
-			$this -> data['OldData'] = $this -> find('first', array('Configuracion' => array('Usuario.id' => $this -> data['Configuracion']['id'])));
+			$this -> data['OldData'] = $this -> find('first', array('conditions' => array('Configuracion.id' => $this -> data['Configuracion']['id'])));
 		}
 	    return true;
 	}

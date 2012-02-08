@@ -249,6 +249,7 @@ class UsuariosController extends AppController {
 		$this -> Usuario -> query("UPDATE `aros` SET `alias`='$alias_usuario' WHERE `model`='Usuario' AND `foreign_key`=$id_usuario");
 		
 		// Operador
+		/*
 		$this -> Usuario -> create();
 		$usuario = array();
 		$usuario['Usuario']['usu_nombre_de_usuario'] = 'otro';
@@ -259,11 +260,14 @@ class UsuariosController extends AppController {
 		$usuario['Usuario']['rol_id'] = 2;
 		$this -> Usuario -> save($usuario);
 		
+		
 		// tratando de arreglar lo del alias en la tabla aros
 		$id_usuario = $this -> Usuario -> id;
 		$alias_usuario = $usuario['Usuario']['usu_nombre_de_usuario'];
 		$this -> Usuario -> query("UPDATE `aros` SET `alias`='$alias_usuario' WHERE `model`='Usuario' AND `foreign_key`=$id_usuario");
 
+		 */
+		
 		// Se permite acceso total a los administradores
 		$this -> Acl -> allow('Administrador', 'controllers');
 
@@ -280,6 +284,21 @@ class UsuariosController extends AppController {
 		$this -> Acl -> allow('Operador', 'controllers/Usuarios/getInfoPermisos');
 		$this -> Acl -> allow('Operador', 'controllers/Usuarios/getValoresPermisos');
 		$this -> Acl -> allow('Operador', 'controllers/Usuarios/setInfoPermisos');
+		// Modulo Provincia
+		$this -> Acl -> allow('Operador', 'controllers/Provincias/getNombre');
+		$this -> Acl -> allow('Operador', 'controllers/Provincias/getProvincias');
+		// Modulo Canton
+		$this -> Acl -> allow('Operador', 'controllers/Cantones/getNombre');
+		$this -> Acl -> allow('Operador', 'controllers/Cantones/getCantones');
+		// Modulo Ciudad
+		$this -> Acl -> allow('Operador', 'controllers/Ciudades/getNombre');
+		$this -> Acl -> allow('Operador', 'controllers/Ciudades/getCiudades');
+		// Modulo Sector
+		$this -> Acl -> allow('Operador', 'controllers/Sectores/getNombre');
+		$this -> Acl -> allow('Operador', 'controllers/Sectores/getSectores');
+		// Modulo Parroquia
+		$this -> Acl -> allow('Operador', 'controllers/Parroquias/getNombre');
+		$this -> Acl -> allow('Operador', 'controllers/Parroquias/getParroquias');
 		
 		/**
 		 * Finished

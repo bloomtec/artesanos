@@ -19,9 +19,15 @@
 			<tr>
 				<td><?php echo $valor['Valor']['val_nombre']; ?></td>
 				<td class="actions">
+					<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Valores', 'view')))) : ?>
 					<a href="/valores/view/<?php echo $valor['Valor']['id']; ?>" class="view">Ver</a>
+					<?php endif; ?>
+					<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Valores', 'edit')))) : ?>
 					<a href="/valores/edit/<?php echo $valor['Valor']['id']; ?>" class="edit">Editar</a>
+					<?php endif; ?>
+					<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Valores', 'delete')))) : ?>
 					<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'valores', 'action' => 'delete', $valor['Valor']['id']), array('class'=>'delete'), __('Esta seguro que quiere eliminar el registro?', $valor['Valor']['id'])); ?>
+					<?php endif; ?>
 				</td>
 			</tr>
 		<?php endforeach; ?>
@@ -30,6 +36,8 @@
 <div class="actions">
 	<ul>
 		<li><?php echo $this->Html->link(__('Volver'), array('action' => 'index')); ?> </li>
+		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Valores', 'add')))) : ?>
 		<li><?php echo $this->Html->link(__('Agregar Valor'), array('controller' => 'valores', 'action' => 'add', $parametrosInformativo['ParametrosInformativo']['id'])); ?> </li>
+		<?php endif; ?>
 	</ul>
 </div>

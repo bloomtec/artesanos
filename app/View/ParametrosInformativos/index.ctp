@@ -16,7 +16,11 @@
 	<tr>
 		<td><?php echo h($parametrosInformativo['ParametrosInformativo']['par_nombre']); ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $parametrosInformativo['ParametrosInformativo']['id']),array('class'=>'view')); ?>
+			<?php
+				if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'ParametrosInformativos', 'view')))) {
+					echo $this->Html->link(__('View'), array('action' => 'view', $parametrosInformativo['ParametrosInformativo']['id']),array('class'=>'view'));
+				}
+			?>
 		</td>
 	</tr>
 	<?php endforeach; ?>

@@ -3,7 +3,7 @@
 	<fieldset>
 		<h2><?php echo __('Agregar Valor');?></h2>
 		<?php
-		echo $this -> Form -> hidden('parametros_informativo_id');
+		echo $this -> Form -> input('parametros_informativo_id');
 		echo $this -> Form -> input('val_nombre', array('label' => 'Nombre'));
 		?>
 	</fieldset>

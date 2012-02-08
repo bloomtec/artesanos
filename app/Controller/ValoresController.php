@@ -11,7 +11,7 @@ class ValoresController extends AppController {
 		$this -> layout = "parametros";
 	}
 	
-	public function getName($id) {
+	public function getNombre($id) {
 		$valor = $this -> Valor -> read('val_nombre', $id);
 		return $valor['Valor']['val_nombre'];
 	}
@@ -37,6 +37,7 @@ class ValoresController extends AppController {
 	 * @return void
 	 */
 	public function add($parametro_id = null) {
+		$this -> Valor -> currentUsrId = $this -> Auth -> user('id');
 		if ($this -> request -> is('post')) {
 			$this -> Valor -> create();
 			if ($this -> Valor -> save($this -> request -> data)) {
@@ -62,6 +63,7 @@ class ValoresController extends AppController {
 	 * @return void
 	 */
 	public function edit($id = null) {
+		$this -> Valor -> currentUsrId = $this -> Auth -> user('id');
 		$this -> Valor -> id = $id;
 		if (!$this -> Valor -> exists()) {
 			throw new NotFoundException(__('Invalid valor'));
@@ -69,7 +71,8 @@ class ValoresController extends AppController {
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			if ($this -> Valor -> save($this -> request -> data)) {
 				$this -> Session -> setFlash(__('The valor has been saved'), 'crud/success');
-				$this -> redirect(array('action' => 'index'));
+				$this -> redirect(array('controller' => 'parametros_informativos', 'action' => 'index'));
+				$this -> redirect($this -> referer());
 			} else {
 				$this -> Session -> setFlash(__('The valor could not be saved. Please, try again.'), 'crud/error');
 			}
@@ -88,6 +91,7 @@ class ValoresController extends AppController {
 	 * @return void
 	 */
 	public function delete($id = null) {
+		$this -> Valor -> currentUsrId = $this -> Auth -> user('id');
 		$this -> autoRender = false;
 		if (!$this -> request -> is('post')) {
 			throw new MethodNotAllowedException();

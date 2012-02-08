@@ -40,61 +40,64 @@ class Usuario extends AppModel {
 		2 => array(
 			'ParametrosInformativos' => array(
 				'index' => 'Listar Parámetros Informativos',
-				'view' => 'Ver Parámetro Informativo',
-				'add' => 'Agregar Parámetro Informativo',
-				'edit' => 'Editar Parámetro Informativo'
+				'view' => 'Ver Parámetro Informativo'
 			)
 		),
 		3 => array(
 			'Valores' => array(
-				'index' => 'Listar Valores De Parámetros Informativos',
 				'view' => 'Ver Valor De Parámetro Informativo',
 				'add' => 'Agregar Valor De Parámetro Informativo',
-				'edit' => 'Editar Valor De Parámetro Informativo'
+				'edit' => 'Editar Valor De Parámetro Informativo',
+				'delete' => 'Eliminar Valor De Parámetro Informativo'
 			)
 		),
 		4 => array(
+			'Geograficos' => array(
+				'index' => 'Ver Configuración Geográfica'
+			)
+		),
+		5 => array(
 			'Provincias' => array(
 				'view' => 'Ver Provincias',
 				'add' => 'Añadir Provincia',
 				'edit' => 'Modificar Provincia'
 			)
 		),
-		5 => array(
+		6 => array(
 			'Cantones' => array(
 				'view' => 'Ver Cantones',
 				'add' => 'Añadir Canton',
 				'edit' => 'Modificar Canton'
 			)
 		),
-		6 => array(
+		7 => array(
 			'Ciudades' => array(
 				'view' => 'Ver Ciudades',
 				'add' => 'Añadir Ciudad',
 				'edit' => 'Modificar Ciudad'
 			)
 		),
-		7 => array(
+		8 => array(
 			'Sectores' => array(
 				'view' => 'Ver Sectores',
 				'add' => 'Añadir Sector',
 				'edit' => 'Modificar Sector'
 			)
 		),
-		8 => array(
+		9 => array(
 			'Parroquias' => array(
 				'view' => 'Ver Parroquias',
 				'add' => 'Añadir Parroquia',
 				'edit' => 'Modificar Parroquia'
 			)
 		),
-		9 => array(
+		10 => array(
 			'Configuraciones' => array(
 				'index' => 'Listar Parámetros De Configuración',
 				'edit' => 'Modificar Parámetros De Configuración'
 			)
 		),
-		10 => array(
+		11 => array(
 			'Auditorias' => array(
 				'index' => 'Listar Auditorias',
 				'view' => 'Ver Auditoria'
