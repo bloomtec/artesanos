@@ -1233,3 +1233,12 @@ table.tabla-permisos tr td.accion-permiso div * {
 	margin: 0;
 	display: table;
 }
+
+/* tabla de información de auditoria */
+tr.diferente td.audit-value, tr.diferente td.audit-data {
+	background: #FF7575;
+}
+
+
+
+

@@ -54,6 +54,12 @@ class Usuario extends AppModel {
 			)
 		),
 		4 => array(
+			'Configuraciones' => array(
+				'index' => 'Listar Parámetros De Configuración',
+				'edit' => 'Modificar Parámetros De Configuración'
+			)
+		),
+		5 => array(
 			'Auditorias' => array(
 				'index' => 'Listar Auditorias',
 				'view' => 'Ver Auditoria'

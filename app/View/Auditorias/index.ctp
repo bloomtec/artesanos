@@ -32,6 +32,10 @@
 						echo $this -> requestAction('/usuarios/getNombreDeUsuario/'.$auditoria['Auditoria']['aud_llave_foranea']);
 						break;
 					
+					case 'Configuracion':
+						echo '<b>:: único :: </b>';
+						break;
+					
 					default:
 						
 						break;

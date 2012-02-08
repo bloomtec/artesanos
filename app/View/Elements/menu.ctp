@@ -25,7 +25,12 @@
 			<?php endif; ?>
 		</li>
 		<?php endif; ?>
-		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'ParametrosInformativos', 'index')))) : ?>
+		<?php
+			if(
+				$this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'ParametrosInformativos', 'index'))) ||
+				$this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Configuraciones', 'index')))
+			) :
+		?>
 		<li class="parametros">
 			<a href="/pages/display/parametros">PARAMETROS</a>
 		</li>
@@ -35,10 +40,5 @@
 			<a href="/auditorias">AUDITORIAS</a>
 		</li>
 		<?php endif; ?>
-		<?php //if($this -> requestAction('/users/verificarAcceso/' , array('ruta'=>array('controllers', 'Artesanos', 'index')))) : ?>
-		<li class="informes-reportes">
-			<a href="">INFORMES Y REPORTES</a>
-		</li>
-		<?php //endif; ?>
 	</ul>
 </div>
