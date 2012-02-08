@@ -13,9 +13,9 @@ class CantonesController extends AppController {
 	
 	public function getCantones($provincia_id = null) {
 		if($provincia_id) {
-			return $this -> Canton -> find('all', array('conditions' => array('Canton.provincia_id' => $provincia_id)));
+			return $this -> Canton -> find('all', array('order' => array('Canton.can_nombre' => 'ASC'), 'conditions' => array('Canton.provincia_id' => $provincia_id)));
 		} else {
-			return $this -> Canton -> find('all');
+			return $this -> Canton -> find('all', array('order' => array('Canton.can_nombre' => 'ASC')));
 		}
 	}
 	

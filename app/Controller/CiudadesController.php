@@ -13,9 +13,9 @@ class CiudadesController extends AppController {
 	
 	public function getCiudades($canton_id = null) {
 		if($canton_id) {
-			return $this -> Ciudad -> find('all', array('conditions' => array('Ciudad.canton_id' => $canton_id)));
+			return $this -> Ciudad -> find('all', array('order' => array('Ciudad.ciu_nombre' => 'ASC'), 'conditions' => array('Ciudad.canton_id' => $canton_id)));
 		} else {
-			return $this -> Ciudad -> find('all');
+			return $this -> Ciudad -> find('all', array('order' => array('Ciudad.ciu_nombre' => 'ASC')));
 		}
 	}
 	

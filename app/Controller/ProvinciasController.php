@@ -12,7 +12,7 @@ class ProvinciasController extends AppController {
 	}
 	
 	public function getProvincias() {
-		return $this -> Provincia -> find('all');
+		return $this -> Provincia -> find('all', array('order' => array('Provincia.pro_nombre' => 'ASC')));
 	}
 	
 	public function getNombre($id) {

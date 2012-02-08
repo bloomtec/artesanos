@@ -47,6 +47,10 @@
 					case 'Parroquia' :
 						echo $this -> requestAction('/parroquias/getNombre/'.$auditoria['Auditoria']['aud_llave_foranea']);
 						break;
+						
+					case 'ParametrosInformativo' :
+						echo $this -> requestAction('/parametros_informativos/getNombre/'.$auditoria['Auditoria']['aud_llave_foranea']);
+						break;
 					
 					default:
 						

@@ -13,9 +13,9 @@ class SectoresController extends AppController {
 
 	public function getSectores($ciudad_id = null) {
 		if($ciudad_id) {
-			return $this -> Sector -> find('all', array('conditions' => array('Sector.ciudad_id' => $ciudad_id)));
+			return $this -> Sector -> find('all', array('order' => array('Sector.sec_nombre' => 'ASC'), 'conditions' => array('Sector.ciudad_id' => $ciudad_id)));
 		} else {
-			return $this -> Sector -> find('all');
+			return $this -> Sector -> find('all', array('order' => array('Sector.sec_nombre' => 'ASC')));
 		}
 	}
 	
