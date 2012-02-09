@@ -217,6 +217,19 @@ class Usuario extends AppModel {
 		)
 	);
 	
+	public function getUnidades() {
+		$fetched_data = $this -> query(
+			"SELECT `id`,`val_nombre`
+			 FROM `valores`
+			 WHERE `parametros_informativo_id`=13;"
+		);
+		$formatted_data = array();
+		foreach ($fetched_data as $key => $value) {
+			$formatted_data[$value['valores']['id']] = $value['valores']['val_nombre'];
+		}
+		return $formatted_data;
+	}
+	
 	public function beforeSave($model) {
 	    if (isset($this->data[$this->alias]['usu_contrasena'])) {
 	        $this->data[$this->alias]['usu_contrasena'] = AuthComponent::password($this->data[$this->alias]['usu_contrasena']);

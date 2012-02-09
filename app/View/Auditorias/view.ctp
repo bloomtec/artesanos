@@ -19,42 +19,58 @@
 		<h3>
 			<?php // echo h($auditoria['Auditoria']['aud_llave_foranea']); ?>
 			<?php
+				$registro_unico = false;
+				$modulo = null;
 				switch ($auditoria['Auditoria']['aud_nombre_modelo']) {
 					case 'Usuario':
-						echo $this -> requestAction('/usuarios/getNombreDeUsuario/'.$auditoria['Auditoria']['aud_llave_foranea']);
+						$modulo = 'usuarios';
 						break;
 					
 					case 'Configuracion':
-						echo '<b>:: único :: </b>';
+						$registro_unico = true;
 						break;
 					
 					case 'Provincia' :
-						echo $this -> requestAction('/provincias/getNombre/'.$auditoria['Auditoria']['aud_llave_foranea']);
+						$modulo = 'provincias';
 						break;
 						
 					case 'Canton' :
-						echo $this -> requestAction('/cantones/getNombre/'.$auditoria['Auditoria']['aud_llave_foranea']);
+						$modulo = 'cantones';
 						break;
 						
 					case 'Ciudad' :
-						echo $this -> requestAction('/ciudades/getNombre/'.$auditoria['Auditoria']['aud_llave_foranea']);
+						$modulo = 'ciudades';
 						break;
 					
 					case 'Sector' :
-						echo $this -> requestAction('/sectores/getNombre/'.$auditoria['Auditoria']['aud_llave_foranea']);
+						$modulo = 'sectores';
 						break;
 					
 					case 'Parroquia' :
-						echo $this -> requestAction('/parroquias/getNombre/'.$auditoria['Auditoria']['aud_llave_foranea']);
+						$modulo = 'parroquias';
 						break;
 						
 					case 'ParametrosInformativo' :
-						echo $this -> requestAction('/parametros_informativos/getNombre/'.$auditoria['Auditoria']['aud_llave_foranea']);
+						$modulo = 'parametros_informativos';
+						break;
+						
+					case 'Valor' :
+						$modulo = 'valores';
 						break;
 					
 					default:
-						
+						$modulo = null;
 						break;
+				}
+				if(!$registro_unico) {
+					$text = $this -> requestAction("/$modulo/getNombre/".$auditoria['Auditoria']['aud_llave_foranea']);
+					if(strpos($text, 'eliminado')) {
+						echo $text . '<b> -- :: id :: ' . $auditoria['Auditoria']['aud_llave_foranea'] . ' ::</b>';
+					} else {
+						echo $text;
+					}
+				} else {
+					echo '<b>:: único :: </b>';
 				}
 			?>
 			&nbsp;

@@ -13,7 +13,11 @@ class ValoresController extends AppController {
 	
 	public function getNombre($id) {
 		$valor = $this -> Valor -> read('val_nombre', $id);
-		return $valor['Valor']['val_nombre'];
+		if(empty($valor)) {
+			return '<b>:: eliminado ::</b>';
+		} else {
+			return $valor['Valor']['val_nombre'];
+		}
 	}
 
 	/**

@@ -24,9 +24,13 @@ class UsuariosController extends AppController {
 		return $this -> Acl -> check($this -> Session -> read('Auth.User.usu_nombre_de_usuario'), $ruta);
 	}
 	
-	public function getNombreDeUsuario($id) {
-		$data = $this -> Usuario -> read('usu_nombre_de_usuario', $id);
-		return $data['Usuario']['usu_nombre_de_usuario'];
+	public function getNombre($id) {
+		$usuario = $this -> Usuario -> read('usu_nombre_de_usuario', $id);
+		if(empty($usuario)) {
+			return '<b>:: eliminado ::</b>';
+		} else {
+			return $usuario['Usuario']['usu_nombre_de_usuario'];
+		}
 	}
 
 	/**
@@ -101,8 +105,9 @@ class UsuariosController extends AppController {
 				$this -> Session -> setFlash(__('No se pudo guardar el usuario. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
+		$usu_unidades = $this -> Usuario -> getUnidades();
 		$roles = $this -> Usuario -> Rol -> find('list');
-		$this -> set(compact('roles'));
+		$this -> set(compact('roles', 'usu_unidades'));
 	}
 
 	/**
@@ -132,9 +137,10 @@ class UsuariosController extends AppController {
 		} else {
 			$this -> request -> data = $this -> Usuario -> read(null, $id);
 		}
+		$usu_unidades = $this -> Usuario -> getUnidades();
 		$roles = $this -> Usuario -> Rol -> find('list');
 		$permisos['Permisos'] = $this -> getValoresPermisos($id);
-		$this -> set(compact('roles', 'permisos'));
+		$this -> set(compact('roles', 'permisos', 'usu_unidades'));
 	}
 
 	public function getInfoPermisos() {
@@ -248,26 +254,6 @@ class UsuariosController extends AppController {
 		$alias_usuario = $usuario['Usuario']['usu_nombre_de_usuario'];
 		$this -> Usuario -> query("UPDATE `aros` SET `alias`='$alias_usuario' WHERE `model`='Usuario' AND `foreign_key`=$id_usuario");
 		
-		// Operador
-		/*
-		$this -> Usuario -> create();
-		$usuario = array();
-		$usuario['Usuario']['usu_nombre_de_usuario'] = 'otro';
-		$usuario['Usuario']['usu_contrasena'] = 'otro';
-		$usuario['Usuario']['usu_cedula'] = 'otro';
-		$usuario['Usuario']['usu_nombres_y_apellidos'] = 'otro';
-		$usuario['Usuario']['usu_activo'] = true;
-		$usuario['Usuario']['rol_id'] = 2;
-		$this -> Usuario -> save($usuario);
-		
-		
-		// tratando de arreglar lo del alias en la tabla aros
-		$id_usuario = $this -> Usuario -> id;
-		$alias_usuario = $usuario['Usuario']['usu_nombre_de_usuario'];
-		$this -> Usuario -> query("UPDATE `aros` SET `alias`='$alias_usuario' WHERE `model`='Usuario' AND `foreign_key`=$id_usuario");
-
-		 */
-		
 		// Se permite acceso total a los administradores
 		$this -> Acl -> allow('Administrador', 'controllers');
 
@@ -280,10 +266,14 @@ class UsuariosController extends AppController {
 		// Modulo Usuarios
 		$this -> Acl -> allow('Operador', 'controllers/Usuarios/logout');
 		$this -> Acl -> allow('Operador', 'controllers/Usuarios/verificarAcceso');
-		$this -> Acl -> allow('Operador', 'controllers/Usuarios/getNombreDeUsuario');
+		$this -> Acl -> allow('Operador', 'controllers/Usuarios/getNombre');
 		$this -> Acl -> allow('Operador', 'controllers/Usuarios/getInfoPermisos');
 		$this -> Acl -> allow('Operador', 'controllers/Usuarios/getValoresPermisos');
 		$this -> Acl -> allow('Operador', 'controllers/Usuarios/setInfoPermisos');
+		// Modulo Artesanos
+		$this -> Acl -> allow('Operador', 'controllers/Artesanos/registroA');
+		$this -> Acl -> allow('Operador', 'controllers/Artesanos/registroB');
+		$this -> Acl -> allow('Operador', 'controllers/Artesanos/registroC');
 		// Modulo Provincia
 		$this -> Acl -> allow('Operador', 'controllers/Provincias/getNombre');
 		$this -> Acl -> allow('Operador', 'controllers/Provincias/getProvincias');

@@ -6,7 +6,7 @@
 		<?php
 		echo $this -> Form -> input('id');
 		echo $this -> Form -> input('usu_nombre_de_usuario', array('label' => 'Nombre De Usuario'));
-		echo $this -> Form -> input('usu_unidad', array('label' => 'Unidad', 'type' => 'select'));
+		echo $this -> Form -> input('usu_unidad', array('label' => 'Unidad', 'type' => 'select', 'options' => $usu_unidades, 'value'=>$this->data['Usuario']['usu_unidad']));
 		echo $this -> Form -> input('usu_cedula', array('label' => 'Cédula'));
 		echo $this -> Form -> input('usu_nombres_y_apellidos', array('label' => 'Nombres Y Apellidos'));
 		echo $this -> Form -> input('rol_id', array('label' => 'Rol', 'empty' => 'Seleccione...'));

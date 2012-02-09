@@ -77,7 +77,7 @@ class Valor extends AppModel {
 			$auditoria['Auditoria'] = array(
 				'usuario_id' => $this -> currentUsrId,
 				'aud_nombre_modelo' => 'Valor',
-				'aud_llave_foranea' => 1,
+				'aud_llave_foranea' => $this -> id,
 				'aud_datos_previos' => $data['Antes'],
 				'aud_datos_nuevos' => $data['Despues'],
 				'aud_add' => true,
@@ -91,7 +91,7 @@ class Valor extends AppModel {
 			$auditoria['Auditoria'] = array(
 				'usuario_id' => $this -> currentUsrId,
 				'aud_nombre_modelo' => 'Valor',
-				'aud_llave_foranea' => 1,
+				'aud_llave_foranea' => $this -> id,
 				'aud_datos_previos' => $data['Antes'],
 				'aud_datos_nuevos' => $data['Despues'],
 				'aud_add' => false,
@@ -116,7 +116,7 @@ class Valor extends AppModel {
 		$auditoria['Auditoria'] = array(
 			'usuario_id' => $this -> currentUsrId,
 			'aud_nombre_modelo' => 'Valor',
-			'aud_llave_foranea' => 1,
+			'aud_llave_foranea' => $this -> id,
 			'aud_datos_previos' => $data['Antes'],
 			'aud_datos_nuevos' => $data['Despues'],
 			'aud_add' => false,

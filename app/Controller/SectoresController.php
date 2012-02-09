@@ -21,7 +21,11 @@ class SectoresController extends AppController {
 	
 	public function getNombre($id) {
 		$sector = $this -> Sector -> read('sec_nombre', $id);
-		return $sector['Sector']['sec_nombre'];
+		if(empty($sector)) {
+			return '<b>:: eliminado ::</b>';
+		} else {
+			return $sector['Sector']['sec_nombre'];
+		}
 	}
 
 	/**
