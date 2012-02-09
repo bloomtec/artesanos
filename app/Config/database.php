@@ -6,7 +6,8 @@ class DATABASE_CONFIG {
 		'persistent' => false,
 		'host' => 'localhost',
 		'login' => 'jndagobe',
-		'password' => 'Kw@Jalein43',
+		'password' => '20qtxNm6E4',
 		'database' => 'jndagobe_artesanos',
 	);
+	
 }
