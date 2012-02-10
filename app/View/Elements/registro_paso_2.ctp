@@ -28,7 +28,7 @@
 <a id="registroB_continuar" href="#" class="cancelar">Siguiente</a>
 <script type="text/javascript">
 	$('#registroA_continuar').click(function() {
-		$('#DataContainer').load('/artesanos/registroC');
+		//$('#DataContainer').load('/artesanos/registroC');
 	});
 	$('.AñadirRegistro').click(function() {
 		$('#TablaEquipos').append(

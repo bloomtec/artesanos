@@ -13,16 +13,16 @@
 		<div class="fila-datos" row="1">
 			<?php
 			echo $this -> Form -> input('dat_nombres', array('label' => 'Nombres:', 'col' => '0'));
-			echo $this -> Form -> input('dat_nacionalidad', array('label' => 'Nacionalidad:', 'type' => 'select', 'col' => '1'));
+			echo $this -> Form -> input('dat_nacionalidad', array('label' => 'Nacionalidad:', 'type' => 'select', 'options' => $nacionalidades, 'empty' => 'Seleccione...', 'col' => '1'));
 			echo $this -> Form -> input('dat_fecha_nacimiento', array('label' => 'Fecha de nacimiento:', 'col' => '2'));
 			?>
 		</div>
 		<div class="fila-datos" row="2">
 			<?php
-			echo $this -> Form -> input('dat_tipo_de_sangre', array('label' => 'Tipo de sangre:', 'type' => 'select', 'col' => '0'));
-			echo $this -> Form -> input('dat_estado_civil', array('label' => 'Estado civil:', 'type' => 'select', 'col' => '1'));
-			echo $this -> Form -> input('dat_grado_estudio', array('label' => 'Grado de estudio:', 'type' => 'select', 'col' => '2'));
-			echo $this -> Form -> input('dat_sexo', array('label' => 'Sexo:', 'type' => 'select'));
+			echo $this -> Form -> input('dat_tipo_de_sangre', array('label' => 'Tipo de sangre:', 'type' => 'select', 'options' => $tipos_de_sangre, 'empty' => 'Seleccione...', 'col' => '0'));
+			echo $this -> Form -> input('dat_estado_civil', array('label' => 'Estado civil:', 'type' => 'select', 'options' => $estados_civiles, 'empty' => 'Seleccione...', 'col' => '1'));
+			echo $this -> Form -> input('dat_grado_estudio', array('label' => 'Grado de estudio:', 'type' => 'select', 'options' => $grados_de_estudio, 'empty' => 'Seleccione...', 'col' => '2'));
+			echo $this -> Form -> input('dat_sexo', array('label' => 'Sexo:', 'type' => 'select', 'options' => $sexos, 'empty' => 'Seleccione...', 'col' => '3'));
 			?>
 		</div>
 		<div class="fila-datos" row="3">
@@ -108,7 +108,7 @@
 <a id="registroA_continuar" href="#" class="cancelar">Siguiente</a>
 <script type="text/javascript">
 	$('#registroA_continuar').click(function() {
-		$('#DataContainer').load('/artesanos/registroB');
+		//$('#DataContainer').load('/artesanos/registroB');
 	});
 
 </script>

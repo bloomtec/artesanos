@@ -271,9 +271,7 @@ class UsuariosController extends AppController {
 		$this -> Acl -> allow('Operador', 'controllers/Usuarios/getValoresPermisos');
 		$this -> Acl -> allow('Operador', 'controllers/Usuarios/setInfoPermisos');
 		// Modulo Artesanos
-		$this -> Acl -> allow('Operador', 'controllers/Artesanos/registroA');
-		$this -> Acl -> allow('Operador', 'controllers/Artesanos/registroB');
-		$this -> Acl -> allow('Operador', 'controllers/Artesanos/registroC');
+		
 		// Modulo Provincia
 		$this -> Acl -> allow('Operador', 'controllers/Provincias/getNombre');
 		$this -> Acl -> allow('Operador', 'controllers/Provincias/getProvincias');

@@ -1,0 +1,24 @@
+/* the root element for scrollable 
+#wizard {
+	overflow: hidden;
+	position: relative;
+}
+ 
+#wizard .items {
+	width: 20000em;
+	clear: both;
+	position: absolute;
+}
+
+#wizard .page {
+	padding: 20px 30px;
+	width: 500px;
+	float: left;
+}
+#drawer {
+	overflow: visible;
+	position: fixed;
+	left: 0;
+	top: 0;
+}
+*/

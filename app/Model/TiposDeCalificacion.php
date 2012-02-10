@@ -1,20 +1,26 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * Balance Model
+ * TiposDeCalificacion Model
  *
  * @property Calificacion $Calificacion
  */
-class Balance extends AppModel {
+class TiposDeCalificacion extends AppModel {
+/**
+ * Display field
+ *
+ * @var string
+ */
+	public $displayField = 'tip_nombre';
 /**
  * Validation rules
  *
  * @var array
  */
 	public $validate = array(
-		'calificacion_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
+		'tip_nombre' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -27,17 +33,24 @@ class Balance extends AppModel {
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 /**
- * belongsTo associations
+ * hasMany associations
  *
  * @var array
  */
-	public $belongsTo = array(
+	public $hasMany = array(
 		'Calificacion' => array(
 			'className' => 'Calificacion',
-			'foreignKey' => 'calificacion_id',
+			'foreignKey' => 'tipos_de_calificacion_id',
+			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
-			'order' => ''
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
 		)
 	);
+
 }
