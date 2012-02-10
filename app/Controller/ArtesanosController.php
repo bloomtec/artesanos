@@ -79,6 +79,11 @@ class ArtesanosController extends AppController {
 			'maquinarias_y_herramientas','tipos_de_adquisicion_maquinaria','tipos_de_materia_prima',
 			'procedencias_materia_prima','detalles_producto','procedencias_producto'
 		));
+		/**
+		 * Provincias
+		 */
+		$provincias = $this -> Artesano -> Calificacion -> Taller -> Provincia -> find('list');
+		$this -> set(compact('provincias'));
 	}
 
 	/**

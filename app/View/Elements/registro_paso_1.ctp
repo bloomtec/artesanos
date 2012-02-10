@@ -1,8 +1,6 @@
 <fieldset>
 	<div class="datos-personales">
 		<h2>Datos Personales</h2>
-		<br />
-		<br />
 		<div class="fila-datos" row="0">
 			<?php
 			echo $this -> Form -> input('art_cedula', array('label' => 'Cédula de ciudadania/pasaporte:', 'col' => '0'));
@@ -29,27 +27,25 @@
 			<?php
 			echo $this -> Form -> input('dat_hijos_mayores', array('label' => 'No. de hijos mayores:', 'col' => '0'));
 			echo $this -> Form -> input('dat_hijos_menores', array('label' => 'No. de hijos menores:', 'col' => '1'));
-			echo $this -> Form -> input('dat_tipo_discapacidad', array('label' => 'Tipo de discapacidad:', 'type' => 'select', 'col' => '2'));
+			echo $this -> Form -> input('dat_tipo_discapacidad', array('label' => 'Tipo de discapacidad:', 'type' => 'select', 'options' => $tipos_de_discapacidad, 'empty' => 'Seleccione...', 'col' => '2'));
 			echo $this -> Form -> input('dat_porcentaje_de_discapacidad', array('label' => 'Porcentaje de discapacidad:', 'col' => '3'));
 			?>
 		</div>
 	</div>
 	<div class="datos-taller">
 		<h2>Datos Taller</h2>
-		<br />
-		<br />
 		<div class="fila-datos" row="4">
 			<?php
 			echo $this -> Form -> input('Taller.tal_razon_social_o_nombre_comercial', array('label' => 'Razón social y/o nombre comercial:', 'col' => '0'));
-			echo $this -> Form -> input('Taller.provincia_id', array('label' => 'Provincia:', 'col' => '1'));
-			echo $this -> Form -> input('Taller.canton_id', array('label' => 'Canton:', 'col' => '2'));
-			echo $this -> Form -> input('Taller.ciudad_id', array('label' => 'Ciudad:', 'col' => '3'));
+			echo $this -> Form -> input('Taller.provincia_id', array('label' => 'Provincia:', 'options' => $provincias, 'empty' => 'Seleccione...', 'col' => '1'));
+			echo $this -> Form -> input('Taller.canton_id', array('label' => 'Canton:', 'empty' => 'Seleccione...', 'col' => '2'));
+			echo $this -> Form -> input('Taller.ciudad_id', array('label' => 'Ciudad:', 'empty' => 'Seleccione...', 'col' => '3'));
 			?>
 		</div>
 		<div class="fila-datos" row="5">
 			<?php
-			echo $this -> Form -> input('Taller.sector_id', array('label' => 'Sector:', 'col' => '0'));
-			echo $this -> Form -> input('Taller.parroquia_id', array('label' => 'Parroquia:', 'col' => '1'));
+			echo $this -> Form -> input('Taller.sector_id', array('label' => 'Sector:', 'empty' => 'Seleccione...', 'col' => '0'));
+			echo $this -> Form -> input('Taller.parroquia_id', array('label' => 'Parroquia:', 'empty' => 'Seleccione...', 'col' => '1'));
 			echo $this -> Form -> input('Taller.tal_calle_o_avenida', array('label' => 'Calle/Avenida:', 'col' => '2'));
 			echo $this -> Form -> input('Taller.tal_numero', array('label' => 'No.:', 'col' => '3'));
 			?>
@@ -71,19 +67,17 @@
 	</div>
 	<div class="datos-local">
 		<h2>Datos Local Comercial</h2>
-		<br />
-		<br />
 		<div class="fila-datos" row="8">
 			<?php
-			echo $this -> Form -> input('Local.provincia_id', array('label' => 'Provincia:', 'col' => '0'));
-			echo $this -> Form -> input('Local.canton_id', array('label' => 'Canton:', 'col' => '1'));
-			echo $this -> Form -> input('Local.ciudad_id', array('label' => 'Ciudad:', 'col' => '2'));
+			echo $this -> Form -> input('Local.provincia_id', array('label' => 'Provincia:', 'options' => $provincias, 'empty' => 'Seleccione...', 'col' => '0'));
+			echo $this -> Form -> input('Local.canton_id', array('label' => 'Canton:', 'empty' => 'Seleccione...', 'col' => '1'));
+			echo $this -> Form -> input('Local.ciudad_id', array('label' => 'Ciudad:', 'empty' => 'Seleccione...', 'col' => '2'));
 			?>
 		</div>
 		<div class="fila-datos" row="9">
 			<?php
-			echo $this -> Form -> input('Local.sector_id', array('label' => 'Sector:', 'col' => '0'));
-			echo $this -> Form -> input('Local.parroquia_id', array('label' => 'Parroquia:', 'col' => '1'));
+			echo $this -> Form -> input('Local.sector_id', array('label' => 'Sector:', 'empty' => 'Seleccione...', 'col' => '0'));
+			echo $this -> Form -> input('Local.parroquia_id', array('label' => 'Parroquia:', 'empty' => 'Seleccione...', 'col' => '1'));
 			echo $this -> Form -> input('Local.loc_calle_o_avenida', array('label' => 'Calle/Avenida:', 'col' => '2'));
 			echo $this -> Form -> input('Local.loc_numero', array('label' => 'No.:', 'col' => '3'));
 			?>
