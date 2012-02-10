@@ -5,11 +5,10 @@ App::uses('AppModel', 'Model');
  *
  * @property Rama $Rama
  * @property Artesano $Artesano
- * @property Balance $Balance
+ * @property TiposDeCalificacion $TiposDeCalificacion
  * @property DatosPersonal $DatosPersonal
  * @property Local $Local
  * @property Taller $Taller
- * @property TiposDe $TiposDe
  */
 class Calificacion extends AppModel {
 /**
@@ -29,6 +28,16 @@ class Calificacion extends AppModel {
 			),
 		),
 		'artesano_id' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'tipos_de_calificacion_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
@@ -61,6 +70,13 @@ class Calificacion extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
+		),
+		'TiposDeCalificacion' => array(
+			'className' => 'TiposDeCalificacion',
+			'foreignKey' => 'tipos_de_calificacion_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
 		)
 	);
 
@@ -70,19 +86,6 @@ class Calificacion extends AppModel {
  * @var array
  */
 	public $hasMany = array(
-		'Balance' => array(
-			'className' => 'Balance',
-			'foreignKey' => 'calificacion_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
 		'DatosPersonal' => array(
 			'className' => 'DatosPersonal',
 			'foreignKey' => 'calificacion_id',
@@ -121,30 +124,6 @@ class Calificacion extends AppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
-		)
-	);
-
-
-/**
- * hasAndBelongsToMany associations
- *
- * @var array
- */
-	public $hasAndBelongsToMany = array(
-		'TiposDe' => array(
-			'className' => 'TiposDe',
-			'joinTable' => 'tipos_de_calificaciones',
-			'foreignKey' => 'calificacion_id',
-			'associationForeignKey' => 'tipos_de_id',
-			'unique' => true,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'finderQuery' => '',
-			'deleteQuery' => '',
-			'insertQuery' => ''
 		)
 	);
 

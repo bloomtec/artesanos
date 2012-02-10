@@ -9,11 +9,10 @@ App::uses('AppModel', 'Model');
  * @property Ciudad $Ciudad
  * @property Sector $Sector
  * @property Parroquia $Parroquia
- * @property Aprendiz $Aprendiz
  * @property EquiposDeTrabajo $EquiposDeTrabajo
  * @property MateriasPrima $MateriasPrima
- * @property Operador $Operador
  * @property ProductosElaborado $ProductosElaborado
+ * @property Trabajador $Trabajador
  */
 class Taller extends AppModel {
 /**
@@ -102,19 +101,6 @@ class Taller extends AppModel {
  * @var array
  */
 	public $hasMany = array(
-		'Aprendiz' => array(
-			'className' => 'Aprendiz',
-			'foreignKey' => 'taller_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
 		'EquiposDeTrabajo' => array(
 			'className' => 'EquiposDeTrabajo',
 			'foreignKey' => 'taller_id',
@@ -141,19 +127,6 @@ class Taller extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
-		'Operador' => array(
-			'className' => 'Operador',
-			'foreignKey' => 'taller_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
 		'ProductosElaborado' => array(
 			'className' => 'ProductosElaborado',
 			'foreignKey' => 'taller_id',
@@ -166,6 +139,30 @@ class Taller extends AppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
+		)
+	);
+
+
+/**
+ * hasAndBelongsToMany associations
+ *
+ * @var array
+ */
+	public $hasAndBelongsToMany = array(
+		'Trabajador' => array(
+			'className' => 'Trabajador',
+			'joinTable' => 'talleres_trabajadores',
+			'foreignKey' => 'taller_id',
+			'associationForeignKey' => 'trabajador_id',
+			'unique' => true,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'finderQuery' => '',
+			'deleteQuery' => '',
+			'insertQuery' => ''
 		)
 	);
 

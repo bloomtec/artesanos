@@ -7,12 +7,6 @@ App::uses('AppModel', 'Model');
  */
 class EquiposDeTrabajo extends AppModel {
 /**
- * Use table
- *
- * @var mixed False or table name
- */
-	public $useTable = 'equipos_de_trabajo';
-/**
  * Validation rules
  *
  * @var array

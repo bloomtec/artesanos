@@ -6,6 +6,9 @@ App::uses('AppModel', 'Model');
  * @property Calificacion $Calificacion
  */
 class Artesano extends AppModel {
+	
+	public $currentUsrId = -1;
+	
 /**
  * Validation rules
  *
@@ -15,7 +18,7 @@ class Artesano extends AppModel {
 		'art_cedula' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				'message' => 'Debe ingresar el dato de identificación.',
+				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -46,5 +49,19 @@ class Artesano extends AppModel {
 			'counterQuery' => ''
 		)
 	);
+	
+	public function getValores($param_id = null) {
+		$fetched_data = $this -> query(
+			"SELECT `id`,`val_nombre`
+			 FROM `valores`
+			 WHERE `parametros_informativo_id`=$param_id
+			 ORDER BY `val_nombre` ASC;"
+		);
+		$formatted_data = array();
+		foreach ($fetched_data as $key => $value) {
+			$formatted_data[$value['valores']['id']] = $value['valores']['val_nombre'];
+		}
+		return $formatted_data;
+	}
 
 }
