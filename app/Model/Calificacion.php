@@ -9,6 +9,7 @@ App::uses('AppModel', 'Model');
  * @property DatosPersonal $DatosPersonal
  * @property Local $Local
  * @property Taller $Taller
+ * @property TiposDe $TiposDe
  */
 class Calificacion extends AppModel {
 /**
@@ -124,6 +125,30 @@ class Calificacion extends AppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
+		)
+	);
+
+
+/**
+ * hasAndBelongsToMany associations
+ *
+ * @var array
+ */
+	public $hasAndBelongsToMany = array(
+		'TiposDe' => array(
+			'className' => 'TiposDe',
+			'joinTable' => 'tipos_de_calificaciones',
+			'foreignKey' => 'calificacion_id',
+			'associationForeignKey' => 'tipos_de_id',
+			'unique' => true,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'finderQuery' => '',
+			'deleteQuery' => '',
+			'insertQuery' => ''
 		)
 	);
 
