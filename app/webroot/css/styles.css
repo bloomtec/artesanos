@@ -161,19 +161,14 @@ p {
 #container {
 	text-align: left;
 	position: relative;
-	padding-left:18%;
-	background-image: url(/img/trama_menu.png);
-	background-position: 17% 0%;
 	background-repeat: repeat-y; 
 	min-height: 800px;
 }
 #header{
 	padding: 10px 20px;
-	margin-bottom: 30px;
 }
 #header .logo img {
 	margin-left: 25px;
-	margin-top: 35px;
 }
 .search{
 	float: right;
@@ -209,38 +204,37 @@ p {
 	border: none;
 }
 #main-menu{
-	width: 18%;
-	height: 100%;
-	position: absolute;
-	left: 0;
-	top: 0;
-	
+	float:right;
 }
 #main-menu .logo{
 	display: block;
     text-align: center;
-    width: 100%;
     margin-top: 43px;
+    float:left;
 }
 #main-menu .logo img{
 	width: 80%;
 }
 #main-menu ul{
 	list-style: none outside none;
-    margin-top: 55px;
-    padding-left: 12%;
+    margin-top: 33px;
 }
 #main-menu ul li{
-    background-position: 87% 4px;
-    background-repeat: no-repeat;
-    margin-bottom: 13px;
+  float:left;
+  background: #3C1FA0;
+  float:left;
+  display:block;
+  padding:10px 5px;;
+  width: 150px;
+  border:solid gray 1px;
+  position:relative;
+  
 }
-#main-menu ul li.opened{
-	background-image: url("/img/desplegado.png");
+
+#main-menu ul li:hover{
+	background: #EFBC00;
 }
-#main-menu ul li.closed{
-	background-image: url("/img/compacto.png");
-}
+
 #main-menu ul a{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 13px;
@@ -249,46 +243,36 @@ p {
 	background-position: top left;
 	background-repeat: no-repeat;
 	padding-top: 5px;
+	color:white;
+	display:block;
 }
-#main-menu ul a:hover{
-	color:#C15007;
+#main-menu ul li:hover a{
+	color:black;
 }
 #main-menu ul ul{
-	margin-top: 5px;
+	position:absolute;
+	display:none;
+	padding-left:0;
+	top:8px;
+	left:-1px;
+}
+
+#main-menu ul li:hover ul{
+	display: block;
+	z-index: 10;
 }
 #main-menu ul .closed ul{
 	display:none;
 }
 #main-menu ul ul li{
 	margin-bottom:0;
-	background: none;
+	background:#EFBC00;
+	width:250px;
 }
 #main-menu ul ul a{
 	padding-left: 16px;
-	background-image: url(/img/drop_menu.png);
 }
-ul .usuarios a{
-	background-image: url(/img/menu_users.png);
-}
-ul .departamentos a{
-	background-image: url(/img/menu_departamentos.png);
-}
-ul .centros a{
-	background-image: url(/img/menu_centros.png);
-	
-}
-ul .extensiones a{
-	background-image: url(/img/menu_extensiones.png);
-}
-ul .abreviados a{
-	background-image: url(/img/menu_abreviados.png);
-}
-ul .informes a{
-	background-image: url(/img/menu_informes.png);
-}
-ul .panel a{
-	background-image: url(/img/telefono2.png);
-}
+
 #content{
 	background: #fff;
 	clear: both;
@@ -337,7 +321,6 @@ div.actions a:hover,  a.cancelar:hover{
 	background-color: #1E72D8; 	
 }
 #footer {
-	background-color: #000000;
     bottom: 0;
     clear: both;
     left: 0;
@@ -441,7 +424,7 @@ div.actions a:hover,  a.cancelar:hover{
 
 }
 #footer h4{
-	color: #FFFFFF;
+	color: black;
     font-size: 11px;
     font-weight: bold;
     padding-top: 5px;
@@ -480,15 +463,13 @@ div.actions a:hover,  a.cancelar:hover{
 /** FORMS **/
 .form label{
 	clear: left;
-    float: left;
     font-family: Arial,Helvetica,sans-serif;
     font-size: 13px;
     font-weight: bold;
-    margin-bottom: 12px;
+    margin-bottom: 5px;
     margin-top: 11px;
     text-align: left;
     text-transform: capitalize;
-    width: 150px;
 }
 .form input,form textarea,form .input input{
 	float: left;
@@ -500,7 +481,7 @@ div.actions a:hover,  a.cancelar:hover{
 	padding-left: 4px;
 }	
 form .input input{
-	padding: 7px 4px;
+	padding: 0 2px;
 }
 #container.login .submit input{
 	margin-top: 5px;
@@ -515,7 +496,7 @@ form .input input{
 }
 .error-form {
 	/* supply height to ensure consistent positioning for every browser */
-	 background-color: #C15007;
+	 background-color: #CD0000;
     background-image: url("/img/triangulo.jpg");
     background-position: left center;
     background-repeat: no-repeat;
@@ -542,10 +523,12 @@ form .input input{
 /** END FORMS **/	
 	
 /** Users Module**/
-
+.menu-container{
+	float:right;
+}
 #user-menu{
 	float:right;
-	margin-top: 50px;
+	margin-top:30px;
 }
 
 #user-menu li{
@@ -558,7 +541,7 @@ form .input input{
 	background-image: url("/img/logout.png");
     background-position: left top;
     background-repeat: no-repeat;
-    color: #C15007;
+    color: #CD0000;
     font-family: Arial,Helvetica,sans-serif;
     font-size: 14px;
     font-weight: bold;
@@ -688,9 +671,9 @@ table td.actions a {
 /** Forms **/
 form {
 	clear: both;
-	margin-right: 20px;
-	padding: 0;
-	width: 95%;
+}
+form h2{
+	color:#CD0000;
 }
 fieldset {
 	border: none;
@@ -716,23 +699,24 @@ fieldset fieldset div {
 }
 form div {
 	clear: both;
-	margin-bottom: 1em;
-	padding: .5em;
 	vertical-align: text-top;
 }
 form .input {
 	color: #444;
+	float: left;
+	margin-left: 5px;
+	clear: none;
 }
 form .input label{
-	float: left;
-	width: 130px;
+	display:block;
 	margin-top: 11px;
 }
 form .input input{
-	float: left;
-	width: 300px;
+	width: 220px;
 	clear: none;
 	font-size: 14px;
+	display:block;
+	height: 20px;
 }
 form .required {
 	font-weight: bold;

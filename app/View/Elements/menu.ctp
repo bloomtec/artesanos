@@ -41,5 +41,8 @@
 			<a href="/auditorias">AUDITORIAS</a>
 		</li>
 		<?php endif; ?>
+		<li class="reportes">
+			<a href="/reportes">REPORTES</a>
+		</li>
 	</ul>
 </div>

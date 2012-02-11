@@ -65,5 +65,9 @@ $(function() {
 		'[required]'	: 'Campo obligatorio'
 	});
 	$('form').validator({lang:'es',messageClass:'error-form'});
+		// FUNCIONALIDAD REGISTRO
+	var root = $("#wizard").scrollable();
+	//var api = root.scrollable();
+	//var drawer = $("#drawer");
 
 });

@@ -1,34 +1,38 @@
 <fieldset>
 	<div class="datos-personales">
-		<h2>Datos Personales</h2>
-		<br />
-		<br />
+		<h2>Calificación</h2>
 		<div class="fila-datos" row="0">
 			<?php
 			echo $this -> Form -> input('art_cedula', array('label' => 'Cédula de ciudadania/pasaporte:', 'col' => '0'));
 			echo $this -> Form -> input('dat_apellido_paterno', array('label' => 'Apellido paterno:', 'col' => '1'));
 			echo $this -> Form -> input('dat_apellido_materno', array('label' => 'Apellido materno:', 'col' => '2'));
+			echo $this -> Form -> input('dat_nombres', array('label' => 'Nombres:', 'col' => '3'));
+			
 			?>
 		</div>
+		<h2>Datos Personales</h2>
 		<div class="fila-datos" row="1">
 			<?php
-			echo $this -> Form -> input('dat_nombres', array('label' => 'Nombres:', 'col' => '0'));
-			echo $this -> Form -> input('dat_nacionalidad', array('label' => 'Nacionalidad:', 'type' => 'select', 'options' => $nacionalidades, 'empty' => 'Seleccione...', 'col' => '1'));
-			echo $this -> Form -> input('dat_fecha_nacimiento', array('label' => 'Fecha de nacimiento:', 'col' => '2'));
+			echo $this -> Form -> input('dat_nacionalidad', array('label' => 'Nacionalidad:', 'type' => 'select', 'options' => $nacionalidades, 'empty' => 'Seleccione...', 'col' => '0'));
+			echo $this -> Form -> input('dat_apellido_paterno', array('label' => 'Apellido paterno:', 'col' => '1'));
+			echo $this -> Form -> input('dat_apellido_materno', array('label' => 'Apellido materno:', 'col' => '2'));
+			echo $this -> Form -> input('dat_nombres', array('label' => 'Nombres:', 'col' => '3'));
+			
 			?>
 		</div>
 		<div class="fila-datos" row="2">
 			<?php
-			echo $this -> Form -> input('dat_tipo_de_sangre', array('label' => 'Tipo de sangre:', 'type' => 'select', 'options' => $tipos_de_sangre, 'empty' => 'Seleccione...', 'col' => '0'));
-			echo $this -> Form -> input('dat_estado_civil', array('label' => 'Estado civil:', 'type' => 'select', 'options' => $estados_civiles, 'empty' => 'Seleccione...', 'col' => '1'));
-			echo $this -> Form -> input('dat_grado_estudio', array('label' => 'Grado de estudio:', 'type' => 'select', 'options' => $grados_de_estudio, 'empty' => 'Seleccione...', 'col' => '2'));
-			echo $this -> Form -> input('dat_sexo', array('label' => 'Sexo:', 'type' => 'select', 'options' => $sexos, 'empty' => 'Seleccione...', 'col' => '3'));
+			echo $this -> Form -> input('dat_fecha_nacimiento', array('label' => 'Fecha de nacimiento:', 'col' => '1'));
+			echo $this -> Form -> input('dat_tipo_de_sangre', array('label' => 'Tipo de sangre:', 'type' => 'select', 'options' => $tipos_de_sangre, 'empty' => 'Seleccione...', 'col' => '2'));
+			echo $this -> Form -> input('dat_estado_civil', array('label' => 'Estado civil:', 'type' => 'select', 'options' => $estados_civiles, 'empty' => 'Seleccione...', 'col' => '3'));
+			echo $this -> Form -> input('dat_grado_estudio', array('label' => 'Grado de estudio:', 'type' => 'select', 'options' => $grados_de_estudio, 'empty' => 'Seleccione...', 'col' => '4'));
+			echo $this -> Form -> input('dat_sexo', array('label' => 'Sexo:', 'type' => 'select', 'options' => $sexos, 'empty' => 'Seleccione...', 'col' => '5'));
 			?>
 		</div>
 		<div class="fila-datos" row="3">
 			<?php
-			echo $this -> Form -> input('dat_hijos_mayores', array('label' => 'No. de hijos mayores:', 'col' => '0'));
-			echo $this -> Form -> input('dat_hijos_menores', array('label' => 'No. de hijos menores:', 'col' => '1'));
+			echo $this -> Form -> input('dat_hijos_mayores', array('type'=>'number','label' => 'No. de hijos mayores:', 'col' => '0'));
+			echo $this -> Form -> input('dat_hijos_menores', array('type'=>'number','label' => 'No. de hijos menores:', 'col' => '1'));
 			echo $this -> Form -> input('dat_tipo_discapacidad', array('label' => 'Tipo de discapacidad:', 'type' => 'select', 'col' => '2'));
 			echo $this -> Form -> input('dat_porcentaje_de_discapacidad', array('label' => 'Porcentaje de discapacidad:', 'col' => '3'));
 			?>

@@ -1,8 +1,8 @@
 <?php echo $this -> Html -> css('registro-artesano'); ?>
-<div class="artesanos form">
+<div class="artesanos form calificar">
 	<!-- twitter style "drawer" for displaying validation errors -->
 	<div id="drawer">
-		[ERROR MESSAGE]
+		[ERROR MESSAGE]	margin-bottom: 30px;
 	</div>
 	<!-- the form -->
 	<form action="#">
@@ -11,14 +11,15 @@
 			<!-- status bar -->
 			<ul id="status">
 				<li class="active">
-					<strong>1.</strong> Datos Personales, Taller Y Local
+					<strong>1.</strong> Datos Personales, Taller y Local
 				</li>
 				<li>
 					<strong>2.</strong> Equipo De Trabajo, Materia Prima Y Productos
 				</li>
 				<li>
-					<strong>3.</strong> Trabajadores Y Balance
+					<strong>3.</strong> Trabajadores y Balance
 				</li>
+				<div style='clear:both'></div>
 			</ul>
 			<!-- scrollable items -->
 			<div class="items">
@@ -33,7 +34,9 @@
 					<?php echo $this -> element('registro_paso_3');?>
 				</div>
 			</div>
+			
 		</div>
+		<div style='clear:both'></div>
 	</form>
 </div>
 <?php echo $this -> Html -> script('registro-artesano'); ?>
