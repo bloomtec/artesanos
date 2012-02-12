@@ -68,7 +68,7 @@ $(function() {
 	// FUNCIONALIDAD REGISTRO
 	$('#wizard .page').css('width',$("#wizard").width());
 	$('#wizard').css('height',$(".items").height());
-	BJS.updateSelect($("#ArtesanoRama"),"/ramas/getByGroup/"+$("#ArtesanoGrupoRama option:selected").val());
+	BJS.updateSelect($("#ArtesanoRama"),"/ramas/obtenerPorGrupo/"+$("#ArtesanoGrupoRama option:selected").val());
 	
 	$("#wizard #ArtesanoArtCedula").blur(function(){
 		checkCalification();
@@ -82,7 +82,7 @@ $(function() {
 		return true;
 	});
 	
-	function checkCalification(){
+	function validarCalificacion(){
 		
 	}
 });

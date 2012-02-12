@@ -104,5 +104,9 @@ class RamasController extends AppController {
 		$this -> Session -> setFlash(__('Rama was not deleted'), 'crud/error');
 		$this -> redirect($this -> referer());
 	}
+	
+	function obtenerPorGrupo($grupoRamaId = null){
+		return $this -> Rama -> find ('list',array('conditions'=>array('grupo_de_rama_id'=>$grupoRamaId)));
+	}
 
 }
