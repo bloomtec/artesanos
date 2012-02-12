@@ -1,14 +1,15 @@
 <fieldset>
-	<div class="datos-personales">
+		<div class="Calificacion">
 		<h2>Calificación</h2>
 		<div class="fila-datos" row="0">
 			<?php
 			echo $this -> Form -> input('art_cedula', array('label' => 'Cédula de ciudadania/pasaporte:', 'col' => '0'));
-			echo $this -> Form -> input('dat_apellido_paterno', array('label' => 'Apellido paterno:', 'col' => '1'));
-			echo $this -> Form -> input('dat_apellido_materno', array('label' => 'Apellido materno:', 'col' => '2'));
-			echo $this -> Form -> input('dat_nombres', array('label' => 'Nombres:', 'col' => '3'));
+			echo $this -> Form -> input('tipo_calificaion', array('label' => 'Tipo de Calificación:', 'col' => '1','options'=>$tipos_de_calificacion));
+			echo $this -> Form -> input('grupo_rama', array('label' => 'Grupo de rama:', 'col' => '2','options'=>$grupos_de_ramas));
+			echo $this -> Form -> input('rama', array('label' => 'Rama:', 'col' => '3'));
 			?>
 		</div>
+		<div class="datos-personales">
 		<h2>Datos Personales</h2>
 		<div class="fila-datos" row="1">
 			<?php
@@ -102,6 +103,11 @@
 			?>
 		</div>
 	</div>
+	<div class='actions'>
+	<?php echo $this -> Html -> link(__('Cancelar'), "#", array('class' => 'prev button'));?>
+	<?php echo $this -> Html -> link(__('Continuar'), "#" , array('class' => 'next button'));?>
+	<div style="clear:both;"></div>
+	</div>
+	
 </fieldset>
-<?php echo $this -> Html -> link(__('Cancelar'), array('action' => 'index'), array('class' => 'cancelar'));?>
-<a id="registro_paso_1_continuar" href="#" class="cancelar">Siguiente</a>
+

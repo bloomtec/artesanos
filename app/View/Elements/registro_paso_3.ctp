@@ -164,3 +164,9 @@
 		</div>
 	</div>
 </fieldset>
+<div class='actions'>
+	<?php echo $this -> Html -> link(__('Atras'), "#", array('class' => 'prev button'));?>
+	<?php echo $this -> Form -> submit('Finalizar'); ?>
+	<div style="clear:both;"></div>
+</div>
+

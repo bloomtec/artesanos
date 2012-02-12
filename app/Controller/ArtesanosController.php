@@ -65,6 +65,7 @@ class ArtesanosController extends AppController {
 		 * 11	Detalle (Producto)
 		 * 12	Procedencia (Producto)
 		 */
+		
 		$nacionalidades = $this -> Artesano -> getValores(1);
 		$tipos_de_sangre = $this -> Artesano -> getValores(2);
 		$estados_civiles = $this -> Artesano -> getValores(3);
@@ -77,10 +78,14 @@ class ArtesanosController extends AppController {
 		$procedencias_materia_prima = $this -> Artesano -> getValores(10);
 		$detalles_producto = $this -> Artesano -> getValores(11);
 		$procedencias_producto = $this -> Artesano -> getValores(12);
+		$this->loadModel('TiposDeCalificacion');
+		$this->loadModel('GruposDeRama');
+		$tipos_de_calificacion = $this -> TiposDeCalificacion -> find('list');
+		$grupos_de_ramas = $this -> GruposDeRama ->find('list');
 		$this -> set(compact(
 			'nacionalidades','tipos_de_sangre','estados_civiles','grados_de_estudio','sexos','tipos_de_discapacidad',
 			'maquinarias_y_herramientas','tipos_de_adquisicion_maquinaria','tipos_de_materia_prima',
-			'procedencias_materia_prima','detalles_producto','procedencias_producto'
+			'procedencias_materia_prima','detalles_producto','procedencias_producto','grupos_de_ramas','tipos_de_calificacion'
 		));
 		/**
 		 * Provincias
