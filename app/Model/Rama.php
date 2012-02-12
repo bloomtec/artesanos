@@ -9,6 +9,9 @@ App::uses('AppModel', 'Model');
  * @property GruposDe $GruposDe
  */
 class Rama extends AppModel {
+	
+	public $displayField = 'ram_nombre';
+	
 /**
  * Validation rules
  *

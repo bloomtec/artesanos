@@ -7,94 +7,94 @@ App::uses('AppController', 'Controller');
  */
 class RamasController extends AppController {
 
-
-/**
- * index method
- *
- * @return void
- */
+	/**
+	 * index method
+	 *
+	 * @return void
+	 */
 	public function index() {
-		$this->Rama->recursive = 0;
-		$this->set('ramas', $this->paginate());
+		$this -> Rama -> recursive = 0;
+		$this -> set('ramas', $this -> paginate());
 	}
 
-/**
- * view method
- *
- * @param string $id
- * @return void
- */
+	/**
+	 * view method
+	 *
+	 * @param string $id
+	 * @return void
+	 */
 	public function view($id = null) {
-		$this->Rama->id = $id;
-		if (!$this->Rama->exists()) {
+		$this -> Rama -> id = $id;
+		if (!$this -> Rama -> exists()) {
 			throw new NotFoundException(__('Invalid rama'));
 		}
-		$this->set('rama', $this->Rama->read(null, $id));
+		$this -> set('rama', $this -> Rama -> read(null, $id));
 	}
 
-/**
- * add method
- *
- * @return void
- */
+	/**
+	 * add method
+	 *
+	 * @return void
+	 */
 	public function add() {
-		if ($this->request->is('post')) {
-			$this->Rama->create();
-			if ($this->Rama->save($this->request->data)) {
-				$this->Session->setFlash(__('The rama has been saved'),'crud/success');
-				$this->redirect(array('action' => 'index'));
+		if ($this -> request -> is('post')) {
+			$this -> Rama -> create();
+			if ($this -> Rama -> save($this -> request -> data)) {
+				$this -> Session -> setFlash(__('The rama has been saved'), 'crud/success');
+				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The rama could not be saved. Please, try again.'),'crud/error');
+				$this -> Session -> setFlash(__('The rama could not be saved. Please, try again.'), 'crud/error');
 			}
 		}
-		$gruposDeRamas = $this->Rama->GruposDeRama->find('list');
-		$this->set(compact('gruposDeRamas'));
+		$gruposDeRamas = $this -> Rama -> GruposDeRama -> find('list');
+		$this -> set(compact('gruposDeRamas'));
 	}
 
-/**
- * edit method
- *
- * @param string $id
- * @return void
- */
+	/**
+	 * edit method
+	 *
+	 * @param string $id
+	 * @return void
+	 */
 	public function edit($id = null) {
-		$this->Rama->id = $id;
-		if (!$this->Rama->exists()) {
+		$this -> Rama -> id = $id;
+		if (!$this -> Rama -> exists()) {
 			throw new NotFoundException(__('Invalid rama'));
 		}
-		if ($this->request->is('post') || $this->request->is('put')) {
-			if ($this->Rama->save($this->request->data)) {
-				$this->Session->setFlash(__('The rama has been saved'),'crud/success');
-				$this->redirect(array('action' => 'index'));
+		if ($this -> request -> is('post') || $this -> request -> is('put')) {
+			if ($this -> Rama -> save($this -> request -> data)) {
+				$this -> Session -> setFlash(__('The rama has been saved'), 'crud/success');
+				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The rama could not be saved. Please, try again.'),'crud/error');
+				$this -> Session -> setFlash(__('The rama could not be saved. Please, try again.'), 'crud/error');
 			}
 		} else {
-			$this->request->data = $this->Rama->read(null, $id);
+			$this -> request -> data = $this -> Rama -> read(null, $id);
 		}
-		$gruposDeRamas = $this->Rama->GruposDeRama->find('list');
-		$this->set(compact('gruposDeRamas'));
+		$gruposDeRamas = $this -> Rama -> GruposDeRama -> find('list');
+		$this -> set(compact('gruposDeRamas'));
 	}
 
-/**
- * delete method
- *
- * @param string $id
- * @return void
- */
+	/**
+	 * delete method
+	 *
+	 * @param string $id
+	 * @return void
+	 */
 	public function delete($id = null) {
-		if (!$this->request->is('post')) {
+		if (!$this -> request -> is('post')) {
 			throw new MethodNotAllowedException();
 		}
-		$this->Rama->id = $id;
-		if (!$this->Rama->exists()) {
+		$this -> Rama -> id = $id;
+		if (!$this -> Rama -> exists()) {
 			throw new NotFoundException(__('Invalid rama'));
 		}
-		if ($this->Rama->delete()) {
-			$this->Session->setFlash(__('Rama deleted'),'crud/success');
-			$this->redirect(array('action'=>'index'));
+		if ($this -> Rama -> delete()) {
+			$this -> Session -> setFlash(__('Rama deleted'), 'crud/success');
+			$this -> redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('Rama was not deleted'),'crud/error');
-		$this->redirect(array('action' => 'index'));
+		$this -> Session -> setFlash(__('Rama was not deleted'), 'crud/error');
+		$this -> redirect(array('action' => 'index'));
 	}
+
 }
