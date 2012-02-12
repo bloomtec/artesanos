@@ -179,7 +179,7 @@ p {
 }
 #header .logo img {
 	margin-left: 25px;
-	width: 380px;
+	height: 100px;
 }
 .search {
 	float: right;
@@ -228,14 +228,14 @@ p {
 }
 #main-menu ul {
 	list-style: none outside none;
-	margin-top: 33px;
+	margin-top: 19px;
 }
 #main-menu ul li {
 	float: left;
 	background: #2047A0;
 	float: left;
 	display: block;
-	padding: 10px 5px;;
+	padding: 2px 5px;;
 	width: 150px;
 	border: solid gray 1px;
 	position: relative;
@@ -261,8 +261,9 @@ p {
 	position: absolute;
 	display: none;
 	padding-left: 0;
-	top: 8px;
+	top: 25px;
 	left: -1px;
+	margin-top:0;
 }
 #main-menu ul li:hover ul {
 	display: block;
