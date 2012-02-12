@@ -3,14 +3,9 @@ App::uses('AppModel', 'Model');
 /**
  * GruposDeRama Model
  *
+ * @property Rama $Rama
  */
 class GruposDeRama extends AppModel {
-/**
- * Display field
- *
- * @var string
- */
-	public $displayField = 'gru_nombre';
 /**
  * Validation rules
  *
@@ -28,4 +23,28 @@ class GruposDeRama extends AppModel {
 			),
 		),
 	);
+
+	//The Associations below have been created with all possible keys, those that are not needed can be removed
+
+/**
+ * hasMany associations
+ *
+ * @var array
+ */
+	public $hasMany = array(
+		'Rama' => array(
+			'className' => 'Rama',
+			'foreignKey' => 'grupos_de_rama_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
+	);
+
 }
