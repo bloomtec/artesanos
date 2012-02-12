@@ -1,11 +1,11 @@
-<?php echo $this -> Html -> css('registro-artesano'); ?>
+<?php echo $this -> Html -> css('registro-artesano');?>
 <div class="artesanos form calificar">
 	<!-- twitter style "drawer" for displaying validation errors -->
 	<div id="drawer">
 		[ERROR MESSAGE]	margin-bottom: 30px;
 	</div>
 	<!-- the form -->
-	<form action="#">
+	<?php echo $this -> Form -> create('Artesano'); ?>
 		<!-- scrollable root element -->
 		<div id="wizard">
 			<!-- status bar -->
@@ -34,23 +34,12 @@
 					<?php echo $this -> element('registro_paso_3');?>
 				</div>
 			</div>
-			
 		</div>
 		<div style='clear:both'></div>
-	</form>
+	<?php echo $this -> Form -> submit('Finalizar Registro'); ?>
+	<?php echo $this -> Form -> end(); ?>
+	<!--<div class="submit">
+		<a href="#" class="finalizar-registro-artesano cancelar">Finalizar Registro</a>
+	</div>-->
 </div>
-<?php echo $this -> Html -> script('registro-artesano'); ?>
-
-<!-- original
-<div class="artesanos form">
-<?php echo $this -> Form -> create('Artesano');?>
-<fieldset>
-<h2><?php echo __('Agregar Artesano');?></h2>
-<?php
-echo $this -> Form -> input('art_cedula');
-?>
-</fieldset>
-<?php echo $this -> Html -> link(__('Cancelar'), array('action' => 'index'), array('class' => 'cancelar'));?>
-<?php echo $this -> Form -> end(__('Guardar'));?>
-</div>
--->
+<?php echo $this -> Html -> script('registro-artesano');?>

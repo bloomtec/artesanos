@@ -7,7 +7,6 @@
 			echo $this -> Form -> input('dat_apellido_paterno', array('label' => 'Apellido paterno:', 'col' => '1'));
 			echo $this -> Form -> input('dat_apellido_materno', array('label' => 'Apellido materno:', 'col' => '2'));
 			echo $this -> Form -> input('dat_nombres', array('label' => 'Nombres:', 'col' => '3'));
-			
 			?>
 		</div>
 		<h2>Datos Personales</h2>
@@ -33,7 +32,7 @@
 			<?php
 			echo $this -> Form -> input('dat_hijos_mayores', array('type'=>'number','label' => 'No. de hijos mayores:', 'col' => '0'));
 			echo $this -> Form -> input('dat_hijos_menores', array('type'=>'number','label' => 'No. de hijos menores:', 'col' => '1'));
-			echo $this -> Form -> input('dat_tipo_discapacidad', array('label' => 'Tipo de discapacidad:', 'type' => 'select', 'col' => '2'));
+			echo $this -> Form -> input('dat_tipo_discapacidad', array('label' => 'Tipo de discapacidad:', 'type' => 'select', 'options' => $tipos_de_discapacidad, 'empty' => 'Seleccione...', 'col' => '2'));
 			echo $this -> Form -> input('dat_porcentaje_de_discapacidad', array('label' => 'Porcentaje de discapacidad:', 'col' => '3'));
 			?>
 		</div>
@@ -109,10 +108,4 @@
 	</div>
 </fieldset>
 <?php echo $this -> Html -> link(__('Cancelar'), array('action' => 'index'), array('class' => 'cancelar'));?>
-<a id="registroA_continuar" href="#" class="cancelar">Siguiente</a>
-<script type="text/javascript">
-	$('#registroA_continuar').click(function() {
-		//$('#DataContainer').load('/artesanos/registroB');
-	});
-
-</script>
+<a id="registro_paso_1_continuar" href="#" class="cancelar">Siguiente</a>

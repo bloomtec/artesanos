@@ -63,44 +63,4 @@
 	</div>
 </fieldset>
 <?php echo $this -> Html -> link(__('Cancelar'), array('action' => 'index'), array('class' => 'cancelar'));?>
-<a id="registroB_continuar" href="#" class="cancelar">Siguiente</a>
-<script type="text/javascript">
-	$('#registroA_continuar').click(function() {
-		//$('#DataContainer').load('/artesanos/registroC');
-	});
-	$('.AñadirRegistroEquipo').click(function(e) {
-		e.preventDefault();
-		$('#TablaEquipos').append(
-			'<tr>' +
-				'<td><input name="data[EquiposDeTrabajo][equ_cantidad]" type="number" id="EquiposDeTrabajoEquCantidad"></td>' +
-				'<td><select name="data[EquiposDeTrabajo][equ_maquinaria_y_herramientas]" id="EquiposDeTrabajoEquMaquinariaYHerramientas"></select></td>' +
-				'<td><select name="data[EquiposDeTrabajo][equ_tipo_de_adquisicion]" id="EquiposDeTrabajoEquTipoDeAdquisicion"></select></td>' +
-				'<td><input name="data[EquiposDeTrabajo][equ_fecha_de_adquisicion]" type="date" id="EquiposDeTrabajoEquFechaDeAdquisicion"></td>' +
-				'<td><input name="data[EquiposDeTrabajo][equ_valor_comercial]" step="any" type="number" id="EquiposDeTrabajoEquValorComercial"></td>' +
-			'</tr>'
-		);
-	});
-	$('.AñadirRegistroMateria').click(function(e) {
-		e.preventDefault();
-		$('#TablaMateriaPrima').append(
-			'<tr>' +
-				'<td><input name="data[MateriasPrima][mat_cantidad]" type="number" id="MateriasPrimaMatCantidad"></td>' +
-				'<td><select name="data[MateriasPrima][mat_tipo_de_materia_prima]" type="number" id="MateriasPrimaMatTipoDeMateriaPrima"></select></td>' +
-				'<td><select name="data[MateriasPrima][mat_procedencia]" type="number" id="MateriasPrimaMatProcedencia"></select></td>' +
-				'<td><input name="data[MateriasPrima][mat_valor_comercial]" type="number" id="MateriasPrimaMatValorComercial"></td>' +
-			'</tr>'
-		);
-	});
-	$('.AñadirRegistroProducto').click(function(e) {
-		e.preventDefault();
-		$('#TablaProductoElaborado').append(
-			'<tr>' +
-				'<td><input name="data[ProductosElaborado][pro_cantidad]" type="number" id="ProductosElaboradoProCantidad"></td>' +
-				'<td><select name="data[ProductosElaborado][pro_detalle]" type="number" id="ProductosElaboradoProDetalle"></select></td>' +
-				'<td><select name="data[ProductosElaborado][pro_procedencia]" type="number" id="ProductosElaboradoProProcedencia"></select></td>' +
-				'<td><input name="data[ProductosElaborado][pro_valor_comercial]" type="number" id="ProductosElaboradoProValorComercial"></td>' +
-			'</tr>'
-		);
-	});
-
-</script>
+<a id="registro_paso_2_continuar" href="#" class="cancelar">Siguiente</a>

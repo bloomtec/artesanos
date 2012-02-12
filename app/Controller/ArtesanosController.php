@@ -39,6 +39,8 @@ class ArtesanosController extends AppController {
 	public function add() {
 		$this -> Artesano -> currentUsrId = $this -> Auth -> user('id');
 		if ($this -> request -> is('post')) {
+			debug($this -> request -> data);
+			/*
 			$this -> Artesano -> create();
 			if ($this -> Artesano -> save($this -> request -> data)) {
 				$this -> Session -> setFlash(__('The artesano has been saved'), 'crud/success');
@@ -46,6 +48,7 @@ class ArtesanosController extends AppController {
 			} else {
 				$this -> Session -> setFlash(__('The artesano could not be saved. Please, try again.'), 'crud/error');
 			}
+			 */
 		}
 		/**
 		 * Obtener los valores de los parametros
