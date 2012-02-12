@@ -6,6 +6,19 @@ App::uses('AppController', 'Controller');
  * @property GruposDeRama $GruposDeRama
  */
 class GruposDeRamasController extends AppController {
+	
+	public function beforeRender() {
+		$this -> layout = 'parametros';
+	}
+	
+	public function getNombre($id) {
+		$grupo = $this -> GruposDeRama -> read('gru_nombre', $id);
+		if(empty($grupo)) {
+			return '<b>:: eliminado ::</b>';
+		} else {
+			return $grupo['GruposDeRama']['gru_nombre'];
+		}
+	}
 
 	/**
 	 * index method
@@ -29,6 +42,16 @@ class GruposDeRamasController extends AppController {
 			throw new NotFoundException(__('Invalid grupos de rama'));
 		}
 		$this -> set('gruposDeRama', $this -> GruposDeRama -> read(null, $id));
+		$this -> set(
+			'ramas',
+			$this -> GruposDeRama -> Rama -> find(
+				'all',
+				array(
+					'order' => array('Rama.ram_nombre' => 'ASC'),
+					'conditions' => array('Rama.grupos_de_rama_id' => $id)
+				)
+			)
+		);
 	}
 
 	/**

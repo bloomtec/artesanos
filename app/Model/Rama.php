@@ -91,28 +91,4 @@ class Rama extends AppModel {
 		)
 	);
 
-
-/**
- * hasAndBelongsToMany associations
- *
- * @var array
- */
-	public $hasAndBelongsToMany = array(
-		'GruposDe' => array(
-			'className' => 'GruposDe',
-			'joinTable' => 'grupos_de_ramas',
-			'foreignKey' => 'rama_id',
-			'associationForeignKey' => 'grupos_de_id',
-			'unique' => true,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'finderQuery' => '',
-			'deleteQuery' => '',
-			'insertQuery' => ''
-		)
-	);
-
 }

@@ -6,6 +6,10 @@ App::uses('AppController', 'Controller');
  * @property Rama $Rama
  */
 class RamasController extends AppController {
+	
+	public function beforeRender() {
+		$this -> layout = 'parametros';
+	}
 
 	/**
 	 * index method
@@ -29,6 +33,7 @@ class RamasController extends AppController {
 			throw new NotFoundException(__('Invalid rama'));
 		}
 		$this -> set('rama', $this -> Rama -> read(null, $id));
+		$this -> set('referer', $this -> referer());
 	}
 
 	/**
@@ -36,18 +41,20 @@ class RamasController extends AppController {
 	 *
 	 * @return void
 	 */
-	public function add() {
+	public function add($group_id = null) {
 		if ($this -> request -> is('post')) {
 			$this -> Rama -> create();
 			if ($this -> Rama -> save($this -> request -> data)) {
 				$this -> Session -> setFlash(__('The rama has been saved'), 'crud/success');
-				$this -> redirect(array('action' => 'index'));
+				$this -> redirect(array('controller' => 'grupos_de_ramas', 'action' => 'view', $group_id));
 			} else {
 				$this -> Session -> setFlash(__('The rama could not be saved. Please, try again.'), 'crud/error');
 			}
 		}
-		$gruposDeRamas = $this -> Rama -> GruposDeRama -> find('list');
+		$gruposDeRamas = $this -> Rama -> GruposDeRama -> find('list', array('conditions' => array('GruposDeRama.id'=>$group_id)));
 		$this -> set(compact('gruposDeRamas'));
+		$this -> set('value', $group_id);
+		$this -> set('referer', $this -> referer());
 	}
 
 	/**
@@ -73,6 +80,7 @@ class RamasController extends AppController {
 		}
 		$gruposDeRamas = $this -> Rama -> GruposDeRama -> find('list');
 		$this -> set(compact('gruposDeRamas'));
+		$this -> set('referer', $this -> referer());
 	}
 
 	/**
@@ -91,10 +99,10 @@ class RamasController extends AppController {
 		}
 		if ($this -> Rama -> delete()) {
 			$this -> Session -> setFlash(__('Rama deleted'), 'crud/success');
-			$this -> redirect(array('action' => 'index'));
+			$this -> redirect($this -> referer());
 		}
 		$this -> Session -> setFlash(__('Rama was not deleted'), 'crud/error');
-		$this -> redirect(array('action' => 'index'));
+		$this -> redirect($this -> referer());
 	}
 
 }
