@@ -65,9 +65,15 @@ $(function() {
 		'[required]'	: 'Campo obligatorio'
 	});
 	$('form').validator({lang:'es',messageClass:'error-form'});
-		// FUNCIONALIDAD REGISTRO
+	// FUNCIONALIDAD REGISTRO
+	$('#wizard .page').css('width',$("#wizard").width());
+	$('#wizard').css('height',$(".items").height());
 	var root = $("#wizard").scrollable();
-	//var api = root.scrollable();
-	//var drawer = $("#drawer");
-
+	var api = root.scrollable();
+	var drawer = $("#drawer");
+	api.onBeforeSeek(function(event, i) {
+		console.log(i);
+		$("#status li").removeClass("active").eq(i).addClass("active");
+		return true;
+	});
 });

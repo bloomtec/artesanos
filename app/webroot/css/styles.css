@@ -89,7 +89,6 @@ p {
 }
 #container.login .submit {
 	float: right;
-	margin-right: 13px;
 }
 #container.login #footer {
 	background-color: #000000;
@@ -99,6 +98,19 @@ p {
 	position: absolute;
 	text-align: center;
 	width: 100%;
+}
+#container.login form{
+	width: 70%;
+	margin: 0 auto;
+}
+#container.login .input{
+	clear:both;
+	float:none;
+	
+}
+#container.login .input input{
+	width: 100%;
+	
 }
 /**  END LOGIN  **/
 
@@ -271,7 +283,7 @@ p {
 	background: #fff;
 	clear: both;
 	color: #333;
-	padding: 10px 20px 60px 20px;
+	padding: 0 20px 60px 20px;
 	overflow: auto;
 }
 .paging {
@@ -289,7 +301,7 @@ p {
 .actions li {
 	list-style: none;
 }
-.actions a, a.cancelar, .cdrs a {
+ a.button {
 	background-color: #13498e;
 	color: #fff;
 	padding: 6px;
@@ -299,19 +311,11 @@ p {
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 	float: left;
-}
-.cdrs a {
 	margin-right: 1em;
-	margin-bottom: 15px;
-	padding: 10px 8px;
+	display: block;
 }
-.cdrs th a:hover {
-	background: none;
-}
-div.actions a, a.cancelar {
-	margin-right: 1em;
-}
-div.actions a:hover, a.cancelar:hover {
+
+a.button:hover {
 	background-color: #1E72D8;
 }
 #footer {
@@ -402,20 +406,7 @@ div.actions a:hover, a.cancelar:hover {
 	font-weight: bold;
 	text-transform: uppercase;
 }
-#CdrReportForm fieldset {
-	clear: left;
-}
-.cdrs h2 {
-	background-image: url("/img/informes.png");
-	background-position: left center;
-	background-repeat: no-repeat;
-	height: 27px;
-	margin-bottom: 20px;
-	margin-left: 15px;
-	padding-left: 70px;
-	padding-top: 15px;
-	width: 92%;
-}
+
 #footer h4 {
 	color: black;
 	font-size: 11px;
@@ -508,6 +499,9 @@ form .input input {
 	-webkit-border-top-left-radius: 0;
 	-moz-box-shadow: 0 0 6px #ddd;
 	-webkit-box-shadow: 0 0 6px #ddd;
+}
+.fila-datos{
+	clear:left;
 }
 /** END FORMS **/
 
@@ -692,7 +686,7 @@ form .input label {
 	margin-top: 11px;
 }
 form .input input {
-	width: 220px;
+	width: 130px;
 	clear: none;
 	font-size: 14px;
 	display: block;

@@ -36,10 +36,9 @@
 			</div>
 		</div>
 		<div style='clear:both'></div>
-	<?php echo $this -> Form -> submit('Finalizar Registro'); ?>
+		
 	<?php echo $this -> Form -> end(); ?>
 	<!--<div class="submit">
 		<a href="#" class="finalizar-registro-artesano cancelar">Finalizar Registro</a>
 	</div>-->
 </div>
-<?php echo $this -> Html -> script('registro-artesano');?>
