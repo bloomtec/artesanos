@@ -3,24 +3,22 @@ App::uses('AppModel', 'Model');
 /**
  * Rama Model
  *
- * @property GrupoDeRama $GrupoDeRama
+ * @property GruposDeRama $GruposDeRama
  * @property Calificacion $Calificacion
  * @property Titulacion $Titulacion
+ * @property GruposDe $GruposDe
  */
 class Rama extends AppModel {
-/**
- * Display field
- *
- * @var string
- */
+	
 	public $displayField = 'ram_nombre';
+	
 /**
  * Validation rules
  *
  * @var array
  */
 	public $validate = array(
-		'grupo_de_rama_id' => array(
+		'grupos_de_rama_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
@@ -50,9 +48,9 @@ class Rama extends AppModel {
  * @var array
  */
 	public $belongsTo = array(
-		'GrupoDeRama' => array(
-			'className' => 'GrupoDeRama',
-			'foreignKey' => 'grupo_de_rama_id',
+		'GruposDeRama' => array(
+			'className' => 'GruposDeRama',
+			'foreignKey' => 'grupos_de_rama_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''

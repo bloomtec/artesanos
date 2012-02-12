@@ -3,17 +3,22 @@
 	<ul class="tabs">
 		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'ParametrosInformativos', 'index')))) : ?>
 		<li>
-			<a href="#">PARÁMETROS INFORMATIVOS</a>
+			<a href="#">DATOS INFORMATIVOS</a>
 		</li>
 		<?php endif; ?>
 		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Geograficos', 'index')))) : ?>
 		<li>
-			<a href="#">PARÁMETROS GEOGRÁFICOS</a>
+			<a href="#">DATOS GEOGRÁFICOS</a>
 		</li>
 		<?php endif; ?>
 		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Configuraciones', 'index')))) : ?>
 		<li>
-			<a href="#">PARÁMETROS DE CONFIGURACIÓN</a>
+			<a href="#">CONFIGURACIÓN CRON JOBS</a>
+		</li>
+		<?php endif; ?>
+		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'GruposDeRamas', 'index')))) : ?>
+		<li>
+			<a href="#">GRUPOS DE RAMAS</a>
 		</li>
 		<?php endif; ?>
 	</ul>
@@ -32,6 +37,11 @@
 		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Configuraciones', 'index')))) : ?>
 		<div>
 			<iframe src="/configuraciones"></iframe>
+		</div>
+		<?php endif; ?>
+		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'GruposDeRamas', 'index')))) : ?>
+		<div>
+			<iframe src="/grupos_de_ramas"></iframe>
 		</div>
 		<?php endif; ?>
 	</div>
