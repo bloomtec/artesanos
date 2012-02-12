@@ -7,6 +7,11 @@ App::uses('AppController', 'Controller');
  */
 class ParametrosInformativosController extends AppController {
 	
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this -> Auth -> allow('getValores');
+	}
+	
 	public function beforeRender() {
 		$this -> layout = "parametros";
 	}
@@ -53,6 +58,16 @@ class ParametrosInformativosController extends AppController {
 				)
 			)
 		);
+	}
+	
+	public function getValores($id = null) {
+		$this -> layout = "ajax";
+		if($id) {
+			echo json_encode($this -> ParametrosInformativo -> getValores($id));
+		} else {
+			echo 'error';
+		}
+		exit(0);
 	}
 
 }

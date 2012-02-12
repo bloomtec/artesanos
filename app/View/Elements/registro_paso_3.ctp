@@ -17,12 +17,16 @@
 				<input name="data[Trabajadores][tipos_de_trabajador_id]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="1" />
 				<td><input name="data[Trabajadores][tra_cedula]" type="number" id="TrabajadoresTraCedula" /></td>
 				<td><input name="data[Trabajadores][tra_nombres_y_apellidos]" type="text" id="TrabajadoresTraNombresYApellidos" /></td>
-				<td><select name="data[Trabajadores][tra_sexo]" id="TrabajadoresTraSexo" /></select></td>
-				<td><input name="data[Trabajadores][tra_fecha_ingreso]" type="date" id="TrabajadoresTraFechaIngreso" /></td>
 				<td>
-					<input name="data[Trabajadores][tra_afiliado_seguro]" type="radio" value="0" checked="checked" />No
-					<input name="data[Trabajadores][tra_afiliado_seguro]" type="radio" value="1" />Sí
+					<select name="data[Trabajadores][tra_sexo]" id="TrabajadoresTraSexo" />
+						<option value="">Seleccione...</option>
+						<?php foreach ($sexos as $value => $sexo) : ?>
+						<option value="<?php echo $value; ?>"><?php echo $sexo; ?></option>
+						<?php endforeach; ?>
+					</select>
 				</td>
+				<td><input name="data[Trabajadores][tra_fecha_ingreso]" type="date" id="TrabajadoresTraFechaIngreso" /></td>
+				<td><input name="data[Trabajadores][tra_afiliado_seguro]" type="checkbox" value="0" /></td>
 				<td><input name="data[Trabajadores][tra_fecha_nacimiento]" type="date" id="TrabajadoresTraFechaNacimiento" /></td>
 				<td><input name="data[Trabajadores][tra_pago_mensual]" type="number" id="TrabajadoresTraPagoMensual" /></td>
 			</tr>
@@ -47,12 +51,16 @@
 				<input name="data[Trabajadores][tipos_de_trabajador_id]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="2" />
 				<td><input name="data[Trabajadores][tra_cedula]" type="number" id="TrabajadoresTraCedula" /></td>
 				<td><input name="data[Trabajadores][tra_nombres_y_apellidos]" type="text" id="TrabajadoresTraNombresYApellidos" /></td>
-				<td><select name="data[Trabajadores][tra_sexo]" id="TrabajadoresTraSexo" /></select></td>
-				<td><input name="data[Trabajadores][tra_fecha_ingreso]" type="date" id="TrabajadoresTraFechaIngreso" /></td>
 				<td>
-					<input name="data[Trabajadores][tra_afiliado_seguro]" type="radio" value="0" checked="checked" />No
-					<input name="data[Trabajadores][tra_afiliado_seguro]" type="radio" value="1" />Sí
+					<select name="data[Trabajadores][tra_sexo]" id="TrabajadoresTraSexo" />
+						<option value="">Seleccione...</option>
+						<?php foreach ($sexos as $value => $sexo) : ?>
+						<option value="<?php echo $value; ?>"><?php echo $sexo; ?></option>
+						<?php endforeach; ?>
+					</select>
 				</td>
+				<td><input name="data[Trabajadores][tra_fecha_ingreso]" type="date" id="TrabajadoresTraFechaIngreso" /></td>
+				<td><input name="data[Trabajadores][tra_afiliado_seguro]" type="checkbox" value="0" /></td>
 				<td><input name="data[Trabajadores][tra_fecha_nacimiento]" type="date" id="TrabajadoresTraFechaNacimiento" /></td>
 				<td><input name="data[Trabajadores][tra_pago_mensual]" type="number" id="TrabajadoresTraPagoMensual" /></td>
 			</tr>

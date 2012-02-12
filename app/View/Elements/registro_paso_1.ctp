@@ -39,8 +39,6 @@
 	</div>
 	<div class="datos-taller">
 		<h2>Datos Taller</h2>
-		<br />
-		<br />
 		<div class="fila-datos" row="4">
 			<?php
 			echo $this -> Form -> input('Taller.tal_razon_social_o_nombre_comercial', array('label' => 'Razón social y/o nombre comercial:', 'col' => '0'));
@@ -74,8 +72,6 @@
 	</div>
 	<div class="datos-local">
 		<h2>Datos Local Comercial</h2>
-		<br />
-		<br />
 		<div class="fila-datos" row="8">
 			<?php
 			echo $this -> Form -> input('Local.provincia_id', array('label' => 'Provincia:', 'col' => '0'));

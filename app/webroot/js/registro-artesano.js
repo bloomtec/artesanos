@@ -63,37 +63,55 @@ $('.finalizar-registro-artesano').click(function(e) {
 });
 $('.AñadirRegistroOperador').click(function(e) {
 	e.preventDefault();
-	$('#TablaOperadores').append(
-		'<tr>' +
-			'<input name="data[Trabajadores][tipos_de_trabajador_id]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="1" />' +
-			'<td><input name="data[Trabajadores][tra_cedula]" type="number" id="TrabajadoresTraCedula" /></td>' +
-			'<td><input name="data[Trabajadores][tra_nombres_y_apellidos]" type="text" id="TrabajadoresTraNombresYApellidos" /></td>' +
-			'<td><select name="data[Trabajadores][tra_sexo]" id="TrabajadoresTraSexo" /></select></td>' +
-			'<td><input name="data[Trabajadores][tra_fecha_ingreso]" type="date" id="TrabajadoresTraFechaIngreso" /></td>' +
-			'<td>' +
-			'<input name="data[Trabajadores][tra_afiliado_seguro]" type="radio" value="0" checked="checked" />No' +
-			'<input name="data[Trabajadores][tra_afiliado_seguro]" type="radio" value="1" />Sí' +
-			'</td>' +
-			'<td><input name="data[Trabajadores][tra_fecha_nacimiento]" type="date" id="TrabajadoresTraFechaNacimiento" /></td>' +
-			'<td><input name="data[Trabajadores][tra_pago_mensual]" type="number" id="TrabajadoresTraPagoMensual" /></td>' +
-		'</tr>'
+	var sexos = '';
+	$.getJSON(
+		'/parametros_informativos/getValores/5',
+		null,
+		function(data) {
+			$.each(data, function(key, val){
+				sexos += '<option value="' + key + '">' + val + '</option>';
+			});
+			$('#TablaOperadores').append(
+				'<tr>' +
+					'<input name="data[Trabajadores][tipos_de_trabajador_id]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="1" />' +
+					'<td><input name="data[Trabajadores][tra_cedula]" type="number" id="TrabajadoresTraCedula" /></td>' +
+					'<td><input name="data[Trabajadores][tra_nombres_y_apellidos]" type="text" id="TrabajadoresTraNombresYApellidos" /></td>' +
+					'<td><select name="data[Trabajadores][tra_sexo]" id="TrabajadoresTraSexo">' +
+							'<option value="">Seleccione...</option>' +
+							sexos +
+					'</select></td>' +
+					'<td><input name="data[Trabajadores][tra_fecha_ingreso]" type="date" id="TrabajadoresTraFechaIngreso" /></td>' +
+					'<td><input name="data[Trabajadores][tra_afiliado_seguro]" type="checkbox" value="0" /></td>' +
+					'<td><input name="data[Trabajadores][tra_fecha_nacimiento]" type="date" id="TrabajadoresTraFechaNacimiento" /></td>' +
+					'<td><input name="data[Trabajadores][tra_pago_mensual]" type="number" id="TrabajadoresTraPagoMensual" /></td>' +
+				'</tr>'
+			);
+		}
 	);
 });
-$('.AñadirRegistroAprendiz').click(function(e) {
-	e.preventDefault();
-	$('#TablaAprendices').append(
-		'<tr>' +
-			'<input name="data[Trabajadores][tipos_de_trabajador_id]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="2" />' +
-			'<td><input name="data[Trabajadores][tra_cedula]" type="number" id="TrabajadoresTraCedula" /></td>' +
-			'<td><input name="data[Trabajadores][tra_nombres_y_apellidos]" type="text" id="TrabajadoresTraNombresYApellidos" /></td>' +
-			'<td><select name="data[Trabajadores][tra_sexo]" id="TrabajadoresTraSexo" /></select></td>' +
-			'<td><input name="data[Trabajadores][tra_fecha_ingreso]" type="date" id="TrabajadoresTraFechaIngreso" /></td>' +
-			'<td>' +
-			'<input name="data[Trabajadores][tra_afiliado_seguro]" type="radio" value="0" checked="checked" />No' +
-			'<input name="data[Trabajadores][tra_afiliado_seguro]" type="radio" value="1" />Sí' +
-			'</td>' +
-			'<td><input name="data[Trabajadores][tra_fecha_nacimiento]" type="date" id="TrabajadoresTraFechaNacimiento" /></td>' +
-			'<td><input name="data[Trabajadores][tra_pago_mensual]" type="number" id="TrabajadoresTraPagoMensual" /></td>' +
-		'</tr>'
+$('.AñadirRegistroAprendiz').click(function(e) {var sexos = '';
+	$.getJSON(
+		'/parametros_informativos/getValores/5',
+		null,
+		function(data) {
+			$.each(data, function(key, val){
+				sexos += '<option value="' + key + '">' + val + '</option>';
+			});
+			$('#TablaAprendices').append(
+				'<tr>' +
+					'<input name="data[Trabajadores][tipos_de_trabajador_id]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="2" />' +
+					'<td><input name="data[Trabajadores][tra_cedula]" type="number" id="TrabajadoresTraCedula" /></td>' +
+					'<td><input name="data[Trabajadores][tra_nombres_y_apellidos]" type="text" id="TrabajadoresTraNombresYApellidos" /></td>' +
+					'<td><select name="data[Trabajadores][tra_sexo]" id="TrabajadoresTraSexo">' +
+							'<option value="">Seleccione...</option>' +
+							sexos +
+					'</select></td>' +
+					'<td><input name="data[Trabajadores][tra_fecha_ingreso]" type="date" id="TrabajadoresTraFechaIngreso" /></td>' +
+					'<td><input name="data[Trabajadores][tra_afiliado_seguro]" type="checkbox" value="0" /></td>' +
+					'<td><input name="data[Trabajadores][tra_fecha_nacimiento]" type="date" id="TrabajadoresTraFechaNacimiento" /></td>' +
+					'<td><input name="data[Trabajadores][tra_pago_mensual]" type="number" id="TrabajadoresTraPagoMensual" /></td>' +
+				'</tr>'
+			);
+		}
 	);
 });
