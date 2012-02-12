@@ -173,6 +173,8 @@ p {
 	position: relative;
 	background-repeat: repeat-y;
 	min-height: 800px;
+	width: 960px;
+	margin: 0 auto;
 }
 #header {
 	padding: 10px 20px;
@@ -236,9 +238,10 @@ p {
 	float: left;
 	display: block;
 	padding: 2px 5px;;
-	width: 150px;
+	width: 100px;
 	border: solid gray 1px;
 	position: relative;
+	text-align:center;
 }
 #main-menu ul li:hover {
 	background: #EFBC00;
@@ -247,7 +250,6 @@ p {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 13px;
 	font-weight: bold;
-	padding-left: 28px;
 	background-position: top left;
 	background-repeat: no-repeat;
 	padding-top: 5px;

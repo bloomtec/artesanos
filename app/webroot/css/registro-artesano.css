@@ -77,6 +77,7 @@
 	background: #2047A0;
 	font-size:15px;
 	border:solid gray 1px;
+	height: 38px;
 }
 
 #status li.active {

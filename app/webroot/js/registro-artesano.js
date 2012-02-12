@@ -1,24 +1,3 @@
-/**
- * jQuery Tools Scrollable
- */
-
-var root = $("#wizard").scrollable();
-
-/**
- * Registro Paso 1
- */
-// Boton para continuar con el paso 2
-$('#registro_paso_1_continuar').click(function() {
-	//$('#DataContainer').load('/artesanos/registroB');
-});
-
-/**
- * Registro Paso 2
- */
-// Boton para continuar con el paso 3
-$('#registro_paso_2_continuar').click(function() {
-	//$('#DataContainer').load('/artesanos/registroC');
-});
 $('.AñadirRegistroEquipo').click(function(e) {
 	e.preventDefault();
 	$('#TablaEquipos').append(

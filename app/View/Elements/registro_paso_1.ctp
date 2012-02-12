@@ -6,7 +6,7 @@
 			echo $this -> Form -> input('art_cedula', array('label' => 'Cédula de ciudadania/pasaporte:', 'col' => '0'));
 			echo $this -> Form -> input('tipo_calificaion', array('label' => 'Tipo de Calificación:', 'col' => '1','options'=>$tipos_de_calificacion));
 			echo $this -> Form -> input('grupo_rama', array('label' => 'Grupo de rama:', 'col' => '2','options'=>$grupos_de_ramas));
-			echo $this -> Form -> input('rama', array('label' => 'Rama:', 'col' => '3'));
+			echo $this -> Form -> input('rama', array('label' => 'Rama:', 'col' => '3','options'=>array()));
 			?>
 		</div>
 		<div class="datos-personales">
