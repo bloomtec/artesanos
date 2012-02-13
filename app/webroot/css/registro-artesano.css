@@ -41,9 +41,26 @@
 	font-style:normal;
 	margin-top:5px;
 }
-
-
-
+#wizard .form input, form textarea, form  date {
+	float: left;
+	width: 130px;
+}
+form #wizard  .input {
+	float: left;
+	width: auto;
+}
+form input[type=number] {
+	width: 6em;
+}
+#wizard select{
+	min-width:130px;
+}
+.validarCalificacion a{
+	padding-top:39px;
+	display: block;
+	float:left;
+	color:#CD0000;
+}
 /* validation error message bar */
 #drawer {
 	background-color:#fff;
@@ -84,4 +101,9 @@
 	background-color:#EFBC00;
 	font-weight:bold;
 	color:black;	
+}
+
+/*TABLES*/
+#wizard table tr td, #wizard table tr th{
+	height:24px;
 }

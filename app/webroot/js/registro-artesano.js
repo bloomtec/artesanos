@@ -1,96 +1,61 @@
-$('.AñadirRegistroEquipo').click(function(e) {
-	e.preventDefault();
-	$('#TablaEquipos').append(
-		'<tr>' +
-			'<td><input name="data[EquiposDeTrabajo][equ_cantidad]" type="number" id="EquiposDeTrabajoEquCantidad"></td>' +
-			'<td><select name="data[EquiposDeTrabajo][equ_maquinaria_y_herramientas]" id="EquiposDeTrabajoEquMaquinariaYHerramientas"></select></td>' +
-			'<td><select name="data[EquiposDeTrabajo][equ_tipo_de_adquisicion]" id="EquiposDeTrabajoEquTipoDeAdquisicion"></select></td>' +
-			'<td><input name="data[EquiposDeTrabajo][equ_fecha_de_adquisicion]" type="date" id="EquiposDeTrabajoEquFechaDeAdquisicion"></td>' +
-			'<td><input name="data[EquiposDeTrabajo][equ_valor_comercial]" step="any" type="number" id="EquiposDeTrabajoEquValorComercial"></td>' +
-		'</tr>'
-	);
-});
-$('.AñadirRegistroMateria').click(function(e) {
-	e.preventDefault();
-	$('#TablaMateriaPrima').append(
-		'<tr>' +
-			'<td><input name="data[MateriasPrima][mat_cantidad]" type="number" id="MateriasPrimaMatCantidad"></td>' +
-			'<td><select name="data[MateriasPrima][mat_tipo_de_materia_prima]" type="number" id="MateriasPrimaMatTipoDeMateriaPrima"></select></td>' +
-			'<td><select name="data[MateriasPrima][mat_procedencia]" type="number" id="MateriasPrimaMatProcedencia"></select></td>' +
-			'<td><input name="data[MateriasPrima][mat_valor_comercial]" type="number" id="MateriasPrimaMatValorComercial"></td>' +
-		'</tr>'
-	);
-});
-$('.AñadirRegistroProducto').click(function(e) {
-	e.preventDefault();
-	$('#TablaProductoElaborado').append(
-		'<tr>' +
-			'<td><input name="data[ProductosElaborado][pro_cantidad]" type="number" id="ProductosElaboradoProCantidad"></td>' +
-			'<td><select name="data[ProductosElaborado][pro_detalle]" type="number" id="ProductosElaboradoProDetalle"></select></td>' +
-			'<td><select name="data[ProductosElaborado][pro_procedencia]" type="number" id="ProductosElaboradoProProcedencia"></select></td>' +
-			'<td><input name="data[ProductosElaborado][pro_valor_comercial]" type="number" id="ProductosElaboradoProValorComercial"></td>' +
-		'</tr>'
-	);
-});
-
-/**
- * Registro Paso 3
- */
-$('.finalizar-registro-artesano').click(function(e) {
-	e.preventDefault();
-	$('#ArtesanoAddForm').submit();
-});
-$('.AñadirRegistroOperador').click(function(e) {
-	e.preventDefault();
-	var sexos = '';
-	$.getJSON(
-		'/parametros_informativos/getValores/5',
-		null,
-		function(data) {
-			$.each(data, function(key, val){
-				sexos += '<option value="' + key + '">' + val + '</option>';
-			});
-			$('#TablaOperadores').append(
-				'<tr>' +
-					'<input name="data[Trabajadores][tipos_de_trabajador_id]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="1" />' +
-					'<td><input name="data[Trabajadores][tra_cedula]" type="number" id="TrabajadoresTraCedula" /></td>' +
-					'<td><input name="data[Trabajadores][tra_nombres_y_apellidos]" type="text" id="TrabajadoresTraNombresYApellidos" /></td>' +
-					'<td><select name="data[Trabajadores][tra_sexo]" id="TrabajadoresTraSexo">' +
-							'<option value="">Seleccione...</option>' +
-							sexos +
-					'</select></td>' +
-					'<td><input name="data[Trabajadores][tra_fecha_ingreso]" type="date" id="TrabajadoresTraFechaIngreso" /></td>' +
-					'<td><input name="data[Trabajadores][tra_afiliado_seguro]" type="checkbox" value="0" /></td>' +
-					'<td><input name="data[Trabajadores][tra_fecha_nacimiento]" type="date" id="TrabajadoresTraFechaNacimiento" /></td>' +
-					'<td><input name="data[Trabajadores][tra_pago_mensual]" type="number" id="TrabajadoresTraPagoMensual" /></td>' +
-				'</tr>'
-			);
+$(function(){
+	// FUNCIONALIDAD REGISTRO
+	$('#wizard .page').css('width',$("#wizard").width());
+	$('#wizard').css('height',$(".items").height());
+	$('.porcentaje').hide();
+	$(':number').keydown(function(e){
+		var key = e.charCode || e.keyCode || 0;
+		console.log(key);
+		return (
+		     key == 8 || 
+		     key == 190 ||  
+		     key == 9 ||
+		     key == 46 ||
+		     (key >= 37 && key <= 40) ||
+		     (key >= 48 && key <= 57) ||
+		     (key >= 96 && key <= 105)
+		     );
+	});
+	$('#ArtesanoDatTipoDiscapacidad').change(function(){
+		if($(this).find('option:selected').val()){
+			$('.porcentaje').show();	
+		}else{
+			$('.porcentaje').hide();
 		}
-	);
-});
-$('.AñadirRegistroAprendiz').click(function(e) {var sexos = '';
-	$.getJSON(
-		'/parametros_informativos/getValores/5',
-		null,
-		function(data) {
-			$.each(data, function(key, val){
-				sexos += '<option value="' + key + '">' + val + '</option>';
+	});
+	BJS.updateSelect($("#ArtesanoRama"),"/ramas/obtenerPorGrupo/"+$("#ArtesanoGrupoRama option:selected").val());
+	$("#wizard .validarCalificacion select").change(function(){
+		if($(this).attr('id') == "ArtesanoGrupoRama"){//actualiza el selects de ramas
+			BJS.updateSelect($("#ArtesanoRama"),"/ramas/obtenerPorGrupo/"+$("#ArtesanoGrupoRama option:selected").val(),function(){
+				if($("#wizard #ArtesanoArtCedula").val()){
+					validarCalificacion();
+				}
 			});
-			$('#TablaAprendices').append(
-				'<tr>' +
-					'<input name="data[Trabajadores][tipos_de_trabajador_id]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="2" />' +
-					'<td><input name="data[Trabajadores][tra_cedula]" type="number" id="TrabajadoresTraCedula" /></td>' +
-					'<td><input name="data[Trabajadores][tra_nombres_y_apellidos]" type="text" id="TrabajadoresTraNombresYApellidos" /></td>' +
-					'<td><select name="data[Trabajadores][tra_sexo]" id="TrabajadoresTraSexo">' +
-							'<option value="">Seleccione...</option>' +
-							sexos +
-					'</select></td>' +
-					'<td><input name="data[Trabajadores][tra_fecha_ingreso]" type="date" id="TrabajadoresTraFechaIngreso" /></td>' +
-					'<td><input name="data[Trabajadores][tra_afiliado_seguro]" type="checkbox" value="0" /></td>' +
-					'<td><input name="data[Trabajadores][tra_fecha_nacimiento]" type="date" id="TrabajadoresTraFechaNacimiento" /></td>' +
-					'<td><input name="data[Trabajadores][tra_pago_mensual]" type="number" id="TrabajadoresTraPagoMensual" /></td>' +
-				'</tr>'
-			);
+		}else{
+			if($("#wizard #ArtesanoArtCedula").val()){
+					validarCalificacion();
+				}
 		}
-	);
+	});
+	$("#wizard #ArtesanoArtCedula").blur(function(){
+		validarCalificacion();
+	});
+	$('.validarCalificacion a').click(function(e){
+		e.preventDefault();
+		validarCalificacion();
+	});
+	var root = $("#wizard").scrollable();
+	var api = root.scrollable();
+	var drawer = $("#drawer");
+	api.onBeforeSeek(function(event, i) {
+		console.log(i);
+		$("#status li").removeClass("active").eq(i).addClass("active");
+		return true;
+	});
+	
+	function validarCalificacion(){
+		BJS.post('/artesanos/validarCalificacion',{cedula:$("#ArtesanoArtCedula").val(),tipoDeCalificacion:$("#ArtesanoTipoCalificaion option:selected").val(),rama:$('#ArtesanoRama option:selected').val()},function(response){
+			
+		});
+	}
 });

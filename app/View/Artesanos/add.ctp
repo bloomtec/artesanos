@@ -1,11 +1,11 @@
-<?php echo $this -> Html -> css('registro-artesano');?>
+<?php echo $this -> Html -> css('registro-artesano',false);?>
 <div class="artesanos form calificar">
 	<!-- twitter style "drawer" for displaying validation errors -->
 	<div id="drawer">
 		[ERROR MESSAGE]	margin-bottom: 30px;
 	</div>
 	<!-- the form -->
-	<?php echo $this -> Form -> create('Artesano'); ?>
+	<?php echo $this -> Form -> create('Artesano',array('id'=>'registro')); ?>
 		<!-- scrollable root element -->
 		<div id="wizard">
 			<!-- status bar -->
@@ -42,3 +42,4 @@
 		<a href="#" class="finalizar-registro-artesano cancelar">Finalizar Registro</a>
 	</div>-->
 </div>
+<?php echo $this -> Html -> script('registro-artesano',false);?>

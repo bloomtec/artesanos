@@ -458,11 +458,9 @@ a.button:hover {
 	text-transform: capitalize;
 }
 .form input, form textarea, form .input input {
-	float: left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 13px;
 	font-weight: bold;
-	width: 300px;
 	clear: none;
 	padding-left: 4px;
 }
@@ -680,7 +678,6 @@ form div {
 }
 form .input {
 	color: #444;
-	float: left;
 	margin-left: 5px;
 	clear: none;
 }
@@ -689,7 +686,6 @@ form .input label {
 	margin-top: 11px;
 }
 form .input input {
-	width: 130px;
 	clear: none;
 	font-size: 14px;
 	display: block;
@@ -1014,12 +1010,12 @@ pre {
 }
 .date {
 	font-size: 18px;
-	padding: 4px;
+	padding: 0 4px;
+	height:20px;
 	text-align: center;
-	width: 194px;
+	width: 100px;
 	-moz-box-shadow: 0 0 10px #eee inset;
 	-webkit-box-shadow: 0 0 10px #eee inset;
-	height: 25px;
 }
 /* calendar root element */
 #calroot {

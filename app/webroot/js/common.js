@@ -6,10 +6,10 @@ $(function() {
 		   days:          'domingo,lunes,martes,miercoles,jueves,viernes,sabado',
 		   shortDays:     'dom,lun,mar,mie,jue,vie,sab'
 		});
-	$(":date").dateinput({
+	$(":date,input.date").dateinput({
 		// this is displayed to the user
 		format : 'yyyy-mm-dd',
-		offset : [-35, 330],
+		offset : [0, 0],
 		lang: 'es',
 		firstDay: 1
 	});
@@ -64,27 +64,5 @@ $(function() {
 		'[min]'		: 'Este campo no puede ser menor que $1',
 		'[required]'	: 'Campo obligatorio'
 	});
-	$('form').validator({lang:'es',messageClass:'error-form'});
-	// FUNCIONALIDAD REGISTRO
-	$('#wizard .page').css('width',$("#wizard").width());
-	$('#wizard').css('height',$(".items").height());
-	BJS.updateSelect($("#ArtesanoRama"),"/ramas/obtenerPorGrupo/"+$("#ArtesanoGrupoRama option:selected").val());
-	
-	$("#wizard #ArtesanoArtCedula").blur(function(){
-		validarCalificacion();
-	});
-	var root = $("#wizard").scrollable();
-	var api = root.scrollable();
-	var drawer = $("#drawer");
-	api.onBeforeSeek(function(event, i) {
-		console.log(i);
-		$("#status li").removeClass("active").eq(i).addClass("active");
-		return true;
-	});
-	
-	function validarCalificacion(){
-		BJS.post('/artesanos/validarCalificacion',{cedula:$("#ArtesanoArtCedula").val(),tipoDeCalificacion:$("#ArtesanoTipoCalificaion option:selected").val(),rama:$('#ArtesanoRama option:selected').val()},function(response){
-			
-		});
-	}
+	$('form[id!=registro]').validator({lang:'es',messageClass:'error-form'});
 });

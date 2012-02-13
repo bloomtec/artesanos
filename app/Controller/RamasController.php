@@ -106,7 +106,8 @@ class RamasController extends AppController {
 	}
 	
 	function obtenerPorGrupo($grupoRamaId = null){
-		return $this -> Rama -> find ('list',array('conditions'=>array('grupo_de_rama_id'=>$grupoRamaId)));
+		echo json_encode($this -> Rama -> find ('list',array('conditions'=>array('grupos_de_rama_id'=>$grupoRamaId))));
+		$this -> autoRender = false;
 	}
 
 }

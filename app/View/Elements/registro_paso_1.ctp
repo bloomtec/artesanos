@@ -1,12 +1,13 @@
 <fieldset>
 		<div class="Calificacion">
 		<h2>Calificación</h2>
-		<div class="fila-datos" row="0">
+		<div class="fila-datos validarCalificacion" row="0">
 			<?php
-			echo $this -> Form -> input('art_cedula', array('label' => 'Cédula de ciudadania/pasaporte:', 'col' => '0'));
 			echo $this -> Form -> input('tipo_calificaion', array('label' => 'Tipo de Calificación:', 'col' => '1','options'=>$tipos_de_calificacion));
 			echo $this -> Form -> input('grupo_rama', array('label' => 'Grupo de rama:', 'col' => '2','options'=>$grupos_de_ramas));
 			echo $this -> Form -> input('rama', array('label' => 'Rama:', 'col' => '3','options'=>array()));
+			echo $this -> Form -> input('art_cedula', array('label' => 'Cédula de ciudadania/pasaporte:', 'col' => '0','type'=>'number'));
+			echo $this -> Html -> link('validar',"#");
 			?>
 		</div>
 		<div class="datos-personales">
@@ -22,7 +23,7 @@
 		</div>
 		<div class="fila-datos" row="2">
 			<?php
-			echo $this -> Form -> input('dat_fecha_nacimiento', array('label' => 'Fecha de nacimiento:', 'col' => '1'));
+			echo $this -> Form -> input('dat_fecha_nacimiento', array('label' => 'Fecha de nacimiento:', 'col' => '1', 'class'=>'date'));
 			echo $this -> Form -> input('dat_tipo_de_sangre', array('label' => 'Tipo de sangre:', 'type' => 'select', 'options' => $tipos_de_sangre, 'empty' => 'Seleccione...', 'col' => '2'));
 			echo $this -> Form -> input('dat_estado_civil', array('label' => 'Estado civil:', 'type' => 'select', 'options' => $estados_civiles, 'empty' => 'Seleccione...', 'col' => '3'));
 			echo $this -> Form -> input('dat_grado_estudio', array('label' => 'Grado de estudio:', 'type' => 'select', 'options' => $grados_de_estudio, 'empty' => 'Seleccione...', 'col' => '4'));
@@ -33,8 +34,8 @@
 			<?php
 			echo $this -> Form -> input('dat_hijos_mayores', array('type'=>'number','label' => 'No. de hijos mayores:', 'col' => '0'));
 			echo $this -> Form -> input('dat_hijos_menores', array('type'=>'number','label' => 'No. de hijos menores:', 'col' => '1'));
-			echo $this -> Form -> input('dat_tipo_discapacidad', array('label' => 'Tipo de discapacidad:', 'type' => 'select', 'options' => $tipos_de_discapacidad, 'empty' => 'Seleccione...', 'col' => '2'));
-			echo $this -> Form -> input('dat_porcentaje_de_discapacidad', array('label' => 'Porcentaje de discapacidad:', 'col' => '3'));
+			echo $this -> Form -> input('dat_tipo_discapacidad', array('label' => 'Tipo de discapacidad:', 'type' => 'select', 'options' => $tipos_de_discapacidad, 'empty' => 'Ninguna', 'col' => '2'));
+			echo $this -> Form -> input('dat_porcentaje_de_discapacidad', array('label' => 'Porcentaje de discapacidad:', 'div' => 'input porcentaje','col' => '3'));
 			?>
 		</div>
 	</div>
