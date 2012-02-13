@@ -7,8 +7,22 @@ App::uses('AppController', 'Controller');
  */
 class ConfiguracionesController extends AppController {
 	
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this -> Auth -> allow('getValorConfiguracion');
+	}
+	
 	public function beforeRender() {
 		$this -> layout = "parametros";
+	}
+	
+	public function getValorConfiguracion($valor = null) {
+		if($valor) {
+			$valor_configuracion = $this -> Configuracion -> read($valor, 1);
+			return $valor_configuracion['Configuracion'][$valor];
+		} else {
+			return null;
+		}
 	}
 
 	/**

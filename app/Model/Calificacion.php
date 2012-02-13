@@ -128,28 +128,4 @@ class Calificacion extends AppModel {
 		)
 	);
 
-
-/**
- * hasAndBelongsToMany associations
- *
- * @var array
- */
-	public $hasAndBelongsToMany = array(
-		'TiposDe' => array(
-			'className' => 'TiposDe',
-			'joinTable' => 'tipos_de_calificaciones',
-			'foreignKey' => 'calificacion_id',
-			'associationForeignKey' => 'tipos_de_id',
-			'unique' => true,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'finderQuery' => '',
-			'deleteQuery' => '',
-			'insertQuery' => ''
-		)
-	);
-
 }
