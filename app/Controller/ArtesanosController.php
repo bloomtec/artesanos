@@ -144,7 +144,8 @@ class ArtesanosController extends AppController {
 					'Calificacion.artesano_id' => $artesano['Artesano']['id']
 				),
 				'order' => array(
-					'Calificacion.created' => 'DESC' // Dejar la más reciente calificación en la posición 0
+					'Calificacion.created' => 'DESC', // Ordenar por creacion, última primero
+					'Calificacion.cal_estado' => 'DESC' // Ordenar por activo, activo primero
 				)
 			)
 		);
@@ -200,7 +201,7 @@ class ArtesanosController extends AppController {
 				 * Obtener las fechas relacionadas con la última calificación creada
 				 */
 				$fecha_expiracion = explode(' ', $calificaciones[0]['Calificacion']['cal_fecha_expiracion']);
-				$resultado_validacion['Fechas'] = $this -> validarCalificacionObtenerFechas($fecha_expiracion[0]);
+				$resultado_validacion['InfoFecha'] = $this -> validarCalificacionObtenerFechas($fecha_expiracion[0]);
 				
 				
 				/**
@@ -267,6 +268,22 @@ class ArtesanosController extends AppController {
 		
 		$fecha_actual = new DateTime('now');
 		$fechas['FechaActual'] = $fecha_actual -> format('Y-m-d');
+		
+		$fechas['Multa'] = 0;
+		
+		if(($fecha_actual >= $fecha_rango_menor_registro) && ($fecha_actual <= $fecha_expiracion)) {
+			$fechas['EnRango'] = 1;
+			$fechas['Mensaje'] = 'Entre las fechas de registro';
+		} else {
+			$fechas['EnRango'] = 0;
+			if($fecha_rango_menor_registro >= $fecha_actual) {
+				$fechas['Mensaje'] = 'Esta tratando de hacer un registro antes de que se cumpla el tiempo de la calificación actual';
+			} else {
+				$fechas['Mensaje'] = 'Se ha pasado la fecha limite de registro';
+				$fechas['Multa'] = 1;
+			}
+		}
+		
 		return $fechas;
 	}
 
