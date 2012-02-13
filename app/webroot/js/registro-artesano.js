@@ -58,7 +58,7 @@ $(function(){
 			if(response.Calificar){
 				
 			}else{
-				
+				alert(response.Mensaje);
 			}
 		});
 	}
