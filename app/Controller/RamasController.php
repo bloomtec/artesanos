@@ -6,7 +6,7 @@ App::uses('AppController', 'Controller');
  * @property Rama $Rama
  */
 class RamasController extends AppController {
-	
+
 	public function beforeRender() {
 		$this -> layout = 'parametros';
 	}
@@ -51,7 +51,7 @@ class RamasController extends AppController {
 				$this -> Session -> setFlash(__('The rama could not be saved. Please, try again.'), 'crud/error');
 			}
 		}
-		$gruposDeRamas = $this -> Rama -> GruposDeRama -> find('list', array('conditions' => array('GruposDeRama.id'=>$group_id)));
+		$gruposDeRamas = $this -> Rama -> GruposDeRama -> find('list', array('conditions' => array('GruposDeRama.id' => $group_id)));
 		$this -> set(compact('gruposDeRamas'));
 		$this -> set('value', $group_id);
 		$this -> set('referer', $this -> referer());
@@ -104,6 +104,7 @@ class RamasController extends AppController {
 		$this -> Session -> setFlash(__('Rama was not deleted'), 'crud/error');
 		$this -> redirect($this -> referer());
 	}
+
 	
 	function obtenerPorGrupo($grupoRamaId = null){
 		echo json_encode($this -> Rama -> find ('list',array('conditions'=>array('grupos_de_rama_id'=>$grupoRamaId))));

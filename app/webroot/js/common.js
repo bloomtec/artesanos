@@ -61,7 +61,7 @@ $(function() {
 		':number' 	: 'Este campo debe ser númerico',
 		':url' 		: 'Formato de URL no valido',
 		'[max]'	 	: 'Este campo no puede ser mayor que $1',
-		'[min]'		: 'Este campo no puede ser menor que $1',
+		'[min]'		: 'Este campo no puede ser menor que 	$1',
 		'[required]'	: 'Campo obligatorio'
 	});
 	$('form[id!=registro]').validator({lang:'es',messageClass:'error-form'});
