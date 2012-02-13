@@ -55,7 +55,11 @@ $(function(){
 	
 	function validarCalificacion(){
 		BJS.post('/artesanos/validarCalificacion',{cedula:$("#ArtesanoArtCedula").val(),tipoDeCalificacion:$("#ArtesanoTipoCalificaion option:selected").val(),rama:$('#ArtesanoRama option:selected').val()},function(response){
-			
+			if(response.Calificar){
+				
+			}else{
+				
+			}
 		});
 	}
 });
