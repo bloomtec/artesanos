@@ -167,16 +167,22 @@ class ArtesanosController extends AppController {
 	 * Tipo De Calificacion Normal :: 1
 	 */
 	private function validarCalificacionNormal($artesano, $calificaciones, $rama_id) {
-		$anos_renovacion_artesano_autonomo = $this -> requestAction('/configuraciones/getValorConfiguracion/con_anos_renovacion_artesanos_autonomos');
-		$anos_renovacion_artesano_normal = $this -> requestAction('/configuraciones/getValorConfiguracion/con_anos_renovacion_artesanos_normales');
+		$resultado_validacion = array();
+		$resultado_validacion['Datos'] = $artesano;
+		$resultado_validacion['Calificar'] = 0;
+		
 		/**
 		 * ¿Hay un artesano registrado?
 		 */
 		if(!empty($artesano)) { // Si
 			
 		} else { // No
-			echo json_encode(array('Datos' => $artesano, 'Calificar' => 0, 'Mensaje' => 'No hay registros previos como artesano autónomo.'));
+			$resultado_validacion['Mensaje'] = 'No hay registros previos como artesano autónomo.';
 		}
+		
+		// Hacer echo del resulado
+		echo json_encode($resultado_validacion);
+		
 		// normal -> ya debe de haber existido el registro
 		// normal -> viene de autónomo, que este en el rango de expiración; si ya expiro la fecha de calificación se avisa la multa y se procede, si esta dentro del rango se dice que si, antes no.
 		// normal -> recalificación -- misma rama de la calificacion anterior.
@@ -189,7 +195,7 @@ class ArtesanosController extends AppController {
 		$resultado_validacion = array();
 		$resultado_validacion['Datos'] = $artesano;
 		$resultado_validacion['Calificar'] = 0;
-		$anos_renovacion_artesano_autonomo = $this -> requestAction('/configuraciones/getValorConfiguracion/con_anos_renovacion_artesanos_autonomos');
+		
 		/**
 		 * ¿Hay un artesano registrado?
 		 */
@@ -204,7 +210,6 @@ class ArtesanosController extends AppController {
 				 */
 				$fecha_expiracion = explode(' ', $calificaciones[0]['Calificacion']['cal_fecha_expiracion']);
 				$resultado_validacion['InfoFecha'] = $this -> validarCalificacionObtenerFechas($fecha_expiracion[0]);
-				
 				
 				/**
 				 * Se tienen calificaciones previas. Revisar si ya esta como artesano normal o no.
@@ -248,6 +253,9 @@ class ArtesanosController extends AppController {
 			$resultado_validacion['Calificar'] = 1;
 		}
 		
+		/**
+		 * Si se permite hacer la calificación validar si hay o no multas por fechas incumplidas
+		 */
 		if($resultado_validacion['Calificar'] && isset($resultado_validacion['InfoFecha']['Multa']) && $resultado_validacion['InfoFecha']['Multa']) {
 			$resultado_validacion['Mensaje'] = $resultado_validacion['InfoFecha']['Mensaje'];
 		}
