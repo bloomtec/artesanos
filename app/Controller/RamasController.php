@@ -6,6 +6,11 @@ App::uses('AppController', 'Controller');
  * @property Rama $Rama
  */
 class RamasController extends AppController {
+	
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this -> Auth -> allow('obtenerPorGrupo');
+	}
 
 	public function beforeRender() {
 		$this -> layout = 'parametros';

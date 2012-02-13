@@ -9,7 +9,7 @@ class ParametrosInformativosController extends AppController {
 	
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('getValores');
+		$this -> Auth -> allow('getValores', 'getNombre', 'getNombreItemParametro');
 	}
 	
 	public function beforeRender() {
@@ -68,6 +68,15 @@ class ParametrosInformativosController extends AppController {
 			echo 'error';
 		}
 		exit(0);
+	}
+	
+	public function getNombreItemParametro($id = null, $item = null) {
+		if($id) {
+			$valores = $this -> ParametrosInformativo -> getValores($id);
+			return $valores[$item];
+		} else {
+			return null;
+		}
 	}
 
 }

@@ -167,7 +167,7 @@ class UsuariosController extends AppController {
 	public function setInfoPermisos($id_usuario = null, $permisos = null) {
 		$this -> recursive = -1;
 		$usuario = $this -> Usuario -> find('first', array('conditions' => array('Usuario.id' => $id_usuario)));
-		if($usuario['Usuario']['rol_id'] == 2) {
+		if($usuario['Usuario']['rol_id'] == 2 || $usuario['Usuario']['rol_id'] == 3) {
 			// Se es operador. Asignar acorde los permisos asignados.
 			$aro_id = $this -> Usuario -> query("SELECT `id` FROM `aros` WHERE `model`='Usuario' AND `foreign_key`=$id_usuario");
 			$aro_id = $aro_id[0]['aros']['id'];
