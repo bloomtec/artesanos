@@ -9,7 +9,7 @@ class ArtesanosController extends AppController {
 	
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('validarCalificacion', 'validarCalificacionAutonomo', 'validarCalificacionNormal');
+		$this -> Auth -> allow('validarCalificacion', 'validarCalificacionAutonomo', 'validarCalificacionNormal', 'validarCalificacionObtenerFechas');
 	}
 
 	/**
@@ -44,6 +44,16 @@ class ArtesanosController extends AppController {
 	public function add() {
 		$this -> Artesano -> currentUsrId = $this -> Auth -> user('id');
 		if ($this -> request -> is('post')) {
+			/**
+			 * A tener en cuenta:
+			 * - Crear primero el artesano
+			 * - Incluir los datos personales
+			 * - Crear la calificación
+			 * - Adjuntar talleres
+			 * - Adjuntar locales
+			 * - Adjuntar lo relacionado del taller
+			 * - Asignar inspectores y fecha de inspección
+			 */
 			debug($this -> request -> data);
 			/*
 			 $this -> Artesano -> create();
@@ -187,6 +197,13 @@ class ArtesanosController extends AppController {
 			 */
 			if(!empty($calificaciones)) { // Si
 				/**
+				 * Obtener las fechas relacionadas con la última calificación creada
+				 */
+				$fecha_expiracion = explode(' ', $calificaciones[0]['Calificacion']['cal_fecha_expiracion']);
+				$resultado_validacion['Fechas'] = $this -> validarCalificacionObtenerFechas($fecha_expiracion[0]);
+				
+				
+				/**
 				 * Se tienen calificaciones previas. Revisar si ya esta como artesano normal o no.
 				 */
 				$existe_calificacion_como_artesano_normal = false;
@@ -235,6 +252,22 @@ class ArtesanosController extends AppController {
 			$resultado_validacion['Mensaje'] = 'Se puede calificar como artesano autónomo';
 			echo json_encode($resultado_validacion);
 		}
+	}
+
+	private function validarCalificacionObtenerFechas($fecha_expiracion) {
+		$fechas = array();
+		$fecha_rango_menor_registro = strtotime('-1 week', strtotime($fecha_expiracion));
+		
+		$fecha_expiracion = DateTime::createFromFormat('Y-m-d', $fecha_expiracion);
+		$fecha_rango_menor_registro = date('Y-m-d', $fecha_rango_menor_registro);
+		$fecha_rango_menor_registro = new DateTime($fecha_rango_menor_registro);
+		
+		$fechas['RangoRegistroFin'] = $fecha_expiracion -> format('Y-m-d');
+		$fechas['RangoRegistroInicio'] = $fecha_rango_menor_registro -> format('Y-m-d');
+		
+		$fecha_actual = new DateTime('now');
+		$fechas['FechaActual'] = $fecha_actual -> format('Y-m-d');
+		return $fechas;
 	}
 
 }
