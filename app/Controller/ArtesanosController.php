@@ -6,6 +6,11 @@ App::uses('AppController', 'Controller');
  * @property Artesano $Artesano
  */
 class ArtesanosController extends AppController {
+	
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this -> Auth -> allow('validarCalificacion');
+	}
 
 	/**
 	 * index method
@@ -41,13 +46,13 @@ class ArtesanosController extends AppController {
 		if ($this -> request -> is('post')) {
 			debug($this -> request -> data);
 			/*
-			$this -> Artesano -> create();
-			if ($this -> Artesano -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The artesano has been saved'), 'crud/success');
-				$this -> redirect(array('action' => 'index'));
-			} else {
-				$this -> Session -> setFlash(__('The artesano could not be saved. Please, try again.'), 'crud/error');
-			}
+			 $this -> Artesano -> create();
+			 if ($this -> Artesano -> save($this -> request -> data)) {
+			 $this -> Session -> setFlash(__('The artesano has been saved'), 'crud/success');
+			 $this -> redirect(array('action' => 'index'));
+			 } else {
+			 $this -> Session -> setFlash(__('The artesano could not be saved. Please, try again.'), 'crud/error');
+			 }
 			 */
 		}
 		/**
@@ -65,7 +70,7 @@ class ArtesanosController extends AppController {
 		 * 11	Detalle (Producto)
 		 * 12	Procedencia (Producto)
 		 */
-		
+
 		$nacionalidades = $this -> Artesano -> getValores(1);
 		$tipos_de_sangre = $this -> Artesano -> getValores(2);
 		$estados_civiles = $this -> Artesano -> getValores(3);
@@ -78,15 +83,11 @@ class ArtesanosController extends AppController {
 		$procedencias_materia_prima = $this -> Artesano -> getValores(10);
 		$detalles_producto = $this -> Artesano -> getValores(11);
 		$procedencias_producto = $this -> Artesano -> getValores(12);
-		$this->loadModel('TiposDeCalificacion');
-		$this->loadModel('GruposDeRama');
+		$this -> loadModel('TiposDeCalificacion');
+		$this -> loadModel('GruposDeRama');
 		$tipos_de_calificacion = $this -> TiposDeCalificacion -> find('list');
-		$grupos_de_ramas = $this -> GruposDeRama ->find('list');
-		$this -> set(compact(
-			'nacionalidades','tipos_de_sangre','estados_civiles','grados_de_estudio','sexos','tipos_de_discapacidad',
-			'maquinarias_y_herramientas','tipos_de_adquisicion_maquinaria','tipos_de_materia_prima',
-			'procedencias_materia_prima','detalles_producto','procedencias_producto','grupos_de_ramas','tipos_de_calificacion'
-		));
+		$grupos_de_ramas = $this -> GruposDeRama -> find('list');
+		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos', 'tipos_de_discapacidad', 'maquinarias_y_herramientas', 'tipos_de_adquisicion_maquinaria', 'tipos_de_materia_prima', 'procedencias_materia_prima', 'detalles_producto', 'procedencias_producto', 'grupos_de_ramas', 'tipos_de_calificacion'));
 		/**
 		 * Provincias
 		 */
@@ -118,7 +119,31 @@ class ArtesanosController extends AppController {
 		}
 	}
 
-	function validarCalificacion(){
+	function validarCalificacion() {
+		$this -> layout = "ajax";
+		$cedula = trim($this -> params['named']['cedula']);
+		$rama_id = $this -> params['named']['rama_id'];
+		$tipo_de_calificacion = $this -> params['named']['tipoDeCalificacion'];
 		
+		// Verificar sí el artesano está o no registrado actualmente
+		$artesano = $this -> Artesano -> find('first', array('conditions' => array('Artesano.art_cedula' => $cedula)));
+		
+		if(!empty($artesano)) {
+			// El artesano ya está registrado; buscar si ya tiene una calificación en la rama propuesta
+			$calficaciones = $this -> Artesano -> Calificacion -> find('all', array('conditions' => array('Calificacion.artesano_id' => $artesano['Artesano']['id'], 'Calificacion.rama_id' => $rama_id)));
+			if(!empty($calficaciones)) {
+				// Ya existe una calificación para este artesano en esta rama
+				echo json_encode(array('Datos' => $artesano, 'Calificar' => 0));
+			} else {
+				// No hay calificaciones en esta rama para el artesano
+				echo json_encode(array('Datos' => $artesano, 'Calificar' => 1));
+			}
+		} else {
+			// No hay personas registradas con dicha cédula
+			echo json_encode(array('Datos' => $artesano, 'Calificar' => 1));
+		}
+		
+		exit(0);
 	}
+
 }
