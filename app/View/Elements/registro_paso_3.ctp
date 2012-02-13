@@ -28,7 +28,7 @@
 				<td><input name="data[Trabajadores][tra_fecha_ingreso][0]" type="date" id="TrabajadoresTraFechaIngreso" /></td>
 				<td><input name="data[Trabajadores][tra_afiliado_seguro][0]" type="checkbox" value="0" /></td>
 				<td><input name="data[Trabajadores][tra_fecha_nacimiento][0]" type="date" id="TrabajadoresTraFechaNacimiento" /></td>
-				<td><input name="data[Trabajadores][tra_pago_mensual][0]" type="number" id="TrabajadoresTraPagoMensual" /></td>
+				<td><input name="data[Trabajadores][tra_pago_mensual][0]" type="number" id="TrabajadoresTraPagoMensual" class='salarioOperarios'/></td>
 			</tr>
 			<tr>
 				<input name="data[Trabajadores][tipos_de_trabajador_id][1]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="1" />
@@ -45,7 +45,7 @@
 				<td><input name="data[Trabajadores][tra_fecha_ingreso][1]" type="date" id="TrabajadoresTraFechaIngreso" /></td>
 				<td><input name="data[Trabajadores][tra_afiliado_seguro][1]" type="checkbox" value="0" /></td>
 				<td><input name="data[Trabajadores][tra_fecha_nacimiento][1]" type="date" id="TrabajadoresTraFechaNacimiento" /></td>
-				<td><input name="data[Trabajadores][tra_pago_mensual][1]" type="number" id="TrabajadoresTraPagoMensual" /></td>
+				<td><input name="data[Trabajadores][tra_pago_mensual][1]" type="number" id="TrabajadoresTraPagoMensual"  class='salarioOperarios' /></td>
 			</tr>
 			<tr>
 				<input name="data[Trabajadores][tipos_de_trabajador_id][2]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="1" />
@@ -62,7 +62,7 @@
 				<td><input name="data[Trabajadores][tra_fecha_ingreso][2]" type="date" id="TrabajadoresTraFechaIngreso" /></td>
 				<td><input name="data[Trabajadores][tra_afiliado_seguro][2]" type="checkbox" value="0" /></td>
 				<td><input name="data[Trabajadores][tra_fecha_nacimiento][2]" type="date" id="TrabajadoresTraFechaNacimiento" /></td>
-				<td><input name="data[Trabajadores][tra_pago_mensual][2]" type="number" id="TrabajadoresTraPagoMensual" /></td>
+				<td><input name="data[Trabajadores][tra_pago_mensual][2]" type="number" id="TrabajadoresTraPagoMensual"  class='salarioOperarios' /></td>
 			</tr>
 			<tr>
 				<input name="data[Trabajadores][tipos_de_trabajador_id][3]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="1" />
@@ -79,7 +79,7 @@
 				<td><input name="data[Trabajadores][tra_fecha_ingreso][3]" type="date" id="TrabajadoresTraFechaIngreso" /></td>
 				<td><input name="data[Trabajadores][tra_afiliado_seguro][3]" type="checkbox" value="0" /></td>
 				<td><input name="data[Trabajadores][tra_fecha_nacimiento][3]" type="date" id="TrabajadoresTraFechaNacimiento" /></td>
-				<td><input name="data[Trabajadores][tra_pago_mensual][3]" type="number" id="TrabajadoresTraPagoMensual" /></td>
+				<td><input name="data[Trabajadores][tra_pago_mensual][3]" type="number" id="TrabajadoresTraPagoMensual"  class='salarioOperarios'/></td>
 			</tr>
 			<tr>
 				<input name="data[Trabajadores][tipos_de_trabajador_id][4]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="1" />
@@ -96,7 +96,7 @@
 				<td><input name="data[Trabajadores][tra_fecha_ingreso][4]" type="date" id="TrabajadoresTraFechaIngreso" /></td>
 				<td><input name="data[Trabajadores][tra_afiliado_seguro][4]" type="checkbox" value="0" /></td>
 				<td><input name="data[Trabajadores][tra_fecha_nacimiento][4]" type="date" id="TrabajadoresTraFechaNacimiento" /></td>
-				<td><input name="data[Trabajadores][tra_pago_mensual][4]" type="number" id="TrabajadoresTraPagoMensual" /></td>
+				<td><input name="data[Trabajadores][tra_pago_mensual][4]" type="number" id="TrabajadoresTraPagoMensual"  class='salarioOperarios' /></td>
 			</tr>
 		</table>
 		<a class="AñadirRegistroOperador button" href="#" >Agregar Otro</a>
@@ -130,7 +130,7 @@
 				<td><input name="data[Trabajadores][tra_fecha_ingreso][0]" type="date" id="TrabajadoresTraFechaIngreso" /></td>
 				<td><input name="data[Trabajadores][tra_afiliado_seguro][0]" type="checkbox" value="0" /></td>
 				<td><input name="data[Trabajadores][tra_fecha_nacimiento][0]" type="date" id="TrabajadoresTraFechaNacimiento" /></td>
-				<td><input name="data[Trabajadores][tra_pago_mensual][0]" type="number" id="TrabajadoresTraPagoMensual" /></td>
+				<td><input name="data[Trabajadores][tra_pago_mensual][0]" type="number" id="TrabajadoresTraPagoMensual"  class='salarioAprendiz' /></td>
 			</tr>
 			<tr>
 				<input name="data[Trabajadores][tipos_de_trabajador_id][1]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="2" />
@@ -147,7 +147,7 @@
 				<td><input name="data[Trabajadores][tra_fecha_ingreso][1]" type="date" id="TrabajadoresTraFechaIngreso" /></td>
 				<td><input name="data[Trabajadores][tra_afiliado_seguro][1]" type="checkbox" value="0" /></td>
 				<td><input name="data[Trabajadores][tra_fecha_nacimiento][1]" type="date" id="TrabajadoresTraFechaNacimiento" /></td>
-				<td><input name="data[Trabajadores][tra_pago_mensual][1]" type="number" id="TrabajadoresTraPagoMensual" /></td>
+				<td><input name="data[Trabajadores][tra_pago_mensual][1]" type="number" id="TrabajadoresTraPagoMensual" class='salarioAprendiz' /></td>
 			</tr>
 			<tr>
 				<input name="data[Trabajadores][tipos_de_trabajador_id][2]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="2" />
@@ -164,7 +164,7 @@
 				<td><input name="data[Trabajadores][tra_fecha_ingreso][2]" type="date" id="TrabajadoresTraFechaIngreso" /></td>
 				<td><input name="data[Trabajadores][tra_afiliado_seguro][2]" type="checkbox" value="0" /></td>
 				<td><input name="data[Trabajadores][tra_fecha_nacimiento][2]" type="date" id="TrabajadoresTraFechaNacimiento" /></td>
-				<td><input name="data[Trabajadores][tra_pago_mensual][2]" type="number" id="TrabajadoresTraPagoMensual" /></td>
+				<td><input name="data[Trabajadores][tra_pago_mensual][2]" type="number" id="TrabajadoresTraPagoMensual" class='salarioAprendiz' /></td>
 			</tr>
 			<tr>
 				<input name="data[Trabajadores][tipos_de_trabajador_id][4]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="2" />
@@ -181,7 +181,7 @@
 				<td><input name="data[Trabajadores][tra_fecha_ingreso][4]" type="date" id="TrabajadoresTraFechaIngreso" /></td>
 				<td><input name="data[Trabajadores][tra_afiliado_seguro][4]" type="checkbox" value="0" /></td>
 				<td><input name="data[Trabajadores][tra_fecha_nacimiento][4]" type="date" id="TrabajadoresTraFechaNacimiento" /></td>
-				<td><input name="data[Trabajadores][tra_pago_mensual][4]" type="number" id="TrabajadoresTraPagoMensual" /></td>
+				<td><input name="data[Trabajadores][tra_pago_mensual][4]" type="number" id="TrabajadoresTraPagoMensual" class='salarioAprendiz' /></td>
 			</tr>
 			<tr>
 				<input name="data[Trabajadores][tipos_de_trabajador_id][5]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="2" />
@@ -198,7 +198,7 @@
 				<td><input name="data[Trabajadores][tra_fecha_ingreso][5]" type="date" id="TrabajadoresTraFechaIngreso" /></td>
 				<td><input name="data[Trabajadores][tra_afiliado_seguro][5]" type="checkbox" value="0" /></td>
 				<td><input name="data[Trabajadores][tra_fecha_nacimiento][5]" type="date" id="TrabajadoresTraFechaNacimiento" /></td>
-				<td><input name="data[Trabajadores][tra_pago_mensual][5]" type="number" id="TrabajadoresTraPagoMensual" /></td>
+				<td><input name="data[Trabajadores][tra_pago_mensual][5]" type="number" id="TrabajadoresTraPagoMensual" class='salarioAprendiz' /></td>
 			</tr>
 		</table>
 	</div>
@@ -247,7 +247,7 @@
 			<tr>
 				<td>Salario Aprendices</td>
 				<td>
-					<?php echo $this->Form->input('Calificacion.cal_salario_aprendices', array('label' => false, 'type' => 'hidden','class'=>'salario_aprendices')); ?>
+					<?php echo $this->Form->input('Calificacion.cal_salario_aprendices', array('label' => false, 'disabled' => true,'class'=>'salario_aprendices')); ?>
 					<?php echo $this->Form->input('Calificacion.cal_salario_aprendices', array( 'type' => 'hidden','class'=>'salario_aprendices')); ?>
 				</td>
 			</tr>
@@ -297,7 +297,7 @@
 		
 	
 			<h2>Ingresos</h2>
-			<table class='balance capital'>
+			<table class='balance ingresos'>
 			<tr>
 				<th> Ingreso </th>
 				<th> Valor </th>
@@ -326,7 +326,7 @@
 		<h2>Balance General</h2>
 		<?php echo $this -> Form -> input('Calificacion.cal_balance_total_ingresos',array('disabled'=>true,'label'=>'Total Ingresos:','class'=>'balance_total_ingresos'));?>
 		<?php echo $this -> Form -> input('Calificacion.cal_balance_total_egresos',array('disabled'=>true,'label'=>'Total Egresos:','class'=>'balance_total_egresos'));?>
-		<?php echo $this -> Form -> input('Calificacion.cal_balance_rentabilidad_mensual',array('disabled'=>true,'label'=>'Total Ingresos:','class'=>'balance_rentabilidad_mensual'));?>
+		<?php echo $this -> Form -> input('Calificacion.cal_balance_rentabilidad_mensual',array('disabled'=>true,'label'=>'Rentabilidad Mensual:','class'=>'balance_rentabilidad_mensual'));?>
 	</div>
 </fieldset>
 <div class='actions validar'>
