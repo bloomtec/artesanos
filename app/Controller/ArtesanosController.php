@@ -93,16 +93,18 @@ class ArtesanosController extends AppController {
 		$procedencias_materia_prima = $this -> Artesano -> getValores(10);
 		$detalles_producto = $this -> Artesano -> getValores(11);
 		$procedencias_producto = $this -> Artesano -> getValores(12);
-		$this -> loadModel('TiposDeCalificacion');
-		$this -> loadModel('GruposDeRama');
-		$tipos_de_calificacion = $this -> TiposDeCalificacion -> find('list');
-		$grupos_de_ramas = $this -> GruposDeRama -> find('list');
+		$tipos_de_calificacion = $this -> Artesano -> Calificacion -> TiposDeCalificacion -> find('list');
+		$grupos_de_ramas = $this -> Artesano -> Calificacion -> Rama -> GruposDeRama -> find('list');
 		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos', 'tipos_de_discapacidad', 'maquinarias_y_herramientas', 'tipos_de_adquisicion_maquinaria', 'tipos_de_materia_prima', 'procedencias_materia_prima', 'detalles_producto', 'procedencias_producto', 'grupos_de_ramas', 'tipos_de_calificacion'));
 		/**
-		 * Provincias
+		 * Provincias y demas
 		 */
 		$provincias = $this -> Artesano -> Calificacion -> Taller -> Provincia -> find('list');
-		$this -> set(compact('provincias'));
+		$cantones = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Canton -> find('list');
+		$ciudades = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Canton -> Ciudad -> find('list');
+		$sectores = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Canton -> Ciudad -> Sector -> find('list');
+		$parroquias = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Canton -> Ciudad -> Sector -> Parroquia -> find('list');
+		$this -> set(compact('provincias', 'cantones', 'ciudades', 'sectores', 'parroquias'));
 	}
 
 	/**
@@ -219,7 +221,6 @@ class ArtesanosController extends AppController {
 				 */
 				if($existe_calificacion_como_artesano_normal) { // Si
 					$resultado_validacion['Mensaje'] = 'Este artesano ya esta calificado como artesano normal';
-					echo json_encode($resultado_validacion);
 				} else { // No
 					/**
 					 * Verificar si hay calificaciones previas con la misma rama
@@ -236,23 +237,23 @@ class ArtesanosController extends AppController {
 					 */
 					if($existe_calificacion_en_la_misma_rama) { // Si
 						$resultado_validacion['Mensaje'] = 'Este artesano ya se ha registrado con la rama seleccionada';
-						echo json_encode($resultado_validacion);
 					} else { // No
 						$resultado_validacion['Calificar'] = 1;
-						$resultado_validacion['Mensaje'] = 'Se puede calificar como artesano autónomo';
-						echo json_encode($resultado_validacion);
 					}
 				}
 			} else { // No
 				$resultado_validacion['Calificar'] = 1;
-				$resultado_validacion['Mensaje'] = 'Se puede calificar como artesano autónomo';
-				echo json_encode($resultado_validacion);
 			}
 		} else { // No
 			$resultado_validacion['Calificar'] = 1;
-			$resultado_validacion['Mensaje'] = 'Se puede calificar como artesano autónomo';
-			echo json_encode($resultado_validacion);
 		}
+		
+		if($resultado_validacion['Calificar'] && isset($resultado_validacion['InfoFecha']['Multa']) && $resultado_validacion['InfoFecha']['Multa']) {
+			$resultado_validacion['Mensaje'] = $resultado_validacion['InfoFecha']['Mensaje'];
+		}
+		
+		// Hacer echo del resultado
+		echo json_encode($resultado_validacion);
 	}
 
 	private function validarCalificacionObtenerFechas($fecha_expiracion) {
