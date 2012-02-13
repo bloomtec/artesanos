@@ -121,9 +121,9 @@ class ArtesanosController extends AppController {
 
 	function validarCalificacion() {
 		$this -> layout = "ajax";
-		$cedula = trim($this -> params['named']['cedula']);
-		$rama_id = $this -> params['named']['rama_id'];
-		$tipo_de_calificacion = $this -> params['named']['tipoDeCalificacion'];
+		$cedula = trim($_POST['cedula']);
+		$rama_id = $_POST['rama'];
+		$tipo_de_calificacion = $_POST['tipoDeCalificacion'];
 		
 		// Verificar sí el artesano está o no registrado actualmente
 		$artesano = $this -> Artesano -> find('first', array('conditions' => array('Artesano.art_cedula' => $cedula)));
