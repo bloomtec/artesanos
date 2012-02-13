@@ -7,6 +7,11 @@ App::uses('AppController', 'Controller');
  */
 class CiudadesController extends AppController {
 	
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this -> Auth -> allow('getNombre', 'getCiudades');
+	}
+	
 	public function beforeRender() {
 		$this -> layout = "parametros";
 	}

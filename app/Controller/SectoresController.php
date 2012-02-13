@@ -6,6 +6,11 @@ App::uses('AppController', 'Controller');
  * @property Sector $Sector
  */
 class SectoresController extends AppController {
+	
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this -> Auth -> allow('getNombre', 'getSectores');
+	}
 
 	public function beforeRender() {
 		$this -> layout = "parametros";

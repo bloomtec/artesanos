@@ -193,6 +193,20 @@ class Usuario extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
+		),
+		'Ciudad' => array(
+			'className' => 'Ciudad',
+			'foreignKey' => 'ciudad_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'Sector' => array(
+			'className' => 'Sector',
+			'foreignKey' => 'sector_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
 		)
 	);
 

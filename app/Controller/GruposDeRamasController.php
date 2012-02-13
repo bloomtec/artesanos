@@ -7,6 +7,11 @@ App::uses('AppController', 'Controller');
  */
 class GruposDeRamasController extends AppController {
 	
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this -> Auth -> allow('getNombre');
+	}
+	
 	public function beforeRender() {
 		$this -> layout = 'parametros';
 	}

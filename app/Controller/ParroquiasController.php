@@ -7,6 +7,11 @@ App::uses('AppController', 'Controller');
  */
 class ParroquiasController extends AppController {
 	
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this -> Auth -> allow('getNombre', 'getParroquias');
+	}
+	
 	public function beforeRender() {
 		$this -> layout = "parametros";
 	}

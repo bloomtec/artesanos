@@ -9,7 +9,7 @@ class UsuariosController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('inicializarAcl');
+		$this -> Auth -> allow('inicializarAcl', 'logout', 'verificarAcceso', 'getNombre', 'getInfoPermisos', 'getValoresPermisos', 'setInfoPermisos');
 	}
 
 	public function verificarAcceso() {
@@ -107,7 +107,9 @@ class UsuariosController extends AppController {
 		}
 		$usu_unidades = $this -> Usuario -> getUnidades();
 		$roles = $this -> Usuario -> Rol -> find('list');
-		$this -> set(compact('roles', 'usu_unidades'));
+		$ciudades = $this -> Usuario -> Ciudad -> find('list');
+		$sectores = $this -> Usuario -> Sector -> find('list');
+		$this -> set(compact('roles', 'usu_unidades', 'ciudades', 'sectores'));
 	}
 
 	/**
@@ -140,7 +142,9 @@ class UsuariosController extends AppController {
 		$usu_unidades = $this -> Usuario -> getUnidades();
 		$roles = $this -> Usuario -> Rol -> find('list');
 		$permisos['Permisos'] = $this -> getValoresPermisos($id);
-		$this -> set(compact('roles', 'permisos', 'usu_unidades'));
+		$ciudades = $this -> Usuario -> Ciudad -> find('list');
+		$sectores = $this -> Usuario -> Sector -> find('list');
+		$this -> set(compact('roles', 'permisos', 'usu_unidades', 'ciudades', 'sectores'));
 	}
 
 	public function getInfoPermisos() {
@@ -163,7 +167,7 @@ class UsuariosController extends AppController {
 	public function setInfoPermisos($id_usuario = null, $permisos = null) {
 		$this -> recursive = -1;
 		$usuario = $this -> Usuario -> find('first', array('conditions' => array('Usuario.id' => $id_usuario)));
-		if($usuario['Usuario']['rol_id'] == 2) {
+		if($usuario['Usuario']['rol_id'] == 2 || $usuario['Usuario']['rol_id'] == 3) {
 			// Se es operador. Asignar acorde los permisos asignados.
 			$aro_id = $this -> Usuario -> query("SELECT `id` FROM `aros` WHERE `model`='Usuario' AND `foreign_key`=$id_usuario");
 			$aro_id = $aro_id[0]['aros']['id'];
@@ -194,15 +198,15 @@ class UsuariosController extends AppController {
 		 */
 
 		// Limpiar ARO's vs ACO's
-		$this -> Usuario -> query('TRUNCATE TABLE aros_acos;');
+			$this -> Usuario -> query('TRUNCATE TABLE aros_acos;');
 		// Limpiar ARO's
-		$this -> Usuario -> query('TRUNCATE TABLE aros;');
+			$this -> Usuario -> query('TRUNCATE TABLE aros;');
 		// Limpiar ACO's
-		$this -> Usuario -> query('TRUNCATE TABLE acos;');
+			$this -> Usuario -> query('TRUNCATE TABLE acos;');
 		// Limpiar Auditorias
-		$this -> Usuario -> query('TRUNCATE TABLE auditorias;');
+			$this -> Usuario -> query('TRUNCATE TABLE auditorias;');
 		// Limpiar Usuarios
-		$this -> Usuario -> query('TRUNCATE TABLE usuarios;');
+			$this -> Usuario -> query('TRUNCATE TABLE usuarios;');
 
 		exec('/var/www/artesanos/app/Console/cake -app /var/www/artesanos/app/ AclExtras.AclExtras aco_sync');
 
@@ -222,6 +226,11 @@ class UsuariosController extends AppController {
 				'foreign_key' => 2,
 				'model' => 'Rol',
 				'alias' => 'Operador'
+			),
+			2 => array(
+				'foreign_key' => 3,
+				'model' => 'Rol',
+				'alias' => 'Inspector'
 			)
 		);
 
@@ -257,36 +266,9 @@ class UsuariosController extends AppController {
 		// Se permite acceso total a los administradores
 		$this -> Acl -> allow('Administrador', 'controllers');
 
-		// Se le niega totalmente el acceso a los operadores de manera inicial
+		// Se le niega totalmente el acceso a los operadores e inspectores de manera inicial
 		$this -> Acl -> deny('Operador', 'controllers');
-		
-		// Se permite el acceso a ciertas acciones por defecto para los operadores
-		// Modulo Pages
-		$this -> Acl -> allow('Operador', 'controllers/Pages/display');
-		// Modulo Usuarios
-		$this -> Acl -> allow('Operador', 'controllers/Usuarios/logout');
-		$this -> Acl -> allow('Operador', 'controllers/Usuarios/verificarAcceso');
-		$this -> Acl -> allow('Operador', 'controllers/Usuarios/getNombre');
-		$this -> Acl -> allow('Operador', 'controllers/Usuarios/getInfoPermisos');
-		$this -> Acl -> allow('Operador', 'controllers/Usuarios/getValoresPermisos');
-		$this -> Acl -> allow('Operador', 'controllers/Usuarios/setInfoPermisos');
-		// Modulo Artesanos
-		
-		// Modulo Provincia
-		$this -> Acl -> allow('Operador', 'controllers/Provincias/getNombre');
-		$this -> Acl -> allow('Operador', 'controllers/Provincias/getProvincias');
-		// Modulo Canton
-		$this -> Acl -> allow('Operador', 'controllers/Cantones/getNombre');
-		$this -> Acl -> allow('Operador', 'controllers/Cantones/getCantones');
-		// Modulo Ciudad
-		$this -> Acl -> allow('Operador', 'controllers/Ciudades/getNombre');
-		$this -> Acl -> allow('Operador', 'controllers/Ciudades/getCiudades');
-		// Modulo Sector
-		$this -> Acl -> allow('Operador', 'controllers/Sectores/getNombre');
-		$this -> Acl -> allow('Operador', 'controllers/Sectores/getSectores');
-		// Modulo Parroquia
-		$this -> Acl -> allow('Operador', 'controllers/Parroquias/getNombre');
-		$this -> Acl -> allow('Operador', 'controllers/Parroquias/getParroquias');
+		$this -> Acl -> deny('Inspector', 'controllers');
 		
 		/**
 		 * Finished

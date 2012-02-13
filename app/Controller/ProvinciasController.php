@@ -7,6 +7,11 @@ App::uses('AppController', 'Controller');
  */
 class ProvinciasController extends AppController {
 	
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this -> Auth -> allow('getNombre', 'getProvincias');
+	}
+	
 	public function beforeRender() {
 		$this -> layout = "parametros";
 	}
