@@ -2,7 +2,7 @@
 <div class="artesanos form calificar">
 	<!-- twitter style "drawer" for displaying validation errors -->
 	<div id="drawer">
-		[ERROR MESSAGE]	margin-bottom: 30px;
+		[Hay campos no validos en el formulario, por favor verifiquelos] <br /> Recuerde que todos los campos marcados con (*) son obligatorios
 	</div>
 	<!-- the form -->
 	<?php echo $this -> Form -> create('Artesano',array('id'=>'registro')); ?>

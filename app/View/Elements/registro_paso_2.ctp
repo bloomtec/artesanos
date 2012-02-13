@@ -1,5 +1,5 @@
 <fieldset>
-	<div class="datos-equipo-trabajo">
+	<div class="datos-equipo-trabajo validar">
 		<h2>Detalle Del Equipo De Trabajo</h2>
 		<table id="TablaEquipos" class="tabla-equipo-trabajo">
 			<thead>
@@ -49,7 +49,7 @@
 		</table>
 		<a class="AñadirRegistroEquipo cancelar" href="#" >Agregar Otro</a>
 	</div>
-	<div class="datos-materia-prima">
+	<div class="datos-materia-prima validar">
 		<h2>Materia Prima Existente</h2>
 		<table id="TablaMateriaPrima" class="tabla-materia-prima">
 			<thead>
@@ -93,7 +93,7 @@
 		</table>
 		<a class="AñadirRegistroMateria cancelar" href="#" >Agregar Otro</a>
 	</div>
-	<div class="datos-producto">
+	<div class="datos-producto validar">
 		<h2>Productos Elaborados</h2>
 		<table id="TablaProductoElaborado" class="tabla-producto-elaborado">
 			<thead>
@@ -143,7 +143,7 @@
 		</table>
 		<a class="AñadirRegistroProducto cancelar" href="#" >Agregar Otro</a>
 	</div>
-	<div class='actions'>
+	<div class='actions validar'>
 	<?php echo $this -> Html -> link(__('Atras'), "#", array('class' => 'prev button'));?>
 	<?php echo $this -> Html -> link(__('Continuar'), "#" , array('class' => 'next button'));?>
 	<div style="clear:both;"></div>

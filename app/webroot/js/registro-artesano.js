@@ -5,7 +5,6 @@ $(function(){
 	$('.porcentaje').hide();
 	$(':number').keydown(function(e){
 		var key = e.charCode || e.keyCode || 0;
-		console.log(key);
 		return (
 		     key == 8 || 
 		     key == 190 ||  
@@ -16,7 +15,7 @@ $(function(){
 		     (key >= 96 && key <= 105)
 		     );
 	});
-	$('#ArtesanoDatTipoDiscapacidad').change(function(){
+	$('#DatosPersonalDatTipoDiscapacidad').change(function(){
 		if($(this).find('option:selected').val()){
 			$('.porcentaje').show();	
 		}else{
@@ -27,9 +26,7 @@ $(function(){
 	$("#wizard .validarCalificacion select").change(function(){
 		if($(this).attr('id') == "ArtesanoGrupoRama"){//actualiza el selects de ramas
 			BJS.updateSelect($("#ArtesanoRama"),"/ramas/obtenerPorGrupo/"+$("#ArtesanoGrupoRama option:selected").val(),function(){
-				if($("#wizard #ArtesanoArtCedula").val()){
 					validarCalificacion();
-				}
 			});
 		}else{
 			if($("#wizard #ArtesanoArtCedula").val()){
@@ -48,18 +45,51 @@ $(function(){
 	var api = root.scrollable();
 	var drawer = $("#drawer");
 	api.onBeforeSeek(function(event, i) {
-		console.log(i);
+		if (api.getIndex() < i) {
+			var page = root.find(".page").eq(api.getIndex()),
+				 inputs = page.find(".required :input").removeClass("error"),
+				 empty = inputs.filter(function() {
+					return $(this).val().replace(/\s*/g, '') == '';
+				 });
+				emails=inputs.filter(':email');
+				emails = emails.filter(function(){
+					var x=$(this).val();
+					var atpos=x.indexOf("@");
+					var dotpos=x.lastIndexOf(".");
+					if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
+					  {
+					  return true;
+					  }
+				});
+
+			if (empty.length || emails.length) {
+				drawer.slideDown(function()  {
+					drawer.css({"backgroundColor":"#EFBC00",'color':'black'});
+					//setTimeout(function() { drawer.css({"backgroundColor":"#EFBC00",'color':'black'}); }, 1000);
+				});
+				empty.addClass("error");
+				emails.addClass("error");
+				return false;
+			} else {
+				drawer.slideUp();
+			}
+		}
 		$("#status li").removeClass("active").eq(i).addClass("active");
 		return true;
 	});
 	
 	function validarCalificacion(){
-		BJS.post('/artesanos/validarCalificacion',{cedula:$("#ArtesanoArtCedula").val(),tipoDeCalificacion:$("#ArtesanoTipoCalificaion option:selected").val(),rama:$('#ArtesanoRama option:selected').val()},function(response){
-			if(response.Calificar){
+		if(!$("#wizard #ArtesanoArtCedula").val()){// LOGICA DE VALIDACION DE FORMATO DE CEDULA
+			alert('No ha escrito la cedula del artesano');	
+		}else{
+			BJS.JSONP('/artesanos/validarCalificacion',{cedula:$("#ArtesanoArtCedula").val(),tipoDeCalificacion:$("#ArtesanoTipoCalificaion option:selected").val(),rama:$('#ArtesanoRama option:selected').val()},function(response){
 				
-			}else{
-				alert(response.Mensaje);
-			}
-		});
+				if(response.Calificar){
+					$("#wizard .validar").css('visibility','visible');
+				}else{
+					alert(response.Mensaje);
+				}
+			});
+		}
 	}
 });

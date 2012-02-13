@@ -28,10 +28,12 @@
 /* title */
 #wizard h2 {
 	border-bottom:1px dotted #ccc;
-	font-size:22px;
-	font-weight:normal;
-	margin:10px 0 0 0;
-	padding-bottom:15px;		
+	font-size:15px;
+	font-weight:bold;
+	margin:0;
+	padding-bottom:0;
+	padding-top:1em;
+	float:none;		
 }
 
 #wizard h2 em {
@@ -45,6 +47,12 @@
 	float: left;
 	width: 130px;
 }
+#wizard fieldset{
+	padding: 0 10px;
+}
+form #wizard .datos-balance .input{
+	float:none;
+}
 form #wizard  .input {
 	float: left;
 	width: auto;
@@ -55,7 +63,7 @@ form input[type=number] {
 #wizard select{
 	min-width:130px;
 }
-.validarCalificacion a{
+#wizard .validarCalificacion a{
 	padding-top:39px;
 	display: block;
 	float:left;
@@ -106,4 +114,28 @@ form input[type=number] {
 /*TABLES*/
 #wizard table tr td, #wizard table tr th{
 	height:24px;
+}
+table.balance{
+	width:50%;
+}
+#wizard table.balance .total th{
+	text-align: center;
+}
+#wizard table div.checkbox{
+	width:70px;
+}
+#wizard table div.checkbox label {
+    clear: none;
+    display: block;
+    float: left;
+    margin-top: 0;
+    font-weight: normal;
+    font-size:10px;
+}
+#wizard table div.checkbox input {
+	float:right;
+}
+/*END TABLES*/
+#wizard .validar{
+	visibility: hidden;	
 }
