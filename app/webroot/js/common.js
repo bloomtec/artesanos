@@ -71,7 +71,7 @@ $(function() {
 	BJS.updateSelect($("#ArtesanoRama"),"/ramas/obtenerPorGrupo/"+$("#ArtesanoGrupoRama option:selected").val());
 	
 	$("#wizard #ArtesanoArtCedula").blur(function(){
-		checkCalification();
+		validarCalificacion();
 	});
 	var root = $("#wizard").scrollable();
 	var api = root.scrollable();
@@ -83,6 +83,8 @@ $(function() {
 	});
 	
 	function validarCalificacion(){
-		
+		BJS.post('/artesanos/validarCalificacion',{cedula:$("#ArtesanoArtCedula").val(),tipoDeCalificacion:$("#ArtesanoTipoCalificaion option:selected").val(),rama:$('#ArtesanoRama option:selected').val()},function(response){
+			
+		});
 	}
 });

@@ -118,4 +118,7 @@ class ArtesanosController extends AppController {
 		}
 	}
 
+	function validarCalificacion(){
+		
+	}
 }
