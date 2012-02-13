@@ -9,7 +9,7 @@ class ArtesanosController extends AppController {
 	
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('validarCalificacion');
+		$this -> Auth -> allow('validarCalificacion', 'validarCalificacionAutonomo', 'validarCalificacionNormal');
 	}
 
 	/**
@@ -127,78 +127,114 @@ class ArtesanosController extends AppController {
 		
 		// Verificar sí el artesano está o no registrado actualmente
 		$artesano = $this -> Artesano -> find('first', array('conditions' => array('Artesano.art_cedula' => $cedula)));
-		
-		if(!empty($artesano)) {
-			/**
-			 * El artesano ya está registrado
-			 * Se obtiene el conjunto de calificaciones pertenecientes para
-			 * revisar condiciones.
-			 */
-			// Calificaciones del artesano
-			$calificaciones = $this -> Artesano -> Calificacion -> find(
-				'all',
-				array(
-					'conditions' => array(
-						'Calificacion.artesano_id' => $artesano['Artesano']['id'],
-						'Calificacion.rama_id' => $rama_id
-					)
+		$calificaciones = $this -> Artesano -> Calificacion -> find(
+			'all',
+			array(
+				'conditions' => array(
+					'Calificacion.artesano_id' => $artesano['Artesano']['id']
+				),
+				'order' => array(
+					'Calificacion.created' => 'DESC' // Dejar la más reciente calificación en la posición 0
 				)
-			);
+			)
+		);
+		
+		/**
+		 * Validaciones del registro
+		 */
+		if($tipo_de_calificacion == 1) {
+			$this -> validarCalificacionNormal($artesano, $calificaciones, $rama_id);
+		} elseif($tipo_de_calificacion == 2) {
+			$this -> validarCalificacionAutonomo($artesano, $calificaciones, $rama_id);
+		}
+		exit(0);
+	}
+	
+	/**
+	 * Tipo De Calificacion Normal :: 1
+	 */
+	private function validarCalificacionNormal($artesano, $calificaciones, $rama_id) {
+		$anos_renovacion_artesano_autonomo = $this -> requestAction('/configuraciones/getValorConfiguracion/con_anos_renovacion_artesanos_autonomos');
+		$anos_renovacion_artesano_normal = $this -> requestAction('/configuraciones/getValorConfiguracion/con_anos_renovacion_artesanos_normales');
+		/**
+		 * ¿Hay un artesano registrado?
+		 */
+		if(!empty($artesano)) { // Si
 			
-			/**
-			 * Validaciones del registro
-			 */
-			if($tipo_de_calificacion == 1) {
-				/**
-				 * Calificación Normal
-				 */
-				if(!empty($calificaciones)) {
-					/**
-					 * Calificación Normal con calificaciones previas
-					 */
-					echo json_encode(array('Datos' => $artesano, 'Calificar' => 0, ''));
-				} else {
-					/**
-					 * Calificación Normal sin calificaciones previas
-					 */
-					echo json_encode(array('Datos' => $artesano, 'Calificar' => 1));
-				}
-			} else {
-				/**
-				 * Calificación Autónomo
-				 */
-				if(!empty($calificaciones)) {
-					/**
-					 * Calificación Autónomo con calificaciones previas
-					 */
-					echo json_encode(array('Datos' => $artesano, 'Calificar' => 0, ''));
-				} else {
-					/**
-					 * Calificación Autónomo sin calificaciones previas
-					 */
-					echo json_encode(array('Datos' => $artesano, 'Calificar' => 1));
-				}
-			}
-		} else {
-			/**
-			 * No hay personas registradas con dicha cédula
-			 */
-			if($tipo_de_calificacion == 1) {
-				/**
-				 * Calificación Normal
-				 */
-				echo json_encode(array('Datos' => $artesano, 'Calificar' => 0, 'Mensaje' => 'No hay registros previos como artesano autónomo.'));
-			} else {
-				/**
-				 * Calificación Autonomo
-				 */
-				echo json_encode(array('Datos' => $artesano, 'Calificar' => 1));
-			}
+		} else { // No
+			echo json_encode(array('Datos' => $artesano, 'Calificar' => 0, 'Mensaje' => 'No hay registros previos como artesano autónomo.'));
 		}
 		// normal -> ya debe de haber existido el registro
 		// normal -> viene de autónomo, que este en el rango de expiración; si ya expiro la fecha de calificación se avisa la multa y se procede, si esta dentro del rango se dice que si, antes no.
 		// normal -> recalificación -- misma rama de la calificacion anterior.
-		exit(0);
+	}
+	
+	/**
+	 * Tipo De Calificacion Autónomo :: 2
+	 */
+	private function validarCalificacionAutonomo($artesano, $calificaciones, $rama_id) {
+		$resultado_validacion = array();
+		$resultado_validacion['Datos'] = $artesano;
+		$resultado_validacion['Calificar'] = 0;
+		$anos_renovacion_artesano_autonomo = $this -> requestAction('/configuraciones/getValorConfiguracion/con_anos_renovacion_artesanos_autonomos');
+		/**
+		 * ¿Hay un artesano registrado?
+		 */
+		if(!empty($artesano)) { // Si
+			/**
+			 * Como el artesano existe, verificar si ya tiene calificaciones previas.
+			 * ¿Tiene calificaciones previas?
+			 */
+			if(!empty($calificaciones)) { // Si
+				/**
+				 * Se tienen calificaciones previas. Revisar si ya esta como artesano normal o no.
+				 */
+				$existe_calificacion_como_artesano_normal = false;
+				foreach ($calificaciones as $key => $calificacion) {
+					if($calificacion['Calificacion']['tipos_de_calificacion_id'] == 1) {
+						$existe_calificacion_como_artesano_normal = true;
+						break;
+					}
+				}
+				/**
+				 * ¿Es un artesano normal?
+				 */
+				if($existe_calificacion_como_artesano_normal) { // Si
+					$resultado_validacion['Mensaje'] = 'Este artesano ya esta calificado como artesano normal';
+					echo json_encode($resultado_validacion);
+				} else { // No
+					/**
+					 * Verificar si hay calificaciones previas con la misma rama
+					 */
+					$existe_calificacion_en_la_misma_rama = false;
+					foreach ($calificaciones as $key => $calificacion) {
+						if($calificacion['Calificacion']['rama_id'] == $rama_id) {
+							$existe_calificacion_en_la_misma_rama = true;
+							break;
+						}
+					}
+					/**
+					 * ¿Hay calificaciones de la misma rama?
+					 */
+					if($existe_calificacion_en_la_misma_rama) { // Si
+						$resultado_validacion['Mensaje'] = 'Este artesano ya se ha registrado con la rama seleccionada';
+						echo json_encode($resultado_validacion);
+					} else { // No
+						$resultado_validacion['Calificar'] = 1;
+						$resultado_validacion['Mensaje'] = 'Se puede calificar como artesano autónomo';
+						echo json_encode($resultado_validacion);
+					}
+				}
+			} else { // No
+				$resultado_validacion['Calificar'] = 1;
+				$resultado_validacion['Mensaje'] = 'Se puede calificar como artesano autónomo';
+				echo json_encode($resultado_validacion);
+			}
+		} else { // No
+			$resultado_validacion['Calificar'] = 1;
+			$resultado_validacion['Mensaje'] = 'Se puede calificar como artesano autónomo';
+			echo json_encode($resultado_validacion);
+		}
 	}
 
 }

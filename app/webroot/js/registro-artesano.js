@@ -54,11 +54,12 @@ $(function(){
 	});
 	
 	function validarCalificacion(){
-		BJS.post('/artesanos/validarCalificacion',{cedula:$("#ArtesanoArtCedula").val(),tipoDeCalificacion:$("#ArtesanoTipoCalificaion option:selected").val(),rama:$('#ArtesanoRama option:selected').val()},function(response){
+		BJS.JSONP('/artesanos/validarCalificacion',{cedula:$("#ArtesanoArtCedula").val(),tipoDeCalificacion:$("#ArtesanoTipoCalificaion option:selected").val(),rama:$('#ArtesanoRama option:selected').val()},function(response){
+			alert(response.Mensaje);
 			if(response.Calificar){
-				
-			}else{
-				alert(response.Mensaje);
+				// TODO : Se puede calificar
+			} else {
+				// TODO : No se puede calificar
 			}
 		});
 	}
