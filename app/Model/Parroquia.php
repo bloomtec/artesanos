@@ -9,6 +9,8 @@ App::uses('Auditoria', 'Model');
  * @property Taller $Taller
  */
 class Parroquia extends AppModel {
+	
+	public $displayField = 'par_nombre';
 /**
  * Validation rules
  *
