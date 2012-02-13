@@ -9,8 +9,15 @@
 		echo $this -> Form -> input('usu_unidad', array('label' => 'Unidad', 'type' => 'select', 'options' => $usu_unidades));
 		echo $this -> Form -> input('usu_cedula', array('label' => 'Cédula'));
 		echo $this -> Form -> input('usu_nombres_y_apellidos', array('label' => 'Nombres Y Apellidos'));
-		echo $this -> Form -> input('rol_id', array('label' => 'Rol', 'empty' => 'Seleccione...'));
+		echo $this -> Form -> input('rol_id', array('label' => 'Rol', 'value' => 2));
 		?>
+		<div class="campos-inspector">
+			<h2><?php echo __('Area');?></h2>
+			<?php
+			echo $this -> Form -> input('ciudad_id');
+			echo $this -> Form -> input('sector_id');
+			?>
+		</div>
 		<div class="permisos-acl">
 			<h4><?php echo __('Permisos');?></h4>
 			<?php
