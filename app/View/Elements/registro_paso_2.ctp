@@ -12,39 +12,39 @@
 				</tr>
 			</thead>
 			<tr>
-				<td><input name="data[EquiposDeTrabajo][equ_cantidad]" type="number" id="EquiposDeTrabajoEquCantidad"></td>
-				<td><select name="data[EquiposDeTrabajo][equ_maquinaria_y_herramientas]" id="EquiposDeTrabajoEquMaquinariaYHerramientas"></select></td>
-				<td><select name="data[EquiposDeTrabajo][equ_tipo_de_adquisicion]" id="EquiposDeTrabajoEquTipoDeAdquisicion"></select></td>
-				<td><input name="data[EquiposDeTrabajo][equ_fecha_de_adquisicion]" type="date" id="EquiposDeTrabajoEquFechaDeAdquisicion"></td>
-				<td><input name="data[EquiposDeTrabajo][equ_valor_comercial]" step="any" type="number" id="EquiposDeTrabajoEquValorComercial"></td>
+				<td><input name="data[EquiposDeTrabajo][equ_cantidad][0]" type="number" id="EquiposDeTrabajoEquCantidad" class="cantidad_maquinas"> </td>
+				<td><select name="data[EquiposDeTrabajo][equ_maquinaria_y_herramientas][0]" id="EquiposDeTrabajoEquMaquinariaYHerramientas"></select></td>
+				<td><select name="data[EquiposDeTrabajo][equ_tipo_de_adquisicion][0]" id="EquiposDeTrabajoEquTipoDeAdquisicion"></select></td>
+				<td><input name="data[EquiposDeTrabajo][equ_fecha_de_adquisicion][0]" type="date" id="EquiposDeTrabajoEquFechaDeAdquisicion"></td>
+				<td><input name="data[EquiposDeTrabajo][equ_valor_comercial][0]" step="any" type="number" id="EquiposDeTrabajoEquValorComercial" class='valor_maquinas'></td>
 			</tr>
 			<tr>
-				<td><input name="data[EquiposDeTrabajo][equ_cantidad]" type="number" id="EquiposDeTrabajoEquCantidad"></td>
-				<td><select name="data[EquiposDeTrabajo][equ_maquinaria_y_herramientas]" id="EquiposDeTrabajoEquMaquinariaYHerramientas"></select></td>
-				<td><select name="data[EquiposDeTrabajo][equ_tipo_de_adquisicion]" id="EquiposDeTrabajoEquTipoDeAdquisicion"></select></td>
-				<td><input name="data[EquiposDeTrabajo][equ_fecha_de_adquisicion]" type="date" id="EquiposDeTrabajoEquFechaDeAdquisicion"></td>
-				<td><input name="data[EquiposDeTrabajo][equ_valor_comercial]" step="any" type="number" id="EquiposDeTrabajoEquValorComercial"></td>
+				<td><input name="data[EquiposDeTrabajo][equ_cantidad][1]" type="number" id="EquiposDeTrabajoEquCantidad" class="cantidad_maquinas"></td>
+				<td><select name="data[EquiposDeTrabajo][equ_maquinaria_y_herramientas][1]" id="EquiposDeTrabajoEquMaquinariaYHerramientas"></select></td>
+				<td><select name="data[EquiposDeTrabajo][equ_tipo_de_adquisicion][1]" id="EquiposDeTrabajoEquTipoDeAdquisicion"></select></td>
+				<td><input name="data[EquiposDeTrabajo][equ_fecha_de_adquisicion][1]" type="date" id="EquiposDeTrabajoEquFechaDeAdquisicion"></td>
+				<td><input name="data[EquiposDeTrabajo][equ_valor_comercial][1]" step="any" type="number" id="EquiposDeTrabajoEquValorComercial" class='valor_maquinas'></td>
 			</tr>
 			<tr>
-				<td><input name="data[EquiposDeTrabajo][equ_cantidad]" type="number" id="EquiposDeTrabajoEquCantidad"></td>
-				<td><select name="data[EquiposDeTrabajo][equ_maquinaria_y_herramientas]" id="EquiposDeTrabajoEquMaquinariaYHerramientas"></select></td>
-				<td><select name="data[EquiposDeTrabajo][equ_tipo_de_adquisicion]" id="EquiposDeTrabajoEquTipoDeAdquisicion"></select></td>
-				<td><input name="data[EquiposDeTrabajo][equ_fecha_de_adquisicion]" type="date" id="EquiposDeTrabajoEquFechaDeAdquisicion"></td>
-				<td><input name="data[EquiposDeTrabajo][equ_valor_comercial]" step="any" type="number" id="EquiposDeTrabajoEquValorComercial"></td>
+				<td><input name="data[EquiposDeTrabajo][equ_cantidad][2]" type="number" id="EquiposDeTrabajoEquCantidad" class="cantidad_maquinas"></td>
+				<td><select name="data[EquiposDeTrabajo][equ_maquinaria_y_herramientas][2]" id="EquiposDeTrabajoEquMaquinariaYHerramientas"></select></td>
+				<td><select name="data[EquiposDeTrabajo][equ_tipo_de_adquisicion][2]" id="EquiposDeTrabajoEquTipoDeAdquisicion"></select></td>
+				<td><input name="data[EquiposDeTrabajo][equ_fecha_de_adquisicion][2]" type="date" id="EquiposDeTrabajoEquFechaDeAdquisicion"></td>
+				<td><input name="data[EquiposDeTrabajo][equ_valor_comercial][2]" step="any" type="number" id="EquiposDeTrabajoEquValorComercial" class='valor_maquinas'></td>
 			</tr>
 			<tr>
-				<td><input name="data[EquiposDeTrabajo][equ_cantidad]" type="number" id="EquiposDeTrabajoEquCantidad"></td>
-				<td><select name="data[EquiposDeTrabajo][equ_maquinaria_y_herramientas]" id="EquiposDeTrabajoEquMaquinariaYHerramientas"></select></td>
-				<td><select name="data[EquiposDeTrabajo][equ_tipo_de_adquisicion]" id="EquiposDeTrabajoEquTipoDeAdquisicion"></select></td>
-				<td><input name="data[EquiposDeTrabajo][equ_fecha_de_adquisicion]" type="date" id="EquiposDeTrabajoEquFechaDeAdquisicion"></td>
-				<td><input name="data[EquiposDeTrabajo][equ_valor_comercial]" step="any" type="number" id="EquiposDeTrabajoEquValorComercial"></td>
+				<td><input name="data[EquiposDeTrabajo][equ_cantidad][3]" type="number" id="EquiposDeTrabajoEquCantidad" class="cantidad_maquinas"></td>
+				<td><select name="data[EquiposDeTrabajo][equ_maquinaria_y_herramientas][3]" id="EquiposDeTrabajoEquMaquinariaYHerramientas"></select></td>
+				<td><select name="data[EquiposDeTrabajo][equ_tipo_de_adquisicion][3]" id="EquiposDeTrabajoEquTipoDeAdquisicion"></select></td>
+				<td><input name="data[EquiposDeTrabajo][equ_fecha_de_adquisicion][3]" type="date" id="EquiposDeTrabajoEquFechaDeAdquisicion"></td>
+				<td><input name="data[EquiposDeTrabajo][equ_valor_comercial][3]" step="any" type="number" id="EquiposDeTrabajoEquValorComercial" class='valor_maquinas'></td>
 			</tr>
 			<tr>
-				<td><input name="data[EquiposDeTrabajo][equ_cantidad]" type="number" id="EquiposDeTrabajoEquCantidad"></td>
-				<td><select name="data[EquiposDeTrabajo][equ_maquinaria_y_herramientas]" id="EquiposDeTrabajoEquMaquinariaYHerramientas"></select></td>
-				<td><select name="data[EquiposDeTrabajo][equ_tipo_de_adquisicion]" id="EquiposDeTrabajoEquTipoDeAdquisicion"></select></td>
-				<td><input name="data[EquiposDeTrabajo][equ_fecha_de_adquisicion]" type="date" id="EquiposDeTrabajoEquFechaDeAdquisicion"></td>
-				<td><input name="data[EquiposDeTrabajo][equ_valor_comercial]" step="any" type="number" id="EquiposDeTrabajoEquValorComercial"></td>
+				<td><input name="data[EquiposDeTrabajo][equ_cantidad][4]" type="number" id="EquiposDeTrabajoEquCantidad" class="cantidad_maquinas"></td>
+				<td><select name="data[EquiposDeTrabajo][equ_maquinaria_y_herramientas][4]" id="EquiposDeTrabajoEquMaquinariaYHerramientas"></select></td>
+				<td><select name="data[EquiposDeTrabajo][equ_tipo_de_adquisicion][4]" id="EquiposDeTrabajoEquTipoDeAdquisicion"></select></td>
+				<td><input name="data[EquiposDeTrabajo][equ_fecha_de_adquisicion][4]" type="date" id="EquiposDeTrabajoEquFechaDeAdquisicion"></td>
+				<td><input name="data[EquiposDeTrabajo][equ_valor_comercial][4]" step="any" type="number" id="EquiposDeTrabajoEquValorComercial" class='valor_maquinas'></td>
 			</tr>
 		</table>
 		<a class="AñadirRegistroEquipo cancelar" href="#" >Agregar Otro</a>
@@ -61,34 +61,34 @@
 				</tr>
 			</thead>
 			<tr>
-				<td><input name="data[MateriasPrima][mat_cantidad]" type="number" id="MateriasPrimaMatCantidad"></td>
-				<td><select name="data[MateriasPrima][mat_tipo_de_materia_prima]" type="number" id="MateriasPrimaMatTipoDeMateriaPrima"></select></td>
-				<td><select name="data[MateriasPrima][mat_procedencia]" type="number" id="MateriasPrimaMatProcedencia"></select></td>
-				<td><input name="data[MateriasPrima][mat_valor_comercial]" type="number" id="MateriasPrimaMatValorComercial"></td>
+				<td><input name="data[MateriasPrima][mat_cantidad][0]" type="number" id="MateriasPrimaMatCantidad"></td>
+				<td><select name="data[MateriasPrima][mat_tipo_de_materia_prima][0]" type="number" id="MateriasPrimaMatTipoDeMateriaPrima"></select></td>
+				<td><select name="data[MateriasPrima][mat_procedencia][0]" type="number" id="MateriasPrimaMatProcedencia"></select></td>
+				<td><input name="data[MateriasPrima][mat_valor_comercial][0]" type="number" id="MateriasPrimaMatValorComercial"></td>
 			</tr>
 			<tr>
-				<td><input name="data[MateriasPrima][mat_cantidad]" type="number" id="MateriasPrimaMatCantidad"></td>
-				<td><select name="data[MateriasPrima][mat_tipo_de_materia_prima]" type="number" id="MateriasPrimaMatTipoDeMateriaPrima"></select></td>
-				<td><select name="data[MateriasPrima][mat_procedencia]" type="number" id="MateriasPrimaMatProcedencia"></select></td>
-				<td><input name="data[MateriasPrima][mat_valor_comercial]" type="number" id="MateriasPrimaMatValorComercial"></td>
+				<td><input name="data[MateriasPrima][mat_cantidad][1]" type="number" id="MateriasPrimaMatCantidad"></td>
+				<td><select name="data[MateriasPrima][mat_tipo_de_materia_prima][1]" type="number" id="MateriasPrimaMatTipoDeMateriaPrima"></select></td>
+				<td><select name="data[MateriasPrima][mat_procedencia][1]" type="number" id="MateriasPrimaMatProcedencia"></select></td>
+				<td><input name="data[MateriasPrima][mat_valor_comercial][1]" type="number" id="MateriasPrimaMatValorComercial"></td>
 			</tr>
 			<tr>
-				<td><input name="data[MateriasPrima][mat_cantidad]" type="number" id="MateriasPrimaMatCantidad"></td>
-				<td><select name="data[MateriasPrima][mat_tipo_de_materia_prima]" type="number" id="MateriasPrimaMatTipoDeMateriaPrima"></select></td>
-				<td><select name="data[MateriasPrima][mat_procedencia]" type="number" id="MateriasPrimaMatProcedencia"></select></td>
-				<td><input name="data[MateriasPrima][mat_valor_comercial]" type="number" id="MateriasPrimaMatValorComercial"></td>
+				<td><input name="data[MateriasPrima][mat_cantidad][2]" type="number" id="MateriasPrimaMatCantidad"></td>
+				<td><select name="data[MateriasPrima][mat_tipo_de_materia_prima][2]" type="number" id="MateriasPrimaMatTipoDeMateriaPrima"></select></td>
+				<td><select name="data[MateriasPrima][mat_procedencia][2]" type="number" id="MateriasPrimaMatProcedencia"></select></td>
+				<td><input name="data[MateriasPrima][mat_valor_comercial][2]" type="number" id="MateriasPrimaMatValorComercial"></td>
 			</tr>
 			<tr>
-				<td><input name="data[MateriasPrima][mat_cantidad]" type="number" id="MateriasPrimaMatCantidad"></td>
-				<td><select name="data[MateriasPrima][mat_tipo_de_materia_prima]" type="number" id="MateriasPrimaMatTipoDeMateriaPrima"></select></td>
-				<td><select name="data[MateriasPrima][mat_procedencia]" type="number" id="MateriasPrimaMatProcedencia"></select></td>
-				<td><input name="data[MateriasPrima][mat_valor_comercial]" type="number" id="MateriasPrimaMatValorComercial"></td>
+				<td><input name="data[MateriasPrima][mat_cantidad][3]" type="number" id="MateriasPrimaMatCantidad"></td>
+				<td><select name="data[MateriasPrima][mat_tipo_de_materia_prima][3]" type="number" id="MateriasPrimaMatTipoDeMateriaPrima"></select></td>
+				<td><select name="data[MateriasPrima][mat_procedencia][3]" type="number" id="MateriasPrimaMatProcedencia"></select></td>
+				<td><input name="data[MateriasPrima][mat_valor_comercial][3]" type="number" id="MateriasPrimaMatValorComercial"></td>
 			</tr>
 			<tr>
-				<td><input name="data[MateriasPrima][mat_cantidad]" type="number" id="MateriasPrimaMatCantidad"></td>
-				<td><select name="data[MateriasPrima][mat_tipo_de_materia_prima]" type="number" id="MateriasPrimaMatTipoDeMateriaPrima"></select></td>
-				<td><select name="data[MateriasPrima][mat_procedencia]" type="number" id="MateriasPrimaMatProcedencia"></select></td>
-				<td><input name="data[MateriasPrima][mat_valor_comercial]" type="number" id="MateriasPrimaMatValorComercial"></td>
+				<td><input name="data[MateriasPrima][mat_cantidad][4]" type="number" id="MateriasPrimaMatCantidad"></td>
+				<td><select name="data[MateriasPrima][mat_tipo_de_materia_prima][4]" type="number" id="MateriasPrimaMatTipoDeMateriaPrima"></select></td>
+				<td><select name="data[MateriasPrima][mat_procedencia][4]" type="number" id="MateriasPrimaMatProcedencia"></select></td>
+				<td><input name="data[MateriasPrima][mat_valor_comercial][4]" type="number" id="MateriasPrimaMatValorComercial"></td>
 			</tr>
 		</table>
 		<a class="AñadirRegistroMateria cancelar" href="#" >Agregar Otro</a>
@@ -105,40 +105,40 @@
 				</tr>
 			</thead>
 			<tr>
-				<td><input name="data[ProductosElaborado][pro_cantidad]" type="number" id="ProductosElaboradoProCantidad"></td>
-				<td><select name="data[ProductosElaborado][pro_detalle]" type="number" id="ProductosElaboradoProDetalle"></select></td>
-				<td><select name="data[ProductosElaborado][pro_procedencia]" type="number" id="ProductosElaboradoProProcedencia"></select></td>
-				<td><input name="data[ProductosElaborado][pro_valor_comercial]" type="number" id="ProductosElaboradoProValorComercial"></td>
+				<td><input name="data[ProductosElaborado][pro_cantidad][0]" type="number" id="ProductosElaboradoProCantidad"></td>
+				<td><select name="data[ProductosElaborado][pro_detalle][0]" type="number" id="ProductosElaboradoProDetalle"></select></td>
+				<td><select name="data[ProductosElaborado][pro_procedencia][0]" type="number" id="ProductosElaboradoProProcedencia"></select></td>
+				<td><input name="data[ProductosElaborado][pro_valor_comercial][0]" type="number" id="ProductosElaboradoProValorComercial"></td>
 			</tr>
 			<tr>
-				<td><input name="data[ProductosElaborado][pro_cantidad]" type="number" id="ProductosElaboradoProCantidad"></td>
-				<td><select name="data[ProductosElaborado][pro_detalle]" type="number" id="ProductosElaboradoProDetalle"></select></td>
-				<td><select name="data[ProductosElaborado][pro_procedencia]" type="number" id="ProductosElaboradoProProcedencia"></select></td>
-				<td><input name="data[ProductosElaborado][pro_valor_comercial]" type="number" id="ProductosElaboradoProValorComercial"></td>
+				<td><input name="data[ProductosElaborado][pro_cantidad][1]" type="number" id="ProductosElaboradoProCantidad"></td>
+				<td><select name="data[ProductosElaborado][pro_detalle][1]" type="number" id="ProductosElaboradoProDetalle"></select></td>
+				<td><select name="data[ProductosElaborado][pro_procedencia][1]" type="number" id="ProductosElaboradoProProcedencia"></select></td>
+				<td><input name="data[ProductosElaborado][pro_valor_comercial][1]" type="number" id="ProductosElaboradoProValorComercial"></td>
 			</tr>
 			<tr>
-				<td><input name="data[ProductosElaborado][pro_cantidad]" type="number" id="ProductosElaboradoProCantidad"></td>
-				<td><select name="data[ProductosElaborado][pro_detalle]" type="number" id="ProductosElaboradoProDetalle"></select></td>
-				<td><select name="data[ProductosElaborado][pro_procedencia]" type="number" id="ProductosElaboradoProProcedencia"></select></td>
-				<td><input name="data[ProductosElaborado][pro_valor_comercial]" type="number" id="ProductosElaboradoProValorComercial"></td>
+				<td><input name="data[ProductosElaborado][pro_cantidad][2]" type="number" id="ProductosElaboradoProCantidad"></td>
+				<td><select name="data[ProductosElaborado][pro_detalle][2]" type="number" id="ProductosElaboradoProDetalle"></select></td>
+				<td><select name="data[ProductosElaborado][pro_procedencia][2]" type="number" id="ProductosElaboradoProProcedencia"></select></td>
+				<td><input name="data[ProductosElaborado][pro_valor_comercial][2]" type="number" id="ProductosElaboradoProValorComercial"></td>
 			</tr>
 			<tr>
-				<td><input name="data[ProductosElaborado][pro_cantidad]" type="number" id="ProductosElaboradoProCantidad"></td>
-				<td><select name="data[ProductosElaborado][pro_detalle]" type="number" id="ProductosElaboradoProDetalle"></select></td>
-				<td><select name="data[ProductosElaborado][pro_procedencia]" type="number" id="ProductosElaboradoProProcedencia"></select></td>
-				<td><input name="data[ProductosElaborado][pro_valor_comercial]" type="number" id="ProductosElaboradoProValorComercial"></td>
+				<td><input name="data[ProductosElaborado][pro_cantidad][3]" type="number" id="ProductosElaboradoProCantidad"></td>
+				<td><select name="data[ProductosElaborado][pro_detalle][3]" type="number" id="ProductosElaboradoProDetalle"></select></td>
+				<td><select name="data[ProductosElaborado][pro_procedencia][3]" type="number" id="ProductosElaboradoProProcedencia"></select></td>
+				<td><input name="data[ProductosElaborado][pro_valor_comercial][3]" type="number" id="ProductosElaboradoProValorComercial"></td>
 			</tr>
 			<tr>
-				<td><input name="data[ProductosElaborado][pro_cantidad]" type="number" id="ProductosElaboradoProCantidad"></td>
-				<td><select name="data[ProductosElaborado][pro_detalle]" type="number" id="ProductosElaboradoProDetalle"></select></td>
-				<td><select name="data[ProductosElaborado][pro_procedencia]" type="number" id="ProductosElaboradoProProcedencia"></select></td>
-				<td><input name="data[ProductosElaborado][pro_valor_comercial]" type="number" id="ProductosElaboradoProValorComercial"></td>
+				<td><input name="data[ProductosElaborado][pro_cantidad][4]" type="number" id="ProductosElaboradoProCantidad"></td>
+				<td><select name="data[ProductosElaborado][pro_detalle][4]" type="number" id="ProductosElaboradoProDetalle"></select></td>
+				<td><select name="data[ProductosElaborado][pro_procedencia][4]" type="number" id="ProductosElaboradoProProcedencia"></select></td>
+				<td><input name="data[ProductosElaborado][pro_valor_comercial][4]" type="number" id="ProductosElaboradoProValorComercial"></td>
 			</tr>
 			<tr>
-				<td><input name="data[ProductosElaborado][pro_cantidad]" type="number" id="ProductosElaboradoProCantidad"></td>
-				<td><select name="data[ProductosElaborado][pro_detalle]" type="number" id="ProductosElaboradoProDetalle"></select></td>
-				<td><select name="data[ProductosElaborado][pro_procedencia]" type="number" id="ProductosElaboradoProProcedencia"></select></td>
-				<td><input name="data[ProductosElaborado][pro_valor_comercial]" type="number" id="ProductosElaboradoProValorComercial"></td>
+				<td><input name="data[ProductosElaborado][pro_cantidad][5]" type="number" id="ProductosElaboradoProCantidad"></td>
+				<td><select name="data[ProductosElaborado][pro_detalle][5]" type="number" id="ProductosElaboradoProDetalle"></select></td>
+				<td><select name="data[ProductosElaborado][pro_procedencia][5]" type="number" id="ProductosElaboradoProProcedencia"></select></td>
+				<td><input name="data[ProductosElaborado][pro_valor_comercial][5]" type="number" id="ProductosElaboradoProValorComercial"></td>
 			</tr>
 		</table>
 		<a class="AñadirRegistroProducto cancelar" href="#" >Agregar Otro</a>

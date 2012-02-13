@@ -92,4 +92,31 @@ $(function(){
 			});
 		}
 	}
+	
+	//BALANCES
+	var actualizarCapital=function(){
+		
+	}
+	var actualizarMaquinariaYHerramientas=function(){
+		var total=0;
+		var $maquinas =$('.valor_maquinas');
+		var lenght = $maquinas.length-1;
+		var cantidad=0;
+		var valor=0;
+		$.each($maquinas,function(i,val){
+			cantidad=parseInt($($('.cantidad_maquinas')[i]).val());
+			valor=$(val).val();
+			if( valor && cantidad){
+				total+=cantidad*parseFloat($(val).val());
+				console.log(total);
+			}
+			if( lenght == i){
+				$('.maquinas_y_herramientas').val(total);
+			}
+		});
+		actualizarCapital();
+	}
+	$('.cantidad_maquinas , .valor_maquinas').keyup(function(){
+		actualizarMaquinariaYHerramientas();
+	});
 });
