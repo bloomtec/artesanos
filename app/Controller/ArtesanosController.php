@@ -129,20 +129,75 @@ class ArtesanosController extends AppController {
 		$artesano = $this -> Artesano -> find('first', array('conditions' => array('Artesano.art_cedula' => $cedula)));
 		
 		if(!empty($artesano)) {
-			// El artesano ya está registrado; buscar si ya tiene una calificación en la rama propuesta
-			$calficaciones = $this -> Artesano -> Calificacion -> find('all', array('conditions' => array('Calificacion.artesano_id' => $artesano['Artesano']['id'], 'Calificacion.rama_id' => $rama_id)));
-			if(!empty($calficaciones)) {
-				// Ya existe una calificación para este artesano en esta rama
-				echo json_encode(array('Datos' => $artesano, 'Calificar' => 0));
+			/**
+			 * El artesano ya está registrado
+			 * Se obtiene el conjunto de calificaciones pertenecientes para
+			 * revisar condiciones.
+			 */
+			// Calificaciones del artesano
+			$calificaciones = $this -> Artesano -> Calificacion -> find(
+				'all',
+				array(
+					'conditions' => array(
+						'Calificacion.artesano_id' => $artesano['Artesano']['id'],
+						'Calificacion.rama_id' => $rama_id
+					)
+				)
+			);
+			
+			/**
+			 * Validaciones del registro
+			 */
+			if($tipo_de_calificacion == 1) {
+				/**
+				 * Calificación Normal
+				 */
+				if(!empty($calificaciones)) {
+					/**
+					 * Calificación Normal con calificaciones previas
+					 */
+					echo json_encode(array('Datos' => $artesano, 'Calificar' => 0, ''));
+				} else {
+					/**
+					 * Calificación Normal sin calificaciones previas
+					 */
+					echo json_encode(array('Datos' => $artesano, 'Calificar' => 1));
+				}
 			} else {
-				// No hay calificaciones en esta rama para el artesano
-				echo json_encode(array('Datos' => $artesano, 'Calificar' => 1));
+				/**
+				 * Calificación Autónomo
+				 */
+				if(!empty($calificaciones)) {
+					/**
+					 * Calificación Autónomo con calificaciones previas
+					 */
+					echo json_encode(array('Datos' => $artesano, 'Calificar' => 0, ''));
+				} else {
+					/**
+					 * Calificación Autónomo sin calificaciones previas
+					 */
+					echo json_encode(array('Datos' => $artesano, 'Calificar' => 1));
+				}
 			}
 		} else {
-			// No hay personas registradas con dicha cédula
-			echo json_encode(array('Datos' => $artesano, 'Calificar' => 1));
+			/**
+			 * No hay personas registradas con dicha cédula
+			 */
+			if($tipo_de_calificacion == 1) {
+				/**
+				 * Calificación Normal
+				 */
+				echo json_encode(array('Datos' => $artesano, 'Calificar' => 0, 'Mensaje' => 'No hay registros previos como artesano autónomo.'));
+			} else {
+				/**
+				 * Calificación Autonomo
+				 */
+				echo json_encode(array('Datos' => $artesano, 'Calificar' => 1));
+			}
 		}
-		
+		// normal -> ya debe de haber existido el registro
+		// normal -> viene de autónomo, que este en el rango de expiración; si ya expiro la fecha de calificación se avisa la multa y se procede, si esta dentro del rango se dice que si, antes no.
+		// normal -> recalificación -- misma rama de la calificacion anterior.
 		exit(0);
 	}
 
