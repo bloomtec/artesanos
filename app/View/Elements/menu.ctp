@@ -42,7 +42,24 @@
 		</li>
 		<?php endif; ?>
 		<li class="reportes">
-			<a href="/reportes">REPORTES</a>
+			<a href="#">REPORTES</a>
+			<ul>
+				<li>
+					<a href="/reportes/reporteArtesanos">Artesanos</a>
+				</li>
+				<li>
+					<a href="/reportes/reporteCalificacionesOperador">Calificaciones Operador</a>
+				</li>
+				<li>
+					<a href="/reportes/reporteCalificacionesArtesano">Calificaciones Artesano</a>
+				</li>
+				<li>
+					<a href="/reportes/reporteInspecciones">Inspecciones</a>
+				</li>
+				<li>
+					<a href="/reportes/reporteEstadisticoCalificaciones">Estadistico Calificaciones</a>
+				</li>
+			</ul>
 		</li>
 	</ul>
 </div>
