@@ -9,7 +9,7 @@ class ArtesanosController extends AppController {
 	
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('validarCalificacion', 'validarCalificacionAutonomo', 'validarCalificacionNormal', 'validarCalificacionObtenerFechas');
+		$this -> Auth -> allow('isCalificacionActive', 'validarCalificacion', 'validarCalificacionAutonomo', 'validarCalificacionNormal', 'validarCalificacionObtenerFechas');
 	}
 
 	/**
@@ -175,17 +175,71 @@ class ArtesanosController extends AppController {
 		 * ¿Hay un artesano registrado?
 		 */
 		if(!empty($artesano)) { // Si
-			
+			/**
+			 * Verificar si tiene calificación previa
+			 */
+			if(!empty($calificaciones)) { // Si
+				/**
+				 * Obtener las fechas relacionadas con la última calificación creada
+				 */
+				$fecha_expiracion = explode(' ', $calificaciones[0]['Calificacion']['cal_fecha_expiracion']);
+				$resultado_validacion['InfoFecha'] = $this -> validarCalificacionObtenerFechas($fecha_expiracion[0]);
+				
+				/**
+				 * Verificar si la calificación más reciente esta activa o no
+				 */
+				if($this -> isCalificacionActive($calificaciones[0])) { // Si
+					/**
+					 * La más reciente calificación esta como activa, ver si es de la misma rama
+					 */
+					if($calificaciones[0]['Calificacion']['rama_id'] == $rama_id) { // Si
+						/**
+						 * ---------------------------------------------------------------------------------------------------
+						 * 
+						 * Se puede dar:
+						 * 1. Autónomo -> Normal (calificación)
+						 * 2. Normal -> Normal (recalificación)
+						 * 
+						 * ---------------------------------------------------------------------------------------------------
+						 */
+						if($calificaciones[0]['Calificacion']['tipos_de_calificacion_id'] == 1) { // Calificación previa tipo Normal
+							/**
+							 * Se está haciendo una recalificación
+							 */
+							$resultado_validacion['Calificacion'] = 1;
+						} elseif($calificaciones[0]['Calificacion']['tipos_de_calificacion_id'] == 2) { // Calificación previa tipo Autónomo
+							/**
+							 * Se esta calificando como normal por primera vez
+							 */
+							$resultado_validacion['Calificacion'] = 1;
+						} else { // Error
+							$resultado_validacion['Mensaje'] = 'Tipo de calificación erronea';
+						}
+						/**
+						 * ---------------------------------------------------------------------------------------------------
+						 */
+					} else { // No
+						$resultado_validacion['Mensaje'] = 'La rama seleccionada no concuerda con la más reciente calificación';
+					}
+				} else { // No
+					$resultado_validacion['Mensaje'] = 'No hay registros de calificaciones activas para este artesano';
+				}
+			} else { // No
+				$resultado_validacion['Mensaje'] = 'No hay registros previos de este artesano como artesano autónomo';
+			}
 		} else { // No
-			$resultado_validacion['Mensaje'] = 'No hay registros previos como artesano autónomo.';
+			$resultado_validacion['Mensaje'] = 'No hay registros previos de este artesano artesano';
+		}
+		
+		/**
+		 * Si se permite hacer la calificación validar si hay o no multas por fechas incumplidas
+		 */
+		if($resultado_validacion['Calificar'] && isset($resultado_validacion['InfoFecha']['Multa']) && $resultado_validacion['InfoFecha']['Multa']) {
+			$resultado_validacion['Mensaje'] = $resultado_validacion['InfoFecha']['Mensaje'];
 		}
 		
 		// Hacer echo del resulado
 		echo json_encode($resultado_validacion);
-		
-		// normal -> ya debe de haber existido el registro
-		// normal -> viene de autónomo, que este en el rango de expiración; si ya expiro la fecha de calificación se avisa la multa y se procede, si esta dentro del rango se dice que si, antes no.
-		// normal -> recalificación -- misma rama de la calificacion anterior.
 	}
 	
 	/**
@@ -294,6 +348,14 @@ class ArtesanosController extends AppController {
 		}
 		
 		return $fechas;
+	}
+
+	private function isCalificacionActive($calificacion = null) {
+		if($calificacion && $calificacion['Calificacion']['cal_estado'] == 1) { 
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }
