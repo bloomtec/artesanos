@@ -1,3 +1,9 @@
+/*
+ var capitalMaximoInversion: capital maximo de inversion pasado por php al entorno global
+ var salarioMinimoUnificado: 
+ * */
+var totalRentabilidad=0;
+var totalInversion=0;
 $(function(){
 	// FUNCIONALIDAD REGISTRO
 	$('#wizard .page').css('width',$("#wizard").width());
@@ -42,6 +48,21 @@ $(function(){
 		e.preventDefault();
 		validarCalificacion();
 	});
+	/*_________PARAMETROS GEOGRAFICOS*/
+	var actualizarGeoTaller = function(){
+		BJS.updateSelect($("#TallerCantonId"),"/cantones/getByProvincia/"+$("#TallerProvinciaId option:selected").val(),function(){
+			BJS.updateSelect($("#TallerCiudadId"),"/ciudades/getByCanton/"+$("#TallerCantonId option:selected").val(),function(){
+				BJS.updateSelect($("#TallerSectorId"),"/sectores/getByCiudad/"+$("#TallerCiudadId option:selected").val(),function(){
+					BJS.updateSelect($("#LocalParroquiaId"),"/parroquias/getBySector/"+$("#TallerSectorId option:selected").val());	
+				});	
+			});	
+		});
+	}
+	actualizarGeoTaller();
+	$("#TallerProvinciaId").change(function(){
+		actualizarGeoTaller();
+	});
+	/*______________________________*/
 	var root = $("#wizard").scrollable();
 	var api = root.scrollable();
 	var drawer = $("#drawer");
@@ -72,6 +93,17 @@ $(function(){
 				emails.addClass("error");
 				return false;
 			} else {
+				switch(api.getIndex()){
+					case 1:
+						if(totalInversion>capitalMaximoInversion){
+							alert('El capital de inversión excede el capital máximo permitido');
+							return false;
+						}
+					break;
+					case 2:
+					break;
+				}
+				
 				drawer.slideUp();
 			}
 		}
@@ -96,7 +128,10 @@ $(function(){
 	
 	//BALANCES
 	var actualizarRentabilidad = function(){
-		$("#CalificacionCalBalanceRentabilidadMensual").val(parseFloat($('#CalificacionCalBalanceTotalIngresos').val()) - parseFloat($('#CalificacionCalBalanceTotalEgresos').val()));
+		var ingresos = parseFloat($('#CalificacionCalBalanceTotalIngresos').val())?parseFloat($('#CalificacionCalBalanceTotalIngresos').val()):0;
+		var egresos = parseFloat($('#CalificacionCalBalanceTotalEgresos').val())?parseFloat($('#CalificacionCalBalanceTotalEgresos').val()):0;
+		$("#CalificacionCalBalanceRentabilidadMensual").val(ingresos-egresos);
+		totalRentabilidad=ingresos-egresos;
 	}
 	/*____________CAPITAL__________________*/
 	var actualizarCapital=function(){
@@ -104,6 +139,7 @@ $(function(){
 		var totalMateriaPrima = parseFloat($('.materia_prima').val())?  parseFloat($('.materia_prima').val()):0; 
 		var totalProductosElaborados = parseFloat($('.productos_elaborados').val())? parseFloat($('.productos_elaborados').val()):0;
 		$('.total_capital').val(totalMaquinas+totalMateriaPrima+totalProductosElaborados);
+		totalInversion = totalMaquinas+totalMateriaPrima+totalProductosElaborados;
 	}
 	var actualizarMaquinariaYHerramientas=function(){
 		var total=0;
@@ -255,6 +291,17 @@ $(function(){
 		actualizarIngresos();
 	});
 	
-	
+	/*__________VALIDACION ENVIO FORM*/
+	$("#registro").submit(function(e){
+		if(totalRentabilidad < salarioMinimoUnificado){
+			e.preventDefault();
+			alert('La rentabilidad es menor al mìnimo permitido para permitir una calificación');
+		}else{
+			return true;
+		}
+	});
+	actualizarIngresos();
+	actualizarEgresos();
+	actualizarRentabilidad();
 
 });

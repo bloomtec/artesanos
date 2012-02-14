@@ -1,4 +1,11 @@
 <?php echo $this -> Html -> css('registro-artesano',false);?>
+<?php 
+	echo $this -> Html ->scriptBlock('var capitalMaximoInversion='.$this->requestAction('/configuraciones/getValorConfiguracion/con_capital_maximo_de_inversion'),
+	array('inline'=>false));
+	echo $this -> Html ->scriptBlock('var salarioMinimoUnificado='.$this->requestAction('/configuraciones/getValorConfiguracion/con_salario_basico_unificado'),
+	array('inline'=>false));
+
+?>
 <div class="artesanos form calificar">
 	<!-- twitter style "drawer" for displaying validation errors -->
 	<div id="drawer">

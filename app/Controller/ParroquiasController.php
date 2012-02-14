@@ -15,7 +15,10 @@ class ParroquiasController extends AppController {
 	public function beforeRender() {
 		$this -> layout = "parametros";
 	}
-	
+	public function getBySector($secId){
+		echo json_encode($this->Parroquia->find('list',array('conditions'=>array('sector_id'=>$secId))));	
+		$this -> autorender =false;
+	}
 	public function getParroquias($sector_id = null) {
 		if($sector_id) {
 			return $this -> Parroquia -> find('all', array('order' => array('Parroquia.par_nombre' => 'ASC'), 'conditions' => array('Parroquia.sector_id' => $sector_id)));

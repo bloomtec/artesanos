@@ -48,7 +48,7 @@
 	width: 130px;
 }
 #wizard fieldset{
-	padding: 0 10px;
+	padding: 0 10px 50px;
 }
 form #wizard .datos-balance .input{
 	float:none;

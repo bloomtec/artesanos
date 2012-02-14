@@ -6,6 +6,7 @@ App::uses('AppController', 'Controller');
  * @property Ciudad $Ciudad
  */
 class CiudadesController extends AppController {
+		
 	
 	public function beforeFilter() {
 		parent::beforeFilter();
@@ -15,7 +16,10 @@ class CiudadesController extends AppController {
 	public function beforeRender() {
 		$this -> layout = "parametros";
 	}
-	
+	public function getByCanton($canId){
+		echo json_encode($this->Ciudad->find('list',array('conditions'=>array('canton_id'=>$canId))));
+		$this -> autorender =false;
+	}
 	public function getCiudades($canton_id = null) {
 		if($canton_id) {
 			return $this -> Ciudad -> find('all', array('order' => array('Ciudad.ciu_nombre' => 'ASC'), 'conditions' => array('Ciudad.canton_id' => $canton_id)));

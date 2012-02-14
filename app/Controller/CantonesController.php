@@ -6,6 +6,7 @@ App::uses('AppController', 'Controller');
  * @property Canton $Canton
  */
 class CantonesController extends AppController {
+		
 	
 	public function beforeFilter() {
 		parent::beforeFilter();
@@ -15,7 +16,10 @@ class CantonesController extends AppController {
 	public function beforeRender() {
 		$this -> layout = "parametros";
 	}
-	
+	public function getByProvincia($provId){
+		echo json_encode($this->Canton->find('list',array('conditions'=>array('provincia_id'=>$provId))));	
+		$this -> autorender =false;
+	}
 	public function getCantones($provincia_id = null) {
 		if($provincia_id) {
 			return $this -> Canton -> find('all', array('order' => array('Canton.can_nombre' => 'ASC'), 'conditions' => array('Canton.provincia_id' => $provincia_id)));
