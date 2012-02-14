@@ -7,12 +7,12 @@
 			echo $this -> Form -> input('apellido_materno');
 			echo $this -> Form -> input('nombres');
 			echo $this -> Form -> input('cedula', array('label' => 'Cédula De Ciudadanía'));
-			echo $this -> Form -> input('fecha_de_nacimiento', array('label' => 'Fecha De Nacimiento (AAAA-MM-DD)'));
+			// echo $this -> Form -> input('fecha_de_nacimiento', array('label' => 'Fecha De Nacimiento (AAAA-MM-DD)'));
 			echo $this -> Form -> input('nacionalidad', array('options' => $nacionalidades, 'empty' => 'Seleccione...'));
 			echo $this -> Form -> input('tipo_de_sangre', array('options' => $tipos_de_sangre, 'empty' => 'Seleccione...'));
 			echo $this -> Form -> input('sexo', array('options' => $sexos, 'empty' => 'Seleccione...'));
 			echo $this -> Form -> input('estado_civil', array('options' => $estados_civiles, 'empty' => 'Seleccione...'));
-			echo $this -> Form -> input('edad');
+			echo $this -> Form -> input('edad', array('label' => 'Edad (en años, edad mínima de artesano a la fecha)'));
 			echo $this -> Form -> input('grado_de_estudio', array('options' => $grados_de_estudio, 'empty' => 'Seleccione...'));
 			echo $this -> Form -> input('hijos_mayores');
 			echo $this -> Form -> input('hijos_menores');
