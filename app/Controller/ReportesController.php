@@ -37,9 +37,11 @@ class ReportesController extends AppController {
 				
 				$conditions['DatosPersonal.calificacion_id'] = $calificaciones;
 			}
+			/*
 			if(!empty($this -> request -> data['Reporte']['fecha_de_nacimiento'])) {
 				$conditions['DatosPersonal.dat_fecha_nacimiento'] = $this -> request -> data['Reporte']['fecha_de_nacimiento'];
 			}
+			 */
 			if(!empty($this -> request -> data['Reporte']['nacionalidad'])) {
 				$conditions['DatosPersonal.dat_nacionalidad'] = $this -> request -> data['Reporte']['nacionalidad'];
 			}
@@ -54,7 +56,7 @@ class ReportesController extends AppController {
 			}
 			if(!empty($this -> request -> data['Reporte']['edad'])) {
 				$fecha_de_nacimiento = date('Y-m-d', gmmktime(0,0,0,date('n'),date('j'),date('Y')-$this -> request -> data['Reporte']['edad']));
-				$conditions['DatosPersonal.dat_fecha_nacimiento'] = $fecha_de_nacimiento;
+				$conditions['DatosPersonal.dat_fecha_nacimiento <='] = $fecha_de_nacimiento;
 			}
 			if(!empty($this -> request -> data['Reporte']['grado_de_estudio'])) {
 				$conditions['DatosPersonal.dat_grado_de_estudio'] = $this -> request -> data['Reporte']['grado_de_estudio'];
