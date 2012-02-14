@@ -53,8 +53,8 @@ class ReportesController extends AppController {
 				$conditions['DatosPersonal.dat_estado_civil'] = $this -> request -> data['Reporte']['estado_civil'];
 			}
 			if(!empty($this -> request -> data['Reporte']['edad'])) {
-				//debug(date('Y-m-d', time()));
-				//$conditions['DatosPersonal.dat_fecha_nacimiento ? BETWEEN ?'] = $this -> request -> data['Reporte']['edad'];
+				$fecha_de_nacimiento = date('Y-m-d', gmmktime(0,0,0,date('n'),date('j'),date('Y')-$this -> request -> data['Reporte']['edad']));
+				$conditions['DatosPersonal.dat_fecha_nacimiento'] = $fecha_de_nacimiento;
 			}
 			if(!empty($this -> request -> data['Reporte']['grado_de_estudio'])) {
 				$conditions['DatosPersonal.dat_grado_de_estudio'] = $this -> request -> data['Reporte']['grado_de_estudio'];
