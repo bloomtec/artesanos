@@ -16,7 +16,7 @@
 			echo $this -> Form -> input('grado_de_estudio');
 			echo $this -> Form -> input('hijos_mayores');
 			echo $this -> Form -> input('hijos_menores');
-			echo $this -> Form -> input('tipo_de_discapacidad');
+			echo $this -> Form -> input('tipo_de_discapacidad', array('options' => $tipos_de_discapacidad, 'empty' => 'Seleccione...'));
 		?>
 	</fieldset>
 	<?php echo $this -> Form -> submit('Buscar'); ?>

@@ -62,7 +62,7 @@ class ParametrosInformativo extends AppModel {
 		);
 		$formatted_data = array();
 		foreach ($fetched_data as $key => $value) {
-			$formatted_data[$value['valores']['id']] = $value['valores']['val_nombre'];
+			$formatted_data[$value['valores']['val_nombre']] = $value['valores']['val_nombre'];
 		}
 		return $formatted_data;
 	}
