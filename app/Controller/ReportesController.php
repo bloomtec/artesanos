@@ -14,7 +14,6 @@ class ReportesController extends AppController {
 	
 	public function reporteArtesanos() {
 		if ($this -> request -> is('post')) {
-			debug($this -> request -> data);
 			$this -> set('mostrar_reporte', true);
 		} else {
 			$this -> set('mostrar_reporte', false);
