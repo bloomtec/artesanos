@@ -13,7 +13,7 @@
 		<label><?php echo __('Unidad'); ?></label>
 		<h3>
 			<?php
-				echo h($this -> requestAction('/parametros_informativos/getNombreItemParametro/13/'.$usuario['Usuario']['usu_unidad']));
+				echo h($usuario['Usuario']['usu_unidad']);
 			?>
 			&nbsp;
 		</h3>

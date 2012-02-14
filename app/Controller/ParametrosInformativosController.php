@@ -72,7 +72,7 @@ class ParametrosInformativosController extends AppController {
 	
 	public function getNombreItemParametro($id = null, $item = null) {
 		if($id) {
-			$valores = $this -> ParametrosInformativo -> getValores($id);
+			$valores = $this -> ParametrosInformativo -> getValores($item);
 			return $valores[$item];
 		} else {
 			return null;

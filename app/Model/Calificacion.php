@@ -78,6 +78,20 @@ class Calificacion extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
+		),
+		'InspectorTaller' => array(
+			'className' => 'Usuario',
+			'foreignKey' => 'cal_inspector_taller',	
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'InspectorLocal' => array(
+			'className' => 'Usuario',
+			'foreignKey' => 'cal_inspector_local',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
 		)
 	);
 

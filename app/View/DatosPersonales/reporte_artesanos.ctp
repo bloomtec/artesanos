@@ -1,5 +1,4 @@
-<?php //debug($artesanos) ?>
-<div class="reportes informe">
+<div class=" informe">
 	<table>
 		<tr>
 			<th><?php echo $this -> Paginator -> sort('dat_nombres', 'Nombre');?></th>
