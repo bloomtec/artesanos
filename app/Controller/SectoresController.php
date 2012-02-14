@@ -15,7 +15,10 @@ class SectoresController extends AppController {
 	public function beforeRender() {
 		$this -> layout = "parametros";
 	}
-
+	public function getByCiudad($ciuId){
+		echo json_encode($this->Sector->find('list',array('conditions'=>array('ciudad_id'=>$ciuId))));
+		$this -> autorender =false;
+	}
 	public function getSectores($ciudad_id = null) {
 		if($ciudad_id) {
 			return $this -> Sector -> find('all', array('order' => array('Sector.sec_nombre' => 'ASC'), 'conditions' => array('Sector.ciudad_id' => $ciudad_id)));
