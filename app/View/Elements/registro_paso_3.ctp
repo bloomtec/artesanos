@@ -328,10 +328,11 @@
 		<?php echo $this -> Form -> input('Calificacion.cal_balance_total_egresos',array('disabled'=>true,'label'=>'Total Egresos:','class'=>'balance_total_egresos'));?>
 		<?php echo $this -> Form -> input('Calificacion.cal_balance_rentabilidad_mensual',array('disabled'=>true,'label'=>'Rentabilidad Mensual:','class'=>'balance_rentabilidad_mensual'));?>
 	</div>
-</fieldset>
-<div class='actions validar'>
+	<div class='actions validar'>
 	<?php echo $this -> Html -> link(__('Atras'), "#", array('class' => 'prev button'));?>
 	<?php echo $this -> Form -> submit('Finalizar'); ?>
 	<div style="clear:both;"></div>
-</div>
+	</div>
+</fieldset>
+
 
