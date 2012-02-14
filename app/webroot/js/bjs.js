@@ -95,14 +95,18 @@ $(function(){
 		BJS.JSON($address,{},function(options){
 			var count=0;
 			var objectSize= BJS.objectSize(options);
-			$.each(options,function(i,val){
-				$select.append('<option value="'+i+'">'+val+'</option>');
-				count += 1;
-				if(firstArguments.length == 3 && count ==  objectSize){
-					$callback();
-				}
-				
-			});
+			if(BJS.objectSize(options)){
+				$.each(options,function(i,val){
+					$select.append('<option value="'+i+'">'+val+'</option>');
+					count += 1;
+					if(firstArguments.length == 3 && count ==  objectSize){
+							if($callback) $callback();
+					}
+					
+				});	
+			}else{
+				if($callback) $callback();
+			}
 		});	
 	}
 	BJS.objectSize = function(obj) {

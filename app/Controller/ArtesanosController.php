@@ -11,6 +11,11 @@ class ArtesanosController extends AppController {
 		parent::beforeFilter();
 		$this -> Auth -> allow('isCalificacionActive', 'validarCalificacion', 'validarCalificacionAutonomo', 'validarCalificacionNormal', 'validarCalificacionObtenerFechas');
 	}
+	public function pruebas(){
+		$this->layout='pdf/default';
+		//Configure::write('debug',0);
+		
+	}
 
 	/**
 	 * index method
@@ -100,10 +105,10 @@ class ArtesanosController extends AppController {
 		 * Provincias y demas
 		 */
 		$provincias = $this -> Artesano -> Calificacion -> Taller -> Provincia -> find('list');
-		$cantones = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Canton -> find('list');
+		/*$cantones = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Canton -> find('list');
 		$ciudades = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Canton -> Ciudad -> find('list');
 		$sectores = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Canton -> Ciudad -> Sector -> find('list');
-		$parroquias = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Canton -> Ciudad -> Sector -> Parroquia -> find('list');
+		$parroquias = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Canton -> Ciudad -> Sector -> Parroquia -> find('list');*/
 		$this -> set(compact('provincias', 'cantones', 'ciudades', 'sectores', 'parroquias'));
 	}
 
