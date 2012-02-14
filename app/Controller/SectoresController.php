@@ -6,30 +6,32 @@ App::uses('AppController', 'Controller');
  * @property Sector $Sector
  */
 class SectoresController extends AppController {
-	
+
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('getNombre', 'getSectores');
+		$this -> Auth -> allow('getNombre', 'getSectores', 'getByCiudad');
 	}
 
 	public function beforeRender() {
 		$this -> layout = "parametros";
 	}
-	public function getByCiudad($ciuId){
-		echo json_encode($this->Sector->find('list',array('conditions'=>array('ciudad_id'=>$ciuId))));
-		$this -> autorender =false;
+
+	public function getByCiudad($ciuId) {
+		echo json_encode($this -> Sector -> find('list', array('order' => array('Sector.sec_nombre' => 'ASC'), 'conditions' => array('Sector.ciudad_id' => $ciuId))));
+		$this -> autorender = false;
 	}
+
 	public function getSectores($ciudad_id = null) {
-		if($ciudad_id) {
+		if ($ciudad_id) {
 			return $this -> Sector -> find('all', array('order' => array('Sector.sec_nombre' => 'ASC'), 'conditions' => array('Sector.ciudad_id' => $ciudad_id)));
 		} else {
 			return $this -> Sector -> find('all', array('order' => array('Sector.sec_nombre' => 'ASC')));
 		}
 	}
-	
+
 	public function getNombre($id) {
 		$sector = $this -> Sector -> read('sec_nombre', $id);
-		if(empty($sector)) {
+		if (empty($sector)) {
 			return '<b>:: eliminado ::</b>';
 		} else {
 			return $sector['Sector']['sec_nombre'];

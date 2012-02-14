@@ -6,27 +6,29 @@ App::uses('AppController', 'Controller');
  * @property Parroquia $Parroquia
  */
 class ParroquiasController extends AppController {
-	
+
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('getNombre', 'getParroquias');
+		$this -> Auth -> allow('getNombre', 'getParroquias', 'getBySector');
 	}
-	
+
 	public function beforeRender() {
 		$this -> layout = "parametros";
 	}
-	public function getBySector($secId){
-		echo json_encode($this->Parroquia->find('list',array('conditions'=>array('sector_id'=>$secId))));	
-		$this -> autorender =false;
+
+	public function getBySector($secId) {
+		echo json_encode($this -> Parroquia -> find('list', array('order' => array('Parroquia.par_nombre' => 'ASC'), 'conditions' => array('Parroquia.sector_id' => $secId))));
+		$this -> autorender = false;
 	}
+
 	public function getParroquias($sector_id = null) {
-		if($sector_id) {
+		if ($sector_id) {
 			return $this -> Parroquia -> find('all', array('order' => array('Parroquia.par_nombre' => 'ASC'), 'conditions' => array('Parroquia.sector_id' => $sector_id)));
 		} else {
 			return $this -> Parroquia -> find('all', array('order' => array('Parroquia.par_nombre' => 'ASC')));
 		}
 	}
-	
+
 	public function getNombre($id) {
 		$parroquia = $this -> Parroquia -> read('par_nombre', $id);
 		return $parroquia['Parroquia']['par_nombre'];

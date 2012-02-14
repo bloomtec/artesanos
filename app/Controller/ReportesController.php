@@ -17,15 +17,9 @@ class ReportesController extends AppController {
 			// Sección informe
 			$this -> set('mostrar_reporte', true);
 			$conditions = array();
-			$this -> paginate = array('DatosPersonal' => array('conditions' => $conditions));
-			$artesanos = $this -> paginate('DatosPersonal');
-			foreach ($artesanos as $key => $value) {
-				
-			}
-			$this -> set('artesanos', $artesanos);
-		} else {
-			// Sección formulario
-			$this -> set('mostrar_reporte', false);
+			$this -> Session -> delete('conditions');
+			$this -> Session -> write('conditions', $conditions);
+			$this -> redirect(array('controller' => 'datos_personales', 'action' => 'reporteArtesanos'));
 		}
 	}
 	

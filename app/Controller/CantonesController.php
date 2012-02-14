@@ -6,28 +6,30 @@ App::uses('AppController', 'Controller');
  * @property Canton $Canton
  */
 class CantonesController extends AppController {
-		
-	
+
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('getNombre', 'getCantones');
+		$this -> Auth -> allow('getNombre', 'getCantones', 'getByProvincia');
 	}
-	
+
 	public function beforeRender() {
 		$this -> layout = "parametros";
 	}
-	public function getByProvincia($provId){
-		echo json_encode($this->Canton->find('list',array('conditions'=>array('provincia_id'=>$provId))));	
-		$this -> autorender =false;
+
+	public function getByProvincia($provId) {
+		$this -> layout = "ajax";
+		echo json_encode($this -> Canton -> find('list', array('order' => array('Canton.can_nombre' => 'ASC'), 'conditions' => array('Canton.provincia_id' => $provId))));
+		exit(0);
 	}
+
 	public function getCantones($provincia_id = null) {
-		if($provincia_id) {
+		if ($provincia_id) {
 			return $this -> Canton -> find('all', array('order' => array('Canton.can_nombre' => 'ASC'), 'conditions' => array('Canton.provincia_id' => $provincia_id)));
 		} else {
 			return $this -> Canton -> find('all', array('order' => array('Canton.can_nombre' => 'ASC')));
 		}
 	}
-	
+
 	public function getNombre($id) {
 		$canton = $this -> Canton -> read('can_nombre', $id);
 		return $canton['Canton']['can_nombre'];
