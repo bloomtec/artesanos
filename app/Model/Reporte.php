@@ -1,5 +1,8 @@
 <?php
 App::uses('AppModel', 'Model');
+App::uses('Artesano', 'Model');
+App::uses('DatosPersonal', 'Model');
+App::uses('Calificacion', 'Model');
 /**
  * Reporte Model
  */

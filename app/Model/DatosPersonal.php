@@ -6,6 +6,7 @@ App::uses('AppModel', 'Model');
  * @property Calificacion $Calificacion
  */
 class DatosPersonal extends AppModel {
+	
 /**
  * Validation rules
  *
@@ -83,7 +84,7 @@ class DatosPersonal extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'[dat_estado_civil' => array(
+		'dat_estado_civil' => array(
 			'noempty' => array(
 				'rule' => array('noempty'),
 				//'message' => 'Your custom message here',
@@ -131,4 +132,5 @@ class DatosPersonal extends AppModel {
 			'order' => ''
 		)
 	);
+	
 }
