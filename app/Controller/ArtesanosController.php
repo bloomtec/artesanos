@@ -237,6 +237,15 @@ class ArtesanosController extends AppController {
 		if($resultado_validacion['Calificar'] && isset($resultado_validacion['InfoFecha']['Multa']) && $resultado_validacion['InfoFecha']['Multa']) {
 			$resultado_validacion['Mensaje'] = $resultado_validacion['InfoFecha']['Mensaje'];
 		}
+
+		/**
+		 * Si se permite hacer la calificación validar si se esta o no dentro del rango permitido
+		 * No permitir si se está antes de tiempo
+		 */
+		if($resultado_validacion['Calificar'] && isset($resultado_validacion['InfoFecha']['Antes']) && $resultado_validacion['InfoFecha']['Antes']) {
+			$resultado_validacion['Mensaje'] = $resultado_validacion['InfoFecha']['Mensaje'];
+			$resultado_validacion['Calificar'] = 0;
+		}
 		
 		// Hacer echo del resulado
 		echo json_encode($resultado_validacion);
@@ -341,7 +350,9 @@ class ArtesanosController extends AppController {
 			$fechas['EnRango'] = 0;
 			if($fecha_rango_menor_registro >= $fecha_actual) {
 				$fechas['Mensaje'] = 'Esta tratando de hacer un registro antes de que se cumpla el tiempo de la calificación actual';
+				$fechas['Antes'] = 1;
 			} else {
+				$fechas['Despues'] = 1;
 				$fechas['Mensaje'] = 'Se ha pasado la fecha limite de registro';
 				$fechas['Multa'] = 1;
 			}
