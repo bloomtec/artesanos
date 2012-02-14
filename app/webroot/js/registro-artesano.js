@@ -49,11 +49,12 @@ $(function(){
 		validarCalificacion();
 	});
 	/*_________PARAMETROS GEOGRAFICOS*/
+	/*___________TALLER_______________*/
 	var actualizarGeoTaller = function(){
 		BJS.updateSelect($("#TallerCantonId"),"/cantones/getByProvincia/"+$("#TallerProvinciaId option:selected").val(),function(){
 			BJS.updateSelect($("#TallerCiudadId"),"/ciudades/getByCanton/"+$("#TallerCantonId option:selected").val(),function(){
 				BJS.updateSelect($("#TallerSectorId"),"/sectores/getByCiudad/"+$("#TallerCiudadId option:selected").val(),function(){
-					BJS.updateSelect($("#LocalParroquiaId"),"/parroquias/getBySector/"+$("#TallerSectorId option:selected").val());	
+					BJS.updateSelect($("#TallerParroquiaId"),"/parroquias/getBySector/"+$("#TallerSectorId option:selected").val(),function(){});	
 				});	
 			});	
 		});
@@ -61,6 +62,50 @@ $(function(){
 	actualizarGeoTaller();
 	$("#TallerProvinciaId").change(function(){
 		actualizarGeoTaller();
+	});
+	$("#TallerCantonId").change(function(){
+		BJS.updateSelect($("#TallerCiudadId"),"/ciudades/getByCanton/"+$("#TallerCantonId option:selected").val(),function(){
+			BJS.updateSelect($("#TallerSectorId"),"/sectores/getByCiudad/"+$("#TallerCiudadId option:selected").val(),function(){
+				BJS.updateSelect($("#TallerParroquiaId"),"/parroquias/getBySector/"+$("#TallerSectorId option:selected").val(),function(){});	
+			});	
+		});	
+	});
+	$("#TallerCiudadId").change(function(){
+		BJS.updateSelect($("#TallerSectorId"),"/sectores/getByCiudad/"+$("#TallerCiudadId option:selected").val(),function(){
+			BJS.updateSelect($("#TallerParroquiaId"),"/parroquias/getBySector/"+$("#TallerSectorId option:selected").val(),function(){});	
+		});	
+	});
+	$("#TallerSectorId").change(function(){
+		BJS.updateSelect($("#TallerParroquiaId"),"/parroquias/getBySector/"+$("#TallerSectorId option:selected").val(),function(){});	
+	});
+	/*__________________LOCAL_________________________*/
+	var actualizarGeoLocal = function(){
+		BJS.updateSelect($("#LocalCantonId"),"/cantones/getByProvincia/"+$("#LocalProvinciaId option:selected").val(),function(){
+			BJS.updateSelect($("#LocalCiudadId"),"/ciudades/getByCanton/"+$("#LocalCantonId option:selected").val(),function(){
+				BJS.updateSelect($("#LocalSectorId"),"/sectores/getByCiudad/"+$("#LocalCiudadId option:selected").val(),function(){
+					BJS.updateSelect($("#LocalParroquiaId"),"/parroquias/getBySector/"+$("#LocalSectorId option:selected").val(),function(){});	
+				});	
+			});	
+		});
+	}
+	actualizarGeoLocal();
+	$("#LocalProvinciaId").change(function(){
+		actualizarGeoLocal();
+	});
+	$("#LocalCantonId").change(function(){
+		BJS.updateSelect($("#LocalCiudadId"),"/ciudades/getByCanton/"+$("#LocalCantonId option:selected").val(),function(){
+			BJS.updateSelect($("#LocalSectorId"),"/sectores/getByCiudad/"+$("#LocalCiudadId option:selected").val(),function(){
+				BJS.updateSelect($("#LocalParroquiaId"),"/parroquias/getBySector/"+$("#LocalSectorId option:selected").val(),function(){});	
+			});	
+		});	
+	});
+	$("#TallerCiudadId").change(function(){
+		BJS.updateSelect($("#TallerSectorId"),"/sectores/getByCiudad/"+$("#TallerCiudadId option:selected").val(),function(){
+			BJS.updateSelect($("#LocalParroquiaId"),"/parroquias/getBySector/"+$("#TallerSectorId option:selected").val(),function(){});	
+		});	
+	});
+	$("#TallerSectorId").change(function(){
+		BJS.updateSelect($("#LocalParroquiaId"),"/parroquias/getBySector/"+$("#TallerSectorId option:selected").val(),function(){});	
 	});
 	/*______________________________*/
 	var root = $("#wizard").scrollable();
