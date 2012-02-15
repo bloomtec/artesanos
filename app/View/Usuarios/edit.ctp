@@ -17,6 +17,7 @@
 			<?php
 			echo $this -> Form -> input('ciudad_id');
 			echo $this -> Form -> input('sector_id');
+			echo $this -> Form -> input('usu_inspecciones_por_dia', array('label' => 'Número De Inspecciones Por Día'));
 			?>
 		</div>
 		<div class="permisos-acl">

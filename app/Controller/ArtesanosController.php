@@ -9,7 +9,7 @@ class ArtesanosController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('isCalificacionActive', 'validarCalificacion', 'validarCalificacionAutonomo', 'validarCalificacionNormal', 'validarCalificacionObtenerFechas');
+		$this -> Auth -> allow('asignarInspector', 'isCalificacionActive', 'validarCalificacion', 'validarCalificacionAutonomo', 'validarCalificacionNormal', 'validarCalificacionObtenerFechas');
 	}
 
 	public function pruebas() {
@@ -92,6 +92,9 @@ class ArtesanosController extends AppController {
 				$calificacion['Calificacion']['artesano_id'] = $this -> request -> data['Calificacion']['artesano_id'] = $artesano['Artesano']['id'];
 				if($this -> Artesano -> Calificacion -> save($calificacion)) {
 					$calificacion['Calificacion']['id'] = $this -> request -> data['Calificacion']['id'] = $this -> Artesano -> Calificacion -> id;
+					
+					// Asignar inspector a la calificacion
+					$this -> asignarInspector($calificacion['Calificacion']['id']);
 					
 					// Guardar los datos personales
 					$this -> Artesano -> Calificacion -> DatosPersonal -> create();
@@ -231,6 +234,62 @@ class ArtesanosController extends AppController {
 		 $sectores = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Canton -> Ciudad -> Sector -> find('list');
 		 $parroquias = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Canton -> Ciudad -> Sector -> Parroquia -> find('list');*/
 		$this -> set(compact('provincias', 'cantones', 'ciudades', 'sectores', 'parroquias'));
+	}
+	
+	/**
+	 * Manejo de asignación de inspector a la última calificación creada
+	 */
+	public function asignarInspector($calificacion_id = null) {
+		$this -> autoRender = false;
+		if($calificacion_id) {
+			// Obtener la calificacion
+			$this -> Artesano -> Calificacion -> recursive = -1;
+			$calificacion = $this -> Artesano -> Calificacion -> read(null, $calificacion_id);
+			debug($calificacion);
+			
+			// Obtener el taller
+			$this -> Artesano -> Calificacion -> Taller -> recursive = -1;
+			$taller = $this -> Artesano -> Calificacion -> Taller -> find('first', array('conditions' => array('Taller.calificacion_id' => $calificacion_id)));
+			$fecha_inspeccion = 
+			debug($taller);
+			
+			// Obtener los inspectores del taller
+			$this -> Artesano -> Calificacion -> InspectorTaller -> recursive = -1;
+			$inspectores_taller = $this -> Artesano -> Calificacion -> InspectorTaller -> find('all', array('conditions' => array('InspectorTaller.rol_id' => 3, 'InspectorTaller.sector_id' => $taller['Taller']['sector_id'])));
+			
+			if($inspectores_taller) {
+				debug($inspectores_taller);
+				$fecha_calificacion = explode(' ', $calificacion['Calificacion']['created']);
+				$fecha_calificacion = $fecha_calificacion[0];
+				$fecha_rango_menor_registro = strtotime('-1 week', strtotime($fecha_expiracion));
+				$fecha_expiracion = DateTime::createFromFormat('Y-m-d', $fecha_expiracion);
+				$fecha_rango_menor_registro = date('Y-m-d', $fecha_rango_menor_registro);
+				$fecha_rango_menor_registro = new DateTime($fecha_rango_menor_registro);
+				$fechas['RangoRegistroFin'] = $fecha_expiracion -> format('Y-m-d');
+				foreach ($inspectores_taller as $key => $value) {
+					
+				}
+			} else {
+				// No hay inspectores para el sector del taller
+				return;
+			}
+			
+			// Obtener el local
+			$this -> Artesano -> Calificacion -> Local -> recursive = -1;
+			$local = $this -> Artesano -> Calificacion -> Local -> find('first', array('conditions' => array('Local.calificacion_id' => $calificacion_id)));
+			
+			/**
+			 * Si hay local registrado asignar inspección
+			 */
+			if($local) {
+				// Obtener los inspectores del local
+				$this -> Artesano -> Calificacion -> InspectorLocal -> recursive = -1;
+				$inspectores_local = $this -> Artesano -> Calificacion -> InspectorLocal -> find('all', array('conditions' => array('InspectorLocal.rol_id' => 3, 'InspectorLocal.sector_id' => $local['Local']['sector_id'])));
+				debug($inspectores_local);
+			} else {
+				// No hay local
+			}
+		}
 	}
 
 	/**
