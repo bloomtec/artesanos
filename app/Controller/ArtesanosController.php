@@ -76,7 +76,7 @@ class ArtesanosController extends AppController {
 			if (!$this -> request -> data['Local']['loc_email']) {
 				unset($this -> request -> data['Local']);
 			}
-			debug($this -> request -> data);
+			//debug($this -> request -> data);
 			
 			// Guardar el artesano
 			$this -> Artesano -> create();
@@ -118,6 +118,12 @@ class ArtesanosController extends AppController {
 						foreach($equipos_de_trabajo['EquiposDeTrabajo'] as $key => $values) {
 							$equipos_de_trabajo['EquiposDeTrabajo'][$key]['taller_id'] = $this -> request -> data['EquiposDeTrabajo'][$key]['taller_id'] = $taller['Taller']['id'];
 						}
+						foreach($equipos_de_trabajo['EquiposDeTrabajo'] as $key => $values) {
+							$tmp = array();
+							$tmp['EquiposDeTrabajo'] = $values;
+							$this -> Artesano -> Calificacion -> Taller -> EquiposDeTrabajo -> create();
+							$this -> Artesano -> Calificacion -> Taller -> EquiposDeTrabajo -> save($tmp);
+						}
 						
 						// Materias Primas
 						$materias_primas = array();
@@ -125,10 +131,11 @@ class ArtesanosController extends AppController {
 						foreach($materias_primas['MateriasPrima'] as $key => $values) {
 							$materias_primas['MateriasPrima'][$key]['taller_id'] = $this -> request -> data['MateriasPrima'][$key]['taller_id'] = $taller['Taller']['id'];
 						}
-						if($this -> Artesano -> Calificacion -> Taller -> MateriasPrima -> saveAll($materias_primas)) {
-							// TODO : Por si se debe hacer algo en este caso
-						} else {
-							$this -> Session -> setFlash(__('Ha ocurrido un error al registrar las materias primas del taller del artesano. Por favor, intente de nuevo.'), 'crud/error');
+						foreach($materias_primas['MateriasPrima'] as $key => $values) {
+							$tmp = array();
+							$tmp['MateriasPrima'] = $values;
+							$this -> Artesano -> Calificacion -> Taller -> MateriasPrima -> create();
+							$this -> Artesano -> Calificacion -> Taller -> MateriasPrima -> save($tmp);
 						}
 						
 						// Productos Elaborados
@@ -137,10 +144,11 @@ class ArtesanosController extends AppController {
 						foreach($productos_elaborados['ProductosElaborado'] as $key => $values) {
 							$productos_elaborados['ProductosElaborado'][$key]['taller_id'] = $this -> request -> data['ProductosElaborado'][$key]['taller_id'] = $taller['Taller']['id'];
 						}
-						if($this -> Artesano -> Calificacion -> Taller -> ProductosElaborado -> saveAll($productos_elaborados)) {
-							// TODO : Por si se debe hacer algo en este caso
-						} else {
-							$this -> Session -> setFlash(__('Ha ocurrido un error al registrar los productos elaborados del taller del artesano. Por favor, intente de nuevo.'), 'crud/error');
+						foreach($productos_elaborados['ProductosElaborado'] as $key => $values) {
+							$tmp = array();
+							$tmp['ProductosElaborado'] = $values;
+							$this -> Artesano -> Calificacion -> Taller -> ProductosElaborado -> create();
+							$this -> Artesano -> Calificacion -> Taller -> ProductosElaborado -> save($tmp);
 						}
 						
 						// Guardar Trabajadores
@@ -149,10 +157,11 @@ class ArtesanosController extends AppController {
 						foreach($trabajadores['Trabajador'] as $key => $values) {
 							$trabajadores['Trabajador'][$key]['taller_id'] = $this -> request -> data['Trabajador'][$key]['taller_id'] = $taller['Taller']['id'];
 						}
-						if($this -> Artesano -> Calificacion -> Taller -> Trabajador -> saveAll($trabajadores)) {
-							// TODO : Por si se debe hacer algo en este caso
-						} else {
-							$this -> Session -> setFlash(__('Ha ocurrido un error al registrar los trabajadores del taller del artesano. Por favor, intente de nuevo.'), 'crud/error');
+						foreach($trabajadores['Trabajador'] as $key => $values) {
+							$tmp = array();
+							$tmp['Trabajador'] = $values;
+							$this -> Artesano -> Calificacion -> Taller -> Trabajador -> create();
+							$this -> Artesano -> Calificacion -> Taller -> Trabajador -> save($tmp);
 						}
 						 
 					} else {
@@ -173,10 +182,10 @@ class ArtesanosController extends AppController {
 					} else {
 						// TODO : Por si se debe hacer algo en este caso
 					}
-					$this -> redirect(array('action' => 'index'));
 				} else {
 					$this -> Session -> setFlash(__('Ha ocurrido un error al registrar la calificación del artesano. Por favor, intente de nuevo.'), 'crud/error');
 				}
+				$this -> redirect(array('action' => 'index'));
 			} else {
 				$this -> Session -> setFlash(__('Ha ocurrido un error al registrar el artesano. Por favor, intente de nuevo.'), 'crud/error');
 			}
