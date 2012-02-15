@@ -21,9 +21,7 @@
 				<li>
 					<a href="/artesanos/add">Registrar</a>
 				</li>
-				<li>
-					<?php echo $this->Html->link('View as PDF', array('controller'=>'artesanos','action'=>'pruebas', 'ext'=>'pdf','umm')); ?>
-				</li>
+				
 			</ul>
 			<?php endif; ?>
 		</li>
