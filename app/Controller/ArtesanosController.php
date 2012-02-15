@@ -239,7 +239,7 @@ class ArtesanosController extends AppController {
 	/**
 	 * Manejo de asignación de inspector a la última calificación creada
 	 */
-	public function asignarInspector($calificacion_id = null) {
+	private function asignarInspector($calificacion_id = null) {
 		$this -> autoRender = false;
 		if($calificacion_id) {
 			// Obtener la calificacion
