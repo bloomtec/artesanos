@@ -9,7 +9,7 @@ class ArtesanosController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('asignarInspector', 'isCalificacionActive', 'validarCalificacion', 'validarCalificacionAutonomo', 'validarCalificacionNormal', 'validarCalificacionObtenerFechas');
+		$this -> Auth -> allow('isCalificacionActive', 'validarCalificacion', 'validarCalificacionAutonomo', 'validarCalificacionNormal', 'validarCalificacionObtenerFechas');
 	}
 
 	public function pruebas() {
@@ -92,9 +92,6 @@ class ArtesanosController extends AppController {
 				$calificacion['Calificacion']['artesano_id'] = $this -> request -> data['Calificacion']['artesano_id'] = $artesano['Artesano']['id'];
 				if($this -> Artesano -> Calificacion -> save($calificacion)) {
 					$calificacion['Calificacion']['id'] = $this -> request -> data['Calificacion']['id'] = $this -> Artesano -> Calificacion -> id;
-					
-					// Asignar inspector a la calificacion
-					$this -> asignarInspector($calificacion['Calificacion']['id']);
 					
 					// Guardar los datos personales
 					$this -> Artesano -> Calificacion -> DatosPersonal -> create();
@@ -235,6 +232,7 @@ class ArtesanosController extends AppController {
 		 $parroquias = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Canton -> Ciudad -> Sector -> Parroquia -> find('list');*/
 		$this -> set(compact('provincias', 'cantones', 'ciudades', 'sectores', 'parroquias'));
 	}
+<<<<<<< HEAD
 	
 	/**
 	 * Manejo de asignación de inspector a la última calificación creada
@@ -322,6 +320,8 @@ class ArtesanosController extends AppController {
 			}
 		}
 	}
+=======
+>>>>>>> 211134f3ca16a7ccb57c311e3a0ea57cbe7113ae
 
 	/**
 	 * edit method
@@ -535,18 +535,19 @@ class ArtesanosController extends AppController {
 	}
 
 	private function validarCalificacionObtenerFechas($fecha_expiracion) {
-				
 		$fechas = array();
 		$fecha_rango_menor_registro = strtotime('-1 week', strtotime($fecha_expiracion));
-		$fecha_rango_menor_registro = date('Y-m-d', $fecha_rango_menor_registro);
-		$fechas['RangoRegistroInicio'] = $fecha_rango_menor_registro;
-		$fechas['RangoRegistroFin'] = date('Y-m-d', strtotime($fecha_expiracion));
-		
-		$fecha_rango_menor_registro = new DateTime($fecha_rango_menor_registro);
+
 		$fecha_expiracion = DateTime::createFromFormat('Y-m-d', $fecha_expiracion);
+		$fecha_rango_menor_registro = date('Y-m-d', $fecha_rango_menor_registro);
+		$fecha_rango_menor_registro = new DateTime($fecha_rango_menor_registro);
+
+		$fechas['RangoRegistroFin'] = $fecha_expiracion -> format('Y-m-d');
+		$fechas['RangoRegistroInicio'] = $fecha_rango_menor_registro -> format('Y-m-d');
+
 		$fecha_actual = new DateTime('now');
-		
 		$fechas['FechaActual'] = $fecha_actual -> format('Y-m-d');
+
 		$fechas['Multa'] = 0;
 
 		if (($fecha_actual >= $fecha_rango_menor_registro) && ($fecha_actual <= $fecha_expiracion)) {
