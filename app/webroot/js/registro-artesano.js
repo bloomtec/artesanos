@@ -68,7 +68,15 @@ $(function(){
 	    return false;
 	  }
 	}
-
+	var llenarDatos = function(Model,datosPersonales){
+		var input=null;
+		for(atributo in datosPersonales){
+			input = $("[name='data["+Model+"]["+atributo+"]']");
+			if(input.length){
+				input.val(datosPersonales[atributo]);
+			}
+		}
+	}
 	var validarCalificacion = function (){
 		if($('.validarCalificacion .radio input:checked').val()==0/*si es pasaporte*/ || checkCedulaEcuador($("#wizard #ArtesanoArtCedula").val())){
 			if($("#wizard #ArtesanoArtCedula").val()==""){
@@ -79,7 +87,12 @@ $(function(){
 				
 				if(response.Calificar){
 					$("#wizard .validar").css('visibility','visible');
-					console.log(response.Calificacion);
+					//llenarDatos(response.Datos.Calificacion);
+					if(response.Datos.DatosPersonal.length) llenarDatos('DatosPersonal',response.Datos.DatosPersonal[0]);
+					if(response.Datos.Taller.length) llenarDatos('Taller',response.Datos.Taller[0]);
+					if(response.Datos.Local.length) llenarDatos('Taller',response.Datos.Local[0]);
+					//console.log(response.Datos.Local);
+					//console.log(response.Datos.Taller);
 				}else{
 					alert(response.Mensaje);
 				}
