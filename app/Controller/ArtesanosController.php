@@ -68,22 +68,119 @@ class ArtesanosController extends AppController {
 					unset($this -> request -> data['ProductosElaborado'][$key]);
 				}
 			}
-			foreach ($this -> request -> data['Trabajadores'] as $key => $value) {
+			foreach ($this -> request -> data['Trabajador'] as $key => $value) {
 				if (!$value['tra_cedula'] || !$value['tra_nombres_y_apellidos'] || !$value['tra_pago_mensual'] || !$value['tra_sexo']) {
-					unset($this -> request -> data['Trabajadores'][$key]);
+					unset($this -> request -> data['Trabajador'][$key]);
 				}
 			}
 			if (!$this -> request -> data['Local']['loc_email']) {
 				unset($this -> request -> data['Local']);
 			}
-			$this -> Artesano -> Calificacion -> create();
-			if ($this -> Artesano -> Calificacion -> saveAll($this -> request -> data)) {
-				$this -> Session -> setFlash(__('Los datos del artesano han sido registrados.'), 'crud/success');
-				$this -> redirect(array('action' => 'index'));
+			debug($this -> request -> data);
+			
+			// Guardar el artesano
+			$this -> Artesano -> create();
+			$artesano = array();
+			$artesano['Artesano'] = $this -> request -> data['Artesano'];
+			if ($this -> Artesano -> save($artesano)) {
+				$artesano['Artesano']['id'] = $this -> request -> data['Artesano']['id'] = $this -> Artesano -> id;
+				
+				// Guardar la calificacion
+				$this -> Artesano -> Calificacion -> create();
+				$calificacion = array();
+				$calificacion['Calificacion'] = $this -> request -> data['Calificacion'];
+				$calificacion['Calificacion']['artesano_id'] = $this -> request -> data['Calificacion']['artesano_id'] = $artesano['Artesano']['id'];
+				if($this -> Artesano -> Calificacion -> save($calificacion)) {
+					$calificacion['Calificacion']['id'] = $this -> request -> data['Calificacion']['id'] = $this -> Artesano -> Calificacion -> id;
+					
+					// Guardar los datos personales
+					$this -> Artesano -> Calificacion -> DatosPersonal -> create();
+					$datos_personales = array();
+					$datos_personales['DatosPersonal'] = $this -> request -> data['DatosPersonal'];
+					$datos_personales['DatosPersonal']['calificacion_id'] = $this -> request -> data['DatosPersonal']['calificacion_id'] = $calificacion['Calificacion']['id'];
+					if($this -> Artesano -> Calificacion -> DatosPersonal -> save($datos_personales)) {
+						$this -> Session -> setFlash(__('Los datos del artesano han sido registrados.'), 'crud/success');
+					} else {
+						$this -> Session -> setFlash(__('Ha ocurrido un error al registrar los datos personales del artesano. Por favor, intente de nuevo.'), 'crud/error');
+					}
+					
+					// Guardar el taller
+					$this -> Artesano -> Calificacion -> Taller -> create();
+					$taller = array();
+					$taller['Taller'] = $this -> request -> data['Taller'];
+					$taller['Taller']['calificacion_id'] = $this -> request -> data['Taller']['calificacion_id'] = $calificacion['Calificacion']['id'];
+					if($this -> Artesano -> Calificacion -> Taller -> save($taller)) {
+						$taller['Taller']['id'] = $this -> request -> data['Taller']['id'] = $this -> Artesano -> Calificacion -> Taller -> id;
+						
+						// Guardar Equipos De Trabajo
+						$equipos_de_trabajo = array();
+						$equipos_de_trabajo['EquiposDeTrabajo'] = $this -> request -> data['EquiposDeTrabajo'];
+						foreach($equipos_de_trabajo['EquiposDeTrabajo'] as $key => $values) {
+							$equipos_de_trabajo['EquiposDeTrabajo'][$key]['taller_id'] = $this -> request -> data['EquiposDeTrabajo'][$key]['taller_id'] = $taller['Taller']['id'];
+						}
+						
+						// Materias Primas
+						$materias_primas = array();
+						$materias_primas['MateriasPrima'] = $this -> request -> data['MateriasPrima'];
+						foreach($materias_primas['MateriasPrima'] as $key => $values) {
+							$materias_primas['MateriasPrima'][$key]['taller_id'] = $this -> request -> data['MateriasPrima'][$key]['taller_id'] = $taller['Taller']['id'];
+						}
+						if($this -> Artesano -> Calificacion -> Taller -> MateriasPrima -> saveAll($materias_primas)) {
+							// TODO : Por si se debe hacer algo en este caso
+						} else {
+							$this -> Session -> setFlash(__('Ha ocurrido un error al registrar las materias primas del taller del artesano. Por favor, intente de nuevo.'), 'crud/error');
+						}
+						
+						// Productos Elaborados
+						$productos_elaborados = array();
+						$productos_elaborados['ProductosElaborado'] = $this -> request -> data['ProductosElaborado'];
+						foreach($productos_elaborados['ProductosElaborado'] as $key => $values) {
+							$productos_elaborados['ProductosElaborado'][$key]['taller_id'] = $this -> request -> data['ProductosElaborado'][$key]['taller_id'] = $taller['Taller']['id'];
+						}
+						if($this -> Artesano -> Calificacion -> Taller -> ProductosElaborado -> saveAll($productos_elaborados)) {
+							// TODO : Por si se debe hacer algo en este caso
+						} else {
+							$this -> Session -> setFlash(__('Ha ocurrido un error al registrar los productos elaborados del taller del artesano. Por favor, intente de nuevo.'), 'crud/error');
+						}
+						
+						// Guardar Trabajadores
+						$trabajadores = array();
+						$trabajadores['Trabajador'] = $this -> request -> data['Trabajador'];
+						foreach($trabajadores['Trabajador'] as $key => $values) {
+							$trabajadores['Trabajador'][$key]['taller_id'] = $this -> request -> data['Trabajador'][$key]['taller_id'] = $taller['Taller']['id'];
+						}
+						if($this -> Artesano -> Calificacion -> Taller -> Trabajador -> saveAll($trabajadores)) {
+							// TODO : Por si se debe hacer algo en este caso
+						} else {
+							$this -> Session -> setFlash(__('Ha ocurrido un error al registrar los trabajadores del taller del artesano. Por favor, intente de nuevo.'), 'crud/error');
+						}
+						 
+					} else {
+						$this -> Session -> setFlash(__('Ha ocurrido un error al registrar el taller del artesano. Por favor, intente de nuevo.'), 'crud/error');
+					}
+					
+					// Guardar el local en caso que haya
+					if(isset($this -> request -> data['Local'])) {
+						$this -> Artesano -> Calificacion -> Local -> create();
+						$local = array();
+						$local['Local'] = $this -> request -> data['Local'];
+						$local['Local']['calificacion_id'] = $this -> request -> data['Local']['calificacion_id'] = $calificacion['Calificacion']['id'];
+						if($this -> Artesano -> Calificacion -> Taller -> save($local)) {
+							// TODO : Por si se debe hacer algo en este caso
+						} else {
+							$this -> Session -> setFlash(__('Ha ocurrido un error al registrar el local del artesano. Por favor, intente de nuevo.'), 'crud/error');
+						}
+					} else {
+						// TODO : Por si se debe hacer algo en este caso
+					}
+					$this -> redirect(array('action' => 'index'));
+				} else {
+					$this -> Session -> setFlash(__('Ha ocurrido un error al registrar la calificación del artesano. Por favor, intente de nuevo.'), 'crud/error');
+				}
 			} else {
 				$this -> Session -> setFlash(__('Ha ocurrido un error al registrar el artesano. Por favor, intente de nuevo.'), 'crud/error');
-				debug($this -> Artesano -> Calificacion -> validationErrors);
 			}
+			
 		}
 		/**
 		 * Obtener los valores de los parametros
