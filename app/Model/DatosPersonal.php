@@ -24,8 +24,8 @@ class DatosPersonal extends AppModel {
 			),
 		),
 		'dat_nacionalidad' => array(
-			'noempty' => array(
-				'rule' => array('noempty'),
+			'notempty' => array(
+				'rule' => array('notempty'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -33,10 +33,9 @@ class DatosPersonal extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		
 		'dat_apellido_paterno' => array(
-			'noempty' => array(
-				'rule' => array('noempty'),
+			'notempty' => array(
+				'rule' => array('notempty'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -45,8 +44,8 @@ class DatosPersonal extends AppModel {
 			),
 		),
 		'dat_apellido_materno' => array(
-			'noempty' => array(
-				'rule' => array('noempty'),
+			'notempty' => array(
+				'rule' => array('notempty'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -55,8 +54,8 @@ class DatosPersonal extends AppModel {
 			),
 		),
 		'dat_nombres' => array(
-			'noempty' => array(
-				'rule' => array('noempty'),
+			'notempty' => array(
+				'rule' => array('notempty'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -65,8 +64,8 @@ class DatosPersonal extends AppModel {
 			),
 		),
 		'dat_fecha_nacimiento' => array(
-			'noempty' => array(
-				'rule' => array('noempty'),
+			'notempty' => array(
+				'rule' => array('notempty'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -75,8 +74,8 @@ class DatosPersonal extends AppModel {
 			),
 		),
 		'dat_tipo_de_sangre' => array(
-			'noempty' => array(
-				'rule' => array('noempty'),
+			'notempty' => array(
+				'rule' => array('notempty'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -85,8 +84,8 @@ class DatosPersonal extends AppModel {
 			),
 		),
 		'dat_estado_civil' => array(
-			'noempty' => array(
-				'rule' => array('noempty'),
+			'notempty' => array(
+				'rule' => array('notempty'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -95,8 +94,8 @@ class DatosPersonal extends AppModel {
 			),
 		),
 		'dat_grado_estudio' => array(
-			'noempty' => array(
-				'rule' => array('noempty'),
+			'notempty' => array(
+				'rule' => array('notempty'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -105,8 +104,8 @@ class DatosPersonal extends AppModel {
 			),
 		),
 		'dat_sexo' => array(
-			'noempty' => array(
-				'rule' => array('noempty'),
+			'notempty' => array(
+				'rule' => array('notempty'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,

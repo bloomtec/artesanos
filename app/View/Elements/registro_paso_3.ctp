@@ -14,89 +14,119 @@
 				</tr>
 			</thead>
 			<tr>
-				<input name="data[Trabajadores][tipos_de_trabajador_id][0]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="1" />
-				<td><input name="data[Trabajadores][tra_cedula][0]" type="number" id="TrabajadoresTraCedula" /></td>
-				<td><input name="data[Trabajadores][tra_nombres_y_apellidos][0]" type="text" id="TrabajadoresTraNombresYApellidos" /></td>
-				<td>
+				<!--<input name="data[Trabajadores][tipos_de_trabajador_id][0]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="1" />-->
+				<?php echo $this -> Form -> hidden('Trabajadores.0.tipos_de_trabajador_id', array('value' => 1, 'label' => false, 'div' => false)); ?>
+				<!--<td><input name="data[Trabajadores][tra_cedula][0]" type="number" id="TrabajadoresTraCedula" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.0.tra_cedula', array('label' => false, 'div' => false)); ?></td>
+				<!--<td><input name="data[Trabajadores][tra_nombres_y_apellidos][0]" type="text" id="TrabajadoresTraNombresYApellidos" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.0.tra_nombres_y_apellidos', array('label' => false, 'div' => false)); ?></td>
+				<!--<td>
 					<select name="data[Trabajadores][tra_sexo][0]" id="TrabajadoresTraSexo" />
 						<option value="">Seleccione...</option>
-						<?php foreach ($sexos as $value => $sexo) : ?>
-						<option value="<?php echo $value; ?>"><?php echo $sexo; ?></option>
-						<?php endforeach; ?>
+						<?php //foreach ($sexos as $value => $sexo) : ?>
+						<option value="<?php //echo $value; ?>"><?php //echo $sexo; ?></option>
+						<?php //endforeach; ?>
 					</select>
-				</td>
-				<td><input name="data[Trabajadores][tra_fecha_ingreso][0]" type="date" id="TrabajadoresTraFechaIngreso" /></td>
-				<td><input name="data[Trabajadores][tra_afiliado_seguro][0]" type="checkbox" value="0" /></td>
-				<td><input name="data[Trabajadores][tra_fecha_nacimiento][0]" type="date" id="TrabajadoresTraFechaNacimiento" /></td>
-				<td><input name="data[Trabajadores][tra_pago_mensual][0]" type="number" id="TrabajadoresTraPagoMensual" class='salarioOperarios'/></td>
+				</td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.0.tra_sexo', array('options' => $sexos, 'empty' => 'Seleccione...', 'label' => false, 'div' => false)); ?></td>
+				<td><input name="data[Trabajadores][0][tra_fecha_ingreso]" type="date" id="Trabajadores0TraFechaIngreso" /></td>
+				<!--<td><input name="data[Trabajadores][tra_afiliado_seguro][0]" type="checkbox" value="0" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.0.tra_afiliado_seguro', array('type' => 'checkbox', 'label' => false, 'div' => false)); ?></td>
+				<td><input name="data[Trabajadores][0][tra_fecha_nacimiento]" type="date" id="Trabajadores0TraFechaNacimiento" /></td>
+				<!--<td><input name="data[Trabajadores][tra_pago_mensual][0]" type="number" id="TrabajadoresTraPagoMensual" class='salarioOperarios'/></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.0.tra_pago_mensual', array('label' => false, 'div' => false)); ?></td>
 			</tr>
 			<tr>
-				<input name="data[Trabajadores][tipos_de_trabajador_id][1]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="1" />
-				<td><input name="data[Trabajadores][tra_cedula][1]" type="number" id="TrabajadoresTraCedula" /></td>
-				<td><input name="data[Trabajadores][tra_nombres_y_apellidos][1]" type="text" id="TrabajadoresTraNombresYApellidos" /></td>
-				<td>
-					<select name="data[Trabajadores][tra_sexo][1]" id="TrabajadoresTraSexo" />
+				<!--<input name="data[Trabajadores][tipos_de_trabajador_id][0]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="1" />-->
+				<?php echo $this -> Form -> hidden('Trabajadores.1.tipos_de_trabajador_id', array('value' => 1, 'label' => false, 'div' => false)); ?>
+				<!--<td><input name="data[Trabajadores][tra_cedula][0]" type="number" id="TrabajadoresTraCedula" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.1.tra_cedula', array('label' => false, 'div' => false)); ?></td>
+				<!--<td><input name="data[Trabajadores][tra_nombres_y_apellidos][0]" type="text" id="TrabajadoresTraNombresYApellidos" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.1.tra_nombres_y_apellidos', array('label' => false, 'div' => false)); ?></td>
+				<!--<td>
+					<select name="data[Trabajadores][tra_sexo][0]" id="TrabajadoresTraSexo" />
 						<option value="">Seleccione...</option>
-						<?php foreach ($sexos as $value => $sexo) : ?>
-						<option value="<?php echo $value; ?>"><?php echo $sexo; ?></option>
-						<?php endforeach; ?>
+						<?php //foreach ($sexos as $value => $sexo) : ?>
+						<option value="<?php //echo $value; ?>"><?php //echo $sexo; ?></option>
+						<?php //endforeach; ?>
 					</select>
-				</td>
-				<td><input name="data[Trabajadores][tra_fecha_ingreso][1]" type="date" id="TrabajadoresTraFechaIngreso" /></td>
-				<td><input name="data[Trabajadores][tra_afiliado_seguro][1]" type="checkbox" value="0" /></td>
-				<td><input name="data[Trabajadores][tra_fecha_nacimiento][1]" type="date" id="TrabajadoresTraFechaNacimiento" /></td>
-				<td><input name="data[Trabajadores][tra_pago_mensual][1]" type="number" id="TrabajadoresTraPagoMensual"  class='salarioOperarios' /></td>
+				</td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.1.tra_sexo', array('options' => $sexos, 'empty' => 'Seleccione...', 'label' => false, 'div' => false)); ?></td>
+				<td><input name="data[Trabajadores][1][tra_fecha_ingreso]" type="date" id="Trabajadores1TraFechaIngreso" /></td>
+				<!--<td><input name="data[Trabajadores][tra_afiliado_seguro][0]" type="checkbox" value="0" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.1.tra_afiliado_seguro', array('type' => 'checkbox', 'label' => false, 'div' => false)); ?></td>
+				<td><input name="data[Trabajadores][1][tra_fecha_nacimiento]" type="date" id="Trabajadores1TraFechaNacimiento" /></td>
+				<!--<td><input name="data[Trabajadores][tra_pago_mensual][0]" type="number" id="TrabajadoresTraPagoMensual" class='salarioOperarios'/></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.1.tra_pago_mensual', array('label' => false, 'div' => false)); ?></td>
 			</tr>
 			<tr>
-				<input name="data[Trabajadores][tipos_de_trabajador_id][2]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="1" />
-				<td><input name="data[Trabajadores][tra_cedula][2]" type="number" id="TrabajadoresTraCedula" /></td>
-				<td><input name="data[Trabajadores][tra_nombres_y_apellidos][2]" type="text" id="TrabajadoresTraNombresYApellidos" /></td>
-				<td>
-					<select name="data[Trabajadores][tra_sexo][2]" id="TrabajadoresTraSexo" />
+				<!--<input name="data[Trabajadores][tipos_de_trabajador_id][0]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="1" />-->
+				<?php echo $this -> Form -> hidden('Trabajadores.2.tipos_de_trabajador_id', array('value' => 1, 'label' => false, 'div' => false)); ?>
+				<!--<td><input name="data[Trabajadores][tra_cedula][0]" type="number" id="TrabajadoresTraCedula" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.2.tra_cedula', array('label' => false, 'div' => false)); ?></td>
+				<!--<td><input name="data[Trabajadores][tra_nombres_y_apellidos][0]" type="text" id="TrabajadoresTraNombresYApellidos" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.2.tra_nombres_y_apellidos', array('label' => false, 'div' => false)); ?></td>
+				<!--<td>
+					<select name="data[Trabajadores][tra_sexo][0]" id="TrabajadoresTraSexo" />
 						<option value="">Seleccione...</option>
-						<?php foreach ($sexos as $value => $sexo) : ?>
-						<option value="<?php echo $value; ?>"><?php echo $sexo; ?></option>
-						<?php endforeach; ?>
+						<?php //foreach ($sexos as $value => $sexo) : ?>
+						<option value="<?php //echo $value; ?>"><?php //echo $sexo; ?></option>
+						<?php //endforeach; ?>
 					</select>
-				</td>
-				<td><input name="data[Trabajadores][tra_fecha_ingreso][2]" type="date" id="TrabajadoresTraFechaIngreso" /></td>
-				<td><input name="data[Trabajadores][tra_afiliado_seguro][2]" type="checkbox" value="0" /></td>
-				<td><input name="data[Trabajadores][tra_fecha_nacimiento][2]" type="date" id="TrabajadoresTraFechaNacimiento" /></td>
-				<td><input name="data[Trabajadores][tra_pago_mensual][2]" type="number" id="TrabajadoresTraPagoMensual"  class='salarioOperarios' /></td>
+				</td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.2.tra_sexo', array('options' => $sexos, 'empty' => 'Seleccione...', 'label' => false, 'div' => false)); ?></td>
+				<td><input name="data[Trabajadores][2][tra_fecha_ingreso]" type="date" id="Trabajadores2TraFechaIngreso" /></td>
+				<!--<td><input name="data[Trabajadores][tra_afiliado_seguro][0]" type="checkbox" value="0" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.2.tra_afiliado_seguro', array('type' => 'checkbox', 'label' => false, 'div' => false)); ?></td>
+				<td><input name="data[Trabajadores][2][tra_fecha_nacimiento]" type="date" id="Trabajadores2TraFechaNacimiento" /></td>
+				<!--<td><input name="data[Trabajadores][tra_pago_mensual][0]" type="number" id="TrabajadoresTraPagoMensual" class='salarioOperarios'/></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.2.tra_pago_mensual', array('label' => false, 'div' => false)); ?></td>
 			</tr>
 			<tr>
-				<input name="data[Trabajadores][tipos_de_trabajador_id][3]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="1" />
-				<td><input name="data[Trabajadores][tra_cedula][3]" type="number" id="TrabajadoresTraCedula" /></td>
-				<td><input name="data[Trabajadores][tra_nombres_y_apellidos][3]" type="text" id="TrabajadoresTraNombresYApellidos" /></td>
-				<td>
-					<select name="data[Trabajadores][tra_sexo][3]" id="TrabajadoresTraSexo" />
+				<!--<input name="data[Trabajadores][tipos_de_trabajador_id][0]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="1" />-->
+				<?php echo $this -> Form -> hidden('Trabajadores.3.tipos_de_trabajador_id', array('value' => 1, 'label' => false, 'div' => false)); ?>
+				<!--<td><input name="data[Trabajadores][tra_cedula][0]" type="number" id="TrabajadoresTraCedula" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.3.tra_cedula', array('label' => false, 'div' => false)); ?></td>
+				<!--<td><input name="data[Trabajadores][tra_nombres_y_apellidos][0]" type="text" id="TrabajadoresTraNombresYApellidos" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.3.tra_nombres_y_apellidos', array('label' => false, 'div' => false)); ?></td>
+				<!--<td>
+					<select name="data[Trabajadores][tra_sexo][0]" id="TrabajadoresTraSexo" />
 						<option value="">Seleccione...</option>
-						<?php foreach ($sexos as $value => $sexo) : ?>
-						<option value="<?php echo $value; ?>"><?php echo $sexo; ?></option>
-						<?php endforeach; ?>
+						<?php //foreach ($sexos as $value => $sexo) : ?>
+						<option value="<?php //echo $value; ?>"><?php //echo $sexo; ?></option>
+						<?php //endforeach; ?>
 					</select>
-				</td>
-				<td><input name="data[Trabajadores][tra_fecha_ingreso][3]" type="date" id="TrabajadoresTraFechaIngreso" /></td>
-				<td><input name="data[Trabajadores][tra_afiliado_seguro][3]" type="checkbox" value="0" /></td>
-				<td><input name="data[Trabajadores][tra_fecha_nacimiento][3]" type="date" id="TrabajadoresTraFechaNacimiento" /></td>
-				<td><input name="data[Trabajadores][tra_pago_mensual][3]" type="number" id="TrabajadoresTraPagoMensual"  class='salarioOperarios'/></td>
+				</td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.3.tra_sexo', array('options' => $sexos, 'empty' => 'Seleccione...', 'label' => false, 'div' => false)); ?></td>
+				<td><input name="data[Trabajadores][3][tra_fecha_ingreso]" type="date" id="Trabajadores3TraFechaIngreso" /></td>
+				<!--<td><input name="data[Trabajadores][tra_afiliado_seguro][0]" type="checkbox" value="0" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.3.tra_afiliado_seguro', array('type' => 'checkbox', 'label' => false, 'div' => false)); ?></td>
+				<td><input name="data[Trabajadores][3][tra_fecha_nacimiento]" type="date" id="Trabajadores3TraFechaNacimiento" /></td>
+				<!--<td><input name="data[Trabajadores][tra_pago_mensual][0]" type="number" id="TrabajadoresTraPagoMensual" class='salarioOperarios'/></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.3.tra_pago_mensual', array('label' => false, 'div' => false)); ?></td>
 			</tr>
 			<tr>
-				<input name="data[Trabajadores][tipos_de_trabajador_id][4]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="1" />
-				<td><input name="data[Trabajadores][tra_cedula][4]" type="number" id="TrabajadoresTraCedula" /></td>
-				<td><input name="data[Trabajadores][tra_nombres_y_apellidos][4]" type="text" id="TrabajadoresTraNombresYApellidos" /></td>
-				<td>
-					<select name="data[Trabajadores][tra_sexo][4]" id="TrabajadoresTraSexo" />
+				<!--<input name="data[Trabajadores][tipos_de_trabajador_id][0]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="1" />-->
+				<?php echo $this -> Form -> hidden('Trabajadores.4.tipos_de_trabajador_id', array('value' => 1, 'label' => false, 'div' => false)); ?>
+				<!--<td><input name="data[Trabajadores][tra_cedula][0]" type="number" id="TrabajadoresTraCedula" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.4.tra_cedula', array('label' => false, 'div' => false)); ?></td>
+				<!--<td><input name="data[Trabajadores][tra_nombres_y_apellidos][0]" type="text" id="TrabajadoresTraNombresYApellidos" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.4.tra_nombres_y_apellidos', array('label' => false, 'div' => false)); ?></td>
+				<!--<td>
+					<select name="data[Trabajadores][tra_sexo][0]" id="TrabajadoresTraSexo" />
 						<option value="">Seleccione...</option>
-						<?php foreach ($sexos as $value => $sexo) : ?>
-						<option value="<?php echo $value; ?>"><?php echo $sexo; ?></option>
-						<?php endforeach; ?>
+						<?php //foreach ($sexos as $value => $sexo) : ?>
+						<option value="<?php //echo $value; ?>"><?php //echo $sexo; ?></option>
+						<?php //endforeach; ?>
 					</select>
-				</td>
-				<td><input name="data[Trabajadores][tra_fecha_ingreso][4]" type="date" id="TrabajadoresTraFechaIngreso" /></td>
-				<td><input name="data[Trabajadores][tra_afiliado_seguro][4]" type="checkbox" value="0" /></td>
-				<td><input name="data[Trabajadores][tra_fecha_nacimiento][4]" type="date" id="TrabajadoresTraFechaNacimiento" /></td>
-				<td><input name="data[Trabajadores][tra_pago_mensual][4]" type="number" id="TrabajadoresTraPagoMensual"  class='salarioOperarios' /></td>
+				</td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.4.tra_sexo', array('options' => $sexos, 'empty' => 'Seleccione...', 'label' => false, 'div' => false)); ?></td>
+				<td><input name="data[Trabajadores][4][tra_fecha_ingreso]" type="date" id="Trabajadores4TraFechaIngreso" /></td>
+				<!--<td><input name="data[Trabajadores][tra_afiliado_seguro][0]" type="checkbox" value="0" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.4.tra_afiliado_seguro', array('type' => 'checkbox', 'label' => false, 'div' => false)); ?></td>
+				<td><input name="data[Trabajadores][4][tra_fecha_nacimiento]" type="date" id="Trabajadores4TraFechaNacimiento" /></td>
+				<!--<td><input name="data[Trabajadores][tra_pago_mensual][0]" type="number" id="TrabajadoresTraPagoMensual" class='salarioOperarios'/></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.4.tra_pago_mensual', array('label' => false, 'div' => false)); ?></td>
 			</tr>
 		</table>
 		<a class="AñadirRegistroOperador button" href="#" >Agregar Otro</a>
@@ -116,89 +146,119 @@
 				</tr>
 			</thead>
 			<tr>
-				<input name="data[Trabajadores][tipos_de_trabajador_id][5]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="2" />
-				<td><input name="data[Trabajadores][tra_cedula][5]" type="number" id="TrabajadoresTraCedula" /></td>
-				<td><input name="data[Trabajadores][tra_nombres_y_apellidos][5]" type="text" id="TrabajadoresTraNombresYApellidos" /></td>
-				<td>
+				<!--<input name="data[Trabajadores][tipos_de_trabajador_id][5]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="1" />-->
+				<?php echo $this -> Form -> hidden('Trabajadores.5.tipos_de_trabajador_id', array('value' => 2, 'label' => false, 'div' => false)); ?>
+				<!--<td><input name="data[Trabajadores][tra_cedula][5]" type="number" id="TrabajadoresTraCedula" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.5.tra_cedula', array('label' => false, 'div' => false)); ?></td>
+				<!--<td><input name="data[Trabajadores][tra_nombres_y_apellidos][5]" type="text" id="TrabajadoresTraNombresYApellidos" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.5.tra_nombres_y_apellidos', array('label' => false, 'div' => false)); ?></td>
+				<!--<td>
 					<select name="data[Trabajadores][tra_sexo][5]" id="TrabajadoresTraSexo" />
 						<option value="">Seleccione...</option>
-						<?php foreach ($sexos as $value => $sexo) : ?>
-						<option value="<?php echo $value; ?>"><?php echo $sexo; ?></option>
-						<?php endforeach; ?>
+						<?php //foreach ($sexos as $value => $sexo) : ?>
+						<option value="<?php //echo $value; ?>"><?php //echo $sexo; ?></option>
+						<?php //endforeach; ?>
 					</select>
-				</td>
-				<td><input name="data[Trabajadores][tra_fecha_ingreso][5]" type="date" id="TrabajadoresTraFechaIngreso" /></td>
-				<td><input name="data[Trabajadores][tra_afiliado_seguro][5]" type="checkbox" value="0" /></td>
-				<td><input name="data[Trabajadores][tra_fecha_nacimiento][5]" type="date" id="TrabajadoresTraFechaNacimiento" /></td>
-				<td><input name="data[Trabajadores][tra_pago_mensual][5]" type="number" id="TrabajadoresTraPagoMensual" class='salarioAprendiz' /></td>
+				</td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.5.tra_sexo', array('options' => $sexos, 'empty' => 'Seleccione...', 'label' => false, 'div' => false)); ?></td>
+				<td><input name="data[Trabajadores][5][tra_fecha_ingreso]" type="date" id="Trabajadores5TraFechaIngreso" /></td>
+				<!--<td><input name="data[Trabajadores][tra_afiliado_seguro][5]" type="checkbox" value="5" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.5.tra_afiliado_seguro', array('type' => 'checkbox', 'label' => false, 'div' => false)); ?></td>
+				<td><input name="data[Trabajadores][5][tra_fecha_nacimiento]" type="date" id="Trabajadores5TraFechaNacimiento" /></td>
+				<!--<td><input name="data[Trabajadores][tra_pago_mensual][5]" type="number" id="TrabajadoresTraPagoMensual" class='salarioOperarios'/></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.5.tra_pago_mensual', array('label' => false, 'div' => false)); ?></td>
 			</tr>
 			<tr>
-				<input name="data[Trabajadores][tipos_de_trabajador_id][6]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="2" />
-				<td><input name="data[Trabajadores][tra_cedula][6]" type="number" id="TrabajadoresTraCedula" /></td>
-				<td><input name="data[Trabajadores][tra_nombres_y_apellidos][6]" type="text" id="TrabajadoresTraNombresYApellidos" /></td>
-				<td>
+				<!--<input name="data[Trabajadores][tipos_de_trabajador_id][6]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="1" />-->
+				<?php echo $this -> Form -> hidden('Trabajadores.6.tipos_de_trabajador_id', array('value' => 2, 'label' => false, 'div' => false)); ?>
+				<!--<td><input name="data[Trabajadores][tra_cedula][6]" type="number" id="TrabajadoresTraCedula" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.6.tra_cedula', array('label' => false, 'div' => false)); ?></td>
+				<!--<td><input name="data[Trabajadores][tra_nombres_y_apellidos][6]" type="text" id="TrabajadoresTraNombresYApellidos" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.6.tra_nombres_y_apellidos', array('label' => false, 'div' => false)); ?></td>
+				<!--<td>
 					<select name="data[Trabajadores][tra_sexo][6]" id="TrabajadoresTraSexo" />
 						<option value="">Seleccione...</option>
-						<?php foreach ($sexos as $value => $sexo) : ?>
-						<option value="<?php echo $value; ?>"><?php echo $sexo; ?></option>
-						<?php endforeach; ?>
+						<?php //foreach ($sexos as $value => $sexo) : ?>
+						<option value="<?php //echo $value; ?>"><?php //echo $sexo; ?></option>
+						<?php //endforeach; ?>
 					</select>
-				</td>
-				<td><input name="data[Trabajadores][tra_fecha_ingreso][6]" type="date" id="TrabajadoresTraFechaIngreso" /></td>
-				<td><input name="data[Trabajadores][tra_afiliado_seguro][6]" type="checkbox" value="0" /></td>
-				<td><input name="data[Trabajadores][tra_fecha_nacimiento][6]" type="date" id="TrabajadoresTraFechaNacimiento" /></td>
-				<td><input name="data[Trabajadores][tra_pago_mensual][6]" type="number" id="TrabajadoresTraPagoMensual"  class='salarioAprendiz' /></td>
+				</td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.6.tra_sexo', array('options' => $sexos, 'empty' => 'Seleccione...', 'label' => false, 'div' => false)); ?></td>
+				<td><input name="data[Trabajadores][6][tra_fecha_ingreso]" type="date" id="Trabajadores6TraFechaIngreso" /></td>
+				<!--<td><input name="data[Trabajadores][tra_afiliado_seguro][6]" type="checkbox" value="6" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.6.tra_afiliado_seguro', array('type' => 'checkbox', 'label' => false, 'div' => false)); ?></td>
+				<td><input name="data[Trabajadores][6][tra_fecha_nacimiento]" type="date" id="Trabajadores6TraFechaNacimiento" /></td>
+				<!--<td><input name="data[Trabajadores][tra_pago_mensual][6]" type="number" id="TrabajadoresTraPagoMensual" class='salarioOperarios'/></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.6.tra_pago_mensual', array('label' => false, 'div' => false)); ?></td>
 			</tr>
 			<tr>
-				<input name="data[Trabajadores][tipos_de_trabajador_id][7]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="2" />
-				<td><input name="data[Trabajadores][tra_cedula][7]" type="number" id="TrabajadoresTraCedula" /></td>
-				<td><input name="data[Trabajadores][tra_nombres_y_apellidos][7]" type="text" id="TrabajadoresTraNombresYApellidos" /></td>
-				<td>
+				<!--<input name="data[Trabajadores][tipos_de_trabajador_id][7]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="1" />-->
+				<?php echo $this -> Form -> hidden('Trabajadores.7.tipos_de_trabajador_id', array('value' => 2, 'label' => false, 'div' => false)); ?>
+				<!--<td><input name="data[Trabajadores][tra_cedula][7]" type="number" id="TrabajadoresTraCedula" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.7.tra_cedula', array('label' => false, 'div' => false)); ?></td>
+				<!--<td><input name="data[Trabajadores][tra_nombres_y_apellidos][7]" type="text" id="TrabajadoresTraNombresYApellidos" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.7.tra_nombres_y_apellidos', array('label' => false, 'div' => false)); ?></td>
+				<!--<td>
 					<select name="data[Trabajadores][tra_sexo][7]" id="TrabajadoresTraSexo" />
 						<option value="">Seleccione...</option>
-						<?php foreach ($sexos as $value => $sexo) : ?>
-						<option value="<?php echo $value; ?>"><?php echo $sexo; ?></option>
-						<?php endforeach; ?>
+						<?php //foreach ($sexos as $value => $sexo) : ?>
+						<option value="<?php //echo $value; ?>"><?php //echo $sexo; ?></option>
+						<?php //endforeach; ?>
 					</select>
-				</td>
-				<td><input name="data[Trabajadores][tra_fecha_ingreso][7]" type="date" id="TrabajadoresTraFechaIngreso" /></td>
-				<td><input name="data[Trabajadores][tra_afiliado_seguro][7]" type="checkbox" value="0" /></td>
-				<td><input name="data[Trabajadores][tra_fecha_nacimiento][7]" type="date" id="TrabajadoresTraFechaNacimiento" /></td>
-				<td><input name="data[Trabajadores][tra_pago_mensual][7]" type="number" id="TrabajadoresTraPagoMensual" class='salarioAprendiz' /></td>
+				</td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.7.tra_sexo', array('options' => $sexos, 'empty' => 'Seleccione...', 'label' => false, 'div' => false)); ?></td>
+				<td><input name="data[Trabajadores][7][tra_fecha_ingreso]" type="date" id="Trabajadores7TraFechaIngreso" /></td>
+				<!--<td><input name="data[Trabajadores][tra_afiliado_seguro][7]" type="checkbox" value="7" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.7.tra_afiliado_seguro', array('type' => 'checkbox', 'label' => false, 'div' => false)); ?></td>
+				<td><input name="data[Trabajadores][7][tra_fecha_nacimiento]" type="date" id="Trabajadores7TraFechaNacimiento" /></td>
+				<!--<td><input name="data[Trabajadores][tra_pago_mensual][7]" type="number" id="TrabajadoresTraPagoMensual" class='salarioOperarios'/></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.7.tra_pago_mensual', array('label' => false, 'div' => false)); ?></td>
 			</tr>
 			<tr>
-				<input name="data[Trabajadores][tipos_de_trabajador_id][8]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="2" />
-				<td><input name="data[Trabajadores][tra_cedula][8]" type="number" id="TrabajadoresTraCedula" /></td>
-				<td><input name="data[Trabajadores][tra_nombres_y_apellidos][8]" type="text" id="TrabajadoresTraNombresYApellidos" /></td>
-				<td>
+				<!--<input name="data[Trabajadores][tipos_de_trabajador_id][8]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="1" />-->
+				<?php echo $this -> Form -> hidden('Trabajadores.8.tipos_de_trabajador_id', array('value' => 2, 'label' => false, 'div' => false)); ?>
+				<!--<td><input name="data[Trabajadores][tra_cedula][8]" type="number" id="TrabajadoresTraCedula" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.8.tra_cedula', array('label' => false, 'div' => false)); ?></td>
+				<!--<td><input name="data[Trabajadores][tra_nombres_y_apellidos][8]" type="text" id="TrabajadoresTraNombresYApellidos" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.8.tra_nombres_y_apellidos', array('label' => false, 'div' => false)); ?></td>
+				<!--<td>
 					<select name="data[Trabajadores][tra_sexo][8]" id="TrabajadoresTraSexo" />
 						<option value="">Seleccione...</option>
-						<?php foreach ($sexos as $value => $sexo) : ?>
-						<option value="<?php echo $value; ?>"><?php echo $sexo; ?></option>
-						<?php endforeach; ?>
+						<?php //foreach ($sexos as $value => $sexo) : ?>
+						<option value="<?php //echo $value; ?>"><?php //echo $sexo; ?></option>
+						<?php //endforeach; ?>
 					</select>
-				</td>
-				<td><input name="data[Trabajadores][tra_fecha_ingreso][8]" type="date" id="TrabajadoresTraFechaIngreso" /></td>
-				<td><input name="data[Trabajadores][tra_afiliado_seguro][8]" type="checkbox" value="0" /></td>
-				<td><input name="data[Trabajadores][tra_fecha_nacimiento][8]" type="date" id="TrabajadoresTraFechaNacimiento" /></td>
-				<td><input name="data[Trabajadores][tra_pago_mensual][8]" type="number" id="TrabajadoresTraPagoMensual" class='salarioAprendiz' /></td>
+				</td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.8.tra_sexo', array('options' => $sexos, 'empty' => 'Seleccione...', 'label' => false, 'div' => false)); ?></td>
+				<td><input name="data[Trabajadores][8][tra_fecha_ingreso]" type="date" id="Trabajadores8TraFechaIngreso" /></td>
+				<!--<td><input name="data[Trabajadores][tra_afiliado_seguro][8]" type="checkbox" value="8" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.8.tra_afiliado_seguro', array('type' => 'checkbox', 'label' => false, 'div' => false)); ?></td>
+				<td><input name="data[Trabajadores][8][tra_fecha_nacimiento]" type="date" id="Trabajadores8TraFechaNacimiento" /></td>
+				<!--<td><input name="data[Trabajadores][tra_pago_mensual][8]" type="number" id="TrabajadoresTraPagoMensual" class='salarioOperarios'/></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.8.tra_pago_mensual', array('label' => false, 'div' => false)); ?></td>
 			</tr>
 			<tr>
-				<input name="data[Trabajadores][tipos_de_trabajador_id][9]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="2" />
-				<td><input name="data[Trabajadores][tra_cedula][9]" type="number" id="TrabajadoresTraCedula" /></td>
-				<td><input name="data[Trabajadores][tra_nombres_y_apellidos][9]" type="text" id="TrabajadoresTraNombresYApellidos" /></td>
-				<td>
+				<!--<input name="data[Trabajadores][tipos_de_trabajador_id][9]" type="hidden" id="TrabajadoresTiposDeTrabajadorId" value="1" />-->
+				<?php echo $this -> Form -> hidden('Trabajadores.9.tipos_de_trabajador_id', array('value' => 2, 'label' => false, 'div' => false)); ?>
+				<!--<td><input name="data[Trabajadores][tra_cedula][9]" type="number" id="TrabajadoresTraCedula" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.9.tra_cedula', array('label' => false, 'div' => false)); ?></td>
+				<!--<td><input name="data[Trabajadores][tra_nombres_y_apellidos][9]" type="text" id="TrabajadoresTraNombresYApellidos" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.9.tra_nombres_y_apellidos', array('label' => false, 'div' => false)); ?></td>
+				<!--<td>
 					<select name="data[Trabajadores][tra_sexo][9]" id="TrabajadoresTraSexo" />
 						<option value="">Seleccione...</option>
-						<?php foreach ($sexos as $value => $sexo) : ?>
-						<option value="<?php echo $value; ?>"><?php echo $sexo; ?></option>
-						<?php endforeach; ?>
+						<?php //foreach ($sexos as $value => $sexo) : ?>
+						<option value="<?php //echo $value; ?>"><?php //echo $sexo; ?></option>
+						<?php //endforeach; ?>
 					</select>
-				</td>
-				<td><input name="data[Trabajadores][tra_fecha_ingreso][9]" type="date" id="TrabajadoresTraFechaIngreso" /></td>
-				<td><input name="data[Trabajadores][tra_afiliado_seguro][9]" type="checkbox" value="0" /></td>
-				<td><input name="data[Trabajadores][tra_fecha_nacimiento][9]" type="date" id="TrabajadoresTraFechaNacimiento" /></td>
-				<td><input name="data[Trabajadores][tra_pago_mensual][9]" type="number" id="TrabajadoresTraPagoMensual" class='salarioAprendiz' /></td>
+				</td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.9.tra_sexo', array('options' => $sexos, 'empty' => 'Seleccione...', 'label' => false, 'div' => false)); ?></td>
+				<td><input name="data[Trabajadores][9][tra_fecha_ingreso]" type="date" id="Trabajadores9TraFechaIngreso" /></td>
+				<!--<td><input name="data[Trabajadores][tra_afiliado_seguro][9]" type="checkbox" value="9" /></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.9.tra_afiliado_seguro', array('type' => 'checkbox', 'label' => false, 'div' => false)); ?></td>
+				<td><input name="data[Trabajadores][9][tra_fecha_nacimiento]" type="date" id="Trabajadores9TraFechaNacimiento" /></td>
+				<!--<td><input name="data[Trabajadores][tra_pago_mensual][9]" type="number" id="TrabajadoresTraPagoMensual" class='salarioOperarios'/></td>-->
+				<td><?php echo $this -> Form -> input('Trabajadores.9.tra_pago_mensual', array('label' => false, 'div' => false)); ?></td>
 			</tr>
 		</table>
 	</div>
