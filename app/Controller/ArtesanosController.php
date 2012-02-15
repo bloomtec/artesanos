@@ -378,7 +378,8 @@ class ArtesanosController extends AppController {
 	 */
 	private function validarCalificacionNormal($artesano, $calificaciones, $rama_id) {
 		$resultado_validacion = array();
-		$resultado_validacion['Datos'] = $calificaciones[0];
+		$this -> Artesano -> Calificacion -> recursive = 2;
+		$resultado_validacion['Datos'] = $this -> Artesano -> Calificacion -> read(null, $calificaciones[0]['Calificacion']['id']);
 		$resultado_validacion['Calificar'] = 0;
 
 		/**
@@ -466,7 +467,8 @@ class ArtesanosController extends AppController {
 	 */
 	private function validarCalificacionAutonomo($artesano, $calificaciones, $rama_id) {
 		$resultado_validacion = array();
-		$resultado_validacion['Datos'] = $calificaciones[0];
+$this -> Artesano -> Calificacion -> recursive = 2;
+		$resultado_validacion['Datos'] = $this -> Artesano -> Calificacion -> read(null, $calificaciones[0]['Calificacion']['id']);
 		$resultado_validacion['Calificar'] = 0;
 
 		/**
