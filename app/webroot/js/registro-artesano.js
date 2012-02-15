@@ -29,8 +29,23 @@ $(function(){
 			$('.porcentaje').hide();
 		}
 	});
+	var validarCalificacion = function (){
+		
+		if(!$("#wizard #ArtesanoArtCedula").val()){// LOGICA DE VALIDACION DE FORMATO DE CEDULA
+			alert('No ha escrito la cedula del artesano');	
+		}else{
+			BJS.JSONP('/artesanos/validarCalificacion',{cedula:$("#ArtesanoArtCedula").val(),tipoDeCalificacion:$("#CalificacionTiposDeCalificacionId option:selected").val(),rama:$('#CalificacionRamaId option:selected').val()},function(response){
+				
+				if(response.Calificar){
+					$("#wizard .validar").css('visibility','visible');
+				}else{
+					alert(response.Mensaje);
+				}
+			});
+		}
+	}
 	BJS.updateSelect($("#CalificacionRamaId"),"/ramas/obtenerPorGrupo/"+$("#ArtesanoGruposDeRamaId option:selected").val());	
-	$("#wizard .validarCalificacion select").change(function(){
+	/*$("#wizard .validarCalificacion select").change(function(){
 		if($(this).attr('id') == "ArtesanoGruposDeRamaId"){//actualiza el selects de ramas
 			BJS.updateSelect($("#CalificacionRamaId"),"/ramas/obtenerPorGrupo/"+$("#ArtesanoGruposDeRamaId option:selected").val(),function(){
 					validarCalificacion();
@@ -43,7 +58,7 @@ $(function(){
 	});
 	$("#wizard #ArtesanoArtCedula").blur(function(){
 		validarCalificacion();
-	});
+	});*/
 	$('.validarCalificacion a').click(function(e){
 		e.preventDefault();
 		validarCalificacion();
@@ -156,20 +171,7 @@ $(function(){
 		return true;
 	});
 	
-	function validarCalificacion(){
-		if(!$("#wizard #ArtesanoArtCedula").val()){// LOGICA DE VALIDACION DE FORMATO DE CEDULA
-			alert('No ha escrito la cedula del artesano');	
-		}else{
-			BJS.JSONP('/artesanos/validarCalificacion',{cedula:$("#ArtesanoArtCedula").val(),tipoDeCalificacion:$("#CalificacionTiposDeCalificacionId option:selected").val(),rama:$('#CalificacionRamaId option:selected').val()},function(response){
-				
-				if(response.Calificar){
-					$("#wizard .validar").css('visibility','visible');
-				}else{
-					alert(response.Mensaje);
-				}
-			});
-		}
-	}
+	
 	
 	//BALANCES
 	var actualizarRentabilidad = function(){
