@@ -1008,15 +1008,7 @@ pre {
 	overflow: auto;
 	text-shadow: none;
 }
-#wizard select.date {
-	padding: 0 4px;
-	height:20px;
-	text-align: center;
-	width: 85px;
-	min-width:85px;
-	-moz-box-shadow: 0 0 10px #eee inset;
-	-webkit-box-shadow: 0 0 10px #eee inset;
-}
+
 /* calendar root element */
 #calroot {
 	/* place on top of other elements. set a higher value if nessessary */

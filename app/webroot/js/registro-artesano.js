@@ -29,15 +29,57 @@ $(function(){
 			$('.porcentaje').hide();
 		}
 	});
+	var checkCedulaEcuador = function ( cedula ){
+	  array = cedula.split( "" );
+	  num = array.length;
+	  if ( num == 10 ){
+	    total = 0;
+	    digito = (array[9]*1);
+	    for( i=0; i < (num-1); i++ ){
+	      mult = 0;
+	      if ( ( i%2 ) != 0 ) {
+	        total = total + ( array[i] * 1 );
+	      }
+	      else
+	      {
+	        mult = array[i] * 2;
+	        if ( mult > 9 )
+	          total = total + ( mult - 9 );
+	        else
+	          total = total + mult;
+	      }
+	    }
+	    decena = total / 10;
+	    decena = Math.floor( decena );
+	    decena = ( decena + 1 ) * 10;
+	    nfinal = ( decena - total );
+	    if ( ( nfinal == 10 && digito == 0 ) || ( nfinal == digito ) ) {
+	      return true;
+	    }
+	    else
+	    {
+	      alert( "La c\xe9dula NO es v\xe1lida!!!" );
+	      return false;
+	    }
+	  }
+	  else
+	  {
+	    alert("La c\xe9dula no puede tener menos de 10 d\xedgitos");
+	    return false;
+	  }
+	}
+
 	var validarCalificacion = function (){
-		
-		if(!$("#wizard #ArtesanoArtCedula").val()){// LOGICA DE VALIDACION DE FORMATO DE CEDULA
-			alert('No ha escrito la cedula del artesano');	
-		}else{
+		if($('.validarCalificacion .radio input:checked').val()==0/*si es pasaporte*/ || checkCedulaEcuador($("#wizard #ArtesanoArtCedula").val())){
+			if($("#wizard #ArtesanoArtCedula").val()==""){
+				alert('No ha escrito un numero de pasaporte');
+				return false;
+			}
 			BJS.JSONP('/artesanos/validarCalificacion',{cedula:$("#ArtesanoArtCedula").val(),tipoDeCalificacion:$("#CalificacionTiposDeCalificacionId option:selected").val(),rama:$('#CalificacionRamaId option:selected').val()},function(response){
 				
 				if(response.Calificar){
 					$("#wizard .validar").css('visibility','visible');
+					console.log(response.Calificacion);
 				}else{
 					alert(response.Mensaje);
 				}
