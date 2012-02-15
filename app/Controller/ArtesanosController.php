@@ -250,7 +250,6 @@ class ArtesanosController extends AppController {
 			// Obtener el taller
 			$this -> Artesano -> Calificacion -> Taller -> recursive = -1;
 			$taller = $this -> Artesano -> Calificacion -> Taller -> find('first', array('conditions' => array('Taller.calificacion_id' => $calificacion_id)));
-			$fecha_inspeccion = 
 			debug($taller);
 			
 			// Obtener los inspectores del taller
@@ -261,11 +260,11 @@ class ArtesanosController extends AppController {
 				debug($inspectores_taller);
 				$fecha_calificacion = explode(' ', $calificacion['Calificacion']['created']);
 				$fecha_calificacion = $fecha_calificacion[0];
-				$fecha_rango_menor_registro = strtotime('-1 week', strtotime($fecha_expiracion));
-				$fecha_expiracion = DateTime::createFromFormat('Y-m-d', $fecha_expiracion);
-				$fecha_rango_menor_registro = date('Y-m-d', $fecha_rango_menor_registro);
-				$fecha_rango_menor_registro = new DateTime($fecha_rango_menor_registro);
-				$fechas['RangoRegistroFin'] = $fecha_expiracion -> format('Y-m-d');
+				$fecha_inspeccion_taller = strtotime('+1 day', strtotime($fecha_calificacion));
+				$fecha_inspeccion_taller = date('Y-m-d', $fecha_inspeccion_taller);
+				debug($fecha_calificacion);
+				debug($fecha_inspeccion_taller);
+				
 				foreach ($inspectores_taller as $key => $value) {
 					
 				}
@@ -504,19 +503,18 @@ class ArtesanosController extends AppController {
 	}
 
 	private function validarCalificacionObtenerFechas($fecha_expiracion) {
+				
 		$fechas = array();
 		$fecha_rango_menor_registro = strtotime('-1 week', strtotime($fecha_expiracion));
-
-		$fecha_expiracion = DateTime::createFromFormat('Y-m-d', $fecha_expiracion);
 		$fecha_rango_menor_registro = date('Y-m-d', $fecha_rango_menor_registro);
+		$fechas['RangoRegistroInicio'] = $fecha_rango_menor_registro;
+		$fechas['RangoRegistroFin'] = date('Y-m-d', strtotime($fecha_expiracion));
+		
 		$fecha_rango_menor_registro = new DateTime($fecha_rango_menor_registro);
-
-		$fechas['RangoRegistroFin'] = $fecha_expiracion -> format('Y-m-d');
-		$fechas['RangoRegistroInicio'] = $fecha_rango_menor_registro -> format('Y-m-d');
-
+		$fecha_expiracion = DateTime::createFromFormat('Y-m-d', $fecha_expiracion);
 		$fecha_actual = new DateTime('now');
+		
 		$fechas['FechaActual'] = $fecha_actual -> format('Y-m-d');
-
 		$fechas['Multa'] = 0;
 
 		if (($fecha_actual >= $fecha_rango_menor_registro) && ($fecha_actual <= $fecha_expiracion)) {
