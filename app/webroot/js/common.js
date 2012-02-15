@@ -11,7 +11,9 @@ $(function() {
 		format : 'yyyy-mm-dd',
 		offset : [0, 0],
 		lang: 'es',
-		firstDay: 1
+		firstDay: 1,
+		selectors: true,
+		yearRange: [-100,100]
 	});
 	$(".index .search-generic").click(function() {
 		search();

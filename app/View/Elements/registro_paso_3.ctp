@@ -34,7 +34,7 @@
 				<td><?php echo $this -> Form -> input('Trabajador.0.tra_afiliado_seguro', array('type' => 'checkbox', 'label' => false, 'div' => false)); ?></td>
 				<td><input name="data[Trabajador][0][tra_fecha_nacimiento]" type="date" id="Trabajador0TraFechaNacimiento" /></td>
 				<!--<td><input name="data[Trabajador][tra_pago_mensual][0]" type="number" id="TrabajadorTraPagoMensual" class='salarioOperarios'/></td>-->
-				<td><?php echo $this -> Form -> input('Trabajador.0.tra_pago_mensual', array('label' => false, 'div' => false)); ?></td>
+				<td><?php echo $this -> Form -> input('Trabajador.0.tra_pago_mensual', array('label' => false, 'div' => false,'class'=>'salarioOperarios')); ?></td>
 			</tr>
 			<tr>
 				<!--<input name="data[Trabajador][tipos_de_trabajador_id][0]" type="hidden" id="TrabajadorTiposDeTrabajadorId" value="1" />-->
@@ -57,7 +57,7 @@
 				<td><?php echo $this -> Form -> input('Trabajador.1.tra_afiliado_seguro', array('type' => 'checkbox', 'label' => false, 'div' => false)); ?></td>
 				<td><input name="data[Trabajador][1][tra_fecha_nacimiento]" type="date" id="Trabajador1TraFechaNacimiento" /></td>
 				<!--<td><input name="data[Trabajador][tra_pago_mensual][0]" type="number" id="TrabajadorTraPagoMensual" class='salarioOperarios'/></td>-->
-				<td><?php echo $this -> Form -> input('Trabajador.1.tra_pago_mensual', array('label' => false, 'div' => false)); ?></td>
+				<td><?php echo $this -> Form -> input('Trabajador.1.tra_pago_mensual', array('label' => false, 'div' => false,'class'=>'salarioOperarios')); ?></td>
 			</tr>
 			<tr>
 				<!--<input name="data[Trabajador][tipos_de_trabajador_id][0]" type="hidden" id="TrabajadorTiposDeTrabajadorId" value="1" />-->
@@ -80,7 +80,7 @@
 				<td><?php echo $this -> Form -> input('Trabajador.2.tra_afiliado_seguro', array('type' => 'checkbox', 'label' => false, 'div' => false)); ?></td>
 				<td><input name="data[Trabajador][2][tra_fecha_nacimiento]" type="date" id="Trabajador2TraFechaNacimiento" /></td>
 				<!--<td><input name="data[Trabajador][tra_pago_mensual][0]" type="number" id="TrabajadorTraPagoMensual" class='salarioOperarios'/></td>-->
-				<td><?php echo $this -> Form -> input('Trabajador.2.tra_pago_mensual', array('label' => false, 'div' => false)); ?></td>
+				<td><?php echo $this -> Form -> input('Trabajador.2.tra_pago_mensual', array('label' => false, 'div' => false,'class'=>'salarioOperarios')); ?></td>
 			</tr>
 			<tr>
 				<!--<input name="data[Trabajador][tipos_de_trabajador_id][0]" type="hidden" id="TrabajadorTiposDeTrabajadorId" value="1" />-->
@@ -103,7 +103,7 @@
 				<td><?php echo $this -> Form -> input('Trabajador.3.tra_afiliado_seguro', array('type' => 'checkbox', 'label' => false, 'div' => false)); ?></td>
 				<td><input name="data[Trabajador][3][tra_fecha_nacimiento]" type="date" id="Trabajador3TraFechaNacimiento" /></td>
 				<!--<td><input name="data[Trabajador][tra_pago_mensual][0]" type="number" id="TrabajadorTraPagoMensual" class='salarioOperarios'/></td>-->
-				<td><?php echo $this -> Form -> input('Trabajador.3.tra_pago_mensual', array('label' => false, 'div' => false)); ?></td>
+				<td><?php echo $this -> Form -> input('Trabajador.3.tra_pago_mensual', array('label' => false, 'div' => false,'class'=>'salarioOperarios')); ?></td>
 			</tr>
 			<tr>
 				<!--<input name="data[Trabajador][tipos_de_trabajador_id][0]" type="hidden" id="TrabajadorTiposDeTrabajadorId" value="1" />-->
@@ -126,7 +126,7 @@
 				<td><?php echo $this -> Form -> input('Trabajador.4.tra_afiliado_seguro', array('type' => 'checkbox', 'label' => false, 'div' => false)); ?></td>
 				<td><input name="data[Trabajador][4][tra_fecha_nacimiento]" type="date" id="Trabajador4TraFechaNacimiento" /></td>
 				<!--<td><input name="data[Trabajador][tra_pago_mensual][0]" type="number" id="TrabajadorTraPagoMensual" class='salarioOperarios'/></td>-->
-				<td><?php echo $this -> Form -> input('Trabajador.4.tra_pago_mensual', array('label' => false, 'div' => false)); ?></td>
+				<td><?php echo $this -> Form -> input('Trabajador.4.tra_pago_mensual', array('label' => false, 'div' => false,'class'=>'salarioOperarios')); ?></td>
 			</tr>
 		</table>
 		<a class="AñadirRegistroOperador button" href="#" >Agregar Otro</a>
@@ -166,7 +166,7 @@
 				<td><?php echo $this -> Form -> input('Trabajador.5.tra_afiliado_seguro', array('type' => 'checkbox', 'label' => false, 'div' => false)); ?></td>
 				<td><input name="data[Trabajador][5][tra_fecha_nacimiento]" type="date" id="Trabajador5TraFechaNacimiento" /></td>
 				<!--<td><input name="data[Trabajador][tra_pago_mensual][5]" type="number" id="TrabajadorTraPagoMensual" class='salarioOperarios'/></td>-->
-				<td><?php echo $this -> Form -> input('Trabajador.5.tra_pago_mensual', array('label' => false, 'div' => false)); ?></td>
+				<td><?php echo $this -> Form -> input('Trabajador.5.tra_pago_mensual', array('label' => false, 'div' => false, 'class'=>'salarioAprendiz')); ?></td>
 			</tr>
 			<tr>
 				<!--<input name="data[Trabajador][tipos_de_trabajador_id][6]" type="hidden" id="TrabajadorTiposDeTrabajadorId" value="1" />-->
@@ -189,8 +189,7 @@
 				<td><?php echo $this -> Form -> input('Trabajador.6.tra_afiliado_seguro', array('type' => 'checkbox', 'label' => false, 'div' => false)); ?></td>
 				<td><input name="data[Trabajador][6][tra_fecha_nacimiento]" type="date" id="Trabajador6TraFechaNacimiento" /></td>
 				<!--<td><input name="data[Trabajador][tra_pago_mensual][6]" type="number" id="TrabajadorTraPagoMensual" class='salarioOperarios'/></td>-->
-				<td><?php echo $this -> Form -> input('Trabajador.6.tra_pago_mensual', array('label' => false, 'div' => false)); ?></td>
-			</tr>
+				<td><?php echo $this -> Form -> input('Trabajador.6.tra_pago_mensual', array('label' => false, 'div' => false, 'class'=>'salarioAprendiz')); ?></td>
 			<tr>
 				<!--<input name="data[Trabajador][tipos_de_trabajador_id][7]" type="hidden" id="TrabajadorTiposDeTrabajadorId" value="1" />-->
 				<?php echo $this -> Form -> hidden('Trabajador.7.tipos_de_trabajador_id', array('value' => 2, 'label' => false, 'div' => false)); ?>
@@ -212,7 +211,7 @@
 				<td><?php echo $this -> Form -> input('Trabajador.7.tra_afiliado_seguro', array('type' => 'checkbox', 'label' => false, 'div' => false)); ?></td>
 				<td><input name="data[Trabajador][7][tra_fecha_nacimiento]" type="date" id="Trabajador7TraFechaNacimiento" /></td>
 				<!--<td><input name="data[Trabajador][tra_pago_mensual][7]" type="number" id="TrabajadorTraPagoMensual" class='salarioOperarios'/></td>-->
-				<td><?php echo $this -> Form -> input('Trabajador.7.tra_pago_mensual', array('label' => false, 'div' => false)); ?></td>
+				<td><?php echo $this -> Form -> input('Trabajador.7.tra_pago_mensual', array('label' => false, 'div' => false, 'class'=>'salarioAprendiz')); ?></td>
 			</tr>
 			<tr>
 				<!--<input name="data[Trabajador][tipos_de_trabajador_id][8]" type="hidden" id="TrabajadorTiposDeTrabajadorId" value="1" />-->
@@ -235,7 +234,7 @@
 				<td><?php echo $this -> Form -> input('Trabajador.8.tra_afiliado_seguro', array('type' => 'checkbox', 'label' => false, 'div' => false)); ?></td>
 				<td><input name="data[Trabajador][8][tra_fecha_nacimiento]" type="date" id="Trabajador8TraFechaNacimiento" /></td>
 				<!--<td><input name="data[Trabajador][tra_pago_mensual][8]" type="number" id="TrabajadorTraPagoMensual" class='salarioOperarios'/></td>-->
-				<td><?php echo $this -> Form -> input('Trabajador.8.tra_pago_mensual', array('label' => false, 'div' => false)); ?></td>
+				<td><?php echo $this -> Form -> input('Trabajador.8.tra_pago_mensual', array('label' => false, 'div' => false, 'class'=>'salarioAprendiz')); ?></td>
 			</tr>
 			<tr>
 				<!--<input name="data[Trabajador][tipos_de_trabajador_id][9]" type="hidden" id="TrabajadorTiposDeTrabajadorId" value="1" />-->
@@ -257,8 +256,8 @@
 				<!--<td><input name="data[Trabajador][tra_afiliado_seguro][9]" type="checkbox" value="9" /></td>-->
 				<td><?php echo $this -> Form -> input('Trabajador.9.tra_afiliado_seguro', array('type' => 'checkbox', 'label' => false, 'div' => false)); ?></td>
 				<td><input name="data[Trabajador][9][tra_fecha_nacimiento]" type="date" id="Trabajador9TraFechaNacimiento" /></td>
-				<!--<td><input name="data[Trabajador][tra_pago_mensual][9]" type="number" id="TrabajadorTraPagoMensual" class='salarioOperarios'/></td>-->
-				<td><?php echo $this -> Form -> input('Trabajador.9.tra_pago_mensual', array('label' => false, 'div' => false)); ?></td>
+				<!--<td><input name="data[Trabajador][tra_pago_mensual][9]" type="number" id="TrabajadorTraPagoMensual" class='salarioAprendiz'/></td>-->
+				<td><?php echo $this -> Form -> input('Trabajador.9.tra_pago_mensual', array('label' => false, 'div' => false, 'class'=>'salarioAprendiz')); ?></td>
 			</tr>
 		</table>
 	</div>

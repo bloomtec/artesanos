@@ -141,7 +141,7 @@ $(function(){
 				switch(api.getIndex()){
 					case 1:
 						if(totalInversion>capitalMaximoInversion){
-							alert('El capital de inversión excede el capital máximo permitido');
+							alert('El capital de inversión excede el capital máximo permitido ('+capitalMaximoInversion+')');
 							return false;
 						}
 					break;
@@ -252,15 +252,15 @@ $(function(){
 	});
 	
 	/*____________EGRESOS__________________*/
-	var actualizarEgresos=function(){
+	var actualizarEgresos=function($callback){
 	 	var totalSalarioAprendices = parseFloat($('.salario_aprendices').val())? parseFloat($('.salario_aprendices').val()):0;
 		var totalSalarioOperarios= parseFloat($('.salario_operarios').val())?  parseFloat($('.salario_operarios').val()):0; 
 		var domicilio = parseFloat($('#CalificacionCalDomicilioValor').val())? parseFloat($('#CalificacionCalDomicilioValor').val()):0;
 		var taller = parseFloat($('#CalificacionCalTallerValor').val())? parseFloat($('#CalificacionCalTallerValor').val()):0;
-		var agua = parseFloat($('#CalificacionCalificacionCalAgua').val())? parseFloat($('#CalificacionCalificacionCalAgua').val()):0;
-		var luz = parseFloat($('#CalificacionCalificacionCalLuz').val())? parseFloat($('#CalificacionCalificacionCalLuz').val()):0;
-		var telefono = parseFloat($('#CalificacionCalificacionCalTelefono').val())? parseFloat($('#CalificacionCalificacionCalTelefono').val()):0;
-		var servicios = parseFloat($('#CalificacionCalificacionCalServiciosBasicos').val())? parseFloat($('#CalificacionCalificacionCalServiciosBasicos').val()):0;
+		var agua = parseFloat($('#CalificacionCalAgua').val())? parseFloat($('#CalificacionCalAgua').val()):0;
+		var luz = parseFloat($('#CalificacionCalLuz').val())? parseFloat($('#CalificacionCalLuz').val()):0;
+		var telefono = parseFloat($('#CalificacionCalTelefono').val())? parseFloat($('#CalificacionCalTelefono').val()):0;
+		var servicios = parseFloat($('#CalificacionCalServiciosBasicos').val())? parseFloat($('#CalificacionCalServiciosBasicos').val()):0;
 		var materiaPrima = parseFloat($('#CalificacionCalCompraDeMateriaPrimaMensual').val())? parseFloat($('#CalificacionCalCompraDeMateriaPrimaMensual').val()):0;	
 	 	$('.total_egresos, #CalificacionCalBalanceTotalEgresos').val(totalSalarioAprendices+totalSalarioOperarios+domicilio+taller+agua+luz+telefono+servicios+materiaPrima);
 		actualizarRentabilidad();
@@ -345,8 +345,12 @@ $(function(){
 			return true;
 		}
 	});
+	actualizarSalarioOperario();
+	actualizarSalarioAprendiz();
+	actualizarCapital();
 	actualizarIngresos();
 	actualizarEgresos();
 	actualizarRentabilidad();
+
 
 });

@@ -23,7 +23,7 @@
 		</div>
 		<div class="fila-datos" row="2">
 			<?php
-			echo $this -> Form -> input('DatosPersonal.dat_fecha_nacimiento', array('type'=>'text','label' => 'Fecha de nacimiento:', 'col' => '0', 'class' => 'date'));
+			echo $this -> Form -> input('DatosPersonal.dat_fecha_nacimiento', array('label' => 'Fecha de nacimiento:', 'col' => '0', 'class' => 'date','minYear'=>'1910'));
 			echo $this -> Form -> input('DatosPersonal.dat_tipo_de_sangre', array('label' => 'Tipo de sangre:', 'type' => 'select', 'options' => $tipos_de_sangre, 'empty' => 'Seleccione...', 'col' => '1'));
 			echo $this -> Form -> input('DatosPersonal.dat_estado_civil', array('label' => 'Estado civil:', 'type' => 'select', 'options' => $estados_civiles, 'empty' => 'Seleccione...', 'col' => '2'));
 			echo $this -> Form -> input('DatosPersonal.dat_grado_estudio', array('label' => 'Grado de estudio:', 'type' => 'select', 'options' => $grados_de_estudio, 'empty' => 'Seleccione...', 'col' => '3'));
