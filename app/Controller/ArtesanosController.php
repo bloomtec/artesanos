@@ -257,16 +257,49 @@ class ArtesanosController extends AppController {
 			$inspectores_taller = $this -> Artesano -> Calificacion -> InspectorTaller -> find('all', array('conditions' => array('InspectorTaller.rol_id' => 3, 'InspectorTaller.sector_id' => $taller['Taller']['sector_id'])));
 			
 			if($inspectores_taller) {
-				debug($inspectores_taller);
 				$fecha_calificacion = explode(' ', $calificacion['Calificacion']['created']);
 				$fecha_calificacion = $fecha_calificacion[0];
 				$fecha_inspeccion_taller = strtotime('+1 day', strtotime($fecha_calificacion));
 				$fecha_inspeccion_taller = date('Y-m-d', $fecha_inspeccion_taller);
-				debug($fecha_calificacion);
-				debug($fecha_inspeccion_taller);
 				
-				foreach ($inspectores_taller as $key => $value) {
-					
+				$inspector_asignado = false;
+				while (!$inspector_asignado) {
+					foreach ($inspectores_taller as $key => $value) {
+						$inspecciones_inspector_fecha_propuesta = 0;
+						$inspecciones_inspector_fecha_propuesta += $this -> Artesano -> Calificacion -> find(
+							'count',
+							array(
+								'conditions' => array(
+									'Calificacion.cal_inspector_taller' => $value['InspectorTaller']['id'],
+									'Calificacion.cal_fecha_inspeccion_taller' => $fecha_inspeccion_taller
+								)
+							)
+						);
+						$inspecciones_inspector_fecha_propuesta += $this -> Artesano -> Calificacion -> find(
+							'count',
+							array(
+								'conditions' => array(
+									'Calificacion.cal_inspector_local' => $value['InspectorTaller']['id'],
+									'Calificacion.cal_fecha_inspeccion_local' => $fecha_inspeccion_taller
+								)
+							)
+						);
+						if($inspecciones_inspector_fecha_propuesta < $value['InspectorTaller']['usu_inspecciones_por_dia']) {
+							// Asignar el inspector
+							$calificacion['Calificacion']['cal_inspector_taller'] = $value['InspectorTaller']['id'];
+							$calificacion['Calificacion']['cal_fecha_inspeccion_taller'] = $fecha_inspeccion_taller;
+							if($this -> Artesano -> Calificacion -> save($calificacion)) {
+								$inspector_asignado = true;
+								break;
+							}
+						} else {
+							// TODO : Algo por hacer si no se puede
+						}
+					}
+					if(!$inspector_asignado) {
+						$fecha_inspeccion_taller = strtotime('+1 day', strtotime($fecha_inspeccion_taller));
+						$fecha_inspeccion_taller = date('Y-m-d', $fecha_inspeccion_taller);
+					}
 				}
 			} else {
 				// No hay inspectores para el sector del taller
