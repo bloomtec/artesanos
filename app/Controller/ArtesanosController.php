@@ -288,7 +288,9 @@ class ArtesanosController extends AppController {
 							// Asignar el inspector
 							$calificacion['Calificacion']['cal_inspector_taller'] = $value['InspectorTaller']['id'];
 							$calificacion['Calificacion']['cal_fecha_inspeccion_taller'] = $fecha_inspeccion_taller;
-							if($this -> Artesano -> Calificacion -> save($calificacion)) {
+							debug($calificacion);
+							//if($this -> Artesano -> Calificacion -> save($calificacion)) {
+							if(true) {
 								$inspector_asignado = true;
 								break;
 							}
@@ -376,7 +378,7 @@ class ArtesanosController extends AppController {
 	 */
 	private function validarCalificacionNormal($artesano, $calificaciones, $rama_id) {
 		$resultado_validacion = array();
-		$resultado_validacion['Datos'] = $artesano;
+		$resultado_validacion['Datos'] = $calificaciones[0];
 		$resultado_validacion['Calificar'] = 0;
 
 		/**
@@ -464,7 +466,7 @@ class ArtesanosController extends AppController {
 	 */
 	private function validarCalificacionAutonomo($artesano, $calificaciones, $rama_id) {
 		$resultado_validacion = array();
-		$resultado_validacion['Datos'] = $artesano;
+		$resultado_validacion['Datos'] = $calificaciones[0];
 		$resultado_validacion['Calificar'] = 0;
 
 		/**
