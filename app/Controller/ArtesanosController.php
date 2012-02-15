@@ -317,7 +317,6 @@ class ArtesanosController extends AppController {
 				// Obtener los inspectores del local
 				$this -> Artesano -> Calificacion -> InspectorLocal -> recursive = -1;
 				$inspectores_local = $this -> Artesano -> Calificacion -> InspectorLocal -> find('all', array('conditions' => array('InspectorLocal.rol_id' => 3, 'InspectorLocal.sector_id' => $local['Local']['sector_id'])));
-				debug($inspectores_local);
 			} else {
 				// No hay local
 			}
