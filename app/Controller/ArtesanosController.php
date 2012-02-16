@@ -93,9 +93,6 @@ class ArtesanosController extends AppController {
 				if($this -> Artesano -> Calificacion -> save($calificacion)) {
 					$calificacion['Calificacion']['id'] = $this -> request -> data['Calificacion']['id'] = $this -> Artesano -> Calificacion -> id;
 					
-					// Asignar inspector a la calificacion
-					$this -> asignarInspector($calificacion['Calificacion']['id']);
-					
 					// Guardar los datos personales
 					$this -> Artesano -> Calificacion -> DatosPersonal -> create();
 					$datos_personales = array();
@@ -159,11 +156,20 @@ class ArtesanosController extends AppController {
 						$trabajadores['Trabajador'] = $this -> request -> data['Trabajador'];		
 						$this -> loadModel('Trabajador');
 						foreach($trabajadores['Trabajador'] as $key => $values) {
-							$tmp = array();
-							$tmp['Trabajador'] = $values;
-							$tmp['Taller']['Taller'][] = $taller['Taller']['id']; 
-							$this -> Artesano -> Calificacion -> Taller -> Trabajador -> create();
-							$this -> Artesano -> Calificacion -> Taller -> Trabajador -> save($tmp);
+							/**
+							 * Verificar que no existe el trabajdor ya
+							 */
+							$trabajador_existente = $this -> Artesano -> Calificacion -> Taller -> Trabajador -> find('first', array('conditions' => array('Trabajador.tra_cedula'=>$values['tra_cedula'])));
+							if(!empty($trabajador_existente)) {
+								$trabajador_existente['Taller']['Taller'][] = $taller['Taller']['id'];
+								$this -> Artesano -> Calificacion -> Taller -> Trabajador -> save($trabajador_existente);
+							} else {
+								$tmp = array();
+								$tmp['Trabajador'] = $values;
+								$tmp['Taller']['Taller'][] = $taller['Taller']['id'];
+								$this -> Artesano -> Calificacion -> Taller -> Trabajador -> create();
+								$this -> Artesano -> Calificacion -> Taller -> Trabajador -> save($tmp);
+							}
 						}
 						 
 					} else {
@@ -187,6 +193,8 @@ class ArtesanosController extends AppController {
 				} else {
 					$this -> Session -> setFlash(__('Ha ocurrido un error al registrar la calificación del artesano. Por favor, intente de nuevo.'), 'crud/error');
 				}
+				// Asignar inspector a la calificacion
+				$this -> asignarInspector($calificacion['Calificacion']['id']);
 				$this -> redirect(array('action' => 'index'));
 			} else {
 				$this -> Session -> setFlash(__('Ha ocurrido un error al registrar el artesano. Por favor, intente de nuevo.'), 'crud/error');
