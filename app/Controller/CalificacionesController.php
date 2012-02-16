@@ -9,7 +9,7 @@ class CalificacionesController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('reporteCalificacionesOperador');
+		$this -> Auth -> allow('reporteInspecciones', 'reporteCalificacionesOperador', 'reporteCalificacionesArtesano');
 	}
 
 	/**
@@ -128,6 +128,20 @@ class CalificacionesController extends AppController {
 		foreach($calificaciones as $key => $calificacion) {
 			$calificaciones[$key]['Calificacion']['cal_rama'] = $this -> requestAction('/ramas/getNombre/' . $calificacion['Calificacion']['rama_id']);
 			$calificaciones[$key]['Calificacion']['cal_tipo_de_calificacion'] = $this -> requestAction('/tipos_de_calificaciones/getNombre/' . $calificacion['Calificacion']['tipos_de_calificacion_id']);
+		}
+		$this -> set('calificaciones', $calificaciones);
+	}
+	
+	public function reporteInspecciones() {
+		$this -> Calificacion -> recursive = 0;
+		$conditions = $this -> Session -> read('conditions');
+		$this -> Session -> delete('conditions');
+		$this -> paginate = array('conditions' => $conditions, 'order' => array('Calificacion.id' => 'ASC'));
+		$calificaciones = $this -> paginate();
+		foreach($calificaciones as $key => $calificacion) {
+			$calificaciones[$key]['Calificacion']['cal_nombre_inspector_taller'] = $this -> requestAction('/usuarios/getNombresYApellidos/' . $calificacion['Calificacion']['cal_inspector_taller']);
+			$calificaciones[$key]['Calificacion']['cal_nombre_inspector_local'] = $this -> requestAction('/usuarios/getNombresYApellidos/' . $calificacion['Calificacion']['cal_inspector_local']);
+			$calificaciones[$key]['Calificacion']['cal_nombre_artesano'] = $this -> requestAction('/datos_personales/getNombreArtesano/'. $calificacion['Calificacion']['id']);
 		}
 		$this -> set('calificaciones', $calificaciones);
 	}

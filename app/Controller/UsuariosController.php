@@ -9,7 +9,7 @@ class UsuariosController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('inicializarAcl', 'logout', 'verificarAcceso', 'getNombre', 'getInfoPermisos', 'getValoresPermisos', 'setInfoPermisos');
+		$this -> Auth -> allow('inicializarAcl', 'logout', 'verificarAcceso', 'getNombre', 'getNombresYApellidos', 'getInfoPermisos', 'getValoresPermisos', 'setInfoPermisos');
 	}
 
 	public function verificarAcceso() {
@@ -30,6 +30,15 @@ class UsuariosController extends AppController {
 			return '<b>:: eliminado ::</b>';
 		} else {
 			return $usuario['Usuario']['usu_nombre_de_usuario'];
+		}
+	}
+	
+	public function getNombresYApellidos($id) {
+		$usuario = $this -> Usuario -> read('usu_nombres_y_apellidos', $id);
+		if(empty($usuario)) {
+			return '<b>:: eliminado ::</b>';
+		} else {
+			return $usuario['Usuario']['usu_nombres_y_apellidos'];
 		}
 	}
 

@@ -126,6 +126,7 @@ class ReportesController extends AppController {
 	public function reporteInspecciones() {
 		if ($this -> request -> is('post')) {
 			// Sección informe
+			$this -> redirect(array('controller' => 'calificaciones', 'action' => 'reporteInspecciones'));
 		}
 	}
 	
