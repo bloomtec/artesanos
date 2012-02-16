@@ -43,13 +43,14 @@ class TrabajadoresController extends AppController {
 	 */
 	public function add() {
 		if ($this -> request -> is('post')) {
-			$this -> Trabajador -> create();
+			debug($this->request->data);
+			/*$this -> Trabajador -> create();
 			if ($this -> Trabajador -> save($this -> request -> data)) {
 				$this -> Session -> setFlash(__('The trabajador has been saved'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
 				$this -> Session -> setFlash(__('The trabajador could not be saved. Please, try again.'), 'crud/error');
-			}
+			}*/
 		}
 		$tiposDeTrabajadores = $this -> Trabajador -> TiposDeTrabajador -> find('list');
 		$talleres = $this -> Trabajador -> Taller -> find('list');

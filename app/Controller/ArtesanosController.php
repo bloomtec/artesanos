@@ -156,13 +156,12 @@ class ArtesanosController extends AppController {
 						
 						// Guardar Trabajadores
 						$trabajadores = array();
-						$trabajadores['Trabajador'] = $this -> request -> data['Trabajador'];
-						foreach($trabajadores['Trabajador'] as $key => $values) {
-							$trabajadores['Trabajador'][$key]['taller_id'] = $this -> request -> data['Trabajador'][$key]['taller_id'] = $taller['Taller']['id'];
-						}
+						$trabajadores['Trabajador'] = $this -> request -> data['Trabajador'];		
+						$this -> loadModel('Trabajador');
 						foreach($trabajadores['Trabajador'] as $key => $values) {
 							$tmp = array();
 							$tmp['Trabajador'] = $values;
+							$tmp['Taller']['Taller'][] = $taller['Taller']['id']; 
 							$this -> Artesano -> Calificacion -> Taller -> Trabajador -> create();
 							$this -> Artesano -> Calificacion -> Taller -> Trabajador -> save($tmp);
 						}
