@@ -69,14 +69,17 @@ class TrabajadoresController extends AppController {
 			throw new NotFoundException(__('Invalid trabajador'));
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
+			debug($this->request->data);
+			/*
 			if ($this -> Trabajador -> save($this -> request -> data)) {
 				$this -> Session -> setFlash(__('The trabajador has been saved'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
 				$this -> Session -> setFlash(__('The trabajador could not be saved. Please, try again.'), 'crud/error');
-			}
+			}*/
 		} else {
 			$this -> request -> data = $this -> Trabajador -> read(null, $id);
+			debug($this -> request -> data);
 		}
 		$tiposDeTrabajadores = $this -> Trabajador -> TiposDeTrabajador -> find('list');
 		$talleres = $this -> Trabajador -> Taller -> find('list');

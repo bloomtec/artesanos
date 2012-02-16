@@ -161,6 +161,9 @@ class ArtesanosController extends AppController {
 							 */
 							$trabajador_existente = $this -> Artesano -> Calificacion -> Taller -> Trabajador -> find('first', array('conditions' => array('Trabajador.tra_cedula'=>$values['tra_cedula'])));
 							if(!empty($trabajador_existente)) {
+								foreach($trabajador_existente['Taller'] as $key => $taller_existente) {
+									$trabajador_existente['Taller']['Taller'][] = $taller_existente['id'];
+								}
 								$trabajador_existente['Taller']['Taller'][] = $taller['Taller']['id'];
 								$this -> Artesano -> Calificacion -> Taller -> Trabajador -> save($trabajador_existente);
 							} else {
