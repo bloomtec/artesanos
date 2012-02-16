@@ -4,6 +4,7 @@
  * */
 var totalRentabilidad=0;
 var totalInversion=0;
+var indiceOperador=indiceAprendiz=0;
 $(function(){
 	// FUNCIONALIDAD REGISTRO
 	$('#wizard .page').css('width',$("#wizard").width());
@@ -68,7 +69,58 @@ $(function(){
 	    return false;
 	  }
 	}
-
+	var llenarDatosIndexado = function(Model,datos,indice){
+		var input=null;		
+		for(atributo in datos){
+			input = $("[name='data["+Model+"]["+indice+"]["+atributo+"]']");
+			if(input.length){
+				input.val(datos[atributo]);
+			}
+		}
+	}
+	var llenarTrabajadoresIndexado = function(Model,datos,indice){
+		
+		switch(datos['tipos_de_trabajador_id']){
+			case '1':
+			indice=indiceOperador++;
+			break;
+			case '2':
+			indice= 15 + indiceAprendiz++;
+			break;
+		}
+		var input=null;		
+			for(atributo in datos){
+				input = $("[name='data["+Model+"]["+indice+"]["+atributo+"]']");
+				if(input.length){
+					input.val(datos[atributo]);
+				}
+			}
+	}
+	var llenarDatos = function(Model,datosPersonales){
+		var input=null;
+		for(atributo in datosPersonales){
+			input = $("[name='data["+Model+"]["+atributo+"]']");
+			if(input.length){
+				input.val(datosPersonales[atributo]);
+			}
+		}
+		if(Model=="Taller"){
+			for(indice in datosPersonales['EquiposDeTrabajo']){
+				llenarDatosIndexado('EquiposDeTrabajo',datosPersonales['EquiposDeTrabajo'][indice],indice);
+			}
+			for(indice in datosPersonales['MateriasPrima']){
+				llenarDatosIndexado('MateriasPrima',datosPersonales['MateriasPrima'][indice],indice);
+			}
+			for(indice in datosPersonales['ProductosElaborado']){
+				llenarDatosIndexado('ProductosElaborado',datosPersonales['ProductosElaborado'][indice],indice);
+			}
+			
+			for(indice in datosPersonales['Trabajador']){
+				llenarTrabajadoresIndexado('Trabajador',datosPersonales['Trabajador'][indice],indice);
+			}
+								
+		}
+	}
 	var validarCalificacion = function (){
 		if($('.validarCalificacion .radio input:checked').val()==0/*si es pasaporte*/ || checkCedulaEcuador($("#wizard #ArtesanoArtCedula").val())){
 			if($("#wizard #ArtesanoArtCedula").val()==""){
@@ -79,7 +131,10 @@ $(function(){
 				
 				if(response.Calificar){
 					$("#wizard .validar").css('visibility','visible');
-					console.log(response.Calificacion);
+					if(response.Datos.DatosPersonal.length) llenarDatos('DatosPersonal',response.Datos.DatosPersonal[0]);
+					indiceOperador=indiceAprendiz=0;
+					if(response.Datos.Taller.length) llenarDatos('Taller',response.Datos.Taller[0]);
+					llenarDatos('Calificacion',response.Datos.Calificacion);
 				}else{
 					alert(response.Mensaje);
 				}
