@@ -25,7 +25,16 @@ class ArtesanosController extends AppController {
 	 */
 	public function index() {
 		$this -> Artesano -> recursive = 0;
-		$this -> set('artesanos', $this -> paginate());
+		$artesanos = $this -> paginate();
+		foreach($artesanos as $key => $artesano) {
+			$calificacion = $this -> Artesano -> Calificacion -> find('first', array('order' => array('Calificacion.created' => 'DESC'), 'conditions' => array('Calificacion.artesano_id' => $artesano['Artesano']['id'])));
+			$datos_personales = $this -> Artesano -> Calificacion -> DatosPersonal -> find('first', array('conditions' => array('DatosPersonal.calificacion_id' => $calificacion['Calificacion']['id'])));
+			$artesanos[$key]['Artesano']['art_nombres'] = $datos_personales['DatosPersonal']['dat_nombres'];
+			$artesanos[$key]['Artesano']['art_apellido_paterno'] = $datos_personales['DatosPersonal']['dat_apellido_paterno'];
+			$artesanos[$key]['Artesano']['art_apellido_materno'] = $datos_personales['DatosPersonal']['dat_apellido_materno'];
+			$artesanos[$key]['Artesano']['art_nacionalidad'] = $datos_personales['DatosPersonal']['dat_nacionalidad'];
+		}
+		$this -> set('artesanos', $artesanos);
 	}
 
 	/**

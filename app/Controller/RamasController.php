@@ -9,11 +9,16 @@ class RamasController extends AppController {
 	
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('obtenerPorGrupo');
+		$this -> Auth -> allow('obtenerPorGrupo', 'getNombre');
 	}
 
 	public function beforeRender() {
 		$this -> layout = 'parametros';
+	}
+	
+	public function getNombre($id) {
+		$rama = $this -> Rama -> read('ram_nombre', $id);
+		return $rama['Rama']['ram_nombre'];
 	}
 
 	/**

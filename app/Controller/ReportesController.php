@@ -107,20 +107,25 @@ class ReportesController extends AppController {
 	public function reporteCalificacionesArtesano() {
 		if ($this -> request -> is('post')) {
 			// Sección informe
-			$this -> set('mostrar_reporte', true);
-		} else {
-			// Sección formulario
-			$this -> set('mostrar_reporte', false);
+			$conditions = array();
+			if(!empty($this -> request -> data['Reporte']['cedula'])) {
+				$this -> loadModel('Artesano');
+				$artesano = $this -> Artesano -> findByArtCedula($this -> request -> data['Reporte']['cedula']);
+				if(!empty($artesano)) {
+					$this -> loadModel('Calificacion');
+					$calificaciones = $this -> Calificacion -> find('list', array('conditions' => array('Calificacion.artesano_id' => $artesano['Artesano']['id'])));
+				}
+				$conditions['Calificacion.id'] = $calificaciones;
+			}
+			$this -> Session -> delete('conditions');
+			$this -> Session -> write('conditions', $conditions);
+			$this -> redirect(array('controller' => 'calificaciones', 'action' => 'reporteCalificacionesArtesano'));
 		}
 	}
 	
 	public function reporteInspecciones() {
 		if ($this -> request -> is('post')) {
 			// Sección informe
-			$this -> set('mostrar_reporte', true);
-		} else {
-			// Sección formulario
-			$this -> set('mostrar_reporte', false);
 		}
 	}
 	

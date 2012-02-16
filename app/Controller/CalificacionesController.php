@@ -6,7 +6,7 @@ App::uses('AppController', 'Controller');
  * @property Calificacion $Calificacion
  */
 class CalificacionesController extends AppController {
-	
+
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this -> Auth -> allow('reporteCalificacionesOperador');
@@ -110,11 +110,25 @@ class CalificacionesController extends AppController {
 		$this -> Calificacion -> recursive = 0;
 		$conditions = $this -> Session -> read('conditions');
 		$this -> Session -> delete('conditions');
-		$this -> paginate = array(
-			'conditions' => $conditions,
-			'order' => array('Calificacion.id' => 'ASC')
-		);
+		$this -> paginate = array('conditions' => $conditions, 'order' => array('Calificacion.id' => 'ASC'));
 		$calificaciones = $this -> paginate();
+		foreach($calificaciones as $key => $calificacion) {
+			$calificaciones[$key]['Calificacion']['cal_rama'] = $this -> requestAction('/ramas/getNombre/' . $calificacion['Calificacion']['rama_id']);
+			$calificaciones[$key]['Calificacion']['cal_tipo_de_calificacion'] = $this -> requestAction('/tipos_de_calificaciones/getNombre/' . $calificacion['Calificacion']['tipos_de_calificacion_id']);
+		}
+		$this -> set('calificaciones', $calificaciones);
+	}
+
+	public function reporteCalificacionesArtesano() {
+		$this -> Calificacion -> recursive = 0;
+		$conditions = $this -> Session -> read('conditions');
+		$this -> Session -> delete('conditions');
+		$this -> paginate = array('conditions' => $conditions, 'order' => array('Calificacion.id' => 'ASC'));
+		$calificaciones = $this -> paginate();
+		foreach($calificaciones as $key => $calificacion) {
+			$calificaciones[$key]['Calificacion']['cal_rama'] = $this -> requestAction('/ramas/getNombre/' . $calificacion['Calificacion']['rama_id']);
+			$calificaciones[$key]['Calificacion']['cal_tipo_de_calificacion'] = $this -> requestAction('/tipos_de_calificaciones/getNombre/' . $calificacion['Calificacion']['tipos_de_calificacion_id']);
+		}
 		$this -> set('calificaciones', $calificaciones);
 	}
 

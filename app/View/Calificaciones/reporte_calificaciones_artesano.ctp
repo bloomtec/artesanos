@@ -5,7 +5,7 @@
 			<th><?php echo $this -> Paginator -> sort('created', 'Fecha De Expedición');?></th>
 			<th><?php echo $this -> Paginator -> sort('cal_fecha_expiracion', 'Fecha De Expiración');?></th>
 			<th><?php echo $this -> Paginator -> sort('cal_rama', 'Rama');?></th>
-			<th><?php echo $this -> Paginator -> sort('cal_tipo_de_calificacion', 'Tipo De Artesano');?></th>
+			<th><?php echo $this -> Paginator -> sort('cal_tipo_artesano', 'Tipo De Artesano');?></th>
 			<th></th>
 		</tr>
 		<?php foreach ($calificaciones as $calificacion): ?>

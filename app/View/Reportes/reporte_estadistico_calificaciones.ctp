@@ -28,7 +28,7 @@
 			
 		?>
 	</fieldset>
-	<?php echo $this -> Form -> submit('Buscar'); ?>
+	<?php // echo $this -> Form -> submit('Buscar'); ?>
 	<?php echo $this -> Form -> end(); ?>
 </div>
 <?php endif;?>
