@@ -21,7 +21,11 @@
 				<li>
 					<a href="/artesanos/add">Registrar</a>
 				</li>
-				
+				<?php if($this -> Session -> read('Auth.User.rol_id') == 3): ?>
+				<li class="inspectores">
+					<a href="/calificaciones/inspecciones/<?php echo $this -> Session -> read('Auth.User.id'); ?>">MIS INSPECCIONES</a>
+				</li>
+				<?php endif; ?>
 			</ul>
 			<?php endif; ?>
 		</li>

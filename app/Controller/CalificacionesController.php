@@ -105,6 +105,24 @@ class CalificacionesController extends AppController {
 		$this -> Session -> setFlash(__('Calificacion was not deleted'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
 	}
+	
+	public function inspecciones($inspector_id = null) {
+		if($inspector_id) {
+			$calificaciones = $this -> Calificacion -> find(
+				'all',
+				array(
+					'conditions' => array(
+						'OR' => array(
+							'Calificacion.cal_inspector_taller' => $inspector_id,
+							
+						)
+					)
+				)
+			);
+		} else {
+			$this -> redirect($this -> referer());
+		}
+	}
 
 	public function reporteCalificacionesOperador() {
 		$this -> Calificacion -> recursive = 0;

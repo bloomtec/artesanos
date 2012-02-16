@@ -613,7 +613,7 @@ class ArtesanosController extends AppController {
 		$fechas['RangoRegistroFin'] = date('Y-m-d', strtotime($fecha_expiracion));
 		
 		$fecha_rango_menor_registro = new DateTime($fecha_rango_menor_registro);
-		$fecha_expiracion = DateTime($fecha_expiracion);
+		$fecha_expiracion = new DateTime($fecha_expiracion);
 		$fecha_actual = new DateTime('now');
 		
 		$fechas['FechaActual'] = $fecha_actual -> format('Y-m-d');
