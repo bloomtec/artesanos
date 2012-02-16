@@ -32,7 +32,7 @@
 		</h3>
 		<label><?php echo __('Parroquia'); ?></label>
 		<h3>
-			<?php echo $this->Html->link($taller['Parroquia']['id'], array('controller' => 'parroquias', 'action' => 'view', $taller['Parroquia']['id'])); ?>
+			<?php echo $this->Html->link($taller['Parroquia']['par_nombre'], array('controller' => 'parroquias', 'action' => 'view', $taller['Parroquia']['id'])); ?>
 			&nbsp;
 		</h3>
 		<label><?php echo __('Tal Calle O Avenida'); ?></label>

@@ -177,7 +177,7 @@ class ArtesanosController extends AppController {
 						$local = array();
 						$local['Local'] = $this -> request -> data['Local'];
 						$local['Local']['calificacion_id'] = $this -> request -> data['Local']['calificacion_id'] = $calificacion['Calificacion']['id'];
-						if($this -> Artesano -> Calificacion -> Taller -> save($local)) {
+						if($this -> Artesano -> Calificacion -> Local -> save($local)) {
 							// TODO : Por si se debe hacer algo en este caso
 						} else {
 							$this -> Session -> setFlash(__('Ha ocurrido un error al registrar el local del artesano. Por favor, intente de nuevo.'), 'crud/error');
