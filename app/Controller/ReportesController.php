@@ -132,8 +132,8 @@ class ReportesController extends AppController {
 			
 			$fecha_fin = $this -> request -> data['Reporte']['fecha_final'];
 			$fecha_fin = $fecha_fin['year'] . '-' . $fecha_fin['month'] . '-' . $fecha_fin['day'];
-			$DT_fecha_inicio = DateTime::createFromFormat('Y-m-d', $fecha_inicio);
-			$DT_fecha_fin = DateTime::createFromFormat('Y-m-d', $fecha_fin);
+			$DT_fecha_inicio = new DateTime($fecha_inicio);
+			$DT_fecha_fin = new DateTime($fecha_fin);
 			if($DT_fecha_inicio > $DT_fecha_fin) {
 				$this -> Session -> setFlash(__('La fecha inicial no puede ser mayor que la final'), 'crud/error');
 			} else {
