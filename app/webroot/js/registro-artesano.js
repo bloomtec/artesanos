@@ -131,10 +131,14 @@ $(function(){
 				
 				if(response.Calificar){
 					$("#wizard .validar").css('visibility','visible');
-					if(response.Datos.DatosPersonal.length) llenarDatos('DatosPersonal',response.Datos.DatosPersonal[0]);
-					indiceOperador=indiceAprendiz=0;
-					if(response.Datos.Taller.length) llenarDatos('Taller',response.Datos.Taller[0]);
-					llenarDatos('Calificacion',response.Datos.Calificacion);
+					if(typeof response.Datos != 'undefined'){
+						if(response.Datos.DatosPersonal.length) llenarDatos('DatosPersonal',response.Datos.DatosPersonal[0]);
+						indiceOperador=indiceAprendiz=0;
+						if(response.Datos.Taller.length) llenarDatos('Taller',response.Datos.Taller[0]);
+						llenarDatos('Calificacion',response.Datos.Calificacion);	
+					}else{
+						// VACIAR DATOS INCLUYENDO LOS SELECT, pero conservando la cedula y los datos de calificacion
+					}
 				}else{
 					alert(response.Mensaje);
 				}
@@ -340,13 +344,13 @@ $(function(){
 		});
 		actualizarCapital();
 	}
-	$('.cantidad_maquinas , .valor_maquinas').keyup(function(){
+	$('.cantidad_maquinas , .valor_maquinas').blur(function(){
 		actualizarMaquinariaYHerramientas();
 	});
-	$('.cantidad_materia_prima , .valor_materia_prima').keyup(function(){
+	$('.cantidad_materia_prima , .valor_materia_prima').blur(function(){
 		actualizarMateriaPrima();
 	});
-	$('.cantidad_productos_elaborados , .valor_productos_elaborados').keyup(function(){
+	$('.cantidad_productos_elaborados , .valor_productos_elaborados').blur(function(){
 		actualizarProductosElaborados();
 	});
 	
@@ -397,13 +401,13 @@ $(function(){
 		});
 		actualizarEgresos();
 	}
-	$('.salarioAprendiz').keyup(function(){
+	$('.salarioAprendiz').blur(function(){
 		actualizarSalarioAprendiz();
 	});
-	$('.salarioOperarios').keyup(function(){
+	$('.salarioOperarios').blur(function(){
 		actualizarSalarioOperario();
 	});
-	$('.egresos input').keyup(function(){
+	$('.egresos input').blur(function(){
 		actualizarEgresos();
 	});
 	$("#CalificacionCalDomicilioPropio").click(function(){
@@ -431,7 +435,7 @@ $(function(){
 		$('#CalificacionCalTotalIngresos, #CalificacionCalBalanceTotalIngresos').val(porventas+otros);
 		actualizarRentabilidad();
 	}
-	$('.ingresos input').keyup(function(){
+	$('.ingresos input').blur(function(){
 		actualizarIngresos();
 	});
 	
