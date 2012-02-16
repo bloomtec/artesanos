@@ -115,11 +115,7 @@ class CalificacionesController extends AppController {
 			'order' => array('Calificacion.id' => 'ASC')
 		);
 		$calificaciones = $this -> paginate();
-		foreach($artesanos as $key => $artesano) {
-			$tmp = $this -> Calificacion -> Usuario -> read('usu_cedula', $calificaciones['Calificacion']['usuario_id']);
-			$calificaciones[$key]['Calificacion']['dat_cedula'] = $tmp['Calificacion']['art_cedula'];
-		}
-		$this -> set('artesanos', $artesanos);
+		$this -> set('calificaciones', $calificaciones);
 	}
 
 }
