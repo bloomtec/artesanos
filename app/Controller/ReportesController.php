@@ -126,7 +126,26 @@ class ReportesController extends AppController {
 	public function reporteInspecciones() {
 		if ($this -> request -> is('post')) {
 			// Sección informe
-			$this -> redirect(array('controller' => 'calificaciones', 'action' => 'reporteInspecciones'));
+			$conditions = array();
+			$fecha_inicio = $this -> request -> data['Reporte']['fecha_inicial'];
+			$fecha_inicio = $fecha_inicio['year'] . '-' . $fecha_inicio['month'] . '-' . $fecha_inicio['day'];
+			
+			$fecha_fin = $this -> request -> data['Reporte']['fecha_final'];
+			$fecha_fin = $fecha_fin['year'] . '-' . $fecha_fin['month'] . '-' . $fecha_fin['day'];
+			$DT_fecha_inicio = DateTime::createFromFormat('Y-m-d', $fecha_inicio);
+			$DT_fecha_fin = DateTime::createFromFormat('Y-m-d', $fecha_fin);
+			if($DT_fecha_inicio > $DT_fecha_fin) {
+				$this -> Session -> setFlash(__('La fecha inicial no puede ser mayor que la final'), 'crud/error');
+			} else {
+				$conditions['OR'] = array(
+					'Calificacion.cal_fecha_inspeccion_taller BETWEEN ? AND ?'=> array($fecha_inicio, $fecha_fin),
+					'Calificacion.cal_fecha_inspeccion_local BETWEEN ? AND ?' => array($fecha_inicio, $fecha_fin)
+				);
+				$conditions['Calificacion.cal_estado'] = $this -> request -> data['Reporte']['estado'];
+				$this -> Session -> delete('conditions');
+				$this -> Session -> write('conditions', $conditions);
+				$this -> redirect(array('controller' => 'calificaciones', 'action' => 'reporteInspecciones'));
+			}
 		}
 	}
 	
