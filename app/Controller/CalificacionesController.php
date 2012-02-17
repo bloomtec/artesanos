@@ -9,7 +9,7 @@ class CalificacionesController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('reporteInspecciones', 'reporteCalificacionesOperador', 'reporteCalificacionesArtesano', 'inspecciones');
+		$this -> Auth -> allow('inspecciones', 'verInspeccion', 'reporteInspecciones', 'reporteCalificacionesOperador', 'reporteCalificacionesArtesano');
 	}
 
 	/**
@@ -106,33 +106,110 @@ class CalificacionesController extends AppController {
 		$this -> redirect(array('action' => 'index'));
 	}
 	
-	public function inspecciones($inspector_id = null) {
-		$this -> autoRender = false;
+	public function inspecciones() {
 		$this -> Calificacion -> recursive = -1;
-		if($inspector_id) {
-			$calificaciones_taller = $this -> Calificacion -> find(
-				'all',
-				array(
-					'conditions' => array(
-						'Calificacion.cal_inspector_taller' => $inspector_id,
-						'Calificacion.cal_taller_aprobado' => 0
-					)
+		
+		$inspector_id = $this -> Auth -> user('id');
+		
+		$talleres = $this -> Calificacion -> find(
+			'all',
+			array(
+				'conditions' => array(
+					'Calificacion.cal_inspector_taller' => $inspector_id,
+					'Calificacion.cal_taller_aprobado' => 0
+				),
+				'order' => array(
+					'Calificacion.cal_fecha_inspeccion_taller' => 'ASC'
+				),
+				'fields' => array(
+					'Calificacion.id',
+					'Calificacion.artesano_id',
+					'Calificacion.cal_inspector_taller',
+					'Calificacion.cal_fecha_inspeccion_taller',
+					'Calificacion.cal_comentarios_taller',
+					'Calificacion.cal_taller_aprobado',
 				)
-			);
-			$calificaciones_local = $this -> Calificacion -> find(
-				'all',
-				array(
-					'conditions' => array(
-						'Calificacion.cal_inspector_local' => $inspector_id,
-						'Calificacion.cal_local_aprobado' => 0
-					)
+			)
+		);
+		
+		$locales = $this -> Calificacion -> find(
+			'all',
+			array(
+				'conditions' => array(
+					'Calificacion.cal_inspector_local' => $inspector_id,
+					'Calificacion.cal_local_aprobado' => 0
+				),
+				'order' => array(
+					'Calificacion.cal_fecha_inspeccion_local' => 'ASC'
+				),
+				'fields' => array(
+					'Calificacion.id',
+					'Calificacion.cal_inspector_local',
+					'Calificacion.cal_fecha_inspeccion_local',
+					'Calificacion.cal_comentarios_local',
+					'Calificacion.cal_local_aprobado',
 				)
+			)
+		);
+		
+		$this -> set(compact('locales', 'talleres'));
+		
+	}
+	
+	public function verInspeccion($cal_id = null, $tipo_inspeccion = null) {
+		
+		$this -> Calificacion -> recursive = 1;
+		
+		$inspector_id = $this -> Auth -> user('id');
+		
+		$se_inspecciona = '';
+		$fields = array();
+		$order = array();
+		
+		if($tipo_inspeccion == 1) { // Taller
+			$se_inspecciona = 'Taller';
+			$fields = array(
+				'Calificacion.id',
+				'Calificacion.artesano_id',
+				'Calificacion.cal_inspector_taller',
+				'Calificacion.cal_fecha_inspeccion_taller',
+				'Calificacion.cal_comentarios_taller',
+				'Calificacion.cal_taller_aprobado'
 			);
-			debug($calificaciones_taller);
-			debug($calificaciones_local);
+			$order = array('Calificacion.cal_fecha_inspeccion_taller' => 'ASC');
+		} elseif($tipo_inspeccion == 2) { // Local
+			$se_inspecciona = 'Local';
+			$fields = array(
+				'Calificacion.id',
+				'Calificacion.artesano_id',
+				'Calificacion.cal_inspector_local',
+				'Calificacion.cal_fecha_inspeccion_local',
+				'Calificacion.cal_comentarios_local',
+				'Calificacion.cal_local_aprobado'
+			);
+			$order = array('Calificacion.cal_fecha_inspeccion_local' => 'ASC');
 		} else {
-			$this -> redirect($this -> referer());
+			//$this -> redirect($this -> referer());
 		}
+		
+		$inspeccion = $this -> Calificacion -> find(
+			'first',
+			array(
+				'conditions' => array(
+					'Calificacion.id' => $cal_id
+				),
+				'fields' => $fields,
+				'order' => $order
+			)
+		);
+		
+		if($tipo_inspeccion == 1) { // Taller
+			if(isset($inspeccion['Local'])) unset($inspeccion['Local']);
+		} else { // Local
+			if(isset($inspeccion['Taller'])) unset($inspeccion['Taller']);
+		}
+		
+		$this -> set(compact('inspeccion', 'se_inspecciona', 'tipo_inspeccion'));
 	}
 
 	public function reporteCalificacionesOperador() {

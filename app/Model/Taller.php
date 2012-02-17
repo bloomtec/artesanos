@@ -15,11 +15,14 @@ App::uses('AppModel', 'Model');
  * @property Trabajador $Trabajador
  */
 class Taller extends AppModel {
-/**
- * Validation rules
- *
- * @var array
- */
+	
+	public $order = array('created' => 'DESC');
+	
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'calificacion_id' => array(
 			'numeric' => array(

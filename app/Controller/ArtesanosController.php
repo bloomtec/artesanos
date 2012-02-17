@@ -9,13 +9,26 @@ class ArtesanosController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('asignarInspector', 'isCalificacionActive', 'validarCalificacion', 'validarCalificacionAutonomo', 'validarCalificacionNormal', 'validarCalificacionObtenerFechas');
+		$this -> Auth -> allow('getID', 'asignarInspector', 'isCalificacionActive', 'validarCalificacion', 'validarCalificacionAutonomo', 'validarCalificacionNormal', 'validarCalificacionObtenerFechas');
 	}
 
 	public function pruebas() {
 		$this -> layout = 'pdf/default';
 		//Configure::write('debug',0);
 
+	}
+	
+	public function getID($id = null) {
+		if($id) {
+			$artesano = $this -> Artesano -> read(null, $id);
+			if(!empty($artesano)) {
+				return $artesano['Artesano']['art_cedula'];
+			} else {
+				return null;
+			}
+		} else {
+			return null;
+		}
 	}
 
 	/**

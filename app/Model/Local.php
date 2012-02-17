@@ -11,11 +11,14 @@ App::uses('AppModel', 'Model');
  * @property Parroquia $Parroquia
  */
 class Local extends AppModel {
-/**
- * Validation rules
- *
- * @var array
- */
+	
+	public $order = array('created' => 'DESC');
+	
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'calificacion_id' => array(
 			'numeric' => array(

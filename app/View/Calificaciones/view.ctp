@@ -135,7 +135,6 @@
 			<?php echo h($calificacion['Calificacion']['modified']); ?>
 			&nbsp;
 		</h3>
-	
 </div>
 <div class="actions">
 	<ul>

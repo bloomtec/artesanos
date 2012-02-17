@@ -7,11 +7,13 @@ App::uses('AppModel', 'Model');
  */
 class DatosPersonal extends AppModel {
 	
-/**
- * Validation rules
- *
- * @var array
- */
+	public $order = array('created' => 'DESC');
+	
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'calificacion_id' => array(
 			'numeric' => array(
