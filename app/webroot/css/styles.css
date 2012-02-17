@@ -316,6 +316,7 @@ p {
 	float: left;
 	margin-right: 1em;
 	display: block;
+	cursor:pointer;
 }
 
 a.button:hover {

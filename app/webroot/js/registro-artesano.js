@@ -10,6 +10,9 @@ $(function(){
 	$('#wizard .page').css('width',$("#wizard").width());
 	$('#wizard').css('height',$(".items").height());
 	$('.porcentaje').hide();
+	$('.submit').click(function(){
+		$('form').submit();
+	});
 	$(':number').keydown(function(e){
 		var key = e.charCode || e.keyCode || 0;
 		return (
@@ -135,7 +138,6 @@ $(function(){
 			if( valor){
 				total+=parseFloat(valor);
 			}
-			console.log(lenght+":"+i);
 			if( lenght == i){
 				$('.salario_operarios').val(total);
 			}
@@ -287,7 +289,9 @@ $(function(){
 		for(atributo in datosPersonales){
 			input = $("[name='data["+Model+"]["+atributo+"]']");
 			if(input.length){
-				input.val(datosPersonales[atributo]);
+				if(atributo != "tipos_de_calificacion_id" && atributo != "grupos_de_rama_id" && atributo != "rama_id" && atributo != "art_is_cedula"){
+					input.val(datosPersonales[atributo]);
+				}
 			}
 		}
 		if(Model=="Taller"){
@@ -337,10 +341,14 @@ $(function(){
 							}
 						} 
 					}else{
-						// VACIAR DATOS INCLUYENDO LOS SELECT, pero conservando la cedula y los datos de calificacion
+						$('.validar input').val("");
+						$('.validar select option:first-child').attr('selected',true).parent().change();
 					}
 				}else{
 					alert(response.Mensaje);
+					$("#wizard .validar").css('visibility','hidden');
+					$('.validar input').val("");
+					$('.validar select option:first-child').attr('selected',true).parent().change();
 				}
 			});
 		}
@@ -474,5 +482,18 @@ $(function(){
 		$("#status li").removeClass("active").eq(i).addClass("active");
 		return true;
 	});
-
+	//_________________OTRAS VALIDACIONES
+	$("input.cedulaUnica").blur(function(){
+		var $that=$(this);
+		var coincidencias=0;
+		$.each($("input.cedulaUnica"),function(i,input){
+			if($that.val() == $(input).val() && $that.val()!=""){
+				coincidencias+=1;
+				if(coincidencias == 2){
+					$that.val('');
+					alert('Esta cedula ya se encuentra en el formulario');
+				}
+			}
+		});
+	});
 });

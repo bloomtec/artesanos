@@ -59,7 +59,6 @@ class ArtesanosController extends AppController {
 	public function add() {
 		$this -> Artesano -> currentUsrId = $this -> Auth -> user('id');
 		if ($this -> request -> is('post')) {
-			debug($this -> data);
 			/**
 			 * - Asignar inspectores y fecha de inspección
 			 */

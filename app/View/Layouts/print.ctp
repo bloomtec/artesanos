@@ -24,35 +24,38 @@ $cakeDescription = __d('cake_dev', 'Junta Nacional de defensa del artesano');
 		<?php echo $this -> Html -> charset();?>
 		<title><?php echo $title_for_layout;?></title>
 		<?php
-			echo $this -> Html -> meta('icon');
-			
-			echo $this -> Html -> css('tabs-no-images');
-			echo $this -> Html -> css('styles');
-			
-			echo $this -> Html -> script('jquery');
-			echo $this -> Html -> script('jquery.tools.min');
-			echo $this -> Html -> script('bjs');
-			echo $this -> Html -> script('default');
-			echo $this -> Html -> script('common');
-			echo $scripts_for_layout;
+		echo $this -> Html -> meta('icon');
+
+		echo $this -> Html -> css('tabs-no-images');
+		echo $this -> Html -> css('styles');
+
+		echo $this -> Html -> script('jquery');
+		echo $this -> Html -> script('jquery.tools.min');
+		echo $this -> Html -> script('bjs');
+		echo $this -> Html -> script('default');
+		echo $this -> Html -> script('common');
+		echo $scripts_for_layout;
 		?>
+		<script type="text/javascript">
+			$(function(){
+				$('.imprimir').click(function(){
+					window.print()
+				});
+			});
+		</script>
+		<style>
+			   div.breakhere {page-break-before: always}
+		</style>
 	</head>
 	<body>
-		
 		<div id="container">
-			<?php echo $this -> element('header'); ?>
-			<div id="content">
-				<?php echo $this -> Session -> flash('auth'); ?>
-				<?php echo $this -> Session -> flash(); ?>
-
-				<?php echo $content_for_layout; ?>
-				
-			</div>
-			<?php echo $this -> element('footer'); ?>
-			
-		</div>
 	
-		
-		<?php echo $this -> element('sql_dump'); ?>
+			<div id="content">
+				<div class="imprimir"> imprimir </div>
+
+				<?php echo $content_for_layout;?>
+			</div>
+		</div>
+		<?php echo $this -> element('sql_dump');?>
 	</body>
 </html>
