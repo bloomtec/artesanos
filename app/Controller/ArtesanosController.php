@@ -59,6 +59,7 @@ class ArtesanosController extends AppController {
 	public function add() {
 		$this -> Artesano -> currentUsrId = $this -> Auth -> user('id');
 		if ($this -> request -> is('post')) {
+			debug($this -> data);
 			/**
 			 * - Asignar inspectores y fecha de inspección
 			 */
@@ -248,10 +249,10 @@ class ArtesanosController extends AppController {
 		 * Provincias y demas
 		 */
 		$provincias = $this -> Artesano -> Calificacion -> Taller -> Provincia -> find('list');
-		/*$cantones = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Canton -> find('list');
+		$cantones = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Canton -> find('list');
 		 $ciudades = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Canton -> Ciudad -> find('list');
 		 $sectores = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Canton -> Ciudad -> Sector -> find('list');
-		 $parroquias = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Canton -> Ciudad -> Sector -> Parroquia -> find('list');*/
+		 $parroquias = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Canton -> Ciudad -> Sector -> Parroquia -> find('list');
 		$this -> set(compact('provincias', 'cantones', 'ciudades', 'sectores', 'parroquias'));
 	}
 	

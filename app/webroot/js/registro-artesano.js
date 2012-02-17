@@ -30,6 +30,190 @@ $(function(){
 			$('.porcentaje').hide();
 		}
 	});
+	//BALANCES
+	var actualizarRentabilidad = function(){
+		var ingresos = parseFloat($('#CalificacionCalBalanceTotalIngresos').val())?parseFloat($('#CalificacionCalBalanceTotalIngresos').val()):0;
+		var egresos = parseFloat($('#CalificacionCalBalanceTotalEgresos').val())?parseFloat($('#CalificacionCalBalanceTotalEgresos').val()):0;
+		$("#CalificacionCalBalanceRentabilidadMensual").val(ingresos-egresos);
+		totalRentabilidad=ingresos-egresos;
+	}
+	/*____________CAPITAL__________________*/
+	var actualizarCapital=function(){
+		var totalMaquinas = parseFloat($('.maquinas_y_herramientas').val())? parseFloat($('.maquinas_y_herramientas').val()):0;
+		var totalMateriaPrima = parseFloat($('.materia_prima').val())?  parseFloat($('.materia_prima').val()):0; 
+		var totalProductosElaborados = parseFloat($('.productos_elaborados').val())? parseFloat($('.productos_elaborados').val()):0;
+		$('.total_capital').val(totalMaquinas+totalMateriaPrima+totalProductosElaborados);
+		totalInversion = totalMaquinas+totalMateriaPrima+totalProductosElaborados;
+	}
+	var actualizarMaquinariaYHerramientas=function(){
+		var total=0;
+		var $maquinas =$('.valor_maquinas');
+		var lenght = $maquinas.length-1;
+		var cantidad=0;
+		var valor=0;
+		$.each($maquinas,function(i,val){
+			cantidad=parseInt($($('.cantidad_maquinas')[i]).val());
+			valor=$(val).val();
+			if( valor && cantidad){
+				total+=cantidad*parseFloat($(val).val());
+			}
+			if( lenght == i){
+				$('.maquinas_y_herramientas').val(total);
+			}
+		});
+		actualizarCapital();
+	}
+	var actualizarMateriaPrima=function(){
+		var total=0;
+		var $maquinas =$('.valor_materia_prima');
+		var lenght = $maquinas.length-1;
+		var cantidad=0;
+		var valor=0;
+		$.each($maquinas,function(i,val){
+			cantidad=parseInt($($('.cantidad_materia_prima')[i]).val());
+			valor=$(val).val();
+			if( valor && cantidad){
+				total+=cantidad*parseFloat($(val).val());
+			}
+			if( lenght == i){
+				$('.materia_prima').val(total);
+			}
+		});
+		actualizarCapital();
+	}
+
+	var actualizarProductosElaborados=function(){
+		var total=0;
+		var $maquinas =$('.valor_productos_elaborados');
+		var lenght = $maquinas.length-1;
+		var cantidad=0;
+		var valor=0;
+		$.each($maquinas,function(i,val){
+			cantidad=parseInt($($('.cantidad_productos_elaborados')[i]).val());
+			valor=$(val).val();
+			if( valor && cantidad){
+				total+=cantidad*parseFloat($(val).val());
+			}
+			if( lenght == i){
+				$('.productos_elaborados').val(total);
+			}
+		});
+		actualizarCapital();
+	}
+	$('.cantidad_maquinas , .valor_maquinas').blur(function(){
+		actualizarMaquinariaYHerramientas();
+	});
+	$('.cantidad_materia_prima , .valor_materia_prima').blur(function(){
+		actualizarMateriaPrima();
+	});
+	$('.cantidad_productos_elaborados , .valor_productos_elaborados').blur(function(){
+		actualizarProductosElaborados();
+	});
+	
+	/*____________EGRESOS__________________*/
+	var actualizarEgresos=function($callback){
+	 	var totalSalarioAprendices = parseFloat($('.salario_aprendices').val())? parseFloat($('.salario_aprendices').val()):0;
+		var totalSalarioOperarios= parseFloat($('.salario_operarios').val())?  parseFloat($('.salario_operarios').val()):0; 
+		var domicilio = parseFloat($('#CalificacionCalDomicilioValor').val())? parseFloat($('#CalificacionCalDomicilioValor').val()):0;
+		var taller = parseFloat($('#CalificacionCalTallerValor').val())? parseFloat($('#CalificacionCalTallerValor').val()):0;
+		var agua = parseFloat($('#CalificacionCalAgua').val())? parseFloat($('#CalificacionCalAgua').val()):0;
+		var luz = parseFloat($('#CalificacionCalLuz').val())? parseFloat($('#CalificacionCalLuz').val()):0;
+		var telefono = parseFloat($('#CalificacionCalTelefono').val())? parseFloat($('#CalificacionCalTelefono').val()):0;
+		var servicios = parseFloat($('#CalificacionCalServiciosBasicos').val())? parseFloat($('#CalificacionCalServiciosBasicos').val()):0;
+		var materiaPrima = parseFloat($('#CalificacionCalCompraDeMateriaPrimaMensual').val())? parseFloat($('#CalificacionCalCompraDeMateriaPrimaMensual').val()):0;	
+	 	$('.total_egresos, #CalificacionCalBalanceTotalEgresos').val(totalSalarioAprendices+totalSalarioOperarios+domicilio+taller+agua+luz+telefono+servicios+materiaPrima);
+		actualizarRentabilidad();
+	}
+	var actualizarSalarioOperario=function(){
+		var total=0;
+		var $salarios =$('.salarioOperarios');
+		var lenght = $salarios.length-1;
+		var valor=0;
+		$.each($salarios,function(i,val){
+			valor=$(val).val();
+			
+			if( valor){
+				total+=parseFloat(valor);
+			}
+			console.log(lenght+":"+i);
+			if( lenght == i){
+				$('.salario_operarios').val(total);
+			}
+		});
+		
+		actualizarEgresos();
+	}
+	var actualizarSalarioAprendiz=function(){
+		var total=0;
+		var $salarios =$('.salarioAprendiz');
+		var lenght = $salarios.length-1;
+		var valor=0;
+		$.each($salarios,function(i,val){
+			valor=$(val).val();
+			if( valor){
+				total+=parseFloat(valor);
+			}
+			if( lenght == i){
+				$('.salario_aprendices').val(total);
+			}
+		});
+		actualizarEgresos();
+	}
+	$('.salarioAprendiz').blur(function(){
+		actualizarSalarioAprendiz();
+	});
+	$('.salarioOperarios').blur(function(){
+		actualizarSalarioOperario();
+	});
+	$('.egresos input').blur(function(){
+		actualizarEgresos();
+	});
+	$("#CalificacionCalDomicilioPropio").click(function(){
+		if($(this).is(':checked')){
+			$('#CalificacionCalDomicilioValor').val(0).attr('disabled',true);
+		}else{
+			$('#CalificacionCalDomicilioValor').attr('disabled',false);
+		}	
+		actualizarEgresos();
+	});
+	
+	$("#CalificacionCalTallerPropio").click(function(){
+		if($(this).is(':checked')){
+			$('#CalificacionCalTallerValor').val(0).attr('disabled',true);	
+		}else{
+			$('#CalificacionCalTallerValor').attr('disabled',false);
+		}	
+		actualizarEgresos();
+	});
+	
+	/*_______INGRESOS____________*/
+	var actualizarIngresos= function(){
+		var porventas = parseFloat($('#CalificacionCalIngresosPorVentas').val())? parseFloat($('#CalificacionCalIngresosPorVentas').val()):0;
+		var otros= parseFloat($('#CalificacionCalOtrosIngresos').val())?  parseFloat($('#CalificacionCalOtrosIngresos').val()):0; 
+		$('#CalificacionCalTotalIngresos, #CalificacionCalBalanceTotalIngresos').val(porventas+otros);
+		actualizarRentabilidad();
+	}
+	$('.ingresos input').blur(function(){
+		actualizarIngresos();
+	});
+	
+	/*__________VALIDACION ENVIO FORM*/
+	$("#registro").submit(function(e){
+		if(totalRentabilidad < salarioMinimoUnificado){
+			e.preventDefault();
+			alert('La rentabilidad es menor al mìnimo permitido para permitir una calificación');
+		}else{
+			return true;
+		}
+	});
+	actualizarSalarioOperario();
+	actualizarSalarioAprendiz();
+	actualizarCapital();
+	actualizarIngresos();
+	actualizarEgresos();
+	actualizarRentabilidad();
+	
+	
 	var checkCedulaEcuador = function ( cedula ){
 	  array = cedula.split( "" );
 	  num = array.length;
@@ -77,6 +261,7 @@ $(function(){
 				input.val(datos[atributo]);
 			}
 		}
+		return true;
 	}
 	var llenarTrabajadoresIndexado = function(Model,datos,indice){
 		
@@ -95,6 +280,7 @@ $(function(){
 					input.val(datos[atributo]);
 				}
 			}
+			return true;
 	}
 	var llenarDatos = function(Model,datosPersonales){
 		var input=null;
@@ -116,10 +302,13 @@ $(function(){
 			}
 			
 			for(indice in datosPersonales['Trabajador']){
-				llenarTrabajadoresIndexado('Trabajador',datosPersonales['Trabajador'][indice],indice);
+				if(llenarTrabajadoresIndexado('Trabajador',datosPersonales['Trabajador'][indice],indice)){
+					
+				}
 			}
 								
 		}
+		return true;
 	}
 	var validarCalificacion = function (){
 		if($('.validarCalificacion .radio input:checked').val()==0/*si es pasaporte*/ || checkCedulaEcuador($("#wizard #ArtesanoArtCedula").val())){
@@ -133,9 +322,20 @@ $(function(){
 					$("#wizard .validar").css('visibility','visible');
 					if(typeof response.Datos != 'undefined'){
 						if(response.Datos.DatosPersonal.length) llenarDatos('DatosPersonal',response.Datos.DatosPersonal[0]);
-						indiceOperador=indiceAprendiz=0;
-						if(response.Datos.Taller.length) llenarDatos('Taller',response.Datos.Taller[0]);
-						llenarDatos('Calificacion',response.Datos.Calificacion);	
+						indiceOperador=indiceAprendiz=0;						
+						if(response.Datos.Local.length) llenarDatos('Local',response.Datos.Local[0]);
+						if(response.Datos.Taller.length){
+							if(llenarDatos('Taller',response.Datos.Taller[0])){
+								if(llenarDatos('Calificacion',response.Datos.Calificacion)){
+									actualizarSalarioOperario();
+									actualizarSalarioAprendiz();
+									actualizarCapital();
+									actualizarIngresos();
+									actualizarEgresos();
+									actualizarRentabilidad();
+								}
+							}
+						} 
 					}else{
 						// VACIAR DATOS INCLUYENDO LOS SELECT, pero conservando la cedula y los datos de calificacion
 					}
@@ -145,7 +345,10 @@ $(function(){
 			});
 		}
 	}
-	BJS.updateSelect($("#CalificacionRamaId"),"/ramas/obtenerPorGrupo/"+$("#ArtesanoGruposDeRamaId option:selected").val());	
+	BJS.updateSelect($("#CalificacionRamaId"),"/ramas/obtenerPorGrupo/"+$("#ArtesanoGruposDeRamaId option:selected").val());
+	$("#ArtesanoGruposDeRamaId").change(function(){
+		BJS.updateSelect($("#CalificacionRamaId"),"/ramas/obtenerPorGrupo/"+$("#ArtesanoGruposDeRamaId option:selected").val());
+	});
 	/*$("#wizard .validarCalificacion select").change(function(){
 		if($(this).attr('id') == "ArtesanoGruposDeRamaId"){//actualiza el selects de ramas
 			BJS.updateSelect($("#CalificacionRamaId"),"/ramas/obtenerPorGrupo/"+$("#ArtesanoGruposDeRamaId option:selected").val(),function(){
@@ -271,189 +474,5 @@ $(function(){
 		$("#status li").removeClass("active").eq(i).addClass("active");
 		return true;
 	});
-	
-	
-	
-	//BALANCES
-	var actualizarRentabilidad = function(){
-		var ingresos = parseFloat($('#CalificacionCalBalanceTotalIngresos').val())?parseFloat($('#CalificacionCalBalanceTotalIngresos').val()):0;
-		var egresos = parseFloat($('#CalificacionCalBalanceTotalEgresos').val())?parseFloat($('#CalificacionCalBalanceTotalEgresos').val()):0;
-		$("#CalificacionCalBalanceRentabilidadMensual").val(ingresos-egresos);
-		totalRentabilidad=ingresos-egresos;
-	}
-	/*____________CAPITAL__________________*/
-	var actualizarCapital=function(){
-		var totalMaquinas = parseFloat($('.maquinas_y_herramientas').val())? parseFloat($('.maquinas_y_herramientas').val()):0;
-		var totalMateriaPrima = parseFloat($('.materia_prima').val())?  parseFloat($('.materia_prima').val()):0; 
-		var totalProductosElaborados = parseFloat($('.productos_elaborados').val())? parseFloat($('.productos_elaborados').val()):0;
-		$('.total_capital').val(totalMaquinas+totalMateriaPrima+totalProductosElaborados);
-		totalInversion = totalMaquinas+totalMateriaPrima+totalProductosElaborados;
-	}
-	var actualizarMaquinariaYHerramientas=function(){
-		var total=0;
-		var $maquinas =$('.valor_maquinas');
-		var lenght = $maquinas.length-1;
-		var cantidad=0;
-		var valor=0;
-		$.each($maquinas,function(i,val){
-			cantidad=parseInt($($('.cantidad_maquinas')[i]).val());
-			valor=$(val).val();
-			if( valor && cantidad){
-				total+=cantidad*parseFloat($(val).val());
-			}
-			if( lenght == i){
-				$('.maquinas_y_herramientas').val(total);
-			}
-		});
-		actualizarCapital();
-	}
-	var actualizarMateriaPrima=function(){
-		var total=0;
-		var $maquinas =$('.valor_materia_prima');
-		var lenght = $maquinas.length-1;
-		var cantidad=0;
-		var valor=0;
-		$.each($maquinas,function(i,val){
-			cantidad=parseInt($($('.cantidad_materia_prima')[i]).val());
-			valor=$(val).val();
-			if( valor && cantidad){
-				total+=cantidad*parseFloat($(val).val());
-			}
-			if( lenght == i){
-				$('.materia_prima').val(total);
-			}
-		});
-		actualizarCapital();
-	}
-
-	var actualizarProductosElaborados=function(){
-		var total=0;
-		var $maquinas =$('.valor_productos_elaborados');
-		var lenght = $maquinas.length-1;
-		var cantidad=0;
-		var valor=0;
-		$.each($maquinas,function(i,val){
-			cantidad=parseInt($($('.cantidad_productos_elaborados')[i]).val());
-			valor=$(val).val();
-			if( valor && cantidad){
-				total+=cantidad*parseFloat($(val).val());
-			}
-			if( lenght == i){
-				$('.productos_elaborados').val(total);
-			}
-		});
-		actualizarCapital();
-	}
-	$('.cantidad_maquinas , .valor_maquinas').blur(function(){
-		actualizarMaquinariaYHerramientas();
-	});
-	$('.cantidad_materia_prima , .valor_materia_prima').blur(function(){
-		actualizarMateriaPrima();
-	});
-	$('.cantidad_productos_elaborados , .valor_productos_elaborados').blur(function(){
-		actualizarProductosElaborados();
-	});
-	
-	/*____________EGRESOS__________________*/
-	var actualizarEgresos=function($callback){
-	 	var totalSalarioAprendices = parseFloat($('.salario_aprendices').val())? parseFloat($('.salario_aprendices').val()):0;
-		var totalSalarioOperarios= parseFloat($('.salario_operarios').val())?  parseFloat($('.salario_operarios').val()):0; 
-		var domicilio = parseFloat($('#CalificacionCalDomicilioValor').val())? parseFloat($('#CalificacionCalDomicilioValor').val()):0;
-		var taller = parseFloat($('#CalificacionCalTallerValor').val())? parseFloat($('#CalificacionCalTallerValor').val()):0;
-		var agua = parseFloat($('#CalificacionCalAgua').val())? parseFloat($('#CalificacionCalAgua').val()):0;
-		var luz = parseFloat($('#CalificacionCalLuz').val())? parseFloat($('#CalificacionCalLuz').val()):0;
-		var telefono = parseFloat($('#CalificacionCalTelefono').val())? parseFloat($('#CalificacionCalTelefono').val()):0;
-		var servicios = parseFloat($('#CalificacionCalServiciosBasicos').val())? parseFloat($('#CalificacionCalServiciosBasicos').val()):0;
-		var materiaPrima = parseFloat($('#CalificacionCalCompraDeMateriaPrimaMensual').val())? parseFloat($('#CalificacionCalCompraDeMateriaPrimaMensual').val()):0;	
-	 	$('.total_egresos, #CalificacionCalBalanceTotalEgresos').val(totalSalarioAprendices+totalSalarioOperarios+domicilio+taller+agua+luz+telefono+servicios+materiaPrima);
-		actualizarRentabilidad();
-	}
-	var actualizarSalarioOperario=function(){
-		var total=0;
-		var $salarios =$('.salarioOperarios');
-		var lenght = $salarios.length-1;
-		var valor=0;
-		$.each($salarios,function(i,val){
-			valor=$(val).val();
-			
-			if( valor){
-				total+=parseFloat(valor);
-			}
-			if( lenght == i){
-				$('.number .salario_operarios').val(total);
-			}
-		});
-		actualizarEgresos();
-	}
-	var actualizarSalarioAprendiz=function(){
-		var total=0;
-		var $salarios =$('.salarioAprendiz');
-		var lenght = $salarios.length-1;
-		var valor=0;
-		$.each($salarios,function(i,val){
-			valor=$(val).val();
-			if( valor){
-				total+=parseFloat(valor);
-			}
-			if( lenght == i){
-				$('.number .salario_aprendices').val(total);
-			}
-		});
-		actualizarEgresos();
-	}
-	$('.salarioAprendiz').blur(function(){
-		actualizarSalarioAprendiz();
-	});
-	$('.salarioOperarios').blur(function(){
-		actualizarSalarioOperario();
-	});
-	$('.egresos input').blur(function(){
-		actualizarEgresos();
-	});
-	$("#CalificacionCalDomicilioPropio").click(function(){
-		if($(this).is(':checked')){
-			$('#CalificacionCalDomicilioValor').val(0).attr('disabled',true);
-		}else{
-			$('#CalificacionCalDomicilioValor').attr('disabled',false);
-		}	
-		actualizarEgresos();
-	});
-	
-	$("#CalificacionCalTallerPropio").click(function(){
-		if($(this).is(':checked')){
-			$('#CalificacionCalTallerValor').val(0).attr('disabled',true);	
-		}else{
-			$('#CalificacionCalTallerValor').attr('disabled',false);
-		}	
-		actualizarEgresos();
-	});
-	
-	/*_______INGRESOS____________*/
-	var actualizarIngresos= function(){
-		var porventas = parseFloat($('#CalificacionCalIngresosPorVentas').val())? parseFloat($('#CalificacionCalIngresosPorVentas').val()):0;
-		var otros= parseFloat($('#CalificacionCalOtrosIngresos').val())?  parseFloat($('#CalificacionCalOtrosIngresos').val()):0; 
-		$('#CalificacionCalTotalIngresos, #CalificacionCalBalanceTotalIngresos').val(porventas+otros);
-		actualizarRentabilidad();
-	}
-	$('.ingresos input').blur(function(){
-		actualizarIngresos();
-	});
-	
-	/*__________VALIDACION ENVIO FORM*/
-	$("#registro").submit(function(e){
-		if(totalRentabilidad < salarioMinimoUnificado){
-			e.preventDefault();
-			alert('La rentabilidad es menor al mìnimo permitido para permitir una calificación');
-		}else{
-			return true;
-		}
-	});
-	actualizarSalarioOperario();
-	actualizarSalarioAprendiz();
-	actualizarCapital();
-	actualizarIngresos();
-	actualizarEgresos();
-	actualizarRentabilidad();
-
 
 });
