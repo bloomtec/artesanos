@@ -9,7 +9,7 @@ class CalificacionesController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('reporteInspecciones', 'reporteCalificacionesOperador', 'reporteCalificacionesArtesano');
+		$this -> Auth -> allow('reporteInspecciones', 'reporteCalificacionesOperador', 'reporteCalificacionesArtesano', 'inspecciones');
 	}
 
 	/**
@@ -107,18 +107,29 @@ class CalificacionesController extends AppController {
 	}
 	
 	public function inspecciones($inspector_id = null) {
+		$this -> autoRender = false;
+		$this -> Calificacion -> recursive = -1;
 		if($inspector_id) {
-			$calificaciones = $this -> Calificacion -> find(
+			$calificaciones_taller = $this -> Calificacion -> find(
 				'all',
 				array(
 					'conditions' => array(
-						'OR' => array(
-							'Calificacion.cal_inspector_taller' => $inspector_id,
-							
-						)
+						'Calificacion.cal_inspector_taller' => $inspector_id,
+						'Calificacion.cal_taller_aprobado' => 0
 					)
 				)
 			);
+			$calificaciones_local = $this -> Calificacion -> find(
+				'all',
+				array(
+					'conditions' => array(
+						'Calificacion.cal_inspector_local' => $inspector_id,
+						'Calificacion.cal_local_aprobado' => 0
+					)
+				)
+			);
+			debug($calificaciones_taller);
+			debug($calificaciones_local);
 		} else {
 			$this -> redirect($this -> referer());
 		}
