@@ -16,8 +16,6 @@ App::uses('AppModel', 'Model');
  */
 class Taller extends AppModel {
 	
-	public $order = array('created' => 'DESC');
-	
 	/**
 	 * Validation rules
 	 *

@@ -1,245 +1,312 @@
 <div class="inspecciones view">
-	<h2><?php  echo __('INSPECCIÓN');?></h2>
-	<label><?php echo __('Código'); ?></label>
-	<h3>
-		<?php echo $inspeccion['Calificacion']['id']; ?>
-		&nbsp;
-	</h3>
-	<label><?php echo __('Tipo De Inspección'); ?></label>
-	<h3>
-		<?php echo $se_inspecciona; ?>
-		&nbsp;
-	</h3>
-	<label><?php echo __('Fecha Asignada'); ?></label>
-	<h3>
+	<h3>DATOS INSPECCIÓN</h3>
+	<table class="inspeccion">
+		<caption>INSPECCIÓN</caption>
+		<tr>
+			<th>Código</th>
+			<th>Tipo De Inspección</th>
+			<th>Fecha Asignada</th>
+		</tr>
+		<tr>
+			<td>
+				<?php echo $inspeccion['Calificacion']['id']; ?>
+			</td>
+			<td>
+				<?php echo $se_inspecciona; ?>
+			</td>
+			<td>
+				<?php
+					if($tipo_inspeccion == 1) {
+						echo $inspeccion['Calificacion']['cal_fecha_inspeccion_taller'];
+					} else {
+						echo $inspeccion['Calificacion']['cal_fecha_inspeccion_local'];
+					}
+				?>
+			</td>
+		</tr>
+	</table>
+	<table class="artesano">
+		<caption>ARTESANO</caption>
+		<tr>
+			<th>Nombre</th>
+			<th>Documento</th>
+			<th>Fecha De Nacimiento</th>
+			<th>Nacionalidad</th>
+			<th>Tipo De Sangre</th>
+			<th>Sexo</th>
+		</tr>
+		<tr>
+			<td>
+				<?php
+					echo $inspeccion['DatosPersonal'][0]['dat_nombres']
+					. ' ' . $inspeccion['DatosPersonal'][0]['dat_apellido_paterno']
+					. ' ' . $inspeccion['DatosPersonal'][0]['dat_apellido_materno'];
+				?>
+			</td>
+			<td><?php echo $this -> requestAction('/artesanos/getID/' . $inspeccion['Calificacion']['artesano_id']); ?></td>
+			<td><?php echo $inspeccion['DatosPersonal'][0]['dat_fecha_nacimiento'];	?></td>
+			<td><?php echo $inspeccion['DatosPersonal'][0]['dat_nacionalidad'];	?></td>
+			<td><?php echo $inspeccion['DatosPersonal'][0]['dat_tipo_de_sangre']; ?></td>
+			<td><?php echo $inspeccion['DatosPersonal'][0]['dat_sexo']; ?></td>
+		</tr>
+		<tr>
+			<th>Estado Civil</th>
+			<th>Grado De Estudio</th>
+			<th>Hijos Mayores</th>
+			<th>Hijos Menores</th>
+			<th>Tipo De Discapacidad</th>
+			<th>% De Discapacidad</th>
+		</tr>
+		<tr>
+			<td><?php echo $inspeccion['DatosPersonal'][0]['dat_estado_civil']; ?></td>
+			<td><?php echo $inspeccion['DatosPersonal'][0]['dat_grado_estudio']; ?></td>
+			<td><?php echo $inspeccion['DatosPersonal'][0]['dat_hijos_mayores']; ?></td>
+			<td><?php echo $inspeccion['DatosPersonal'][0]['dat_hijos_menores']; ?></td>
+			<td><?php echo $inspeccion['DatosPersonal'][0]['dat_tipo_discapacidad']; ?></td>
+			<td><?php echo $inspeccion['DatosPersonal'][0]['dat_porcentaje_de_discapacidad']; ?></td>
+		</tr>
+	</table>
+	<?php if($tipo_inspeccion == 2) : ?> <!-- Información para un local -->
+	<table class="local">
+		<caption>LOCAL</caption>
+		<tr>
+			<th>Provincia</th>
+			<th>Canton</th>
+			<th>Ciudad</th>
+			<th>Sector</th>
+			<th>Parroquia</th>
+		</tr>
+		<tr>
+			<td><?php if($inspeccion['Local'][0]['provincia_id']) echo $this -> requestAction('/provincias/getNombre/' . $inspeccion['Local'][0]['provincia_id']); ?></td>
+			<td><?php if($inspeccion['Local'][0]['canton_id']) echo $this -> requestAction('/cantones/getNombre/' . $inspeccion['Local'][0]['canton_id']); ?></td>
+			<td><?php if($inspeccion['Local'][0]['ciudad_id']) echo $this -> requestAction('/ciudades/getNombre/' . $inspeccion['Local'][0]['ciudad_id']); ?></td>
+			<td><?php if($inspeccion['Local'][0]['sector_id']) echo $this -> requestAction('/sectores/getNombre/' . $inspeccion['Local'][0]['sector_id']); ?></td>
+			<td><?php if($inspeccion['Local'][0]['parroquia_id']) echo $this -> requestAction('/parroquias/getNombre/' . $inspeccion['Local'][0]['parroquia_id']); ?></td>
+		</tr>
+		<tr>
+			<th>Teléfono</th>
+			<th>Celular</th>
+			<th>Referencia</th>
+			<th>Correo Electrónico</th>
+			<th>Dirección</th>
+		</tr>
+		<tr>
+			<td><?php echo $inspeccion['Local'][0]['loc_telefono_convencional']; ?></td>
+			<td><?php echo $inspeccion['Local'][0]['loc_telefono_celular']; ?></td>
+			<td><?php echo $inspeccion['Local'][0]['loc_referencia']; ?></td>
+			<td><?php echo $inspeccion['Local'][0]['loc_email']; ?></td>
+			<td>
+				<?php echo 'Calle / Avenida: ' . $inspeccion['Local'][0]['loc_calle_o_avenida']; ?>
+				&nbsp;
+				<?php echo 'Número: ' . $inspeccion['Local'][0]['loc_numero']; ?>
+				&nbsp;
+				<?php echo 'Intersección: ' . $inspeccion['Local'][0]['loc_interseccion']; ?>
+				&nbsp;
+				<?php echo 'Barrio: ' . $inspeccion['Local'][0]['loc_barrio']; ?>
+				&nbsp;
+			</td>
+		</tr>
+	</table>
+	<?php endif; ?>
+	<?php if($tipo_inspeccion == 1) : ?> <!-- Información para un taller -->
+	<table class="taller">
+		<caption>TALLER</caption>
+		<tr>
+			<th>Provincia</th>
+			<th>Canton</th>
+			<th>Ciudad</th>
+			<th>Sector</th>
+			<th>Parroquia</th>
+			<th>Dirección</th>
+		</tr>
+		<tr>
+			<td><?php if($inspeccion['Taller'][0]['provincia_id']) echo $this -> requestAction('/provincias/getNombre/' . $inspeccion['Taller'][0]['provincia_id']); ?></td>
+			<td><?php if($inspeccion['Taller'][0]['canton_id']) echo $this -> requestAction('/cantones/getNombre/' . $inspeccion['Taller'][0]['canton_id']); ?></td>
+			<td><?php if($inspeccion['Taller'][0]['ciudad_id']) echo $this -> requestAction('/ciudades/getNombre/' . $inspeccion['Taller'][0]['ciudad_id']); ?></td>
+			<td><?php if($inspeccion['Taller'][0]['sector_id']) echo $this -> requestAction('/sectores/getNombre/' . $inspeccion['Taller'][0]['sector_id']); ?></td>
+			<td><?php if($inspeccion['Taller'][0]['parroquia_id']) echo $this -> requestAction('/parroquias/getNombre/' . $inspeccion['Taller'][0]['parroquia_id']); ?></td>
+			<td>
+				<?php echo 'Calle / Avenida: ' . $inspeccion['Taller'][0]['tal_calle_o_avenida']; ?>
+				&nbsp;
+				<?php echo 'Número: ' . $inspeccion['Taller'][0]['tal_numero']; ?>
+				&nbsp;
+				<?php echo 'Intersección: ' . $inspeccion['Taller'][0]['tal_interseccion']; ?>
+				&nbsp;
+				<?php echo 'Barrio: ' . $inspeccion['Taller'][0]['tal_barrio']; ?>
+				&nbsp;
+			</td>
+		</tr>
+		<tr>
+			<th></th>
+			<th>Razón Social</th>
+			<th>Teléfono</th>
+			<th>Celular</th>
+			<th>Referencia</th>
+			<th>Correo Electrónico</th>
+		</tr>
+		<tr>
+			<td></td>
+			<td><?php echo $inspeccion['Taller'][0]['tal_razon_social_o_nombre_comercial']; ?></td>
+			<td><?php echo $inspeccion['Taller'][0]['tal_telefono_convencional']; ?></td>
+			<td><?php echo $inspeccion['Taller'][0]['tal_telefono_celular']; ?></td>
+			<td><?php echo $inspeccion['Taller'][0]['tal_referencia']; ?></td>
+			<td><?php echo $inspeccion['Taller'][0]['tal_email']; ?></td>
+		</tr>
+	</table>
+	<!-- Operadores -->
+	<table class="operadores">
+		<caption>Operarios Del Taller</caption>
+		<tr>
+			<th>Cedula</th>
+			<th>Nombres Y Apellidos</th>
+			<th>Sexo</th>
+			<th>Fecha De Ingreso</th>
+			<th>Afiliado Al Seguro</th>
+			<th>Fecha De Nacimiento</th>
+			<th>Pago Mensual</th>
+		</tr>
 		<?php
-			if($tipo_inspeccion == 1) {
-				echo $inspeccion['Calificacion']['cal_fecha_inspeccion_taller'];
-			} else {
-				echo $inspeccion['Calificacion']['cal_fecha_inspeccion_local'];
+			$cantidad_trabajadores = count($inspeccion['Operador']);
+			if($cantidad_trabajadores > 0 && $cantidad_trabajadores == 1) { // Solo hay un trabajador
+				$trabajador = $inspeccion['Operador'];
+		?>
+		<tr>
+			<td><?php echo $trabajador['Trabajador']['tra_cedula']; ?></td>
+			<td><?php echo $trabajador['Trabajador']['tra_nombres_y_apellidos']; ?></td>
+			<td>
+				<?php
+					if($trabajador['Trabajador']['tra_sexo']) {
+						echo 'Masculino';
+					} else {
+						echo 'Femenino';
+					}
+				?>
+			</td>
+			<td><?php echo $trabajador['Trabajador']['tra_fecha_ingreso']; ?></td>
+			<td>
+				<?php
+					if($trabajador['Trabajador']['tra_afiliado_seguro']) {
+						echo 'Sí';
+					} else {
+						echo 'No';
+					}
+				?>
+			</td>
+			<td><?php echo $trabajador['Trabajador']['tra_fecha_nacimiento']; ?></td>
+			<td><?php echo $trabajador['Trabajador']['tra_pago_mensual']; ?></td>
+		</tr>
+		<?php
+			} elseif($cantidad_trabajadores > 0 && $cantidad_trabajadores >= 2) { // Hay m
+				foreach($inspeccion['Operador'] as $key => $trabajador) :
+		?>
+		<tr>
+			<td><?php echo $trabajador['Trabajador']['tra_cedula']; ?></td>
+			<td><?php echo $trabajador['Trabajador']['tra_nombres_y_apellidos']; ?></td>
+			<td>
+				<?php
+					if($trabajador['Trabajador']['tra_sexo']) {
+						echo 'Masculino';
+					} else {
+						echo 'Femenino';
+					}
+				?>
+			</td>
+			<td><?php echo $trabajador['Trabajador']['tra_fecha_ingreso']; ?></td>
+			<td>
+				<?php
+					if($trabajador['Trabajador']['tra_afiliado_seguro']) {
+						echo 'Sí';
+					} else {
+						echo 'No';
+					}
+				?>
+			</td>
+			<td><?php echo $trabajador['Trabajador']['tra_fecha_nacimiento']; ?></td>
+			<td><?php echo $trabajador['Trabajador']['tra_pago_mensual']; ?></td>
+		</tr>
+		<?php
+				endforeach;	
 			}
 		?>
-		&nbsp;
-	</h3>
-	<label><?php echo __('ARTESANO'); ?></label><h3>&nbsp;</h3>
-	<label><?php echo __('Nombre'); ?></label>
-	<h3>
+	</table>
+	<!-- Aprendices -->
+	<table class="aprendices">
+		<caption>Aprendices Del Taller</caption>
+		<tr>
+			<th>Cedula</th>
+			<th>Nombres Y Apellidos</th>
+			<th>Sexo</th>
+			<th>Fecha De Ingreso</th>
+			<th>Afiliado Al Seguro</th>
+			<th>Fecha De Nacimiento</th>
+			<th>Pago Mensual</th>
+		</tr>
 		<?php
-			echo $inspeccion['DatosPersonal'][0]['dat_nombres']
-			. ' ' . $inspeccion['DatosPersonal'][0]['dat_apellido_paterno']
-			. ' ' . $inspeccion['DatosPersonal'][0]['dat_apellido_materno'];
+			$cantidad_trabajadores = count($inspeccion['Aprendiz']);
+			if($cantidad_trabajadores > 0 && $cantidad_trabajadores == 1) { // Solo hay un trabajador
+				$trabajador = $inspeccion['Aprendiz'];
 		?>
-		&nbsp;
-	</h3>
-	<label><?php echo __('Documento'); ?></label>
-	<h3>
+		<tr>
+			<td><?php echo $trabajador['Trabajador']['tra_cedula']; ?></td>
+			<td><?php echo $trabajador['Trabajador']['tra_nombres_y_apellidos']; ?></td>
+			<td>
+				<?php
+					if($trabajador['Trabajador']['tra_sexo']) {
+						echo 'Masculino';
+					} else {
+						echo 'Femenino';
+					}
+				?>
+			</td>
+			<td><?php echo $trabajador['Trabajador']['tra_fecha_ingreso']; ?></td>
+			<td>
+				<?php
+					if($trabajador['Trabajador']['tra_afiliado_seguro']) {
+						echo 'Sí';
+					} else {
+						echo 'No';
+					}
+				?>
+			</td>
+			<td><?php echo $trabajador['Trabajador']['tra_fecha_nacimiento']; ?></td>
+			<td><?php echo $trabajador['Trabajador']['tra_pago_mensual']; ?></td>
+		</tr>
 		<?php
-			echo $this -> requestAction('/artesanos/getID/' . $inspeccion['Calificacion']['artesano_id']);
+			} elseif($cantidad_trabajadores > 0 && $cantidad_trabajadores >= 2) { // Hay m
+				foreach($inspeccion['Aprendiz'] as $key => $trabajador) :
 		?>
-		&nbsp;
-	</h3>
-	<label><?php echo __('Fecha De Nacimiento'); ?></label>
-	<h3>
+		<tr>
+			<td><?php echo $trabajador['Trabajador']['tra_cedula']; ?></td>
+			<td><?php echo $trabajador['Trabajador']['tra_nombres_y_apellidos']; ?></td>
+			<td>
+				<?php
+					if($trabajador['Trabajador']['tra_sexo']) {
+						echo 'Masculino';
+					} else {
+						echo 'Femenino';
+					}
+				?>
+			</td>
+			<td><?php echo $trabajador['Trabajador']['tra_fecha_ingreso']; ?></td>
+			<td>
+				<?php
+					if($trabajador['Trabajador']['tra_afiliado_seguro']) {
+						echo 'Sí';
+					} else {
+						echo 'No';
+					}
+				?>
+			</td>
+			<td><?php echo $trabajador['Trabajador']['tra_fecha_nacimiento']; ?></td>
+			<td><?php echo $trabajador['Trabajador']['tra_pago_mensual']; ?></td>
+		</tr>
 		<?php
-			echo $inspeccion['DatosPersonal'][0]['dat_fecha_nacimiento'];
+				endforeach;	
+			}
 		?>
-		&nbsp;
-	</h3>
-	<label><?php echo __('Nacionalidad'); ?></label>
-	<h3>
-		<?php
-			echo $inspeccion['DatosPersonal'][0]['dat_nacionalidad'];
-		?>
-		&nbsp;
-	</h3>
-	<label><?php echo __('Tipo De Sangre'); ?></label>
-	<h3>
-		<?php
-			echo $inspeccion['DatosPersonal'][0]['dat_tipo_de_sangre'];
-		?>
-		&nbsp;
-	</h3>
-	<label><?php echo __('Sexo'); ?></label>
-	<h3>
-		<?php
-			echo $inspeccion['DatosPersonal'][0]['dat_sexo'];
-		?>
-		&nbsp;
-	</h3>
-	<label><?php echo __('Estado Civil'); ?></label>
-	<h3>
-		<?php
-			echo $inspeccion['DatosPersonal'][0]['dat_estado_civil'];
-		?>
-		&nbsp;
-	</h3>
-	<label><?php echo __('Grado De Estudio'); ?></label>
-	<h3>
-		<?php
-			echo $inspeccion['DatosPersonal'][0]['dat_grado_estudio'];
-		?>
-		&nbsp;
-	</h3>
-	<label><?php echo __('Hijos Mayores'); ?></label>
-	<h3>
-		<?php
-			echo $inspeccion['DatosPersonal'][0]['dat_hijos_mayores'];
-		?>
-		&nbsp;
-	</h3>
-	<label><?php echo __('Hijos Menores'); ?></label>
-	<h3>
-		<?php
-			echo $inspeccion['DatosPersonal'][0]['dat_hijos_menores'];
-		?>
-		&nbsp;
-	</h3>
-	<label><?php echo __('Discapacidad'); ?></label>
-	<h3>
-		<?php
-			echo $inspeccion['DatosPersonal'][0]['dat_tipo_discapacidad'];
-		?>
-		&nbsp;
-	</h3>
-	<label><?php echo __('% Discapacidad'); ?></label>
-	<h3>
-		<?php
-			echo $inspeccion['DatosPersonal'][0]['dat_porcentaje_de_discapacidad'];
-		?>
-		&nbsp;
-	</h3>
-	<?php if($tipo_inspeccion == 1) : ?>
-	<label><?php echo __('TALLER'); ?></label><h3>&nbsp;</h3>
-	<label><?php echo __('Razón Social / Nombre Comercial'); ?></label>
-	<h3>
-		<?php echo $inspeccion['Taller'][0]['tal_razon_social_o_nombre_comercial']; ?>&nbsp;
-	</h3>
-	<label><?php echo __('Provincia'); ?></label>
-	<h3>
-		<?php
-			if($inspeccion['Taller'][0]['provincia_id']) echo $this -> requestAction('/provincias/getNombre/' . $inspeccion['Taller'][0]['provincia_id']);
-		?>
-		&nbsp;
-	</h3>
-	<label><?php echo __('Canton'); ?></label>
-	<h3>
-		<?php
-			if($inspeccion['Taller'][0]['canton_id']) echo $this -> requestAction('/cantones/getNombre/' . $inspeccion['Taller'][0]['canton_id']);
-		?>
-		&nbsp;
-	</h3>
-	<label><?php echo __('Ciudad'); ?></label>
-	<h3>
-		<?php
-			if($inspeccion['Taller'][0]['ciudad_id']) echo $this -> requestAction('/ciudades/getNombre/' . $inspeccion['Taller'][0]['ciudad_id']);
-		?>
-		&nbsp;
-	</h3>
-	<label><?php echo __('Sector'); ?></label>
-	<h3>
-		<?php
-			if($inspeccion['Taller'][0]['sector_id']) echo $this -> requestAction('/sectores/getNombre/' . $inspeccion['Taller'][0]['sector_id']);
-		?>
-		&nbsp;
-	</h3>
-	<label><?php echo __('Parroquia'); ?></label>
-	<h3>
-		<?php
-			if($inspeccion['Taller'][0]['parroquia_id']) echo $this -> requestAction('/parroquias/getNombre/' . $inspeccion['Taller'][0]['parroquia_id']);
-		?>
-		&nbsp;
-	</h3>
-	<label><?php echo __('Dirección'); ?></label>
-	<h3>
-		<?php echo 'Calle / Avenida: ' . $inspeccion['Taller'][0]['tal_calle_o_avenida']; ?>
-		&nbsp;
-		<?php echo 'Número: ' . $inspeccion['Taller'][0]['tal_numero']; ?>
-		&nbsp;
-		<?php echo 'Intersección: ' . $inspeccion['Taller'][0]['tal_interseccion']; ?>
-		&nbsp;
-		<?php echo 'Barrio: ' . $inspeccion['Taller'][0]['tal_barrio']; ?>
-		&nbsp;
-	</h3>
-	<label><?php echo __('Teléfono'); ?></label>
-	<h3>
-		<?php echo $inspeccion['Taller'][0]['tal_telefono_convencional']; ?>&nbsp;
-	</h3>
-	<label><?php echo __('Celular'); ?></label>
-	<h3>
-		<?php echo $inspeccion['Taller'][0]['tal_telefono_celular']; ?>&nbsp;
-	</h3>
-	<label><?php echo __('Referencia'); ?></label>
-	<h3>
-		<?php echo $inspeccion['Taller'][0]['tal_referencia']; ?>&nbsp;
-	</h3>
-	<label><?php echo __('Correo Electrónico'); ?></label>
-	<h3>
-		<?php echo $inspeccion['Taller'][0]['tal_email']; ?>&nbsp;
-	</h3>
-	<?php endif; ?>
-	<?php if($tipo_inspeccion == 2) : ?>
-	<label><?php echo __('LOCAL'); ?></label><h3>&nbsp;</h3>
-	<label><?php echo __('Provincia'); ?></label>
-	<h3>
-		<?php
-			if($inspeccion['Local'][0]['provincia_id']) echo $this -> requestAction('/provincias/getNombre/' . $inspeccion['Local'][0]['provincia_id']);
-		?>
-		&nbsp;
-	</h3>
-	<label><?php echo __('Canton'); ?></label>
-	<h3>
-		<?php
-			if($inspeccion['Local'][0]['canton_id']) echo $this -> requestAction('/cantones/getNombre/' . $inspeccion['Local'][0]['canton_id']);
-		?>
-		&nbsp;
-	</h3>
-	<label><?php echo __('Ciudad'); ?></label>
-	<h3>
-		<?php
-			if($inspeccion['Local'][0]['ciudad_id']) echo $this -> requestAction('/ciudades/getNombre/' . $inspeccion['Local'][0]['ciudad_id']);
-		?>
-		&nbsp;
-	</h3>
-	<label><?php echo __('Sector'); ?></label>
-	<h3>
-		<?php
-			if($inspeccion['Local'][0]['sector_id']) echo $this -> requestAction('/sectores/getNombre/' . $inspeccion['Local'][0]['sector_id']);
-		?>
-		&nbsp;
-	</h3>
-	<label><?php echo __('Parroquia'); ?></label>
-	<h3>
-		<?php
-			if($inspeccion['Local'][0]['parroquia_id']) echo $this -> requestAction('/parroquias/getNombre/' . $inspeccion['Local'][0]['parroquia_id']);
-		?>
-		&nbsp;
-	</h3>
-	<label><?php echo __('Dirección'); ?></label>
-	<h3>
-		<?php echo 'Calle / Avenida: ' . $inspeccion['Local'][0]['loc_calle_o_avenida']; ?>
-		&nbsp;
-		<?php echo 'Número: ' . $inspeccion['Local'][0]['loc_numero']; ?>
-		&nbsp;
-		<?php echo 'Intersección: ' . $inspeccion['Local'][0]['loc_interseccion']; ?>
-		&nbsp;
-		<?php echo 'Barrio: ' . $inspeccion['Local'][0]['loc_barrio']; ?>
-		&nbsp;
-	</h3>
-	<label><?php echo __('Teléfono'); ?></label>
-	<h3>
-		<?php echo $inspeccion['Local'][0]['loc_telefono_convencional']; ?>&nbsp;
-	</h3>
-	<label><?php echo __('Celular'); ?></label>
-	<h3>
-		<?php echo $inspeccion['Local'][0]['loc_telefono_celular']; ?>&nbsp;
-	</h3>
-	<label><?php echo __('Referencia'); ?></label>
-	<h3>
-		<?php echo $inspeccion['Local'][0]['loc_referencia']; ?>&nbsp;
-	</h3>
-	<label><?php echo __('Correo Electrónico'); ?></label>
-	<h3>
-		<?php echo $inspeccion['Local'][0]['loc_email']; ?>&nbsp;
-	</h3>
+	</table>
+	<!-- Equipos Y Herramientas -->
+	<!-- Materia Prima -->
+	<!-- Productos Elaborados -->
 	<?php endif; ?>
 </div>

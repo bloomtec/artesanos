@@ -56,7 +56,7 @@
 				?>
 			</td>
 			<td class="actions">
-				<?php echo $this->Html->link(__('View'), array('action' => 'verInspeccion', $taller['Calificacion']['id'], 2),array('class'=>'view')); ?>
+				<?php echo $this->Html->link(__('View'), array('action' => 'verInspeccion', $local['Calificacion']['id'], 2),array('class'=>'view')); ?>
 			</td>
 		</tr>
 		<?php endforeach; ?>

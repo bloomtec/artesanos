@@ -189,7 +189,7 @@ class CalificacionesController extends AppController {
 			);
 			$order = array('Calificacion.cal_fecha_inspeccion_local' => 'ASC');
 		} else {
-			//$this -> redirect($this -> referer());
+			$this -> redirect($this -> referer());
 		}
 		
 		$inspeccion = $this -> Calificacion -> find(
@@ -205,6 +205,36 @@ class CalificacionesController extends AppController {
 		
 		if($tipo_inspeccion == 1) { // Taller
 			if(isset($inspeccion['Local'])) unset($inspeccion['Local']);
+			$trabajadores = $this -> Calificacion -> Taller -> TalleresTrabajador -> find(
+				'list', array(
+					'conditions' => array(
+						'TalleresTrabajador.taller_id' => $inspeccion['Taller'][0]['id']
+					),
+					'fields' => array(
+						'TalleresTrabajador.trabajador_id'
+					),
+					'order' => array(
+						'TalleresTrabajador.trabajador_id' => 'ASC'
+					)
+				)
+			);
+			$this -> Calificacion -> Taller -> Trabajador -> recursive = -1;
+			$inspeccion['Operador'] = $this -> Calificacion -> Taller -> Trabajador -> find(
+				'all', array(
+					'conditions' => array(
+						'Trabajador.id' => $trabajadores,
+						'Trabajador.tipos_de_trabajador_id' => 1
+					)
+				)
+			);
+			$inspeccion['Aprendiz'] = $this -> Calificacion -> Taller -> Trabajador -> find(
+				'all', array(
+					'conditions' => array(
+						'Trabajador.id' => $trabajadores,
+						'Trabajador.tipos_de_trabajador_id' => 2
+					)
+				)
+			);
 		} else { // Local
 			if(isset($inspeccion['Taller'])) unset($inspeccion['Taller']);
 		}

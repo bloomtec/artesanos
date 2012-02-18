@@ -7,8 +7,6 @@ App::uses('AppModel', 'Model');
  */
 class DatosPersonal extends AppModel {
 	
-	public $order = array('created' => 'DESC');
-	
 	/**
 	 * Validation rules
 	 *
