@@ -32,10 +32,10 @@
 		<td class="actions">
 			<?php
 				if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Usuarios', 'view')))) {
-					echo $this->Html->link(__('View'), array('action' => 'view', $usuario['Usuario']['id']),array('class'=>'view'));
+					echo $this->Html->link(__('View'), array('action' => 'view', $usuario['Usuario']['id']),array('class'=>'view','title' => 'Ver'));
 				}
 				if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Usuarios', 'edit')))) {
-					echo $this->Html->link(__('Edit'), array('action' => 'edit', $usuario['Usuario']['id']),array('class'=>'edit'));
+					echo $this->Html->link(__('Edit'), array('action' => 'edit', $usuario['Usuario']['id']),array('class'=>'edit','title'=>'Modificar'));
 				}
 			?>
 		</td>

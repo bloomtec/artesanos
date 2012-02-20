@@ -426,13 +426,13 @@ $(function(){
 			});	
 		});	
 	});
-	$("#TallerCiudadId").change(function(){
-		BJS.updateSelect($("#TallerSectorId"),"/sectores/getByCiudad/"+$("#TallerCiudadId option:selected").val(),function(){
-			BJS.updateSelect($("#LocalParroquiaId"),"/parroquias/getBySector/"+$("#TallerSectorId option:selected").val(),function(){});	
+	$("#LocalCiudadId").change(function(){
+		BJS.updateSelect($("#LocalSectorId"),"/sectores/getByCiudad/"+$("#LocalCiudadId option:selected").val(),function(){
+			BJS.updateSelect($("#LocalParroquiaId"),"/parroquias/getBySector/"+$("#LocalSectorId option:selected").val(),function(){});	
 		});	
 	});
-	$("#TallerSectorId").change(function(){
-		BJS.updateSelect($("#LocalParroquiaId"),"/parroquias/getBySector/"+$("#TallerSectorId option:selected").val(),function(){});	
+	$("#LocalSectorId").change(function(){
+		BJS.updateSelect($("#LocalParroquiaId"),"/parroquias/getBySector/"+$("#LocalSectorId option:selected").val(),function(){});	
 	});
 	/*______________________________*/
 	var root = $("#wizard").scrollable();

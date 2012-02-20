@@ -1145,3 +1145,13 @@ tr.diferente td.audit-value, tr.diferente td.audit-data {
 	background: #FF7575;
 }
 
+/*TOOLTIPS*/
+.tooltip {
+	display:none;
+	background-color:#13498E;
+	font-size:12px;
+	height:10px;
+	width:auto;
+	padding:5px;
+	color:white;	
+}
