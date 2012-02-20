@@ -67,4 +67,7 @@ $(function() {
 		'[required]'	: 'Campo obligatorio'
 	});
 	$('form[id!=registro]').validator({lang:'es',messageClass:'error-form'});
+	
+	//TOOLTIPS
+	$(".actions a[title]").tooltip({ position: "bottom center", opacity: 1});
 });
