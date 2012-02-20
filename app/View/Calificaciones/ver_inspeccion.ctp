@@ -118,8 +118,8 @@
 			<th></th>
 		</tr>
 		<tr>
-			<td><?php echo $this -> Form -> input('cal_comentarios_local', array('label' => false, 'div' => false, 'type' => 'textarea')); ?></td>
-			<td><?php echo $this -> Form -> radio('cal_local_aprobado', array(-1 => 'Denegado', 1 => 'Aprobado'), array('label' => false, 'div' => false, 'legend' => false)); ?></td>
+			<td><?php echo $this -> Form -> input('cal_comentarios_local', array('required' => 'required', 'label' => false, 'div' => false, 'type' => 'textarea')); ?></td>
+			<td><?php echo $this -> Form -> radio('cal_local_aprobado', array(-1 => 'Denegado', 1 => 'Aprobado'), array('value' => '-1', 'required' => 'required', 'label' => false, 'div' => false, 'legend' => false)); ?></td>
 			<td><?php echo $this -> Form -> submit('Enviar'); ?></td>
 		</tr>
 	</table>

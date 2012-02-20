@@ -166,6 +166,7 @@ class CalificacionesController extends AppController {
 					 * Siempre va a existir el taller, se debe verificar si hay inspección de
 					 * un local para proceder a poner el estado de la calificación
 					 */
+					if(empty($this -> request -> data['Calificacion']['cal_']))
 					$calificacion = $this -> Calificacion -> read(null, $this -> request -> data ['Calificacion']['id']);
 					$verificar_local = false;
 					if(!empty($calificacion['Calificacion']['cal_inspector_local'])) {
