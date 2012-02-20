@@ -158,88 +158,159 @@ class CalificacionesController extends AppController {
 	
 	public function verInspeccion($cal_id = null, $tipo_inspeccion = null) {
 		
-		$this -> Calificacion -> recursive = 1;
-		
-		$inspector_id = $this -> Auth -> user('id');
-		
-		$se_inspecciona = '';
-		$fields = array();
-		$order = array();
-		
-		if($tipo_inspeccion == 1) { // Taller
-			$se_inspecciona = 'Taller';
-			$fields = array(
-				'Calificacion.id',
-				'Calificacion.artesano_id',
-				'Calificacion.cal_inspector_taller',
-				'Calificacion.cal_fecha_inspeccion_taller',
-				'Calificacion.cal_comentarios_taller',
-				'Calificacion.cal_taller_aprobado'
-			);
-			$order = array('Calificacion.cal_fecha_inspeccion_taller' => 'ASC');
-		} elseif($tipo_inspeccion == 2) { // Local
-			$se_inspecciona = 'Local';
-			$fields = array(
-				'Calificacion.id',
-				'Calificacion.artesano_id',
-				'Calificacion.cal_inspector_local',
-				'Calificacion.cal_fecha_inspeccion_local',
-				'Calificacion.cal_comentarios_local',
-				'Calificacion.cal_local_aprobado'
-			);
-			$order = array('Calificacion.cal_fecha_inspeccion_local' => 'ASC');
+		if ($this -> request -> is('post')) {
+			if(!empty($this -> request -> data)) { // Se enviaron datos
+				if($this -> Calificacion -> save($this -> request -> data)) { // Se puede salvar los datos
+					/**
+					 * Lógica de revisión del estado de la inspección
+					 * Siempre va a existir el taller, se debe verificar si hay inspección de
+					 * un local para proceder a poner el estado de la calificación
+					 */
+					$calificacion = $this -> Calificacion -> read(null, $this -> request -> data ['Calificacion']['id']);
+					$verificar_local = false;
+					if(!empty($calificacion['Calificacion']['cal_inspector_local'])) {
+						// Hay un local
+						if($calificacion['Calificacion']['cal_local_aprobado'] == -1 || $calificacion['Calificacion']['cal_taller_aprobado'] == -1) {
+							// Taller o local DENEGADO
+							$calificacion['Calificacion']['cal_estado'] = -1;
+						} elseif($calificacion['Calificacion']['cal_local_aprobado'] == 1 && $calificacion['Calificacion']['cal_taller_aprobado']) {
+							// Taller y local APROBADOS
+							$calificacion['Calificacion']['cal_estado'] = 1;
+						} else {
+							// Falta alguno por aprobar
+							$calificacion['Calificacion']['cal_estado'] = 0;
+						}
+					} else {
+						// No hay local
+						if($calificacion['Calificacion']['cal_taller_aprobado'] == -1) {
+							// Taller DENEGADO
+							$calificacion['Calificacion']['cal_estado'] = -1;
+						} elseif($calificacion['Calificacion']['cal_taller_aprobado'] == 1) {
+							// Taller APROBADO
+							$calificacion['Calificacion']['cal_estado'] = 1;
+						} else {
+							// Falta por aprobar
+							$calificacion['Calificacion']['cal_estado'] = 0;
+						}
+					}
+					
+					$periodo_validez = 0;
+					$fecha_actual = new DateTime('now');
+					$fecha_actual = $fecha_actual -> format('Y-m-d');
+					$fecha_expiracion = null;
+					
+					if($calificacion['Calificacion']['cal_estado'] == 1) {
+						// Acomodar la fecha a la nueva fecha de expiración
+						$this -> loadModel('Configuracion');
+						$configuracion = $this -> Configuracion -> read(null, 1);
+						if($calificacion['Calificacion']['tipos_de_calificacion_id'] == 2) {
+							// Artesano Autónomo
+							$periodo_validez = $configuracion['Configuracion']['con_anos_renovacion_artesanos_autonomos'];
+						} else {
+							// Artesano Normal
+							$periodo_validez = $configuracion['Configuracion']['con_anos_renovacion_artesanos_normales'];
+						}
+						$fecha_expiracion = strtotime("+$periodo_validez year", strtotime($fecha_actual));
+					} else {
+						$fecha_expiracion = strtotime('+1 month', strtotime($fecha_actual));
+					}
+					
+					$calificacion['Calificacion']['cal_fecha_expiracion'] = date('Y-m-d', $fecha_expiracion);
+					
+					$this -> Calificacion -> save($calificacion);
+					$this -> redirect(array('action' => 'inspecciones'));
+				} else { // No se puede salvar los datos
+					
+				}
+			} else { // No se envían datos
+				
+			}
 		} else {
-			$this -> redirect($this -> referer());
+			$this -> Calificacion -> recursive = 1;
+			
+			$inspector_id = $this -> Auth -> user('id');
+			
+			$se_inspecciona = '';
+			$fields = array();
+			$order = array();
+			
+			if($tipo_inspeccion == 1) { // Taller
+				$se_inspecciona = 'Taller';
+				$fields = array(
+					'Calificacion.id',
+					'Calificacion.artesano_id',
+					'Calificacion.cal_inspector_taller',
+					'Calificacion.cal_fecha_inspeccion_taller',
+					'Calificacion.cal_comentarios_taller',
+					'Calificacion.cal_taller_aprobado'
+				);
+				$order = array('Calificacion.cal_fecha_inspeccion_taller' => 'ASC');
+			} elseif($tipo_inspeccion == 2) { // Local
+				$se_inspecciona = 'Local';
+				$fields = array(
+					'Calificacion.id',
+					'Calificacion.artesano_id',
+					'Calificacion.cal_inspector_local',
+					'Calificacion.cal_fecha_inspeccion_local',
+					'Calificacion.cal_comentarios_local',
+					'Calificacion.cal_local_aprobado'
+				);
+				$order = array('Calificacion.cal_fecha_inspeccion_local' => 'ASC');
+			} else {
+				$this -> redirect($this -> referer());
+			}
+			
+			$inspeccion = $this -> Calificacion -> find(
+				'first',
+				array(
+					'conditions' => array(
+						'Calificacion.id' => $cal_id
+					),
+					'fields' => $fields,
+					'order' => $order
+				)
+			);
+			
+			if($tipo_inspeccion == 1) { // Taller
+				if(isset($inspeccion['Local'])) unset($inspeccion['Local']);
+				$trabajadores = $this -> Calificacion -> Taller -> TalleresTrabajador -> find(
+					'list', array(
+						'conditions' => array(
+							'TalleresTrabajador.taller_id' => $inspeccion['Taller'][0]['id']
+						),
+						'fields' => array(
+							'TalleresTrabajador.trabajador_id'
+						),
+						'order' => array(
+							'TalleresTrabajador.trabajador_id' => 'ASC'
+						)
+					)
+				);
+				$this -> Calificacion -> Taller -> Trabajador -> recursive = -1;
+				$inspeccion['Operador'] = $this -> Calificacion -> Taller -> Trabajador -> find(
+					'all', array(
+						'conditions' => array(
+							'Trabajador.id' => $trabajadores,
+							'Trabajador.tipos_de_trabajador_id' => 1
+						)
+					)
+				);
+				$inspeccion['Aprendiz'] = $this -> Calificacion -> Taller -> Trabajador -> find(
+					'all', array(
+						'conditions' => array(
+							'Trabajador.id' => $trabajadores,
+							'Trabajador.tipos_de_trabajador_id' => 2
+						)
+					)
+				);
+			} else { // Local
+				if(isset($inspeccion['Taller'])) unset($inspeccion['Taller']);
+			}
+			
+			$this -> set(compact('inspeccion', 'se_inspecciona', 'tipo_inspeccion'));
 		}
 		
-		$inspeccion = $this -> Calificacion -> find(
-			'first',
-			array(
-				'conditions' => array(
-					'Calificacion.id' => $cal_id
-				),
-				'fields' => $fields,
-				'order' => $order
-			)
-		);
 		
-		if($tipo_inspeccion == 1) { // Taller
-			if(isset($inspeccion['Local'])) unset($inspeccion['Local']);
-			$trabajadores = $this -> Calificacion -> Taller -> TalleresTrabajador -> find(
-				'list', array(
-					'conditions' => array(
-						'TalleresTrabajador.taller_id' => $inspeccion['Taller'][0]['id']
-					),
-					'fields' => array(
-						'TalleresTrabajador.trabajador_id'
-					),
-					'order' => array(
-						'TalleresTrabajador.trabajador_id' => 'ASC'
-					)
-				)
-			);
-			$this -> Calificacion -> Taller -> Trabajador -> recursive = -1;
-			$inspeccion['Operador'] = $this -> Calificacion -> Taller -> Trabajador -> find(
-				'all', array(
-					'conditions' => array(
-						'Trabajador.id' => $trabajadores,
-						'Trabajador.tipos_de_trabajador_id' => 1
-					)
-				)
-			);
-			$inspeccion['Aprendiz'] = $this -> Calificacion -> Taller -> Trabajador -> find(
-				'all', array(
-					'conditions' => array(
-						'Trabajador.id' => $trabajadores,
-						'Trabajador.tipos_de_trabajador_id' => 2
-					)
-				)
-			);
-		} else { // Local
-			if(isset($inspeccion['Taller'])) unset($inspeccion['Taller']);
-		}
-		
-		$this -> set(compact('inspeccion', 'se_inspecciona', 'tipo_inspeccion'));
 	}
 
 	public function reporteCalificacionesOperador() {
