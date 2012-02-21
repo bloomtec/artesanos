@@ -378,6 +378,100 @@
 		</tr>
 		<?php endforeach; ?>
 	</table>
+	<!-- Balance -->
+	<table class="balance">
+		<caption>Balance</caption>
+		<tr>
+			<th>Capital De Operaciones</th>
+			<th>Ingresos</th>
+			<th>Egresos</th>
+		</tr>
+		<tr>
+			<!-- TD Resultado -->
+			<td>
+				<table>
+					<tr>
+						<td>Máquinas Y Herramientas</td>
+						<td><?php echo $inspeccion['Calificacion']['cal_maquinas_y_herramientas']; ?></td>
+					</tr>
+					<tr>
+						<td>Materia Prima</td>
+						<td><?php echo $inspeccion['Calificacion']['cal_materia_prima']; ?></td>
+					</tr>
+					<tr>
+						<td>Productos Elaborados</td>
+						<td><?php echo $inspeccion['Calificacion']['cal_productos_elaborados']; ?></td>
+					</tr>
+				</table>
+			</td>
+			<!-- TD Ingresos -->
+			<td>
+				<table>
+					<tr>
+						<td>Ventas</td><td><?php echo $inspeccion['Calificacion']['cal_ingresos_por_ventas']; ?></td>
+					</tr>
+					<tr>
+						<td>Otros</td><td><?php echo $inspeccion['Calificacion']['cal_otros_ingresos']; ?></td>
+					</tr>
+				</table>
+			</td>
+			<!-- TD Egresos -->
+			<td>
+				<table>
+					<tr>
+						<td><label>Domicilio -- Propio ::</label><?php if($inspeccion['Calificacion']['cal_domicilio_propio']) { echo '<input type="checkbox" disabled=true checked="checked"></input>'; } else { echo '<input type="checkbox" disabled=true></input>'; } ?></td>
+						<td><?php echo $inspeccion['Calificacion']['cal_domicilio_valor']; ?></td>
+					</tr>
+					<tr>
+						<td><label>Taller -- Propio ::</label><?php if($inspeccion['Calificacion']['cal_taller_propio']) { echo '<input type="checkbox" disabled=true checked="checked"></input>'; } else { echo '<input type="checkbox" disabled=true></input>'; } ?></td>
+						<td><?php echo $inspeccion['Calificacion']['cal_taller_valor']; ?></td>
+					</tr>
+					<tr>
+						<td>Agua</td>
+						<td><?php echo $inspeccion['Calificacion']['cal_agua']; ?></td>
+					</tr>
+					<tr>
+						<td>Luz</td>
+						<td><?php echo $inspeccion['Calificacion']['cal_luz']; ?></td>
+					</tr>
+					<tr>
+						<td>Teléfono</td>
+						<td><?php echo $inspeccion['Calificacion']['cal_telefono']; ?></td>
+					</tr>
+					<tr>
+						<td>Servicios Básicos</td>
+						<td><?php echo $inspeccion['Calificacion']['cal_servicios_basicos']; ?></td>
+					</tr>
+					<tr>
+						<td>Compra Materia Prima Mensual</td>
+						<td><?php echo $inspeccion['Calificacion']['cal_compra_de_materia_prima_mensual']; ?></td>
+					</tr>
+					<tr>
+						<td>Salario Operarios</td>
+						<td><?php echo $inspeccion['Calificacion']['cal_salario_operarios']; ?></td>
+					</tr>
+					<tr>
+						<td>Salario Aprendices</td>
+						<td><?php echo $inspeccion['Calificacion']['cal_salario_aprendices']; ?></td>
+					</tr>
+					<tr>
+						<td>Otros Salarios</td>
+						<td><?php echo $inspeccion['Calificacion']['cal_otros_salarios']; ?></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<th>Total Ingresos</th>
+			<th>Total Egresos</th>
+			<th>Rentabilidad Mensual</th>
+		</tr>
+		<tr>
+			<td><?php echo $inspeccion['Calificacion']['cal_balance_total_ingresos']; ?></td>
+			<td><?php echo $inspeccion['Calificacion']['cal_balance_total_egresos']; ?></td>
+			<td><?php echo $inspeccion['Calificacion']['cal_balance_rentabilidad_mensual']; ?></td>
+		</tr>
+	</table>
 	<!-- Inspección -->
 	<?php echo $this -> Form -> create('Calificacion', array('action' => 'verInspeccion')); ?>
 	<?php echo $this -> Form -> hidden('id', array('value' => $inspeccion['Calificacion']['id'])); ?>
@@ -397,4 +491,4 @@
 	<?php echo $this -> Form -> end(); ?>
 	<?php endif; ?>
 </div>
-<?php debug($inspeccion); ?>
+<?php // debug($inspeccion); ?>
