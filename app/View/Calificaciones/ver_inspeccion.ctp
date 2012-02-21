@@ -397,4 +397,4 @@
 	<?php echo $this -> Form -> end(); ?>
 	<?php endif; ?>
 </div>
-<?php // debug($inspeccion); ?>
+<?php debug($inspeccion); ?>
