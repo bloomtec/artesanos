@@ -20,5 +20,5 @@
 	<?php echo $this -> Html -> css('styles'); ?>
 	<?php echo $this -> Session -> flash('auth'); ?>
 	<?php echo $this -> Session -> flash(); ?>
-	<?php echo $content_for_layout; ?>	
+	<?php echo $content_for_layout; ?>
 </div>	
