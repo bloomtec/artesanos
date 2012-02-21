@@ -9,7 +9,7 @@ class ArtesanosController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('getID', 'asignarInspector', 'validarFecha', 'isCalificacionActive', 'validarCalificacion', 'validarCalificacionAutonomo', 'validarCalificacionNormal', 'validarCalificacionObtenerFechas');
+		$this -> Auth -> allow('getID', 'asignarInspector', 'isCalificacionActive', 'validarCalificacion', 'validarCalificacionAutonomo', 'validarCalificacionNormal', 'validarCalificacionObtenerFechas');
 	}
 
 	public function pruebas() {
@@ -285,8 +285,15 @@ class ArtesanosController extends AppController {
 			if($inspectores_taller) {
 				$fecha_calificacion = explode(' ', $calificacion['Calificacion']['created']);
 				$fecha_calificacion = $fecha_calificacion[0];
-				$fecha_inspeccion_taller = strtotime('+1 day', strtotime($fecha_calificacion));
+				$dias_sumados = 1;
+				$fecha_inspeccion_taller = strtotime("+$dias_sumados day", strtotime($fecha_calificacion));
 				$fecha_inspeccion_taller = date('Y-m-d', $fecha_inspeccion_taller);
+				
+				while(!$this -> requestAction('/feriados/esFechaValida/'.$fecha_inspeccion_taller)) {
+					$dias_sumados += 1;
+					$fecha_inspeccion_taller = strtotime("+$dias_sumados day", strtotime($fecha_calificacion));
+					$fecha_inspeccion_taller = date('Y-m-d', $fecha_inspeccion_taller);
+				}
 				
 				$inspector_asignado = false;
 				while (!$inspector_asignado) {
@@ -394,11 +401,6 @@ class ArtesanosController extends AppController {
 				// No hay local
 			}
 		}
-	}
-	
-	public function validarFecha($fecha = null) {
-		$this -> autoRender = false;
-		
 	}
 
 	/**
