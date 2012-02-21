@@ -1,3 +1,8 @@
+<style>
+table tr td{
+	vertical-align: top;
+}
+</style>
 <div class="info-geografica">
 	<table class="info-geografica-conglomerado">
 		<caption>Parámetros Geográficos</caption>
@@ -14,10 +19,10 @@
 							<td><?php echo $provincia['Provincia']['pro_nombre']; ?></td>
 							<td class="actions">
 								<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Provincias', 'view')))) : ?>
-								<a href="/provincias/view/<?php echo $provincia['Provincia']['id']; ?>" class="view">Ver</a>
+								<a href="/provincias/view/<?php echo $provincia['Provincia']['id']; ?>" class="view" title='Ver'>Ver</a>
 								<?php endif; ?>
 								<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Provincias', 'edit')))) : ?>
-								<a href="/provincias/edit/<?php echo $provincia['Provincia']['id']; ?>" class="edit">Editar</a>
+								<a href="/provincias/edit/<?php echo $provincia['Provincia']['id']; ?>" class="edit" title="Modificar" >Editar</a>
 								<?php endif; ?>
 							</td>
 						</tr>
@@ -39,10 +44,10 @@
 							<td><?php echo $canton['Canton']['can_nombre']; ?></td>
 							<td class="actions">
 								<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Cantones', 'view')))) : ?>
-								<a href="/cantones/view/<?php echo $canton['Canton']['id']; ?>" class="view">Ver</a>
+								<a href="/cantones/view/<?php echo $canton['Canton']['id']; ?>" class="view" title="Ver">Ver</a>
 								<?php endif; ?>
 								<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Cantones', 'edit')))) : ?>
-								<a href="/cantones/edit/<?php echo $canton['Canton']['id']; ?>" class="edit">Editar</a>
+								<a href="/cantones/edit/<?php echo $canton['Canton']['id']; ?>" class="edit" title="Modificar">Editar</a>
 								<?php endif; ?>
 							</td>
 						</tr>
@@ -64,10 +69,10 @@
 							<td><?php echo $ciudad['Ciudad']['ciu_nombre']; ?></td>
 							<td class="actions">
 								<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Ciudades', 'view')))) : ?>
-								<a href="/ciudades/view/<?php echo $ciudad['Ciudad']['id']; ?>" class="view">Ver</a>
+								<a href="/ciudades/view/<?php echo $ciudad['Ciudad']['id']; ?>" class="view" title="Ver">Ver</a>
 								<?php endif; ?>
 								<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Ciudades', 'edit')))) : ?>
-								<a href="/ciudades/edit/<?php echo $ciudad['Ciudad']['id']; ?>" class="edit">Editar</a>
+								<a href="/ciudades/edit/<?php echo $ciudad['Ciudad']['id']; ?>" class="edit" title="Modificar">Editar</a>
 								<?php endif; ?>
 							</td>
 						</tr>
@@ -89,10 +94,10 @@
 							<td><?php echo $sector['Sector']['sec_nombre']; ?></td>
 							<td class="actions">
 								<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Sectores', 'view')))) : ?>
-								<a href="/sectores/view/<?php echo $sector['Sector']['id']; ?>" class="view">Ver</a>
+								<a href="/sectores/view/<?php echo $sector['Sector']['id']; ?>" class="view" title="Ver">Ver</a>
 								<?php endif; ?>
 								<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Sectores', 'edit')))) : ?>
-								<a href="/sectores/edit/<?php echo $sector['Sector']['id']; ?>" class="edit">Editar</a>
+								<a href="/sectores/edit/<?php echo $sector['Sector']['id']; ?>" class="edit" title="Modificar">Editar</a>
 								<?php endif; ?>
 							</td>
 						</tr>
@@ -114,10 +119,10 @@
 							<td><?php echo $parroquia['Parroquia']['par_nombre']; ?></td>
 							<td class="actions">
 								<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Parroquias', 'view')))) : ?>
-								<a href="/parroquias/view/<?php echo $parroquia['Parroquia']['id']; ?>" class="view">Ver</a>
+								<a href="/parroquias/view/<?php echo $parroquia['Parroquia']['id']; ?>" class="view" title='Ver'>Ver</a>
 								<?php endif; ?>
 								<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Parroquias', 'edit')))) : ?>
-								<a href="/parroquias/edit/<?php echo $parroquia['Parroquia']['id']; ?>" class="edit">Editar</a>
+								<a href="/parroquias/edit/<?php echo $parroquia['Parroquia']['id']; ?>" class="edit" title='Modificar'>Editar</a>
 								<?php endif; ?>
 							</td>
 						</tr>

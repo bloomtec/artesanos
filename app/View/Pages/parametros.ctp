@@ -48,5 +48,4 @@
 </div>
 <script type="text/javascript">
 	$("ul.tabs").tabs("div.panes > div");
-
 </script>

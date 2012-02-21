@@ -18,9 +18,9 @@
 		<tr>
 			<td><?php echo h($gruposDeRama['GruposDeRama']['gru_nombre']);?>&nbsp;</td>
 			<td><?php echo h($gruposDeRama['GruposDeRama']['gru_descipcion']);?>&nbsp;</td>
-			<td class="actions"><?php echo $this -> Html -> link(__('View'), array('action' => 'view', $gruposDeRama['GruposDeRama']['id']), array('class' => 'view'));?>
-			<?php echo $this -> Html -> link(__('Edit'), array('action' => 'edit', $gruposDeRama['GruposDeRama']['id']), array('class' => 'edit'));?>
-			<?php echo $this -> Form -> postLink(__('Delete'), array('action' => 'delete', $gruposDeRama['GruposDeRama']['id']), array('class' => 'delete'), __('Esta seguro que quiere eliminar el registro?', $gruposDeRama['GruposDeRama']['id']));?></td>
+			<td class="actions"><?php echo $this -> Html -> link(__('Ver'), array('action' => 'view', $gruposDeRama['GruposDeRama']['id']), array('class' => 'view', 'title'=>'Ver'));?>
+			<?php echo $this -> Html -> link(__('Modificar'), array('action' => 'edit', $gruposDeRama['GruposDeRama']['id']), array('class' => 'edit', 'title'=>'Modifcar'));?>
+			<?php echo $this -> Form -> postLink(__('Borrar'), array('action' => 'delete', $gruposDeRama['GruposDeRama']['id']), array('class' => 'delete', 'title'=>'Borrar'), __('Esta seguro que quiere eliminar el registro?', $gruposDeRama['GruposDeRama']['id']));?></td>
 		</tr>
 		<?php endforeach;?>
 	</table>

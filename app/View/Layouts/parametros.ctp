@@ -18,6 +18,13 @@
 ?>
 <div id="content">
 	<?php echo $this -> Html -> css('styles'); ?>
+	<?php 
+		echo $this -> Html -> script('jquery');
+		echo $this -> Html -> script('jquery.tools.min');
+		echo $this -> Html -> script('bjs');
+		echo $this -> Html -> script('default');
+		echo $this -> Html -> script('common');
+	?>
 	<?php echo $this -> Session -> flash('auth'); ?>
 	<?php echo $this -> Session -> flash(); ?>
 	<?php echo $content_for_layout; ?>

@@ -581,6 +581,7 @@ table tr td {
 	border-bottom: 1px solid #ddd;
 	height: 50px;
 }
+
 table tr:nth-child(even) {
 	background-image: url(/img/trama_tabla_azul.png);
 	background-position: left bottom;

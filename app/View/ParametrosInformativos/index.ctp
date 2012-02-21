@@ -18,7 +18,7 @@
 			<td><?php echo h($parametrosInformativo['ParametrosInformativo']['par_nombre']);?>&nbsp;</td>
 			<td class="actions"><?php
 			if ($this -> requestAction('/usuarios/verificarAcceso/', array('ruta' => array('controllers', 'ParametrosInformativos', 'view')))) {
-				echo $this -> Html -> link(__('View'), array('action' => 'view', $parametrosInformativo['ParametrosInformativo']['id']), array('class' => 'view'));
+				echo $this -> Html -> link(__('View'), array('action' => 'view', $parametrosInformativo['ParametrosInformativo']['id']), array('class' => 'view','title'=>'Ver'));
 			}
 			?></td>
 		</tr>
