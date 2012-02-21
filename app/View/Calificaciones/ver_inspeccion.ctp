@@ -323,8 +323,61 @@
 		?>
 	</table>
 	<!-- Equipos Y Herramientas -->
+	<table class="equipos-herramientas">
+		<caption>Equipos Y Herramientas</caption>
+		<tr>
+			<th>Cantidad</th>
+			<th>Maquinaria Y Herramientas</th>
+			<th>Tipo De Adquisición</th>
+			<th>Fecha De Adquisición</th>
+			<th>Valor Comercial</th>
+		</tr>
+		<?php foreach($inspeccion['EquipoDeTrabajo'] as $key => $equipo) : ?>
+		<tr>
+			<td><?php echo $equipo['EquiposDeTrabajo']['equ_cantidad']; ?></td>
+			<td><?php echo $equipo['EquiposDeTrabajo']['equ_maquinaria_y_herramientas']; ?></td>
+			<td><?php echo $equipo['EquiposDeTrabajo']['equ_tipo_de_adquisicion']; ?></td>
+			<td><?php echo $equipo['EquiposDeTrabajo']['equ_fecha_de_adquisicion']; ?></td>
+			<td><?php echo $equipo['EquiposDeTrabajo']['equ_valor_comercial']; ?></td>
+		</tr>
+		<?php endforeach; ?>
+	</table>
 	<!-- Materia Prima -->
+	<table class="materia-prima">
+		<caption>Materia Prima</caption>
+		<tr>
+			<th>Cantidad</th>
+			<th>Tipo De Materia Prima</th>
+			<th>Procedencia</th>
+			<th>Valor Comercial</th>
+		</tr>
+		<?php foreach($inspeccion['MateriaPrima'] as $key => $materia) : ?>
+		<tr>
+			<td><?php echo $materia['MateriasPrima']['mat_cantidad']; ?></td>
+			<td><?php echo $materia['MateriasPrima']['mat_tipo_de_materia_prima']; ?></td>
+			<td><?php echo $materia['MateriasPrima']['mat_procedencia']; ?></td>
+			<td><?php echo $materia['MateriasPrima']['mat_valor_comercial']; ?></td>
+		</tr>
+		<?php endforeach; ?>
+	</table>
 	<!-- Productos Elaborados -->
+	<table class="productos">
+		<caption>Productos Elaborados</caption>
+		<tr>
+			<th>Cantidad</th>
+			<th>Detalle</th>
+			<th>Procedencia</th>
+			<th>Valor Comercial</th>
+		</tr>
+		<?php foreach($inspeccion['ProductoElaborado'] as $key => $producto) : ?>
+		<tr>
+			<td><?php echo $producto['ProductosElaborado']['pro_cantidad']; ?></td>
+			<td><?php echo $producto['ProductosElaborado']['pro_detalle']; ?></td>
+			<td><?php echo $producto['ProductosElaborado']['pro_procedencia']; ?></td>
+			<td><?php echo $producto['ProductosElaborado']['pro_valor_comercial']; ?></td>
+		</tr>
+		<?php endforeach; ?>
+	</table>
 	<!-- Inspección -->
 	<?php echo $this -> Form -> create('Calificacion', array('action' => 'verInspeccion')); ?>
 	<?php echo $this -> Form -> hidden('id', array('value' => $inspeccion['Calificacion']['id'])); ?>
@@ -344,4 +397,4 @@
 	<?php echo $this -> Form -> end(); ?>
 	<?php endif; ?>
 </div>
-<?php debug($inspeccion); ?>
+<?php // debug($inspeccion); ?>
