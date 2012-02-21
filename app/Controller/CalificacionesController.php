@@ -304,6 +304,30 @@ class CalificacionesController extends AppController {
 						)
 					)
 				);
+				$this -> Calificacion -> Taller -> EquiposDeTrabajo -> recursive = -1;
+				$inspeccion['EquipoDeTrabajo'] = $this -> Calificacion -> Taller -> EquiposDeTrabajo -> find(
+					'all', array(
+						'conditions' => array(
+							'EquiposDeTrabajo.taller_id' => $inspeccion['Taller'][0]['id']
+						)
+					)
+				);
+				$this -> Calificacion -> Taller -> MateriasPrima -> recursive = -1;
+				$inspeccion['MateriaPrima'] = $this -> Calificacion -> Taller -> MateriasPrima -> find(
+					'all', array(
+						'conditions' => array(
+							'MateriasPrima.taller_id' => $inspeccion['Taller'][0]['id']
+						)
+					)
+				);
+				$this -> Calificacion -> Taller -> ProductosElaborado -> recursive = -1;
+				$inspeccion['ProductoElaborado'] = $this -> Calificacion -> Taller -> ProductosElaborado -> find(
+					'all', array(
+						'conditions' => array(
+							'ProductosElaborado.taller_id' => $inspeccion['Taller'][0]['id']
+						)
+					)
+				);
 			} else { // Local
 				if(isset($inspeccion['Taller'])) unset($inspeccion['Taller']);
 			}

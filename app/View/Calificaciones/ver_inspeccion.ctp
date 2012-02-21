@@ -289,7 +289,7 @@
 			<td><?php echo $trabajador['Trabajador']['tra_pago_mensual']; ?></td>
 		</tr>
 		<?php
-			} elseif($cantidad_trabajadores > 0 && $cantidad_trabajadores >= 2) { // Hay m
+			} elseif($cantidad_trabajadores > 0 && $cantidad_trabajadores >= 2) { // Hay más de un trabajador
 				foreach($inspeccion['Aprendiz'] as $key => $trabajador) :
 		?>
 		<tr>
@@ -344,3 +344,4 @@
 	<?php echo $this -> Form -> end(); ?>
 	<?php endif; ?>
 </div>
+<?php debug($inspeccion); ?>

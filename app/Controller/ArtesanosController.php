@@ -9,7 +9,7 @@ class ArtesanosController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('getID', 'asignarInspector', 'isCalificacionActive', 'validarCalificacion', 'validarCalificacionAutonomo', 'validarCalificacionNormal', 'validarCalificacionObtenerFechas');
+		$this -> Auth -> allow('getID', 'asignarInspector', 'validarFecha', 'isCalificacionActive', 'validarCalificacion', 'validarCalificacionAutonomo', 'validarCalificacionNormal', 'validarCalificacionObtenerFechas');
 	}
 
 	public function pruebas() {
@@ -98,7 +98,6 @@ class ArtesanosController extends AppController {
 			if (!$this -> request -> data['Local']['loc_email']) {
 				unset($this -> request -> data['Local']);
 			}
-			//debug($this -> request -> data);
 			
 			// Guardar el artesano
 			$this -> Artesano -> create();
@@ -178,9 +177,7 @@ class ArtesanosController extends AppController {
 						$trabajadores['Trabajador'] = $this -> request -> data['Trabajador'];		
 						$this -> loadModel('Trabajador');
 						foreach($trabajadores['Trabajador'] as $key => $values) {
-							/**
-							 * Verificar que no existe el trabajdor ya
-							 */
+							// Verificar que no existe el trabajdor ya
 							$trabajador_existente = $this -> Artesano -> Calificacion -> Taller -> Trabajador -> find('first', array('conditions' => array('Trabajador.tra_cedula'=>$values['tra_cedula'])));
 							if(!empty($trabajador_existente)) {
 								foreach($trabajador_existente['Taller'] as $key => $taller_existente) {
@@ -224,7 +221,6 @@ class ArtesanosController extends AppController {
 			} else {
 				$this -> Session -> setFlash(__('Ha ocurrido un error al registrar el artesano. Por favor, intente de nuevo.'), 'crud/error');
 			}
-			
 		}
 		/**
 		 * Obtener los valores de los parametros
@@ -398,6 +394,11 @@ class ArtesanosController extends AppController {
 				// No hay local
 			}
 		}
+	}
+	
+	public function validarFecha($fecha = null) {
+		$this -> autoRender = false;
+		
 	}
 
 	/**
