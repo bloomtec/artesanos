@@ -21,7 +21,7 @@
 			<td class="actions">
 				<?php
 					if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Configuraciones', 'edit')))) {
-						echo $this -> Html -> link(__('Edit'), array('action' => 'edit', $configuracion['Configuracion']['id']), array('class' => 'edit'));
+						echo $this -> Html -> link(__('Edit'), array('action' => 'edit', $configuracion['Configuracion']['id']), array('class' => 'edit', 'title'=>'Modificar'));
 					}
 				?>
 			</td>

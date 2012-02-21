@@ -115,7 +115,7 @@
 		<td class="actions">
 			<?php
 				if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Auditorias', 'view')))) {
-					echo $this->Html->link(__('View'), array('action' => 'view', $auditoria['Auditoria']['id']),array('class'=>'view'));
+					echo $this->Html->link(__('View'), array('action' => 'view', $auditoria['Auditoria']['id']),array('class'=>'view', 'title'=>'Ver'));
 				}
 			?>
 		</td>

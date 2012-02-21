@@ -7,7 +7,7 @@
 	</div>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-									<th><?php echo $this->Paginator->sort('rama_id');?></th>
+							<th><?php echo $this->Paginator->sort('rama_id');?></th>
 							<th><?php echo $this->Paginator->sort('artesano_id');?></th>
 							<th><?php echo $this->Paginator->sort('tipos_de_calificacion_id');?></th>
 							<th><?php echo $this->Paginator->sort('cal_estado');?></th>
@@ -76,9 +76,9 @@
 		<td><?php echo h($calificacion['Calificacion']['created']); ?>&nbsp;</td>
 		<td><?php echo h($calificacion['Calificacion']['modified']); ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $calificacion['Calificacion']['id']),array('class'=>'view')); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $calificacion['Calificacion']['id']),array('class'=>'edit')); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $calificacion['Calificacion']['id']), array('class'=>'delete'), __('Esta seguro que quiere eliminar el registro?', $calificacion['Calificacion']['id'])); ?>
+			<?php echo $this->Html->link(__('Ver'), array('action' => 'view', $calificacion['Calificacion']['id']),array('class'=>'view','title'=>'Ver')); ?>
+			<?php echo $this->Html->link(__('Modificar'), array('action' => 'edit', $calificacion['Calificacion']['id']),array('class'=>'edit','title'=>'Modificar')); ?>
+			<?php echo $this->Form->postLink(__('Borrar'), array('action' => 'delete', $calificacion['Calificacion']['id']), array('class'=>'delete','title'=>'Borrar'), __('Esta seguro que quiere eliminar el registro?', $calificacion['Calificacion']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

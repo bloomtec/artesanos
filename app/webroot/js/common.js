@@ -70,4 +70,12 @@ $(function() {
 	
 	//TOOLTIPS
 	$(".actions a[title]").tooltip({ position: "bottom center", opacity: 1});
+	
+	//TRANSFORMACION A MAYUSCULA
+	/*$("input[type='text']").keydown(function(e){
+		var key = e.charCode || e.keyCode || 0;
+		console.log(e.charCode);
+		console.log(e.keyCode);
+		return true;
+	});*/
 });
