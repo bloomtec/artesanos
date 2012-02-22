@@ -99,9 +99,6 @@ class ArtesanosController extends AppController {
 				unset($this -> request -> data['Local']);
 			}
 			
-			debug($this -> request -> data);
-			
-			/*
 			// Guardar el artesano
 			$this -> Artesano -> create();
 			$artesano = array();
@@ -180,7 +177,7 @@ class ArtesanosController extends AppController {
 						$trabajadores['Trabajador'] = $this -> request -> data['Trabajador'];		
 						$this -> loadModel('Trabajador');
 						foreach($trabajadores['Trabajador'] as $key => $values) {
-							// Verificar que no existe el trabajdor ya
+							// Verificar que no existe el trabajador ya
 							$trabajador_existente = $this -> Artesano -> Calificacion -> Taller -> Trabajador -> find('first', array('conditions' => array('Trabajador.tra_cedula'=>$values['tra_cedula'])));
 							if(!empty($trabajador_existente)) {
 								foreach($trabajador_existente['Taller'] as $key => $taller_existente) {
@@ -191,9 +188,18 @@ class ArtesanosController extends AppController {
 							} else {
 								$tmp = array();
 								$tmp['Trabajador'] = $values;
-								$tmp['Taller']['Taller'][] = $taller['Taller']['id'];
 								$this -> Artesano -> Calificacion -> Taller -> Trabajador -> create();
 								$this -> Artesano -> Calificacion -> Taller -> Trabajador -> save($tmp);
+								// Guardar la relación del trabajador con el taller
+								$tmp = array();
+								$tmp['TalleresTrabajador'] = array();
+								$tmp['TalleresTrabajador']['trabajador_id'] = $this -> Artesano -> Calificacion -> Taller -> Trabajador -> id;
+								$tmp['TalleresTrabajador']['taller_id'] = $taller['Taller']['id'];
+								$tmp['TalleresTrabajador']['tipos_de_trabajador_id'] = $values['tipos_de_trabajador_id']; 
+								$tmp['TalleresTrabajador']['tal_fecha_ingreso'] = $values['tra_fecha_ingreso']; 
+								$tmp['TalleresTrabajador']['tal_pago_mensual'] = $values['tra_pago_mensual'];
+								$this -> Artesano -> Calificacion -> Taller -> Trabajador -> TalleresTrabajador -> create();
+								$this -> Artesano -> Calificacion -> Taller -> Trabajador -> TalleresTrabajador -> save($tmp);
 							}
 						}
 						 
@@ -224,7 +230,6 @@ class ArtesanosController extends AppController {
 			} else {
 				$this -> Session -> setFlash(__('Ha ocurrido un error al registrar el artesano. Por favor, intente de nuevo.'), 'crud/error');
 			}
-			*/
 		}
 		/**
 		 * Obtener los valores de los parametros
