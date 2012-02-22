@@ -226,7 +226,7 @@ class ArtesanosController extends AppController {
 				}
 				// Asignar inspector a la calificacion
 				$this -> asignarInspector($calificacion['Calificacion']['id']);
-				$this -> redirect(array('action' => 'index'));
+				$this -> redirect(array('controller' => 'calificaciones', 'action' => 'view', $calificacion['Calificacion']['id']));
 			} else {
 				$this -> Session -> setFlash(__('Ha ocurrido un error al registrar el artesano. Por favor, intente de nuevo.'), 'crud/error');
 			}
