@@ -13,11 +13,13 @@ class TrabajadoresController extends AppController {
 	}
 
 	public function getData($cedula = null) {
+		$this -> layout = 'ajax';
 		if($cedula) {
 			
 		} else {
 			echo array();
 		}
+		exit(0);
 	}
 
 }
