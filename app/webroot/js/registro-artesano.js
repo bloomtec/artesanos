@@ -347,7 +347,7 @@ $(function(){
 				}else{
 					alert(response.Mensaje);
 					$("#wizard .validar").css('visibility','hidden');
-					$('.validar input').val("");
+					$(".validar input[type!='hidden']").val("");
 					$('.validar select option:first-child').attr('selected',true).parent().change();
 				}
 			});
@@ -463,7 +463,6 @@ $(function(){
 				});
 				empty.addClass("error");
 				emails.addClass("error");
-				return true /*_________________ELIMINAR ESTA LINEA_____________XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
 				return false;
 			} else {
 				switch(api.getIndex()){

@@ -1154,3 +1154,11 @@ tr.diferente td.audit-value, tr.diferente td.audit-data {
 	padding:5px;
 	color:white;	
 }
+/*IMPRIMIR*/
+.imprimir.bottom{
+	font-size:12px;
+	font-weight: bold;
+	text-transform: uppercase;
+	float:left;
+	cursor:pointer;
+}

@@ -39,7 +39,8 @@ $cakeDescription = __d('cake_dev', 'Junta Nacional de defensa del artesano');
 		<script type="text/javascript">
 			$(function(){
 				$('.imprimir').click(function(){
-					window.print()
+					
+					window.print();
 				});
 			});
 		</script>
@@ -51,9 +52,9 @@ $cakeDescription = __d('cake_dev', 'Junta Nacional de defensa del artesano');
 		<div id="container">
 	
 			<div id="content">
-				<div class="imprimir"> imprimir </div>
-
+				<div class="imprimir top"> imprimir </div>
 				<?php echo $content_for_layout;?>
+				<div class="imprimir bottom"> imprimir </div>
 			</div>
 		</div>
 		<?php echo $this -> element('sql_dump');?>
