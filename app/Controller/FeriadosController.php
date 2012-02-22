@@ -12,6 +12,10 @@ class FeriadosController extends AppController {
 		$this -> Auth -> allow('esFechaValida', 'esDiaFeriado', 'esSabado', 'esDomingo');
 	}
 	
+	public function beforeRender() {
+		$this -> layout = 'parametros';
+	}
+	
 	public function esFechaValida($fecha = null) {
 		if($fecha) {
 			if($this -> esDiaFeriado($fecha) || $this -> esSabado($fecha) || $this -> esDomingo($fecha)) {
@@ -69,20 +73,6 @@ class FeriadosController extends AppController {
 	public function index() {
 		$this -> Feriado -> recursive = 0;
 		$this -> set('feriados', $this -> paginate());
-	}
-
-	/**
-	 * view method
-	 *
-	 * @param string $id
-	 * @return void
-	 */
-	public function view($id = null) {
-		$this -> Feriado -> id = $id;
-		if (!$this -> Feriado -> exists()) {
-			throw new NotFoundException(__('Invalid feriado'));
-		}
-		$this -> set('feriado', $this -> Feriado -> read(null, $id));
 	}
 
 	/**

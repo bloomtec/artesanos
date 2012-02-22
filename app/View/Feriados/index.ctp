@@ -7,22 +7,18 @@
 	</div>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-									<th><?php echo $this->Paginator->sort('fer_nombre');?></th>
-							<th><?php echo $this->Paginator->sort('fer_fecha');?></th>
-							<th><?php echo $this->Paginator->sort('created');?></th>
-							<th><?php echo $this->Paginator->sort('modified');?></th>
-					<th class="actions"><?php echo __('Actions');?></th>
+		<th><?php echo $this->Paginator->sort('fer_nombre', 'Nombre');?></th>
+		<th><?php echo $this->Paginator->sort('fer_fecha', 'Fecha');?></th>
+		<th class="actions"><?php echo __('Acciones');?></th>
 	</tr>
 	<?php
-	$i = 0;
-	foreach ($feriados as $feriado): ?>
+		$i = 0;
+		foreach ($feriados as $feriado) :
+	?>
 	<tr>
 		<td><?php echo h($feriado['Feriado']['fer_nombre']); ?>&nbsp;</td>
 		<td><?php echo h($feriado['Feriado']['fer_fecha']); ?>&nbsp;</td>
-		<td><?php echo h($feriado['Feriado']['created']); ?>&nbsp;</td>
-		<td><?php echo h($feriado['Feriado']['modified']); ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $feriado['Feriado']['id']),array('class'=>'view')); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $feriado['Feriado']['id']),array('class'=>'edit')); ?>
 			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $feriado['Feriado']['id']), array('class'=>'delete'), __('Esta seguro que quiere eliminar el registro?', $feriado['Feriado']['id'])); ?>
 		</td>

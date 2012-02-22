@@ -25,7 +25,7 @@
 				?>
 			</td>
 			<td class="actions">
-				<?php echo $this->Html->link(__('View'), array('action' => 'verInspeccion', $taller['Calificacion']['id'], 1), array('class'=>'view')); ?>
+				<?php echo $this->Html->link(__('View'), array('action' => 'verInspeccion', $taller['Calificacion']['id'], 1), array('class'=>'view','title'=>'Ver','TARGET'=>'_blank')); ?>
 			</td>
 		</tr>
 		<?php endforeach; ?>
