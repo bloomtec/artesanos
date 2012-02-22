@@ -37,7 +37,7 @@ $(function(){
 	var actualizarRentabilidad = function(){
 		var ingresos = parseFloat($('#CalificacionCalBalanceTotalIngresos').val())?parseFloat($('#CalificacionCalBalanceTotalIngresos').val()):0;
 		var egresos = parseFloat($('#CalificacionCalBalanceTotalEgresos').val())?parseFloat($('#CalificacionCalBalanceTotalEgresos').val()):0;
-		$("#CalificacionCalBalanceRentabilidadMensual").val(ingresos-egresos);
+		$(".balance_rentabilidad_mensual").val(ingresos-egresos);
 		totalRentabilidad=ingresos-egresos;
 	}
 	/*____________CAPITAL__________________*/
