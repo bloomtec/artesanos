@@ -113,7 +113,7 @@
 			<tr class='total'>
 				<th>Total</th>
 				<th><?php echo $this -> Form -> number('Calificacion.cal_total_capital', array('disabled' => true, 'label' => false, 'class' => 'total_capital'));?>
-				<?php echo $this -> Form -> input('Calificacion.cal_total_capital', array('type' => 'hidden', 'disabled' => true, 'label' => false, 'class' => 'total_capital'));?></th>
+				<?php echo $this -> Form -> input('Calificacion.cal_total_capital', array('type' => 'hidden', 'label' => false, 'class' => 'total_capital'));?></th>
 			</tr>
 		</table>
 		<h2>Ingresos</h2>
@@ -133,7 +133,7 @@
 			<tr class='total'>
 				<th>Total</th>
 				<th><?php echo $this -> Form -> number('Calificacion.cal_total_ingresos', array('disabled' => true, 'label' => false, 'class' => 'total_ingresos'));?>
-				<?php echo $this -> Form -> hidden('Calificacion.cal_total_ingresos', array('disabled' => true, 'label' => false, 'class' => 'total_ingresos'));?></th>
+				<?php echo $this -> Form -> hidden('Calificacion.cal_total_ingresos', array('label' => false, 'class' => 'total_ingresos'));?></th>
 			</tr>
 		</table>
 	</div>
@@ -142,9 +142,9 @@
 		<?php echo $this -> Form -> input('Calificacion.cal_balance_total_ingresos', array('disabled' => true, 'label' => 'Total Ingresos:', 'class' => 'balance_total_ingresos'));?>
 		<?php echo $this -> Form -> input('Calificacion.cal_balance_total_egresos', array('disabled' => true, 'label' => 'Total Egresos:', 'class' => 'balance_total_egresos'));?>
 		<?php echo $this -> Form -> input('Calificacion.cal_balance_rentabilidad_mensual', array('disabled' => true, 'label' => 'Rentabilidad Mensual:', 'class' => 'balance_rentabilidad_mensual'));?>
-		<?php echo $this -> Form -> hidden('Calificacion.cal_balance_total_ingresos', array('disabled' => true, 'label' => 'Total Ingresos:', 'class' => 'balance_total_ingresos'));?>
-		<?php echo $this -> Form -> hidden('Calificacion.cal_balance_total_egresos', array('disabled' => true, 'label' => 'Total Egresos:', 'class' => 'balance_total_egresos'));?>
-		<?php echo $this -> Form -> hidden('Calificacion.cal_balance_rentabilidad_mensual', array('disabled' => true, 'label' => 'Rentabilidad Mensual:', 'class' => 'balance_rentabilidad_mensual'));?>
+		<?php echo $this -> Form -> hidden('Calificacion.cal_balance_total_ingresos', array('label' => 'Total Ingresos:', 'class' => 'balance_total_ingresos'));?>
+		<?php echo $this -> Form -> hidden('Calificacion.cal_balance_total_egresos', array('label' => 'Total Egresos:', 'class' => 'balance_total_egresos'));?>
+		<?php echo $this -> Form -> hidden('Calificacion.cal_balance_rentabilidad_mensual', array('label' => 'Rentabilidad Mensual:', 'class' => 'balance_rentabilidad_mensual'));?>
 	</div>
 	<div class='actions validar'>
 		<?php echo $this -> Html -> link(__('Atras'), "#", array('class' => 'prev button'));?>
