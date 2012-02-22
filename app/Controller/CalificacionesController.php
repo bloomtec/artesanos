@@ -248,6 +248,14 @@ class CalificacionesController extends AppController {
 				$order = array('Calificacion.cal_fecha_inspeccion_taller' => 'ASC');
 			} elseif($tipo_inspeccion == 2) { // Local
 				$se_inspecciona = 'Local';
+				$fields = array(
+					'Calificacion.id',
+					'Calificacion.artesano_id',
+					'Calificacion.cal_inspector_local',
+					'Calificacion.cal_fecha_inspeccion_local',
+					'Calificacion.cal_comentarios_local',
+					'Calificacion.cal_local_aprobado'
+				);
 				$order = array('Calificacion.cal_fecha_inspeccion_local' => 'ASC');
 			} else {
 				$this -> redirect($this -> referer());
@@ -259,6 +267,7 @@ class CalificacionesController extends AppController {
 					'conditions' => array(
 						'Calificacion.id' => $cal_id
 					),
+					'fields' => $fields,
 					'order' => $order
 				)
 			);

@@ -57,7 +57,7 @@
 			echo $this -> Form -> input('Taller.sector_id', array('label' => 'Sector:', 'col' => '0'));
 			echo $this -> Form -> input('Taller.parroquia_id', array('label' => 'Parroquia:', 'col' => '1'));
 			
-			echo $this -> Form -> input('Taller.tal_calle_o_avenida', array('style'=>'width:50px;','label' => 'Calle/Avenida:', 'col' => '2'));
+			echo $this -> Form -> input('Taller.tal_calle_o_avenida', array('style'=>'width:170px;','label' => 'Calle/Avenida:', 'col' => '2'));
 			echo $this -> Form -> input('Taller.tal_numero', array('style'=>'width:50px;','label' => 'No.:', 'col' => '3'));
 			echo $this -> Form -> input('Taller.tal_interseccion', array('label' => 'Intersección:', 'col' => '4'));
 			echo $this -> Form -> input('Taller.tal_barrio', array('label' => 'Barrio:', 'col' => '5'));
@@ -86,7 +86,7 @@
 			<?php
 			echo $this -> Form -> input('Local.sector_id', array('label' => 'Sector:', 'col' => '0'));
 			echo $this -> Form -> input('Local.parroquia_id', array('label' => 'Parroquia:', 'col' => '1'));
-			echo $this -> Form -> input('Local.loc_calle_o_avenida', array('style'=>'width:50px;','label' => 'Calle/Avenida:', 'col' => '2'));
+			echo $this -> Form -> input('Local.loc_calle_o_avenida', array('style'=>'width:170px;','label' => 'Calle/Avenida:', 'col' => '2'));
 			echo $this -> Form -> input('Local.loc_numero', array('style'=>'width:50px;','label' => 'No.:', 'col' => '3'));
 			echo $this -> Form -> input('Local.loc_interseccion', array('label' => 'Interseccion:', 'col' => '0'));
 			echo $this -> Form -> input('Local.loc_barrio', array('label' => 'Barrio:', 'col' => '1'));

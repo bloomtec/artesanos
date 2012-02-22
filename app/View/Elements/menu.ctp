@@ -19,7 +19,7 @@
 			<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Artesanos', 'add')))) : ?>
 			<ul>
 				<li>
-					<a href="/artesanos/add">Registrar</a>
+					<a href="/artesanos/add">Calificar</a>
 				</li>
 				<?php if($this -> Session -> read('Auth.User.rol_id') == 3): ?>
 				<li class="inspectores">
