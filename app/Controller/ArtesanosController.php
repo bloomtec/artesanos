@@ -99,6 +99,9 @@ class ArtesanosController extends AppController {
 				unset($this -> request -> data['Local']);
 			}
 			
+			debug($this -> request -> data);
+			
+			/*
 			// Guardar el artesano
 			$this -> Artesano -> create();
 			$artesano = array();
@@ -221,6 +224,7 @@ class ArtesanosController extends AppController {
 			} else {
 				$this -> Session -> setFlash(__('Ha ocurrido un error al registrar el artesano. Por favor, intente de nuevo.'), 'crud/error');
 			}
+			*/
 		}
 		/**
 		 * Obtener los valores de los parametros
