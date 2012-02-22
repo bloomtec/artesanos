@@ -141,7 +141,13 @@ class ReportesController extends AppController {
 					'Calificacion.cal_fecha_inspeccion_taller BETWEEN ? AND ?'=> array($fecha_inicio, $fecha_fin),
 					'Calificacion.cal_fecha_inspeccion_local BETWEEN ? AND ?' => array($fecha_inicio, $fecha_fin)
 				);
-				$conditions['Calificacion.cal_estado'] = $this -> request -> data['Reporte']['estado'];
+				if(!empty($this -> request -> data['Reporte']['estado'])) {
+					if($this -> request -> data['Reporte']['estado'] == -3) {
+						$conditions['Calificacion.cal_estado'] = 0;
+					} else {
+						$conditions['Calificacion.cal_estado'] = $this -> request -> data['Reporte']['estado'];
+					}					
+				}
 				$this -> Session -> delete('conditions');
 				$this -> Session -> write('conditions', $conditions);
 				$this -> redirect(array('controller' => 'calificaciones', 'action' => 'reporteInspecciones'));
