@@ -73,6 +73,35 @@ class ArtesanosController extends AppController {
 			$calificacion = array();
 			$calificacion['Calificacion'] = $this -> request -> data['Calificacion'];
 			$calificacion['Calificacion']['artesano_id'] = $this -> request -> data['Calificacion']['artesano_id'] = $artesano['Artesano']['id'];
+			
+			/**
+			 * Revisar campos del balance
+			 */
+			if(empty($calificacion['Calificacion']['cal_domicilio_valor'])) $calificacion['Calificacion']['cal_domicilio_valor'] = 0;
+			if(empty($calificacion['Calificacion']['cal_taller_valor'])) $calificacion['Calificacion']['cal_taller_valor'] = 0;
+			if(empty($calificacion['Calificacion']['cal_agua'])) $calificacion['Calificacion']['cal_agua'] = 0;
+			if(empty($calificacion['Calificacion']['cal_luz'])) $calificacion['Calificacion']['cal_luz'] = 0;
+			if(empty($calificacion['Calificacion']['cal_telefono'])) $calificacion['Calificacion']['cal_telefono'] = 0;
+			if(empty($calificacion['Calificacion']['cal_servicios_basicos'])) $calificacion['Calificacion']['cal_servicios_basicos'] = 0;
+			if(empty($calificacion['Calificacion']['cal_compra_de_materia_prima_mensual'])) $calificacion['Calificacion']['cal_compra_de_materia_prima_mensual'] = 0;
+			if(empty($calificacion['Calificacion']['cal_salario_operarios'])) $calificacion['Calificacion']['cal_salario_operarios'] = 0;
+			if(empty($calificacion['Calificacion']['cal_salario_aprendices'])) $calificacion['Calificacion']['cal_salario_aprendices'] = 0;
+			if(empty($calificacion['Calificacion']['cal_otros_salarios'])) $calificacion['Calificacion']['cal_otros_salarios'] = 0;
+			if(empty($calificacion['Calificacion']['cal_maquinas_y_herramientas'])) $calificacion['Calificacion']['cal_maquinas_y_herramientas'] = 0;
+			if(empty($calificacion['Calificacion']['cal_materia_prima'])) $calificacion['Calificacion']['cal_materia_prima'] = 0;
+			if(empty($calificacion['Calificacion']['cal_productos_elaborados'])) $calificacion['Calificacion']['cal_productos_elaborados'] = 0;
+			if(empty($calificacion['Calificacion']['cal_ingresos_por_ventas'])) $calificacion['Calificacion']['cal_ingresos_por_ventas'] = 0;
+			if(empty($calificacion['Calificacion']['cal_otros_ingresos'])) $calificacion['Calificacion']['cal_otros_ingresos'] = 0;
+			if(empty($calificacion['Calificacion']['cal_total_capital'])) $calificacion['Calificacion']['cal_total_capital'] = 0;
+			if(empty($calificacion['Calificacion']['cal_total_ingresos'])) $calificacion['Calificacion']['cal_total_ingresos'] = 0;
+			if(empty($calificacion['Calificacion']['cal_total_egresos'])) $calificacion['Calificacion']['cal_total_egresos'] = 0;
+			if(empty($calificacion['Calificacion']['cal_balance_total_ingresos'])) $calificacion['Calificacion']['cal_balance_total_ingresos'] = 0;
+			if(empty($calificacion['Calificacion']['cal_balance_total_egresos'])) $calificacion['Calificacion']['cal_balance_total_egresos'] = 0;
+			if(empty($calificacion['Calificacion']['cal_balance_rentabilidad_mensual'])) $calificacion['Calificacion']['cal_balance_rentabilidad_mensual'] = 0;
+			/**
+			 * Fin revision campos del balance
+			 */
+			
 			if($this -> Artesano -> Calificacion -> save($calificacion)) {
 				$calificacion['Calificacion']['id'] = $this -> request -> data['Calificacion']['id'] = $this -> Artesano -> Calificacion -> id;
 				

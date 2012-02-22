@@ -3,17 +3,17 @@
 	<ul class="tabs">
 		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'ParametrosInformativos', 'index')))) : ?>
 		<li>
-			<a href="#">DATOS INFORMATIVOS</a>
+			<a href="#">INFORMATIVOS</a>
 		</li>
 		<?php endif; ?>
 		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Geograficos', 'index')))) : ?>
 		<li>
-			<a href="#">DATOS GEOGRÁFICOS</a>
+			<a href="#">GEOGRÁFICOS</a>
 		</li>
 		<?php endif; ?>
 		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Configuraciones', 'index')))) : ?>
 		<li>
-			<a href="#">CONFIGURACIÓN CRON JOBS</a>
+			<a href="#">CRON JOBS</a>
 		</li>
 		<?php endif; ?>
 		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'GruposDeRamas', 'index')))) : ?>
@@ -21,6 +21,9 @@
 			<a href="#">GRUPOS DE RAMAS</a>
 		</li>
 		<?php endif; ?>
+		<li>
+			<a href="#">FERIADOS</a>
+		</li>
 	</ul>
 	<!-- tab "panes" -->
 	<div class="panes">
@@ -44,6 +47,9 @@
 			<iframe src="/grupos_de_ramas"></iframe>
 		</div>
 		<?php endif; ?>
+		<div>
+			<iframe src="/feriados"></iframe>
+		</div>
 	</div>
 </div>
 <script type="text/javascript">
