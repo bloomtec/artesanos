@@ -11,12 +11,6 @@ class ArtesanosController extends AppController {
 		parent::beforeFilter();
 		$this -> Auth -> allow('getID', 'asignarInspector', 'isCalificacionActive', 'validarCalificacion', 'validarCalificacionAutonomo', 'validarCalificacionNormal', 'validarCalificacionObtenerFechas');
 	}
-
-	public function pruebas() {
-		$this -> layout = 'pdf/default';
-		//Configure::write('debug',0);
-
-	}
 	
 	public function getID($id = null) {
 		if($id) {
@@ -240,6 +234,7 @@ class ArtesanosController extends AppController {
 			} else {
 				$this -> Session -> setFlash(__('Ha ocurrido un error al registrar el artesano. Por favor, intente de nuevo.'), 'crud/error');
 			}
+
 		}
 		/**
 		 * Obtener los valores de los parametros
