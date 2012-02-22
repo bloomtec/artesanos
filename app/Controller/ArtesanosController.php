@@ -597,7 +597,7 @@ class ArtesanosController extends AppController {
 	 */
 	private function validarCalificacionAutonomo($artesano, $calificaciones, $rama_id) {
 		$resultado_validacion = array();
-		$this -> Artesano -> Calificacion -> recursive = 1;
+		$this -> Artesano -> Calificacion -> recursive = 2;
 		if(!empty($calificaciones)) {
 			$resultado_validacion['Datos'] = $this -> Artesano -> Calificacion -> read(null, $calificaciones[0]['Calificacion']['id']);			
 			$trabajadores = $this -> Artesano -> Calificacion -> Taller -> TalleresTrabajador -> find(
