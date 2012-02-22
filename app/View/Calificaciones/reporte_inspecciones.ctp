@@ -44,6 +44,9 @@
 						<th><?php echo $this -> Paginator -> sort('cal_comentarios_taller', 'Comentarios');?></th>
 					</tr>
 					<tr>
+						<td><?php echo $calificacion['Calificacion']['cal_comentarios_taller']; ?></td>
+					</tr>
+					<tr>
 						<td>
 							<?php if(!empty($calificacion['Calificacion']['cal_nombre_inspector_taller'])) echo $this -> Html -> link(__('Ver Inspección Taller'), array('controller' => 'calificaciones', 'action' => 'verInspeccion', $calificacion['Calificacion']['id'], 1), array('target' => '_BLANK')); ?>
 						</td>
@@ -83,6 +86,9 @@
 					</tr>
 					<tr>
 						<th><?php echo $this -> Paginator -> sort('cal_comentarios_local', 'Comentarios');?></th>
+					</tr>
+					<tr>
+						<td><?php echo $calificacion['Calificacion']['cal_comentarios_local']; ?></td>
 					</tr>
 					<tr>
 						<td>
