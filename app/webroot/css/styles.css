@@ -1174,3 +1174,6 @@ tr.diferente td.audit-value, tr.diferente td.audit-data {
 	line-height:30px;
 	vertical-align: middle;
 }
+.inspecciones.view input[type=radio]{
+	float:none;
+}
