@@ -21,19 +21,114 @@ class CalificacionesController extends AppController {
 		$this -> Calificacion -> recursive = 0;
 		$this -> set('calificaciones', $this -> paginate());
 	}
-
-	/**
-	 * view method
-	 *
-	 * @param string $id
-	 * @return void
-	 */
-	public function view($id = null) {
-		$this -> Calificacion -> id = $id;
-		if (!$this -> Calificacion -> exists()) {
-			throw new NotFoundException(__('Invalid calificacion'));
+	
+	public function view($cal_id = null) {
+		$this -> Calificacion -> recursive = 1;
+		
+		$order = array();
+		
+		$inspeccion = $this -> Calificacion -> find(
+			'first',
+			array(
+				'conditions' => array(
+					'Calificacion.id' => $cal_id
+				)
+			)
+		);
+		
+		$operadores = $this -> Calificacion -> Taller -> TalleresTrabajador -> find(
+			'list', array(
+				'conditions' => array(
+					'TalleresTrabajador.taller_id' => $inspeccion['Taller'][0]['id'],
+					'TalleresTrabajador.tipos_de_trabajador_id' => 1
+				),
+				'fields' => array(
+					'TalleresTrabajador.trabajador_id'
+				),
+				'order' => array(
+					'TalleresTrabajador.trabajador_id' => 'ASC'
+				)
+			)
+		);
+		$this -> Calificacion -> Taller -> Trabajador -> recursive = -1;
+		$inspeccion['Operador'] = $this -> Calificacion -> Taller -> Trabajador -> find(
+			'all', array(
+				'conditions' => array(
+					'Trabajador.id' => $operadores
+				)
+			)
+		);
+		foreach($inspeccion['Operador'] as $key => $operador) {
+			$datos = $this -> Calificacion -> Taller -> Trabajador -> TalleresTrabajador -> find(
+				'first', array(
+					'conditions' => array(
+						'TalleresTrabajador.taller_id' => $inspeccion['Taller'][0]['id'],
+						'TalleresTrabajador.trabajador_id' => $operador['Trabajador']['id']
+					)
+				)
+			);
+			$inspeccion['Operador'][$key]['Trabajador']['tra_fecha_ingreso'] = $datos['TalleresTrabajador']['tal_fecha_ingreso'];
+			$inspeccion['Operador'][$key]['Trabajador']['tra_pago_mensual'] = $datos['TalleresTrabajador']['tal_pago_mensual'];
 		}
-		$this -> set('calificacion', $this -> Calificacion -> read(null, $id));
+		$aprendices = $this -> Calificacion -> Taller -> TalleresTrabajador -> find(
+			'list', array(
+				'conditions' => array(
+					'TalleresTrabajador.taller_id' => $inspeccion['Taller'][0]['id'],
+					'TalleresTrabajador.tipos_de_trabajador_id' => 2
+				),
+				'fields' => array(
+					'TalleresTrabajador.trabajador_id'
+				),
+				'order' => array(
+					'TalleresTrabajador.trabajador_id' => 'ASC'
+				)
+			)
+		);
+		$inspeccion['Aprendiz'] = $this -> Calificacion -> Taller -> Trabajador -> find(
+			'all', array(
+				'conditions' => array(
+					'Trabajador.id' => $aprendices
+				)
+			)
+		);
+		foreach($inspeccion['Aprendiz'] as $key => $aprendiz) {
+			$datos = $this -> Calificacion -> Taller -> Trabajador -> TalleresTrabajador -> find(
+				'first', array(
+					'conditions' => array(
+						'TalleresTrabajador.taller_id' => $inspeccion['Taller'][0]['id'],
+						'TalleresTrabajador.trabajador_id' => $aprendiz['Trabajador']['id']
+					)
+				)
+			);
+			$inspeccion['Aprendiz'][$key]['Trabajador']['tra_fecha_ingreso'] = $datos['TalleresTrabajador']['tal_fecha_ingreso'];
+			$inspeccion['Aprendiz'][$key]['Trabajador']['tra_pago_mensual'] = $datos['TalleresTrabajador']['tal_pago_mensual'];
+		}
+		$this -> Calificacion -> Taller -> EquiposDeTrabajo -> recursive = -1;
+		$inspeccion['EquipoDeTrabajo'] = $this -> Calificacion -> Taller -> EquiposDeTrabajo -> find(
+			'all', array(
+				'conditions' => array(
+					'EquiposDeTrabajo.taller_id' => $inspeccion['Taller'][0]['id']
+				)
+			)
+		);
+		$this -> Calificacion -> Taller -> MateriasPrima -> recursive = -1;
+		$inspeccion['MateriaPrima'] = $this -> Calificacion -> Taller -> MateriasPrima -> find(
+			'all', array(
+				'conditions' => array(
+					'MateriasPrima.taller_id' => $inspeccion['Taller'][0]['id']
+				)
+			)
+		);
+		$this -> Calificacion -> Taller -> ProductosElaborado -> recursive = -1;
+		$inspeccion['ProductoElaborado'] = $this -> Calificacion -> Taller -> ProductosElaborado -> find(
+			'all', array(
+				'conditions' => array(
+					'ProductosElaborado.taller_id' => $inspeccion['Taller'][0]['id']
+				)
+			)
+		);
+		
+		$this -> set(compact('inspeccion'));
 	}
 
 	/**
@@ -274,10 +369,11 @@ class CalificacionesController extends AppController {
 			
 			if($tipo_inspeccion == 1) { // Taller
 				if(isset($inspeccion['Local'])) unset($inspeccion['Local']);
-				$trabajadores = $this -> Calificacion -> Taller -> TalleresTrabajador -> find(
+				$operadores = $this -> Calificacion -> Taller -> TalleresTrabajador -> find(
 					'list', array(
 						'conditions' => array(
-							'TalleresTrabajador.taller_id' => $inspeccion['Taller'][0]['id']
+							'TalleresTrabajador.taller_id' => $inspeccion['Taller'][0]['id'],
+							'TalleresTrabajador.tipos_de_trabajador_id' => 1
 						),
 						'fields' => array(
 							'TalleresTrabajador.trabajador_id'
@@ -291,19 +387,55 @@ class CalificacionesController extends AppController {
 				$inspeccion['Operador'] = $this -> Calificacion -> Taller -> Trabajador -> find(
 					'all', array(
 						'conditions' => array(
-							'Trabajador.id' => $trabajadores,
-							'Trabajador.tipos_de_trabajador_id' => 1
+							'Trabajador.id' => $operadores
+						)
+					)
+				);
+				foreach($inspeccion['Operador'] as $key => $operador) {
+					$datos = $this -> Calificacion -> Taller -> Trabajador -> TalleresTrabajador -> find(
+						'first', array(
+							'conditions' => array(
+								'TalleresTrabajador.taller_id' => $inspeccion['Taller'][0]['id'],
+								'TalleresTrabajador.trabajador_id' => $operador['Trabajador']['id']
+							)
+						)
+					);
+					$inspeccion['Operador'][$key]['Trabajador']['tra_fecha_ingreso'] = $datos['TalleresTrabajador']['tal_fecha_ingreso'];
+					$inspeccion['Operador'][$key]['Trabajador']['tra_pago_mensual'] = $datos['TalleresTrabajador']['tal_pago_mensual'];
+				}
+				$aprendices = $this -> Calificacion -> Taller -> TalleresTrabajador -> find(
+					'list', array(
+						'conditions' => array(
+							'TalleresTrabajador.taller_id' => $inspeccion['Taller'][0]['id'],
+							'TalleresTrabajador.tipos_de_trabajador_id' => 2
+						),
+						'fields' => array(
+							'TalleresTrabajador.trabajador_id'
+						),
+						'order' => array(
+							'TalleresTrabajador.trabajador_id' => 'ASC'
 						)
 					)
 				);
 				$inspeccion['Aprendiz'] = $this -> Calificacion -> Taller -> Trabajador -> find(
 					'all', array(
 						'conditions' => array(
-							'Trabajador.id' => $trabajadores,
-							'Trabajador.tipos_de_trabajador_id' => 2
+							'Trabajador.id' => $aprendices
 						)
 					)
 				);
+				foreach($inspeccion['Aprendiz'] as $key => $aprendiz) {
+					$datos = $this -> Calificacion -> Taller -> Trabajador -> TalleresTrabajador -> find(
+						'first', array(
+							'conditions' => array(
+								'TalleresTrabajador.taller_id' => $inspeccion['Taller'][0]['id'],
+								'TalleresTrabajador.trabajador_id' => $aprendiz['Trabajador']['id']
+							)
+						)
+					);
+					$inspeccion['Aprendiz'][$key]['Trabajador']['tra_fecha_ingreso'] = $datos['TalleresTrabajador']['tal_fecha_ingreso'];
+					$inspeccion['Aprendiz'][$key]['Trabajador']['tra_pago_mensual'] = $datos['TalleresTrabajador']['tal_pago_mensual'];
+				}
 				$this -> Calificacion -> Taller -> EquiposDeTrabajo -> recursive = -1;
 				$inspeccion['EquipoDeTrabajo'] = $this -> Calificacion -> Taller -> EquiposDeTrabajo -> find(
 					'all', array(
