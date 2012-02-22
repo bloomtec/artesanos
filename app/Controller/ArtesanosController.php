@@ -597,9 +597,46 @@ class ArtesanosController extends AppController {
 	 */
 	private function validarCalificacionAutonomo($artesano, $calificaciones, $rama_id) {
 		$resultado_validacion = array();
-		$this -> Artesano -> Calificacion -> recursive = 2;
+		$this -> Artesano -> Calificacion -> recursive = 1;
 		if(!empty($calificaciones)) {
-			$resultado_validacion['Datos'] = $this -> Artesano -> Calificacion -> read(null, $calificaciones[0]['Calificacion']['id']);
+			$resultado_validacion['Datos'] = $this -> Artesano -> Calificacion -> read(null, $calificaciones[0]['Calificacion']['id']);			
+			$trabajadores = $this -> Artesano -> Calificacion -> Taller -> TalleresTrabajador -> find(
+				'list', array(
+					'conditions' => array(
+						'TalleresTrabajador.taller_id' => $resultado_validacion['Datos']['Taller'][0]['id'],
+					),
+					'fields' => array(
+						'TalleresTrabajador.trabajador_id'
+					),
+					'order' => array(
+						'TalleresTrabajador.trabajador_id' => 'ASC'
+					)
+				)
+			);
+			$resultado_validacion['Datos']['Taller'][0]['Trabajador'] = $this -> Artesano -> Calificacion -> Taller -> Trabajador -> find(
+				'all', array(
+					'conditions' => array('Trabajador.id' => $trabajadores),
+					'recursive' => 0
+				)
+			);
+			foreach($resultado_validacion['Datos']['Taller'][0]['Trabajador'] as $key => $trabajador) {
+				$tmp = $trabajador['Trabajador'];
+				unset($resultado_validacion['Datos']['Taller'][0]['Trabajador'][$key]['Trabajador']);
+				
+				$datos = $this -> Artesano -> Calificacion -> Taller -> Trabajador -> TalleresTrabajador -> find(
+					'first', array(
+						'conditions' => array(
+							'TalleresTrabajador.taller_id' => $resultado_validacion['Datos']['Taller'][0]['id'],
+							'TalleresTrabajador.trabajador_id' => $tmp['id']
+						)
+					)
+				);
+				$tmp['tra_fecha_ingreso'] = $datos['TalleresTrabajador']['tal_fecha_ingreso'];
+				$tmp['tra_pago_mensual'] = $datos['TalleresTrabajador']['tal_pago_mensual'];
+				$tmp['tipos_de_trabajador_id'] = $datos['TalleresTrabajador']['tipos_de_trabajador_id'];
+				
+				$resultado_validacion['Datos']['Taller'][0]['Trabajador'][$key] = $tmp;
+			}			
 		}
 		$resultado_validacion['Calificar'] = 0;
 
