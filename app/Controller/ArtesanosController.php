@@ -142,8 +142,10 @@ class ArtesanosController extends AppController {
 						foreach($equipos_de_trabajo['EquiposDeTrabajo'] as $key => $values) {
 							$tmp = array();
 							$tmp['EquiposDeTrabajo'] = $values;
-							$this -> Artesano -> Calificacion -> Taller -> EquiposDeTrabajo -> create();
-							$this -> Artesano -> Calificacion -> Taller -> EquiposDeTrabajo -> save($tmp);
+							if(!empty($tmp['EquiposDeTrabajo']['equ_cantidad']) && !empty($tmp['EquiposDeTrabajo']['equ_valor_comercial'])) {
+								$this -> Artesano -> Calificacion -> Taller -> EquiposDeTrabajo -> create();
+								$this -> Artesano -> Calificacion -> Taller -> EquiposDeTrabajo -> save($tmp);
+							}
 						}
 						
 						// Materias Primas
@@ -155,8 +157,10 @@ class ArtesanosController extends AppController {
 						foreach($materias_primas['MateriasPrima'] as $key => $values) {
 							$tmp = array();
 							$tmp['MateriasPrima'] = $values;
-							$this -> Artesano -> Calificacion -> Taller -> MateriasPrima -> create();
-							$this -> Artesano -> Calificacion -> Taller -> MateriasPrima -> save($tmp);
+							if(!empty($tmp['MateriasPrima']['mat_cantidad']) && !empty($tmp['MateriasPrima']['mat_valor_comercial'])) {
+								$this -> Artesano -> Calificacion -> Taller -> MateriasPrima -> create();
+								$this -> Artesano -> Calificacion -> Taller -> MateriasPrima -> save($tmp);
+							}
 						}
 						
 						// Productos Elaborados
@@ -168,8 +172,10 @@ class ArtesanosController extends AppController {
 						foreach($productos_elaborados['ProductosElaborado'] as $key => $values) {
 							$tmp = array();
 							$tmp['ProductosElaborado'] = $values;
-							$this -> Artesano -> Calificacion -> Taller -> ProductosElaborado -> create();
-							$this -> Artesano -> Calificacion -> Taller -> ProductosElaborado -> save($tmp);
+							if(!empty($tmp['ProductosElaborado']['pro_cantidad']) && !empty($tmp['ProductosElaborado']['pro_valor_comercial'])) {
+								$this -> Artesano -> Calificacion -> Taller -> ProductosElaborado -> create();
+								$this -> Artesano -> Calificacion -> Taller -> ProductosElaborado -> save($tmp);
+							}
 						}
 						
 						// Guardar Trabajadores
@@ -180,11 +186,15 @@ class ArtesanosController extends AppController {
 							// Verificar que no existe el trabajador ya
 							$trabajador_existente = $this -> Artesano -> Calificacion -> Taller -> Trabajador -> find('first', array('conditions' => array('Trabajador.tra_cedula'=>$values['tra_cedula'])));
 							if(!empty($trabajador_existente)) {
-								foreach($trabajador_existente['Taller'] as $key => $taller_existente) {
-									$trabajador_existente['Taller']['Taller'][] = $taller_existente['id'];
-								}
-								$trabajador_existente['Taller']['Taller'][] = $taller['Taller']['id'];
-								$this -> Artesano -> Calificacion -> Taller -> Trabajador -> save($trabajador_existente);
+								$tmp = array();
+								$tmp['TalleresTrabajador'] = array();
+								$tmp['TalleresTrabajador']['trabajador_id'] = $trabajador_existente['Trabajador']['id'];
+								$tmp['TalleresTrabajador']['taller_id'] = $taller['Taller']['id'];
+								$tmp['TalleresTrabajador']['tipos_de_trabajador_id'] = $values['tipos_de_trabajador_id']; 
+								$tmp['TalleresTrabajador']['tal_fecha_ingreso'] = $values['tra_fecha_ingreso']; 
+								$tmp['TalleresTrabajador']['tal_pago_mensual'] = $values['tra_pago_mensual'];
+								$this -> Artesano -> Calificacion -> Taller -> Trabajador -> TalleresTrabajador -> create();
+								$this -> Artesano -> Calificacion -> Taller -> Trabajador -> TalleresTrabajador -> save($tmp);
 							} else {
 								$tmp = array();
 								$tmp['Trabajador'] = $values;
