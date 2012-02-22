@@ -4,14 +4,6 @@
 			<th><?php echo $this -> Paginator -> sort('cal_nombre_artesano', 'Nombre Artesano');?></th>
 			<th>Taller</th>
 			<th>Local</th>
-			<!--<th><?php echo $this -> Paginator -> sort('cal_nombre_inspector_taller', 'Inspector Taller');?></th>-->
-			<!--<th><?php echo $this -> Paginator -> sort('cal_fecha_inspeccion_taller', 'Fecha Inspección Taller');?></th>-->
-			<!--<th><?php echo $this -> Paginator -> sort('cal_taller_aprobado', 'Estado Inspección Taller');?></th>-->
-			<!--<th><?php echo $this -> Paginator -> sort('cal_comentarios_taller', 'Comentarios Inspección Taller');?></th>-->
-			<!--<th><?php echo $this -> Paginator -> sort('cal_nombre_inspector_local', 'Inspector Local');?></th>-->
-			<!--<th><?php echo $this -> Paginator -> sort('cal_fecha_inspeccion_local', 'Fecha Inspección Local');?></th>-->
-			<!--<th><?php echo $this -> Paginator -> sort('cal_local_aprobado', 'Estado Inspección Local');?></th>-->
-			<!--<th><?php echo $this -> Paginator -> sort('cal_comentarios_local', 'Comentarios Inspección Local');?></th>-->
 			<th><?php echo $this -> Paginator -> sort('cal_estado', 'Estado Calificación');?></th>
 		</tr>
 		<?php foreach ($calificaciones as $calificacion): ?>
@@ -51,6 +43,11 @@
 					<tr>
 						<th><?php echo $this -> Paginator -> sort('cal_comentarios_taller', 'Comentarios');?></th>
 					</tr>
+					<tr>
+						<td>
+							<?php if(!empty($calificacion['Calificacion']['cal_nombre_inspector_taller'])) echo $this -> Html -> link(__('Ver Inspección Taller'), array('controller' => 'calificaciones', 'action' => 'verInspeccion', $calificacion['Calificacion']['id'], 1), array('target' => '_BLANK')); ?>
+						</td>
+					</tr>
 				</table>
 			</td>
 			<td>
@@ -87,6 +84,11 @@
 					<tr>
 						<th><?php echo $this -> Paginator -> sort('cal_comentarios_local', 'Comentarios');?></th>
 					</tr>
+					<tr>
+						<td>
+							<?php if(!empty($calificacion['Calificacion']['cal_nombre_inspector_local'])) echo $this -> Html -> link(__('Ver Inspección Local'), array('controller' => 'calificaciones', 'action' => 'verInspeccion', $calificacion['Calificacion']['id'], 2), array('target' => '_BLANK')); ?>
+						</td>
+					</tr>
 				</table>
 			</td>
 			<td>
@@ -95,6 +97,8 @@
 						echo h('Aprobado');
 					} elseif($calificacion['Calificacion']['cal_estado'] == -1) {
 						echo h('Denegado');
+					} elseif($calificacion['Calificacion']['cal_estado'] == -2) {
+						echo h('Deshabilitado');
 					} else {
 						echo h('Pendiente');
 					}

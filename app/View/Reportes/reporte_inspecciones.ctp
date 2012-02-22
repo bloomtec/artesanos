@@ -5,7 +5,7 @@
 		<?php
 		echo $this -> Form -> input('fecha_inicial', array('type' => 'date'));
 		echo $this -> Form -> input('fecha_final', array('type' => 'date'));
-		echo $this -> Form -> input('estado', array('empty' => 'Seleccione...', 'options' => array(-1 => 'Denegado', 0 => 'Pendiente', 1 => 'Aprobado')));
+		echo $this -> Form -> input('estado', array('empty' => 'Seleccione...', 'options' => array('-2' => 'Deshabilitado', '-1' => 'Denegado', '-3' => 'Pendiente', '1' => 'Aprobado')));
 		?>
 	</fieldset>
 	<?php echo $this -> Form -> submit('Buscar');?>

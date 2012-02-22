@@ -33,12 +33,14 @@ class UsuariosController extends AppController {
 		}
 	}
 	
-	public function getNombresYApellidos($id) {
-		$usuario = $this -> Usuario -> read('usu_nombres_y_apellidos', $id);
-		if(empty($usuario)) {
-			return '<b>:: eliminado ::</b>';
-		} else {
-			return $usuario['Usuario']['usu_nombres_y_apellidos'];
+	public function getNombresYApellidos($id = null) {
+		if($id) {
+			$usuario = $this -> Usuario -> read('usu_nombres_y_apellidos', $id);
+			if(empty($usuario)) {
+				return '<b>:: eliminado ::</b>';
+			} else {
+				return $usuario['Usuario']['usu_nombres_y_apellidos'];
+			}
 		}
 	}
 
