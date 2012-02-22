@@ -15,12 +15,17 @@ App::uses('AppModel', 'Model');
  * @property Trabajador $Trabajador
  */
 class Taller extends AppModel {
-	
-	/**
-	 * Validation rules
-	 *
-	 * @var array
-	 */
+/**
+ * Display field
+ *
+ * @var string
+ */
+	public $displayField = 'tal_razon_social_o_nombre_comercial';
+/**
+ * Validation rules
+ *
+ * @var array
+ */
 	public $validate = array(
 		'calificacion_id' => array(
 			'numeric' => array(
@@ -33,24 +38,6 @@ class Taller extends AppModel {
 			),
 		),
 		'tal_razon_social_o_nombre_comercial' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'tal_email' => array(
-			'email' => array(
-				'rule' => array('email'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => true,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
 			'notempty' => array(
 				'rule' => array('notempty'),
 				//'message' => 'Your custom message here',

@@ -1,24 +1,24 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * Trabajador Model
+ * TiposDeTrabajador Model
  *
- * @property Taller $Taller
+ * @property TalleresTrabajador $TalleresTrabajador
  */
-class Trabajador extends AppModel {
+class TiposDeTrabajador extends AppModel {
 /**
  * Display field
  *
  * @var string
  */
-	public $displayField = 'tra_cedula';
+	public $displayField = 'tip_nombre';
 /**
  * Validation rules
  *
  * @var array
  */
 	public $validate = array(
-		'tra_cedula' => array(
+		'tip_nombre' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
 				//'message' => 'Your custom message here',
@@ -33,25 +33,23 @@ class Trabajador extends AppModel {
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 /**
- * hasAndBelongsToMany associations
+ * hasMany associations
  *
  * @var array
  */
-	public $hasAndBelongsToMany = array(
-		'Taller' => array(
-			'className' => 'Taller',
-			'joinTable' => 'talleres_trabajadores',
-			'foreignKey' => 'trabajador_id',
-			'associationForeignKey' => 'taller_id',
-			'unique' => true,
+	public $hasMany = array(
+		'TalleresTrabajador' => array(
+			'className' => 'TalleresTrabajador',
+			'foreignKey' => 'tipos_de_trabajador_id',
+			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
 			'limit' => '',
 			'offset' => '',
+			'exclusive' => '',
 			'finderQuery' => '',
-			'deleteQuery' => '',
-			'insertQuery' => ''
+			'counterQuery' => ''
 		)
 	);
 
