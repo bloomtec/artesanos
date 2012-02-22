@@ -19,7 +19,7 @@ class Trabajador extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'tipos_de_trabajador_id' => array(
+		/*'tipos_de_trabajador_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
@@ -28,7 +28,7 @@ class Trabajador extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-		),
+		),*/
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed

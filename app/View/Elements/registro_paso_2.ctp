@@ -11,68 +11,9 @@
 					<th>Valor Comercial</th>
 				</tr>
 			</thead>
-			<tr>
-				<!--<td><input name="data[EquiposDeTrabajo][equ_cantidad][0]" type="number" id="EquiposDeTrabajoEquCantidad" class="cantidad_maquinas"> </td>-->
-				<td><?php echo $this -> Form -> input('EquiposDeTrabajo.0.equ_cantidad', array('label' => false, 'div' => false, 'class' => 'cantidad_maquinas')); ?></td>
-				<!--<td><select name="data[EquiposDeTrabajo][equ_maquinaria_y_herramientas][0]" id="EquiposDeTrabajoEquMaquinariaYHerramientas"></select></td>-->
-				<td><?php echo $this -> Form -> input('EquiposDeTrabajo.0.equ_maquinaria_y_herramientas', array('label' => false, 'div' => false, 'options' => $maquinarias_y_herramientas)); ?></td>
-				<!--<td><select name="data[EquiposDeTrabajo][equ_tipo_de_adquisicion][0]" id="EquiposDeTrabajoEquTipoDeAdquisicion"></select></td>-->
-				<td><?php echo $this -> Form -> input('EquiposDeTrabajo.0.equ_tipo_de_adquisicion', array('label' => false, 'div' => false, 'options' => $tipos_de_adquisicion_maquinaria)); ?></td>
-				<td><input name="data[EquiposDeTrabajo][0][equ_fecha_de_adquisicion]" type="date" id="EquiposDeTrabajo0EquFechaDeAdquisicion"></td>
-				<!--<td><?php echo $this -> Form -> input('EquiposDeTrabajo.0.equ_fecha_de_adquisicion', array('label' => false, 'div' => false, 'type' => 'date')); ?></td>-->
-				<!--<td><input name="data[EquiposDeTrabajo][equ_valor_comercial][0]" step="any" type="number" id="EquiposDeTrabajoEquValorComercial" class='valor_maquinas'></td>-->
-				<td><?php echo $this -> Form -> input('EquiposDeTrabajo.0.equ_valor_comercial', array('label' => false, 'div' => false, 'class' => 'valor_maquinas')); ?></td>
-			</tr>
-			<tr>
-				<!--<td><input name="data[EquiposDeTrabajo][equ_cantidad][0]" type="number" id="EquiposDeTrabajoEquCantidad" class="cantidad_maquinas"> </td>-->
-				<td><?php echo $this -> Form -> input('EquiposDeTrabajo.1.equ_cantidad', array('label' => false, 'div' => false, 'class' => 'cantidad_maquinas')); ?></td>
-				<!--<td><select name="data[EquiposDeTrabajo][equ_maquinaria_y_herramientas][0]" id="EquiposDeTrabajoEquMaquinariaYHerramientas"></select></td>-->
-				<td><?php echo $this -> Form -> input('EquiposDeTrabajo.1.equ_maquinaria_y_herramientas', array('label' => false, 'div' => false, 'options' => $maquinarias_y_herramientas)); ?></td>
-				<!--<td><select name="data[EquiposDeTrabajo][equ_tipo_de_adquisicion][0]" id="EquiposDeTrabajoEquTipoDeAdquisicion"></select></td>-->
-				<td><?php echo $this -> Form -> input('EquiposDeTrabajo.1.equ_tipo_de_adquisicion', array('label' => false, 'div' => false, 'options' => $tipos_de_adquisicion_maquinaria)); ?></td>
-				<td><input name="data[EquiposDeTrabajo][1][equ_fecha_de_adquisicion]" type="date" id="EquiposDeTrabajo1EquFechaDeAdquisicion"></td>
-				<!--<td><?php echo $this -> Form -> input('EquiposDeTrabajo.0.equ_fecha_de_adquisicion', array('label' => false, 'div' => false, 'type' => 'date')); ?></td>-->
-				<!--<td><input name="data[EquiposDeTrabajo][equ_valor_comercial][0]" step="any" type="number" id="EquiposDeTrabajoEquValorComercial" class='valor_maquinas'></td>-->
-				<td><?php echo $this -> Form -> input('EquiposDeTrabajo.1.equ_valor_comercial', array('label' => false, 'div' => false, 'class' => 'valor_maquinas')); ?></td>
-			</tr>
-			<tr>
-				<!--<td><input name="data[EquiposDeTrabajo][equ_cantidad][0]" type="number" id="EquiposDeTrabajoEquCantidad" class="cantidad_maquinas"> </td>-->
-				<td><?php echo $this -> Form -> input('EquiposDeTrabajo.2.equ_cantidad', array('label' => false, 'div' => false, 'class' => 'cantidad_maquinas')); ?></td>
-				<!--<td><select name="data[EquiposDeTrabajo][equ_maquinaria_y_herramientas][0]" id="EquiposDeTrabajoEquMaquinariaYHerramientas"></select></td>-->
-				<td><?php echo $this -> Form -> input('EquiposDeTrabajo.2.equ_maquinaria_y_herramientas', array('label' => false, 'div' => false, 'options' => $maquinarias_y_herramientas)); ?></td>
-				<!--<td><select name="data[EquiposDeTrabajo][equ_tipo_de_adquisicion][0]" id="EquiposDeTrabajoEquTipoDeAdquisicion"></select></td>-->
-				<td><?php echo $this -> Form -> input('EquiposDeTrabajo.2.equ_tipo_de_adquisicion', array('label' => false, 'div' => false, 'options' => $tipos_de_adquisicion_maquinaria)); ?></td>
-				<td><input name="data[EquiposDeTrabajo][2][equ_fecha_de_adquisicion]" type="date" id="EquiposDeTrabajo2EquFechaDeAdquisicion"></td>
-				<!--<td><?php echo $this -> Form -> input('EquiposDeTrabajo.0.equ_fecha_de_adquisicion', array('label' => false, 'div' => false, 'type' => 'date')); ?></td>-->
-				<!--<td><input name="data[EquiposDeTrabajo][equ_valor_comercial][0]" step="any" type="number" id="EquiposDeTrabajoEquValorComercial" class='valor_maquinas'></td>-->
-				<td><?php echo $this -> Form -> input('EquiposDeTrabajo.2.equ_valor_comercial', array('label' => false, 'div' => false, 'class' => 'valor_maquinas')); ?></td>
-			</tr>
-			<tr>
-				<!--<td><input name="data[EquiposDeTrabajo][equ_cantidad][0]" type="number" id="EquiposDeTrabajoEquCantidad" class="cantidad_maquinas"> </td>-->
-				<td><?php echo $this -> Form -> input('EquiposDeTrabajo.3.equ_cantidad', array('label' => false, 'div' => false, 'class' => 'cantidad_maquinas')); ?></td>
-				<!--<td><select name="data[EquiposDeTrabajo][equ_maquinaria_y_herramientas][0]" id="EquiposDeTrabajoEquMaquinariaYHerramientas"></select></td>-->
-				<td><?php echo $this -> Form -> input('EquiposDeTrabajo.3.equ_maquinaria_y_herramientas', array('label' => false, 'div' => false, 'options' => $maquinarias_y_herramientas)); ?></td>
-				<!--<td><select name="data[EquiposDeTrabajo][equ_tipo_de_adquisicion][0]" id="EquiposDeTrabajoEquTipoDeAdquisicion"></select></td>-->
-				<td><?php echo $this -> Form -> input('EquiposDeTrabajo.3.equ_tipo_de_adquisicion', array('label' => false, 'div' => false, 'options' => $tipos_de_adquisicion_maquinaria)); ?></td>
-				<td><input name="data[EquiposDeTrabajo][3][equ_fecha_de_adquisicion]" type="date" id="EquiposDeTrabajo3EquFechaDeAdquisicion"></td>
-				<!--<td><?php echo $this -> Form -> input('EquiposDeTrabajo.0.equ_fecha_de_adquisicion', array('label' => false, 'div' => false, 'type' => 'date')); ?></td>-->
-				<!--<td><input name="data[EquiposDeTrabajo][equ_valor_comercial][0]" step="any" type="number" id="EquiposDeTrabajoEquValorComercial" class='valor_maquinas'></td>-->
-				<td><?php echo $this -> Form -> input('EquiposDeTrabajo.3.equ_valor_comercial', array('label' => false, 'div' => false, 'class' => 'valor_maquinas')); ?></td>
-			</tr>
-			<tr>
-				<!--<td><input name="data[EquiposDeTrabajo][equ_cantidad][0]" type="number" id="EquiposDeTrabajoEquCantidad" class="cantidad_maquinas"> </td>-->
-				<td><?php echo $this -> Form -> input('EquiposDeTrabajo.4.equ_cantidad', array('label' => false, 'div' => false, 'class' => 'cantidad_maquinas')); ?></td>
-				<!--<td><select name="data[EquiposDeTrabajo][equ_maquinaria_y_herramientas][0]" id="EquiposDeTrabajoEquMaquinariaYHerramientas"></select></td>-->
-				<td><?php echo $this -> Form -> input('EquiposDeTrabajo.4.equ_maquinaria_y_herramientas', array('label' => false, 'div' => false, 'options' => $maquinarias_y_herramientas)); ?></td>
-				<!--<td><select name="data[EquiposDeTrabajo][equ_tipo_de_adquisicion][0]" id="EquiposDeTrabajoEquTipoDeAdquisicion"></select></td>-->
-				<td><?php echo $this -> Form -> input('EquiposDeTrabajo.4.equ_tipo_de_adquisicion', array('label' => false, 'div' => false, 'options' => $tipos_de_adquisicion_maquinaria)); ?></td>
-				<td><input name="data[EquiposDeTrabajo][4][equ_fecha_de_adquisicion]" type="date" id="EquiposDeTrabajo4EquFechaDeAdquisicion"></td>
-				<!--<td><?php echo $this -> Form -> input('EquiposDeTrabajo.0.equ_fecha_de_adquisicion', array('label' => false, 'div' => false, 'type' => 'date')); ?></td>-->
-				<!--<td><input name="data[EquiposDeTrabajo][equ_valor_comercial][0]" step="any" type="number" id="EquiposDeTrabajoEquValorComercial" class='valor_maquinas'></td>-->
-				<td><?php echo $this -> Form -> input('EquiposDeTrabajo.4.equ_valor_comercial', array('label' => false, 'div' => false, 'class' => 'valor_maquinas')); ?></td>
-			</tr>
+			<?php echo $this -> element ("equipos-trabajo")?>
 		</table>
-		<a class="AñadirRegistroEquipo cancelar" href="#" >Agregar Otro</a>
+
 	</div>
 	<div class="datos-materia-prima validar">
 		<h2>Materia Prima Existente</h2>
@@ -85,58 +26,8 @@
 					<th>Valor Comercial</th>
 				</tr>
 			</thead>
-			<tr>
-				<!--<td><input name="data[MateriasPrima][mat_cantidad][0]" type="number" id="MateriasPrimaMatCantidad" class='cantidad_materia_prima'></td>-->
-				<td><?php echo $this -> Form -> input('MateriasPrima.0.mat_cantidad', array('label' => false, 'div' => false, 'class' => 'cantidad_materia_prima')); ?></td>
-				<!--<td><select name="data[MateriasPrima][mat_tipo_de_materia_prima][0]" type="number" id="MateriasPrimaMatTipoDeMateriaPrima"></select></td>-->
-				<td><?php echo $this -> Form -> input('MateriasPrima.0.mat_tipo_de_materia_prima', array('label' => false, 'div' => false, 'options' => $tipos_de_materia_prima)); ?></td>
-				<!--<td><select name="data[MateriasPrima][mat_procedencia][0]" type="number" id="MateriasPrimaMatProcedencia"></select></td>-->
-				<td><?php echo $this -> Form -> input('MateriasPrima.0.mat_procedencia', array('label' => false, 'div' => false, 'options' => $procedencias_materia_prima)); ?></td>
-				<!--<td><input name="data[MateriasPrima][mat_valor_comercial][0]" type="number" id="MateriasPrimaMatValorComercial" class='valor_materia_prima'></td>-->
-				<td><?php echo $this -> Form -> input('MateriasPrima.0.mat_valor_comercial', array('label' => false, 'div' => false, 'class' => 'valor_materia_prima')); ?></td>
-			</tr>
-			<tr>
-				<!--<td><input name="data[MateriasPrima][mat_cantidad][0]" type="number" id="MateriasPrimaMatCantidad" class='cantidad_materia_prima'></td>-->
-				<td><?php echo $this -> Form -> input('MateriasPrima.1.mat_cantidad', array('label' => false, 'div' => false, 'class' => 'cantidad_materia_prima')); ?></td>
-				<!--<td><select name="data[MateriasPrima][mat_tipo_de_materia_prima][0]" type="number" id="MateriasPrimaMatTipoDeMateriaPrima"></select></td>-->
-				<td><?php echo $this -> Form -> input('MateriasPrima.1.mat_tipo_de_materia_prima', array('label' => false, 'div' => false, 'options' => $tipos_de_materia_prima)); ?></td>
-				<!--<td><select name="data[MateriasPrima][mat_procedencia][0]" type="number" id="MateriasPrimaMatProcedencia"></select></td>-->
-				<td><?php echo $this -> Form -> input('MateriasPrima.1.mat_procedencia', array('label' => false, 'div' => false, 'options' => $procedencias_materia_prima)); ?></td>
-				<!--<td><input name="data[MateriasPrima][mat_valor_comercial][0]" type="number" id="MateriasPrimaMatValorComercial" class='valor_materia_prima'></td>-->
-				<td><?php echo $this -> Form -> input('MateriasPrima.1.mat_valor_comercial', array('label' => false, 'div' => false, 'class' => 'valor_materia_prima')); ?></td>
-			</tr>
-			<tr>
-				<!--<td><input name="data[MateriasPrima][mat_cantidad][0]" type="number" id="MateriasPrimaMatCantidad" class='cantidad_materia_prima'></td>-->
-				<td><?php echo $this -> Form -> input('MateriasPrima.2.mat_cantidad', array('label' => false, 'div' => false, 'class' => 'cantidad_materia_prima')); ?></td>
-				<!--<td><select name="data[MateriasPrima][mat_tipo_de_materia_prima][0]" type="number" id="MateriasPrimaMatTipoDeMateriaPrima"></select></td>-->
-				<td><?php echo $this -> Form -> input('MateriasPrima.2.mat_tipo_de_materia_prima', array('label' => false, 'div' => false, 'options' => $tipos_de_materia_prima)); ?></td>
-				<!--<td><select name="data[MateriasPrima][mat_procedencia][0]" type="number" id="MateriasPrimaMatProcedencia"></select></td>-->
-				<td><?php echo $this -> Form -> input('MateriasPrima.2.mat_procedencia', array('label' => false, 'div' => false, 'options' => $procedencias_materia_prima)); ?></td>
-				<!--<td><input name="data[MateriasPrima][mat_valor_comercial][0]" type="number" id="MateriasPrimaMatValorComercial" class='valor_materia_prima'></td>-->
-				<td><?php echo $this -> Form -> input('MateriasPrima.2.mat_valor_comercial', array('label' => false, 'div' => false, 'class' => 'valor_materia_prima')); ?></td>
-			</tr>
-			<tr>
-				<!--<td><input name="data[MateriasPrima][mat_cantidad][0]" type="number" id="MateriasPrimaMatCantidad" class='cantidad_materia_prima'></td>-->
-				<td><?php echo $this -> Form -> input('MateriasPrima.3.mat_cantidad', array('label' => false, 'div' => false, 'class' => 'cantidad_materia_prima')); ?></td>
-				<!--<td><select name="data[MateriasPrima][mat_tipo_de_materia_prima][0]" type="number" id="MateriasPrimaMatTipoDeMateriaPrima"></select></td>-->
-				<td><?php echo $this -> Form -> input('MateriasPrima.3.mat_tipo_de_materia_prima', array('label' => false, 'div' => false, 'options' => $tipos_de_materia_prima)); ?></td>
-				<!--<td><select name="data[MateriasPrima][mat_procedencia][0]" type="number" id="MateriasPrimaMatProcedencia"></select></td>-->
-				<td><?php echo $this -> Form -> input('MateriasPrima.3.mat_procedencia', array('label' => false, 'div' => false, 'options' => $procedencias_materia_prima)); ?></td>
-				<!--<td><input name="data[MateriasPrima][mat_valor_comercial][0]" type="number" id="MateriasPrimaMatValorComercial" class='valor_materia_prima'></td>-->
-				<td><?php echo $this -> Form -> input('MateriasPrima.3.mat_valor_comercial', array('label' => false, 'div' => false, 'class' => 'valor_materia_prima')); ?></td>
-			</tr>
-			<tr>
-				<!--<td><input name="data[MateriasPrima][mat_cantidad][0]" type="number" id="MateriasPrimaMatCantidad" class='cantidad_materia_prima'></td>-->
-				<td><?php echo $this -> Form -> input('MateriasPrima.4.mat_cantidad', array('label' => false, 'div' => false, 'class' => 'cantidad_materia_prima')); ?></td>
-				<!--<td><select name="data[MateriasPrima][mat_tipo_de_materia_prima][0]" type="number" id="MateriasPrimaMatTipoDeMateriaPrima"></select></td>-->
-				<td><?php echo $this -> Form -> input('MateriasPrima.4.mat_tipo_de_materia_prima', array('label' => false, 'div' => false, 'options' => $tipos_de_materia_prima)); ?></td>
-				<!--<td><select name="data[MateriasPrima][mat_procedencia][0]" type="number" id="MateriasPrimaMatProcedencia"></select></td>-->
-				<td><?php echo $this -> Form -> input('MateriasPrima.4.mat_procedencia', array('label' => false, 'div' => false, 'options' => $procedencias_materia_prima)); ?></td>
-				<!--<td><input name="data[MateriasPrima][mat_valor_comercial][0]" type="number" id="MateriasPrimaMatValorComercial" class='valor_materia_prima'></td>-->
-				<td><?php echo $this -> Form -> input('MateriasPrima.4.mat_valor_comercial', array('label' => false, 'div' => false, 'class' => 'valor_materia_prima')); ?></td>
-			</tr>
+			<?php echo $this ->element('materias-primas');?>			
 		</table>
-		<a class="AñadirRegistroMateria cancelar" href="#" >Agregar Otro</a>
 	</div>
 	<div class="datos-producto validar">
 		<h2>Productos Elaborados</h2>

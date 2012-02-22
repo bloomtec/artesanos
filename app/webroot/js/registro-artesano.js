@@ -341,7 +341,7 @@ $(function(){
 							}
 						} 
 					}else{
-						$('.validar input').val("");
+						$(".validar input[type!='hidden']").val("");
 						$('.validar select option:first-child').attr('selected',true).parent().change();
 					}
 				}else{
@@ -463,6 +463,7 @@ $(function(){
 				});
 				empty.addClass("error");
 				emails.addClass("error");
+				return true /*_________________ELIMINAR ESTA LINEA_____________XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
 				return false;
 			} else {
 				switch(api.getIndex()){
@@ -496,4 +497,8 @@ $(function(){
 			}
 		});
 	});
+	$("td select").css({'padding':'0'});
+	$("td").find("select.date:eq(0)").css({'width':'50px','minWidth':'50px'});
+	$("td").find("select.date:eq(1)").css({'width':'27px','minWidth':'27px'});
+	$("td").find("select.date:eq(2)").css({'width':'50px','minWidth':'50px'});
 });

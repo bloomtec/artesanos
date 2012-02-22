@@ -70,11 +70,11 @@
 	clear:left;
 }
 #wizard select.date {
-	padding: 0 4px;
+	padding: 0;
 	height:20px;
 	text-align: center;
-	width: 85px;
-	min-width:85px;
+	width: 54px;
+	min-width:54px;
 	-moz-box-shadow: 0 0 10px #eee inset;
 	-webkit-box-shadow: 0 0 10px #eee inset;
 }
@@ -87,6 +87,13 @@ form #wizard  .input {
 }
 form input[type=number] {
 	width: 6em;
+}
+form #TablaAprendices input[type=number].salarioAprendiz, form #TablaAprendices input[type=number].salarioOperarios,  form #TablaOperadores input[type=number].salarioAprendiz, form #TablaOperadores input[type=number].salarioOperarios{
+	width: 4em;
+}
+#wizard  #TablaAprendices select, #wizard  #TablaOperadores select{
+	min-width:100px;
+	width:100px;
 }
 #wizard select{
 	min-width:130px;

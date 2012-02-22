@@ -8,7 +8,7 @@
 					<th>Nombre Y Apellido</th>
 					<th>Sexo</th>
 					<th>Fecha De Ingreso</th>
-					<th>Afiliado Al Seguro</th>
+					<th style='width:70px;'>Afiliado Seguro</th>
 					<th>Fecha De Nacimiento</th>
 					<th>Pago Mensual</th>
 				</tr>
@@ -26,7 +26,7 @@
 					<th>Nombre Y Apellido</th>
 					<th>Sexo</th>
 					<th>Fecha De Ingreso</th>
-					<th>Afiliado Al Seguro</th>
+					<th style='width:70px;'>Afiliado Seguro</th>
 					<th>Fecha De Nacimiento</th>
 					<th>Pago Mensual</th>
 				</tr>
