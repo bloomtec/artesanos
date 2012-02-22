@@ -22,9 +22,7 @@ class CalificacionesController extends AppController {
 		$this -> set('calificaciones', $this -> paginate());
 	}
 	
-	public function view($cal_id = null) {
-		$this -> layout = 'print';
-		
+	public function view($cal_id = null) {		
 		$this -> Calificacion -> recursive = 1;
 		
 		$order = array();
