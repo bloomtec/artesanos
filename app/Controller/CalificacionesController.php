@@ -500,6 +500,7 @@ class CalificacionesController extends AppController {
 		$this -> Calificacion -> recursive = 0;
 		$conditions = $this -> Session -> read('conditions');
 		$this -> Session -> delete('conditions');
+		debug($conditions);
 		$this -> paginate = array('conditions' => $conditions, 'order' => array('Calificacion.id' => 'ASC'));
 		$calificaciones = $this -> paginate();
 		foreach($calificaciones as $key => $calificacion) {

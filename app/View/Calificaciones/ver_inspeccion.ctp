@@ -185,7 +185,7 @@
 		<?php
 			$cantidad_trabajadores = count($inspeccion['Operador']);
 			if($cantidad_trabajadores > 0 && $cantidad_trabajadores == 1) { // Solo hay un trabajador
-				$trabajador = $inspeccion['Operador'];
+				$trabajador = $inspeccion['Operador'][0];
 		?>
 		<tr>
 			<td><?php echo $trabajador['Trabajador']['tra_cedula']; ?></td>
