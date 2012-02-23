@@ -73,12 +73,14 @@
 					<tr>
 						<td>
 							<?php
-								if($calificacion['Calificacion']['cal_local_aprobado'] == 1) {
-									echo h('Aprobado');
-								} elseif($calificacion['Calificacion']['cal_local_aprobado'] == -1) {
-									echo h('Denegado');
-								} else {
-									echo h('Pendiente');
+								if(!empty($calificacion['Calificacion']['cal_local_aprobado'])) {
+									if($calificacion['Calificacion']['cal_local_aprobado'] == 1) {
+										echo h('Aprobado');
+									} elseif($calificacion['Calificacion']['cal_local_aprobado'] == -1) {
+										echo h('Denegado');
+									} else {
+										echo h('Pendiente');
+									}
 								}
 							;?>
 							&nbsp;
