@@ -513,7 +513,7 @@ $(function(){
 								$that.val('');
 								alert('La persona se encuentra registrada como Artesano');
 							}
-						}));
+						});
 					}else{
 						$that.val('');
 					}
