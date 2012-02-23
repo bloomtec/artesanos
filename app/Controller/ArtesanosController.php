@@ -9,7 +9,21 @@ class ArtesanosController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('getID', 'crearCalificacion', 'asignarInspector', 'isCalificacionActive', 'validarCalificacion', 'validarCalificacionAutonomo', 'validarCalificacionNormal', 'validarCalificacionObtenerFechas');
+		$this -> Auth -> allow('verificarArtesano', 'getID', 'crearCalificacion', 'asignarInspector', 'isCalificacionActive', 'validarCalificacion', 'validarCalificacionAutonomo', 'validarCalificacionNormal', 'validarCalificacionObtenerFechas');
+	}
+	
+	public function verificarArtesano($cedula = null) {
+		$this -> layout = 'ajax';
+		if($cedula) {
+			if($this -> Artesano -> find('count', array('conditions' => array('Artesano.art_cedula' => $cedula))) > 0) {
+				echo 'SI';
+			} else {
+				echo 'NO';
+			}
+		} else {
+			echo 'NO INGRESO CEDULA';
+		}
+		exit(0);
 	}
 	
 	public function getID($id = null) {
@@ -613,12 +627,12 @@ class ArtesanosController extends AppController {
 							/**
 							 * Se está haciendo una recalificación
 							 */
-							$resultado_validacion['Calificacion'] = 1;
+							$resultado_validacion['Calificar'] = 1;
 						} elseif ($calificaciones[0]['Calificacion']['tipos_de_calificacion_id'] == 2) {// Calificación previa tipo Autónomo
 							/**
 							 * Se esta calificando como normal por primera vez
 							 */
-							$resultado_validacion['Calificacion'] = 1;
+							$resultado_validacion['Calificar'] = 1;
 						} else {// Error
 							$resultado_validacion['Mensaje'] = 'Tipo de calificación erronea';
 						}
@@ -635,7 +649,7 @@ class ArtesanosController extends AppController {
 				$resultado_validacion['Mensaje'] = 'No hay registros previos de este artesano como artesano autónomo';
 			}
 		} else {// No
-			$resultado_validacion['Mensaje'] = 'No hay registros previos de este artesano artesano';
+			$resultado_validacion['Mensaje'] = 'No hay registros previos de este artesano para poder hacer calificación normal';
 		}
 
 		/**
