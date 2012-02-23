@@ -55,6 +55,7 @@ $cakeDescription = __d('cake_dev', 'Junta Nacional de defensa del artesano');
 				<div class="imprimir top"> imprimir </div>
 				<?php echo $content_for_layout;?>
 				<div class="imprimir bottom"> imprimir </div>
+				<div class="volver bottom"> <?php echo $html -> link('volver',array('controller'=>'pages','action'=>'display','home'));?> </div>
 			</div>
 		</div>
 		<?php echo $this -> element('sql_dump');?>

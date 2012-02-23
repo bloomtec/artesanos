@@ -293,7 +293,9 @@ $(function(){
 				if(atributo != "tipos_de_calificacion_id" && atributo != "grupos_de_rama_id" && atributo != "rama_id" && atributo != "art_is_cedula"){
 					input.val(datosPersonales[atributo]);
 				}
+				//console.log(atributo);
 			}
+			
 		}
 		if(Model=="Taller"){
 			for(indice in datosPersonales['EquiposDeTrabajo']){
