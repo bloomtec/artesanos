@@ -212,7 +212,8 @@ class CalificacionesController extends AppController {
 			array(
 				'conditions' => array(
 					'Calificacion.cal_inspector_taller' => $inspector_id,
-					'Calificacion.cal_taller_aprobado' => 0
+					'Calificacion.cal_taller_aprobado' => 0,
+					'Calificacion.cal_estado' => 0
 				),
 				'order' => array(
 					'Calificacion.cal_fecha_inspeccion_taller' => 'ASC'
@@ -233,7 +234,8 @@ class CalificacionesController extends AppController {
 			array(
 				'conditions' => array(
 					'Calificacion.cal_inspector_local' => $inspector_id,
-					'Calificacion.cal_local_aprobado' => 0
+					'Calificacion.cal_local_aprobado' => 0,
+					'Calificacion.cal_estado' => 0
 				),
 				'order' => array(
 					'Calificacion.cal_fecha_inspeccion_local' => 'ASC'
@@ -253,7 +255,7 @@ class CalificacionesController extends AppController {
 	}
 	
 	public function verInspeccion($cal_id = null, $tipo_inspeccion = null) {
-		$this -> layout ="print";
+		$this -> layout ='print';
 		if ($this -> request -> is('post')) {
 			if(!empty($this -> request -> data)) { // Se enviaron datos
 				if($this -> Calificacion -> save($this -> request -> data)) { // Se puede salvar los datos
@@ -323,7 +325,6 @@ class CalificacionesController extends AppController {
 				
 			}
 		} else {
-			$this -> layout = 'print';
 			$this -> Calificacion -> recursive = 1;
 			
 			$inspector_id = $this -> Auth -> user('id');
