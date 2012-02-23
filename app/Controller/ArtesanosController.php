@@ -237,9 +237,9 @@ class ArtesanosController extends AppController {
 	public function add() {
 		$this -> Artesano -> currentUsrId = $this -> Auth -> user('id');
 		if ($this -> request -> is('post')) {
-			/**
-			 * - Asignar inspectores y fecha de inspección
-			 */
+			 //
+			 // - Asignar inspectores y fecha de inspección
+			 //
 			foreach ($this -> request -> data['MateriasPrima'] as $key => $value) {
 				if (!$value['mat_cantidad'] || !$value['mat_tipo_de_materia_prima'] || !$value['mat_procedencia'] || !$value['mat_valor_comercial']) {
 					unset($this -> request -> data['MateriasPrima'][$key]);
@@ -266,9 +266,9 @@ class ArtesanosController extends AppController {
 			
 			// debug($this -> request -> data);
 			
-			/**
-			 * Verificar si el artesano ya esta o no registrado para decidir si es o no recalificación
-			 */
+			//
+			// Verificar si el artesano ya esta o no registrado para decidir si es o no recalificación
+			 //
 			
 			$artesano = $this -> Artesano -> find('first', array('conditions' => array('Artesano.art_cedula' => $this -> request -> data['Artesano']['art_cedula']), 'recursive' => -1));
 			

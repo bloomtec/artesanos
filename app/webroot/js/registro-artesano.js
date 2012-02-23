@@ -124,7 +124,8 @@ $(function(){
 		var telefono = parseFloat($('#CalificacionCalTelefono').val())? parseFloat($('#CalificacionCalTelefono').val()):0;
 		var servicios = parseFloat($('#CalificacionCalServiciosBasicos').val())? parseFloat($('#CalificacionCalServiciosBasicos').val()):0;
 		var materiaPrima = parseFloat($('#CalificacionCalCompraDeMateriaPrimaMensual').val())? parseFloat($('#CalificacionCalCompraDeMateriaPrimaMensual').val()):0;	
-	 	$('.total_egresos, #CalificacionCalBalanceTotalEgresos').val(totalSalarioAprendices+totalSalarioOperarios+domicilio+taller+agua+luz+telefono+servicios+materiaPrima);
+		var otrosSalarios = parseFloat($('#CalificacionCalOtrosSalarios').val())? parseFloat($('#CalificacionCalOtrosSalarios').val()):0;
+	 	$('.total_egresos, #CalificacionCalBalanceTotalEgresos').val(totalSalarioAprendices+totalSalarioOperarios+domicilio+taller+agua+luz+telefono+servicios+materiaPrima+otrosSalarios);
 		actualizarRentabilidad();
 	}
 	var actualizarSalarioOperario=function(){
@@ -341,13 +342,15 @@ $(function(){
 							}
 						} 
 					}else{
-						$(".validar input[type!='hidden']").val("");
+						$(".validar input[type!='hidden'][type!='checkbox']").val("");
+						$(".validar input[type='checkbox']").attr('checked',false);
 						$('.validar select option:first-child').attr('selected',true).parent().change();
 					}
 				}else{
 					alert(response.Mensaje);
 					$("#wizard .validar").css('visibility','hidden');
-					$(".validar input[type!='hidden']").val("");
+					$(".validar input[type!='hidden'][type!='checkbox']").val("");
+					$(".validar input[type='checkbox']").attr('checked',false);
 					$('.validar select option:first-child').attr('selected',true).parent().change();
 				}
 			});
