@@ -1177,3 +1177,8 @@ tr.diferente td.audit-value, tr.diferente td.audit-data {
 .inspecciones.view input[type=radio]{
 	float:none;
 }
+
+/*boton local*/
+.datos-local .fila-datos{
+	display:none;
+}

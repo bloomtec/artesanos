@@ -23,6 +23,7 @@ $(function() {
 			search();
 		}
 	});
+	$(".telefono").mask("(99) 9999-999"); 
 	function search() {
 		var url = BJS.setParam('query', $(".index .search input[type='text']").val());
 		var indexQuery = url.indexOf('query');

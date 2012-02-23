@@ -13,7 +13,7 @@
 			?>
 		</div>
 	</div>
-	<div class="datos-personales validar">
+	<div class="datos-personales validar tovalidate">
 		<h2>Datos Personales</h2>
 		<div class="fila-datos" row="1">
 			<?php
@@ -41,7 +41,7 @@
 			?>
 		</div>
 	</div>
-	<div class="datos-taller validar">
+	<div class="datos-taller validar tovalidate">
 		<h2>Datos Taller</h2>
 		<div class="fila-datos" row="4">
 			<?php
@@ -57,24 +57,26 @@
 			echo $this -> Form -> input('Taller.sector_id', array('label' => 'Sector:', 'col' => '0'));
 			echo $this -> Form -> input('Taller.parroquia_id', array('label' => 'Parroquia:', 'col' => '1'));
 			
-			echo $this -> Form -> input('Taller.tal_calle_o_avenida', array('style'=>'width:170px;','label' => 'Calle/Avenida:', 'col' => '2'));
+			echo $this -> Form -> input('Taller.tal_calle_o_avenida', array('style'=>'width:150px;','label' => 'Calle/Avenida:', 'col' => '2'));
 			echo $this -> Form -> input('Taller.tal_numero', array('style'=>'width:50px;','label' => 'No.:', 'col' => '3'));
-			echo $this -> Form -> input('Taller.tal_interseccion', array('label' => 'Intersección:', 'col' => '4'));
-			echo $this -> Form -> input('Taller.tal_barrio', array('label' => 'Barrio:', 'col' => '5'));
+			echo $this -> Form -> input('Taller.tal_interseccion', array('style'=>'width:130px;','label' => 'Intersección:', 'col' => '4'));
+			echo $this -> Form -> input('Taller.tal_barrio', array('style'=>'width:130px;','label' => 'Barrio:', 'col' => '5'));
+			echo $this -> Form -> input('Taller.tal_referencia', array('style'=>'width:130px;','label' => 'Referencia:', 'col' => '2'));
 			?>
 		</div>
 
 		<div class="fila-datos" row="7">
 			<?php
-			echo $this -> Form -> input('Taller.tal_telefono_celular', array('label' => 'Tel celular:', 'col' => '0'));
-			echo $this -> Form -> input('Taller.tal_telefono_convencional', array('label' => 'Tel convencional:', 'col' => '1'));
-			echo $this -> Form -> input('Taller.tal_referencia', array('label' => 'Referencia:', 'col' => '2'));
+			echo $this -> Form -> input('Taller.tal_telefono_celular', array('label' => 'Tel celular:', 'col' => '0','class'=>'telefono'));
+			echo $this -> Form -> input('Taller.tal_telefono_convencional', array('label' => 'Tel convencional:', 'col' => '1', 'class'=>'celular'));
+			
 			echo $this -> Form -> input('Taller.tal_email', array('type'=>'email','label' => 'Email:', 'col' => '3'));
 			?>
 		</div>
 	</div>
 	<div class="datos-local validar">
-		<h2>Datos Local Comercial</h2>
+		<h2>Datos Local Comercial <?php echo $this -> Form -> input('has_local',array('label'=>false,'type'=>'checkbox')); ?></h2>
+		
 		<div class="fila-datos" row="8">
 			<?php
 			echo $this -> Form -> input('Local.provincia_id', array('label' => 'Provincia:', 'col' => '0'));
@@ -95,9 +97,9 @@
 		</div>
 		<div class="fila-datos" row="10">
 			<?php
+			echo $this -> Form -> input('Local.loc_referencia', array('label' => 'Referencia:', 'col' => '0'));
 			echo $this -> Form -> input('Local.loc_telefono_celular', array('label' => 'Tel celular:', 'col' => '2'));
 			echo $this -> Form -> input('Local.loc_telefono_convencional', array('label' => 'Tel convencional:', 'col' => '3'));
-			echo $this -> Form -> input('Local.loc_referencia', array('label' => 'Referencia:', 'col' => '0'));
 			echo $this -> Form -> input('Local.loc_email', array('type'=>'email','label' => 'Email:', 'col' => '1'));
 			?>
 		</div>

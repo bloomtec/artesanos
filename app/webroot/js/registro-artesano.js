@@ -440,13 +440,22 @@ $(function(){
 		BJS.updateSelect($("#LocalParroquiaId"),"/parroquias/getBySector/"+$("#LocalSectorId option:selected").val(),function(){});	
 	});
 	/*______________________________*/
+	$('#ArtesanoHasLocal').click(function(){
+		if($(this).is(":checked")){
+			$(".datos-local").addClass('tovalidate');
+			$(".datos-local .fila-datos").show();
+		}else{
+			$(".datos-local").removeClass('tovalidate');
+			$(".datos-local .fila-datos").hide();
+		}
+	});
 	var root = $("#wizard").scrollable();
 	var api = root.scrollable();
 	var drawer = $("#drawer");
 	api.onBeforeSeek(function(event, i) {
 		if (api.getIndex() < i) {
 			var page = root.find(".page").eq(api.getIndex()),
-				 inputs = page.find(".required :input").removeClass("error"),
+				 inputs = page.find(".tovalidate .required :input").removeClass("error"),
 				 empty = inputs.filter(function() {
 					return $(this).val().replace(/\s*/g, '') == '';
 				 });
@@ -497,6 +506,17 @@ $(function(){
 				if(coincidencias == 2){
 					$that.val('');
 					alert('Esta cedula ya se encuentra en el formulario');
+				}else{
+					if(checkCedulaEcuador($that.val())){
+						BJS.post("/artesanos/verificarCedula/"+$that.val(),{},function(data){
+							if(data){
+								$that.val('');
+								alert('La persona se encuentra registrada como Artesano');
+							}
+						}));
+					}else{
+						$that.val('');
+					}
 				}
 			}
 		});

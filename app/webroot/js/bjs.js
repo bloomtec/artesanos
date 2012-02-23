@@ -95,6 +95,7 @@ $(function(){
 		BJS.JSON($address,{},function(options){
 			var count=0;
 			var objectSize= BJS.objectSize(options);
+			$select.append('<option>Seleccione..</option>');
 			if(BJS.objectSize(options)){
 				$.each(options,function(i,val){
 					$select.append('<option value="'+i+'">'+val+'</option>');

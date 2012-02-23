@@ -34,6 +34,11 @@ $cakeDescription = __d('cake_dev', 'Junta Nacional de defensa del artesano');
 			echo $this -> Html -> script('bjs');
 			echo $this -> Html -> script('default');
 			echo $this -> Html -> script('common');
+			echo $this -> Html -> script('jquery.maskedinput-1.2.2');
+			/*
+			 * echo $this -> Html -> script('jquery.inputmask');
+			echo $this -> Html -> script('jquery.inputmask.extentions');
+			 */
 			echo $scripts_for_layout;
 		?>
 	</head>
