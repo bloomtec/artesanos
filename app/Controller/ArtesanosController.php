@@ -9,10 +9,10 @@ class ArtesanosController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('verificarArtesano', 'getID', 'crearCalificacion', 'asignarInspector', 'isCalificacionActive', 'validarCalificacion', 'validarCalificacionAutonomo', 'validarCalificacionNormal', 'validarCalificacionObtenerFechas');
+		$this -> Auth -> allow('verificarCedula', 'getID', 'crearCalificacion', 'asignarInspector', 'isCalificacionActive', 'validarCalificacion', 'validarCalificacionAutonomo', 'validarCalificacionNormal', 'validarCalificacionObtenerFechas');
 	}
 	
-	public function verificarArtesano($cedula = null) {
+	public function verificarCedula($cedula = null) {
 		$this -> layout = 'ajax';
 		if($cedula) {
 			if($this -> Artesano -> find('count', array('conditions' => array('Artesano.art_cedula' => $cedula))) > 0) {
