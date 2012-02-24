@@ -1,7 +1,10 @@
 <?php for($i=15; $i<=19; $i++): ?>
 <tr>
 	<?php echo $this -> Form -> hidden('Trabajador.' . $i . '.tipos_de_trabajador_id', array('value' => 2, 'label' => false, 'div' => false));?>
-	<td><?php echo $this -> Form -> number('Trabajador.' . $i . '.tra_cedula', array('label' => false, 'div' => false, 'class' => 'cedulaUnica'));?></td>
+	<td>
+		<?php echo $this -> Form -> number('Trabajador.' . $i . '.tra_is_cedula', array('label' => 'pasaporte', 'div' => false, 'type' => 'checkbox', 'value'=>1));?>
+		<?php echo $this -> Form -> number('Trabajador.' . $i . '.tra_cedula', array('label' => false, 'div' => false, 'class' => 'cedulaUnica'));?>
+	</td>
 	<td><?php echo $this -> Form -> input('Trabajador.' . $i . '.tra_nombres_y_apellidos', array('label' => false, 'div' => false));?></td>
 	<td><?php echo $this -> Form -> input('Trabajador.' . $i . '.tra_sexo', array('options' => $sexos, 'empty' => 'Seleccione...', 'label' => false, 'div' => false));?></td>
 	<td>

@@ -477,6 +477,7 @@ $(function(){
 				});
 				empty.addClass("error");
 				emails.addClass("error");
+				return true; /*_________________XXXXXXXXXXXXXXXXXXXXXX_ELIMINAR FILA_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
 				return false;
 			} else {
 				switch(api.getIndex()){
@@ -512,6 +513,12 @@ $(function(){
 							if(data){
 								$that.val('');
 								alert('La persona se encuentra registrada como Artesano');
+							}else{
+								BJS.post("/trabajadores/getData/"+$that.val(),{},function(trabajador){
+									if(trabajador.length){
+										//llenar los datos del trabajador
+									}
+								});
 							}
 						});
 					}else{
