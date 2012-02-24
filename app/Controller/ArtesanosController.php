@@ -809,7 +809,7 @@ class ArtesanosController extends AppController {
 		} else {
 			$fechas['EnRango'] = 0;
 			if ($fecha_rango_menor_registro >= $fecha_actual) {
-				$fechas['Mensaje'] = 'Esta tratando de hacer un registro antes de que se cumpla el tiempo de la calificación actual';
+				$fechas['Mensaje'] = 'Esta tratando de hacer un registro antes de estar en el rango válido de tiempo';
 				$fechas['Antes'] = 1;
 			} else {
 				$fechas['Despues'] = 1;
