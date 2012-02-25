@@ -200,15 +200,7 @@ $(function(){
 		actualizarIngresos();
 	});
 	
-	/*__________VALIDACION ENVIO FORM*/
-	$("#registro").submit(function(e){
-		if(totalRentabilidad < salarioMinimoUnificado){
-			e.preventDefault();
-			alert('La rentabilidad es menor al mìnimo permitido para permitir una calificación');
-		}else{
-			return true;
-		}
-	});
+
 	actualizarSalarioOperario();
 	actualizarSalarioAprendiz();
 	actualizarCapital();
@@ -318,7 +310,7 @@ $(function(){
 		return true;
 	}
 	var validarCalificacion = function (){
-		if($('.validarCalificacion .radio input:checked').val()==0/*si es pasaporte*/ || checkCedulaEcuador($("#wizard #ArtesanoArtCedula").val())){
+		if($('.validarCalificacion #ArtesanoArtIsCedula option:selected').val()==0/*si es pasaporte*/ || checkCedulaEcuador($("#wizard #ArtesanoArtCedula").val())){
 			if($("#wizard #ArtesanoArtCedula").val()==""){
 				alert('No ha escrito un numero de pasaporte');
 				return false;
@@ -497,7 +489,65 @@ $(function(){
 		$("#status li").removeClass("active").eq(i).addClass("active");
 		return true;
 	});
+	
+	/*__________VALIDACION ENVIO FORM*/
+	$("#registro").submit(function(e){
+		var valido=true;
+		var page = root.find(".page").eq(api.getIndex()),
+		inputs = page.find(".tovalidate :input").removeClass("error"),
+		empty = inputs.filter(function() {
+			return $(this).val().replace(/\s*/g, '') == '';
+		 });
+		emails = emails.filter(function(){
+				var x=$(this).val();
+				var atpos=x.indexOf("@");
+				var dotpos=x.lastIndexOf(".");
+				if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length){
+				  return true;
+				 }
+		});
+		
+		if(totalRentabilidad < salarioMinimoUnificado){
+			valido=false;
+			e.preventDefault();
+			alert('La rentabilidad es menor al mìnimo permitido para permitir una calificación');
+		}
+		if(!$("#CalificacionCalDomicilioPropio").is(":checked") && $("#CalificacionCalDomicilioValor").val()=="0"){
+			$("#CalificacionCalDomicilioValor").addClass('error');
+			valido=false;
+			e.preventDefault();		
+		}
+		if(!$("#CalificacionCalTallerPropio").is(":checked") && $("#CalificacionCalTallerValor").val()=="0"){
+			$("#CalificacionCalTallerValor").addClass('error');
+			valido=false;
+			e.preventDefault();	
+		}
+		if(valido){
+			return true;	
+		}
+	});
 	//_________________OTRAS VALIDACIONES
+	var llenarDatosTrabajador= function(trabajador,$inputCedula){
+		if(BJS.objectSize(trabajador)){
+			var $tr=$inputCedula.parent().parent();
+			console.log(trabajador);
+			console.log(trabajador.Taller);
+			$tr.find('.nombres').val(trabajador.Trabajador.tra_nombres_y_apellidos);
+			$tr.find('.sexo').val(trabajador.Trabajador.tra_sexo);
+				if(trabajador.Trabajador.tra_afiliado_seguro){
+					$tr.find('.afiliado_seguro').attr('checked',true);
+				}else{
+					$tr.find('.afiliado_seguro').attr('checked',false);
+				}
+			$tr.find('.fecha_nacimiento').val(trabajador.Trabajador.tra_fecha_nacimiento);
+		}
+	
+	}
+	$(".selectCedula").change(function(){
+		if(api.getIndex()){
+			$(this).parent().parent().find('input').focus();
+		}
+	});
 	$("input.cedulaUnica").blur(function(){
 		var $that=$(this);
 		var coincidencias=0;
@@ -508,21 +558,37 @@ $(function(){
 					$that.val('');
 					alert('Esta cedula ya se encuentra en el formulario');
 				}else{
-					if(checkCedulaEcuador($that.val())){
-						BJS.post("/artesanos/verificarCedula/"+$that.val(),{},function(data){
-							if(data){
-								$that.val('');
-								alert('La persona se encuentra registrada como Artesano');
-							}else{
-								BJS.post("/trabajadores/getData/"+$that.val(),{},function(trabajador){
-									if(trabajador.length){
-										//llenar los datos del trabajador
+					switch($that.parent().find('select option:checked').val()){
+						case "1"://CEDULA
+							if(checkCedulaEcuador($that.val())){
+								BJS.post("/artesanos/verificarCedula/"+$that.val()+"/1",{},function(data){
+									if(data){
+										$that.val('');
+										alert('La persona se encuentra registrada como Artesano');
+									}else{
+										BJS.JSON("/trabajadores/getData/"+$that.val()+"/1",{},function(trabajador){
+											llenarDatosTrabajador(trabajador,$that);
+										});
 									}
 								});
+							}else{
+								$that.val('');
 							}
-						});
-					}else{
-						$that.val('');
+						break;
+						case "0"://PASAPORTE
+							BJS.post("/artesanos/verificarCedula/"+$that.val()+"/0",{},function(data){
+								if(data){
+									$that.val('');
+									alert('La persona se encuentra registrada como Artesano');
+								}else{
+									BJS.JSON("/trabajadores/getData/"+$that.val()+"/0",{},function(trabajador){
+										
+										llenarDatosTrabajador(trabajador,$that);
+									});
+								}
+							});
+						break;
+						
 					}
 				}
 			}

@@ -69,6 +69,7 @@
 	float:left;
 	clear:left;
 }
+/*
 #wizard select.date {
 	padding: 0;
 	height:20px;
@@ -78,6 +79,11 @@
 	-moz-box-shadow: 0 0 10px #eee inset;
 	-webkit-box-shadow: 0 0 10px #eee inset;
 }
+*/
+#wizard input.date{
+	width: 6em;
+}
+
 form #wizard .datos-balance .input{
 	float:none;
 }
@@ -94,6 +100,11 @@ form #TablaAprendices input[type=number].salarioAprendiz, form #TablaAprendices 
 #wizard  #TablaAprendices select, #wizard  #TablaOperadores select{
 	min-width:100px;
 	width:100px;
+}
+#wizard  #TablaAprendices select.selectCedula, #wizard  #TablaOperadores select.selectCedula{
+	width:60px;
+	min-width:60px;
+	font-size:10px;
 }
 #wizard select{
 	min-width:130px;

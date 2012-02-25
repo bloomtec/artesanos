@@ -40,56 +40,7 @@
 					<th>Valor Comercial</th>
 				</tr>
 			</thead>
-			<tr>
-				<!--<td><input name="data[ProductosElaborado][pro_cantidad][0]" type="number" id="ProductosElaboradoProCantidad" class="cantidad_productos_elaborados"></td>-->
-				<td><?php echo $this -> Form -> input('ProductosElaborado.0.pro_cantidad', array('label' => false, 'div' => false, 'class' => 'cantidad_productos_elaborados')); ?></td>
-				<!--<td><select name="data[ProductosElaborado][pro_detalle][0]" type="number" id="ProductosElaboradoProDetalle"></select></td>-->
-				<td><?php echo $this -> Form -> input('ProductosElaborado.0.pro_detalle', array('label' => false, 'div' => false, 'options' => $detalles_producto)); ?></td>
-				<!--<td><select name="data[ProductosElaborado][pro_procedencia][0]" type="number" id="ProductosElaboradoProProcedencia"></select></td>-->
-				<td><?php echo $this -> Form -> input('ProductosElaborado.0.pro_procedencia', array('label' => false, 'div' => false, 'options' => $procedencias_producto)); ?></td>
-				<!--<td><input name="data[ProductosElaborado][pro_valor_comercial][0]" type="number" id="ProductosElaboradoProValorComercial" class="valor_productos_elaborados"></td>-->
-				<td><?php echo $this -> Form -> input('ProductosElaborado.0.pro_valor_comercial', array('label' => false, 'div' => false, 'class' => 'valor_productos_elaborados')); ?></td>
-			</tr>
-			<tr>
-				<!--<td><input name="data[ProductosElaborado][pro_cantidad][0]" type="number" id="ProductosElaboradoProCantidad" class="cantidad_productos_elaborados"></td>-->
-				<td><?php echo $this -> Form -> input('ProductosElaborado.1.pro_cantidad', array('label' => false, 'div' => false, 'class' => 'cantidad_productos_elaborados')); ?></td>
-				<!--<td><select name="data[ProductosElaborado][pro_detalle][0]" type="number" id="ProductosElaboradoProDetalle"></select></td>-->
-				<td><?php echo $this -> Form -> input('ProductosElaborado.1.pro_detalle', array('label' => false, 'div' => false, 'options' => $detalles_producto)); ?></td>
-				<!--<td><select name="data[ProductosElaborado][pro_procedencia][0]" type="number" id="ProductosElaboradoProProcedencia"></select></td>-->
-				<td><?php echo $this -> Form -> input('ProductosElaborado.1.pro_procedencia', array('label' => false, 'div' => false, 'options' => $procedencias_producto)); ?></td>
-				<!--<td><input name="data[ProductosElaborado][pro_valor_comercial][0]" type="number" id="ProductosElaboradoProValorComercial" class="valor_productos_elaborados"></td>-->
-				<td><?php echo $this -> Form -> input('ProductosElaborado.1.pro_valor_comercial', array('label' => false, 'div' => false, 'class' => 'valor_productos_elaborados')); ?></td>
-			</tr>
-			<tr>
-				<!--<td><input name="data[ProductosElaborado][pro_cantidad][0]" type="number" id="ProductosElaboradoProCantidad" class="cantidad_productos_elaborados"></td>-->
-				<td><?php echo $this -> Form -> input('ProductosElaborado.2.pro_cantidad', array('label' => false, 'div' => false, 'class' => 'cantidad_productos_elaborados')); ?></td>
-				<!--<td><select name="data[ProductosElaborado][pro_detalle][0]" type="number" id="ProductosElaboradoProDetalle"></select></td>-->
-				<td><?php echo $this -> Form -> input('ProductosElaborado.2.pro_detalle', array('label' => false, 'div' => false, 'options' => $detalles_producto)); ?></td>
-				<!--<td><select name="data[ProductosElaborado][pro_procedencia][0]" type="number" id="ProductosElaboradoProProcedencia"></select></td>-->
-				<td><?php echo $this -> Form -> input('ProductosElaborado.2.pro_procedencia', array('label' => false, 'div' => false, 'options' => $procedencias_producto)); ?></td>
-				<!--<td><input name="data[ProductosElaborado][pro_valor_comercial][0]" type="number" id="ProductosElaboradoProValorComercial" class="valor_productos_elaborados"></td>-->
-				<td><?php echo $this -> Form -> input('ProductosElaborado.2.pro_valor_comercial', array('label' => false, 'div' => false, 'class' => 'valor_productos_elaborados')); ?></td>
-			</tr>
-			<tr>
-				<!--<td><input name="data[ProductosElaborado][pro_cantidad][0]" type="number" id="ProductosElaboradoProCantidad" class="cantidad_productos_elaborados"></td>-->
-				<td><?php echo $this -> Form -> input('ProductosElaborado.3.pro_cantidad', array('label' => false, 'div' => false, 'class' => 'cantidad_productos_elaborados')); ?></td>
-				<!--<td><select name="data[ProductosElaborado][pro_detalle][0]" type="number" id="ProductosElaboradoProDetalle"></select></td>-->
-				<td><?php echo $this -> Form -> input('ProductosElaborado.3.pro_detalle', array('label' => false, 'div' => false, 'options' => $detalles_producto)); ?></td>
-				<!--<td><select name="data[ProductosElaborado][pro_procedencia][0]" type="number" id="ProductosElaboradoProProcedencia"></select></td>-->
-				<td><?php echo $this -> Form -> input('ProductosElaborado.3.pro_procedencia', array('label' => false, 'div' => false, 'options' => $procedencias_producto)); ?></td>
-				<!--<td><input name="data[ProductosElaborado][pro_valor_comercial][0]" type="number" id="ProductosElaboradoProValorComercial" class="valor_productos_elaborados"></td>-->
-				<td><?php echo $this -> Form -> input('ProductosElaborado.3.pro_valor_comercial', array('label' => false, 'div' => false, 'class' => 'valor_productos_elaborados')); ?></td>
-			</tr>
-			<tr>
-				<!--<td><input name="data[ProductosElaborado][pro_cantidad][0]" type="number" id="ProductosElaboradoProCantidad" class="cantidad_productos_elaborados"></td>-->
-				<td><?php echo $this -> Form -> input('ProductosElaborado.4.pro_cantidad', array('label' => false, 'div' => false, 'class' => 'cantidad_productos_elaborados')); ?></td>
-				<!--<td><select name="data[ProductosElaborado][pro_detalle][0]" type="number" id="ProductosElaboradoProDetalle"></select></td>-->
-				<td><?php echo $this -> Form -> input('ProductosElaborado.4.pro_detalle', array('label' => false, 'div' => false, 'options' => $detalles_producto)); ?></td>
-				<!--<td><select name="data[ProductosElaborado][pro_procedencia][0]" type="number" id="ProductosElaboradoProProcedencia"></select></td>-->
-				<td><?php echo $this -> Form -> input('ProductosElaborado.4.pro_procedencia', array('label' => false, 'div' => false, 'options' => $procedencias_producto)); ?></td>
-				<!--<td><input name="data[ProductosElaborado][pro_valor_comercial][0]" type="number" id="ProductosElaboradoProValorComercial" class="valor_productos_elaborados"></td>-->
-				<td><?php echo $this -> Form -> input('ProductosElaborado.4.pro_valor_comercial', array('label' => false, 'div' => false, 'class' => 'valor_productos_elaborados')); ?></td>
-			</tr>
+			<?php echo $this -> element('productos_elaborados');?>
 		</table>
 		<a class="AñadirRegistroProducto cancelar" href="#" >Agregar Otro</a>
 	</div>

@@ -2,14 +2,14 @@
 /*
 	Masked Input plugin for jQuery
 	Copyright (c) 2007-2009 Josh Bush (digitalbush.com)
-	Licensed under the MIT license (http://digitalbush.com/projects/masked-input-plugin/#license) 
+	Licensed under the MIT license (http://digitalbush.com/projects/mask2ed-input-plugin/#license) 
 	Version: 1.2.2 (03/09/2009 22:39:06)
 */
 (function($) {
-	var pasteEventName = ($.browser.msie ? 'paste' : 'input') + ".mask";
+	var pasteEventName = ($.browser.msie ? 'paste' : 'input') + ".mask2";
 	var iPhone = (window.orientation != undefined);
 
-	$.mask = {
+	$.mask2 = {
 		//Predefined character definitions
 		definitions: {
 			'9': "[0-9]",
@@ -48,9 +48,9 @@
 				return { begin: begin, end: end };
 			}
 		},
-		unmask: function() { return this.trigger("unmask"); },
-		mask: function(mask, settings) {
-			if (!mask && this.length > 0) {
+		unmask2: function() { return this.trigger("unmask2"); },
+		mask2: function(mask2, settings) {
+			if (!mask2 && this.length > 0) {
 				var input = $(this[0]);
 				var tests = input.data("tests");
 				return $.map(input.data("buffer"), function(c, i) {
@@ -62,13 +62,13 @@
 				completed: null
 			}, settings);
 
-			var defs = $.mask.definitions;
+			var defs = $.mask2.definitions;
 			var tests = [];
-			var partialPosition = mask.length;
+			var partialPosition = mask2.length;
 			var firstNonMaskPos = null;
-			var len = mask.length;
+			var len = mask2.length;
 
-			$.each(mask.split(""), function(i, c) {
+			$.each(mask2.split(""), function(i, c) {
 				if (c == '?') {
 					len--;
 					partialPosition = i;
@@ -83,7 +83,7 @@
 
 			return this.each(function() {
 				var input = $(this);
-				var buffer = $.map(mask.split(""), function(c, i) { if (c != '?') return defs[c] ? settings.placeholder : c });
+				var buffer = $.map(mask2.split(""), function(c, i) { if (c != '?') return defs[c] ? settings.placeholder : c });
 				var ignore = false;  			//Variable for ignoring control keys
 				var focusText = input.val();
 
@@ -217,30 +217,30 @@
 
 				if (!input.attr("readonly"))
 					input
-					.one("unmask", function() {
+					.one("unmask2", function() {
 						input
-							.unbind(".mask")
+							.unbind(".mask2")
 							.removeData("buffer")
 							.removeData("tests");
 					})
-					.bind("focus.mask", function() {
+					.bind("focus.mask2", function() {
 						focusText = input.val();
 						var pos = checkVal();
 						writeBuffer();
 						setTimeout(function() {
-							if (pos == mask.length)
+							if (pos == mask2.length)
 								input.caret(0, pos);
 							else
 								input.caret(pos);
 						}, 0);
 					})
-					.bind("blur.mask", function() {
+					.bind("blur.mask2", function() {
 						checkVal();
 						if (input.val() != focusText)
 							input.change();
 					})
-					.bind("keydown.mask", keydownEvent)
-					.bind("keypress.mask", keypressEvent)
+					.bind("keydown.mask2", keydownEvent)
+					.bind("keypress.mask2", keypressEvent)
 					.bind(pasteEventName, function() {
 						setTimeout(function() { input.caret(checkVal(true)); }, 0);
 					});

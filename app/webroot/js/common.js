@@ -1,5 +1,5 @@
 $(function() {
-	$.tools.dateinput.localize("es",  {
+	/*$.tools.dateinput.localize("es",  {
 		   months:        'enero,febrero,marzo,abril,mayo,junio,julio,agosto,' +
 		                   	'septiembre,octubre,noviembre,diciembre',
 		   shortMonths:   'ene,feb,mar,abr,may,jun,jul,ago,sep,oct,nov,dic',
@@ -14,7 +14,7 @@ $(function() {
 		firstDay: 1,
 		selectors: true,
 		yearRange: [-100,100]
-	});
+	});*/
 	$(".index .search-generic").click(function() {
 		search();
 	});
@@ -23,7 +23,7 @@ $(function() {
 			search();
 		}
 	});
-	$(".telefono").mask("(99) 9999-999"); 
+	
 	function search() {
 		var url = BJS.setParam('query', $(".index .search input[type='text']").val());
 		var indexQuery = url.indexOf('query');
@@ -76,4 +76,14 @@ $(function() {
 	$("input[type='text']").keyup(function(e){
 		$(this).val($(this).val().toUpperCase());
 	});
+	
+	//Mascaras
+	$.mask2.definitions['2']='[12]';
+	$.mask2.definitions['3']='[123]';
+	$(".telefono").mask2("(99) 9999-999"); 
+	$(":date").mask2("9999-39-92"); 
+	$("input.date").mask2("9999-39-92");
+	$(":date , input.date").attr('placeholder','aaaa-mm-dd');
+	$('input.valor').setMask({ mask : '99,999.999.999.999', type : 'reverse', defaultValue: '000' });
+	
 });

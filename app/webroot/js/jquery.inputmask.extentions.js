@@ -43,6 +43,7 @@ Optional extentions on the jquery.inputmask base
             cardinality: 1,
             casing: "upper"
         }
+        
     });
     //aliases
     $.extend($.inputmask.defaults.aliases, {

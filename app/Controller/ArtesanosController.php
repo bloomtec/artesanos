@@ -16,12 +16,12 @@ class ArtesanosController extends AppController {
 		$this -> layout = 'ajax';
 		if($cedula) {
 			if($this -> Artesano -> find('count', array('conditions' => array('Artesano.art_cedula' => $cedula))) > 0) {
-				echo 'SI';
+				echo true;
 			} else {
-				echo 'NO';
+				echo false;
 			}
 		} else {
-			echo 'NO INGRESO CEDULA';
+			echo false;
 		}
 		exit(0);
 	}
