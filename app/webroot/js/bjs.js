@@ -95,7 +95,7 @@ $(function(){
 		BJS.JSON($address,{},function(options){
 			var count=0;
 			var objectSize= BJS.objectSize(options);
-			$select.append('<option>Seleccione..</option>');
+			
 			if(BJS.objectSize(options)){
 				$.each(options,function(i,val){
 					$select.append('<option value="'+i+'">'+val+'</option>');
@@ -106,16 +106,33 @@ $(function(){
 					
 				});	
 			}else{
-				if($callback) $callback();
+				$select.html('');
+				$select.append('<option>Seleccione..</option>');
+				/*if($callback){
+					$callback()
+				};*/
 			}
 		});	
 	}
 	BJS.objectSize = function(obj) {
-    var size = 0, key;
-    for (key in obj) {
-        if (obj.hasOwnProperty(key)) size++;
-    }
-    return size;
-};
+	    var size = 0, key;
+	    for (key in obj) {
+	        if (obj.hasOwnProperty(key)) size++;
+	    }
+	    return size;
+	};
+	BJS.formatNumber = function(num){
+		if(!isNaN(num)){
+		num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
+		num = num.split('').reverse().join('').replace(/^[\.]/,'');
+		return num;
+		}
+		else{ 
+			input.value = input.value.replace(/[^\d\.]*/g,'');
+		}
+	};
+	BJS.formatComma = function(num){
+		return num.slice(0,-3)+","+num.slice(-2);
+	}
 
 });

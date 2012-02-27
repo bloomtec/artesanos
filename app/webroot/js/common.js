@@ -78,12 +78,15 @@ $(function() {
 	});
 	
 	//Mascaras
-	$.mask2.definitions['2']='[12]';
-	$.mask2.definitions['3']='[123]';
-	$(".telefono").mask2("(99) 9999-999"); 
-	$(":date").mask2("9999-39-92"); 
-	$("input.date").mask2("9999-39-92");
+	//$.mask2.definitions['2']='[12]';
+	//$.mask2.definitions['3']='[123]';
+	//$(".telefono").mask2("(9 - 999 99 99"); 
+	//$(".celular").mask2("999-999-999"); 
+	//$(":date").mask2("9999-39-92"); 
+	$("input.date").setMask({'mask':"9999-13-39", });
 	$(":date , input.date").attr('placeholder','aaaa-mm-dd');
 	$('input.valor').setMask({ mask : '99,999.999.999.999', type : 'reverse', defaultValue: '000' });
 	$('input.number').setMask({ mask : '9999', type : 'repeat' });
+	$(".telefono").setMask({mask:"9-999 99 99"}); 
+	$(".celular").setMask({mask:"999-999-999"}); 
 });

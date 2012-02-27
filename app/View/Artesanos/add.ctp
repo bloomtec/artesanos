@@ -7,15 +7,12 @@
 
 ?>
 <div class="artesanos form calificar">
-	<!-- twitter style "drawer" for displaying validation errors -->
 	<div id="drawer">
 		[Hay campos no validos en el formulario, por favor verifiquelos] <br /> Recuerde que todos los campos marcados con (*) son obligatorios
 	</div>
-	<!-- the form -->
 	<?php echo $this -> Form -> create('Artesano',array('id'=>'registro')); ?>
-		<!-- scrollable root element -->
 		<div id="wizard">
-			<!-- status bar -->
+			<!--<div class='overlay-espera'> Verificando... </div>-->
 			<ul id="status">
 				<li class="active">
 					<strong>1.</strong> Datos Personales, Taller y Local
@@ -28,7 +25,7 @@
 				</li>
 				<div style='clear:both'></div>
 			</ul>
-			<!-- scrollable items -->
+
 			<div class="items">
 				<!-- pages -->
 				<div class="page">

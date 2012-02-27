@@ -85,7 +85,7 @@
 			</tr>
 			<tr class='total'>
 				<th>Total</th>
-				<th><?php echo $this -> Form -> text('Calificacion.cal_total_egresos', array('disabled' => true, 'label' => false, 'class' => 'total_egresos'));?></th>
+				<th><?php echo $this -> Form -> text('Calificacion.cal_total_egresos', array('disabled' => true, 'label' => false, 'class' => 'total_egresos valor'));?></th>
 			</tr>
 		</table>
 		<h2>Capital De Operaciones</h2>

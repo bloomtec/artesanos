@@ -45,8 +45,8 @@
 		<a class="AñadirRegistroProducto cancelar" href="#" >Agregar Otro</a>
 	</div>
 	<div class='actions validar'>
-	<?php echo $this -> Html -> link(__('Atras'), "#", array('class' => 'prev button'));?>
-	<?php echo $this -> Html -> link(__('Continuar'), "#" , array('class' => 'next button'));?>
-	<div style="clear:both;"></div>
+		<?php echo $this -> Html -> link(__('Atras'), "#", array('class' => 'prev button'));?>
+		<?php echo $this -> Html -> link(__('Continuar'), "#" , array('class' => 'next button'));?>
+		<div style="clear:both;"></div>
 	</div>
 </fieldset>

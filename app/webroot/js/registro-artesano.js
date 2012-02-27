@@ -13,19 +13,6 @@ $(function(){
 	$('.submit').click(function(){
 		$('form').submit();
 	});
-	$(':number').keydown(function(e){
-		var key = e.charCode || e.keyCode || 0;
-		return (
-		     key == 8 || 
-		     key == 190 ||
-		     key == 188 ||   
-		     key == 9 ||
-		     key == 46 ||
-		     (key >= 37 && key <= 40) ||
-		     (key >= 48 && key <= 57) ||
-		     (key >= 96 && key <= 105)
-		     );
-	});
 	$('#DatosPersonalDatTipoDiscapacidad').change(function(){
 		if($(this).find('option:selected').val()){
 			$('.porcentaje').show();	
@@ -61,10 +48,10 @@ $(function(){
 				total+=cantidad*parseFloat($(val).val());
 			}
 			if( lenght == i){
-				$('.maquinas_y_herramientas').val(total);
+				$('.maquinas_y_herramientas').val(BJS.formatComma(BJS.formatNumber(total)));
+				actualizarCapital();
 			}
 		});
-		actualizarCapital();
 	}
 	var actualizarMateriaPrima=function(){
 		var total=0;
@@ -79,10 +66,11 @@ $(function(){
 				total+=cantidad*parseFloat($(val).val());
 			}
 			if( lenght == i){
-				$('.materia_prima').val(total);
+				$('.materia_prima').val(BJS.formatComma(BJS.formatNumber(total)));
+				actualizarCapital();
 			}
 		});
-		actualizarCapital();
+		
 	}
 
 	var actualizarProductosElaborados=function(){
@@ -98,7 +86,7 @@ $(function(){
 				total+=cantidad*parseFloat($(val).val());
 			}
 			if( lenght == i){
-				$('.productos_elaborados').val(total);
+				$('.productos_elaborados').val(BJS.formatComma(BJS.formatNumber(total)));
 			}
 		});
 		actualizarCapital();
@@ -137,14 +125,15 @@ $(function(){
 			valor=$(val).val();
 			
 			if( valor){
-				total+=parseFloat(valor);
+				total+=parseFloat(valor.replace('.','').replace(',','.'));
 			}
 			if( lenght == i){
-				$('.salario_operarios').val(total);
+				$('.salario_operarios').val(BJS.formatComma(BJS.formatNumber(total)));
+				actualizarEgresos();
 			}
 		});
 		
-		actualizarEgresos();
+		
 	}
 	var actualizarSalarioAprendiz=function(){
 		var total=0;
@@ -154,13 +143,14 @@ $(function(){
 		$.each($salarios,function(i,val){
 			valor=$(val).val();
 			if( valor){
-				total+=parseFloat(valor);
+				total+=parseFloat(valor.replace('.','').replace(',','.'));
 			}
 			if( lenght == i){
-				$('.salario_aprendices').val(total);
+				$('.salario_aprendices').val(BJS.formatComma(BJS.formatNumber(total)));
+				actualizarEgresos();
 			}
 		});
-		actualizarEgresos();
+		
 	}
 	$('.salarioAprendiz').blur(function(){
 		actualizarSalarioAprendiz();
@@ -191,6 +181,7 @@ $(function(){
 	
 	/*_______INGRESOS____________*/
 	var actualizarIngresos= function(){
+		//parseFloat(valor.replace('.','').replace(',','.'));
 		var porventas = parseFloat($('#CalificacionCalIngresosPorVentas').val())? parseFloat($('#CalificacionCalIngresosPorVentas').val()):0;
 		var otros= parseFloat($('#CalificacionCalOtrosIngresos').val())?  parseFloat($('#CalificacionCalOtrosIngresos').val()):0; 
 		$('#CalificacionCalTotalIngresos, #CalificacionCalBalanceTotalIngresos').val(porventas+otros);
@@ -383,7 +374,7 @@ $(function(){
 			});	
 		});
 	}
-	actualizarGeoTaller();
+	
 	$("#TallerProvinciaId").change(function(){
 		actualizarGeoTaller();
 	});
@@ -412,7 +403,7 @@ $(function(){
 			});	
 		});
 	}
-	actualizarGeoLocal();
+
 	$("#LocalProvinciaId").change(function(){
 		actualizarGeoLocal();
 	});
@@ -436,11 +427,14 @@ $(function(){
 		if($(this).is(":checked")){
 			$(".datos-local").addClass('tovalidate');
 			$(".datos-local .fila-datos").show();
+			$("#wizard").height($("#wizard").find(".page").eq(0).height());
 		}else{
 			$(".datos-local").removeClass('tovalidate');
 			$(".datos-local .fila-datos").hide();
+			$("#wizard").height($("#wizard").find(".page").eq(0).height());
 		}
 	});
+	$("#wizard").height($("#wizard").find(".page").eq(0).height());
 	var root = $("#wizard").scrollable();
 	var api = root.scrollable();
 	var drawer = $("#drawer");
@@ -451,6 +445,7 @@ $(function(){
 				 empty = inputs.filter(function() {
 					return $(this).val().replace(/\s*/g, '') == '';
 				 });
+				 $("#wizard").height(page.next().height());
 				emails=inputs.filter(':email');
 				emails = emails.filter(function(){
 					var x=$(this).val();
