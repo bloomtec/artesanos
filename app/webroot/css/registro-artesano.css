@@ -91,7 +91,7 @@ form #wizard  .input {
 	float: left;
 	width: auto;
 }
-form input[type=number] {
+form input[type=number], form input.valor, input.number {
 	width: 6em;
 }
 form #TablaAprendices input[type=number].salarioAprendiz, form #TablaAprendices input[type=number].salarioOperarios,  form #TablaOperadores input[type=number].salarioAprendiz, form #TablaOperadores input[type=number].salarioOperarios{
@@ -110,10 +110,11 @@ form #TablaAprendices input[type=number].salarioAprendiz, form #TablaAprendices 
 	min-width:130px;
 }
 #wizard .validarCalificacion a{
-	padding-top:39px;
+	margin-top:25px;
+	margin-left: 3px;
 	display: block;
 	float:left;
-	color:#CD0000;
+	color:white;
 }
 /* validation error message bar */
 #drawer {

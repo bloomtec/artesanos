@@ -24,6 +24,6 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $this->Html->link(__('Volver'), $referer); ?> </li>
+		<li><?php echo $this->Html->link(__('Volver'), $referer,array('class' => 'button')); ?> </li>
 	</ul>
 </div>

@@ -43,49 +43,49 @@
 			</tr>
 			<tr>
 				<td>Domicilio <?php echo $this -> Form -> input('Calificacion.cal_domicilio_propio', array('label' => 'Propio'));?></td>
-				<td><?php echo $this -> Form -> input('Calificacion.cal_domicilio_valor', array('label' => false,'value'=>0, 'class'=>'valor'));?></td>
+				<td><?php echo $this -> Form -> text('Calificacion.cal_domicilio_valor', array('label' => false,'value'=>0, 'class'=>'valor'));?></td>
 			</tr>
 			<tr>
 				<td>Taller <?php echo $this -> Form -> input('Calificacion.cal_taller_propio', array('label' => 'Propio'));?></td>
-				<td><?php echo $this -> Form -> input('Calificacion.cal_taller_valor', array('label' => false,'value'=>0, 'class'=>'valor'));?></td>
+				<td><?php echo $this -> Form -> text('Calificacion.cal_taller_valor', array('label' => false,'value'=>0, 'class'=>'valor'));?></td>
 			</tr>
 			<tr>
 				<td>Agua</td>
-				<td><?php echo $this -> Form -> input('Calificacion.cal_agua', array('label' => false,'value'=>0, 'class'=>'valor'));?></td>
+				<td><?php echo $this -> Form -> text('Calificacion.cal_agua', array('label' => false,'value'=>0, 'class'=>'valor'));?></td>
 			</tr>
 			<tr>
 				<td>Luz</td>
-				<td><?php echo $this -> Form -> input('Calificacion.cal_luz', array('label' => false,'value'=>0, 'class'=>'valor'));?></td>
+				<td><?php echo $this -> Form -> text('Calificacion.cal_luz', array('label' => false,'value'=>0, 'class'=>'valor'));?></td>
 			</tr>
 			<tr>
 				<td>Teléfono</td>
-				<td><?php echo $this -> Form -> input('Calificacion.cal_telefono', array('label' => false,'value'=>0, 'class'=>'valor'));?></td>
+				<td><?php echo $this -> Form -> text('Calificacion.cal_telefono', array('label' => false,'value'=>0, 'class'=>'valor'));?></td>
 			</tr>
 			<tr>
 				<td>Servicios Básicos</td>
-				<td><?php echo $this -> Form -> input('Calificacion.cal_servicios_basicos', array('label' => false,'value'=>0, 'class'=>'valor'));?></td>
+				<td><?php echo $this -> Form -> text('Calificacion.cal_servicios_basicos', array('label' => false,'value'=>0, 'class'=>'valor'));?></td>
 			</tr>
 			<tr>
 				<td>Compra Materia Prima Mensual</td>
-				<td><?php echo $this -> Form -> input('Calificacion.cal_compra_de_materia_prima_mensual', array('label' => false,'value'=>0, 'class'=>'valor'));?></td>
+				<td><?php echo $this -> Form -> text('Calificacion.cal_compra_de_materia_prima_mensual', array('label' => false,'value'=>0, 'class'=>'valor'));?></td>
 			</tr>
 			<tr>
 				<td>Salario Operarios</td>
-				<td><?php echo $this -> Form -> input('Calificacion.cal_salario_operarios', array('label' => false, 'disabled' => true, 'class' => 'salario_operarios'));?>
+				<td><?php echo $this -> Form -> text('Calificacion.cal_salario_operarios', array('label' => false, 'disabled' => true, 'class' => 'salario_operarios'));?>
 				<?php echo $this -> Form -> input('Calificacion.cal_salario_operarios', array('type' => 'hidden', 'class' => 'salario_operarios'));?></td>
 			</tr>
 			<tr>
 				<td>Salario Aprendices</td>
-				<td><?php echo $this -> Form -> input('Calificacion.cal_salario_aprendices', array('label' => false, 'disabled' => true, 'class' => 'salario_aprendices'));?>
+				<td><?php echo $this -> Form -> text('Calificacion.cal_salario_aprendices', array('label' => false, 'disabled' => true, 'class' => 'salario_aprendices'));?>
 				<?php echo $this -> Form -> input('Calificacion.cal_salario_aprendices', array('type' => 'hidden', 'class' => 'salario_aprendices'));?></td>
 			</tr>
 			<tr>
 				<td>Otros Salarios</td>
-				<td><?php echo $this -> Form -> input('Calificacion.cal_otros_salarios', array('label' => false,'value'=>0, 'class'=>'valor'));?></td>
+				<td><?php echo $this -> Form -> text('Calificacion.cal_otros_salarios', array('label' => false,'value'=>0, 'class'=>'valor'));?></td>
 			</tr>
 			<tr class='total'>
 				<th>Total</th>
-				<th><?php echo $this -> Form -> number('Calificacion.cal_total_egresos', array('disabled' => true, 'label' => false, 'class' => 'total_egresos'));?></th>
+				<th><?php echo $this -> Form -> text('Calificacion.cal_total_egresos', array('disabled' => true, 'label' => false, 'class' => 'total_egresos'));?></th>
 			</tr>
 		</table>
 		<h2>Capital De Operaciones</h2>
@@ -96,23 +96,23 @@
 			</tr>
 			<tr>
 				<td>Maquinas y Herramientas </td>
-				<td><?php echo $this -> Form -> input('Calificacion.cal_maquinas_y_herramientas', array('label' => false, 'disabled' => true, 'class' => 'maquinas_y_herramientas'));?>
+				<td><?php echo $this -> Form -> text('Calificacion.cal_maquinas_y_herramientas', array('label' => false, 'disabled' => true, 'class' => 'maquinas_y_herramientas'));?>
 				<?php echo $this -> Form -> input('Calificacion.cal_maquinas_y_herramientas', array('label' => false, 'type' => 'hidden', 'class' => 'maquinas_y_herramientas','value'=>0));?></td>
 			</tr>
 			<tr>
 				<td>Materia Prima</td>
-				<td><?php echo $this -> Form -> input('Calificacion.cal_materia_prima', array('label' => false, 'disabled' => true, 'class' => 'materia_prima'));?>
+				<td><?php echo $this -> Form -> text('Calificacion.cal_materia_prima', array('label' => false, 'disabled' => true, 'class' => 'materia_prima'));?>
 				<?php echo $this -> Form -> input('Calificacion.cal_materia_prima', array('label' => false, 'type' => 'hidden', 'class' => 'materia_prima','value'=>0));?></td>
 				</td>
 			</tr>
 			<tr>
 				<td>Productos Elaborados</td>
-				<td><?php echo $this -> Form -> input('Calificacion.cal_productos_elaborados', array('label' => false, 'disabled' => true, 'class' => 'productos_elaborados'));?>
+				<td><?php echo $this -> Form -> text('Calificacion.cal_productos_elaborados', array('label' => false, 'disabled' => true, 'class' => 'productos_elaborados'));?>
 				<?php echo $this -> Form -> input('Calificacion.cal_productos_elaborados', array('label' => false, 'type' => 'hidden', 'class' => 'productos_elaborados','value'=>0));?></td>
 			</tr>
 			<tr class='total'>
 				<th>Total</th>
-				<th><?php echo $this -> Form -> number('Calificacion.cal_total_capital', array('disabled' => true, 'label' => false, 'class' => 'total_capital'));?>
+				<th><?php echo $this -> Form -> text('Calificacion.cal_total_capital', array('disabled' => true, 'label' => false, 'class' => 'total_capital'));?>
 				<?php echo $this -> Form -> input('Calificacion.cal_total_capital', array('type' => 'hidden', 'label' => false, 'class' => 'total_capital','value'=>0));?></th>
 			</tr>
 		</table>
@@ -124,24 +124,24 @@
 			</tr>
 			<tr>
 				<td>Ingresos Por Ventas </td>
-				<td><?php echo $this -> Form -> input('Calificacion.cal_ingresos_por_ventas', array('label' => false, 'class' => 'ingresos_ventas valor','value'=>0));?></td>
+				<td><?php echo $this -> Form -> text('Calificacion.cal_ingresos_por_ventas', array('label' => false, 'class' => 'ingresos_ventas valor','value'=>0));?></td>
 			</tr>
 			<tr>
 				<td>Otros Ingresos</td>
-				<td><?php echo $this -> Form -> input('Calificacion.cal_otros_ingresos', array('label' => false, 'class' => 'otros_ingresos valor','value'=>0));?></td>
+				<td><?php echo $this -> Form -> text('Calificacion.cal_otros_ingresos', array('label' => false, 'class' => 'otros_ingresos valor','value'=>0));?></td>
 			</tr>
 			<tr class='total'>
 				<th>Total</th>
-				<th><?php echo $this -> Form -> number('Calificacion.cal_total_ingresos', array('disabled' => true, 'label' => false, 'class' => 'total_ingresos valor'));?>
+				<th><?php echo $this -> Form -> text('Calificacion.cal_total_ingresos', array('disabled' => true, 'label' => false, 'class' => 'total_ingresos valor'));?>
 				<?php echo $this -> Form -> hidden('Calificacion.cal_total_ingresos', array('label' => false, 'class' => 'total_ingresos','value'=>0));?></th>
 			</tr>
 		</table>
 	</div>
 	<div class="resultado-balance validar">
 		<h2>Balance General</h2>
-		<?php echo $this -> Form -> input('Calificacion.cal_balance_total_ingresos', array('disabled' => true, 'label' => 'Total Ingresos:', 'class' => 'balance_total_ingresos'));?>
-		<?php echo $this -> Form -> input('Calificacion.cal_balance_total_egresos', array('disabled' => true, 'label' => 'Total Egresos:', 'class' => 'balance_total_egresos'));?>
-		<?php echo $this -> Form -> input('Calificacion.cal_balance_rentabilidad_mensual', array('disabled' => true, 'label' => 'Rentabilidad Mensual:', 'class' => 'balance_rentabilidad_mensual'));?>
+		<?php echo $this -> Form -> text('Calificacion.cal_balance_total_ingresos', array('disabled' => true, 'label' => 'Total Ingresos:', 'class' => 'balance_total_ingresos'));?>
+		<?php echo $this -> Form -> text('Calificacion.cal_balance_total_egresos', array('disabled' => true, 'label' => 'Total Egresos:', 'class' => 'balance_total_egresos'));?>
+		<?php echo $this -> Form -> text('Calificacion.cal_balance_rentabilidad_mensual', array('disabled' => true, 'label' => 'Rentabilidad Mensual:', 'class' => 'balance_rentabilidad_mensual'));?>
 		<?php echo $this -> Form -> hidden('Calificacion.cal_balance_total_ingresos', array('label' => 'Total Ingresos:', 'class' => 'balance_total_ingresos','value'=>0));?>
 		<?php echo $this -> Form -> hidden('Calificacion.cal_balance_total_egresos', array('label' => 'Total Egresos:', 'class' => 'balance_total_egresos','value'=>0));?>
 		<?php echo $this -> Form -> hidden('Calificacion.cal_balance_rentabilidad_mensual', array('label' => 'Rentabilidad Mensual:', 'class' => 'balance_rentabilidad_mensual','value'=>0));?>

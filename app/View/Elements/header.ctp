@@ -1,5 +1,5 @@
 <div id="header">
-	<a class="logo" href="/"><img src="/img/logo_header.png" /></a> 
+	<a class="logo" href="/pages/display/home"><img src="/img/logo_header.png" /></a> 
 	<div class='menu-container'>
 	<ul id='user-menu'>
 		<?php if(!$this -> Session -> read("Auth.User.id")) { ?>

@@ -83,7 +83,7 @@
 <?php // endif; ?>
 <div class="actions">
 	<ul>
-		<li><?php echo $this->Html->link(__('Volver Usuarios'), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('Modificar Usuario'), array('action' => 'edit', $usuario['Usuario']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('Volver Usuarios'), array('action' => 'index'),array('class' => 'button')); ?> </li>
+		<li><?php echo $this->Html->link(__('Modificar Usuario'), array('action' => 'edit', $usuario['Usuario']['id']),array('class' => 'button')); ?> </li>
 	</ul>
 </div>

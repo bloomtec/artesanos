@@ -48,7 +48,7 @@
 <div class="actions">
 	<ul>
 		<li>
-			<?php echo $this -> Html -> link(__('Agregar Artesano'), array('action' => 'add'));?>
+			<?php echo $this -> Html -> link(__('Agregar Artesano'), array('action' => 'add'),array('class' => 'button'));?>
 		</li>
 	</ul>
 </div>

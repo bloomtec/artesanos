@@ -35,9 +35,9 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $this->Html->link(__('Volver'), array('action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('Volver'), array('action' => 'index'),array('class' => 'button')); ?> </li>
 		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Valores', 'add')))) : ?>
-		<li><?php echo $this->Html->link(__('Agregar Valor'), array('controller' => 'valores', 'action' => 'add', $parametrosInformativo['ParametrosInformativo']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('Agregar Valor'), array('controller' => 'valores', 'action' => 'add', $parametrosInformativo['ParametrosInformativo']['id']),array('class' => 'button')); ?> </li>
 		<?php endif; ?>
 	</ul>
 </div>

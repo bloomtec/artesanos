@@ -8,8 +8,8 @@
 			echo $this -> Form -> input('Calificacion.rama_id', array('label' => 'Rama:', 'col' => '2', 'options' => array()));
 			echo $this -> Form -> input('art_is_cedula', array('label' => '&nbsp', 'type' => 'select','options'=>array('1'=>'Cédula: ','0'=>'Pasaporte: ')));
 			
-			echo $this -> Form -> input('art_cedula', array('label' => '&nbsp', 'type' => 'number'));
-			echo $this -> Html -> link('validar', "#");
+			echo $this -> Form -> input('art_cedula', array('label' => '&nbsp', 'type' => 'text','class'=>'number'));
+			echo $this -> Html -> link('validar', "#",array("class"=>'button'));
 			?>
 		</div>
 	</div>

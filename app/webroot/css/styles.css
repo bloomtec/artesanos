@@ -144,7 +144,7 @@ p {
 	float: left;
 	margin-left: 50px;
 	margin-top: 15px;
-	width: 70%;
+	width: 65%;
 }
 .home_description .usuarios {
 	background-image: url(/img/users.png);
@@ -304,7 +304,7 @@ p {
 .actions li {
 	list-style: none;
 }
- a.button {
+ a.button, a.cancelar, .actions ul a {
 	background-color: #13498e;
 	color: #fff;
 	padding: 6px;
@@ -690,7 +690,8 @@ form .input label {
 form .input input {
 	clear: none;
 	display: block;
-	height: 20px;
+	height: 16px;
+	border: gray 1px solid;
 }
 form .required {
 	font-weight: bold;
