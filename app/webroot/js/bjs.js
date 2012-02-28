@@ -127,12 +127,20 @@ $(function(){
 		num = num.split('').reverse().join('').replace(/^[\.]/,'');
 		return num;
 		}
-		else{ 
-			input.value = input.value.replace(/[^\d\.]*/g,'');
-		}
+		
 	};
 	BJS.formatComma = function(num){
-		return num.slice(0,-3)+","+num.slice(-2);
+		var posLastPoint=num.lastIndexOf('.');
+		if(posLastPoint > 0 && (num.length - posLastPoint) < 4){
+			var devolver=num.substring(0,posLastPoint)+","+num.substring(posLastPoint+1,num.length);
+			if((num.length - posLastPoint)== 2 ){
+				devolver+='0';
+			}
+			return devolver;
+		}else{
+			return num+',00';
+		}
+		
 	}
 
 });
