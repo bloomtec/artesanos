@@ -1,4 +1,4 @@
-<?php for($i = 0; $i<=5; $i++):
+<?php for($i = 0; $i<10; $i++):
 ?>
 <tr>
 	<td><?php echo $this -> Form -> input('EquiposDeTrabajo.'.$i.'.equ_cantidad', array('label' => false, 'div' => false, 'class' => 'cantidad_maquinas number','type'=>'text'));?></td>

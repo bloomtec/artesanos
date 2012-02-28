@@ -317,6 +317,9 @@ $(function(){
 			}
 			BJS.JSONP('/artesanos/validarCalificacion',{cedula:$("#ArtesanoArtCedula").val(),tipoDeCalificacion:$("#CalificacionTiposDeCalificacionId option:selected").val(),rama:$('#CalificacionRamaId option:selected').val()},function(response){
 				
+				if(response.Mensaje){
+					alert(response.Mensaje);
+				}
 				if(response.Calificar){
 					$("#wizard .validar").css('visibility','visible');
 					if(typeof response.Datos != 'undefined'){
@@ -341,7 +344,6 @@ $(function(){
 						$('.validar select option:first-child').attr('selected',true).parent().change();
 					}
 				}else{
-					alert(response.Mensaje);
 					$("#wizard .validar").css('visibility','hidden');
 					$(".validar input[type!='hidden'][type!='checkbox']").val("");
 					$(".validar input[type='checkbox']").attr('checked',false);
@@ -502,28 +504,28 @@ $(function(){
 		empty = inputs.filter(function() {
 			return $(this).val().replace(/\s*/g, '') == '';
 		 });
-		emails = emails.filter(function(){
-				var x=$(this).val();
-				var atpos=x.indexOf("@");
-				var dotpos=x.lastIndexOf(".");
-				if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length){
-				  return true;
-				 }
-		});
 		
 		if(totalRentabilidad < salarioMinimoUnificado){
 			valido=false;
 			e.preventDefault();
 			alert('La rentabilidad es menor al mìnimo permitido para permitir una calificación');
 		}
-		if(!$("#CalificacionCalDomicilioPropio").is(":checked") && $("#CalificacionCalDomicilioValor").val()=="0"){
+		if(!$("#CalificacionCalDomicilioPropio").is(":checked") && $("#CalificacionCalDomicilioValor").val()=="0,00"){
 			$("#CalificacionCalDomicilioValor").addClass('error');
 			valido=false;
+			drawer.slideDown(function()  {
+					drawer.css({"backgroundColor":"#EFBC00",'color':'black'});
+					//setTimeout(function() { drawer.css({"backgroundColor":"#EFBC00",'color':'black'}); }, 1000);
+				});
 			e.preventDefault();		
 		}
-		if(!$("#CalificacionCalTallerPropio").is(":checked") && $("#CalificacionCalTallerValor").val()=="0"){
+		if(!$("#CalificacionCalTallerPropio").is(":checked") && $("#CalificacionCalTallerValor").val()=="0,00"){
 			$("#CalificacionCalTallerValor").addClass('error');
 			valido=false;
+			drawer.slideDown(function()  {
+					drawer.css({"backgroundColor":"#EFBC00",'color':'black'});
+					//setTimeout(function() { drawer.css({"backgroundColor":"#EFBC00",'color':'black'}); }, 1000);
+			});
 			e.preventDefault();	
 		}
 		if(valido){
@@ -596,8 +598,32 @@ $(function(){
 			}
 		});
 	});
-	$("td select").css({'padding':'0'});
-	$("td").find("select.date:eq(0)").css({'width':'50px','minWidth':'50px'});
-	$("td").find("select.date:eq(1)").css({'width':'27px','minWidth':'27px'});
-	$("td").find("select.date:eq(2)").css({'width':'50px','minWidth':'50px'});
+	// FUNCIONALIDADES AÑADIR FILAS
+	var tables={};
+	tables.update= function(jtable){
+		if(jtable['show'] <= jtable['till']){
+			if(jtable['show'] == jtable['till']){
+				jtable['button'].addClass('disabled');
+			}
+			jtable['show']+=1;
+			jtable['jTable'].find('tr').hide();
+			jtable['jTable'].find('tr:lt('+jtable['show']+')').show();
+			$("#wizard").height($("#wizard").find(".page").eq(api.getIndex()).height());
+		}
+	}
+	$.each($('.add-row'),function(i,val){
+		tables[$(val).attr('rel')]={};
+		tables[$(val).attr('rel')]['button']=$(val);
+		tables[$(val).attr('rel')]['jTable']=$($(val).attr('rel'));
+		tables[$(val).attr('rel')]['show']=$($(val).attr('rel')).attr('show');
+		tables[$(val).attr('rel')]['till']=parseInt($($(val).attr('rel')).attr('till'));
+		tables[$(val).attr('rel')]['show']=parseInt($($(val).attr('rel')).attr('show'))+1;
+		tables[$(val).attr('rel')]['jTable'].find('tr').hide();
+		tables[$(val).attr('rel')]['jTable'].find('tr:lt('+tables[$(val).attr('rel')]['show']+')').show();
+	});
+	
+	$(".add-row").click(function(e){
+		e.preventDefault();
+		tables.update(tables[$(this).attr('rel')]);
+	});
 });

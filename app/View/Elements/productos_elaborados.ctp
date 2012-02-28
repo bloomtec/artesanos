@@ -1,4 +1,4 @@
-<?php for($i = 0; $i < 5; $i++):
+<?php for($i = 0; $i < 10; $i++):
 ?>
 <tr>
 	<td><?php echo $this -> Form -> input('ProductosElaborado.'.$i.'.pro_cantidad', array('label' => false, 'div' => false, 'class' => 'cantidad_productos_elaborados number','type'=>'text'));?></td>

@@ -1,7 +1,7 @@
 <fieldset>
 	<div class="datos-operadores validar">
 		<h2>Operadores A Su Cargo</h2>
-		<table id="TablaOperadores" class="tabla-operadores">
+		<table id="TablaOperadores" class="tabla-operadores" till='15' show='3'>
 			<thead>
 				<tr>
 					<th>No. De Cédula</th>
@@ -15,11 +15,11 @@
 			</thead>
 			<?php echo $this -> element('operarios');?>
 		</table>
-		<a class="AñadirRegistroOperador button" href="#" >Agregar Otro</a>
+		<a class="add-row button" href="#" rel="#TablaOperadores">Agregar Otro</a>
 	</div>
 	<div class="datos-operadores validar">
 		<h2>Aprendices A Su Cargo</h2>
-		<table id="TablaAprendices" class="tabla-aprendices">
+		<table id="TablaAprendices" class="tabla-aprendices" till='5' show='3'>
 			<thead>
 				<tr>
 					<th>No. De Cédula</th>
@@ -33,6 +33,7 @@
 			</thead>
 			<?php echo $this -> element('aprendices');?>
 		</table>
+		<a class="add-row button" href="#" rel="#TablaAprendices">Agregar Otro</a>
 	</div>
 	<div class="datos-balance validar">
 		<h2>Egresos Mensuales</h2>
@@ -43,11 +44,11 @@
 			</tr>
 			<tr>
 				<td>Domicilio <?php echo $this -> Form -> input('Calificacion.cal_domicilio_propio', array('label' => 'Propio'));?></td>
-				<td><?php echo $this -> Form -> text('Calificacion.cal_domicilio_valor', array('label' => false,'value'=>0, 'class'=>'valor'));?></td>
+				<td class='tovalidate'><?php echo $this -> Form -> text('Calificacion.cal_domicilio_valor', array('label' => false,'value'=>0, 'class'=>'valor'));?></td>
 			</tr>
 			<tr>
 				<td>Taller <?php echo $this -> Form -> input('Calificacion.cal_taller_propio', array('label' => 'Propio'));?></td>
-				<td><?php echo $this -> Form -> text('Calificacion.cal_taller_valor', array('label' => false,'value'=>0, 'class'=>'valor'));?></td>
+				<td class='tovalidate'><?php echo $this -> Form -> text('Calificacion.cal_taller_valor', array('label' => false,'value'=>0, 'class'=>'valor'));?></td>
 			</tr>
 			<tr>
 				<td>Agua</td>
@@ -139,12 +140,13 @@
 	</div>
 	<div class="resultado-balance validar">
 		<h2>Balance General</h2>
-		<?php echo $this -> Form -> text('Calificacion.cal_balance_total_ingresos', array('disabled' => true, 'label' => 'Total Ingresos:', 'class' => 'balance_total_ingresos'));?>
-		<?php echo $this -> Form -> text('Calificacion.cal_balance_total_egresos', array('disabled' => true, 'label' => 'Total Egresos:', 'class' => 'balance_total_egresos'));?>
-		<?php echo $this -> Form -> text('Calificacion.cal_balance_rentabilidad_mensual', array('disabled' => true, 'label' => 'Rentabilidad Mensual:', 'class' => 'balance_rentabilidad_mensual'));?>
+		<?php echo $this -> Form -> input('Calificacion.cal_balance_total_ingresos', array('type'=>'text','disabled' => true, 'label' => 'Total Ingresos:', 'class' => 'balance_total_ingresos'));?>
+		<?php echo $this -> Form -> input('Calificacion.cal_balance_total_egresos', array('type'=>'text','disabled' => true, 'label' => 'Total Egresos:', 'class' => 'balance_total_egresos'));?>
+		<?php echo $this -> Form -> input('Calificacion.cal_balance_rentabilidad_mensual', array('type'=>'text','disabled' => true, 'label' => 'Rentabilidad Mensual:', 'class' => 'balance_rentabilidad_mensual'));?>
 		<?php echo $this -> Form -> hidden('Calificacion.cal_balance_total_ingresos', array('label' => 'Total Ingresos:', 'class' => 'balance_total_ingresos','value'=>0));?>
 		<?php echo $this -> Form -> hidden('Calificacion.cal_balance_total_egresos', array('label' => 'Total Egresos:', 'class' => 'balance_total_egresos','value'=>0));?>
 		<?php echo $this -> Form -> hidden('Calificacion.cal_balance_rentabilidad_mensual', array('label' => 'Rentabilidad Mensual:', 'class' => 'balance_rentabilidad_mensual','value'=>0));?>
+		<div style="clear:both";></div>
 	</div>
 	<div class='actions validar'>
 		<?php echo $this -> Html -> link(__('Atras'), "#", array('class' => 'prev button'));?>
