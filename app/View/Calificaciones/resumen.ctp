@@ -2,7 +2,7 @@
 	<legend>
 		INFORMACIÓN SOBRE LAS INSPECCIONES
 	</legend>
-	<?php if(isset($calificacion['InspectorTaller']) && !empty($calificacion['InspectorTaller'])) :	?>
+	<?php if(isset($calificacion['InspectorTaller']['id']) && !empty($calificacion['InspectorTaller']['id'])) :	?>
 	<table>
 		<caption>
 			INSPECTOR ASIGNADO Y FECHA PARA EL TALLER
@@ -21,7 +21,7 @@
 		</tr>
 	</table>
 	<?php endif;?>
-	<?php if(isset($calificacion['InspectorLocal']) && !empty($calificacion['InspectorLocal'])) : ?>
+	<?php if(isset($calificacion['InspectorLocal']['id']) && !empty($calificacion['InspectorLocal']['id'])) : ?>
 	<table>
 		<caption>
 			INSPECTOR ASIGNADO Y FECHA PARA EL LOCAL
@@ -42,6 +42,6 @@
 	<?php endif;?>
 	<a class="button" target="_blank" href="/calificaciones/view/<?php echo $calificacion['Calificacion']['id'];?>">VER RESUMEN DE LA CALIFICACIÓN</a>
 </div>
-<!--<div class="debug-info">
-	<?php debug($calificacion);?>
-</div>-->
+<div class="debug-info">
+	<?php // debug($calificacion); ?>
+</div>
