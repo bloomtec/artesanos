@@ -143,7 +143,7 @@ class UsuariosController extends AppController {
 				$user_id = $this -> Usuario -> id;
 				$user_alias = $this -> request -> data['Usuario']['usu_nombre_de_usuario'];
 				$this -> Usuario -> query("UPDATE `aros` SET `alias`='$user_alias' WHERE `model`='Usuario' AND `foreign_key`=$user_id");
-				$this -> setInfoPermisos($this -> Usuario -> id, $this -> request -> data['Permisos']);
+				//$this -> setInfoPermisos($this -> Usuario -> id, $this -> request -> data['Permisos']);
 				$this -> Session -> setFlash(__('Se guardó el usuario'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
@@ -203,7 +203,22 @@ class UsuariosController extends AppController {
 	 */
 	
 	public function permisos($id = null) {
-		
+		$this -> Usuario -> currentUsrId = $this -> Auth -> user('id');
+		$this -> Usuario -> id = $id;
+		if (!$this -> Usuario -> exists()) {
+			throw new NotFoundException(__('Usuario no válido'));
+		}
+		if ($this -> request -> is('post') || $this -> request -> is('put')) {
+			debug($this -> request -> data);
+			/* if (true) {				
+				$this -> Session -> setFlash(__('Se asigaron los permisos al usuario'), 'crud/success');
+				$this -> redirect(array('action' => 'index'));
+			} else {
+				$this -> Session -> setFlash(__('No se pudo asignar los permisos al usuario. Por favor, intente de nuevo.'), 'crud/error');
+			} */
+		} else {
+			$this -> request -> data = $this -> Usuario -> read(null, $id);
+		}
 	}
 	
 	private $info_permisos = array(
