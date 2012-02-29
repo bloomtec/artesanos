@@ -6,7 +6,7 @@
 			<th><?php echo $this -> Paginator -> sort('cal_fecha_expiracion', 'Fecha De Expiración');?></th>
 			<th><?php echo $this -> Paginator -> sort('cal_rama', 'Rama');?></th>
 			<th><?php echo $this -> Paginator -> sort('cal_tipo_de_calificacion', 'Tipo De Artesano');?></th>
-			<th></th>
+			<th> Acciones </th>
 		</tr>
 		<?php foreach ($calificaciones as $calificacion): ?>
 		<tr>
@@ -15,7 +15,12 @@
 			<td><?php echo h($calificacion['Calificacion']['cal_fecha_expiracion']);?>&nbsp;</td>
 			<td><?php echo h($calificacion['Calificacion']['cal_rama']);?>&nbsp;</td>
 			<td><?php echo h($calificacion['Calificacion']['cal_tipo_de_calificacion']);?>&nbsp;</td>
-			<td>&nbsp;</td>
+			<td>
+				<?php 
+					if($calificacion['Calificacion']['cal_estado']==1) echo $this -> Html -> link('Especie Valorada',array("action"=>"imprimir",$calificacion['Calificacion']['id']),array('target'=>'blank_', 'class'=>'button')); 
+					echo $this -> Html -> link('Ver',array("action"=>"view",$calificacion['Calificacion']['id']),array('target'=>'blank_', 'class'=>'button')); 
+				?>
+			</td>
 		</tr>
 		<?php endforeach;?>
 	</table>
