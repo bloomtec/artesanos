@@ -23,24 +23,6 @@
 			echo $this -> Form -> input('usu_inspecciones_por_dia', array('label' => 'Número De Inspecciones Por Día',"class"=>"number",'type'=>'text'));
 			?>
 		</div>
-		<div class="permisos-acl">
-			<h4><?php echo __('Permisos');?></h4>
-			<?php
-			$modulos = $this -> requestAction('/usuarios/getInfoPermisos');
-			foreach ($modulos as $key => $modulo) {
-				echo '<div class="modulo-' . key($modulo) . '">';
-				echo '<p><b>'. key($modulo) .'</b></p>';
-				echo '<table class="tabla-permisos"><tr>';
-				foreach($modulo[key($modulo)] as $key => $accion) {
-					echo '<td class="accion-permiso">';
-					echo $this -> Form -> input('Permisos.'.key($modulo).'.'.$key, array('type'=>'checkbox', 'label'=>$accion));
-					echo '</td>';
-				}
-				echo '</tr></table>';
-				echo '</div>';
-			}
-			?>
-		</div>
 	</fieldset>
 	<?php echo $this -> Html -> link(__('Cancelar'), array('action' => 'index'), array('class' => 'cancelar button'));?>
 	<?php echo $this -> Form -> end(__('Guardar'));?>

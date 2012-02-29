@@ -91,8 +91,8 @@ class UsuariosController extends AppController {
 			throw new NotFoundException(__('Usuario no válido'));
 		}
 		$this -> set('usuario', $this -> Usuario -> read(null, $id));
-		$permisos['Permisos'] = $this -> getValoresPermisos($id);
-		$this -> set(compact('permisos'));
+		// $permisos['Permisos'] = $this -> getValoresPermisos($id);
+		// $this -> set(compact('permisos'));
 	}
 	private function validacionesInspector(){
 		if($this->data['Usuario']['rol_id']==3){
@@ -179,7 +179,6 @@ class UsuariosController extends AppController {
 				$user_id = $this -> request -> data['Usuario']['id'];
 				$user_alias = $this -> request -> data['Usuario']['usu_nombre_de_usuario'];
 				$this -> Usuario -> query("UPDATE `aros` SET `alias`='$user_alias' WHERE `model`='Usuario' AND `foreign_key`=$user_id");
-				$this -> setInfoPermisos($this -> request -> data['Usuario']['id'], $this -> request -> data['Permisos']);
 				$this -> Session -> setFlash(__('Se guardó el usuario'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
@@ -190,7 +189,6 @@ class UsuariosController extends AppController {
 		}
 		$usu_unidades = $this -> Usuario -> getUnidades();
 		$roles = $this -> Usuario -> Rol -> find('list');
-		$permisos['Permisos'] = $this -> getValoresPermisos($id);
 		$this -> loadModel('Provincia');
 		$this -> loadModel('Canton');
 		$provincias = $this -> Provincia -> find('list');
@@ -203,6 +201,10 @@ class UsuariosController extends AppController {
 	/**
 	 * Sección manejo ACL
 	 */
+	
+	public function permisos($id = null) {
+		
+	}
 	
 	private $info_permisos = array(
 		0 => array(

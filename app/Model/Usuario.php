@@ -209,7 +209,7 @@ class Usuario extends AppModel {
 		}
 		if(isset($this -> data['Usuario']['id'])) {
 			$this -> data['OldData'] = $this -> find('first', array('conditions' => array('Usuario.id' => $this -> data['Usuario']['id'])));
-			$this -> data['OldData']['Permisos'] = $this -> requestAction('/usuarios/getValoresPermisos/' . $this->data['Usuario']['id']);
+			//$this -> data['OldData']['Permisos'] = $this -> requestAction('/usuarios/getValoresPermisos/' . $this->data['Usuario']['id']);
 		}
 	    return true;
 	}
@@ -271,7 +271,7 @@ class Usuario extends AppModel {
 			$new_data['Antes'] .= '<tr><td class="audit-value">Cédula</td><td class="audit-data">' . $data['OldData']['Usuario']['usu_numero_identificacion'] . '</td></tr>';
 			$new_data['Antes'] .= '<tr><td class="audit-value">Nombres Y Apellidos</td><td class="audit-data">' . $data['OldData']['Usuario']['usu_nombres_y_apellidos'] . '</td></tr>';
 			$new_data['Antes'] .= '<caption>Permisos Del Usuario</caption>';
-			foreach($data['OldData']['Permisos'] as $modelo => $acciones) {
+			/*foreach($data['OldData']['Permisos'] as $modelo => $acciones) {
 				foreach($acciones as $accion => $valor) {
 					$permiso = null;
 					if($valor) {
@@ -281,7 +281,7 @@ class Usuario extends AppModel {
 					}
 					$new_data['Antes'] .= '<tr><td class="audit-value">' . $modelo . '::' . $accion . '</td><td class="audit-data">' . $permiso . '</td></tr>';
 				}
-			}
+			}*/
 			$new_data['Antes'] .= '</table>';
 		}
 		

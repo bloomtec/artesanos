@@ -31,11 +31,14 @@
 		</td>
 		<td class="actions">
 			<?php
+				if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Usuarios', 'permisos')))) {
+					echo $this->Html->link(__('Permisos'), array('action' => 'permisos', $usuario['Usuario']['id']),array('class'=>'privileges','title' => 'Permisos'));
+				}
 				if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Usuarios', 'view')))) {
-					echo $this->Html->link(__('View'), array('action' => 'view', $usuario['Usuario']['id']),array('class'=>'view','title' => 'Ver'));
+					echo $this->Html->link(__('Ver'), array('action' => 'view', $usuario['Usuario']['id']),array('class'=>'view','title' => 'Ver'));
 				}
 				if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Usuarios', 'edit')))) {
-					echo $this->Html->link(__('Edit'), array('action' => 'edit', $usuario['Usuario']['id']),array('class'=>'edit','title'=>'Modificar'));
+					echo $this->Html->link(__('Modificar'), array('action' => 'edit', $usuario['Usuario']['id']),array('class'=>'edit','title'=>'Modificar'));
 				}
 			?>
 		</td>

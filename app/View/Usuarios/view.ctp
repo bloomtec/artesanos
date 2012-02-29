@@ -17,9 +17,19 @@
 			?>
 			&nbsp;
 		</h3>
-		<label><?php echo __('Cedula'); ?></label>
+		<label><?php echo __('Identificación'); ?></label>
 		<h3>
-			<?php echo h($usuario['Usuario']['usu_cedula']); ?>
+			<?php echo h($usuario['Usuario']['usu_numero_identificacion']); ?>
+			&nbsp;
+		</h3>
+		<label><?php echo __('Es Cédula'); ?></label>
+		<h3>
+			<?php // echo h($usuario['Usuario']['usu_activo']); ?>
+			<?php if($usuario['Usuario']['usu_is_cedula']) { ?> 
+				 <input type='checkbox' checked='checked' disabled='true' class='checkbox'/> 
+			 <?php } else { ?> 
+				 <input type='checkbox' disabled='true' class='checkbox'/>
+			 <?php } ?>
 			&nbsp;
 		</h3>
 		<label><?php echo __('Nombres Y Apellidos'); ?></label>
@@ -48,6 +58,7 @@
 			&nbsp;
 		</h3>
 </div>
+<!--
 <?php // if($usuario['Usuario']['rol_id'] != 1) : ?>
 <div class="permisos-acl" style="margin-top: 280px;">
 	<h2><?php echo __('Permisos');?></h2>
@@ -81,6 +92,7 @@
 	});
 </script>
 <?php // endif; ?>
+-->
 <div class="actions">
 	<ul>
 		<li><?php echo $this->Html->link(__('Volver Usuarios'), array('action' => 'index'),array('class' => 'button')); ?> </li>
