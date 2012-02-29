@@ -91,7 +91,7 @@ class ReportesController extends AppController {
 			$conditions = array();
 			if(!empty($this -> request -> data['Reporte']['cedula'])) {
 				$this -> loadModel('Usuario');
-				$usuario = $this -> Usuario -> findByUsuCedula($this -> request -> data['Reporte']['cedula']);
+				$usuario = $this -> Usuario -> findByUsuNumeroIdentificacion($this -> request -> data['Reporte']['cedula']);
 				if(!empty($usuario)) {
 					$this -> loadModel('Calificacion');
 					$calificaciones = $this -> Calificacion -> find('list', array('conditions' => array('OR' => array('Calificacion.cal_inspector_local' => $usuario['Usuario']['id'], 'Calificacion.cal_inspector_taller' => $usuario['Usuario']['id']))));
