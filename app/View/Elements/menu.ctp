@@ -41,30 +41,46 @@
 			<a href="/pages/display/parametros">PARAMETROS</a>
 		</li>
 		<?php endif; ?>
+		<!--
 		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Auditorias', 'index')))) : ?>
 		<li class="auditorias">
 			<a href="/auditorias">AUDITORIAS</a>
 		</li>
 		<?php endif; ?>
+		-->
+		<?php
+			if(
+				$this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Reportes', 'reporteArtesanos'))) ||
+				$this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Reportes', 'reporteCalificacionesOperador'))) ||
+				$this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Reportes', 'reporteCalificacionesArtesano'))) ||
+				$this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Reportes', 'reporteInspecciones')))
+			) :
+		?>
 		<li class="reportes">
 			<a href="#">REPORTES</a>
 			<ul>
+				<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Reportes', 'reporteArtesanos')))) : ?>
 				<li>
 					<a href="/reportes/reporteArtesanos">Artesanos</a>
 				</li>
+				<?php endif; ?>
+				<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Reportes', 'reporteCalificacionesOperador')))) : ?>
 				<li>
 					<a href="/reportes/reporteCalificacionesOperador">Calificaciones Operador</a>
 				</li>
+				<?php endif; ?>
+				<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Reportes', 'reporteCalificacionesArtesano')))) : ?>
 				<li>
 					<a href="/reportes/reporteCalificacionesArtesano">Calificaciones Artesano</a>
 				</li>
+				<?php endif; ?>
+				<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Reportes', 'reporteInspecciones')))) : ?>
 				<li>
 					<a href="/reportes/reporteInspecciones">Inspecciones</a>
 				</li>
-				<!--<li>
-					<a href="/reportes/reporteEstadisticoCalificaciones">Estadistico Calificaciones</a>
-				</li>-->
+				<?php endif; ?>
 			</ul>
 		</li>
+		<?php endif; ?>
 	</ul>
 </div>

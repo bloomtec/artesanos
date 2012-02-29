@@ -7,11 +7,6 @@ App::uses('AppController', 'Controller');
  */
 class ReportesController extends AppController {
 	
-	public function beforeFilter() {
-		parent::beforeFilter();
-		$this -> Auth -> allow('*');
-	}
-	
 	public function reporteArtesanos() {
 		if ($this -> request -> is('post')) {
 			// Sección informe
@@ -152,16 +147,6 @@ class ReportesController extends AppController {
 				$this -> Session -> write('conditions', $conditions);
 				$this -> redirect(array('controller' => 'calificaciones', 'action' => 'reporteInspecciones'));
 			}
-		}
-	}
-	
-	public function reporteEstadisticoCalificaciones() {
-		if ($this -> request -> is('post')) {
-			// Sección informe
-			$this -> set('mostrar_reporte', true);
-		} else {
-			// Sección formulario
-			$this -> set('mostrar_reporte', false);
 		}
 	}
 
