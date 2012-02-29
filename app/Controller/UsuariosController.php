@@ -94,6 +94,7 @@ class UsuariosController extends AppController {
 		// $permisos['Permisos'] = $this -> getValoresPermisos($id);
 		// $this -> set(compact('permisos'));
 	}
+	
 	private function validacionesInspector(){
 		if($this->data['Usuario']['rol_id']==3){
 				$newValidation = array(
@@ -143,6 +144,12 @@ class UsuariosController extends AppController {
 				$user_id = $this -> Usuario -> id;
 				$user_alias = $this -> request -> data['Usuario']['usu_nombre_de_usuario'];
 				$this -> Usuario -> query("UPDATE `aros` SET `alias`='$user_alias' WHERE `model`='Usuario' AND `foreign_key`=$user_id");
+				$usuario = $this -> Usuario -> read(null, $user_id);
+				if($usuario['Usuario']['rol_id'] == 3) {
+					$this -> setPermisosInspectores($usuario, true);
+				} else {
+					$this -> setPermisosInspectores($usuario, false);
+				}
 				//$this -> setInfoPermisos($this -> Usuario -> id, $this -> request -> data['Permisos']);
 				$this -> Session -> setFlash(__('Se guardó el usuario'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
@@ -179,6 +186,12 @@ class UsuariosController extends AppController {
 				$user_id = $this -> request -> data['Usuario']['id'];
 				$user_alias = $this -> request -> data['Usuario']['usu_nombre_de_usuario'];
 				$this -> Usuario -> query("UPDATE `aros` SET `alias`='$user_alias' WHERE `model`='Usuario' AND `foreign_key`=$user_id");
+				$usuario = $this -> Usuario -> read(null, $user_id);
+				if($usuario['Usuario']['rol_id'] == 3) {
+					$this -> setPermisosInspectores($usuario, true);
+				} else {
+					$this -> setPermisosInspectores($usuario, false);
+				}
 				$this -> Session -> setFlash(__('Se guardó el usuario'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
@@ -221,6 +234,11 @@ class UsuariosController extends AppController {
 				$this -> setPermisosArtesanos($usuario, $this -> request -> data['Permisos']['Artesanos']);
 				$this -> setPermisosParametros($usuario, $this -> request -> data['Permisos']['Parametros']);
 				$this -> setPermisosReportes($usuario, $this -> request -> data['Permisos']['Reportes']);
+				if($usuario['Usuario']['rol_id'] == 3) {
+					$this -> setPermisosInspectores($usuario, true);
+				} else {
+					$this -> setPermisosInspectores($usuario, false);
+				}
 				$this -> Session -> setFlash(__('Se asigaron los permisos al usuario'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} elseif($usuario['Usuario']['rol_id'] == 1) {
@@ -417,7 +435,11 @@ class UsuariosController extends AppController {
 	}
 	
 	private function setPermisosInspectores($usuario = null, $asignar = null) {
-		
+		if($asignar) {
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/inspecciones');
+		} else {
+			$this -> Acl -> deny($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/inspecciones');
+		}
 	}
 	
 	private function getPermisosInspectores($usuario = null) {
