@@ -25,7 +25,7 @@ $cakeDescription = __d('cake_dev', 'Junta Nacional de defensa del artesano');
 		<title><?php echo $title_for_layout;?></title>
 		<?php
 			echo $this -> Html -> meta('icon');
-			echo $this -> Html -> css('calificaiones');
+			echo $this -> Html -> css('calificaciones');
 			echo $this -> Html -> script('jquery');
 			echo $scripts_for_layout;
 		?>

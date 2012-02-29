@@ -185,7 +185,6 @@ table.balance{
 /*END TABLES*/
 #wizard .validar{
 	visibility: hidden;	
-	visibility: visible; /*ELIMINAR LINEA*/	
 }
 label[for=ArtesanoArtCedula]{
 	visibility: hidden;

@@ -339,7 +339,4 @@
 		</tr>
 		<?php endforeach; ?>
 	</table>
-	<div class='actions'>
-		<a class='button' href='/calificaciones/imprimir/<?php echo $this -> params['pass'][0];?>' target="blank_">imprimir especie valorada</a>
-	</div>
 </div>

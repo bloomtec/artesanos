@@ -18,6 +18,7 @@ $(function(){
 			$('.porcentaje').show();	
 		}else{
 			$('.porcentaje').hide();
+			$('.porcentaje input').val("");
 		}
 	});
 	//BALANCES
@@ -272,8 +273,14 @@ $(function(){
 	}
 	var validarCalificacion = function (){
 		if($('.validarCalificacion #ArtesanoArtIsCedula option:selected').val()==0/*si es pasaporte*/ || checkCedulaEcuador($("#wizard #ArtesanoArtCedula").val())){
-			if($("#wizard #ArtesanoArtCedula").val()==""){
-				alert('No ha escrito un numero de pasaporte');
+			if($("#wizard #ArtesanoArtCedula").val()=="" || $("#wizard #CalificacionRamaId").val()=="" ){
+				if($("#wizard #ArtesanoArtCedula").val()=="" ){
+					$("#wizard #ArtesanoArtCedula").addClass('error');
+				} 
+				if($("#wizard #CalificacionRamaId").val()==""){
+					$("#wizard #CalificacionRamaId").addClass('error');
+				} 
+				alert('Hay campos sin llenar necesarios para la validación');
 				return false;
 			}
 			BJS.JSONP('/artesanos/validarCalificacion',{cedula:$("#ArtesanoArtCedula").val(),tipoDeCalificacion:$("#CalificacionTiposDeCalificacionId option:selected").val(),rama:$('#CalificacionRamaId option:selected').val()},function(response){
@@ -283,6 +290,7 @@ $(function(){
 				}
 				if(response.Calificar){
 					$("#wizard .validar").css('visibility','visible');
+					$("#wizard .error").removeClass('error');
 					if(typeof response.Datos != 'undefined'){
 						if(response.Datos.DatosPersonal.length) llenarDatos('DatosPersonal',response.Datos.DatosPersonal[0]);
 						indiceOperador=indiceAprendiz=0;						
@@ -302,13 +310,14 @@ $(function(){
 					}else{
 						$(".validar input[type!='hidden'][type!='checkbox']").val("");
 						$(".validar input[type='checkbox']").attr('checked',false);
-						$('.validar select option:first-child').attr('selected',true).parent().change();
+						//$('.validar select option:first-child').attr('selected',true).parent().change();
 					}
 				}else{
 					$("#wizard .validar").css('visibility','hidden');
 					$(".validar input[type!='hidden'][type!='checkbox']").val("");
+					//$('input.valor').setMask({ mask : '99,999.999.999.999', type : 'reverse', defaultValue: '000' });
 					$(".validar input[type='checkbox']").attr('checked',false);
-					$('.validar select option:first-child').attr('selected',true).parent().change();
+					//$('.validar select option:first-child').attr('selected',true).parent().change();
 				}
 			});
 		}
@@ -428,7 +437,6 @@ $(function(){
 					  return true;
 					  }
 				});
-
 			if (empty.length || emails.length) {
 				drawer.slideDown(function()  {
 					drawer.css({"backgroundColor":"#EFBC00",'color':'black'});
@@ -436,7 +444,6 @@ $(function(){
 				});
 				empty.addClass("error");
 				emails.addClass("error");
-				//return true; /*_________________XXXXXXXXXXXXXXXXXXXXXX_ELIMINAR FILA_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
 				return false;
 			} else {
 				switch(api.getIndex()){
@@ -524,7 +531,7 @@ $(function(){
 					$that.val('');
 					alert('Esta cedula ya se encuentra en el formulario');
 				}else{
-					switch($that.parent().find('select option:checked').val()){
+					switch($that.parent().find('select option:selected').val()){
 						case "1"://CEDULA
 							if(checkCedulaEcuador($that.val())){
 								BJS.post("/artesanos/verificarCedula/"+$that.val()+"/1",{},function(data){

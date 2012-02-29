@@ -33,14 +33,14 @@
 			echo $this -> Form -> input('DatosPersonal.dat_grado_estudio', array('label' => 'Grado de estudio:', 'type' => 'select', 'options' => $grados_de_estudio, 'empty' => 'Seleccione...', 'col' => '3'));
 			echo $this -> Form -> input('DatosPersonal.dat_sexo', array('label' => 'Sexo:', 'type' => 'select', 'options' => $sexos, 'empty' => 'Seleccione...', 'col' => '4'));
 			?>
-			<div style="clear:both"</div>
+			<div style="clear:both"></div>
 		</div>
 		<div class="fila-datos" row="3">
 			<?php
 			echo $this -> Form -> input('DatosPersonal.dat_hijos_mayores', array('type'=>'text','class' => 'number','label' => 'No. de hijos mayores:', 'col' => '0'));
 			echo $this -> Form -> input('DatosPersonal.dat_hijos_menores', array('type'=>'text','class' => 'number', 'label' => 'No. de hijos menores:', 'col' => '1'));
 			echo $this -> Form -> input('DatosPersonal.dat_tipo_discapacidad', array('label' => 'Tipo de discapacidad:', 'type' => 'select', 'options' => $tipos_de_discapacidad, 'empty' => 'Ninguna', 'col' => '2'));
-			echo $this -> Form -> input('DatosPersonal.dat_porcentaje_de_discapacidad', array('label' => 'Porcentaje de discapacidad:', 'div' => 'input porcentaje', 'col' => '3'));
+			echo $this -> Form -> input('DatosPersonal.dat_porcentaje_de_discapacidad', array('label' => 'Porcentaje de discapacidad:', 'div' => 'input porcentaje', 'col' => '3','class'=>'porcentaje','type'=>'text'));
 			?>
 			<div style="clear:both"></div>
 		</div>
