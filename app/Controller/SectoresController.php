@@ -16,7 +16,7 @@ class SectoresController extends AppController {
 		$this -> layout = "parametros";
 	}
 
-	public function getByCiudad($ciuId) {
+	public function getByCiudad($ciuId=null) {
 		$this -> layout = "ajax";
 		echo json_encode($this -> Sector -> find('list', array('order' => array('Sector.sec_nombre' => 'ASC'), 'conditions' => array('Sector.ciudad_id' => $ciuId))));
 		exit(0);

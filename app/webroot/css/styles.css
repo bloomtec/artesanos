@@ -1164,6 +1164,9 @@ tr.diferente td.audit-value, tr.diferente td.audit-data {
 	padding:5px;
 	color:white;	
 }
+.campos-inspector{
+	margin-top:15px;
+}
 /*IMPRIMIR*/
 .imprimir.top{
 	display:none;

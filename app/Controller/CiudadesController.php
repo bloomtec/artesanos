@@ -16,7 +16,7 @@ class CiudadesController extends AppController {
 		$this -> layout = "parametros";
 	}
 
-	public function getByCanton($canId) {
+	public function getByCanton($canId=null) {
 		$this -> layout = "ajax";
 		echo json_encode($this -> Ciudad -> find('list', array('order' => array('Ciudad.ciu_nombre' => 'ASC'), 'conditions' => array('Ciudad.canton_id' => $canId))));
 		exit(0);

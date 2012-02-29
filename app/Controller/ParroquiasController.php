@@ -16,7 +16,7 @@ class ParroquiasController extends AppController {
 		$this -> layout = "parametros";
 	}
 
-	public function getBySector($secId) {
+	public function getBySector($secId=null) {
 		$this -> layout = "ajax";
 		echo json_encode($this -> Parroquia -> find('list', array('order' => array('Parroquia.par_nombre' => 'ASC'), 'conditions' => array('Parroquia.sector_id' => $secId))));
 		exit(0);

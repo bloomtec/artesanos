@@ -208,47 +208,6 @@ $(function(){
 	actualizarIngresos();
 	actualizarEgresos();
 	actualizarRentabilidad();
-	
-	
-	var checkCedulaEcuador = function ( cedula ){
-	  array = cedula.split( "" );
-	  num = array.length;
-	  if ( num == 10 ){
-	    total = 0;
-	    digito = (array[9]*1);
-	    for( i=0; i < (num-1); i++ ){
-	      mult = 0;
-	      if ( ( i%2 ) != 0 ) {
-	        total = total + ( array[i] * 1 );
-	      }
-	      else
-	      {
-	        mult = array[i] * 2;
-	        if ( mult > 9 )
-	          total = total + ( mult - 9 );
-	        else
-	          total = total + mult;
-	      }
-	    }
-	    decena = total / 10;
-	    decena = Math.floor( decena );
-	    decena = ( decena + 1 ) * 10;
-	    nfinal = ( decena - total );
-	    if ( ( nfinal == 10 && digito == 0 ) || ( nfinal == digito ) ) {
-	      return true;
-	    }
-	    else
-	    {
-	      alert( "La c\xe9dula NO es v\xe1lida!!!" );
-	      return false;
-	    }
-	  }
-	  else
-	  {
-	    alert("La c\xe9dula no puede tener menos de 10 d\xedgitos");
-	    return false;
-	  }
-	}
 	var llenarDatosIndexado = function(Model,datos,indice){
 		var input=null;		
 		for(atributo in datos){
@@ -278,6 +237,8 @@ $(function(){
 			}
 			return true;
 	}
+	
+	
 	var llenarDatos = function(Model,datosPersonales){
 		var input=null;
 		for(atributo in datosPersonales){
@@ -533,6 +494,7 @@ $(function(){
 		}
 	});
 	//_________________OTRAS VALIDACIONES
+	
 	var llenarDatosTrabajador= function(trabajador,$inputCedula){
 		if(BJS.objectSize(trabajador)){
 			var $tr=$inputCedula.parent().parent();
