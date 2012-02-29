@@ -64,7 +64,7 @@ class Usuario extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'usu_cedula' => array(
+		'usu_numero_identificacion' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
 				'message' => 'Debe ingresar la cédula del usuario.',
@@ -105,6 +105,20 @@ class Usuario extends AppModel {
 		'Rol' => array(
 			'className' => 'Rol',
 			'foreignKey' => 'rol_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'Provincia' => array(
+			'className' => 'Provincia',
+			'foreignKey' => 'provincia_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'Canton' => array(
+			'className' => 'Canton',
+			'foreignKey' => 'canton_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
@@ -186,6 +200,7 @@ class Usuario extends AppModel {
 	}
 	
 	public function beforeSave($model) {
+		
 	    if (isset($this->data[$this->alias]['usu_contrasena'])) {
 	        $this->data[$this->alias]['usu_contrasena'] = AuthComponent::password($this->data[$this->alias]['usu_contrasena']);
 	    }
@@ -253,7 +268,7 @@ class Usuario extends AppModel {
 				$new_data['Antes'] .= '<tr><td class="audit-value">Rol</td><td class="audit-data">Administrador</td></tr>';
 			}
 			$new_data['Antes'] .= '<tr><td class="audit-value">Unidad</td><td class="audit-data">' . $data['OldData']['Usuario']['usu_unidad'] . '</td></tr>';
-			$new_data['Antes'] .= '<tr><td class="audit-value">Cédula</td><td class="audit-data">' . $data['OldData']['Usuario']['usu_cedula'] . '</td></tr>';
+			$new_data['Antes'] .= '<tr><td class="audit-value">Cédula</td><td class="audit-data">' . $data['OldData']['Usuario']['usu_numero_identificacion'] . '</td></tr>';
 			$new_data['Antes'] .= '<tr><td class="audit-value">Nombres Y Apellidos</td><td class="audit-data">' . $data['OldData']['Usuario']['usu_nombres_y_apellidos'] . '</td></tr>';
 			$new_data['Antes'] .= '<caption>Permisos Del Usuario</caption>';
 			foreach($data['OldData']['Permisos'] as $modelo => $acciones) {
@@ -308,8 +323,8 @@ class Usuario extends AppModel {
 			$class = 'igual';
 		}
 		$new_data['Despues'] .= '<tr class="' . $class . '"><td class="audit-value">Unidad</td><td class="audit-data">' . $data['Usuario']['usu_unidad'] . '</td></tr>';
-		if(isset($data['OldData']['Usuario']['usu_cedula'])) {
-			if($data['OldData']['Usuario']['usu_cedula'] != $data['Usuario']['usu_cedula']) {
+		if(isset($data['OldData']['Usuario']['usu_numero_identificacion'])) {
+			if($data['OldData']['Usuario']['usu_numero_identificacion'] != $data['Usuario']['usu_numero_identificacion']) {
 				$class = 'diferente';
 			} else {
 				$class = 'igual';
@@ -317,7 +332,7 @@ class Usuario extends AppModel {
 		} else {
 			$class = 'igual';
 		}
-		$new_data['Despues'] .= '<tr class="' . $class . '"><td class="audit-value">Cédula</td><td class="audit-data">' . $data['Usuario']['usu_cedula'] . '</td></tr>';
+		$new_data['Despues'] .= '<tr class="' . $class . '"><td class="audit-value">Cédula</td><td class="audit-data">' . $data['Usuario']['usu_numero_identificacion'] . '</td></tr>';
 		if(isset($data['OldData']['Usuario']['usu_nombres_y_apellidos'])) {
 			if($data['OldData']['Usuario']['usu_nombres_y_apellidos'] != $data['Usuario']['usu_nombres_y_apellidos']) {
 				$class = 'diferente';

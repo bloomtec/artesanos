@@ -1,4 +1,4 @@
-<?php for($i =0;$i < 5 ;$i++):?>
+<?php for($i =0;$i < 10 ;$i++):?>
 <tr>
 	<td><?php echo $this -> Form -> input('MateriasPrima.'.$i.'.mat_cantidad', array('label' => false, 'div' => false, 'class' => 'cantidad_materia_prima number', 'type'=>'text'));?></td>
 	<td><?php echo $this -> Form -> input('MateriasPrima.'.$i.'.mat_tipo_de_materia_prima', array('label' => false, 'div' => false, 'options' => $tipos_de_materia_prima));?></td>

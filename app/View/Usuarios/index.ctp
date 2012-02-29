@@ -10,7 +10,7 @@
 		<th><?php echo $this->Paginator->sort('rol_id');?></th>
 		<th><?php echo $this->Paginator->sort('usu_nombre_de_usuario', 'Nombre De Usuario');?></th>
 		<th><?php echo $this->Paginator->sort('usu_nombres_y_apellidos', 'Nombres Y Apellidos');?></th>
-		<th><?php echo $this->Paginator->sort('usu_cedula', 'Cedula');?></th>
+		<th><?php echo $this->Paginator->sort('usu_numero_identificacion', 'Identificación');?></th>
 		<th><?php echo $this->Paginator->sort('usu_activo', 'Activo');?></th>
 		<th class="actions"><?php echo __('Acciones');?></th>
 	</tr>
@@ -21,7 +21,7 @@
 		<td><?php echo h($usuario['Rol']['rol_nombre']); ?>&nbsp;</td>
 		<td><?php echo h($usuario['Usuario']['usu_nombre_de_usuario']); ?>&nbsp;</td>
 		<td><?php echo h($usuario['Usuario']['usu_nombres_y_apellidos']); ?>&nbsp;</td>
-		<td><?php echo h($usuario['Usuario']['usu_cedula']); ?>&nbsp;</td>
+		<td><?php echo h($usuario['Usuario']['usu_numero_identificacion']); ?>&nbsp;</td>
 		<td>
 			<?php if($usuario['Usuario']['usu_activo']) { ?> 
 				 <input type='checkbox' checked='checked' disabled='true' class='checkbox'/> 

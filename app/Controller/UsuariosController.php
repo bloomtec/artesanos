@@ -94,6 +94,38 @@ class UsuariosController extends AppController {
 		$permisos['Permisos'] = $this -> getValoresPermisos($id);
 		$this -> set(compact('permisos'));
 	}
+	private function validacionesInspector(){
+		if($this->data['Usuario']['rol_id']==3){
+				$newValidation = array(
+					'usu_inspecciones_por_dia' => array(
+		        		'rule'    => array('minLength', 1),
+		        		'message' => 'A los inspectores se les debe asignar al menos una inspección por día'
+		   	 		),
+		   	 		'provincia_id' => array(
+						'rule' => array('notempty'),
+						'message' => 'Este campo es requerido',
+					),
+					'canton_id' => array(
+						'rule' => array('notempty'),
+						'message' => 'Este campo es requerido',
+					),
+					'ciudad_id' => array(
+						'notempty' => array(
+						'rule' => array('notempty'),
+						'message' => 'Este campo es requerido',
+						),
+					),
+					'sector_id' => array(
+						'notempty' => array(
+						'rule' => array('notempty'),
+						'message' => 'Este campo es requerido',
+						),
+					),
+		   	 		
+				);
+				$this-> Usuario -> validate = array_merge($this-> Usuario -> validate,$newValidation);
+		}
+	}
 
 	/**
 	 * add method
@@ -101,8 +133,10 @@ class UsuariosController extends AppController {
 	 * @return void
 	 */
 	public function add() {
+		
 		$this -> Usuario -> currentUsrId = $this -> Auth -> user('id');
 		if ($this -> request -> is('post')) {
+			$this -> validacionesInspector();
 			$this -> Usuario -> create();
 			if ($this -> Usuario -> save($this -> request -> data)) {
 				// tratando de arreglar lo del alias en la tabla aros
@@ -118,9 +152,13 @@ class UsuariosController extends AppController {
 		}
 		$usu_unidades = $this -> Usuario -> getUnidades();
 		$roles = $this -> Usuario -> Rol -> find('list');
+		$this -> loadModel('Provincia');
+		$this -> loadModel('Canton');
+		$provincias = $this -> Provincia -> find('list');
+		$cantones = $this -> Canton -> find('list');
 		$ciudades = $this -> Usuario -> Ciudad -> find('list');
 		$sectores = $this -> Usuario -> Sector -> find('list');
-		$this -> set(compact('roles', 'usu_unidades', 'ciudades', 'sectores'));
+		$this -> set(compact('roles', 'usu_unidades', 'cantones','provincias','ciudades', 'sectores'));
 	}
 
 	/**
@@ -153,9 +191,13 @@ class UsuariosController extends AppController {
 		$usu_unidades = $this -> Usuario -> getUnidades();
 		$roles = $this -> Usuario -> Rol -> find('list');
 		$permisos['Permisos'] = $this -> getValoresPermisos($id);
+		$this -> loadModel('Provincia');
+		$this -> loadModel('Canton');
+		$provincias = $this -> Provincia -> find('list');
+		$cantones = $this -> Canton -> find('list');
 		$ciudades = $this -> Usuario -> Ciudad -> find('list');
 		$sectores = $this -> Usuario -> Sector -> find('list');
-		$this -> set(compact('roles', 'permisos', 'usu_unidades', 'ciudades', 'sectores'));
+		$this -> set(compact('roles', 'permisos', 'usu_unidades', 'cantones', 'provincias','ciudades', 'sectores'));
 	}
 	
 	/**

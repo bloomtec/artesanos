@@ -318,9 +318,18 @@ p {
 	display: block;
 	cursor:pointer;
 }
-
+a.button.disabled{
+	background-color: gray;
+}
 a.button:hover {
 	background-color: #1E72D8;
+}
+a.button.disabled:hover {
+	background-color: gray;
+}
+a.button.add-row{
+	margin-bottom:3px;
+	float:right;
 }
 #footer {
 	bottom: 0;
@@ -1154,6 +1163,9 @@ tr.diferente td.audit-value, tr.diferente td.audit-data {
 	width:auto;
 	padding:5px;
 	color:white;	
+}
+.campos-inspector{
+	margin-top:15px;
 }
 /*IMPRIMIR*/
 .imprimir.top{
