@@ -1,6 +1,6 @@
-<?php //debug($inspeccion); ?>
 <div class="calificaciones view">
-	<h3>DATOS CALIFICACIÓN</h3>
+	<br />
+	<h3>DATOS CALIFICACIÓN [ NÚMERO - <?php echo $inspeccion['Calificacion']['id']; ?> ]</h3>
 	<table class="artesano">
 		<caption>ARTESANO</caption>
 		<tr>
@@ -339,4 +339,45 @@
 		</tr>
 		<?php endforeach; ?>
 	</table>
+	<legend>
+		INFORMACIÓN SOBRE LAS INSPECCIONES
+	</legend>
+	<?php if(isset($inspeccion['InspectorTaller']['id']) && !empty($inspeccion['InspectorTaller']['id'])) :	?>
+	<table>
+		<caption>
+			INSPECTOR ASIGNADO Y FECHA PARA EL TALLER
+		</caption>
+		<tr>
+			<th>Numero De Identificación</th>
+			<th>Nombres Y Apellidos</th>
+			<th>Unidad</th>
+			<th>Fecha</th>
+		</tr>
+		<tr>
+			<td><?php echo $inspeccion['InspectorTaller']['usu_numero_identificacion'];?></td>
+			<td><?php echo $inspeccion['InspectorTaller']['usu_nombres_y_apellidos'];?></td>
+			<td><?php echo $inspeccion['InspectorTaller']['usu_unidad'];?></td>
+			<td><?php echo $inspeccion['Calificacion']['cal_fecha_inspeccion_taller'];?></td>
+		</tr>
+	</table>
+	<?php endif;?>
+	<?php if(isset($inspeccion['InspectorLocal']['id']) && !empty($inspeccion['InspectorLocal']['id'])) : ?>
+	<table>
+		<caption>
+			INSPECTOR ASIGNADO Y FECHA PARA EL LOCAL
+		</caption>
+		<tr>
+			<th>Numero De Identificación</th>
+			<th>Nombres Y Apellidos</th>
+			<th>Unidad</th>
+			<th>Fecha</th>
+		</tr>
+		<tr>
+			<td><?php echo $inspeccion['InspectorLocal']['usu_numero_identificacion'];?></td>
+			<td><?php echo $inspeccion['InspectorLocal']['usu_nombres_y_apellidos'];?></td>
+			<td><?php echo $inspeccion['InspectorLocal']['usu_unidad'];?></td>
+			<td><?php echo $inspeccion['Calificacion']['cal_fecha_inspeccion_local'];?></td>
+		</tr>
+	</table>
+	<?php endif;?>
 </div>
