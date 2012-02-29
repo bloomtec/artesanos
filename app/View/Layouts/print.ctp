@@ -33,7 +33,7 @@ $cakeDescription = __d('cake_dev', 'Junta Nacional de defensa del artesano');
 		echo $this -> Html -> script('jquery.tools.min');
 		echo $this -> Html -> script('bjs');
 		echo $this -> Html -> script('default');
-		echo $this -> Html -> script('common');
+		//echo $this -> Html -> script('common');
 		echo $scripts_for_layout;
 		?>
 		<script type="text/javascript">
@@ -55,8 +55,7 @@ $cakeDescription = __d('cake_dev', 'Junta Nacional de defensa del artesano');
 				<div class="imprimir top"> imprimir </div>
 				<?php echo $content_for_layout;?>
 				<div class="imprimir bottom"> imprimir </div>
-				<div class="volver bottom"> <?php echo $this -> Html -> link('volver',array('controller'=>'pages','action'=>'display','home'));?> </div>
-			</div>
+				</div>
 		</div>
 		<?php echo $this -> element('sql_dump');?>
 	</body>

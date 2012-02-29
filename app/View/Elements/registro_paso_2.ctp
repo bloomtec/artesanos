@@ -1,7 +1,7 @@
 <fieldset>
 	<div class="datos-equipo-trabajo validar">
 		<h2>Detalle Del Equipo De Trabajo</h2>
-		<table id="TablaEquipos" class="tabla-equipo-trabajo" show="3" till="10">
+		<table id="TablaEquipos" class="tabla-equipo-trabajo" show="2" till="10">
 			<thead>
 				<tr>
 					<th>Cantidad</th>
@@ -17,7 +17,7 @@
 	</div>
 	<div class="datos-materia-prima validar">
 		<h2>Materia Prima Existente</h2>
-		<table id="TablaMateriaPrima" class="tabla-materia-prima" show="3" till="10">
+		<table id="TablaMateriaPrima" class="tabla-materia-prima" show="2" till="10">
 			<thead>
 				<tr>
 					<th>Cantidad</th>
@@ -32,7 +32,7 @@
 	</div>
 	<div class="datos-producto validar">
 		<h2>Productos Elaborados</h2>
-		<table id="TablaProductoElaborado" class="tabla-producto-elaborado" show="3" till="10">
+		<table id="TablaProductoElaborado" class="tabla-producto-elaborado" show="2" till="10">
 			<thead>
 				<tr>
 					<th>Cantidad</th>
