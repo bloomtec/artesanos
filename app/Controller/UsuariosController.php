@@ -203,101 +203,229 @@ class UsuariosController extends AppController {
 	 */
 	
 	public function permisos($id = null) {
+		$this -> Usuario -> recursive = -1;
 		$this -> Usuario -> currentUsrId = $this -> Auth -> user('id');
 		$this -> Usuario -> id = $id;
 		if (!$this -> Usuario -> exists()) {
 			throw new NotFoundException(__('Usuario no válido'));
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
-			debug($this -> request -> data);
-			/* if (true) {				
+			//debug($this -> request -> data);
+			$usuario = $this -> Usuario -> find('first', array('conditions' => array('Usuario.id' => $id)));
+			if($usuario['Usuario']['rol_id'] == 2 || $usuario['Usuario']['rol_id'] == 3) {
+				// Se es operador. Asignar acorde los permisos asignados.
+				$aro_id = $this -> Usuario -> query("SELECT `id` FROM `aros` WHERE `model`='Usuario' AND `foreign_key`=$id");
+				$aro_id = $aro_id[0]['aros']['id'];
+				$this -> Usuario -> query("DELETE FROM `aros_acos` WHERE `aro_id`=$aro_id");
+				$this -> setPermisosUsuarios($usuario, $this -> request -> data['Permisos']['Usuarios']);
+				$this -> setPermisosArtesanos($usuario, $this -> request -> data['Permisos']['Artesanos']);
+				$this -> setPermisosParametros($usuario, $this -> request -> data['Permisos']['Parametros']);
+				$this -> setPermisosReportes($usuario, $this -> request -> data['Permisos']['Reportes']);
 				$this -> Session -> setFlash(__('Se asigaron los permisos al usuario'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
-			} else {
-				$this -> Session -> setFlash(__('No se pudo asignar los permisos al usuario. Por favor, intente de nuevo.'), 'crud/error');
-			} */
+			} elseif($usuario['Usuario']['rol_id'] == 1) {
+				// Caso en que se es administrador. No se requiere hacer algo por lo que se tiene acceso a todo.
+			}
 		} else {
-			$this -> request -> data = $this -> Usuario -> read(null, $id);
+			$usuario = $this -> Usuario -> read(null, $id);
+			$usuario['Permisos']['Usuarios'] = $this -> getPermisosUsuarios($usuario);
+			$usuario['Permisos']['Artesanos'] = $this -> getPermisosArtesanos($usuario);
+			$usuario['Permisos']['Parametros'] = $this -> getPermisosParametros($usuario);
+			$usuario['Permisos']['Reportes'] = $this -> getPermisosReportes($usuario);
+			$this -> request -> data = $usuario;
 		}
 	}
 	
+	private function setPermisosUsuarios($usuario = null, $permisos = null) {
+		if($permisos['index']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Usuarios/index');
+		if($permisos['view']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Usuarios/view');
+		if($permisos['add']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Usuarios/add');
+		if($permisos['edit']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Usuarios/edit');
+	}
+	
+	private function getPermisosUsuarios($usuario = null) {
+		$permisos = array('index' => false, 'view' => false, 'add' => false, 'edit' => false);
+		
+		if($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Usuarios/index')) $permisos['index'] = true;
+		if($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Usuarios/view')) $permisos['view'] = true;
+		if($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Usuarios/add')) $permisos['add'] = true;
+		if($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Usuarios/edit')) $permisos['edit'] = true;
+		
+		return $permisos;
+	}
+	
+	private function setPermisosArtesanos($usuario = null, $permisos = null) {
+		if($permisos['index']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/index');
+		if($permisos['add']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/add');
+	}
+	
+	private function getPermisosArtesanos($usuario = null) {
+		$permisos = array('index' => false, 'add' => false);
+		
+		if($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/index')) $permisos['index'] = true;
+		if($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/add')) $permisos['add'] = true;
+		
+		return $permisos;
+	}
+	
+	private function setPermisosParametros($usuario = null, $permisos = null) {
+		if($permisos['edit']) {
+			// Parametros informativos
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/ParametrosInformativos/index');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/ParametrosInformativos/view');
+			
+			// Valores
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/view');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/add');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/edit');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/delete');
+			
+			// Geográficos
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Geograficos/index');
+			
+			// Provincias
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Provincias/view');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Provincias/add');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Provincias/edit');
+			
+			// Cantones
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Cantones/view');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Cantones/add');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Cantones/edit');
+			
+			// Ciudades
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Ciudades/view');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Ciudades/add');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Ciudades/edit');
+			
+			// Sectores
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Sectores/view');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Sectores/add');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Sectores/edit');
+			
+			// Parroquias
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Parroquias/view');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Parroquias/add');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Parroquias/edit');
+			
+			// Configuraciones
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Configuraciones/index');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Configuraciones/edit');
+			
+			// Feriados
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Feriados/index');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Feriados/add');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Feriados/edit');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Feriados/delete');
+		}
+
+	}
+	
+	private function getPermisosParametros($usuario = null) {
+		$permisos = array('edit' => true);
+		
+		// Parametros informativos
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/ParametrosInformativos/index')) $permisos['edit'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/ParametrosInformativos/view')) $permisos['edit'] = false;
+		
+		// Valores
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/view')) $permisos['edit'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/add')) $permisos['edit'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/edit')) $permisos['edit'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/delete')) $permisos['edit'] = false;
+		
+		// Geográficos
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Geograficos/index')) $permisos['edit'] = false;
+			
+		// Provincias
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Provincias/view')) $permisos['edit'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Provincias/add')) $permisos['edit'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Provincias/edit')) $permisos['edit'] = false;
+		
+		// Cantones
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Cantones/view')) $permisos['edit'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Cantones/add')) $permisos['edit'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Cantones/edit')) $permisos['edit'] = false;
+		
+		// Ciudades
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Ciudades/view')) $permisos['edit'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Ciudades/add')) $permisos['edit'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Ciudades/edit')) $permisos['edit'] = false;	
+			
+		// Sectores
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Sectores/view')) $permisos['edit'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Sectores/add')) $permisos['edit'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Sectores/edit')) $permisos['edit'] = false;
+		
+		// Parroquias
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Parroquias/view')) $permisos['edit'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Parroquias/add')) $permisos['edit'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Parroquias/edit')) $permisos['edit'] = false;
+		
+		// Configuraciones
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Configuraciones/index')) $permisos['edit'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Configuraciones/edit')) $permisos['edit'] = false;
+		
+		// Feriados
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Feriados/index')) $permisos['edit'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Feriados/add')) $permisos['edit'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Feriados/edit')) $permisos['edit'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Feriados/delete')) $permisos['edit'] = false;
+		
+		return $permisos;
+	}
+	
+	private function setPermisosReportes($usuario = null, $permisos = null) {
+		if($permisos['artesanos']) {
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Reportes/reporteArtesanos');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/DatosPersonales/reporteArtesanos');
+		}
+		if($permisos['calificaciones_operador']) {
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Reportes/reporteCalificacionesOperador');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/reporteCalificacionesOperador');
+		}
+		if($permisos['calificaciones_artesano']) {
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Reportes/reporteCalificacionesArtesano');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/reporteCalificacionesArtesano');
+		}
+		if($permisos['inspecciones']) {
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Reportes/reporteInspecciones');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/reporteInspecciones');
+		}
+	}
+	
+	private function getPermisosReportes($usuario = null) {
+		$permisos = array('artesanos' => true, 'calificaciones_operador' => true, 'calificaciones_artesano' => true, 'inspecciones' => true);
+		
+		// artesanos
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Reportes/reporteArtesanos')) $permisos['artesanos'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/DatosPersonales/reporteArtesanos')) $permisos['artesanos'] = false;
+		
+		// calificaciones_operador
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Reportes/reporteCalificacionesOperador')) $permisos['calificaciones_operador'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/reporteCalificacionesOperador')) $permisos['calificaciones_operador'] = false;
+		
+		// calificaciones_artesano
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Reportes/reporteCalificacionesArtesano')) $permisos['calificaciones_artesano'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/reporteCalificacionesArtesano')) $permisos['calificaciones_artesano'] = false;
+		
+		// inspecciones
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Reportes/reporteInspecciones')) $permisos['inspecciones'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/reporteInspecciones')) $permisos['inspecciones'] = false;
+		
+		return $permisos;
+	}
+	
+	private function setPermisosInspectores($usuario = null, $asignar = null) {
+		
+	}
+	
+	private function getPermisosInspectores($usuario = null) {
+		
+	}
+	
 	private $info_permisos = array(
-		0 => array(
-			'Usuarios' => array(
-				'index' => 'Listar Usuarios',
-				'view' => 'Ver Usuario',
-				'add' => 'Agregar Usuario',
-				'edit' => 'Editar Usuario'				
-			)
-		),
-		1 => array(
-			'Artesanos' => array(
-				'index' => 'Listar Artesanos',
-				'view' => 'Ver Artesano',
-				'add' => 'Registrar Artesano',
-				'edit' => 'Editar Artesano'			
-			)
-		),
-		2 => array(
-			'ParametrosInformativos' => array(
-				'index' => 'Listar Parámetros Informativos',
-				'view' => 'Ver Parámetro Informativo'
-			)
-		),
-		3 => array(
-			'Valores' => array(
-				'view' => 'Ver Valor De Parámetro Informativo',
-				'add' => 'Agregar Valor De Parámetro Informativo',
-				'edit' => 'Editar Valor De Parámetro Informativo',
-				'delete' => 'Eliminar Valor De Parámetro Informativo'
-			)
-		),
-		4 => array(
-			'Geograficos' => array(
-				'index' => 'Ver Configuración Geográfica'
-			)
-		),
-		5 => array(
-			'Provincias' => array(
-				'view' => 'Ver Provincias',
-				'add' => 'Añadir Provincia',
-				'edit' => 'Modificar Provincia'
-			)
-		),
-		6 => array(
-			'Cantones' => array(
-				'view' => 'Ver Cantones',
-				'add' => 'Añadir Canton',
-				'edit' => 'Modificar Canton'
-			)
-		),
-		7 => array(
-			'Ciudades' => array(
-				'view' => 'Ver Ciudades',
-				'add' => 'Añadir Ciudad',
-				'edit' => 'Modificar Ciudad'
-			)
-		),
-		8 => array(
-			'Sectores' => array(
-				'view' => 'Ver Sectores',
-				'add' => 'Añadir Sector',
-				'edit' => 'Modificar Sector'
-			)
-		),
-		9 => array(
-			'Parroquias' => array(
-				'view' => 'Ver Parroquias',
-				'add' => 'Añadir Parroquia',
-				'edit' => 'Modificar Parroquia'
-			)
-		),
-		10 => array(
-			'Configuraciones' => array(
-				'index' => 'Listar Parámetros De Configuración',
-				'edit' => 'Modificar Parámetros De Configuración'
-			)
-		),
+		
 		11 => array(
 			'Auditorias' => array(
 				'index' => 'Listar Auditorias',
@@ -343,7 +471,7 @@ class UsuariosController extends AppController {
 			// Caso en que se es administrador. No se requiere hacer algo por lo que se tiene acceso a todo.
 		}
 	}
-
+	
 	/**
 	 * initAcl method
 	 *

@@ -9,14 +9,13 @@ class FeriadosController extends AppController {
 	
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('esFechaValida', 'esDiaFeriado', 'esSabado', 'esDomingo');
 	}
 	
 	public function beforeRender() {
-		$this -> layout = 'parametros';
+		$this -> layout = "parametros";
 	}
 	
-	public function esFechaValida($fecha = null) {
+	private function esFechaValida($fecha = null) {
 		if($fecha) {
 			if($this -> esDiaFeriado($fecha) || $this -> esSabado($fecha) || $this -> esDomingo($fecha)) {
 				return false;
@@ -28,7 +27,7 @@ class FeriadosController extends AppController {
 		}
 	}
 	
-	public function esDiaFeriado($fecha = null) {
+	private function esDiaFeriado($fecha = null) {
 		if($fecha) {
 			$conditions = array('Feriado.fer_fecha' => $fecha);
 			if($this -> Feriado -> find('first', array('conditions' => $conditions))) {
@@ -41,7 +40,7 @@ class FeriadosController extends AppController {
 		}
 	}
 	
-	public function esSabado($fecha = null) {
+	private function esSabado($fecha = null) {
 		if($fecha) {
 			if(date('N', strtotime(date($fecha))) == 6) {
 				return true;
@@ -53,7 +52,7 @@ class FeriadosController extends AppController {
 		}
 	}
 	
-	public function esDomingo($fecha = null) {
+	private function esDomingo($fecha = null) {
 		if($fecha) {
 			if(date('N', strtotime(date($fecha))) == 7) {
 				return true;

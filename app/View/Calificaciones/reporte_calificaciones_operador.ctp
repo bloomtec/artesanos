@@ -2,7 +2,7 @@
 	<table>
 		<tr>
 			<th><?php echo $this -> Paginator -> sort('id', 'Código');?></th>
-			<th><?php echo $this -> Paginator -> sort('created', 'Fecha De Expedición');?></th>
+			<th><?php echo $this -> Paginator -> sort('cal_fecha_expedicion', 'Fecha De Expedición');?></th>
 			<th><?php echo $this -> Paginator -> sort('cal_fecha_expiracion', 'Fecha De Expiración');?></th>
 			<th><?php echo $this -> Paginator -> sort('cal_rama', 'Rama');?></th>
 			<th><?php echo $this -> Paginator -> sort('cal_tipo_de_calificacion', 'Tipo De Artesano');?></th>
@@ -11,7 +11,7 @@
 		<?php foreach ($calificaciones as $calificacion): ?>
 		<tr>
 			<td><?php echo h($calificacion['Calificacion']['id']);?>&nbsp;</td>
-			<td><?php echo h($calificacion['Calificacion']['created']);?>&nbsp;</td>
+			<td><?php echo h($calificacion['Calificacion']['cal_fecha_expedicion']);?>&nbsp;</td>
 			<td><?php echo h($calificacion['Calificacion']['cal_fecha_expiracion']);?>&nbsp;</td>
 			<td><?php echo h($calificacion['Calificacion']['cal_rama']);?>&nbsp;</td>
 			<td><?php echo h($calificacion['Calificacion']['cal_tipo_de_calificacion']);?>&nbsp;</td>

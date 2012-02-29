@@ -1,10 +1,10 @@
 <div class="feriados index">
 	<h2><?php echo __('Feriados');?></h2>
-	<div class="search">
+	<!--<div class="search">
 		<label>BUSCAR:</label>
 		<input type="text" />
 		<input type="button" class="submit search-generic" value="Search" />
-	</div>
+	</div>-->
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 		<th><?php echo $this->Paginator->sort('fer_nombre', 'Nombre');?></th>
