@@ -1,21 +1,21 @@
 
 <h1>Calificacion taller artesanal</h1>
-<h1>Nro. <?php $calificacion['Calificacion']['id']; ?> </h1>
+<h1>Nro. <?php $inspeccion['Calificacion']['id']; ?> </h1>
 
 <h1 class='right'> NO SE ESTE NÚMERO A QUE SE REFIERE</h1>
 <h1 class='right'> PERSONAL E</h1> 
 <h1 class='right'> INSTRANFERIBLE</h1>
 
 <p>
- La Junta Nacional de Defensa del Artesano, vista la solicitud de Clificación Nro. <?php $calificacion['Calificacion']['cal_numero_valido']; ?>
-presentada el <?php $calificacion['Calificacion']['created']; ?>
+ La Junta Nacional de Defensa del Artesano, vista la solicitud de Clificación Nro. <?php $inspeccion['Calificacion']['cal_numero_valido']; ?>
+presentada el <?php $inspeccion['Calificacion']['created']; ?>
 previo el estudio e informe de la Unidad de Inpección y Calificación de Talleres Artesanales de la Dirección Técnica, y de conformidad al Art. 5 del Reglamento de Calificaciones y Ramas de Trabajo Vigente.
 </p>
 
 <h1>RESUELVE</h1>
 
 <p>
-	Conceder el CERTIFICADO DE CALIFICACIÓN ARTESANAL <?php if($calificacion['Calificacion']['tipo_calificaion_id']==2) echo "AUTONOMO"; ?> , con derecho a los beneficios contemplados en el inciso final del Art. 2, Arts. 16, 17, 18 y 19 de la Ley de Defensa del Artesano,
+	Conceder el CERTIFICADO DE CALIFICACIÓN ARTESANAL <?php if($inspeccion['Calificacion']['tipos_de_calificacion_id']==2) echo "AUTONOMO"; ?> , con derecho a los beneficios contemplados en el inciso final del Art. 2, Arts. 16, 17, 18 y 19 de la Ley de Defensa del Artesano,
 	en concordancia con el Art. 302 del Código de Trabajo, Art. 367 de la Ley Orgánica de Régimen Municipal; Arts. 19 y 56, numeral 19 de la Ley de Régimen Tributario interno y Art. 171 de su reglamento, a:
 </p>
 <h1>
@@ -26,19 +26,19 @@ previo el estudio e informe de la Unidad de Inpección y Calificación de Taller
 </h1>
 <h1> 
 	<?php 
-		if($calificacion['Artesano']['art_is_cedula']){
+		if($inspeccion['Artesano']['art_is_cedula']){
 			echo "CC #";
 		}else{
 			echo "PASAPORTE #";
 		}
-		echo $calificacion['Artesano']['art_cedula'];
+		echo $inspeccion['Artesano']['art_cedula'];
 	?> 
 </h1>
 
 <table>
 	<tr>
 		<td>RAMA ARTESANAL:</td>
-		<td><?php echo $calificacion['Rama']['ram_nombre']; ?></td>
+		<td><?php echo $inspeccion['Rama']['ram_nombre']; ?></td>
 	</tr>
 	<tr>
 		<td>RAZÓN SOCIAL:</td>
@@ -74,7 +74,7 @@ previo el estudio e informe de la Unidad de Inpección y Calificación de Taller
 	<tr>
 		<td>CAPITAL INVERTIDO $:</td>
 		<td>
-			<?php echo $calificacion['Calificacion']['cal_total_capital'];?>
+			<?php echo $inspeccion['Calificacion']['cal_total_capital'];?>
 		</td>
 	</tr>
 	<tr>
@@ -84,13 +84,13 @@ previo el estudio e informe de la Unidad de Inpección y Calificación de Taller
 	<tr>
 		<td>FECHA EXPEDICIÓN</td>
 		<td>
-			<?php echo $calificacion['Calificacion']['cal_fecha_expedicion'];?>
+			<?php echo $inspeccion['Calificacion']['cal_fecha_expedicion'];?>
 		</td>
 	</tr>
 	<tr>
 		<td>FECHA CADUCIDAD:</td>
 		<td>
-			<?php echo $calificacion['Calificacion']['cal_fecha_expiracion'];?>
+			<?php echo $inspeccion['Calificacion']['cal_fecha_expiracion'];?>
 		</td>
 	</tr>
 </table>

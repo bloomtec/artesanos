@@ -9,7 +9,7 @@ class ArtesanosController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('verificarCedula', 'getID', 'crearCalificacion', 'asignarInspector', 'isCalificacionActive', 'validarCalificacion', 'validarCalificacionAutonomo', 'validarCalificacionNormal', 'validarCalificacionObtenerFechas');
+		$this -> Auth -> allow('formatearValor', 'verificarCedula', 'getID', 'crearCalificacion', 'asignarInspector', 'isCalificacionActive', 'validarCalificacion', 'validarCalificacionAutonomo', 'validarCalificacionNormal', 'validarCalificacionObtenerFechas');
 	}
 	
 	public function verificarCedula($cedula = null) {
@@ -241,11 +241,17 @@ class ArtesanosController extends AppController {
 			}
 			// Asignar inspector a la calificacion
 			$this -> asignarInspector($calificacion['Calificacion']['id']);
-			$this -> redirect(array('controller' => 'calificaciones', 'action' => 'view', $calificacion['Calificacion']['id']));
+			$this -> redirect(array('controller' => 'calificaciones', 'action' => 'resumen', $calificacion['Calificacion']['id']));
 			
 		} else {
 			// TODO : Por definir
 		}
+	}
+	
+	private function formatearValor($valor = null) {
+		$valor = str_replace('.', '', $valor);
+		$valor = str_replace(',', '.', $valor);
+		return $valor;
 	}
 	
 	public function add() {
@@ -257,28 +263,56 @@ class ArtesanosController extends AppController {
 			foreach ($this -> request -> data['MateriasPrima'] as $key => $value) {
 				if (!$value['mat_cantidad'] || !$value['mat_tipo_de_materia_prima'] || !$value['mat_procedencia'] || !$value['mat_valor_comercial']) {
 					unset($this -> request -> data['MateriasPrima'][$key]);
+				} else {
+					$this -> request -> data['MateriasPrima'][$key]['mat_valor_comercial'] = $this -> formatearValor($this -> request -> data['MateriasPrima'][$key]['mat_valor_comercial']);
 				}
 			}
 			foreach ($this -> request -> data['EquiposDeTrabajo'] as $key => $value) {
 				if (!$value['equ_cantidad'] || !$value['equ_maquinaria_y_herramientas'] || !$value['equ_tipo_de_adquisicion'] || !$value['equ_fecha_de_adquisicion'] || !$value['equ_valor_comercial']) {
 					unset($this -> request -> data['EquiposDeTrabajo'][$key]);
+				} else {
+					$this -> request -> data['EquiposDeTrabajo'][$key]['equ_valor_comercial'] = $this -> formatearValor($this -> request -> data['EquiposDeTrabajo'][$key]['equ_valor_comercial']);
 				}
 			}
 			foreach ($this -> request -> data['ProductosElaborado'] as $key => $value) {
 				if (!$value['pro_cantidad'] || !$value['pro_detalle'] || !$value['pro_procedencia'] || !$value['pro_valor_comercial']) {
 					unset($this -> request -> data['ProductosElaborado'][$key]);
+				} else {
+					$this -> request -> data['ProductosElaborado'][$key]['pro_valor_comercial'] = $this -> formatearValor($this -> request -> data['ProductosElaborado'][$key]['pro_valor_comercial']);
 				}
 			}
 			foreach ($this -> request -> data['Trabajador'] as $key => $value) {
 				if (!$value['tra_cedula'] || !$value['tra_nombres_y_apellidos'] || !$value['tra_pago_mensual'] || !$value['tra_sexo']) {
 					unset($this -> request -> data['Trabajador'][$key]);
+				} else {
+					$this -> request -> data['Trabajador'][$key]['tra_pago_mensual'] = $this -> formatearValor($this -> request -> data['Trabajador'][$key]['tra_pago_mensual']);
 				}
 			}
 			if (!$this -> request -> data['Local']['loc_email']) {
 				unset($this -> request -> data['Local']);
 			}
 			
-			// debug($this -> request -> data);
+			$this -> request -> data['Calificacion']['cal_agua'] = $this -> formatearValor($this -> request -> data['Calificacion']['cal_agua']);
+			$this -> request -> data['Calificacion']['cal_luz'] = $this -> formatearValor($this -> request -> data['Calificacion']['cal_luz']);
+			$this -> request -> data['Calificacion']['cal_telefono'] = $this -> formatearValor($this -> request -> data['Calificacion']['cal_telefono']);
+			$this -> request -> data['Calificacion']['cal_servicios_basicos'] = $this -> formatearValor($this -> request -> data['Calificacion']['cal_servicios_basicos']);
+			$this -> request -> data['Calificacion']['cal_compra_de_materia_prima_mensual'] = $this -> formatearValor($this -> request -> data['Calificacion']['cal_compra_de_materia_prima_mensual']);
+			$this -> request -> data['Calificacion']['cal_salario_operarios'] = $this -> formatearValor($this -> request -> data['Calificacion']['cal_salario_operarios']);
+			$this -> request -> data['Calificacion']['cal_salario_aprendices'] = $this -> formatearValor($this -> request -> data['Calificacion']['cal_salario_aprendices']);
+			$this -> request -> data['Calificacion']['cal_otros_salarios'] = $this -> formatearValor($this -> request -> data['Calificacion']['cal_otros_salarios']);
+			$this -> request -> data['Calificacion']['cal_maquinas_y_herramientas'] = $this -> formatearValor($this -> request -> data['Calificacion']['cal_maquinas_y_herramientas']);
+			$this -> request -> data['Calificacion']['cal_materia_prima'] = $this -> formatearValor($this -> request -> data['Calificacion']['cal_materia_prima']);
+			$this -> request -> data['Calificacion']['cal_productos_elaborados'] = $this -> formatearValor($this -> request -> data['Calificacion']['cal_productos_elaborados']);
+			$this -> request -> data['Calificacion']['cal_total_capital'] = $this -> formatearValor($this -> request -> data['Calificacion']['cal_total_capital']);
+			$this -> request -> data['Calificacion']['cal_ingresos_por_ventas'] = $this -> formatearValor($this -> request -> data['Calificacion']['cal_ingresos_por_ventas']);
+			$this -> request -> data['Calificacion']['cal_otros_ingresos'] = $this -> formatearValor($this -> request -> data['Calificacion']['cal_otros_ingresos']);
+			$this -> request -> data['Calificacion']['cal_total_ingresos'] = $this -> formatearValor($this -> request -> data['Calificacion']['cal_total_ingresos']);
+			$this -> request -> data['Calificacion']['cal_balance_total_ingresos'] = $this -> formatearValor($this -> request -> data['Calificacion']['cal_balance_total_ingresos']);
+			$this -> request -> data['Calificacion']['cal_balance_total_egresos'] = $this -> formatearValor($this -> request -> data['Calificacion']['cal_balance_total_egresos']);
+			$this -> request -> data['Calificacion']['cal_balance_rentabilidad_mensual'] = $this -> formatearValor($this -> request -> data['Calificacion']['cal_balance_rentabilidad_mensual']);
+			
+			//debug($this -> request -> data);
+			//exit(0);
 			
 			//
 			// Verificar si el artesano ya esta o no registrado para decidir si es o no recalificación
@@ -309,7 +343,6 @@ class ArtesanosController extends AppController {
 				if ($this -> Artesano -> save($artesano)) {
 					$artesano['Artesano']['id'] = $this -> request -> data['Artesano']['id'] = $this -> Artesano -> id;
 					$this -> crearCalificacion($this -> request -> data, $artesano);
-					
 				} else {
 					$this -> Session -> setFlash(__('Ha ocurrido un error al registrar el artesano. Por favor, intente de nuevo.'), 'crud/error');
 				}

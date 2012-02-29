@@ -9,7 +9,7 @@ class CalificacionesController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('inspecciones', 'verInspeccion', 'reporteInspecciones', 'reporteCalificacionesOperador', 'reporteCalificacionesArtesano');
+		$this -> Auth -> allow('resumen', 'inspecciones', 'verInspeccion', 'reporteInspecciones', 'reporteCalificacionesOperador', 'reporteCalificacionesArtesano');
 	}
 
 	/**
@@ -253,6 +253,22 @@ class CalificacionesController extends AppController {
 		
 	}
 	
+	public function resumen($cal_id = null) {
+		$this -> Calificacion -> recursive = 1;
+		
+		$order = array();
+		
+		$calificacion = $this -> Calificacion -> find(
+			'first',
+			array(
+				'conditions' => array(
+					'Calificacion.id' => $cal_id
+				)
+			)
+		);
+		$this -> set(compact('calificacion'));
+	}
+	
 	public function verInspeccion($cal_id = null, $tipo_inspeccion = null) {
 		$this -> layout ='print';
 		if ($this -> request -> is('post')) {
@@ -309,11 +325,18 @@ class CalificacionesController extends AppController {
 							$periodo_validez = $configuracion['Configuracion']['con_anos_renovacion_artesanos_normales'];
 						}
 						$fecha_expiracion = strtotime("+$periodo_validez year", strtotime($fecha_actual));
+						$calificacion['Calificacion']['cal_fecha_expedicion'] = $fecha_actual;
+						$calificacion['Calificacion']['cal_fecha_expiracion'] = date('Y-m-d', $fecha_expiracion);
+						$calificaciones_validas = $this -> Calificacion -> query('SELECT MAX(`cal_numero_valido`) FROM `calificaciones`');
+						$calificaciones_validas = $calificaciones_validas[0][0]['MAX(`cal_numero_valido`)'];
+						if($calificaciones_validas) {
+							$calificacion['Calificacion']['cal_numero_valido'] = $calificaciones_validas + 1;
+						} else {
+							$calificacion['Calificacion']['cal_numero_valido'] = 1;
+						}
 					} else {
-						$fecha_expiracion = strtotime('+1 month', strtotime($fecha_actual));
+						//$fecha_expiracion = strtotime('+1 month', strtotime($fecha_actual));
 					}
-					
-					$calificacion['Calificacion']['cal_fecha_expiracion'] = date('Y-m-d', $fecha_expiracion);
 					
 					$this -> Calificacion -> save($calificacion);
 					$this -> redirect(array('action' => 'inspecciones'));
@@ -514,6 +537,8 @@ class CalificacionesController extends AppController {
 	}
 	public function imprimir($id = null){
 		$this -> layout = 'especie_valorada';
+		$inspeccion = $this -> Calificacion -> read(null, $id);
+		$this -> set(compact('inspeccion'));
 	}
 
 }

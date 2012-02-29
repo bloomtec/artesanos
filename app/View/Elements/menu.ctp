@@ -61,9 +61,9 @@
 				<li>
 					<a href="/reportes/reporteInspecciones">Inspecciones</a>
 				</li>
-				<li>
+				<!--<li>
 					<a href="/reportes/reporteEstadisticoCalificaciones">Estadistico Calificaciones</a>
-				</li>
+				</li>-->
 			</ul>
 		</li>
 	</ul>
