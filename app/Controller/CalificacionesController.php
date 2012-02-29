@@ -23,7 +23,6 @@ class CalificacionesController extends AppController {
 	}
 	
 	public function view($cal_id = null) {
-		$this->layout='print';
 		$this -> Calificacion -> recursive = 1;
 		
 		$order = array();
@@ -512,6 +511,9 @@ class CalificacionesController extends AppController {
 			}
 		}
 		$this -> set('calificaciones', $calificaciones);
+	}
+	public function imprimir($id = null){
+		$this -> layout = 'especie_valorada';
 	}
 
 }
