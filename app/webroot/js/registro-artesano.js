@@ -475,7 +475,7 @@ $(function(){
 				});
 				empty.addClass("error");
 				emails.addClass("error");
-				return true; /*_________________XXXXXXXXXXXXXXXXXXXXXX_ELIMINAR FILA_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+				//return true; /*_________________XXXXXXXXXXXXXXXXXXXXXX_ELIMINAR FILA_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
 				return false;
 			} else {
 				switch(api.getIndex()){
