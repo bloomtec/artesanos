@@ -54,8 +54,21 @@ $cakeDescription = __d('cake_dev', 'Junta Nacional de defensa del artesano');
 			<div id="content">
 				<div class="imprimir top"> imprimir </div>
 				<?php echo $content_for_layout;?>
-				<div class="imprimir bottom"> imprimir </div>
-				</div>
+				<?php
+					if($this -> request -> params['controller'] = 'calificaciones') {
+						if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Calificaciones', 'imprimir')))) {
+				?>
+							<div class="imprimir bottom"> imprimir </div>
+				<?php
+						}
+					} else {
+				?>
+						<div class="imprimir bottom"> imprimir </div>
+				<?php
+					}
+				?>
+				<?php // debug($this -> request -> params['controller']); ?>
+			</div>
 		</div>
 		<?php echo $this -> element('sql_dump');?>
 	</body>

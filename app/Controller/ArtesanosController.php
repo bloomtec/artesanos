@@ -9,7 +9,7 @@ class ArtesanosController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('formatearValor', 'verificarCedula', 'getID', 'crearCalificacion', 'asignarInspector', 'isCalificacionActive', 'validarCalificacion', 'validarCalificacionAutonomo', 'validarCalificacionNormal', 'validarCalificacionObtenerFechas');
+		$this -> Auth -> allow('datosCalificacion', 'verificarCedula', 'getID', 'validarCalificacion');
 	}
 	
 	public function verificarCedula($cedula = null) {
@@ -608,6 +608,53 @@ class ArtesanosController extends AppController {
 		// $sectores = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Canton -> Ciudad -> Sector -> find('list');
 		// $parroquias = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Canton -> Ciudad -> Sector -> Parroquia -> find('list');
 		$this -> set(compact('provincias'));
+	}
+	
+	function datosCalificacion($cal_id = null) {
+		$this -> layout = "ajax";
+		$this -> Artesano -> Calificacion -> recursive = 2;
+		
+		$resultado_validacion = array();
+		$resultado_validacion['Datos'] = $this -> Artesano -> Calificacion -> read(null, $cal_id);
+		$trabajadores = $this -> Artesano -> Calificacion -> Taller -> TalleresTrabajador -> find(
+			'list', array(
+				'conditions' => array(
+					'TalleresTrabajador.taller_id' => $resultado_validacion['Datos']['Taller'][0]['id'],
+				),
+				'fields' => array(
+					'TalleresTrabajador.trabajador_id'
+				),
+				'order' => array(
+					'TalleresTrabajador.trabajador_id' => 'ASC'
+				)
+			)
+		);
+		$resultado_validacion['Datos']['Taller'][0]['Trabajador'] = $this -> Artesano -> Calificacion -> Taller -> Trabajador -> find(
+			'all', array(
+				'conditions' => array('Trabajador.id' => $trabajadores),
+				'recursive' => 0
+			)
+		);
+		foreach($resultado_validacion['Datos']['Taller'][0]['Trabajador'] as $key => $trabajador) {
+			$tmp = $trabajador['Trabajador'];
+			unset($resultado_validacion['Datos']['Taller'][0]['Trabajador'][$key]['Trabajador']);
+			
+			$datos = $this -> Artesano -> Calificacion -> Taller -> Trabajador -> TalleresTrabajador -> find(
+				'first', array(
+					'conditions' => array(
+						'TalleresTrabajador.taller_id' => $resultado_validacion['Datos']['Taller'][0]['id'],
+						'TalleresTrabajador.trabajador_id' => $tmp['id']
+					)
+				)
+			);
+			$tmp['tra_fecha_ingreso'] = $datos['TalleresTrabajador']['tal_fecha_ingreso'];
+			$tmp['tra_pago_mensual'] = $datos['TalleresTrabajador']['tal_pago_mensual'];
+			$tmp['tipos_de_trabajador_id'] = $datos['TalleresTrabajador']['tipos_de_trabajador_id'];
+			
+			$resultado_validacion['Datos']['Taller'][0]['Trabajador'][$key] = $tmp;
+		}
+		echo json_encode($resultado_validacion);
+		exit(0);
 	}
 
 	function validarCalificacion() {

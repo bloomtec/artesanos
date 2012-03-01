@@ -240,6 +240,7 @@ class UsuariosController extends AppController {
 				$this -> setPermisosArtesanos($usuario, $this -> request -> data['Permisos']['Artesanos']);
 				$this -> setPermisosParametros($usuario, $this -> request -> data['Permisos']['Parametros']);
 				$this -> setPermisosReportes($usuario, $this -> request -> data['Permisos']['Reportes']);
+				$this -> setPermisosCalificaciones($usuario, $this -> request -> data['Permisos']['Calificaciones']);
 				if($usuario['Usuario']['rol_id'] == 3) {
 					$this -> setPermisosInspectores($usuario, true);
 				} else {
@@ -256,6 +257,7 @@ class UsuariosController extends AppController {
 			$usuario['Permisos']['Artesanos'] = $this -> getPermisosArtesanos($usuario);
 			$usuario['Permisos']['Parametros'] = $this -> getPermisosParametros($usuario);
 			$usuario['Permisos']['Reportes'] = $this -> getPermisosReportes($usuario);
+			$usuario['Permisos']['Calificaciones'] = $this -> getPermisosCalificaciones($usuario);
 			$this -> request -> data = $usuario;
 		}
 	}
@@ -281,14 +283,28 @@ class UsuariosController extends AppController {
 	private function setPermisosArtesanos($usuario = null, $permisos = null) {
 		if($permisos['index']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/index');
 		if($permisos['add']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/add');
-		if($permisos['modificarCalificacion']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/modificarCalificacion');
 	}
 	
 	private function getPermisosArtesanos($usuario = null) {
-		$permisos = array('index' => false, 'add' => false, 'modificarCalificacion' => false);
+		$permisos = array('index' => false, 'add' => false);
 		
 		if($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/index')) $permisos['index'] = true;
 		if($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/add')) $permisos['add'] = true;
+		
+		return $permisos;
+	}
+
+	private function setPermisosCalificaciones($usuario = null, $permisos = null) {
+		if($permisos['view']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/view');
+		if($permisos['imprimir']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/imprimir');
+		if($permisos['modificarCalificacion']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/modificarCalificacion');
+	}
+	
+	private function getPermisosCalificaciones($usuario = null) {
+		$permisos = array('view' => false, 'imprimir' => false, 'modificarCalificacion' => false);
+		
+		if($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/view')) $permisos['view'] = true;
+		if($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/imprimir')) $permisos['imprimir'] = true;
 		if($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/modificarCalificacion')) $permisos['modificarCalificacion'] = true;
 		
 		return $permisos;

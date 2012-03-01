@@ -9,7 +9,7 @@ class CalificacionesController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('resumen', 'inspecciones', 'verInspeccion', 'imprimir');
+		$this -> Auth -> allow('resumen', 'inspecciones', 'verInspeccion');
 	}
 
 	/**
@@ -23,7 +23,7 @@ class CalificacionesController extends AppController {
 	}
 	
 	public function view($cal_id = null) {
-		$this -> layout='print';
+		$this -> layout = 'print';
 		$this -> Calificacion -> recursive = 1;
 		
 		$order = array();
