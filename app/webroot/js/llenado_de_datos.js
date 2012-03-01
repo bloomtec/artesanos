@@ -36,6 +36,12 @@ var llenarTrabajadoresIndexado = function(Model, datos, indice) {
 	return true;
 }
 var llenarDatos = function(Model, datosPersonales) {
+	if(Model=="Local"){
+		$("#ArtesanoHasLocal").click();
+		$(".datos-local").addClass('tovalidate');
+		$(".datos-local .fila-datos").show();
+		$("#wizard").height($("#wizard").find(".page").eq(0).height());
+	}
 	var input = null;
 	for(atributo in datosPersonales) {
 		var isGeo = false;

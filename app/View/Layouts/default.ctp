@@ -35,6 +35,7 @@ $cakeDescription = __d('cake_dev', 'Junta Nacional de defensa del artesano');
 			echo $this -> Html -> script('default');
 			echo $this -> Html -> script('common');
 			echo $this -> Html -> script('jquery.meio.mask');
+			echo $this -> Html -> script('jquery.dateentry.min');
 			//echo $this -> Html -> script('jquery.maskedinput-1.2.2');
 			
 			/*
