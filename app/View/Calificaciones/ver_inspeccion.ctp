@@ -118,8 +118,32 @@
 			<th></th>
 		</tr>
 		<tr>
-			<td><?php echo $this -> Form -> input('cal_comentarios_local', array('required' => 'required', 'label' => false, 'div' => false, 'type' => 'textarea')); ?></td>
-			<td><?php echo $this -> Form -> radio('cal_local_aprobado', array(-1 => 'Denegado', 1 => 'Aprobado'), array('value' => '-1', 'required' => 'required', 'label' => false, 'div' => false, 'legend' => false)); ?></td>
+			<?php
+				$disabled = false;
+				if($this -> Session -> read('Auth.User.rol_id') != 3 || $this -> Session -> read('Auth.User.id') != $inspeccion['Calificacion']['cal_inspector_taller']) $disabled = true;
+			?>
+			<td>
+				<?php
+					$text = '';
+					if(!empty($inspeccion['Calificacion']['cal_comentarios_local'])) $text = $inspeccion['Calificacion']['cal_comentarios_local'];
+					if($disabled) {
+						echo $this -> Form -> input('cal_comentarios_local', array('disabled', 'value' => $text, 'required' => 'required', 'label' => false, 'div' => false, 'type' => 'textarea'));
+					} else {
+						echo $this -> Form -> input('cal_comentarios_local', array('value' => $text, 'required' => 'required', 'label' => false, 'div' => false, 'type' => 'textarea'));
+					}
+				?>
+			</td>
+			<td>
+				<?php
+					$value = '-1';
+					if($inspeccion['Calificacion']['cal_local_aprobado'] != 0) $value = $inspeccion['Calificacion']['cal_local_aprobado'];
+					if($disabled) {
+						echo $this -> Form -> radio('cal_local_aprobado', array(-1 => 'Denegado', 1 => 'Aprobado'), array('value' => $value, 'required' => 'required', 'label' => false, 'div' => false, 'legend' => false, 'disabled'));
+					} else {
+						echo $this -> Form -> radio('cal_local_aprobado', array(-1 => 'Denegado', 1 => 'Aprobado'), array('value' => $value, 'required' => 'required', 'label' => false, 'div' => false, 'legend' => false));
+					}
+				?>
+			</td>			
 			<td><?php echo $this -> Form -> submit('Enviar'); ?></td>
 		</tr>
 	</table>
