@@ -47,4 +47,5 @@
 	</div>-->
 </div>
 <?php echo $this -> Html -> script('llenado_de_datos.js',false);?>
+<?php echo $this -> Html -> script('balances',false);?>
 <?php echo $this -> Html -> script('registro-artesano',false);?>

@@ -1,5 +1,4 @@
-<?php for($i=15; $i<=19; $i++):
-?>
+<?php for($i=15; $i<=19; $i++):?>
 <tr>
 	<?php echo $this -> Form -> hidden('Trabajador.' . $i . '.tipos_de_trabajador_id', array('value' => 2, 'label' => false, 'div' => false));?>
 	<td><?php echo $this -> Form -> input('Trabajador.' . $i . '.is_cedula', array('label' => false, 'type' => 'select', 'options' => array('1' => 'Cédula', '0' => 'Pasaporte'), 'class' => 'selectCedula'));?>

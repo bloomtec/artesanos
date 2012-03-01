@@ -190,3 +190,7 @@ table.balance{
 label[for=ArtesanoArtCedula]{
 	visibility: hidden;
 }
+
+.modificarCalificacion #ArtesanoArtCedula, .modificarCalificacion  .validarCalificacion a.button, .modificarCalificacion  .validarCalificacion #ArtesanoArtIsCedula{
+	display:none;
+}
