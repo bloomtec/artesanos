@@ -629,6 +629,10 @@ table td.actions a {
 	background-image: url(/img/delete.png);
 	background-size: 20px;
 }
+.actions .informe {
+	background-image: url(/img/informes.png);
+	background-size: 20px;
+}
 .actions .privileges {
 	background-image: url(/img/permisos.png);
 	background-size: 20px;

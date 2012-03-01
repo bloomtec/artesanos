@@ -90,6 +90,7 @@ form #wizard .datos-balance .input{
 form #wizard  .input {
 	float: left;
 	width: auto;
+	margin-left: 10px;
 }
 form input[type=number], form input.valor, input.number {
 	width: 6em;
@@ -107,7 +108,7 @@ form #TablaAprendices input[type=number].salarioAprendiz, form #TablaAprendices 
 	font-size:10px;
 }
 #wizard select{
-	min-width:130px;
+	min-width:60px;
 }
 #wizard .validarCalificacion a{
 	margin-top:25px;
