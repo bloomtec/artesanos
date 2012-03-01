@@ -281,13 +281,15 @@ class UsuariosController extends AppController {
 	private function setPermisosArtesanos($usuario = null, $permisos = null) {
 		if($permisos['index']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/index');
 		if($permisos['add']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/add');
+		if($permisos['modificarCalificacion']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/modificarCalificacion');
 	}
 	
 	private function getPermisosArtesanos($usuario = null) {
-		$permisos = array('index' => false, 'add' => false);
+		$permisos = array('index' => false, 'add' => false, 'modificarCalificacion' => false);
 		
 		if($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/index')) $permisos['index'] = true;
 		if($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/add')) $permisos['add'] = true;
+		if($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/modificarCalificacion')) $permisos['modificarCalificacion'] = true;
 		
 		return $permisos;
 	}

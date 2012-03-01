@@ -22,6 +22,7 @@
 				<th class="nombre">ARTESANOS</th>
 				<td class="accion"><?php echo $this -> Form -> input('Permisos.Artesanos.index', array('label' => 'Listar', 'type' => 'checkbox'));?></td>
 				<td class="accion"><?php echo $this -> Form -> input('Permisos.Artesanos.add', array('label' => 'Calificar', 'type' => 'checkbox'));?></td>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.Artesanos.modificarCalificacion', array('label' => 'Modificar Calificación', 'type' => 'checkbox'));?></td>
 				<td class="info">
 					<p>
 						Los permisos correspondientes a la inspección de la calificación son asignados automaticamente
