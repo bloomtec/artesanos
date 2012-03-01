@@ -2,8 +2,8 @@
 	<h2><?php echo __('Artesanos');?></h2>
 	<div class="search">
 		<label>BUSCAR:</label>
-		<input type="text" />
-		<input type="button" class="submit search-generic" value="Search" />
+		<input type="text" class="text-search-generic" />
+		<input type="button" class="submit search-generic" value="Buscar" />
 	</div>
 	<table cellpadding="0" cellspacing="0">
 		<tr>
