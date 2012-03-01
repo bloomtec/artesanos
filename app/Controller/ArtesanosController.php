@@ -559,7 +559,55 @@ class ArtesanosController extends AppController {
 		}
 	}
 	function modificarCalificacion($calificacionId){
+		$this -> Artesano -> Calificacion->Recursive=0;
+		$calificacion = $this -> Artesano -> Calificacion ->read(null,$calificacionId);
+		$this -> set(compact($calificacion));
 		
+		/**
+		 * Obtener los valores de los parametros
+		 * 1	Nacionalidades
+		 * 2	Tipos de sangre
+		 * 3	Estados Civiles
+		 * 4	Grados De Estudio
+		 * 5	Sexos
+		 * 6	Tipos De Discapacidad
+		 * 7	Maquinarias Y Herramientas
+		 * 8	Tipo De Adquisición (Maquinaria)
+		 * 9	Tipo De Materia Prima
+		 * 10	Procedencia (Materia Prima)
+		 * 11	Detalle (Producto)
+		 * 12	Procedencia (Producto)
+		 */
+
+		$nacionalidades = $this -> Artesano -> getValores(1);
+		$tipos_de_sangre = $this -> Artesano -> getValores(2);
+		$estados_civiles = $this -> Artesano -> getValores(3);
+		$grados_de_estudio = $this -> Artesano -> getValores(4);
+		$sexos = $this -> Artesano -> getValores(5);
+		$tipos_de_discapacidad = $this -> Artesano -> getValores(6);
+		$maquinarias_y_herramientas = $this -> Artesano -> getValores(7);
+		$tipos_de_adquisicion_maquinaria = $this -> Artesano -> getValores(8);
+		$tipos_de_materia_prima = $this -> Artesano -> getValores(9);
+		$procedencias_materia_prima = $this -> Artesano -> getValores(10);
+		$detalles_producto = $this -> Artesano -> getValores(11);
+		$procedencias_producto = $this -> Artesano -> getValores(12);
+		$tipos_de_calificacion = $this -> Artesano -> Calificacion -> TiposDeCalificacion -> find('list');
+		$grupos_de_ramas = $this -> Artesano -> Calificacion -> Rama -> GruposDeRama -> find('list');
+		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos', 'tipos_de_discapacidad', 'maquinarias_y_herramientas', 'tipos_de_adquisicion_maquinaria', 'tipos_de_materia_prima', 'procedencias_materia_prima', 'detalles_producto', 'procedencias_producto', 'grupos_de_ramas', 'tipos_de_calificacion'));
+		/**
+		 * Provincias y demas
+		 */
+		$provincias_con_inspectores = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Usuario -> find('list', array('fields' => array('Usuario.provincia_id'), 'conditions' => array('Usuario.rol_id' => 3)));
+		$provincias = array(0 => 'Seleccione...');
+		$provincias_tmp = $this -> Artesano -> Calificacion -> Taller -> Provincia -> find('list', array('conditions' => array('Provincia.id' => $provincias_con_inspectores)));
+		foreach ($provincias_tmp as $key => $value) {
+			$provincias[$key] = $value;
+		}
+		// $cantones = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Canton -> find('list');
+		// $ciudades = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Canton -> Ciudad -> find('list');
+		// $sectores = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Canton -> Ciudad -> Sector -> find('list');
+		// $parroquias = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Canton -> Ciudad -> Sector -> Parroquia -> find('list');
+		$this -> set(compact('provincias'));
 	}
 
 	function validarCalificacion() {
