@@ -393,7 +393,7 @@ class ArtesanosController extends AppController {
 		// $ciudades = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Canton -> Ciudad -> find('list');
 		// $sectores = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Canton -> Ciudad -> Sector -> find('list');
 		// $parroquias = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Canton -> Ciudad -> Sector -> Parroquia -> find('list');
-		$this -> set(compact('provincias', 'cantones', 'ciudades', 'sectores', 'parroquias'));
+		$this -> set(compact('provincias'));
 	}
 	
 	/**
