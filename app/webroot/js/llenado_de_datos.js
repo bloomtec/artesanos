@@ -29,8 +29,6 @@ var llenarTrabajadoresIndexado = function(Model, datos, indice) {
 			if(input.is('.valor')){
 				input.val(BJS.formatComma(BJS.formatNumber(datos[atributo])));
 			}else{
-				console.log(atributo);
-				console.log(datos[atributo]);
 				input.val(datos[atributo]);
 			}
 		}
