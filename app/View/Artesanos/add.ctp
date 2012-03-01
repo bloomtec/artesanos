@@ -46,4 +46,5 @@
 		<a href="#" class="finalizar-registro-artesano cancelar">Finalizar Registro</a>
 	</div>-->
 </div>
+<?php echo $this -> Html -> script('llenado_de_datos.js',false);?>
 <?php echo $this -> Html -> script('registro-artesano',false);?>

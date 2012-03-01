@@ -6,7 +6,7 @@
 			echo $this -> Form -> input('Calificacion.tipos_de_calificacion_id', array('label' => 'Tipo De Calificación:', 'col' => '0', 'options' => $tipos_de_calificacion));
 			echo $this -> Form -> input('grupos_de_rama_id', array('label' => 'Grupo de rama:', 'col' => '1', 'options' => $grupos_de_ramas));
 			echo $this -> Form -> input('Calificacion.rama_id', array('label' => 'Rama:', 'col' => '2', 'options' => array()));
-			echo $this -> Form -> input('art_is_cedula', array('label' => '&nbsp', 'type' => 'select','options'=>array('1'=>'Cédula: ','0'=>'Pasaporte: ')));
+			echo $this -> Form -> input('art_is_cedula', array('label' => '&nbsp','style'=>'width:150px;', 'type' => 'select','options'=>array('1'=>'Cédula: ','0'=>'Pasaporte: ')));
 			
 			echo $this -> Form -> input('art_cedula', array('label' => '&nbsp', 'type' => 'text','div'=>'input text','class'=>'number'));
 			echo $this -> Html -> link('validar', "#",array("class"=>'button'));
@@ -22,28 +22,27 @@
 			echo $this -> Form -> input('DatosPersonal.dat_apellido_paterno', array('label' => 'Apellido paterno:', 'col' => '1'));
 			echo $this -> Form -> input('DatosPersonal.dat_apellido_materno', array('label' => 'Apellido materno:', 'col' => '2'));
 			echo $this -> Form -> input('DatosPersonal.dat_nombres', array('label' => 'Nombres:', 'col' => '3'));
+			echo $this -> Form -> input('DatosPersonal.dat_fecha_nacimiento', array('label' => 'Fecha de nacimiento:', 'col' => '0','label'=>'Fecha de Nacimiento','type'=>'text','class'=>'date'));
+			
 			?>
 			<div style="clear:both"></div>
 		</div>
 		<div class="fila-datos" row="2">
 			<?php
-			echo $this -> Form -> input('DatosPersonal.dat_fecha_nacimiento', array('label' => 'Fecha de nacimiento:', 'col' => '0','label'=>'Fecha de Nacimiento','type'=>'text','class'=>'date'));
-			echo $this -> Form -> input('DatosPersonal.dat_tipo_de_sangre', array('label' => 'Tipo de sangre:', 'type' => 'select', 'options' => $tipos_de_sangre, 'empty' => 'Seleccione...', 'col' => '1'));
-			echo $this -> Form -> input('DatosPersonal.dat_estado_civil', array('label' => 'Estado civil:', 'type' => 'select', 'options' => $estados_civiles, 'empty' => 'Seleccione...', 'col' => '2'));
-			echo $this -> Form -> input('DatosPersonal.dat_grado_estudio', array('label' => 'Grado de estudio:', 'type' => 'select', 'options' => $grados_de_estudio, 'empty' => 'Seleccione...', 'col' => '3'));
+			echo $this -> Form -> input('DatosPersonal.dat_tipo_de_sangre', array('style'=>'width:100px;','label' => 'Tipo de sangre:', 'type' => 'select', 'options' => $tipos_de_sangre, 'empty' => 'Seleccione...', 'col' => '1'));
+			echo $this -> Form -> input('DatosPersonal.dat_estado_civil', array('style'=>'width:100px;','label' => 'Estado civil:', 'type' => 'select', 'options' => $estados_civiles, 'empty' => 'Seleccione...', 'col' => '2'));
+			echo $this -> Form -> input('DatosPersonal.dat_grado_estudio', array('style'=>'width:100px;','label' => 'Grado de estudio:', 'type' => 'select', 'options' => $grados_de_estudio, 'empty' => 'Seleccione...', 'col' => '3'));
 			echo $this -> Form -> input('DatosPersonal.dat_sexo', array('label' => 'Sexo:', 'type' => 'select', 'options' => $sexos, 'empty' => 'Seleccione...', 'col' => '4'));
 			?>
-			<div style="clear:both"></div>
-		</div>
-		<div class="fila-datos" row="3">
 			<?php
-			echo $this -> Form -> input('DatosPersonal.dat_hijos_mayores', array('type'=>'text','class' => 'number','label' => 'No. de hijos mayores:', 'col' => '0'));
-			echo $this -> Form -> input('DatosPersonal.dat_hijos_menores', array('type'=>'text','class' => 'number', 'label' => 'No. de hijos menores:', 'col' => '1'));
+			echo $this -> Form -> input('DatosPersonal.dat_hijos_mayores', array('type'=>'text','class' => 'number','label' => 'Hijos mayores:', 'col' => '0'));
+			echo $this -> Form -> input('DatosPersonal.dat_hijos_menores', array('type'=>'text','class' => 'number', 'label' => 'Hijos menores:', 'col' => '1'));
 			echo $this -> Form -> input('DatosPersonal.dat_tipo_discapacidad', array('label' => 'Tipo de discapacidad:', 'type' => 'select', 'options' => $tipos_de_discapacidad, 'empty' => 'Ninguna', 'col' => '2'));
-			echo $this -> Form -> input('DatosPersonal.dat_porcentaje_de_discapacidad', array('label' => 'Porcentaje de discapacidad:', 'div' => 'input porcentaje', 'col' => '3','class'=>'porcentaje','type'=>'text'));
+			echo $this -> Form -> input('DatosPersonal.dat_porcentaje_de_discapacidad', array('style'=>'width:60px;','label' => 'Porcentaje:', 'div' => 'input porcentaje', 'col' => '3','class'=>'porcentaje','type'=>'text'));
 			?>
 			<div style="clear:both"></div>
 		</div>
+
 	</div>
 	<div class="datos-taller validar tovalidate">
 		<h2>Datos Taller</h2>
@@ -68,11 +67,11 @@
 			<?php
 			
 			
-			echo $this -> Form -> input('Taller.tal_calle_o_avenida', array('style'=>'width:150px;','label' => 'Calle/Avenida:', 'col' => '2'));
-			echo $this -> Form -> input('Taller.tal_numero', array('style'=>'width:50px;','label' => 'No.:', 'col' => '3'));
-			echo $this -> Form -> input('Taller.tal_interseccion', array('style'=>'width:130px;','label' => 'Intersección:', 'col' => '4'));
-			echo $this -> Form -> input('Taller.tal_barrio', array('style'=>'width:130px;','label' => 'Barrio:', 'col' => '5'));
-			echo $this -> Form -> input('Taller.tal_referencia', array('style'=>'width:130px;','label' => 'Referencia:', 'col' => '2'));
+			echo $this -> Form -> input('Taller.tal_calle_o_avenida', array('label' => 'Calle/Avenida:', 'col' => '2'));
+			echo $this -> Form -> input('Taller.tal_numero', array('style'=>'width:100px;','label' => 'No.:', 'col' => '3'));
+			echo $this -> Form -> input('Taller.tal_interseccion', array('label' => 'Intersección:', 'col' => '4'));
+			echo $this -> Form -> input('Taller.tal_barrio', array('label' => 'Barrio:', 'col' => '5'));
+			echo $this -> Form -> input('Taller.tal_referencia', array('style'=>'width:200px','label' => 'Referencia:', 'col' => '2'));
 			?>
 			<div style="clear:both"></div>
 		</div>
@@ -102,17 +101,16 @@
 		<div class="fila-datos" row="9">
 			<?php
 			
-			echo $this -> Form -> input('Local.loc_calle_o_avenida', array('style'=>'width:170px;','label' => 'Calle/Avenida:', 'col' => '2'));
-			echo $this -> Form -> input('Local.loc_numero', array('style'=>'width:50px;','label' => 'No.:', 'col' => '3'));
+			echo $this -> Form -> input('Local.loc_calle_o_avenida', array('label' => 'Calle/Avenida:', 'col' => '2'));
+			echo $this -> Form -> input('Local.loc_numero', array('style'=>'width:100px;','label' => 'No.:', 'col' => '3'));
 			echo $this -> Form -> input('Local.loc_interseccion', array('label' => 'Interseccion:', 'col' => '0'));
 			echo $this -> Form -> input('Local.loc_barrio', array('label' => 'Barrio:', 'col' => '1'));
-			
+			echo $this -> Form -> input('Local.loc_referencia', array('style'=>'width:200px','label' => 'Referencia:', 'col' => '0'));
 			?>
 			<div style="clear:both"></div>
 		</div>
 		<div class="fila-datos" row="10">
 			<?php
-			echo $this -> Form -> input('Local.loc_referencia', array('label' => 'Referencia:', 'col' => '0'));
 			echo $this -> Form -> input('Local.loc_telefono_celular', array('label' => 'Tel celular:', 'class' => 'celular'));
 			echo $this -> Form -> input('Local.loc_telefono_convencional', array('label' => 'Tel convencional:', 'class' => 'telefono'));
 			echo $this -> Form -> input('Local.loc_email', array('type'=>'email','label' => 'Email:', 'col' => '1'));

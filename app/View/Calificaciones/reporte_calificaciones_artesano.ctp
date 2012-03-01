@@ -15,10 +15,11 @@
 			<td><?php echo h($calificacion['Calificacion']['cal_fecha_expiracion']);?>&nbsp;</td>
 			<td><?php echo h($calificacion['Calificacion']['cal_rama']);?>&nbsp;</td>
 			<td><?php echo h($calificacion['Calificacion']['cal_tipo_de_calificacion']);?>&nbsp;</td>
-			<td>
+			<td class='actions'>
 				<?php 
-					if($calificacion['Calificacion']['cal_estado']==1) echo $this -> Html -> link('Especie Valorada',array("action"=>"imprimir",$calificacion['Calificacion']['id']),array('target'=>'blank_', 'class'=>'button')); 
-					echo $this -> Html -> link('Ver',array("action"=>"view",$calificacion['Calificacion']['id']),array('target'=>'blank_', 'class'=>'button')); 
+					if($calificacion['Calificacion']['cal_estado']==1) echo $this -> Html -> link('Especie Valorada',array("action"=>"imprimir",$calificacion['Calificacion']['id']),array('target'=>'blank_', 'class'=>'informe','title'=>'Especie Valorada')); 
+					echo $this -> Html -> link('Ver',array("action"=>"view",$calificacion['Calificacion']['id']),array('target'=>'blank_', 'class'=>'view', 'title' => 'Ver')); 
+					if($calificacion['Calificacion']['cal_estado']== 0) echo $this -> Html -> link('Modificar',array("action"=>"imprimir",$calificacion['Calificacion']['id']),array('target'=>'blank_', 'class'=>'edit', 'title'=>'Modificar')); 
 				?>
 			</td>
 		</tr>
