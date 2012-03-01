@@ -18,7 +18,9 @@ class CantonesController extends AppController {
 
 	public function getByProvincia($provId=null) {
 		$this -> layout = "ajax";
-		echo json_encode($this -> Canton -> find('list', array('order' => array('Canton.can_nombre' => 'ASC'), 'conditions' => array('Canton.provincia_id' => $provId))));
+		$cantones_con_inspectores = $this -> Canton -> Usuario -> find('list', array('fields' => array('Usuario.canton_id'), 'conditions' => array('Usuario.rol_id' => 3)));
+		$cantones = $this -> Canton -> find('list', array('order' => array('Canton.can_nombre' => 'ASC'), 'conditions' => array('Canton.id' => $cantones_con_inspectores, 'Canton.provincia_id' => $provId)));
+		echo json_encode($cantones);
 		exit(0);
 	}
 
