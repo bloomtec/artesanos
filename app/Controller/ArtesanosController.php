@@ -561,7 +561,7 @@ class ArtesanosController extends AppController {
 	function modificarCalificacion($calificacionId){
 		$this -> Artesano -> Calificacion->Recursive=0;
 		$calificacion = $this -> Artesano -> Calificacion ->read(null,$calificacionId);
-		$this -> set(compact($calificacion));
+		$this -> set(compact('calificacion'));
 		
 		/**
 		 * Obtener los valores de los parametros

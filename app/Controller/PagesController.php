@@ -54,7 +54,7 @@ class PagesController extends AppController {
 	
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('display');
+		$this -> Auth -> allow('display','lanzador');
 	}
 
 	/**
@@ -83,6 +83,10 @@ class PagesController extends AppController {
 		}
 		$this -> set(compact('page', 'subpage', 'title_for_layout'));
 		$this -> render(implode('/', $path));
+	}
+	
+	public function lanzador(){
+		$this -> layout ='login';
 	}
 
 }

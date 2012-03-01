@@ -1,3 +1,4 @@
+<div class='modificarCalificacion'>
 <?php echo $this -> Html -> css('registro-artesano',false);?>
 <?php 
 	echo $this -> Html ->scriptBlock('var capitalMaximoInversion='.$this->requestAction('/configuraciones/getValorConfiguracion/con_capital_maximo_de_inversion'),
@@ -48,3 +49,9 @@
 </div>
 <?php echo $this -> Html -> script('llenado_de_datos.js',false);?>
 <?php echo $this -> Html -> script('registro-artesano',false);?>
+<script type="text/javascript">
+	$(function(){
+		BJS.get('/artesanos/datosCalificacion/<?php echo $calificacion['Calificacion']['id']?>');
+	});
+</script>
+</div>
