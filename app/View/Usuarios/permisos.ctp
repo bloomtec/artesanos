@@ -22,13 +22,20 @@
 				<th class="nombre">ARTESANOS</th>
 				<td class="accion"><?php echo $this -> Form -> input('Permisos.Artesanos.index', array('label' => 'Listar', 'type' => 'checkbox'));?></td>
 				<td class="accion"><?php echo $this -> Form -> input('Permisos.Artesanos.add', array('label' => 'Calificar', 'type' => 'checkbox'));?></td>
-				<td class="accion"><?php echo $this -> Form -> input('Permisos.Artesanos.modificarCalificacion', array('label' => 'Modificar Calificación', 'type' => 'checkbox'));?></td>
 				<td class="info">
 					<p>
 						Los permisos correspondientes a la inspección de la calificación son asignados automaticamente
 						a los usuarios con rol de inspector
 					</p>
 				</td>
+			</tr>
+		</table>
+		<table class="permisos">
+			<tr class="modulo">
+				<th class="nombre">CALIFICACIONES</th>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.Calificaciones.view', array('label' => 'Ver', 'type' => 'checkbox'));?></td>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.Calificaciones.imprimir', array('label' => 'Imprimir', 'type' => 'checkbox'));?></td>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.Calificaciones.modificarCalificacion', array('label' => 'Modificar', 'type' => 'checkbox'));?></td>
 			</tr>
 		</table>
 		<table class="permisos">
