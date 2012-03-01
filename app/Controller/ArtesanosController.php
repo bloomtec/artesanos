@@ -558,6 +558,9 @@ class ArtesanosController extends AppController {
 			$this -> request -> data = $this -> Artesano -> read(null, $id);
 		}
 	}
+	function modificarCalificacion($calificacionId){
+		
+	}
 
 	function validarCalificacion() {
 		$this -> layout = "ajax";
