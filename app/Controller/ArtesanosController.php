@@ -46,6 +46,43 @@ class ArtesanosController extends AppController {
 	 */
 	public function index() {
 		$this -> Artesano -> recursive = 0;
+		$conditions = array();
+		if (isset($this -> params['named']['query']) && !empty($this -> params['named']['query'])) {
+			//$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
+			$query = $this -> params['named']['query'];
+			$calificaciones = $this -> Artesano -> Calificacion -> DatosPersonal -> find(
+				'list',
+				array(
+					'conditions' => array(
+						'OR' => array(
+							'DatosPersonal.dat_nombres LIKE' => "%$query%",
+							'DatosPersonal.dat_apellido_paterno LIKE' => "%$query%",
+							'DatosPersonal.dat_apellido_materno LIKE' => "%$query%",
+							'DatosPersonal.dat_nacionalidad LIKE' => "%$query%"
+						)
+					),
+					'fields' => array(
+						'DatosPersonal.calificacion_id'
+					)
+				)
+			);
+			$artesanos = $this -> Artesano -> Calificacion -> find(
+				'list',
+				array(
+					'conditions' => array(
+						'Calificacion.id' => $calificaciones
+					),
+					'fields' => array(
+						'Calificacion.artesano_id'
+					)
+				)
+			);
+			$conditions['OR']['Artesano.id'] = $artesanos;
+			$conditions['OR']['Artesano.art_cedula LIKE'] = "%$query%";
+		}
+		if(!empty($conditions)) {
+			$this -> paginate = array('conditions' => $conditions);
+		}
 		$artesanos = $this -> paginate();
 		foreach($artesanos as $key => $artesano) {
 			$calificacion = $this -> Artesano -> Calificacion -> find('first', array('order' => array('Calificacion.created' => 'DESC'), 'conditions' => array('Calificacion.artesano_id' => $artesano['Artesano']['id'])));
