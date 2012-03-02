@@ -19,8 +19,8 @@
 		<td><?php echo h($feriado['Feriado']['fer_nombre']); ?>&nbsp;</td>
 		<td><?php echo h($feriado['Feriado']['fer_fecha']); ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $feriado['Feriado']['id']),array('class'=>'edit')); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $feriado['Feriado']['id']), array('class'=>'delete'), __('Esta seguro que quiere eliminar el registro?', $feriado['Feriado']['id'])); ?>
+			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $feriado['Feriado']['id']),array('class'=>'edit','title'=>'Modificar')); ?>
+			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $feriado['Feriado']['id']), array('class'=>'delete','title'=>'Borrar'), __('Esta seguro que quiere eliminar el registro?', $feriado['Feriado']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

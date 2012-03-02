@@ -51,9 +51,9 @@ $cakeDescription = __d('cake_dev', 'Junta Nacional de Defensa del Artesano');
 			<?php echo $content_for_layout; ?>
 
 		</div>
-		
+		<?php echo $this -> element('footer');?>
 	</div>
-	<?php echo $this -> element('footer');?>
+	
 
 	<?php echo $this->element('sql_dump'); ?>
 </body>

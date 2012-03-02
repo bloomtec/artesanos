@@ -43,6 +43,10 @@
 	font-style:normal;
 	margin-top:5px;
 }
+.calificar form{
+	width:960px;
+	padding:0;
+}
 #wizard .form input, form textarea, form  date {
 	float: left;
 	width: 130px;
@@ -69,6 +73,9 @@
 	float:left;
 	clear:left;
 }
+#wizard .input input.number {
+    width: 6em;
+}
 /*
 #wizard select.date {
 	padding: 0;
@@ -80,6 +87,32 @@
 	-webkit-box-shadow: 0 0 10px #eee inset;
 }
 */
+#wizard label{
+	display: block;
+	clear:both;
+	float:none;
+	width: auto;
+}
+#wizard h2{
+	
+}
+
+#wizard .input.checkbox{
+	float:left;
+	margin: 0;
+}
+#wizard .input.checkbox input{
+	float:left;
+	margin: 0;
+	clear: none;
+	width:50px;
+}
+#wizard .input input{
+	display: block;
+	clear:both;
+	float: none;
+	width:150px;
+}
 #wizard input.date{
 	width: 6em;
 }
@@ -90,7 +123,10 @@ form #wizard .datos-balance .input{
 form #wizard  .input {
 	float: left;
 	width: auto;
-	margin-left: 10px;
+	margin:5px 0 0 10px;
+}
+form #wizard select{
+	margin-top:5px;
 }
 form input[type=number], form input.valor, input.number {
 	width: 6em;

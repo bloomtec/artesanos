@@ -37,37 +37,49 @@ $cakeDescription = __d('cake_dev', 'Junta Nacional de defensa del artesano');
 		echo $scripts_for_layout;
 		?>
 		<script type="text/javascript">
-			$(function(){
-				$('.imprimir').click(function(){
-					
+			$(function() {
+				$('.imprimir').click(function() {
+
 					window.print();
 				});
 			});
+
 		</script>
 		<style>
-			   div.breakhere {page-break-before: always}
+			div.breakhere {
+				page-break-before: always
+			}
 		</style>
 	</head>
-	<body>
+	<body id="print">
 		<div id="container">
-	
+			<div id="header">
+				<a class="logo" href="/pages/display/home"><img src="/img/logo_header.png" /></a>
+				
+			</div>
 			<div id="content">
-				<div class="imprimir top"> imprimir </div>
+				<div class="imprimir top">
+					imprimir
+				</div>
 				<?php echo $content_for_layout;?>
 				<?php
-					if($this -> request -> params['controller'] = 'calificaciones') {
-						if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Calificaciones', 'imprimir')))) {
+if($this -> request -> params['controller'] = 'calificaciones') {
+if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Calificaciones', 'imprimir')))) {
 				?>
-							<div class="imprimir bottom"> imprimir </div>
+				<div class="imprimir bottom">
+					imprimir
+				</div>
 				<?php
-						}
-					} else {
+				}
+				} else {
 				?>
-						<div class="imprimir bottom"> imprimir </div>
+				<div class="imprimir bottom">
+					imprimir
+				</div>
 				<?php
-					}
+				}
 				?>
-				<?php // debug($this -> request -> params['controller']); ?>
+				<?php // debug($this -> request -> params['controller']);?>
 			</div>
 		</div>
 		<?php echo $this -> element('sql_dump');?>
