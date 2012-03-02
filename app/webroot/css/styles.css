@@ -715,7 +715,7 @@ table {
 #content th {
 	border: 0;
 	background-color: #26469e;
-	text-align: left;
+	text-align: center;
 	padding: 2px;
 	height: 25px;
 	color: #fff;
@@ -757,6 +757,17 @@ table tr td {
 	vertical-align: middle;
 	border-bottom: 1px solid #ddd;
 	height: 50px;
+}
+#print table tr td {
+	padding: 5px;
+	text-align: left;
+	vertical-align: middle;
+	border: 1px solid #ddd;
+	height: auto;
+}
+#print #content th{
+	height: auto;
+	padding: 6px 5px;
 }
 
 table tr:nth-child(even) {
