@@ -715,14 +715,12 @@ table {
 #content th {
 	border: 0;
 	background-color: #26469e;
-	text-align: left;
+	text-align: center;
 	padding: 2px;
 	height: 25px;
 	color: #fff;
 	font-weight: bold;
 	font-size: 13px;
-	border-right: 1px solid #152554;
-	
 	/** css3 gradient **/
 		
 	background: #4778ff; /* Old browsers */
@@ -757,6 +755,23 @@ table tr td {
 	vertical-align: middle;
 	border-bottom: 1px solid #ddd;
 	height: 50px;
+}
+#print table tr td {
+	padding: 5px;
+	text-align: left;
+	vertical-align: middle;
+	border: 1px solid black;
+	height: auto;
+}
+#print #content th{
+	height: auto;
+	padding: 5px 5px;
+	border: 1px solid #152554;
+}
+#print caption{
+	font-size:15px;
+	font-weight: bold;
+	margin-bottom: 4px;
 }
 
 table tr:nth-child(even) {
