@@ -17,11 +17,17 @@ class DatosPersonalesController extends AppController {
 		$conditions = $this -> Session -> read('conditions');
 		$this -> Session -> delete('conditions');
 		$this -> paginate = array('conditions' => $conditions, 'order' => array('DatosPersonal.dat_nombres' => 'ASC'));
+		$csv_export_data = $this -> DatosPersonal -> find('all', array('conditions' => $conditions, 'order' => array('DatosPersonal.dat_nombres' => 'ASC')));
 		$artesanos = $this -> paginate();
 		foreach ($artesanos as $key => $artesano) {
 			$tmp = $this -> DatosPersonal -> Calificacion -> Artesano -> read('art_cedula', $artesano['Calificacion']['artesano_id']);
 			$artesanos[$key]['DatosPersonal']['dat_cedula'] = $tmp['Artesano']['art_cedula'];
+			$csv_export_data[$key]['DatosPersonal']['dat_cedula'] = $tmp['Artesano']['art_cedula'];
 		}
+		$this -> Session -> delete('CSV.export_data');
+		$this -> Session -> write('CSV.export_data', $csv_export_data);
+		$this -> Session -> delete('CSV.filename');
+		$this -> Session -> write('CSV.filename', 'Reporte_Artesanos');
 		$this -> set('artesanos', $artesanos);
 	}
 	

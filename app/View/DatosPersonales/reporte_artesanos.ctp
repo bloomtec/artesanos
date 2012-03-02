@@ -1,20 +1,8 @@
-<?php
-	$rows = $this->Paginator->request->params['paging']['DatosPersonal']['count'];
-	/*
-	$php_memory_limit = ini_get('memory_limit');
-	$php_memory_limit = substr($php_memory_limit, 0, strlen($php_memory_limit) - 1);
-	debug($php_memory_limit . 'M PHP Memory Limit.');
-	debug(round(memory_get_peak_usage()/1000000, 0) . 'M memory used.');
-	*/
-?>
 <div class=" informe">
-	<div class="csv-export <?php if($rows > 300000)  echo 'inactive' ?>">
+	<div class="csv-export">
 		<?php
-			// $fields = 'calldate,clid,src,dst,channel,dstchannel,billsec,disposition,department,cost_center';
-			$fields = 'calldate,clid,src,dst,channel,dstchannel,billsec,disposition,cost_center';
-			// $headers = 'Fecha Y Hora,Usuario,Origen,Destino,Canal Origen,Canal Destino,Duración,Estado,Departamento,Centro De Costo';
-			$headers = 'Fecha Y Hora,Usuario,Origen,Destino,Canal Origen,Canal Destino,Tiempo Facturado,Estado,Centro De Costo';
-			// echo $this -> Html -> link('Exportar ésta página a CSV', array('action' => 'CSVExport', 'type'=>'page', 'fields'=>$fields, 'headers'=>$headers));
+			$fields = urlencode('dat_nombres,dat_apellido_paterno,dat_apellido_materno,dat_nacionalidad,dat_cedula,modified');
+			$headers = urlencode('Nombre,Apellido Paterno,Apellido Materno,Nacionalidad,Cédula,Última Modificación');
 			echo $this -> Html -> link('Exportar el resultado a CSV', array('action' => 'CSVExport', 'fields'=>$fields, 'headers'=>$headers),array('class'=>'csv'));
 		?>
 	</div>
@@ -40,9 +28,11 @@
 	</table>
 	<div class="paging">
 		<?php
+			echo $this -> Paginator -> first('<<  ', array(), null, array('class' => 'prev disabled'));
 			echo $this -> Paginator -> prev('< ' . __('Anterior'), array(), null, array('class' => 'prev disabled'));
 			echo $this -> Paginator -> numbers(array('separator' => ''));
 			echo $this -> Paginator -> next(__('Siguiente') . ' >', array(), null, array('class' => 'next disabled'));
+			echo $this -> Paginator->last('>>  ', array(), null, array('class' => 'next disabled'));
 		?>
 	</div>
 </div>

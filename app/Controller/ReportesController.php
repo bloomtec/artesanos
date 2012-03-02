@@ -31,11 +31,6 @@ class ReportesController extends AppController {
 				
 				$conditions['DatosPersonal.calificacion_id'] = $calificaciones;
 			}
-			/*
-			if(!empty($this -> request -> data['Reporte']['fecha_de_nacimiento'])) {
-				$conditions['DatosPersonal.dat_fecha_nacimiento'] = $this -> request -> data['Reporte']['fecha_de_nacimiento'];
-			}
-			 */
 			if(!empty($this -> request -> data['Reporte']['nacionalidad'])) {
 				$conditions['DatosPersonal.dat_nacionalidad'] = $this -> request -> data['Reporte']['nacionalidad'];
 			}
@@ -69,6 +64,11 @@ class ReportesController extends AppController {
 			 */
 			$this -> Session -> delete('conditions');
 			$this -> Session -> write('conditions', $conditions);
+			/*
+			// Guardar las condiciones del informe
+			$this -> Session -> delete('CSVExport.conditions');
+			$this -> Session -> write('CSVExport.conditions', $conditions);
+			*/
 			$this -> redirect(array('controller' => 'datos_personales', 'action' => 'reporteArtesanos'));
 		}
 		$tipos_de_discapacidad = $this -> Reporte -> getValores(6);

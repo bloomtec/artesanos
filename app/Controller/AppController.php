@@ -62,7 +62,6 @@ class AppController extends Controller {
 		 */
 		$requested_fields = null;
 		$requested_headers = null;
-		$export_type = null;
 
 		/**
 		 * Este campo debe de asignarse en la sesión
@@ -73,38 +72,32 @@ class AppController extends Controller {
 		 * Procesar los datos enviados
 		 */
 		if (isset($this -> request -> params['named']['fields']) && !empty($this -> request -> params['named']['fields'])) {
-			$requested_fields = $this -> request -> params['named']['fields'];
+			$requested_fields = urldecode(($this -> request -> params['named']['fields']));
 			$requested_fields = explode(',', $requested_fields);
 			$model_fields = array_intersect($model_fields, $requested_fields);
 		}
 
 		if (isset($this -> request -> params['named']['headers']) && !empty($this -> request -> params['named']['headers'])) {
-			$requested_headers = $this -> request -> params['named']['headers'];
+			$requested_headers = urldecode($this -> request -> params['named']['headers']);
 			$requested_headers = explode(',', $requested_headers);
 		}
 
-		if (isset($this -> request -> params['named']['type']) && !empty($this -> request -> params['named']['type'])) {
-			$export_type = $this -> request -> params['named']['type'];
-		}
-
-		if ($export_type == 'full') {
-			$export_data = $this -> Session -> read('CSVExport.full');
-		} elseif ($export_type == 'page') {
-			$export_data = $this -> Session -> read('CSVExport.page');
-		} else {
-			$export_data = false;
-		}
-
-		/**
-		 * Sección para procesar los datos e iniciar la descarga al usuario
-		 */
+		$export_data = $this -> Session -> read('CSV.export_data');
+		
+		// Sección para procesar los datos e iniciar la descarga al usuario
 		if ($export_data && $model_fields) {
+		//if(false) {
 			// Delimitador para el archivo CSV
 			$delimiter = ',';
 			// Caracter que encapsula el valor de la columna
 			$enclosure = '"';
 			// Nombre del archivo CSV
-			$filename = "$model.csv";
+			$now = new DateTime('now');
+			$now = $now -> format('Y-m-d_H:i:s');
+			$filename = $this -> Session -> read('CSV.filename');
+			$filename .= '_' . $now;
+			$filename .= '.csv';
+			
 			// Linea de datos para agregar al archivo
 			$line = array();
 			// Definir buffer de memoria
@@ -119,22 +112,25 @@ class AppController extends Controller {
 
 			// Asignar los valores
 			foreach ($export_data as $key => $row) {
-				// $line --> $row en este caso
-				foreach ($model_fields as $model_field) {
+				foreach ($requested_fields as $model_field) {
 					$line[] = $row[$model][$model_field];
 				}
 				fputcsv($buffer, $line, $delimiter, $enclosure);
 				$line = array();
 			}
-
+			
 			header("Content-type:application/vnd.ms-excel");
 			header("Content-disposition:attachment;filename=" . $filename);
 			rewind($buffer);
 			$output = stream_get_contents($buffer);
 			fclose($buffer);
 			return $output;
+						
 		} else {
-			// No se puede exportar
+			debug($requested_fields);
+			debug($requested_headers);
+			debug($export_data);
+			// $this -> redirect($this -> referer());
 		}
 	}
 
