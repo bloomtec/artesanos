@@ -5,6 +5,7 @@
 	</legend>
 	<?php echo $this -> Form -> input('usu_nombre_de_usuario', array('label'=>'Usuario', 'required' => 'required'));?>
 	<?php echo $this -> Form -> input('usu_contrasena', array('label'=>'Contraseña', 'type' => 'password', 'required' => 'required'));?>
-	<?php echo $this -> Form -> end(__('Login', true));?>
+	<?php echo $this -> Form -> submit('Ingresar');?>
 	<div style='clear:both;'></div>
+	<?php echo $this -> Form -> end();?>
 </div>

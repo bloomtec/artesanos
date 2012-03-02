@@ -43,6 +43,9 @@
 	font-style:normal;
 	margin-top:5px;
 }
+.calificar form{
+	width:960px;
+}
 #wizard .form input, form textarea, form  date {
 	float: left;
 	width: 130px;
@@ -80,6 +83,30 @@
 	-webkit-box-shadow: 0 0 10px #eee inset;
 }
 */
+#wizard label{
+	display: block;
+	clear:both;
+	float:none;
+	width: auto;
+}
+#wizard h2{
+	
+}
+#wizard .input.checkbox{
+	float:left;
+	margin: 0;
+}
+#wizard .input.checkbox input{
+	float:left;
+	margin: 0;
+	clear: none;
+	width:50px;
+}
+#wizard .input input{
+	display: block;
+	clear:both;
+	float: none;
+}
 #wizard input.date{
 	width: 6em;
 }

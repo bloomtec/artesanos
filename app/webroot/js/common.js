@@ -131,8 +131,8 @@ $(function() {
 	//Mascaras
 //	$.mask.rules['u']=/[1-9]/;
 	//$("input.date").setMask({'mask':"9999-19-39", });
-	$("input.date").dateEntry({dateFormat: 'ymd-'});
-	$(":date , input.date").attr('placeholder','aaaa-mm-dd');
+	$("input.date").dateEntry({dateFormat: 'ymd-',spinnerImage:null});
+	//$(":date , input.date").attr('placeholder','aaaa-mm-dd');
 	$('input.valor').setMask({ mask : '99,999.999.999.999', type : 'reverse', defaultValue: '000' });
 	$('input.number').setMask({ mask : '9999', type : 'repeat' });
 	$('input.porcentaje').setMask({ mask : '999%'});
@@ -170,4 +170,5 @@ $(function() {
 	$("#UsuarioSectorId").change(function(){
 		BJS.updateSelect($("#UsuarioParroquiaId"),"/parroquias/getBySector/"+$("#UsuarioSectorId option:selected").val(),function(){});	
 	});
+	$('form, .input').append('<div style="clear:both;"></div>');
 });

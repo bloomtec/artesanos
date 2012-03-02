@@ -51,7 +51,7 @@ h2 { /*Titulos Secundarios*/
 	font-size: 14px;
 	text-transform: uppercase;
 	font-weight: bold;
-	float: left;
+	margin-bottom: 1.5em;
 }
 h3 { /*SubTttulos principales*/
 	font-size: 165%;
@@ -237,8 +237,8 @@ p {
 	background: #2047A0;
 	float: left;
 	display: block;
-	padding: 2px 5px;;
-	width: 100px;
+	padding: 2px 0;
+	width: 120px;
 	border: solid gray 1px;
 	position: relative;
 	text-align:center;
@@ -277,10 +277,10 @@ p {
 #main-menu ul ul li {
 	margin-bottom: 0;
 	background: #EFBC00;
-	width: 250px;
+	width: 120px;
 }
 #main-menu ul ul a {
-	padding-left: 16px;
+	
 }
 #content {
 	background: #fff;
@@ -668,6 +668,11 @@ table td.actions a {
 /** Forms **/
 form {
 	clear: both;
+	width: 400px;
+	border: solid 1px gray;
+	margin-top: 10px;
+	padding-bottom: 10px;
+	padding: 16px 10px;
 }
 form h2 {
 	color: #CD0000;
@@ -675,7 +680,7 @@ form h2 {
 fieldset {
 	border: none;
 	margin-bottom: 1em;
-	padding: 16px 10px;
+	
 }
 fieldset legend {
 	color: #e32;
@@ -700,18 +705,34 @@ form div {
 }
 form .input {
 	color: #444;
-	margin-left: 5px;
 	clear: none;
+	margin: 10px 0;
 }
 form .input label {
 	display: block;
 	margin-top: 11px;
+	float:left;
+	width:170px;
+	padding:0;
+	height: 16px;
+	margin:0;
 }
 form .input input {
 	clear: none;
 	display: block;
 	height: 16px;
+	padding: 2px;
 	border: gray 1px solid;
+	float:left;
+	width:200px;
+	
+}
+.usu-cedula{
+	float:left;
+	width: 170px;
+}
+form .input select {
+	max-width:200px;
 }
 form .required {
 	font-weight: bold;
@@ -743,7 +764,6 @@ input, textarea {
 	width: 98%;
 }
 select {
-	clear: both;
 	vertical-align: text-bottom;
 }
 select[multiple=multiple] {
@@ -1207,4 +1227,12 @@ tr.diferente td.audit-value, tr.diferente td.audit-data {
 	display:none;
 }
 
-
+.ingreso.button{
+	float:right;
+	margin-right: 50px;
+	margin-top: 30px;
+	display: block;
+	width:100px;
+	text-align: center;
+	text-transform: uppercase;
+}
