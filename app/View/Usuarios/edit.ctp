@@ -6,6 +6,7 @@
 		<?php
 		echo $this -> Form -> input('id');
 		echo $this -> Form -> input('usu_nombre_de_usuario', array('label' => 'Nombre De Usuario'));
+		echo $this -> Form -> input('new_usu_contrasena', array('label' => 'Contraseña', 'type' => 'password'));
 		echo $this -> Form -> input('usu_unidad', array('label' => 'Unidad', 'type' => 'select', 'options' => $usu_unidades, 'value'=>$this->data['Usuario']['usu_unidad']));
 		$selectedCedula = $this->data['Usuario']['usu_is_cedula']?$this->data['Usuario']['usu_is_cedula']:0;
 		echo $this -> Form -> input('usu_is_cedula', array('label' => '&nbsp', 'type' => 'select','options'=>array('1'=>'Cédula: ','0'=>'Pasaporte: '),'value'=>$selectedCedula));
