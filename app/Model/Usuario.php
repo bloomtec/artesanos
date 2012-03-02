@@ -63,6 +63,14 @@ class Usuario extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
+			'confirmarContraseña' => array(
+				'rule' => array('confirmarContraseña'),
+				'message' => 'Los campos de contraseña y confirmar contraseña no coinciden.',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
 		),
 		'usu_numero_identificacion' => array(
 			'notempty' => array(
@@ -93,6 +101,20 @@ class Usuario extends AppModel {
 			),
 		),
 	);
+	
+	public function confirmarContraseña() {
+		if(
+			(isset($this -> data['Usuario']['usu_contrasena']) && isset($this -> data['Usuario']['usu_contrasena_confirmar'])) &&
+			(
+				(empty($this -> data['Usuario']['usu_contrasena']) && empty($this -> data['Usuario']['usu_contrasena_confirmar'])) ||
+				$this -> data['Usuario']['usu_contrasena'] == $this -> data['Usuario']['usu_contrasena_confirmar']
+			)
+		) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
@@ -201,8 +223,8 @@ class Usuario extends AppModel {
 	
 	public function beforeSave($model) {
 		
-	    if (isset($this->data[$this->alias]['usu_contrasena'])) {
-	        $this->data[$this->alias]['usu_contrasena'] = AuthComponent::password($this->data[$this->alias]['usu_contrasena']);
+	    if (isset($this->data['Usuario']['usu_contrasena'])) {
+	        $this->data[$this->alias]['usu_contrasena'] = AuthComponent::password($this->data['Usuario']['usu_contrasena']);
 	    }
 		if(!isset($this -> data['Usuario']['usu_unidad'])) {
 			$this -> data['Usuario']['usu_unidad'] = '';

@@ -185,10 +185,6 @@ class UsuariosController extends AppController {
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			if ($this -> Usuario -> save($this -> request -> data)) {
-				if(isset($this -> request -> data['Usuario']['new_usu_contrasena']) && !empty($this -> request -> data['Usuario']['new_usu_contrasena'])) {
-					debug($this -> request -> data);
-				}
-				/*
 				// tratando de arreglar lo del alias en la tabla aros
 				$user_id = $this -> request -> data['Usuario']['id'];
 				$user_alias = $this -> request -> data['Usuario']['usu_nombre_de_usuario'];
@@ -204,7 +200,6 @@ class UsuariosController extends AppController {
 				}
 				$this -> Session -> setFlash(__('Se guardó el usuario'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
-				*/
 			} else {
 				$this -> Session -> setFlash(__('No se pudo guardar el usuario. Por favor, intente de nuevo.'), 'crud/error');
 			}
