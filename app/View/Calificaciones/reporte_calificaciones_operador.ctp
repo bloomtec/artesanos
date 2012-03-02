@@ -24,7 +24,7 @@
 						echo $this -> Html -> link('Ver',array("action"=>"view",$calificacion['Calificacion']['id']),array('target'=>'blank_', 'class'=>'view', 'title' => 'Ver'));
 					} 
 					if($calificacion['Calificacion']['cal_estado'] == 0 && $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Artesanos', 'modificarCalificacion')))) {
-						echo $this -> Html -> link('Modificar',array("controller" => "artesanos", "action"=>"modificarCalificacion", $calificacion['Calificacion']['id']),array('target'=>'blank_', 'class'=>'edit', 'title'=>'Modificar'));
+						echo $this -> Html -> link('Modificar',array("controller" => "artesanos", "action"=>"modificarCalificacion", $calificacion['Calificacion']['id']),array('class'=>'edit', 'title'=>'Modificar'));
 					}
 				?>
 			</td>
