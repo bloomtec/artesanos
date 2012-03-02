@@ -79,6 +79,8 @@ p {
 	margin-left: -264px;
 	background: none;
 	min-height: 0;
+	height: 500px;
+	overflow:auto;
 }
 #container.login #header {
 	text-align: center;
@@ -91,13 +93,13 @@ p {
 	float: right;
 }
 #container.login #footer {
-	background-color: #000000;
+
 	bottom: 0;
 	clear: both;
 	padding: 6px 10px;
 	position: absolute;
 	text-align: center;
-	width: 100%;
+	width: 488px;
 }
 #container.login form{
 	width: 70%;
@@ -172,9 +174,14 @@ p {
 	text-align: left;
 	position: relative;
 	background-repeat: repeat-y;
-	min-height: 800px;
-	width: 960px;
+	height: 650px;
+	width: 1000px;
 	margin: 0 auto;
+	overflow-y:scroll;
+}
+#print #container {
+	height:auto;
+	overflow:auto;
 }
 #header {
 	padding: 10px 20px;
@@ -331,14 +338,15 @@ a.button.add-row{
 	margin-bottom:3px;
 	float:right;
 }
-#footer {
+#footer {/*
 	bottom: 0;
 	clear: both;
 	left: 0;
 	padding: 6px 0px;
 	position: absolute;
+	
+	width: 100%;*/
 	text-align: center;
-	width: 100%;
 }
 #content .roles h2 {
 	background-image: url("/img/users.png");
