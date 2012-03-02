@@ -1,4 +1,15 @@
 <div class="home">
+	<?php if($this -> Session -> read('Auth.User.rol_id')==3) : ?>
+	<a class="home_description" href="/calificaciones/inspecciones/<?php echo $this -> Session -> read('Auth.User.id'); ?>">
+		<h2 class="usuarios">
+			Inspecciones
+		</h2>
+		<p>
+			Inspecciones que se deben realizar
+		</p>
+	</a>
+	<?php endif ?>
+	
 	<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Usuarios', 'index')))) : ?>
 	<a class="home_description" href="/usuarios">
 		<h2 class="usuarios">
