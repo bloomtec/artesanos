@@ -3,7 +3,7 @@
 		<?php
 			$fields = urlencode('dat_nombres,dat_apellido_paterno,dat_apellido_materno,dat_nacionalidad,dat_cedula,modified');
 			$headers = urlencode('Nombre,Apellido Paterno,Apellido Materno,Nacionalidad,Cédula,Última Modificación');
-			echo $this -> Html -> link('Exportar el resultado a CSV', array('action' => 'CSVExport', 'fields'=>$fields, 'headers'=>$headers),array('class'=>'csv'));
+			echo $this -> Html -> link('Exportar el resultado a CSV', array('action' => 'CSVExport', 'fields'=>$fields, 'headers'=>$headers),array('class'=>'button'));
 		?>
 	</div>
 	<table>
