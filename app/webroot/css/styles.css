@@ -71,6 +71,7 @@ body {
 	font-family: 'TwCenMT', arial, verdana, helvetica, arial, sans-serif;
 	font-size: 12px;
 	margin: 0;
+	overflow-y:scroll;
 }
 a {
 	color: #000;
@@ -218,12 +219,11 @@ p {
 
 #container {
 	text-align: left;
-	position: relative;
 	background-repeat: repeat-y;
 	height: 650px;
-	width: 1000px;
+	width: 990px;
 	margin: 0 auto;
-	overflow-y:scroll;
+
 }
 #print #container {
 	height:auto;
@@ -889,8 +889,8 @@ form .input label {
 form .input input {
 	clear: none;
 	display: block;
-	height: 16px;
-	padding: 6px;
+	height: 14px;
+	padding: 2px;
 	border: gray 1px solid;
 	float:left;
 	width:200px;
