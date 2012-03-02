@@ -232,6 +232,7 @@ p {
 #header {
 	padding: 10px 20px;
 	margin-bottom: 19px;
+	
 }
 #header .logo img {
 	margin-left: 25px;
@@ -1462,4 +1463,18 @@ tr.diferente td.audit-value, tr.diferente td.audit-data {
     text-align: center;
     text-transform: uppercase;
     width: 102px;
+}
+#content .calificaciones.view th{
+	height: 12px;
+    padding-bottom: 7px;
+    padding-left: 5px;
+    padding-top: 7px;
+}
+#print #header{
+	background: #DAECFA;
+}
+#print #header a{
+	display: block;
+    margin: 0 auto;
+    width: 326px;
 }
