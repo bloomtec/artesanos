@@ -888,8 +888,8 @@ form .input label {
 form .input input {
 	clear: none;
 	display: block;
-	height: 16px;
-	padding: 6px;
+	height: 14px;
+	padding: 2px;
 	border: gray 1px solid;
 	float:left;
 	width:200px;
