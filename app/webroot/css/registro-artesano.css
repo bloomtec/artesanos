@@ -47,9 +47,14 @@
 	width:960px;
 	padding:0;
 }
-#wizard .form input, form textarea, form  date {
+#wizard .form input{
 	float: left;
 	width: 130px;
+	
+}
+#wizard table input{
+	margin-top:10px;
+	
 }
 #wizard fieldset{
 	padding: 0 10px 50px;
@@ -199,6 +204,10 @@ form #TablaAprendices input[type=number].salarioAprendiz, form #TablaAprendices 
 /*TABLES*/
 #wizard table tr td, #wizard table tr th{
 	height:24px;
+	text-align: center;
+}
+#wizard table tr th{
+ border: 1px solid #152554;
 }
 table.balance{
 	width:50%;

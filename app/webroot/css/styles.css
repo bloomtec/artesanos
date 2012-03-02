@@ -193,26 +193,27 @@ p {
 	float: left;
 	margin-left: 50px;
 	margin-top: 15px;
-	width: 65%;
+	width: 48%;
 }
 .home_description .usuarios {
-	background-image: url(/img/users.png);
+	background: url(/img/users.png) no-repeat center left;
 }
-.home_description .departamentos {
-	background-image: url(/img/departamentos.png);
+.home_description .calificar {
+	background-image: url(/img/calificar.png);
 }
-.home_description .centros {
-	background-image: url(/img/centros_costo.png);
+.home_description .parametros {
+	background-image: url(/img/parametros.png);
 }
-.home_description .extensiones {
-	background-image: url(/img/extensiones.png);
+.home_description .auditorias {
+	background-image: url(/img/auditorias.png);
 }
-.home_description .abreviados {
-	background-image: url(/img/abreviados.png);
+.home_description .reportes {
+	background-image: url(/img/reportes.png);
 }
-.home_description .informes {
-	background-image: url(/img/informes.png);
+.home_description .inspecciones {
+	background-image: url(/img/inspecciones.png);
 }
+
 /** END HOME **/
 
 /** Layout **/
@@ -743,6 +744,7 @@ table {
 	text-decoration: none;
 	font-weight: bold;
 	margin-bottom: 0;
+	text-align: left;
 }
 th a.asc:after {
 	content: ' ⇣';
@@ -937,7 +939,7 @@ form .input input:focus{
 }
 .usu-cedula{
 	float:left;
-	width: 170px;
+	width: 155px;
 }
 form .input select {
 	max-width:200px;
@@ -1431,20 +1433,20 @@ tr.diferente td.audit-value, tr.diferente td.audit-data {
 	display:none;
 }
 .imprimir.bottom{
-	font-size:14px;
-	font-weight: bold;
-	text-transform: uppercase;
-	float:left;
-	cursor:pointer;
-	position: fixed;
-	top:50%;
-	left:0;
-	background: url(../img/icono_imprimir.jpg);
-	background-repeat:no-repeat;
-	padding-left:40px; 
-	height: 30px;
-	line-height:30px;
-	vertical-align: middle;
+	background: url("../img/icono_imprimir.png") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    float: left;
+    font-size: 14px;
+    font-weight: bold;
+    height: 38px;
+    left: 0;
+    line-height: 62px;
+    padding-bottom: 17px;
+    padding-left: 55px;
+    position: fixed;
+    text-transform: uppercase;
+    top: 50%;
+    vertical-align: middle;
 }
 .inspecciones.view input[type=radio]{
 	float:none;
@@ -1477,4 +1479,19 @@ tr.diferente td.audit-value, tr.diferente td.audit-data {
 	display: block;
     margin: 0 auto;
     width: 326px;
+}
+.acciones_home {
+	float: left;
+	margin-top: 5px;
+}
+.acciones_home a{
+	color: #26469E;
+	font-size: 13px;
+	font-weight: bold;
+	text-transform: uppercase;	
+	display: block;
+	margin-bottom: 5px;
+}
+.acciones_home a:hover{
+	color: #CD0000;
 }
