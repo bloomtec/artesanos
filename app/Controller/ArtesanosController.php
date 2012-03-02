@@ -110,6 +110,185 @@ class ArtesanosController extends AppController {
 	}
 	
 	/**
+	 * guardarCalificacion method
+	 * 
+	 * @param array $data
+	 * @param array $artesano
+	 */
+	private function guardarCalificacion($data = null) {
+		if($data) {
+			$this -> request -> data = $data;
+			
+			// Guardar la calificacion
+			$calificacion = array();
+			$calificacion['Calificacion'] = $this -> request -> data['Calificacion'];
+			
+			/**
+			 * Revisar campos del balance
+			 */
+			if(empty($calificacion['Calificacion']['cal_domicilio_valor'])) $calificacion['Calificacion']['cal_domicilio_valor'] = 0;
+			if(empty($calificacion['Calificacion']['cal_taller_valor'])) $calificacion['Calificacion']['cal_taller_valor'] = 0;
+			if(empty($calificacion['Calificacion']['cal_agua'])) $calificacion['Calificacion']['cal_agua'] = 0;
+			if(empty($calificacion['Calificacion']['cal_luz'])) $calificacion['Calificacion']['cal_luz'] = 0;
+			if(empty($calificacion['Calificacion']['cal_telefono'])) $calificacion['Calificacion']['cal_telefono'] = 0;
+			if(empty($calificacion['Calificacion']['cal_servicios_basicos'])) $calificacion['Calificacion']['cal_servicios_basicos'] = 0;
+			if(empty($calificacion['Calificacion']['cal_compra_de_materia_prima_mensual'])) $calificacion['Calificacion']['cal_compra_de_materia_prima_mensual'] = 0;
+			if(empty($calificacion['Calificacion']['cal_salario_operarios'])) $calificacion['Calificacion']['cal_salario_operarios'] = 0;
+			if(empty($calificacion['Calificacion']['cal_salario_aprendices'])) $calificacion['Calificacion']['cal_salario_aprendices'] = 0;
+			if(empty($calificacion['Calificacion']['cal_otros_salarios'])) $calificacion['Calificacion']['cal_otros_salarios'] = 0;
+			if(empty($calificacion['Calificacion']['cal_maquinas_y_herramientas'])) $calificacion['Calificacion']['cal_maquinas_y_herramientas'] = 0;
+			if(empty($calificacion['Calificacion']['cal_materia_prima'])) $calificacion['Calificacion']['cal_materia_prima'] = 0;
+			if(empty($calificacion['Calificacion']['cal_productos_elaborados'])) $calificacion['Calificacion']['cal_productos_elaborados'] = 0;
+			if(empty($calificacion['Calificacion']['cal_ingresos_por_ventas'])) $calificacion['Calificacion']['cal_ingresos_por_ventas'] = 0;
+			if(empty($calificacion['Calificacion']['cal_otros_ingresos'])) $calificacion['Calificacion']['cal_otros_ingresos'] = 0;
+			if(empty($calificacion['Calificacion']['cal_total_capital'])) $calificacion['Calificacion']['cal_total_capital'] = 0;
+			if(empty($calificacion['Calificacion']['cal_total_ingresos'])) $calificacion['Calificacion']['cal_total_ingresos'] = 0;
+			if(empty($calificacion['Calificacion']['cal_total_egresos'])) $calificacion['Calificacion']['cal_total_egresos'] = 0;
+			if(empty($calificacion['Calificacion']['cal_balance_total_ingresos'])) $calificacion['Calificacion']['cal_balance_total_ingresos'] = 0;
+			if(empty($calificacion['Calificacion']['cal_balance_total_egresos'])) $calificacion['Calificacion']['cal_balance_total_egresos'] = 0;
+			if(empty($calificacion['Calificacion']['cal_balance_rentabilidad_mensual'])) $calificacion['Calificacion']['cal_balance_rentabilidad_mensual'] = 0;
+			/**
+			 * Fin revision campos del balance
+			 */
+			$this -> Artesano -> Calificacion -> create();
+			if($this -> Artesano -> Calificacion -> save($calificacion)) {				
+				// Guardar los datos personales
+				$datos_personales = array();
+				$datos_personales['DatosPersonal'] = $this -> request -> data['DatosPersonal'];
+				if($this -> Artesano -> Calificacion -> DatosPersonal -> save($datos_personales)) {
+					$this -> Session -> setFlash(__('Los datos del artesano han sido registrados.'), 'crud/success');
+				} else {
+					$this -> Session -> setFlash(__('Ha ocurrido un error al registrar los datos personales del artesano. Por favor, intente de nuevo.'), 'crud/error');
+				}
+				
+				// Guardar el taller
+				$taller = array();
+				$taller['Taller'] = $this -> request -> data['Taller'];
+				$this -> Artesano -> Calificacion -> Taller -> create();
+				if($this -> Artesano -> Calificacion -> Taller -> save($taller)) {
+					// Guardar Equipos De Trabajo
+					$equipos_de_trabajo = array();
+					$equipos_de_trabajo['EquiposDeTrabajo'] = $this -> request -> data['EquiposDeTrabajo'];
+					
+					foreach($equipos_de_trabajo['EquiposDeTrabajo'] as $key => $values) {	
+						if(!isset($equipos_de_trabajo['EquiposDeTrabajo'][$key]['taller_id']) || empty($equipos_de_trabajo['EquiposDeTrabajo'][$key]['taller_id'])) {
+							$equipos_de_trabajo['EquiposDeTrabajo'][$key]['taller_id'] = $taller['Taller']['id'];
+						}
+						$this -> Artesano -> Calificacion -> Taller -> EquiposDeTrabajo -> create();
+						if(!empty($equipos_de_trabajo['EquiposDeTrabajo'][$key]['equ_cantidad']) && !empty($equipos_de_trabajo['EquiposDeTrabajo'][$key]['equ_valor_comercial'])) {
+							$this -> Artesano -> Calificacion -> Taller -> EquiposDeTrabajo -> save($equipos_de_trabajo['EquiposDeTrabajo'][$key]);
+						}
+					}
+					
+					// Materias Primas
+					$materias_primas = array();
+					$materias_primas['MateriasPrima'] = $this -> request -> data['MateriasPrima'];
+					
+					foreach($materias_primas['MateriasPrima'] as $key => $values) {
+						if(!isset($materias_primas['MateriasPrima'][$key]['taller_id']) || empty($materias_primas['MateriasPrima'][$key]['taller_id'])) {
+							$materias_primas['MateriasPrima'][$key]['taller_id'] = $taller['Taller']['id'];
+						}
+						$this -> Artesano -> Calificacion -> Taller -> MateriasPrima -> create();
+						if(!empty($materias_primas['MateriasPrima'][$key]['mat_cantidad']) && !empty($materias_primas['MateriasPrima'][$key]['mat_valor_comercial'])) {
+							$this -> Artesano -> Calificacion -> Taller -> MateriasPrima -> save($materias_primas['MateriasPrima'][$key]);
+						}
+					}
+					
+					// Productos Elaborados
+					$productos_elaborados = array();
+					$productos_elaborados['ProductosElaborado'] = $this -> request -> data['ProductosElaborado'];
+					
+					foreach($productos_elaborados['ProductosElaborado'] as $key => $values) {
+						if(!isset($productos_elaborados['ProductosElaborado'][$key]['taller_id']) || empty($productos_elaborados['ProductosElaborado'][$key]['taller_id'])) {
+							$productos_elaborados['ProductosElaborado'][$key]['taller_id'] = $taller['Taller']['id'];
+						}
+						$this -> Artesano -> Calificacion -> Taller -> ProductosElaborado -> create();
+						if(!empty($productos_elaborados['ProductosElaborado'][$key]['pro_cantidad']) && !empty($productos_elaborados['ProductosElaborado'][$key]['pro_valor_comercial'])) {
+							$this -> Artesano -> Calificacion -> Taller -> ProductosElaborado -> save($productos_elaborados['ProductosElaborado'][$key]);
+						}
+					}
+					
+					// Guardar Trabajadores
+					$trabajadores = array();
+					$trabajadores['Trabajador'] = $this -> request -> data['Trabajador'];		
+					$this -> loadModel('Trabajador');
+					foreach($trabajadores['Trabajador'] as $key => $values) {
+						// Verificar que no existe el trabajador ya
+						$trabajador_existente = $this -> Artesano -> Calificacion -> Taller -> Trabajador -> find('first', array('conditions' => array('Trabajador.tra_cedula'=>$values['tra_cedula'])));
+						if(!empty($trabajador_existente)) {
+							$tmp = $this -> Artesano -> Calificacion -> Taller -> Trabajador -> TalleresTrabajador -> find(
+								'first',
+								array(
+									'conditions' => array(
+										'TalleresTrabajador.trabajador_id' => $trabajador_existente['Trabajador']['id'],
+										'TalleresTrabajador.taller_id' => $taller['Taller']['id']
+									)
+								)
+							);
+							if(empty($tmp)) {
+								$tmp['TalleresTrabajador'] = array();
+								$tmp['TalleresTrabajador']['trabajador_id'] = $trabajador_existente['Trabajador']['id'];
+								$tmp['TalleresTrabajador']['taller_id'] = $taller['Taller']['id'];
+								$tmp['TalleresTrabajador']['tipos_de_trabajador_id'] = $values['tipos_de_trabajador_id']; 
+								$tmp['TalleresTrabajador']['tal_fecha_ingreso'] = $values['tra_fecha_ingreso']; 
+								$tmp['TalleresTrabajador']['tal_pago_mensual'] = $values['tra_pago_mensual'];
+							}
+							$this -> Artesano -> Calificacion -> Taller -> Trabajador -> TalleresTrabajador -> create();
+							$this -> Artesano -> Calificacion -> Taller -> Trabajador -> TalleresTrabajador -> save($tmp);
+						} else {
+							$tmp = array();
+							$tmp['Trabajador'] = $values;
+							$this -> Artesano -> Calificacion -> Taller -> Trabajador -> create();
+							if($this -> Artesano -> Calificacion -> Taller -> Trabajador -> save($tmp)) {
+								// Guardar la relación del trabajador con el taller
+								$tmp = array();
+								$tmp['TalleresTrabajador'] = array();
+								$tmp['TalleresTrabajador']['trabajador_id'] = $this -> Artesano -> Calificacion -> Taller -> Trabajador -> id;
+								$tmp['TalleresTrabajador']['taller_id'] = $taller['Taller']['id'];
+								$tmp['TalleresTrabajador']['tipos_de_trabajador_id'] = $values['tipos_de_trabajador_id']; 
+								$tmp['TalleresTrabajador']['tal_fecha_ingreso'] = $values['tra_fecha_ingreso']; 
+								$tmp['TalleresTrabajador']['tal_pago_mensual'] = $values['tra_pago_mensual'];
+								$this -> Artesano -> Calificacion -> Taller -> Trabajador -> TalleresTrabajador -> create();
+								$this -> Artesano -> Calificacion -> Taller -> Trabajador -> TalleresTrabajador -> save($tmp);
+							}
+						}
+					}
+					 
+				} else {
+					$this -> Session -> setFlash(__('Ha ocurrido un error al registrar el taller del artesano. Por favor, intente de nuevo.'), 'crud/error');
+				}
+				
+				// Guardar el local en caso que haya
+				if(isset($this -> request -> data['Local'])) {
+					$local = array();
+					$local['Local'] = $this -> request -> data['Local'];
+					if(!isset($local['Local']['calificacion_id']) || empty($local['Local']['calificacion_id'])) {
+						$local['Local']['calificacion_id'] = $calificacion['Calificacion']['id'];
+					}
+					if(!empty($local['Local']['id']) || $local['Local']['provincia_id'] > 0) {
+						$this -> Artesano -> Calificacion -> Local -> create();
+						if($this -> Artesano -> Calificacion -> Local -> save($local)) {
+							// TODO : Por si se debe hacer algo en este caso
+						} else {
+							$this -> Session -> setFlash(__('Ha ocurrido un error al registrar el local del artesano. Por favor, intente de nuevo.'), 'crud/error');
+						}
+					}
+				} else {
+					// TODO : Por si se debe hacer algo en este caso
+				}
+			} else {
+				$this -> Session -> setFlash(__('Ha ocurrido un error al registrar la calificación del artesano. Por favor, intente de nuevo.'), 'crud/error');
+			}
+			// Asignar inspector a la calificacion
+			$this -> asignarInspector($calificacion['Calificacion']['id']);
+			$this -> redirect(array('controller' => 'calificaciones', 'action' => 'resumen', $calificacion['Calificacion']['id']));
+			
+		} else {
+			// TODO : Por definir
+		}
+	}
+	
+	/**
 	 * crearCalificacion method
 	 * 
 	 * @param array $data
@@ -595,7 +774,10 @@ class ArtesanosController extends AppController {
 			$this -> request -> data = $this -> Artesano -> read(null, $id);
 		}
 	}
-	function modificarCalificacion($calificacionId){
+	function modificarCalificacion($calificacionId = null){
+		if($this -> request -> is('post')) {
+			$this -> guardarCalificacion($this -> request -> data);
+		}
 		$this -> Artesano -> Calificacion->Recursive=0;
 		$calificacion = $this -> Artesano -> Calificacion ->read(null,$calificacionId);
 		$this -> set(compact('calificacion'));

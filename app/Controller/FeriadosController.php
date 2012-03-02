@@ -9,13 +9,14 @@ class FeriadosController extends AppController {
 	
 	public function beforeFilter() {
 		parent::beforeFilter();
+		$this -> Auth -> allow('esFechaValida');
 	}
 	
 	public function beforeRender() {
 		$this -> layout = "parametros";
 	}
 	
-	private function esFechaValida($fecha = null) {
+	public function esFechaValida($fecha = null) {
 		if($fecha) {
 			if($this -> esDiaFeriado($fecha) || $this -> esSabado($fecha) || $this -> esDomingo($fecha)) {
 				return false;
