@@ -721,6 +721,7 @@ table {
 	color: #fff;
 	font-weight: bold;
 	font-size: 13px;
+	border-right: 1px solid #152554;
 	
 	/** css3 gradient **/
 		
@@ -835,7 +836,7 @@ table td.actions a {
 /** Forms **/
 form {
 	clear: both;
-	width: 400px;
+	width: 403px;
 	margin-top: 10px;
 	padding-bottom: 10px;
 	padding: 16px 10px;
