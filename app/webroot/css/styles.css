@@ -207,6 +207,12 @@ p {
 .home_description .auditorias {
 	background-image: url(/img/auditorias.png);
 }
+.home_description .reportes {
+	background-image: url(/img/reportes.png);
+}
+.home_description .inspecciones {
+	background-image: url(/img/inspecciones.png);
+}
 
 /** END HOME **/
 
@@ -1476,7 +1482,7 @@ tr.diferente td.audit-value, tr.diferente td.audit-data {
 }
 .acciones_home {
 	float: left;
-	margin-top: 15px;
+	margin-top: 5px;
 }
 .acciones_home a{
 	color: #26469E;
@@ -1484,7 +1490,7 @@ tr.diferente td.audit-value, tr.diferente td.audit-data {
 	font-weight: bold;
 	text-transform: uppercase;	
 	display: block;
-	margin-bottom: 8px;
+	margin-bottom: 5px;
 }
 .acciones_home a:hover{
 	color: #CD0000;
