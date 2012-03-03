@@ -225,14 +225,12 @@ class ArtesanosController extends AppController {
 									)
 								)
 							);
-							if(empty($tmp)) {
-								$tmp['TalleresTrabajador'] = array();
-								$tmp['TalleresTrabajador']['trabajador_id'] = $trabajador_existente['Trabajador']['id'];
-								$tmp['TalleresTrabajador']['taller_id'] = $taller['Taller']['id'];
-								$tmp['TalleresTrabajador']['tipos_de_trabajador_id'] = $values['tipos_de_trabajador_id']; 
-								$tmp['TalleresTrabajador']['tal_fecha_ingreso'] = $values['tra_fecha_ingreso']; 
-								$tmp['TalleresTrabajador']['tal_pago_mensual'] = $values['tra_pago_mensual'];
-							}
+							$tmp['TalleresTrabajador'] = array();
+							$tmp['TalleresTrabajador']['trabajador_id'] = $trabajador_existente['Trabajador']['id'];
+							$tmp['TalleresTrabajador']['taller_id'] = $taller['Taller']['id'];
+							$tmp['TalleresTrabajador']['tipos_de_trabajador_id'] = $values['tipos_de_trabajador_id']; 
+							$tmp['TalleresTrabajador']['tal_fecha_ingreso'] = $values['tra_fecha_ingreso']; 
+							$tmp['TalleresTrabajador']['tal_pago_mensual'] = $values['tra_pago_mensual'];
 							$this -> Artesano -> Calificacion -> Taller -> Trabajador -> TalleresTrabajador -> create();
 							$this -> Artesano -> Calificacion -> Taller -> Trabajador -> TalleresTrabajador -> save($tmp);
 						} else {
