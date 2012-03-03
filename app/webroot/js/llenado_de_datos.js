@@ -1,3 +1,13 @@
+var isCheckbox = function(input){
+	var length = input.length;
+	var toReturn = false;
+	if(length == 2){
+		if($(input[1]).is(":checkbox")){
+			toReturn = true;
+		}
+	}
+	return toReturn;
+}
 var llenarDatosIndexado = function(Model, datos, indice) {
 	var input = null;
 	for(atributo in datos) {
@@ -35,8 +45,8 @@ var llenarTrabajadoresIndexado = function(Model, datos, indice) {
 					}
 					
 				}
-				if(atributo=="tra_afiliado_seguro"){
-						if(datos[atributo]) input.attr('checked',true);
+				if(isCheckbox(input)){
+						if(datos[atributo]) {input.click();}
 				}else{
 					input.val(datos[atributo]);	
 				}			
@@ -84,7 +94,11 @@ var llenarDatos = function(Model, datosPersonales) {
 					if(input.is('.valor')){
 						input.val(BJS.formatComma(BJS.formatNumber(datosPersonales[atributo])));
 					}else{
-						input.val(datosPersonales[atributo]);
+						if(isCheckbox(input)){// atributos tipo checkbox
+							if(datosPersonales[atributo]){input.click();}
+						}else{
+							input.val(datosPersonales[atributo]);	
+						}
 					}	
 				}
 			}

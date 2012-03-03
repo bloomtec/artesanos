@@ -150,7 +150,7 @@
 			</tr>
 			<tr class='total'>
 				<th>Total</th>
-				<th><?php echo $this -> Form -> text('Calificacion.cal_total_capital', array('disabled' => true, 'label' => false, 'class' => 'total_capital'));?>
+				<th><?php echo $this -> Form -> text('Calificacion.cal_total_capital', array('disabled' => true, 'label' => false, 'class' => 'total_capital valor'));?>
 				<?php echo $this -> Form -> input('Calificacion.cal_total_capital', array('type' => 'hidden', 'label' => false, 'class' => 'total_capital','value'=>0));?></th>
 			</tr>
 		</table>
