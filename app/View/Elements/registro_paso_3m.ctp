@@ -80,11 +80,11 @@
 				<th> Valor </th>
 			</tr>
 			<tr>
-				<td>Domicilio <?php echo $this -> Form -> input('Calificacion.cal_domicilio_propio', array('label' => 'Propio'));?></td>
+				<td>Domicilio <?php echo $this -> Form -> input('Calificacion.cal_domicilio_propio', array('label' => 'Propio','rel'=>'#CalificacionCalDomicilioValor','action'=>'disabled'));?></td>
 				<td class='tovalidate'><?php echo $this -> Form -> text('Calificacion.cal_domicilio_valor', array('label' => false,'value'=>0, 'class'=>'valor'));?></td>
 			</tr>
 			<tr>
-				<td>Taller <?php echo $this -> Form -> input('Calificacion.cal_taller_propio', array('label' => 'Propio'));?></td>
+				<td>Taller <?php echo $this -> Form -> input('Calificacion.cal_taller_propio', array('label' => 'Propio','rel'=>'#CalificacionCalTallerValor','action'=>'disabled'));?></td>
 				<td class='tovalidate'><?php echo $this -> Form -> text('Calificacion.cal_taller_valor', array('label' => false,'value'=>0, 'class'=>'valor'));?></td>
 			</tr>
 			<tr>

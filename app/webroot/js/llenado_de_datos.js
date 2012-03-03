@@ -95,7 +95,12 @@ var llenarDatos = function(Model, datosPersonales) {
 						input.val(BJS.formatComma(BJS.formatNumber(datosPersonales[atributo])));
 					}else{
 						if(isCheckbox(input)){// atributos tipo checkbox
-							if(datosPersonales[atributo]){input.click();}
+							if(datosPersonales[atributo]){
+								$(input[1]).click();
+								if($(input[1]).is("input[rel]")){
+									$($(input[1]).attr('rel')).attr($(input[1]).attr('action'),true);
+								}
+							}
 						}else{
 							input.val(datosPersonales[atributo]);	
 						}
