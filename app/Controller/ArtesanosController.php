@@ -225,7 +225,6 @@ class ArtesanosController extends AppController {
 									)
 								)
 							);
-							$tmp['TalleresTrabajador'] = array();
 							$tmp['TalleresTrabajador']['trabajador_id'] = $trabajador_existente['Trabajador']['id'];
 							$tmp['TalleresTrabajador']['taller_id'] = $taller['Taller']['id'];
 							$tmp['TalleresTrabajador']['tipos_de_trabajador_id'] = $values['tipos_de_trabajador_id']; 
