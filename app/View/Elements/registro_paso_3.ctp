@@ -97,24 +97,24 @@
 			</tr>
 			<tr>
 				<td>Maquinas y Herramientas </td>
-				<td><?php echo $this -> Form -> text('Calificacion.cal_maquinas_y_herramientas', array('label' => false, 'disabled' => true, 'class' => 'maquinas_y_herramientas'));?>
-				<?php echo $this -> Form -> input('Calificacion.cal_maquinas_y_herramientas', array('label' => false, 'type' => 'hidden', 'class' => 'maquinas_y_herramientas','value'=>0));?></td>
+				<td><?php echo $this -> Form -> text('Calificacion.cal_maquinas_y_herramientas', array('label' => false, 'disabled' => true, 'class' => 'maquinas_y_herramientas valor'));?>
+				<?php echo $this -> Form -> input('Calificacion.cal_maquinas_y_herramientas', array('label' => false, 'type' => 'hidden', 'class' => 'maquinas_y_herramientas valor','value'=>0));?></td>
 			</tr>
 			<tr>
 				<td>Materia Prima</td>
-				<td><?php echo $this -> Form -> text('Calificacion.cal_materia_prima', array('label' => false, 'disabled' => true, 'class' => 'materia_prima'));?>
-				<?php echo $this -> Form -> input('Calificacion.cal_materia_prima', array('label' => false, 'type' => 'hidden', 'class' => 'materia_prima','value'=>0));?></td>
+				<td><?php echo $this -> Form -> text('Calificacion.cal_materia_prima', array('label' => false, 'disabled' => true, 'class' => 'materia_prima valor'));?>
+				<?php echo $this -> Form -> input('Calificacion.cal_materia_prima', array('label' => false, 'type' => 'hidden', 'class' => 'materia_prima valor','value'=>0));?></td>
 				</td>
 			</tr>
 			<tr>
 				<td>Productos Elaborados</td>
-				<td><?php echo $this -> Form -> text('Calificacion.cal_productos_elaborados', array('label' => false, 'disabled' => true, 'class' => 'productos_elaborados'));?>
-				<?php echo $this -> Form -> input('Calificacion.cal_productos_elaborados', array('label' => false, 'type' => 'hidden', 'class' => 'productos_elaborados','value'=>0));?></td>
+				<td><?php echo $this -> Form -> text('Calificacion.cal_productos_elaborados', array('label' => false, 'disabled' => true, 'class' => 'productos_elaborados valor'));?>
+				<?php echo $this -> Form -> input('Calificacion.cal_productos_elaborados', array('label' => false, 'type' => 'hidden', 'class' => 'productos_elaborados valor','value'=>0));?></td>
 			</tr>
 			<tr class='total'>
 				<th>Total</th>
-				<th><?php echo $this -> Form -> text('Calificacion.cal_total_capital', array('disabled' => true, 'label' => false, 'class' => 'total_capital'));?>
-				<?php echo $this -> Form -> input('Calificacion.cal_total_capital', array('type' => 'hidden', 'label' => false, 'class' => 'total_capital','value'=>0));?></th>
+				<th><?php echo $this -> Form -> text('Calificacion.cal_total_capital', array('disabled' => true, 'label' => false, 'class' => 'total_capital valor'));?>
+				<?php echo $this -> Form -> input('Calificacion.cal_total_capital', array('type' => 'hidden', 'label' => false, 'class' => 'total_capital valor','value'=>0));?></th>
 			</tr>
 		</table>
 		<h2>Ingresos</h2>

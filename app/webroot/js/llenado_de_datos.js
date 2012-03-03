@@ -29,7 +29,17 @@ var llenarTrabajadoresIndexado = function(Model, datos, indice) {
 			if(input.is('.valor')){
 				input.val(BJS.formatComma(BJS.formatNumber(datos[atributo])));
 			}else{
-				input.val(datos[atributo]);
+				if(input.is('select')){	
+					if(typeof(datos[atributo])== 'boolean' ){
+						datos[atributo]=datos[atributo]?1:0;
+					}
+					
+				}
+				if(atributo=="tra_afiliado_seguro"){
+						if(datos[atributo]) input.attr('checked',true);
+				}else{
+					input.val(datos[atributo]);	
+				}			
 			}
 		}
 	}
