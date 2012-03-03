@@ -214,25 +214,28 @@ class ArtesanosController extends AppController {
 					$this -> loadModel('Trabajador');
 					foreach($trabajadores['Trabajador'] as $key => $values) {
 						// Verificar que no existe el trabajador ya
-						$trabajador_existente = $this -> Artesano -> Calificacion -> Taller -> Trabajador -> find('first', array('conditions' => array('Trabajador.tra_cedula'=>$values['tra_cedula'])));
+						$trabajador_existente = $this -> Artesano -> Calificacion -> Taller -> Trabajador -> find('first', array('recursive' => -1, 'conditions' => array('Trabajador.tra_cedula'=>$values['tra_cedula'])));
 						if(!empty($trabajador_existente)) {
-							$tmp = $this -> Artesano -> Calificacion -> Taller -> Trabajador -> TalleresTrabajador -> find(
-								'first',
-								array(
-									'conditions' => array(
-										'TalleresTrabajador.trabajador_id' => $trabajador_existente['Trabajador']['id'],
-										'TalleresTrabajador.taller_id' => $taller['Taller']['id']
+							$trabajador_existente['Trabajador'] = $values;
+							if($this -> Artesano -> Calificacion -> Taller -> Trabajador -> save($trabajador_existente)) {
+								$tmp = $this -> Artesano -> Calificacion -> Taller -> Trabajador -> TalleresTrabajador -> find(
+									'first',
+									array(
+										'conditions' => array(
+											'TalleresTrabajador.trabajador_id' => $trabajador_existente['Trabajador']['id'],
+											'TalleresTrabajador.taller_id' => $taller['Taller']['id']
+										),
+										'recursive' => -1
 									)
-								)
-							);
-							$tmp['TalleresTrabajador'] = array();
-							$tmp['TalleresTrabajador']['trabajador_id'] = $trabajador_existente['Trabajador']['id'];
-							$tmp['TalleresTrabajador']['taller_id'] = $taller['Taller']['id'];
-							$tmp['TalleresTrabajador']['tipos_de_trabajador_id'] = $values['tipos_de_trabajador_id']; 
-							$tmp['TalleresTrabajador']['tal_fecha_ingreso'] = $values['tra_fecha_ingreso']; 
-							$tmp['TalleresTrabajador']['tal_pago_mensual'] = $values['tra_pago_mensual'];
-							$this -> Artesano -> Calificacion -> Taller -> Trabajador -> TalleresTrabajador -> create();
-							$this -> Artesano -> Calificacion -> Taller -> Trabajador -> TalleresTrabajador -> save($tmp);
+								);
+								$tmp['TalleresTrabajador']['trabajador_id'] = $trabajador_existente['Trabajador']['id'];
+								$tmp['TalleresTrabajador']['taller_id'] = $taller['Taller']['id'];
+								$tmp['TalleresTrabajador']['tipos_de_trabajador_id'] = $values['tipos_de_trabajador_id']; 
+								$tmp['TalleresTrabajador']['tal_fecha_ingreso'] = $values['tra_fecha_ingreso']; 
+								$tmp['TalleresTrabajador']['tal_pago_mensual'] = $values['tra_pago_mensual'];
+								$this -> Artesano -> Calificacion -> Taller -> Trabajador -> TalleresTrabajador -> create();
+								$this -> Artesano -> Calificacion -> Taller -> Trabajador -> TalleresTrabajador -> save($tmp);
+							}
 						} else {
 							$tmp = array();
 							$tmp['Trabajador'] = $values;
