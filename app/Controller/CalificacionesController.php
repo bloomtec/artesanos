@@ -501,11 +501,18 @@ class CalificacionesController extends AppController {
 		$conditions = $this -> Session -> read('conditions');
 		$this -> Session -> delete('conditions');
 		$this -> paginate = array('conditions' => $conditions, 'order' => array('Calificacion.id' => 'ASC'));
+		$csv_export_data = $this -> Calificacion -> find('all', array('conditions' => $conditions, 'order' => array('Calificacion.id' => 'ASC')));
 		$calificaciones = $this -> paginate();
 		foreach($calificaciones as $key => $calificacion) {
 			$calificaciones[$key]['Calificacion']['cal_rama'] = $this -> requestAction('/ramas/getNombre/' . $calificacion['Calificacion']['rama_id']);
 			$calificaciones[$key]['Calificacion']['cal_tipo_de_calificacion'] = $this -> requestAction('/tipos_de_calificaciones/getNombre/' . $calificacion['Calificacion']['tipos_de_calificacion_id']);
+			$csv_export_data[$key]['Calificacion']['cal_rama'] = $calificaciones[$key]['Calificacion']['cal_rama'];
+			$csv_export_data[$key]['Calificacion']['cal_tipo_de_calificacion'] = $calificaciones[$key]['Calificacion']['cal_tipo_de_calificacion'];
 		}
+		$this -> Session -> delete('CSV.export_data');
+		$this -> Session -> write('CSV.export_data', $csv_export_data);
+		$this -> Session -> delete('CSV.filename');
+		$this -> Session -> write('CSV.filename', 'Reporte_Calificaciones_x_Operador');
 		$this -> set('calificaciones', $calificaciones);
 	}
 
@@ -514,11 +521,18 @@ class CalificacionesController extends AppController {
 		$conditions = $this -> Session -> read('conditions');
 		$this -> Session -> delete('conditions');
 		$this -> paginate = array('conditions' => $conditions, 'order' => array('Calificacion.id' => 'ASC'));
+		$csv_export_data = $this -> Calificacion -> find('all', array('conditions' => $conditions, 'order' => array('Calificacion.id' => 'ASC')));
 		$calificaciones = $this -> paginate();
 		foreach($calificaciones as $key => $calificacion) {
 			$calificaciones[$key]['Calificacion']['cal_rama'] = $this -> requestAction('/ramas/getNombre/' . $calificacion['Calificacion']['rama_id']);
 			$calificaciones[$key]['Calificacion']['cal_tipo_de_calificacion'] = $this -> requestAction('/tipos_de_calificaciones/getNombre/' . $calificacion['Calificacion']['tipos_de_calificacion_id']);
+			$csv_export_data[$key]['Calificacion']['cal_rama'] = $calificaciones[$key]['Calificacion']['cal_rama'];
+			$csv_export_data[$key]['Calificacion']['cal_tipo_de_calificacion'] = $calificaciones[$key]['Calificacion']['cal_tipo_de_calificacion'];
 		}
+		$this -> Session -> delete('CSV.export_data');
+		$this -> Session -> write('CSV.export_data', $csv_export_data);
+		$this -> Session -> delete('CSV.filename');
+		$this -> Session -> write('CSV.filename', 'Reporte_Calificaciones_x_Artesano');
 		$this -> set('calificaciones', $calificaciones);
 	}
 	
@@ -526,16 +540,52 @@ class CalificacionesController extends AppController {
 		$this -> Calificacion -> recursive = 0;
 		$conditions = $this -> Session -> read('conditions');
 		$this -> paginate = array('conditions' => $conditions, 'order' => array('Calificacion.id' => 'ASC'));
+		$csv_export_data = $this -> Calificacion -> find('all', array('conditions' => $conditions, 'order' => array('Calificacion.id' => 'ASC')));
 		$calificaciones = $this -> paginate();
 		if(!empty($calificaciones)) {
 			foreach($calificaciones as $key => $calificacion) {
 				$calificaciones[$key]['Calificacion']['cal_nombre_inspector_taller'] = $this -> requestAction('/usuarios/getNombresYApellidos/' . $calificacion['Calificacion']['cal_inspector_taller']);
 				$calificaciones[$key]['Calificacion']['cal_nombre_inspector_local'] = $this -> requestAction('/usuarios/getNombresYApellidos/' . $calificacion['Calificacion']['cal_inspector_local']);
 				$calificaciones[$key]['Calificacion']['cal_nombre_artesano'] = $this -> requestAction('/datos_personales/getNombreArtesano/'. $calificacion['Calificacion']['id']);
+				$csv_export_data[$key]['Calificacion']['cal_nombre_inspector_taller'] = $calificaciones[$key]['Calificacion']['cal_nombre_inspector_taller'];
+				$csv_export_data[$key]['Calificacion']['cal_nombre_inspector_local'] = $calificaciones[$key]['Calificacion']['cal_nombre_inspector_local'];
+				$csv_export_data[$key]['Calificacion']['cal_nombre_artesano'] = $calificaciones[$key]['Calificacion']['cal_nombre_artesano'];
+				if($csv_export_data[$key]['Calificacion']['cal_estado'] == 1) {
+					$csv_export_data[$key]['Calificacion']['cal_estado'] = 'Aprobado';
+				} elseif($csv_export_data[$key]['Calificacion']['cal_estado'] == -1) {
+					$csv_export_data[$key]['Calificacion']['cal_estado'] = 'Denegado';
+				} elseif($csv_export_data[$key]['Calificacion']['cal_estado'] == -2) {
+					$csv_export_data[$key]['Calificacion']['cal_estado'] = 'Deshabilitado';
+				} else {
+					$csv_export_data[$key]['Calificacion']['cal_estado'] = 'Pendiente';
+				}
+				if($csv_export_data[$key]['Calificacion']['cal_taller_aprobado'] == 1) {
+					$csv_export_data[$key]['Calificacion']['cal_taller_aprobado'] = 'Aprobado';
+				} elseif($csv_export_data[$key]['Calificacion']['cal_taller_aprobado'] == -1) {
+					$csv_export_data[$key]['Calificacion']['cal_taller_aprobado'] = 'Denegado';
+				} else {
+					$csv_export_data[$key]['Calificacion']['cal_taller_aprobado'] = 'Pendiente';
+				}
+				if(!empty($csv_export_data[$key]['Calificacion']['cal_local_aprobado'])) {
+					if($csv_export_data[$key]['Calificacion']['cal_local_aprobado'] == 1) {
+						$csv_export_data[$key]['Calificacion']['cal_local_aprobado'] = 'Aprobado';
+					} elseif($csv_export_data[$key]['Calificacion']['cal_local_aprobado'] == -1) {
+						$csv_export_data[$key]['Calificacion']['cal_local_aprobado'] = 'Denegado';
+					} else {
+						$csv_export_data[$key]['Calificacion']['cal_local_aprobado'] = 'Pendiente';
+					}
+				} else {
+					$csv_export_data[$key]['Calificacion']['cal_local_aprobado'] = '';
+				}
 			}
 		}
+		$this -> Session -> delete('CSV.export_data');
+		$this -> Session -> write('CSV.export_data', $csv_export_data);
+		$this -> Session -> delete('CSV.filename');
+		$this -> Session -> write('CSV.filename', 'Reporte_Inspecciones');
 		$this -> set('calificaciones', $calificaciones);
 	}
+	
 	public function imprimir($id = null){
 		$this -> layout = 'especie_valorada';
 		$inspeccion = $this -> Calificacion -> read(null, $id);

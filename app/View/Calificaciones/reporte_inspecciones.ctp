@@ -1,4 +1,11 @@
 <div class=" informe">
+	<div class="csv-export">
+		<?php
+			$fields = urlencode('cal_nombre_artesano,cal_estado,cal_nombre_inspector_taller,cal_fecha_inspeccion_taller,cal_taller_aprobado,cal_comentarios_taller,cal_nombre_inspector_local,cal_fecha_inspeccion_local,cal_local_aprobado,cal_comentarios_local');
+			$headers = urlencode('Nombre Artesano,Estado Calificación,Inspector Taller,Fecha Inspección Taller,Estado Inspección Taller,Comentarios Taller,Inspector Local,Fecha Inspección Local,Estado Inspección Local,Comentarios Local');
+			echo $this -> Html -> link('Exportar el resultado a CSV', array('action' => 'CSVExport', 'fields'=>$fields, 'headers'=>$headers),array('class'=>'button'));
+		?>
+	</div>
 	<table>
 		<tr>
 			<th><?php echo $this -> Paginator -> sort('cal_nombre_artesano', 'Nombre Artesano');?></th>
