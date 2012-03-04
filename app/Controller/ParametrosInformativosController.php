@@ -45,7 +45,7 @@ class ParametrosInformativosController extends AppController {
 	public function view($id = null) {
 		$this -> ParametrosInformativo -> id = $id;
 		if (!$this -> ParametrosInformativo -> exists()) {
-			throw new NotFoundException(__('Invalid parametros informativo'));
+			throw new NotFoundException(__('Parámetro informativo no válido'));
 		}
 		$this -> set('parametrosInformativo', $this -> ParametrosInformativo -> read(null, $id));
 		$this -> set(

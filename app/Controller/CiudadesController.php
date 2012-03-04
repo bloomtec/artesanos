@@ -46,7 +46,7 @@ class CiudadesController extends AppController {
 	public function view($id = null) {
 		$this -> Ciudad -> id = $id;
 		if (!$this -> Ciudad -> exists()) {
-			throw new NotFoundException(__('Invalid ciudad'));
+			throw new NotFoundException(__('Ciudad no válida'));
 		}
 		$this -> set('ciudad', $this -> Ciudad -> read(null, $id));
 	}
@@ -61,10 +61,10 @@ class CiudadesController extends AppController {
 		if ($this -> request -> is('post')) {
 			$this -> Ciudad -> create();
 			if ($this -> Ciudad -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The ciudad has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se ha guardado la ciudad'), 'crud/success');
 				$this -> redirect(array('controller' => 'geograficos', 'action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The ciudad could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo guardar la ciudad. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
 		$cantones = $this -> Ciudad -> Canton -> find('list');
@@ -81,14 +81,14 @@ class CiudadesController extends AppController {
 		$this -> Ciudad -> currentUsrId = $this -> Auth -> user('id');
 		$this -> Ciudad -> id = $id;
 		if (!$this -> Ciudad -> exists()) {
-			throw new NotFoundException(__('Invalid ciudad'));
+			throw new NotFoundException(__('Ciudad no válida'));
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			if ($this -> Ciudad -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The ciudad has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se ha guardado la ciudad'), 'crud/success');
 				$this -> redirect(array('controller' => 'geograficos', 'action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The ciudad could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo guardar la ciudad. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		} else {
 			$this -> request -> data = $this -> Ciudad -> read(null, $id);

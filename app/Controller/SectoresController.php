@@ -50,7 +50,7 @@ class SectoresController extends AppController {
 	public function view($id = null) {
 		$this -> Sector -> id = $id;
 		if (!$this -> Sector -> exists()) {
-			throw new NotFoundException(__('Invalid sector'));
+			throw new NotFoundException(__('Sector no válido'));
 		}
 		$this -> set('sector', $this -> Sector -> read(null, $id));
 	}
@@ -65,10 +65,10 @@ class SectoresController extends AppController {
 		if ($this -> request -> is('post')) {
 			$this -> Sector -> create();
 			if ($this -> Sector -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The sector has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se ha guardado el sector'), 'crud/success');
 				$this -> redirect(array('controller' => 'geograficos', 'action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The sector could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo guardar el sector. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
 		$ciudades = $this -> Sector -> Ciudad -> find('list');
@@ -85,14 +85,14 @@ class SectoresController extends AppController {
 		$this -> Sector -> currentUsrId = $this -> Auth -> user('id');
 		$this -> Sector -> id = $id;
 		if (!$this -> Sector -> exists()) {
-			throw new NotFoundException(__('Invalid sector'));
+			throw new NotFoundException(__('Sector no válido'));
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			if ($this -> Sector -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The sector has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se ha guardado el sector'), 'crud/success');
 				$this -> redirect(array('controller' => 'geograficos', 'action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The sector could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo guardar el sector. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		} else {
 			$this -> request -> data = $this -> Sector -> read(null, $id);

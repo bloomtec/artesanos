@@ -40,7 +40,7 @@ class RamasController extends AppController {
 	public function view($id = null) {
 		$this -> Rama -> id = $id;
 		if (!$this -> Rama -> exists()) {
-			throw new NotFoundException(__('Invalid rama'));
+			throw new NotFoundException(__('Rama no válida'));
 		}
 		$this -> set('rama', $this -> Rama -> read(null, $id));
 		$this -> set('referer', $this -> referer());
@@ -55,10 +55,10 @@ class RamasController extends AppController {
 		if ($this -> request -> is('post')) {
 			$this -> Rama -> create();
 			if ($this -> Rama -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The rama has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se ha guardado la rama'), 'crud/success');
 				$this -> redirect(array('controller' => 'grupos_de_ramas', 'action' => 'view', $group_id));
 			} else {
-				$this -> Session -> setFlash(__('The rama could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo guardar la rama. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
 		$gruposDeRamas = $this -> Rama -> GruposDeRama -> find('list', array('conditions' => array('GruposDeRama.id' => $group_id)));
@@ -76,14 +76,14 @@ class RamasController extends AppController {
 	public function edit($id = null) {
 		$this -> Rama -> id = $id;
 		if (!$this -> Rama -> exists()) {
-			throw new NotFoundException(__('Invalid rama'));
+			throw new NotFoundException(__('Rama no válida'));
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			if ($this -> Rama -> save($this -> request -> data)) {
 				$this -> Session -> setFlash(__('The rama has been saved'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The rama could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo guardar la rama. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		} else {
 			$this -> request -> data = $this -> Rama -> read(null, $id);
@@ -105,13 +105,13 @@ class RamasController extends AppController {
 		}
 		$this -> Rama -> id = $id;
 		if (!$this -> Rama -> exists()) {
-			throw new NotFoundException(__('Invalid rama'));
+			throw new NotFoundException(__('Rama no válida'));
 		}
 		if ($this -> Rama -> delete()) {
-			$this -> Session -> setFlash(__('Rama deleted'), 'crud/success');
+			$this -> Session -> setFlash(__('Se ha eliminado la rama'), 'crud/success');
 			$this -> redirect($this -> referer());
 		}
-		$this -> Session -> setFlash(__('Rama was not deleted'), 'crud/error');
+		$this -> Session -> setFlash(__('No se ha eliminado la rama'), 'crud/error');
 		$this -> redirect($this -> referer());
 	}
 
