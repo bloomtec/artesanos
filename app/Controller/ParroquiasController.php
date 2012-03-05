@@ -44,7 +44,7 @@ class ParroquiasController extends AppController {
 	public function view($id = null) {
 		$this -> Parroquia -> id = $id;
 		if (!$this -> Parroquia -> exists()) {
-			throw new NotFoundException(__('Invalid parroquia'));
+			throw new NotFoundException(__('Parroquia no válida'));
 		}
 		$this -> set('parroquia', $this -> Parroquia -> read(null, $id));
 	}
@@ -59,10 +59,10 @@ class ParroquiasController extends AppController {
 		if ($this -> request -> is('post')) {
 			$this -> Parroquia -> create();
 			if ($this -> Parroquia -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The parroquia has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se ha guardado la parroquia'), 'crud/success');
 				$this -> redirect(array('controller' => 'geograficos', 'action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The parroquia could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo guardar la parroquia. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
 		$sectores = $this -> Parroquia -> Sector -> find('list');
@@ -79,14 +79,14 @@ class ParroquiasController extends AppController {
 		$this -> Parroquia -> currentUsrId = $this -> Auth -> user('id');
 		$this -> Parroquia -> id = $id;
 		if (!$this -> Parroquia -> exists()) {
-			throw new NotFoundException(__('Invalid parroquia'));
+			throw new NotFoundException(__('Parroquia no válida'));
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			if ($this -> Parroquia -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The parroquia has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se ha guardado la parroquia'), 'crud/success');
 				$this -> redirect(array('controller' => 'geograficos', 'action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The parroquia could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo guardar la parroquia. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		} else {
 			$this -> request -> data = $this -> Parroquia -> read(null, $id);

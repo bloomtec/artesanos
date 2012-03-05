@@ -46,7 +46,7 @@ class CantonesController extends AppController {
 	public function view($id = null) {
 		$this -> Canton -> id = $id;
 		if (!$this -> Canton -> exists()) {
-			throw new NotFoundException(__('Invalid canton'));
+			throw new NotFoundException(__('Cantón no válido'));
 		}
 		$this -> set('canton', $this -> Canton -> read(null, $id));
 	}
@@ -61,10 +61,10 @@ class CantonesController extends AppController {
 		if ($this -> request -> is('post')) {
 			$this -> Canton -> create();
 			if ($this -> Canton -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The canton has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se guardó el cantón'), 'crud/success');
 				$this -> redirect(array('controller' => 'geograficos', 'action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The canton could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo guardar el cantón. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
 		$provincias = $this -> Canton -> Provincia -> find('list');
@@ -81,14 +81,14 @@ class CantonesController extends AppController {
 		$this -> Canton -> currentUsrId = $this -> Auth -> user('id');
 		$this -> Canton -> id = $id;
 		if (!$this -> Canton -> exists()) {
-			throw new NotFoundException(__('Invalid canton'));
+			throw new NotFoundException(__('Cantón no válido'));
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			if ($this -> Canton -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The canton has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se guardó el cantón'), 'crud/success');
 				$this -> redirect(array('controller' => 'geograficos', 'action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The canton could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo guardar el cantón. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		} else {
 			$this -> request -> data = $this -> Canton -> read(null, $id);

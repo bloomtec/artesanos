@@ -34,7 +34,7 @@ class ProvinciasController extends AppController {
 	public function view($id = null) {
 		$this -> Provincia -> id = $id;
 		if (!$this -> Provincia -> exists()) {
-			throw new NotFoundException(__('Invalid provincia'));
+			throw new NotFoundException(__('Provincia no válida'));
 		}
 		$this -> set('provincia', $this -> Provincia -> read(null, $id));
 	}
@@ -49,10 +49,10 @@ class ProvinciasController extends AppController {
 		if ($this -> request -> is('post')) {
 			$this -> Provincia -> create();
 			if ($this -> Provincia -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The provincia has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se ha guardado la provincia'), 'crud/success');
 				$this -> redirect(array('controller' => 'geograficos', 'action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The provincia could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo guardar la provincia. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
 	}
@@ -67,11 +67,10 @@ class ProvinciasController extends AppController {
 		$this -> Provincia -> currentUsrId = $this -> Auth -> user('id');
 		$this -> Provincia -> id = $id;
 		if (!$this -> Provincia -> exists()) {
-			throw new NotFoundException(__('Invalid provincia'));
+			throw new NotFoundException(__('Provincia no válida'));
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			if ($this -> Provincia -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The provincia has been saved'), 'crud/success');
 				/*foreach($this->data['Canton'] as $canton){
 					if(!empty($canton['can_nombre'])){
 						$canton['provincia_id']=$this->data['Provincia']['id'];
@@ -79,9 +78,10 @@ class ProvinciasController extends AppController {
 						$this -> Provincia -> Canton -> id = 0;
 					}
 				}*/
+				$this -> Session -> setFlash(__('Se ha guardado la provincia'), 'crud/success');
 				$this -> redirect(array('controller' => 'geograficos', 'action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The provincia could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo guardar la provincia. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		} else {
 			$this -> request -> data = $this -> Provincia -> read(null, $id);

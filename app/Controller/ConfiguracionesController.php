@@ -45,14 +45,14 @@ class ConfiguracionesController extends AppController {
 		$this -> Configuracion -> currentUsrId = $this -> Auth -> user('id');
 		$this -> Configuracion -> id = $id;
 		if (!$this -> Configuracion -> exists()) {
-			throw new NotFoundException(__('Invalid configuracion'));
+			throw new NotFoundException(__('Configuración no válida'));
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			if ($this -> Configuracion -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The configuracion has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se ha guardado la configuración'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The configuracion could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo guardar la configuración. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		} else {
 			$this -> request -> data = $this -> Configuracion -> read(null, $id);

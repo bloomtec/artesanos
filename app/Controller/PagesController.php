@@ -51,10 +51,10 @@ class PagesController extends AppController {
 	 * @var array
 	 */
 	public $uses = array();
-	
+
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('display','lanzador');
+		$this -> Auth -> allow('display', 'lanzador');
 	}
 
 	/**
@@ -84,9 +84,9 @@ class PagesController extends AppController {
 		$this -> set(compact('page', 'subpage', 'title_for_layout'));
 		$this -> render(implode('/', $path));
 	}
-	
-	public function lanzador(){
-		$this -> layout ='login';
+
+	public function lanzador() {
+		$this -> layout = 'login';
 	}
 
 }

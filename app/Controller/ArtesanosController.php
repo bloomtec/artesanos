@@ -104,7 +104,7 @@ class ArtesanosController extends AppController {
 	public function view($id = null) {
 		$this -> Artesano -> id = $id;
 		if (!$this -> Artesano -> exists()) {
-			throw new NotFoundException(__('Invalid artesano'));
+			throw new NotFoundException(__('Artesano no válido'));
 		}
 		$this -> set('artesano', $this -> Artesano -> read(null, $id));
 	}
@@ -786,14 +786,14 @@ class ArtesanosController extends AppController {
 		$this -> Artesano -> currentUsrId = $this -> Auth -> user('id');
 		$this -> Artesano -> id = $id;
 		if (!$this -> Artesano -> exists()) {
-			throw new NotFoundException(__('Invalid artesano'));
+			throw new NotFoundException(__('Artesano no válido'));
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			if ($this -> Artesano -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The artesano has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se guardó el artesano'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The artesano could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo guardar el artesano. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		} else {
 			$this -> request -> data = $this -> Artesano -> read(null, $id);

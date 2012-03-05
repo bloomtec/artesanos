@@ -84,10 +84,10 @@ class FeriadosController extends AppController {
 		if ($this -> request -> is('post')) {
 			$this -> Feriado -> create();
 			if ($this -> Feriado -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The feriado has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se ha guardado la fecha'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The feriado could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo guardar la fecha. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
 	}
@@ -101,14 +101,14 @@ class FeriadosController extends AppController {
 	public function edit($id = null) {
 		$this -> Feriado -> id = $id;
 		if (!$this -> Feriado -> exists()) {
-			throw new NotFoundException(__('Invalid feriado'));
+			throw new NotFoundException(__('Fecha no válida'));
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			if ($this -> Feriado -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The feriado has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se ha guardado la fecha'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The feriado could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo guardar la fecha. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		} else {
 			$this -> request -> data = $this -> Feriado -> read(null, $id);
@@ -127,13 +127,13 @@ class FeriadosController extends AppController {
 		}
 		$this -> Feriado -> id = $id;
 		if (!$this -> Feriado -> exists()) {
-			throw new NotFoundException(__('Invalid feriado'));
+			throw new NotFoundException(__('Fecha no válida'));
 		}
 		if ($this -> Feriado -> delete()) {
-			$this -> Session -> setFlash(__('Feriado deleted'), 'crud/success');
+			$this -> Session -> setFlash(__('Se ha eliminado la fecha'), 'crud/success');
 			$this -> redirect(array('action' => 'index'));
 		}
-		$this -> Session -> setFlash(__('Feriado was not deleted'), 'crud/error');
+		$this -> Session -> setFlash(__('No se ha eliminado la fecha'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
 	}
 

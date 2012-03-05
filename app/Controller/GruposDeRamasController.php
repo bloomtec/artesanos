@@ -44,7 +44,7 @@ class GruposDeRamasController extends AppController {
 	public function view($id = null) {
 		$this -> GruposDeRama -> id = $id;
 		if (!$this -> GruposDeRama -> exists()) {
-			throw new NotFoundException(__('Invalid grupos de rama'));
+			throw new NotFoundException(__('Grupo de ramas no válido'));
 		}
 		$this -> set('gruposDeRama', $this -> GruposDeRama -> read(null, $id));
 		$this -> set(
@@ -68,10 +68,10 @@ class GruposDeRamasController extends AppController {
 		if ($this -> request -> is('post')) {
 			$this -> GruposDeRama -> create();
 			if ($this -> GruposDeRama -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The grupos de rama has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se ha guardado el grupo de ramas'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The grupos de rama could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo guardar el grupo de ramas. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
 	}
@@ -85,14 +85,14 @@ class GruposDeRamasController extends AppController {
 	public function edit($id = null) {
 		$this -> GruposDeRama -> id = $id;
 		if (!$this -> GruposDeRama -> exists()) {
-			throw new NotFoundException(__('Invalid grupos de rama'));
+			throw new NotFoundException(__('Grupo de ramas no válido'));
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			if ($this -> GruposDeRama -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The grupos de rama has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se ha guardado el grupo de ramas'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The grupos de rama could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo guardar el grupo de ramas. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		} else {
 			$this -> request -> data = $this -> GruposDeRama -> read(null, $id);
@@ -111,13 +111,13 @@ class GruposDeRamasController extends AppController {
 		}
 		$this -> GruposDeRama -> id = $id;
 		if (!$this -> GruposDeRama -> exists()) {
-			throw new NotFoundException(__('Invalid grupos de rama'));
+			throw new NotFoundException(__('Grupo de ramas no válido'));
 		}
 		if ($this -> GruposDeRama -> delete()) {
-			$this -> Session -> setFlash(__('Grupos de rama deleted'), 'crud/success');
+			$this -> Session -> setFlash(__('Se ha eliminado el grupo de ramas'), 'crud/success');
 			$this -> redirect(array('action' => 'index'));
 		}
-		$this -> Session -> setFlash(__('Grupos de rama was not deleted'), 'crud/error');
+		$this -> Session -> setFlash(__('No se ha eliminado el grupo de ramas'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
 	}
 
