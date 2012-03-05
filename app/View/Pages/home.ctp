@@ -46,6 +46,7 @@ $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('contr
 		</div>
 	</div>
 	<?php endif?>
+<!--
 	<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Auditorias', 'index')))) :
 	?>
 	<div class="home_description">
@@ -58,6 +59,7 @@ $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('contr
 		</div>
 	</div>
 	<?php endif?>
+-->
 	<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Reportes', 'reporteArtesanos'))) ||
 $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Reportes', 'reporteCalificacionesOperador'))) ||
 $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Reportes', 'reporteCalificacionesArtesano'))) ||
