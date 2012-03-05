@@ -71,6 +71,13 @@ class ProvinciasController extends AppController {
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			if ($this -> Provincia -> save($this -> request -> data)) {
+				/*foreach($this->data['Canton'] as $canton){
+					if(!empty($canton['can_nombre'])){
+						$canton['provincia_id']=$this->data['Provincia']['id'];
+						$this -> Provincia -> Canton -> save($canton);
+						$this -> Provincia -> Canton -> id = 0;
+					}
+				}*/
 				$this -> Session -> setFlash(__('Se ha guardado la provincia'), 'crud/success');
 				$this -> redirect(array('controller' => 'geograficos', 'action' => 'index'));
 			} else {

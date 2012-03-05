@@ -1,11 +1,4 @@
 <div class=" informe">
-	<div class="csv-export">
-		<?php
-			$fields = urlencode('id,cal_fecha_expedicion,cal_fecha_expiracion,cal_rama,cal_tipo_de_calificacion');
-			$headers = urlencode('Código,Fecha De Expedición,Fecha De Expiración,Rama,Tipo De Artesano');
-			echo $this -> Html -> link('Exportar el resultado a CSV', array('action' => 'CSVExport', 'fields'=>$fields, 'headers'=>$headers),array('class'=>'button'));
-		?>
-	</div>
 	<table>
 		<tr>
 			<th><?php echo $this -> Paginator -> sort('id', 'Código');?></th>
@@ -15,39 +8,47 @@
 			<th><?php echo $this -> Paginator -> sort('cal_tipo_de_calificacion', 'Tipo De Artesano');?></th>
 			<th> Acciones </th>
 		</tr>
-		<?php foreach ($calificaciones as $calificacion): ?>
+		<?php foreach ($calificaciones as $calificacion):
+		?>
 		<tr>
 			<td><?php echo h($calificacion['Calificacion']['id']);?>&nbsp;</td>
 			<td><?php echo h($calificacion['Calificacion']['cal_fecha_expedicion']);?>&nbsp;</td>
 			<td><?php echo h($calificacion['Calificacion']['cal_fecha_expiracion']);?>&nbsp;</td>
 			<td><?php echo h($calificacion['Calificacion']['cal_rama']);?>&nbsp;</td>
 			<td><?php echo h($calificacion['Calificacion']['cal_tipo_de_calificacion']);?>&nbsp;</td>
-			<td class='actions'>
-				<?php 
-					if($calificacion['Calificacion']['cal_estado'] == 1 && $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Calificaciones', 'imprimir')))) {
-						echo $this -> Html -> link('Especie Valorada',array("action"=>"imprimir",$calificacion['Calificacion']['id']),array('target'=>'blank_', 'class'=>'informe','title'=>'Especie Valorada'));
-					}
-					if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Calificaciones', 'view')))) {
-						echo $this -> Html -> link('Ver',array("action"=>"view",$calificacion['Calificacion']['id']),array('target'=>'blank_', 'class'=>'view', 'title' => 'Ver'));
-					} 
-					if($calificacion['Calificacion']['cal_estado'] == 0 && $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Artesanos', 'modificarCalificacion')))) {
-						echo $this -> Html -> link('Modificar',array("controller" => "artesanos", "action"=>"modificarCalificacion", $calificacion['Calificacion']['id']),array('class'=>'edit', 'title'=>'Modificar'));
-					}
-				?>
-			</td>
+			<td class='actions'><?php
+				if ($calificacion['Calificacion']['cal_estado'] == 1 && $this -> requestAction('/usuarios/verificarAcceso/', array('ruta' => array('controllers', 'Calificaciones', 'imprimir')))) {
+					echo $this -> Html -> link('Especie Valorada', array("action" => "imprimir", $calificacion['Calificacion']['id']), array('target' => 'blank_', 'class' => 'informe', 'title' => 'Especie Valorada'));
+				}
+				if ($this -> requestAction('/usuarios/verificarAcceso/', array('ruta' => array('controllers', 'Calificaciones', 'view')))) {
+					echo $this -> Html -> link('Ver', array("action" => "view", $calificacion['Calificacion']['id']), array('target' => 'blank_', 'class' => 'view', 'title' => 'Ver'));
+				}
+				if ($calificacion['Calificacion']['cal_estado'] == 0 && $this -> requestAction('/usuarios/verificarAcceso/', array('ruta' => array('controllers', 'Artesanos', 'modificarCalificacion')))) {
+					echo $this -> Html -> link('Modificar', array("controller" => "artesanos", "action" => "modificarCalificacion", $calificacion['Calificacion']['id']), array('class' => 'edit', 'title' => 'Modificar'));
+				}
+			?></td>
 		</tr>
 		<?php endforeach;?>
 	</table>
 	<div class="paging">
 		<?php
-			echo $this -> Paginator -> prev('< ' . __('Anterior'), array(), null, array('class' => 'prev disabled'));
-			echo $this -> Paginator -> numbers(array('separator' => ''));
-			echo $this -> Paginator -> next(__('Siguiente') . ' >', array(), null, array('class' => 'next disabled'));
+		echo $this -> Paginator -> prev('< ' . __('Anterior'), array(), null, array('class' => 'prev disabled'));
+		echo $this -> Paginator -> numbers(array('separator' => ''));
+		echo $this -> Paginator -> next(__('Siguiente') . ' >', array(), null, array('class' => 'next disabled'));
 		?>
 	</div>
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $this->Html->link(__('Volver'), array('controller' => 'reportes', 'action' => 'reporteCalificacionesOperador'), array('class' => 'prev button')); ?> </li>
+		<li>
+			<?php echo $this -> Html -> link(__('Volver'), array('controller' => 'reportes', 'action' => 'reporteCalificacionesOperador'), array('class' => 'prev button'));?>
+		</li>
 	</ul>
+</div>
+<div class="csv-export">
+	<?php
+	$fields = urlencode('id,cal_fecha_expedicion,cal_fecha_expiracion,cal_rama,cal_tipo_de_calificacion');
+	$headers = urlencode('Código,Fecha De Expedición,Fecha De Expiración,Rama,Tipo De Artesano');
+	echo $this -> Html -> link('Exportar el resultado a CSV', array('action' => 'CSVExport', 'fields' => $fields, 'headers' => $headers), array('class' => 'button'));
+	?>
 </div>
