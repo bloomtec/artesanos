@@ -5,6 +5,11 @@
 			<?php echo $this->Html->link($rama['GruposDeRama']['gru_nombre'], array('controller' => 'grupos_de_ramas', 'action' => 'view', $rama['GruposDeRama']['id'])); ?>
 			&nbsp;
 		</h3>
+		<label><?php echo __('Código'); ?></label>
+		<h3>
+			<?php echo h($rama['Rama']['ram_codigo']); ?>
+			&nbsp;
+		</h3>
 		<label><?php echo __('Nombre'); ?></label>
 		<h3>
 			<?php echo h($rama['Rama']['ram_nombre']); ?>

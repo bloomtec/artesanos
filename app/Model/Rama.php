@@ -28,10 +28,44 @@ class Rama extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
+		'ram_codigo' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Debe ingresar un código para la rama',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+			'isUnique' => array(
+				'rule' => array('isUnique'),
+				'message' => 'El código ingresado ya fue asignado a otra rama',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+			'between' => array(
+				'rule' => array('between', 6, 6),
+				'message' => 'El código ingresado debe ser de seis caracteres',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
 		'ram_nombre' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
 				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+			'isUnique' => array(
+				'rule' => array('isUnique'),
+				'message' => 'El nombre ingresado ya fue asignado a otra rama',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule

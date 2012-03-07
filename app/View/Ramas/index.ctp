@@ -3,6 +3,7 @@
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 		<th><?php echo $this->Paginator->sort('grupos_de_rama_id', 'Grupo De Ramas');?></th>
+		<th><?php echo $this->Paginator->sort('ram_codigo', 'Código');?></th>
 		<th><?php echo $this->Paginator->sort('ram_nombre', 'Nombre');?></th>
 		<th><?php echo $this->Paginator->sort('ram_descripcion', 'Descripción');?></th>
 		<th class="actions"><?php echo __('Acciones');?></th>
@@ -14,6 +15,7 @@
 		<td>
 			<?php echo $this->Html->link($rama['GruposDeRama']['gru_nombre'], array('controller' => 'grupos_de_ramas', 'action' => 'view', $rama['GruposDeRama']['id'])); ?>
 		</td>
+		<td><?php echo h($rama['Rama']['ram_codigo']); ?>&nbsp;</td>
 		<td><?php echo h($rama['Rama']['ram_nombre']); ?>&nbsp;</td>
 		<td><?php echo h($rama['Rama']['ram_descripcion']); ?>&nbsp;</td>
 		<td class="actions">			
