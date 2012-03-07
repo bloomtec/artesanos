@@ -1,20 +1,20 @@
 <div class="gruposDeRamas view">
-<h2><?php  echo __('Grupos De Rama');?></h2>
-		<label><?php echo __('Gru Nombre'); ?></label>
+<h2><?php  echo __('Grupos De Ramas');?></h2>
+		<label><?php echo __('Nombre'); ?></label>
 		<h3>
 			<?php echo h($gruposDeRama['GruposDeRama']['gru_nombre']); ?>
 			&nbsp;
 		</h3>
-		<label><?php echo __('Gru Descipcion'); ?></label>
+		<label><?php echo __('Descipción'); ?></label>
 		<h3>
 			<?php echo h($gruposDeRama['GruposDeRama']['gru_descipcion']); ?>
 			&nbsp;
 		</h3>
-		<label><?php echo __('Modified'); ?></label>
+		<!-- <label><?php echo __('Modified'); ?></label>
 		<h3>
 			<?php echo h($gruposDeRama['GruposDeRama']['modified']); ?>
 			&nbsp;
-		</h3>
+		</h3> -->
 </div>
 <div class="gruposDeRamas related">
 	<table>
@@ -42,6 +42,6 @@
 	<ul>
 		<li><?php echo $this->Html->link(__('Volver'), array('action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('Modificar Grupo De Rama'), array('action' => 'edit', $gruposDeRama['GruposDeRama']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(__('Añadir Rama'), array('controller' => 'ramas', 'action' => 'add', $gruposDeRama['GruposDeRama']['id'])); ?> </li>
+		<!--<li><?php echo $this->Html->link(__('Añadir Rama'), array('controller' => 'ramas', 'action' => 'add', $gruposDeRama['GruposDeRama']['id'])); ?> </li>-->
 	</ul>
 </div>

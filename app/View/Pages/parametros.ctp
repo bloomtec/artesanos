@@ -21,6 +21,11 @@
 			<a href="#">GRUPOS DE RAMAS</a>
 		</li>
 		<?php endif; ?>
+		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Ramas', 'index')))) : ?>
+		<li>
+			<a href="#">RAMAS</a>
+		</li>
+		<?php endif; ?>
 		<li>
 			<a href="#">FERIADOS</a>
 		</li>
@@ -45,6 +50,11 @@
 		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'GruposDeRamas', 'index')))) : ?>
 		<div>
 			<iframe src="/grupos_de_ramas"></iframe>
+		</div>
+		<?php endif; ?>
+		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Ramas', 'index')))) : ?>
+		<div>
+			<iframe src="/ramas"></iframe>
 		</div>
 		<?php endif; ?>
 		<div>

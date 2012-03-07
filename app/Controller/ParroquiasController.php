@@ -65,8 +65,11 @@ class ParroquiasController extends AppController {
 				$this -> Session -> setFlash(__('No se pudo guardar la parroquia. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
+		$provincias = $this -> Parroquia -> Sector -> Ciudad -> Canton -> Provincia -> find('list');
+		$cantones = $this -> Parroquia -> Sector -> Ciudad -> Canton -> find('list');
+		$ciudades = $this -> Parroquia -> Sector -> Ciudad -> find('list');
 		$sectores = $this -> Parroquia -> Sector -> find('list');
-		$this -> set(compact('sectores'));
+		$this -> set(compact('sectores', 'ciudades', 'cantones', 'provincias'));
 	}
 
 	/**
@@ -91,8 +94,11 @@ class ParroquiasController extends AppController {
 		} else {
 			$this -> request -> data = $this -> Parroquia -> read(null, $id);
 		}
+		$provincias = $this -> Parroquia -> Sector -> Ciudad -> Canton -> Provincia -> find('list');
+		$cantones = $this -> Parroquia -> Sector -> Ciudad -> Canton -> find('list');
+		$ciudades = $this -> Parroquia -> Sector -> Ciudad -> find('list');
 		$sectores = $this -> Parroquia -> Sector -> find('list');
-		$this -> set(compact('sectores'));
+		$this -> set(compact('sectores', 'ciudades', 'cantones', 'provincias'));
 	}
 
 }

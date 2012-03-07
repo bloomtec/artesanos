@@ -51,19 +51,18 @@ class RamasController extends AppController {
 	 *
 	 * @return void
 	 */
-	public function add($group_id = null) {
+	public function add() {
 		if ($this -> request -> is('post')) {
 			$this -> Rama -> create();
 			if ($this -> Rama -> save($this -> request -> data)) {
 				$this -> Session -> setFlash(__('Se ha guardado la rama'), 'crud/success');
-				$this -> redirect(array('controller' => 'grupos_de_ramas', 'action' => 'view', $group_id));
+				$this -> redirect(array('action' => 'index'));
 			} else {
 				$this -> Session -> setFlash(__('No se pudo guardar la rama. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
-		$gruposDeRamas = $this -> Rama -> GruposDeRama -> find('list', array('conditions' => array('GruposDeRama.id' => $group_id)));
+		$gruposDeRamas = $this -> Rama -> GruposDeRama -> find('list');
 		$this -> set(compact('gruposDeRamas'));
-		$this -> set('value', $group_id);
 		$this -> set('referer', $this -> referer());
 	}
 
@@ -80,7 +79,7 @@ class RamasController extends AppController {
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			if ($this -> Rama -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The rama has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se ha guardado la rama'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
 				$this -> Session -> setFlash(__('No se pudo guardar la rama. Por favor, intente de nuevo.'), 'crud/error');
