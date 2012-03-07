@@ -23,3 +23,19 @@ h1.right{
 .bold{
 	font-weight: bold;
 }
+.imprimir.bottom{
+	background: url("../img/icono_imprimir.png") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    float: left;
+    font-size: 14px;
+    font-weight: bold;
+    height: 38px;
+    left: 0;
+    line-height: 62px;
+    padding-bottom: 17px;
+    padding-left: 55px;
+    position: fixed;
+    text-transform: uppercase;
+    top: 50%;
+    vertical-align: middle;
+}

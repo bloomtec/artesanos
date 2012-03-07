@@ -42,7 +42,9 @@ $cakeDescription = __d('cake_dev', 'Junta Nacional de defensa del artesano');
 		
 		<div id="calificacion">
 			<?php echo $content_for_layout; ?>
-			
+			<div class="imprimir bottom">
+					imprimir
+				</div>
 		</div>
 		<?php echo $this -> element('sql_dump'); ?>
 	</body>

@@ -41,7 +41,7 @@ class Artesano extends AppModel {
 			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
-			'order' => '',
+			'order' => 'Calificacion.created DESC',
 			'limit' => '',
 			'offset' => '',
 			'exclusive' => '',
