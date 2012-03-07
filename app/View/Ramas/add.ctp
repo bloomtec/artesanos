@@ -3,7 +3,7 @@
 	<fieldset>
 		<h2><?php echo __('Agregar Rama');?></h2>
 		<?php
-		echo $this -> Form -> input('grupos_de_rama_id', array('label' => 'Grupo De Ramas', 'value' => $value));
+		echo $this -> Form -> input('grupos_de_rama_id', array('label' => 'Grupo De Ramas'));
 		echo $this -> Form -> input('ram_nombre', array('label' => 'Nombre'));
 		echo $this -> Form -> input('ram_descripcion', array('label' => 'Descripción'));
 		?>
