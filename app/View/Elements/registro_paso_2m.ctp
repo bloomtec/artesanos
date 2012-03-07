@@ -6,7 +6,7 @@
 				<tr>
 					<th>Cantidad</th>
 					<th>Maquinaria Y Herramientas</th>
-					<th>Tipo De Adquisición</th>
+					<th>Procedencia</th>
 					<th>Fecha</th>
 					<th>Valor Comercial</th>
 				</tr>
