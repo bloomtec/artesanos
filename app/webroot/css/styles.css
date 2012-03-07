@@ -993,6 +993,16 @@ input[type=checkbox] {
 div.checkbox label {
 	display: inline;
 }
+.usuarios div.checkbox label {
+	float: left;
+	display: block;
+}
+.usuarios div.checkbox input{
+	float:right;
+	text-align: left;
+	width:20px;
+	margin-right: 220px;
+}
 input[type=radio] {
 	float: left;
 	width: auto;
