@@ -18,8 +18,9 @@ class SectoresController extends AppController {
 
 	public function getByCiudad($ciuId = null) {
 		$this -> layout = "ajax";
-		$sectores_con_inspectores = $this -> Sector -> Usuario -> find('list', array('fields' => array('Usuario.sector_id'), 'conditions' => array('Usuario.rol_id' => 3)));
-		$sectores = $this -> Sector -> find('list', array('order' => array('Sector.sec_nombre' => 'ASC'), 'conditions' => array('Sector.id' => $sectores_con_inspectores, 'Sector.ciudad_id' => $ciuId)));
+		//$sectores_con_inspectores = $this -> Sector -> Usuario -> find('list', array('fields' => array('Usuario.sector_id'), 'conditions' => array('Usuario.rol_id' => 3)));
+		//$sectores = $this -> Sector -> find('list', array('order' => array('Sector.sec_nombre' => 'ASC'), 'conditions' => array('Sector.id' => $sectores_con_inspectores, 'Sector.ciudad_id' => $ciuId)));
+		$sectores = $this -> Sector -> find('list', array('order' => array('Sector.sec_nombre' => 'ASC'), 'conditions' => array('Sector.ciudad_id' => $ciuId)));
 		echo json_encode($sectores);
 		exit(0);
 	}

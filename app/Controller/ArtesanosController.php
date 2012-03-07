@@ -85,12 +85,23 @@ class ArtesanosController extends AppController {
 		}
 		$artesanos = $this -> paginate();
 		foreach($artesanos as $key => $artesano) {
-			$calificacion = $this -> Artesano -> Calificacion -> find('first', array('order' => array('Calificacion.created' => 'DESC'), 'conditions' => array('Calificacion.artesano_id' => $artesano['Artesano']['id'])));
+			$calificacion = $this -> Artesano -> Calificacion -> find('first', array('recursive' => -1, 'order' => array('Calificacion.created' => 'DESC'), 'conditions' => array('Calificacion.artesano_id' => $artesano['Artesano']['id'])));
 			$datos_personales = $this -> Artesano -> Calificacion -> DatosPersonal -> find('first', array('conditions' => array('DatosPersonal.calificacion_id' => $calificacion['Calificacion']['id'])));
 			$artesanos[$key]['Artesano']['art_nombres'] = $datos_personales['DatosPersonal']['dat_nombres'];
 			$artesanos[$key]['Artesano']['art_apellido_paterno'] = $datos_personales['DatosPersonal']['dat_apellido_paterno'];
 			$artesanos[$key]['Artesano']['art_apellido_materno'] = $datos_personales['DatosPersonal']['dat_apellido_materno'];
 			$artesanos[$key]['Artesano']['art_nacionalidad'] = $datos_personales['DatosPersonal']['dat_nacionalidad'];
+			$artesanos[$key]['Artesano']['art_estado_calificacion'] = '';
+			if($calificacion['Calificacion']['cal_estado'] == 0) {
+				$artesanos[$key]['Artesano']['art_estado_calificacion'] = 'Pendiente';
+			} elseif($calificacion['Calificacion']['cal_estado'] == 1) {
+				$artesanos[$key]['Artesano']['art_estado_calificacion'] = 'Aprobada';
+			} elseif($calificacion['Calificacion']['cal_estado'] == -1) {
+				$artesanos[$key]['Artesano']['art_estado_calificacion'] = 'Denegada';
+			} elseif($calificacion['Calificacion']['cal_estado'] == -2) {
+				$artesanos[$key]['Artesano']['art_estado_calificacion'] = 'Deshabilitada';
+			}
+			$artesanos[$key]['Calificacion'] = $calificacion['Calificacion'];
 		}
 		$this -> set('artesanos', $artesanos);
 	}

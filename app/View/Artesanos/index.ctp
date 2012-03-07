@@ -12,6 +12,7 @@
 			<th><?php echo $this -> Paginator -> sort('art_apellido_materno', 'Apellido Materno');?></th>
 			<th><?php echo $this -> Paginator -> sort('art_nacionalidad', 'Nacionalidad');?></th>
 			<th><?php echo $this -> Paginator -> sort('art_cedula', 'Cédula');?></th>
+			<th><?php echo $this -> Paginator -> sort('art_estado_calificacion', 'Estado Calificación');?></th>
 			<!--<th class="actions"><?php echo __('Acciones');?></th>-->
 		</tr>
 		<?php
@@ -24,6 +25,7 @@
 			<td><?php echo h($artesano['Artesano']['art_apellido_materno']);?>&nbsp;</td>
 			<td><?php echo h($artesano['Artesano']['art_nacionalidad']);?>&nbsp;</td>
 			<td><?php echo h($artesano['Artesano']['art_cedula']);?>&nbsp;</td>
+			<td><?php echo h($artesano['Artesano']['art_estado_calificacion']);?>&nbsp;</td>
 			<!--<td class="actions"><?php echo $this -> Html -> link(__('View'), array('action' => 'view', $artesano['Artesano']['id']), array('class' => 'view'));?>
 				<?php echo $this -> Html -> link(__('Edit'), array('action' => 'edit', $artesano['Artesano']['id']), array('class' => 'edit'));?>
 				<?php echo $this -> Form -> postLink(__('Delete'), array('action' => 'delete', $artesano['Artesano']['id']), array('class' => 'delete'), __('Esta seguro que quiere eliminar el registro?', $artesano['Artesano']['id']));?>

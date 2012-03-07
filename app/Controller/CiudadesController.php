@@ -18,8 +18,9 @@ class CiudadesController extends AppController {
 
 	public function getByCanton($canId=null) {
 		$this -> layout = "ajax";
-		$ciudades_con_inspectores = $this -> Ciudad -> Usuario -> find('list', array('fields' => array('Usuario.ciudad_id'), 'conditions' => array('Usuario.rol_id' => 3)));
-		$ciudades = $this -> Ciudad -> find('list', array('order' => array('Ciudad.ciu_nombre' => 'ASC'), 'conditions' => array('Ciudad.id' => $ciudades_con_inspectores, 'Ciudad.canton_id' => $canId)));
+		//$ciudades_con_inspectores = $this -> Ciudad -> Usuario -> find('list', array('fields' => array('Usuario.ciudad_id'), 'conditions' => array('Usuario.rol_id' => 3)));
+		//$ciudades = $this -> Ciudad -> find('list', array('order' => array('Ciudad.ciu_nombre' => 'ASC'), 'conditions' => array('Ciudad.id' => $ciudades_con_inspectores, 'Ciudad.canton_id' => $canId)));
+		$ciudades = $this -> Ciudad -> find('list', array('order' => array('Ciudad.ciu_nombre' => 'ASC'), 'conditions' => array('Ciudad.canton_id' => $canId)));
 		echo json_encode($ciudades);
 		exit(0);
 	}
