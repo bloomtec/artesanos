@@ -12,6 +12,7 @@
 	</div>
 	<?php echo $this -> Form -> create('Artesano',array('id'=>'registro')); ?>
 		<div id="wizard">
+			<div class="leyenda">Todos los campos marcados con (<span style='color: #e32;'>*</span>) son obligatorios</div>
 			<!--<div class='overlay-espera'> Verificando... </div>-->
 			<ul id="status">
 				<li class="active">

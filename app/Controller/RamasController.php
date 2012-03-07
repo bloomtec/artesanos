@@ -121,6 +121,7 @@ class RamasController extends AppController {
 	}
 	
 	function getByCode($code) {
+		$this -> Rama -> recursive = -1;
 		echo json_encode($this -> Rama -> find('first', array('conditions' => array('Rama.ram_codigo' => $code))));
 		$this -> autoRender = false;
 	}
