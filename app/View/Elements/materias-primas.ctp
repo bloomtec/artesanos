@@ -2,7 +2,7 @@
 <tr>
 	<td><?php echo $this -> Form -> input('MateriasPrima.'.$i.'.mat_cantidad', array('label' => false, 'div' => false, 'class' => 'cantidad_materia_prima number', 'type'=>'text'));?></td>
 	<td><?php echo $this -> Form -> input('MateriasPrima.'.$i.'.mat_tipo_de_materia_prima', array('label' => false, 'div' => false, 'options' => $tipos_de_materia_prima));?></td>
-	<td><?php echo $this -> Form -> input('MateriasPrima.'.$i.'.mat_procedencia', array('label' => false, 'div' => false, 'options' => $procedencias_materia_prima));?></td>
+	<td><?php echo $this -> Form -> input('MateriasPrima.'.$i.'.mat_procedencia', array('label' => false, 'div' => false, 'options' => $procedencias));?></td>
 	<td><?php echo $this -> Form -> input('MateriasPrima.'.$i.'.mat_valor_comercial', array('label' => false, 'div' => false, 'class' => 'valor_materia_prima valor', 'type'=>'text'));?></td>
 </tr>
 <?php endfor;?>

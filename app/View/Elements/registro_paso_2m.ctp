@@ -18,7 +18,7 @@
 					<?php echo $this -> Form -> input('EquiposDeTrabajo.'.$i.'.id'); ?>
 				</td>
 				<td><?php echo $this -> Form -> input('EquiposDeTrabajo.'.$i.'.equ_maquinaria_y_herramientas', array('label' => false, 'div' => false, 'options' => $maquinarias_y_herramientas));?></td>
-				<td><?php echo $this -> Form -> input('EquiposDeTrabajo.'.$i.'.equ_tipo_de_adquisicion', array('label' => false, 'div' => false, 'options' => $tipos_de_adquisicion_maquinaria));?></td>
+				<td><?php echo $this -> Form -> input('EquiposDeTrabajo.'.$i.'.equ_procedencia', array('label' => false, 'div' => false, 'options' => $procedencias));?></td>
 				<td>
 					<?php echo $this -> Form -> input('EquiposDeTrabajo.'.$i.'.equ_fecha_de_adquisicion', array('label' => false, 'div' => false,'class' => 'date','type'=>'text'));?> 
 				<!--<input name="data[EquiposDeTrabajo][<?php echo $i?>][equ_fecha_de_adquisicion]" type="date" id="EquiposDeTrabajo<?php echo $i?>EquFechaDeAdquisicion"> -->
@@ -47,7 +47,7 @@
 					<?php echo $this -> Form -> input('MateriasPrima.'.$i.'.id') ?>
 				</td>
 				<td><?php echo $this -> Form -> input('MateriasPrima.'.$i.'.mat_tipo_de_materia_prima', array('label' => false, 'div' => false, 'options' => $tipos_de_materia_prima));?></td>
-				<td><?php echo $this -> Form -> input('MateriasPrima.'.$i.'.mat_procedencia', array('label' => false, 'div' => false, 'options' => $procedencias_materia_prima));?></td>
+				<td><?php echo $this -> Form -> input('MateriasPrima.'.$i.'.mat_procedencia', array('label' => false, 'div' => false, 'options' => $procedencias));?></td>
 				<td><?php echo $this -> Form -> input('MateriasPrima.'.$i.'.mat_valor_comercial', array('label' => false, 'div' => false, 'class' => 'valor_materia_prima valor', 'type'=>'text'));?></td>
 			</tr>
 			<?php endfor;?>		
@@ -72,7 +72,7 @@
 					<?php echo $this -> Form -> input('ProductosElaborado.'.$i.'.id'); ?>
 				</td>
 				<td><?php echo $this -> Form -> input('ProductosElaborado.'.$i.'.pro_detalle', array('label' => false, 'div' => false, 'options' => $detalles_producto));?></td>
-				<td><?php echo $this -> Form -> input('ProductosElaborado.'.$i.'.pro_procedencia', array('label' => false, 'div' => false, 'options' => $procedencias_producto));?></td>
+				<td><?php echo $this -> Form -> input('ProductosElaborado.'.$i.'.pro_procedencia', array('label' => false, 'div' => false, 'options' => $procedencias));?></td>
 				<td><?php echo $this -> Form -> input('ProductosElaborado.'.$i.'.pro_valor_comercial', array('label' => false, 'div' => false, 'class' => 'valor_productos_elaborados valor', 'type'=>'text'));?></td>
 			</tr>
 			<?php endfor;?>	

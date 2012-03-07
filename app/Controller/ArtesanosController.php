@@ -496,7 +496,7 @@ class ArtesanosController extends AppController {
 				}
 			}
 			foreach ($this -> request -> data['EquiposDeTrabajo'] as $key => $value) {
-				if (!$value['equ_cantidad'] || !$value['equ_maquinaria_y_herramientas'] || !$value['equ_tipo_de_adquisicion'] || !$value['equ_fecha_de_adquisicion'] || !$value['equ_valor_comercial']) {
+				if (!$value['equ_cantidad'] || !$value['equ_maquinaria_y_herramientas'] || !$value['equ_procedencia'] || !$value['equ_fecha_de_adquisicion'] || !$value['equ_valor_comercial']) {
 					unset($this -> request -> data['EquiposDeTrabajo'][$key]);
 				} else {
 					$this -> request -> data['EquiposDeTrabajo'][$key]['equ_valor_comercial'] = $this -> formatearValor($this -> request -> data['EquiposDeTrabajo'][$key]['equ_valor_comercial']);
@@ -822,7 +822,7 @@ class ArtesanosController extends AppController {
 				}
 			}
 			foreach ($this -> request -> data['EquiposDeTrabajo'] as $key => $value) {
-				if (!$value['equ_cantidad'] || !$value['equ_maquinaria_y_herramientas'] || !$value['equ_tipo_de_adquisicion'] || !$value['equ_fecha_de_adquisicion'] || !$value['equ_valor_comercial']) {
+				if (!$value['equ_cantidad'] || !$value['equ_maquinaria_y_herramientas'] || !$value['equ_procedencia'] || !$value['equ_fecha_de_adquisicion'] || !$value['equ_valor_comercial']) {
 					unset($this -> request -> data['EquiposDeTrabajo'][$key]);
 				} else {
 					$this -> request -> data['EquiposDeTrabajo'][$key]['equ_valor_comercial'] = $this -> formatearValor($this -> request -> data['EquiposDeTrabajo'][$key]['equ_valor_comercial']);
