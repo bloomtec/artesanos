@@ -611,9 +611,10 @@ class ArtesanosController extends AppController {
 		/**
 		 * Provincias y demas
 		 */
-		$provincias_con_inspectores = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Usuario -> find('list', array('fields' => array('Usuario.provincia_id'), 'conditions' => array('Usuario.rol_id' => 3)));
+		// $provincias_con_inspectores = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Usuario -> find('list', array('fields' => array('Usuario.provincia_id'), 'conditions' => array('Usuario.rol_id' => 3)));
 		$provincias = array(0 => 'Seleccione...');
-		$provincias_tmp = $this -> Artesano -> Calificacion -> Taller -> Provincia -> find('list', array('conditions' => array('Provincia.id' => $provincias_con_inspectores)));
+		// $provincias_tmp = $this -> Artesano -> Calificacion -> Taller -> Provincia -> find('list', array('conditions' => array('Provincia.id' => $provincias_con_inspectores)));
+		$provincias_tmp = $this -> Artesano -> Calificacion -> Taller -> Provincia -> find('list');
 		foreach ($provincias_tmp as $key => $value) {
 			$provincias[$key] = $value;
 		}
@@ -810,6 +811,7 @@ class ArtesanosController extends AppController {
 			$this -> request -> data = $this -> Artesano -> read(null, $id);
 		}
 	}
+	
 	function modificarCalificacion($calificacionId = null){
 		if($this -> request -> is('post')) {
 			foreach ($this -> request -> data['MateriasPrima'] as $key => $value) {
@@ -902,9 +904,10 @@ class ArtesanosController extends AppController {
 		/**
 		 * Provincias y demas
 		 */
-		$provincias_con_inspectores = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Usuario -> find('list', array('fields' => array('Usuario.provincia_id'), 'conditions' => array('Usuario.rol_id' => 3)));
+		// $provincias_con_inspectores = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Usuario -> find('list', array('fields' => array('Usuario.provincia_id'), 'conditions' => array('Usuario.rol_id' => 3)));
 		$provincias = array(0 => 'Seleccione...');
-		$provincias_tmp = $this -> Artesano -> Calificacion -> Taller -> Provincia -> find('list', array('conditions' => array('Provincia.id' => $provincias_con_inspectores)));
+		// $provincias_tmp = $this -> Artesano -> Calificacion -> Taller -> Provincia -> find('list', array('conditions' => array('Provincia.id' => $provincias_con_inspectores)));
+		$provincias_tmp = $this -> Artesano -> Calificacion -> Taller -> Provincia -> find('list');
 		foreach ($provincias_tmp as $key => $value) {
 			$provincias[$key] = $value;
 		}
