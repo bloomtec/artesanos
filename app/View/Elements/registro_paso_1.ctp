@@ -1,4 +1,3 @@
-<?php debug($provincias); ?>
 <fieldset>
 	<div class="Calificacion">
 		<h2>Calificación</h2>
