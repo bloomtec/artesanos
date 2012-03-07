@@ -68,8 +68,9 @@ class CiudadesController extends AppController {
 				$this -> Session -> setFlash(__('No se pudo guardar la ciudad. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
+		$provincias = $this -> Ciudad -> Canton -> Provincia -> find('list');
 		$cantones = $this -> Ciudad -> Canton -> find('list');
-		$this -> set(compact('cantones'));
+		$this -> set(compact('cantones', 'provincias'));
 	}
 
 	/**
@@ -94,8 +95,9 @@ class CiudadesController extends AppController {
 		} else {
 			$this -> request -> data = $this -> Ciudad -> read(null, $id);
 		}
+		$provincias = $this -> Ciudad -> Canton -> Provincia -> find('list');
 		$cantones = $this -> Ciudad -> Canton -> find('list');
-		$this -> set(compact('cantones'));
+		$this -> set(compact('cantones', 'provincias'));
 	}
 
 }

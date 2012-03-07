@@ -72,8 +72,10 @@ class SectoresController extends AppController {
 				$this -> Session -> setFlash(__('No se pudo guardar el sector. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
+		$provincias = $this -> Sector -> Ciudad -> Canton -> Provincia -> find('list');
+		$cantones = $this -> Sector -> Ciudad -> Canton -> find('list');
 		$ciudades = $this -> Sector -> Ciudad -> find('list');
-		$this -> set(compact('ciudades'));
+		$this -> set(compact('ciudades', 'cantones', 'provincias'));
 	}
 
 	/**
@@ -98,8 +100,10 @@ class SectoresController extends AppController {
 		} else {
 			$this -> request -> data = $this -> Sector -> read(null, $id);
 		}
+		$provincias = $this -> Sector -> Ciudad -> Canton -> Provincia -> find('list');
+		$cantones = $this -> Sector -> Ciudad -> Canton -> find('list');
 		$ciudades = $this -> Sector -> Ciudad -> find('list');
-		$this -> set(compact('ciudades'));
+		$this -> set(compact('ciudades', 'cantones', 'provincias'));
 	}
 
 }
