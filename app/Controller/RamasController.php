@@ -9,7 +9,7 @@ class RamasController extends AppController {
 	
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('obtenerPorGrupo', 'getNombre');
+		$this -> Auth -> allow('obtenerPorGrupo', 'getNombre', 'getByCode');
 	}
 
 	public function beforeRender() {
@@ -117,6 +117,11 @@ class RamasController extends AppController {
 	
 	function obtenerPorGrupo($grupoRamaId = null){
 		echo json_encode($this -> Rama -> find ('list',array('conditions'=>array('Rama.grupos_de_rama_id'=>$grupoRamaId))));
+		$this -> autoRender = false;
+	}
+	
+	function getByCode($code) {
+		echo json_encode($this -> Rama -> find('first', array('conditions' => array('Rama.ram_codigo' => $code))));
 		$this -> autoRender = false;
 	}
 

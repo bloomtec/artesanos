@@ -586,11 +586,11 @@ class ArtesanosController extends AppController {
 		 * 5	Sexos
 		 * 6	Tipos De Discapacidad
 		 * 7	Maquinarias Y Herramientas
-		 * 8	Tipo De Adquisición (Maquinaria)
+		 
 		 * 9	Tipo De Materia Prima
-		 * 10	Procedencia (Materia Prima)
+		 * 10	Procedencia
 		 * 11	Detalle (Producto)
-		 * 12	Procedencia (Producto)
+		 
 		 */
 
 		$nacionalidades = $this -> Artesano -> getValores(1);
@@ -600,14 +600,14 @@ class ArtesanosController extends AppController {
 		$sexos = $this -> Artesano -> getValores(5);
 		$tipos_de_discapacidad = $this -> Artesano -> getValores(6);
 		$maquinarias_y_herramientas = $this -> Artesano -> getValores(7);
-		$tipos_de_adquisicion_maquinaria = $this -> Artesano -> getValores(8);
+		//$tipos_de_adquisicion_maquinaria = $this -> Artesano -> getValores(8);
 		$tipos_de_materia_prima = $this -> Artesano -> getValores(9);
-		$procedencias_materia_prima = $this -> Artesano -> getValores(10);
+		$procedencias = $this -> Artesano -> getValores(10);
 		$detalles_producto = $this -> Artesano -> getValores(11);
-		$procedencias_producto = $this -> Artesano -> getValores(12);
+		//$procedencias_producto = $this -> Artesano -> getValores(12);
 		$tipos_de_calificacion = $this -> Artesano -> Calificacion -> TiposDeCalificacion -> find('list');
 		$grupos_de_ramas = $this -> Artesano -> Calificacion -> Rama -> GruposDeRama -> find('list');
-		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos', 'tipos_de_discapacidad', 'maquinarias_y_herramientas', 'tipos_de_adquisicion_maquinaria', 'tipos_de_materia_prima', 'procedencias_materia_prima', 'detalles_producto', 'procedencias_producto', 'grupos_de_ramas', 'tipos_de_calificacion'));
+		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos', 'tipos_de_discapacidad', 'maquinarias_y_herramientas', 'tipos_de_materia_prima', 'procedencias', 'detalles_producto', 'grupos_de_ramas', 'tipos_de_calificacion'));
 		/**
 		 * Provincias y demas
 		 */
@@ -879,11 +879,11 @@ class ArtesanosController extends AppController {
 		 * 5	Sexos
 		 * 6	Tipos De Discapacidad
 		 * 7	Maquinarias Y Herramientas
-		 * 8	Tipo De Adquisición (Maquinaria)
+		 
 		 * 9	Tipo De Materia Prima
-		 * 10	Procedencia (Materia Prima)
+		 * 10	Procedencia
 		 * 11	Detalle (Producto)
-		 * 12	Procedencia (Producto)
+		 
 		 */
 
 		$nacionalidades = $this -> Artesano -> getValores(1);
@@ -893,14 +893,14 @@ class ArtesanosController extends AppController {
 		$sexos = $this -> Artesano -> getValores(5);
 		$tipos_de_discapacidad = $this -> Artesano -> getValores(6);
 		$maquinarias_y_herramientas = $this -> Artesano -> getValores(7);
-		$tipos_de_adquisicion_maquinaria = $this -> Artesano -> getValores(8);
+		//$tipos_de_adquisicion_maquinaria = $this -> Artesano -> getValores(8);
 		$tipos_de_materia_prima = $this -> Artesano -> getValores(9);
-		$procedencias_materia_prima = $this -> Artesano -> getValores(10);
+		$procedencias = $this -> Artesano -> getValores(10);
 		$detalles_producto = $this -> Artesano -> getValores(11);
-		$procedencias_producto = $this -> Artesano -> getValores(12);
+		//$procedencias_producto = $this -> Artesano -> getValores(12);
 		$tipos_de_calificacion = $this -> Artesano -> Calificacion -> TiposDeCalificacion -> find('list');
 		$grupos_de_ramas = $this -> Artesano -> Calificacion -> Rama -> GruposDeRama -> find('list');
-		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos', 'tipos_de_discapacidad', 'maquinarias_y_herramientas', 'tipos_de_adquisicion_maquinaria', 'tipos_de_materia_prima', 'procedencias_materia_prima', 'detalles_producto', 'procedencias_producto', 'grupos_de_ramas', 'tipos_de_calificacion'));
+		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos', 'tipos_de_discapacidad', 'maquinarias_y_herramientas', 'tipos_de_materia_prima', 'procedencias', 'detalles_producto', 'grupos_de_ramas', 'tipos_de_calificacion'));
 		/**
 		 * Provincias y demas
 		 */
