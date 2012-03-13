@@ -86,9 +86,12 @@
 	</p>-->
 	<?php
 		echo "<?php\n";
+		echo "\t\techo \$this->Paginator->first('<< ', array(), null, array('class' => 'prev disabled'));\n";
 		echo "\t\techo \$this->Paginator->prev('< ' . __('Anterior'), array(), null, array('class' => 'prev disabled'));\n";
 		echo "\t\techo \$this->Paginator->numbers(array('separator' => ''));\n";
 		echo "\t\techo \$this->Paginator->next(__('Siguiente') . ' >', array(), null, array('class' => 'next disabled'));\n";
+		echo "\t\techo \$this->Paginator->last('>> ', array(), null, array('class' => 'next disabled'));\n";
+		
 		echo "\t?>\n";
 	?>
 	</div>
