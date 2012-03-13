@@ -8,6 +8,7 @@ class DATABASE_CONFIG {
 		'login' => 'jndagobe',
 		'password' => '20qtxNm6E4',
 		'database' => 'jndagobe_artesanos',
+		'encoding' => 'utf8'
 	);
 
 }
