@@ -37,14 +37,22 @@
 						}
 					break;
 					default:
-						echo "\t\techo \$this->Form->input('{$field}');\n";
+						if (substr($field,-3) !="_id" && $field !="id"){
+							echo "\t\techo \$this->Form->input('{$field}',array('label'=>'".ucfirst(substr($field,4,strlen($field)))."'));\n";
+						}else{
+							echo "\t\techo \$this->Form->input('{$field}');\n";
+						}
 					break;
 				}	
 			}
 		}
 		if (!empty($associations['hasAndBelongsToMany'])) {
 			foreach ($associations['hasAndBelongsToMany'] as $assocName => $assocData) {
-				echo "\t\techo \$this->Form->input('{$assocName}');\n";
+				if (substr($field,-3) !="_id"){
+					echo "\t\techo \$this->Form->input('{$assocName}',array('label'=>'".ucfirst(substr($field,4,strlen($field)))."')));\n";
+				}else{
+					echo "\t\techo \$this->Form->input('{$assocName}');\n";
+				}
 			}
 		}
 		echo "\t?>\n";
