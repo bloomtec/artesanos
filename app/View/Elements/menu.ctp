@@ -87,5 +87,19 @@
 			</ul>
 		</li>
 		<?php endif; ?>
+		<li class="inventarios">
+			<a href="#">INVENTARIOS</a>
+			<ul>
+				<li>
+					<a href="/productos">Productos</a>
+				</li>
+				<li>
+					<a href="/personas">Personas</a>
+				</li>
+				<li>
+					<a href="/proveedores">Proveedores</a>
+				</li>
+			</ul>
+		</li>
 	</ul>
 </div>
