@@ -12,6 +12,10 @@ class ArtesanosController extends AppController {
 		$this -> Auth -> allow('datosCalificacion', 'verificarCedula', 'getID', 'validarCalificacion');
 	}
 	
+	function pruebas(){
+		$this -> layout="pdf";
+	}
+	
 	public function verificarCedula($cedula = null) {
 		$this -> layout = 'ajax';
 		if($cedula) {
