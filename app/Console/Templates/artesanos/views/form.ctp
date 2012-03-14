@@ -49,7 +49,7 @@
 		if (!empty($associations['hasAndBelongsToMany'])) {
 			foreach ($associations['hasAndBelongsToMany'] as $assocName => $assocData) {
 				if (substr($field,-3) !="_id"){
-					echo "\t\techo \$this->Form->input('{$assocName}',array('label'=>'".ucfirst(substr($field,4,strlen($field)))."')));\n";
+					echo "\t\techo \$this->Form->input('{$assocName}',array('label'=>'".ucfirst(substr($field,4,strlen($field)))."'));\n";
 				}else{
 					echo "\t\techo \$this->Form->input('{$assocName}');\n";
 				}
