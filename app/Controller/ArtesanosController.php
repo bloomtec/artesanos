@@ -1089,11 +1089,13 @@ class ArtesanosController extends AppController {
 				} else {// No
 					$resultado_validacion['Mensaje'] = 'No hay registros de calificaciones activas para este artesano';
 				}
-			} else {// No
-				$resultado_validacion['Mensaje'] = 'No hay registros previos de este artesano como artesano autónomo';
+			} else {// No :: EDIT, a petición se deja calificar.
+				$resultado_validacion['Calificar'] = 1;
+				// $resultado_validacion['Mensaje'] = 'No hay registros previos de este artesano como artesano autónomo';
 			}
-		} else {// No
-			$resultado_validacion['Mensaje'] = 'No hay registros previos de este artesano para poder hacer calificación normal';
+		} else {// No :: Edit, a petición se deja calificar
+			$resultado_validacion['Calificar'] = 1;
+			// $resultado_validacion['Mensaje'] = 'No hay registros previos de este artesano para poder hacer calificación normal';
 		}
 
 		/**
