@@ -7,11 +7,9 @@
 	</div>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-									<th><?php echo $this->Paginator->sort('pro_name');?></th>
-							<th><?php echo $this->Paginator->sort('pro_observaciones');?></th>
-							<th><?php echo $this->Paginator->sort('created');?></th>
-							<th><?php echo $this->Paginator->sort('modified');?></th>
-					<th class="actions"><?php echo __('Actions');?></th>
+		<th><?php echo $this->Paginator->sort('pro_name', 'Nombre');?></th>
+		<th><?php echo $this->Paginator->sort('pro_observaciones', 'Observaciones');?></th>
+		<th class="actions"><?php echo __('Acciones');?></th>
 	</tr>
 	<?php
 	$i = 0;
@@ -27,7 +25,7 @@
 			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $producto['Producto']['id']), array('class'=>'delete','title'=>'Borrar'), __('Esta seguro que quiere eliminar el registro?', $producto['Producto']['id'])); ?>
 		</td>
 	</tr>
-<?php endforeach; ?>
+	<?php endforeach; ?>
 	</table>
 
 

@@ -7,13 +7,11 @@
 	</div>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-									<th><?php echo $this->Paginator->sort('per_nombres');?></th>
-							<th><?php echo $this->Paginator->sort('per_apellidos');?></th>
-							<th><?php echo $this->Paginator->sort('per_cedula_de_identidad');?></th>
-							<th><?php echo $this->Paginator->sort('per_departamento');?></th>
-							<th><?php echo $this->Paginator->sort('created');?></th>
-							<th><?php echo $this->Paginator->sort('modified');?></th>
-					<th class="actions"><?php echo __('Actions');?></th>
+		<th><?php echo $this->Paginator->sort('per_nombres', 'Nombres');?></th>
+		<th><?php echo $this->Paginator->sort('per_apellidos', 'Apellidos');?></th>
+		<th><?php echo $this->Paginator->sort('per_cedula_de_identidad', 'Cedula De Identidad');?></th>
+		<th><?php echo $this->Paginator->sort('per_departamento', 'Departamento');?></th>
+		<th class="actions"><?php echo __('Acciones');?></th>
 	</tr>
 	<?php
 	$i = 0;
@@ -23,15 +21,13 @@
 		<td><?php echo h($persona['Persona']['per_apellidos']); ?>&nbsp;</td>
 		<td><?php echo h($persona['Persona']['per_cedula_de_identidad']); ?>&nbsp;</td>
 		<td><?php echo h($persona['Persona']['per_departamento']); ?>&nbsp;</td>
-		<td><?php echo h($persona['Persona']['created']); ?>&nbsp;</td>
-		<td><?php echo h($persona['Persona']['modified']); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $persona['Persona']['id']),array('class'=>'view','title'=>'Ver')); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $persona['Persona']['id']),array('class'=>'edit','title'=>'Modificar')); ?>
 			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $persona['Persona']['id']), array('class'=>'delete','title'=>'Borrar'), __('Esta seguro que quiere eliminar el registro?', $persona['Persona']['id'])); ?>
 		</td>
 	</tr>
-<?php endforeach; ?>
+	<?php endforeach; ?>
 	</table>
 
 

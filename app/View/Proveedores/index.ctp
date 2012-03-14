@@ -7,15 +7,13 @@
 	</div>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-									<th><?php echo $this->Paginator->sort('pro_rut');?></th>
-							<th><?php echo $this->Paginator->sort('pro_nombre_razon_social');?></th>
-							<th><?php echo $this->Paginator->sort('pro_representante_legal');?></th>
-							<th><?php echo $this->Paginator->sort('pro_telefono_fijo');?></th>
-							<th><?php echo $this->Paginator->sort('pro_celular');?></th>
-							<th><?php echo $this->Paginator->sort('pro_observaciones');?></th>
-							<th><?php echo $this->Paginator->sort('created');?></th>
-							<th><?php echo $this->Paginator->sort('modified');?></th>
-					<th class="actions"><?php echo __('Actions');?></th>
+		<th><?php echo $this->Paginator->sort('pro_rut', 'Rut');?></th>
+		<th><?php echo $this->Paginator->sort('pro_nombre_razon_social', 'Nombre Razon Social');?></th>
+		<th><?php echo $this->Paginator->sort('pro_representante_legal', 'Representante Legal');?></th>
+		<th><?php echo $this->Paginator->sort('pro_telefono_fijo', 'Teléfono Fijo');?></th>
+		<th><?php echo $this->Paginator->sort('pro_celular', 'Celular');?></th>
+		<th><?php echo $this->Paginator->sort('pro_observaciones', 'Observaciones');?></th>
+		<th class="actions"><?php echo __('Acciones');?></th>
 	</tr>
 	<?php
 	$i = 0;
@@ -27,8 +25,6 @@
 		<td><?php echo h($proveedor['Proveedor']['pro_telefono_fijo']); ?>&nbsp;</td>
 		<td><?php echo h($proveedor['Proveedor']['pro_celular']); ?>&nbsp;</td>
 		<td><?php echo h($proveedor['Proveedor']['pro_observaciones']); ?>&nbsp;</td>
-		<td><?php echo h($proveedor['Proveedor']['created']); ?>&nbsp;</td>
-		<td><?php echo h($proveedor['Proveedor']['modified']); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $proveedor['Proveedor']['id']),array('class'=>'view','title'=>'Ver')); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $proveedor['Proveedor']['id']),array('class'=>'edit','title'=>'Modificar')); ?>
