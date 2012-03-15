@@ -262,6 +262,14 @@ class UsuariosController extends AppController {
 		}
 	}
 	
+	private function setPermisosInventarios() {
+		
+	}
+	
+	private function getPermisosInventarios() {
+		
+	}
+	
 	private function setPermisosUsuarios($usuario = null, $permisos = null) {
 		if($permisos['index']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Usuarios/index');
 		if($permisos['view']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Usuarios/view');

@@ -47,9 +47,8 @@ class ProductosController extends AppController {
 				$this->Session->setFlash(__('The producto could not be saved. Please, try again.'),'crud/error');
 			}
 		}
-		$egresosDeInventarios = $this->Producto->EgresosDeInventario->find('list');
-		$ingresosDeInventarios = $this->Producto->IngresosDeInventario->find('list');
-		$this->set(compact('egresosDeInventarios', 'ingresosDeInventarios'));
+		$tiposDeProductos = $this -> Producto -> getValores(15);
+		$this -> set(compact('tiposDeProductos'));
 	}
 
 /**
@@ -73,9 +72,8 @@ class ProductosController extends AppController {
 		} else {
 			$this->request->data = $this->Producto->read(null, $id);
 		}
-		$egresosDeInventarios = $this->Producto->EgresosDeInventario->find('list');
-		$ingresosDeInventarios = $this->Producto->IngresosDeInventario->find('list');
-		$this->set(compact('egresosDeInventarios', 'ingresosDeInventarios'));
+		$tiposDeProductos = $this -> Producto -> getValores(15);
+		$this -> set(compact('tiposDeProductos'));
 	}
 
 /**

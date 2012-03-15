@@ -3,7 +3,10 @@
 	<fieldset>
 		<h2><?php echo __('Agregar Producto');?></h2>
 		<?php
-		echo $this -> Form -> input('pro_name', array('label' => 'Nombre'));
+		//echo $this -> Form -> input('pro_codigo', array('label' => 'Codigo'));
+		echo $this -> Form -> input('pro_tipo_de_producto', array('label' => 'Tipo De Producto', 'type' => 'select', 'options' => $tiposDeProductos));
+		echo $this -> Form -> input('pro_nombre', array('label' => 'Nombre'));
+		echo $this -> Form -> input('pro_descripcion', array('label' => 'Descripción'));
 		echo $this -> Form -> input('pro_observaciones', array('label' => 'Observaciones'));
 		?>
 	</fieldset>
