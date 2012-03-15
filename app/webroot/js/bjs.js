@@ -2,6 +2,9 @@ $(function(){
 	BJS = {};
 
 	BJS.get = function(url, params, callback) {
+		$.each(params,function(i,val){
+			params[i]=params[i].toUpperCase();
+		});
 		jQuery.ajax({
 			url : url,
 			type : "GET",
@@ -12,6 +15,9 @@ $(function(){
 	}
 
 	BJS.post = function(url, params, callback) {
+		$.each(params,function(i,val){
+			params[i]=params[i].toUpperCase();
+		});
 		jQuery.ajax({
 			url : url,
 			type : "POST",
@@ -22,6 +28,9 @@ $(function(){
 	}
 
 	BJS.JSON = function(url, params, callback) {
+		$.each(params,function(i,val){
+			params[i]=params[i].toUpperCase();
+		});
 		jQuery.ajax({
 			url : url,
 			type : "GET",
@@ -33,6 +42,9 @@ $(function(){
 	}
 
 	BJS.JSONP = function(url, params, callback) {
+		$.each(params,function(i,val){
+			params[i]=params[i].toUpperCase();
+		});
 		jQuery.ajax({
 			url : url,
 			type : "POST",

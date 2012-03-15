@@ -50,22 +50,6 @@ var checkCedulaEcuador = function ( cedula ){
 
 
 $(function() {
-	/*$.tools.dateinput.localize("es",  {
-		   months:        'enero,febrero,marzo,abril,mayo,junio,julio,agosto,' +
-		                   	'septiembre,octubre,noviembre,diciembre',
-		   shortMonths:   'ene,feb,mar,abr,may,jun,jul,ago,sep,oct,nov,dic',
-		   days:          'domingo,lunes,martes,miercoles,jueves,viernes,sabado',
-		   shortDays:     'dom,lun,mar,mie,jue,vie,sab'
-		});
-	$(":date,input.date").dateinput({
-		// this is displayed to the user
-		format : 'yyyy-mm-dd',
-		offset : [0, 0],
-		lang: 'es',
-		firstDay: 1,
-		selectors: true,
-		yearRange: [-100,100]
-	});*/
 	$(".index .search-generic").click(function() {
 		search();
 	});
@@ -124,8 +108,9 @@ $(function() {
 	$(".actions a[title]").tooltip({ position: "bottom center", opacity: 1});
 	
 	//TRANSFORMACION A MAYUSCULA
-	$("input[type='text']").keyup(function(e){
+	$("input[type='text']").blur(function(e){
 		$(this).val($(this).val().toUpperCase());
+		
 	});
 	
 	//Mascaras
@@ -141,6 +126,16 @@ $(function() {
 	
 	
 	// CREAR Y MODIFICAR USUARIOS
+	$("#UsuarioUsuIsCedula").change(function(){
+		switch($(this).val()){
+			case "0": // PASAPORTE
+			$('#UsuarioUsuNumeroIdentificacion').setMask({ mask : '*', type : 'repeat' }).val('');
+			break;
+			case "1": // CEDULA
+			$('#UsuarioUsuNumeroIdentificacion').setMask({ mask : '9999', type : 'repeat' }).val();
+			break;
+		}
+	});
 	$("#UsuarioEditForm , #UsuarioAddForm").submit(function(e){
 		if($("#UsuarioUsuIsCedula option:selected").val()=="1"){
 			if(!checkCedulaEcuador($("#UsuarioUsuNumeroIdentificacion").val())){

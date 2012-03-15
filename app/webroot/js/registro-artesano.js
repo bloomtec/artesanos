@@ -71,6 +71,16 @@ $(function() {
 	actualizarRentabilidad();
 
 	// FUNCIONALIDAD PARA VALIDAR CALIFICACION Y CONTROLLAR LOS LLENADOS DE DATOS
+	$('.validarCalificacion #ArtesanoArtIsCedula').change(function(){
+		switch($(this).val()){
+			case "0": // PASAPORTE
+			$('#ArtesanoArtCedula').setMask({ mask : '*', type : 'repeat' }).val('');
+			break;
+			case "1": // CEDULA
+			$('#ArtesanoArtCedula').setMask({ mask : '9999', type : 'repeat' }).val();
+			break;
+		}
+	});
 	var validarCalificacion = function() {
 		if($('.validarCalificacion #ArtesanoArtIsCedula option:selected').val() == 0/*si es pasaporte*/ || checkCedulaEcuador($("#wizard #ArtesanoArtCedula").val())) {
 			if($("#wizard #ArtesanoArtCedula").val() == "" || $("#wizard #CalificacionRamaId").val() == "") {
@@ -237,6 +247,7 @@ $(function() {
 	api.onBeforeSeek(function(event, i) {
 		if(api.getIndex() < i) {
 			var page = root.find(".page").eq(api.getIndex()), inputs = page.find(".tovalidate .required :input").removeClass("error"), empty = inputs.filter(function() {
+				console.log($(this).attr('name'));
 				return $(this).val().replace(/\s*/g, '') == '';
 			});
 			$("#wizard").height(page.next().height());
@@ -259,7 +270,8 @@ $(function() {
 				});
 				empty.addClass("error");
 				emails.addClass("error");
-				return false;
+				return true;
+				//return false;
 			} else {
 				switch(api.getIndex()) {
 					case 1:
@@ -335,7 +347,17 @@ $(function() {
 	}
 	$(".selectCedula").change(function() {
 		if(api.getIndex()) {
-			$(this).parent().parent().find('input').focus();
+			$input=$(this).parent().parent().find('input');
+			$input.focus();
+			switch($(this).val()){
+				case "0": // PASAPORTE
+				$input.setMask({ mask : '*', type : 'repeat' }).val('');
+				break;
+				case "1": // CEDULA
+				$input.setMask({ mask : '9999', type : 'repeat' }).val();
+				break;
+			}
+			
 		}
 	});
 	$("input.cedulaUnica").blur(function() {
