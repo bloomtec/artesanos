@@ -51,7 +51,7 @@
 					echo $this -> Html -> link('Especie Valorada', array("action" => "imprimir", $calificacion['id']), array('target' => 'blank_', 'class' => 'informe', 'title' => 'Especie Valorada'));
 				}
 				if ($this -> requestAction('/usuarios/verificarAcceso/', array('ruta' => array('controllers', 'Calificaciones', 'view')))) {
-					echo $this -> Html -> link('Ver', array("action" => "view", $calificacion['id']), array('target' => 'blank_', 'class' => 'view', 'title' => 'Ver'));
+					echo $this -> Html -> link('Ver', array('controller'=>'calificaciones',"action" => "view", $calificacion['id']), array('target' => 'blank_', 'class' => 'view', 'title' => 'Ver'));
 				}
 				if ($calificacion['cal_estado'] == 0 && $this -> requestAction('/usuarios/verificarAcceso/', array('ruta' => array('controllers', 'Artesanos', 'modificarCalificacion')))) {
 					echo $this -> Html -> link('Modificar', array("controller" => "artesanos", "action" => "modificarCalificacion", $calificacion['id']), array('class' => 'edit', 'title' => 'Modificar'));

@@ -54,6 +54,6 @@ $pdf->Write($h=0, $txt, $link='', $fill=0, $align='C', $ln=true, $stretch=0, $fi
 // ---------------------------------------------------------
 
 //Close and output PDF document
-$pdf->Output('example_003.pdf', 'D');
+$pdf->Output('example_003.pdf', 'I');
 
 ?> 

@@ -2,8 +2,8 @@
 	<h1>Nro. <?php echo $inspeccion['Calificacion']['id']; ?> </h1>
 	
 	<!--<h1 class='right' style='color:red; font-size: 12px;'> DEFINIR A QUE HACE REFENCIA ESTE NUMERO </h1> -->
-	<h1 class='right'> PERSONAL E</h1> 
-	<h1 class='right'> INSTRANFERIBLE</h1>
+	<h3 class='right' style='text-align: right; color:red;'> PERSONAL E</h3> 
+	<h3 class='right'> INSTRANFERIBLE</h3>
 	
 	<p>
 	 La Junta Nacional de Defensa del Artesano, vista la solicitud de Clificación Nro. <?php echo $inspeccion['Calificacion']['cal_numero_valido']; ?>&nbsp;
@@ -34,9 +34,9 @@
 		?> 
 	</h1>
 	<br />
-	<table>
+	<table style="margin-top:50px;">
 		<tr>
-			<td class="bold">RAMA ARTESANAL:</td>
+			<td style='font-size: 30px;' class="bold">RAMA ARTESANAL:</td>
 			<td style='padding-left:40px;'><?php echo $inspeccion['Rama']['ram_nombre']; ?></td>
 		</tr>
 		<tr>
@@ -99,24 +99,24 @@
 	<p class='center'>
 		DIOS, PATRIA Y LIBERTAD <br /> POR LA JUNTA NACIONAL DE DEFENSA DEL ARTESANO <br /> REGISTRADO:
 	</p>
-	<br />
+	<br /><br /><br /><br /><br />
 
 	
-	<h2 class='center'> Lic. Luis Quishpi Vélez</h2>
-	<h2 class='center'> PRESIDENTE DE LA JNDA</h2>
+	<h4 class='center'> Lic. Luis Quishpi Vélez</h4>
+	<h4 class='center'> PRESIDENTE DE LA JNDA</h4>
 	
 
 	<br />
 	
 	<table style="width:100%;">
 		<tr>
-			<td>
-				<h2>Dr. Oswaldo Toledo Romo </h2>
-				<h2> SECRETARIO GENERAL </h2>
+			<td  style='font-size: 20px;'>
+				<h5>Dr. Oswaldo Toledo Romo </h5>
+				<h5> SECRETARIO GENERAL </h5>
 			</td>
 			<td align="right">
-				<h2>Sr. Lenin Barba Galarza </h2>
-				<h2> DIRECTOR TECNICO NACIONAL (E) </h2>
+				<h5>Sr. Lenin Barba Galarza </h5>
+				<h5> DIRECTOR TECNICO NACIONAL (E) </h5>
 			</td>
 		</tr>
 	</table>

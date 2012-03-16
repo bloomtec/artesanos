@@ -270,8 +270,7 @@ $(function() {
 				});
 				empty.addClass("error");
 				emails.addClass("error");
-				return true;
-				//return false;
+				return false;
 			} else {
 				switch(api.getIndex()) {
 					case 1:
