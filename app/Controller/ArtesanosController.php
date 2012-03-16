@@ -1115,6 +1115,7 @@ class ArtesanosController extends AppController {
 		 */
 		if ($resultado_validacion['Calificar'] && isset($resultado_validacion['InfoFecha']['Antes']) && $resultado_validacion['InfoFecha']['Antes']) {
 			$resultado_validacion['Mensaje'] = $resultado_validacion['InfoFecha']['Mensaje'];
+			$resultado_validacion['Calificar'] = 0;
 		}
 		
 		if($calificaciones[0]['Calificacion']['cal_multa_pagada']) $resultado_validacion['Calificar'] = 1;
@@ -1247,16 +1248,20 @@ class ArtesanosController extends AppController {
 		// Fecha de expiración menos dos meses de antelación
 		$fecha_rango_menor_registro = strtotime('-2 month', strtotime($fecha_expiracion));
 		$fecha_rango_menor_registro = date('Y-m-d', $fecha_rango_menor_registro);
-		$fechas['RangoRegistroInicio'] = $fecha_rango_menor_registro;
+		
+		$tmp_fecha_final = $fecha_expiracion;
 		
 		// Fecha de expiración más treinta días habiles
-		$fechas['RangoRegistroFin'] = date('Y-m-d', strtotime($fecha_expiracion));
 		for($i = 30; $i > 0; $i -= 1) {
 			do {
-				$fechas['RangoRegistroFin'] = strtotime('+1 day', strtotime($fechas['RangoRegistroFin']));
-				$fechas['RangoRegistroFin'] = date('Y-m-d', strtotime($fechas['RangoRegistroFin']));
-			} while (!$this -> requestAction('/feriados/esFechaValida/'.$fechas['RangoRegistroFin']));
-		}
+				$dias_sumados = 1;
+				$tmp_fecha_final = strtotime("+$dias_sumados day", strtotime($tmp_fecha_final));
+				$tmp_fecha_final = date('Y-m-d', $tmp_fecha_final);
+			} while(!$this -> requestAction('/feriados/esFechaValida/'.$tmp_fecha_final));
+		}		
+		
+		$fechas['RangoRegistroInicio'] = $fecha_rango_menor_registro;
+		$fechas['RangoRegistroFin'] = $tmp_fecha_final;
 		
 		$fecha_rango_menor_registro = new DateTime($fecha_rango_menor_registro);
 		$fecha_expiracion = new DateTime($fecha_expiracion);
