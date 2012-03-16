@@ -1118,7 +1118,9 @@ class ArtesanosController extends AppController {
 			$resultado_validacion['Calificar'] = 0;
 		}
 		
-		if($calificaciones[0]['Calificacion']['cal_multa_pagada']) $resultado_validacion['Calificar'] = 1;
+		if(!empty($calificaciones)) {
+			if($calificaciones[0]['Calificacion']['cal_multa_pagada']) $resultado_validacion['Calificar'] = 1;
+		}
 
 		// Hacer echo del resulado
 		echo json_encode($resultado_validacion);
@@ -1236,7 +1238,9 @@ class ArtesanosController extends AppController {
 			$resultado_validacion['Mensaje'] = $resultado_validacion['InfoFecha']['Mensaje'];
 		}
 		
-		if($calificaciones[0]['Calificacion']['cal_multa_pagada']) $resultado_validacion['Calificar'] = 1;
+		if(!empty($calificaciones)) {
+			if($calificaciones[0]['Calificacion']['cal_multa_pagada']) $resultado_validacion['Calificar'] = 1;
+		}
 
 		// Hacer echo del resultado
 		echo json_encode($resultado_validacion);
