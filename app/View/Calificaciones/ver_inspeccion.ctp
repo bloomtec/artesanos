@@ -133,7 +133,7 @@
 		<tr>
 			<?php
 				$disabled = false;
-				if ($this -> Session -> read('Auth.User.rol_id') != 3 || $this -> Session -> read('Auth.User.id') != $inspeccion['Calificacion']['cal_inspector_taller']) $disabled = true;
+				if ($this -> Session -> read('Auth.User.rol_id') != 3 || $this -> Session -> read('Auth.User.id') != $inspeccion['Calificacion']['cal_inspector_local']) $disabled = true;
 			?>
 			<td style="min-width: 229px;">
 				<?php
