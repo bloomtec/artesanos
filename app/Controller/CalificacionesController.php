@@ -200,17 +200,43 @@ class CalificacionesController extends AppController {
 		$this -> set(compact('calificacion'));
 	}
 	
+	private function uploadFile($tmp_name = null, $filename = null) {
+		if($tmp_name && $filename) {			
+			$url = 'files/uploads/'.$filename;			
+			return move_uploaded_file($tmp_name, $url);
+		}
+	}	
+	
 	public function verInspeccion($cal_id = null, $tipo_inspeccion = null) {
 		$this -> layout ='print';
 		if ($this -> request -> is('post')) {
 			if(!empty($this -> request -> data)) { // Se enviaron datos
 				if($this -> Calificacion -> save($this -> request -> data)) { // Se puede salvar los datos
-					/**
-					 * Lógica de revisión del estado de la inspección
-					 * Siempre va a existir el taller, se debe verificar si hay inspección de
-					 * un local para proceder a poner el estado de la calificación
-					 */
-					if(empty($this -> request -> data['Calificacion']['cal_']))
+					
+					foreach($this -> request -> data['Documentos'] as $key => $documento) {
+						if(!empty($documento['name']) && !$documento['error']) {
+							$now = new DateTime('now');
+							$filename = $now->format('Y-m-d_H-i-s') . '_' . str_replace(' ', '_', $documento['name']);
+							if($this -> uploadFile($documento['tmp_name'], $filename)) {
+								$this -> Calificacion -> Documento -> create();
+								$documento = array(
+									'Documento' => array(
+										'doc_name' => $documento['name'],
+										'doc_path' => 'files/uploads/'.$filename,
+										'calificacion_id' => $this -> request -> data['Calificacion']['id'],
+										'doc_documento_taller' => $this -> request -> data['Documentos']['is_taller']
+									)
+								);
+								$this -> Calificacion -> Documento -> save($documento);
+							}
+						}
+					}
+				
+					// Lógica de revisión del estado de la inspección
+					// Siempre va a existir el taller, se debe verificar si hay inspección de
+					// un local para proceder a poner el estado de la calificación
+				 
+					//if(empty($this -> request -> data['Calificacion']['cal_']))
 					$calificacion = $this -> Calificacion -> read(null, $this -> request -> data ['Calificacion']['id']);
 					$verificar_local = false;
 					if(!empty($calificacion['Calificacion']['cal_inspector_local'])) {
@@ -271,6 +297,7 @@ class CalificacionesController extends AppController {
 					
 					$this -> Calificacion -> save($calificacion);
 					$this -> redirect(array('action' => 'inspecciones'));
+					
 				} else { // No se puede salvar los datos
 					
 				}

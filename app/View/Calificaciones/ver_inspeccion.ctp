@@ -108,12 +108,13 @@
 		</tr>
 	</table>
 	<!-- Inspección -->
-	<?php echo $this -> Form -> create('Calificacion', array('action' => 'verInspeccion')); ?>
+	<?php echo $this -> Form -> create('Calificacion', array('type' => 'file', 'action' => 'verInspeccion', 'style' => 'padding: 0')); ?>
 	<?php echo $this -> Form -> hidden('id', array('value' => $inspeccion['Calificacion']['id'])); ?>
 	<table class="calificacion">
 		<caption>Área Para El Inspector</caption>
 		<tr>
 			<th>Comentarios</th>
+			<th>Documentos Asociados</th>
 			<th>Decisión</th>
 			<th></th>
 		</tr>
@@ -122,7 +123,7 @@
 				$disabled = false;
 				if($this -> Session -> read('Auth.User.rol_id') != 3 || $this -> Session -> read('Auth.User.id') != $inspeccion['Calificacion']['cal_inspector_local']) $disabled = true;
 			?>
-			<td>
+			<td style="min-width: 229px;">
 				<?php
 					$text = '';
 					if(!empty($inspeccion['Calificacion']['cal_comentarios_local'])) $text = $inspeccion['Calificacion']['cal_comentarios_local'];
@@ -133,7 +134,30 @@
 					}
 				?>
 			</td>
-			<td>
+			<td style="min-width: 450px;">
+				<?php
+					if($disabled) {
+						foreach($inspeccion['Documento'] as $key => $documento) :
+							if(!$documento['doc_documento_taller']) :
+				?>
+								<a href="<?php echo '/' . $documento['doc_path']; ?>" class="button"><?php echo $documento['doc_name']; ?></a>
+								<br />
+								<br />
+								<br />
+				<?php
+							endif;
+						endforeach;
+					} else {
+						echo $this -> Form -> input('Documentos.doc_1', array('type' => 'file'));
+						echo $this -> Form -> input('Documentos.doc_2', array('type' => 'file'));
+						echo $this -> Form -> input('Documentos.doc_3', array('type' => 'file'));
+						echo $this -> Form -> input('Documentos.doc_4', array('type' => 'file'));
+						echo $this -> Form -> input('Documentos.doc_5', array('type' => 'file'));
+					}
+					echo $this -> Form -> hidden('Documentos.is_taller', array('value' => false));
+				?>
+			</td>
+			<td style="min-width: 160px;">
 				<?php
 					$value = '-1';
 					if($inspeccion['Calificacion']['cal_local_aprobado'] != 0) $value = $inspeccion['Calificacion']['cal_local_aprobado'];
@@ -403,12 +427,13 @@
 		<?php endforeach; ?>
 	</table>
 	<!-- Inspección -->
-	<?php echo $this -> Form -> create('Calificacion', array('action' => 'verInspeccion')); ?>
+	<?php echo $this -> Form -> create('Calificacion', array('type' => 'file', 'action' => 'verInspeccion', 'style' => 'padding: 0')); ?>
 	<?php echo $this -> Form -> hidden('id', array('value' => $inspeccion['Calificacion']['id'])); ?>
 	<table class="calificacion">
 		<caption>Área Para El Inspector</caption>
 		<tr>
 			<th>Comentarios</th>
+			<th>Documentos Asociados</th>
 			<th>Decisión</th>
 			<th></th>
 		</tr>
@@ -417,7 +442,7 @@
 				$disabled = false;
 				if($this -> Session -> read('Auth.User.rol_id') != 3 || $this -> Session -> read('Auth.User.id') != $inspeccion['Calificacion']['cal_inspector_taller']) $disabled = true;
 			?>
-			<td>
+			<td style="min-width: 229px;">
 				<?php
 					$text = '';
 					if(!empty($inspeccion['Calificacion']['cal_comentarios_taller'])) $text = $inspeccion['Calificacion']['cal_comentarios_taller'];
@@ -428,7 +453,30 @@
 					}
 				?>
 			</td>
-			<td>
+			<td style="min-width: 450px;">
+				<?php
+					if($disabled) {
+						foreach($inspeccion['Documento'] as $key => $documento) :
+							if($documento['doc_documento_taller']) :
+				?>
+								<a href="<?php echo '/' . $documento['doc_path']; ?>" class="button"><?php echo $documento['doc_name']; ?></a>
+								<br />
+								<br />
+								<br />
+				<?php
+							endif;
+						endforeach;
+					} else {
+						echo $this -> Form -> input('Documentos.doc_1', array('type' => 'file'));
+						echo $this -> Form -> input('Documentos.doc_2', array('type' => 'file'));
+						echo $this -> Form -> input('Documentos.doc_3', array('type' => 'file'));
+						echo $this -> Form -> input('Documentos.doc_4', array('type' => 'file'));
+						echo $this -> Form -> input('Documentos.doc_5', array('type' => 'file'));
+					}
+					echo $this -> Form -> hidden('Documentos.is_taller', array('value' => true));
+				?>
+			</td>
+			<td style="min-width: 160px;">
 				<?php
 					$value = '-1';
 					if($inspeccion['Calificacion']['cal_taller_aprobado'] != 0) $value = $inspeccion['Calificacion']['cal_taller_aprobado'];
