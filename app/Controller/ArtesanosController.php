@@ -1124,7 +1124,10 @@ class ArtesanosController extends AppController {
 		}
 		
 		if(!empty($calificaciones)) {
-			if($calificaciones[0]['Calificacion']['cal_multa_pagada']) $resultado_validacion['Calificar'] = 1;
+			if($calificaciones[0]['Calificacion']['cal_multa_pagada']) {
+				$resultado_validacion['Calificar'] = 1;
+				unset($resultado_validacion['Mensaje']);
+			}
 		}
 
 		// Hacer echo del resulado
@@ -1249,7 +1252,10 @@ class ArtesanosController extends AppController {
 		}
 		
 		if(!empty($calificaciones)) {
-			if($calificaciones[0]['Calificacion']['cal_multa_pagada']) $resultado_validacion['Calificar'] = 1;
+			if($calificaciones[0]['Calificacion']['cal_multa_pagada']) {
+				$resultado_validacion['Calificar'] = 1;
+				unset($resultado_validacion['Mensaje']);
+			}
 		}
 
 		// Hacer echo del resultado
