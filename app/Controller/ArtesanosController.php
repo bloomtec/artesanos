@@ -1111,15 +1111,23 @@ class ArtesanosController extends AppController {
 
 		/**
 		 * Si se permite hacer la calificación validar si se esta o no dentro del rango permitido
-		 * No permitir si se está antes de tiempo
+		 * No permitir si se está antes de tiempo o despues del tiempo
 		 */
 		if ($resultado_validacion['Calificar'] && isset($resultado_validacion['InfoFecha']['Antes']) && $resultado_validacion['InfoFecha']['Antes']) {
 			$resultado_validacion['Mensaje'] = $resultado_validacion['InfoFecha']['Mensaje'];
 			$resultado_validacion['Calificar'] = 0;
 		}
 		
+		if ($resultado_validacion['Calificar'] && isset($resultado_validacion['InfoFecha']['Despues']) && $resultado_validacion['InfoFecha']['Despues']) {
+			$resultado_validacion['Mensaje'] = $resultado_validacion['InfoFecha']['Mensaje'];
+			$resultado_validacion['Calificar'] = 0;
+		}
+		
 		if(!empty($calificaciones)) {
-			if($calificaciones[0]['Calificacion']['cal_multa_pagada']) $resultado_validacion['Calificar'] = 1;
+			if($calificaciones[0]['Calificacion']['cal_multa_pagada']) {
+				$resultado_validacion['Calificar'] = 1;
+				unset($resultado_validacion['Mensaje']);
+			}
 		}
 
 		// Hacer echo del resulado
@@ -1234,12 +1242,20 @@ class ArtesanosController extends AppController {
 		/**
 		 * Si se permite hacer la calificación validar si hay o no multas por fechas incumplidas
 		 */
+		if ($resultado_validacion['Calificar'] && isset($resultado_validacion['InfoFecha']['Despues']) && $resultado_validacion['InfoFecha']['Despues']) {
+			$resultado_validacion['Mensaje'] = $resultado_validacion['InfoFecha']['Mensaje'];
+			$resultado_validacion['Calificar'] = 0;
+		}
+		
 		if ($resultado_validacion['Calificar'] && isset($resultado_validacion['InfoFecha']['Multa']) && $resultado_validacion['InfoFecha']['Multa']) {
 			$resultado_validacion['Mensaje'] = $resultado_validacion['InfoFecha']['Mensaje'];
 		}
 		
 		if(!empty($calificaciones)) {
-			if($calificaciones[0]['Calificacion']['cal_multa_pagada']) $resultado_validacion['Calificar'] = 1;
+			if($calificaciones[0]['Calificacion']['cal_multa_pagada']) {
+				$resultado_validacion['Calificar'] = 1;
+				unset($resultado_validacion['Mensaje']);
+			}
 		}
 
 		// Hacer echo del resultado
@@ -1268,13 +1284,13 @@ class ArtesanosController extends AppController {
 		$fechas['RangoRegistroFin'] = $tmp_fecha_final;
 		
 		$fecha_rango_menor_registro = new DateTime($fecha_rango_menor_registro);
-		$fecha_expiracion = new DateTime($fecha_expiracion);
+		$tmp_fecha_final = new DateTime($tmp_fecha_final);
 		$fecha_actual = new DateTime('now');
 		
 		$fechas['FechaActual'] = $fecha_actual -> format('Y-m-d');
 		$fechas['Multa'] = 0;
 
-		if (($fecha_actual >= $fecha_rango_menor_registro) && ($fecha_actual <= $fecha_expiracion)) {
+		if (($fecha_actual >= $fecha_rango_menor_registro) && ($fecha_actual <= $tmp_fecha_final)) {
 			$fechas['EnRango'] = 1;
 			$fechas['Mensaje'] = 'Entre las fechas de registro';
 		} else {
@@ -1284,7 +1300,7 @@ class ArtesanosController extends AppController {
 				$fechas['Antes'] = 1;
 			} else {
 				$fechas['Despues'] = 1;
-				$fechas['Mensaje'] = 'Se ha pasado la fecha limite de registro';
+				$fechas['Mensaje'] = 'Se ha pasado la fecha limite de registro y se debe revisar primero si hay o no multa';
 				$fechas['Multa'] = 1;
 			}
 		}

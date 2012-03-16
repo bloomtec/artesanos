@@ -131,9 +131,14 @@
 		</tr>
 		<tr>
 			<?php
+<<<<<<< HEAD
 			$disabled = false;
 			if ($this -> Session -> read('Auth.User.rol_id') != 3 || $this -> Session -> read('Auth.User.id') != $inspeccion['Calificacion']['cal_inspector_taller'])
 				$disabled = true;
+=======
+				$disabled = false;
+				if($this -> Session -> read('Auth.User.rol_id') != 3 || $this -> Session -> read('Auth.User.id') != $inspeccion['Calificacion']['cal_inspector_local']) $disabled = true;
+>>>>>>> cb68c7a4cd840668ea08062f4f0a7c529fc0896a
 			?>
 			<td><?php
 			$text = '';
@@ -381,6 +386,7 @@ $trabajador = $inspeccion['Aprendiz'][0];
 			<td><?php echo $equipo['EquiposDeTrabajo']['equ_procedencia'];?></td>
 			<td><?php echo $equipo['EquiposDeTrabajo']['equ_fecha_de_adquisicion'];?></td>
 			<td><?php echo $equipo['EquiposDeTrabajo']['equ_valor_comercial'];?></td>
+
 		</tr>
 		<?php endforeach;?>
 	</table>
