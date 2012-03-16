@@ -1115,8 +1115,9 @@ class ArtesanosController extends AppController {
 		 */
 		if ($resultado_validacion['Calificar'] && isset($resultado_validacion['InfoFecha']['Antes']) && $resultado_validacion['InfoFecha']['Antes']) {
 			$resultado_validacion['Mensaje'] = $resultado_validacion['InfoFecha']['Mensaje'];
-			$resultado_validacion['Calificar'] = 0;
 		}
+		
+		if($calificaciones[0]['Calificacion']['cal_multa_pagada']) $resultado_validacion['Calificar'] = 1;
 
 		// Hacer echo del resulado
 		echo json_encode($resultado_validacion);
@@ -1233,6 +1234,8 @@ class ArtesanosController extends AppController {
 		if ($resultado_validacion['Calificar'] && isset($resultado_validacion['InfoFecha']['Multa']) && $resultado_validacion['InfoFecha']['Multa']) {
 			$resultado_validacion['Mensaje'] = $resultado_validacion['InfoFecha']['Mensaje'];
 		}
+		
+		if($calificaciones[0]['Calificacion']['cal_multa_pagada']) $resultado_validacion['Calificar'] = 1;
 
 		// Hacer echo del resultado
 		echo json_encode($resultado_validacion);
