@@ -297,7 +297,7 @@
 		<tr>
 			<td><?php echo $equipo['EquiposDeTrabajo']['equ_cantidad']; ?></td>
 			<td><?php echo $equipo['EquiposDeTrabajo']['equ_maquinaria_y_herramientas']; ?></td>
-			<td><?php echo $equipo['EquiposDeTrabajo']['equ_tipo_de_adquisicion']; ?></td>
+			<td><?php echo $equipo['EquiposDeTrabajo']['equ_procedencia']; ?></td>
 			<td><?php echo $equipo['EquiposDeTrabajo']['equ_fecha_de_adquisicion']; ?></td>
 			<td><?php echo $equipo['EquiposDeTrabajo']['equ_valor_comercial']; ?></td>
 		</tr>

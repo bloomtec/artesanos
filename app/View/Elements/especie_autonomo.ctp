@@ -1,7 +1,7 @@
 <h1 style='margin-top:100px;'>CALIFICACION TALLER ARTESANAL</h1>
 	<h1>Nro. <?php echo $inspeccion['Calificacion']['id']; ?> </h1>
 	
-	<h1 class='right' style='color:red; font-size: 12px;'> DEFINIR A QUE HACE REFENCIA ESTE NUMERO </h1>
+	<!--<h1 class='right' style='color:red; font-size: 12px;'> DEFINIR A QUE HACE REFENCIA ESTE NUMERO </h1> -->
 	<h1 class='right'> PERSONAL E</h1> 
 	<h1 class='right'> INSTRANFERIBLE</h1>
 	

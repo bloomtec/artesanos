@@ -64,7 +64,10 @@
 			</tr>
 			<tr>
 				<td>Servicios Básicos</td>
-				<td><?php echo $this -> Form -> text('Calificacion.cal_servicios_basicos', array('label' => false,'value'=>0, 'class'=>'valor'));?></td>
+				<td>
+					<?php echo $this -> Form -> text('Calificacion.cal_servicios_basicos', array('label' => false,'value'=>0, 'disabled'=>true,'class' => 'servicios_basicos'));?>
+					<?php echo $this -> Form -> input('Calificacion.cal_servicios_basicos', array('label' => false,'value'=>0, 'type' => 'hidden', 'class' => 'servicios_basicos'));?>
+				</td>
 			</tr>
 			<tr>
 				<td>Compra Materia Prima Mensual</td>

@@ -856,7 +856,7 @@ table td.actions a {
 /** Forms **/
 form {
 	clear: both;
-	width: 403px;
+	width: 450px;
 	margin-top: 10px;
 	padding-bottom: 10px;
 	padding: 16px 10px;
@@ -914,10 +914,10 @@ form .input input {
 	clear: none;
 	display: block;
 	height: 17px;
-	padding: 2px;
+	padding: 2px 2px;
 	border: gray 1px solid;
 	float:left;
-	width:200px;
+	width:270px;
 	margin-bottom: 5px;
 	
 	/** css3 gradient **/
@@ -981,6 +981,7 @@ input, textarea {
 }
 select {
 	vertical-align: text-bottom;
+	padding:2px;
 }
 select[multiple=multiple] {
 	width: 100%;
@@ -1510,4 +1511,11 @@ tr.diferente td.audit-value, tr.diferente td.audit-data {
 }
 .acciones_home a:hover{
 	color: #CD0000;
+}
+.no-hay-inspecciones{
+	clear:both;
+	margin-top:5px;
+}
+.radios-aprobar input{
+	margin:0 5px;
 }
