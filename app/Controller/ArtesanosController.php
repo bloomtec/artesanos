@@ -9,7 +9,7 @@ class ArtesanosController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('datosCalificacion', 'verificarCedula', 'getID', 'validarCalificacion');
+		$this -> Auth -> allow('datosCalificacion', 'verificarCedula', 'getID', 'validarCalificacion', 'setMultaPagada');
 	}
 	
 	function pruebas(){
@@ -1241,10 +1241,19 @@ class ArtesanosController extends AppController {
 	private function validarCalificacionObtenerFechas($fecha_expiracion) {
 				
 		$fechas = array();
-		$fecha_rango_menor_registro = strtotime('-1 week', strtotime($fecha_expiracion));
+		// Fecha de expiración menos dos meses de antelación
+		$fecha_rango_menor_registro = strtotime('-2 month', strtotime($fecha_expiracion));
 		$fecha_rango_menor_registro = date('Y-m-d', $fecha_rango_menor_registro);
 		$fechas['RangoRegistroInicio'] = $fecha_rango_menor_registro;
+		
+		// Fecha de expiración más treinta días habiles
 		$fechas['RangoRegistroFin'] = date('Y-m-d', strtotime($fecha_expiracion));
+		for($i = 30; $i > 0; $i -= 1) {
+			do {
+				$fechas['RangoRegistroFin'] = strtotime('+1 day', strtotime($fechas['RangoRegistroFin']));
+				$fechas['RangoRegistroFin'] = date('Y-m-d', strtotime($fechas['RangoRegistroFin']));
+			} while (!$this -> requestAction('/feriados/esFechaValida/'.$fechas['RangoRegistroFin']));
+		}
 		
 		$fecha_rango_menor_registro = new DateTime($fecha_rango_menor_registro);
 		$fecha_expiracion = new DateTime($fecha_expiracion);
@@ -1277,6 +1286,16 @@ class ArtesanosController extends AppController {
 		} else {
 			return false;
 		}
+	}
+	
+	public function setMultaPagada($cal_id = null) {
+		$this -> layout = 'ajax';
+		if($cal_id) {
+			$this -> Artesano -> Calificacion -> read(null, $cal_id);
+			$this -> Artesano -> Calificacion -> set('cal_multa_pagada', 1);
+			$this -> Artesano -> Calificacion -> save();
+		}
+		exit(0);
 	}
 
 }

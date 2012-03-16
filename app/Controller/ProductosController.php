@@ -39,6 +39,14 @@ class ProductosController extends AppController {
  */
 	public function add() {
 		if ($this->request->is('post')) {
+			$max_id = $this -> Producto -> query('SELECT MAX(`id`) FROM `productos`');
+			$max_id = $max_id[0][0]['MAX(`id`)'];
+			if(!$max_id) {
+				$max_id = 1;
+			} else {
+				$max_id += 1;
+			}
+			$this -> request -> data['Producto']['pro_codigo'] = 1000000 + $max_id;
 			$this->Producto->create();
 			if ($this->Producto->save($this->request->data)) {
 				$this->Session->setFlash(__('The producto has been saved'),'crud/success');
