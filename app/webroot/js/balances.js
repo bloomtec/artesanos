@@ -87,8 +87,8 @@
 		var agua = parseFloat($('#CalificacionCalAgua').val().replace(/[.]/g,'').replace(',','.'))? parseFloat($('#CalificacionCalAgua').val().replace(/[.]/g,'').replace(',','.')):0;
 		var luz = parseFloat($('#CalificacionCalLuz').val().replace(/[.]/g,'').replace(',','.'))? parseFloat($('#CalificacionCalLuz').val().replace(/[.]/g,'').replace(',','.')):0;
 		var telefono = parseFloat($('#CalificacionCalTelefono').val().replace(/[.]/g,'').replace(',','.'))? parseFloat($('#CalificacionCalTelefono').val().replace(/[.]/g,'').replace(',','.')):0;
-		var servicios = parseFloat($('#CalificacionCalServiciosBasicos').val().replace(/[.]/g,'').replace(',','.'))? parseFloat($('#CalificacionCalServiciosBasicos').val().replace(/[.]/g,'').replace(',','.')):0;
-		$('.servicios_basicos').val(BJS.formatComma(BJS.formatNumber(servicios)));
+		//var servicios = parseFloat($('#CalificacionCalServiciosBasicos').val().replace(/[.]/g,'').replace(',','.'))? parseFloat($('#CalificacionCalServiciosBasicos').val().replace(/[.]/g,'').replace(',','.')):0;
+		$('.servicios_basicos').val(BJS.formatComma(BJS.formatNumber(agua+luz+telefono)));
 		var materiaPrima = parseFloat($('#CalificacionCalCompraDeMateriaPrimaMensual').val().replace(/[.]/g,'').replace(',','.'))? parseFloat($('#CalificacionCalCompraDeMateriaPrimaMensual').val().replace(/[.]/g,'').replace(',','.')):0;	
 		var otrosSalarios = parseFloat($('#CalificacionCalOtrosSalarios').val().replace(/[.]/g,'').replace(',','.'))? parseFloat($('#CalificacionCalOtrosSalarios').val().replace(/[.]/g,'').replace(',','.')):0;
 	 	var total= (totalSalarioAprendices+totalSalarioOperarios+domicilio+taller+agua+luz+telefono+materiaPrima+otrosSalarios).toFixed(2);

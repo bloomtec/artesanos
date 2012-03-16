@@ -1512,3 +1512,10 @@ tr.diferente td.audit-value, tr.diferente td.audit-data {
 .acciones_home a:hover{
 	color: #CD0000;
 }
+.no-hay-inspecciones{
+	clear:both;
+	margin-top:5px;
+}
+.radios-aprobar input{
+	margin:0 5px;
+}

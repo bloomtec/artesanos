@@ -65,7 +65,7 @@
 	<?php endif; ?>
 	<?php if(empty($talleres) && empty($locales)) : ?>
 	<div class="no-hay-inspecciones">
-		<h3><?php echo __('No hay inspecciones asignadas actualmente'); ?></h3>		
+		<h3 class='message'><?php echo __('No tiene inspecciones asignadas actualmente'); ?></h3>		
 	</div>
 	<?php endif; ?>	
 </div>
