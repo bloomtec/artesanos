@@ -120,7 +120,7 @@
 		<tr>
 			<?php
 				$disabled = false;
-				if($this -> Session -> read('Auth.User.rol_id') != 3 || $this -> Session -> read('Auth.User.id') != $inspeccion['Calificacion']['cal_inspector_taller']) $disabled = true;
+				if($this -> Session -> read('Auth.User.rol_id') != 3 || $this -> Session -> read('Auth.User.id') != $inspeccion['Calificacion']['cal_inspector_local']) $disabled = true;
 			?>
 			<td>
 				<?php
@@ -360,7 +360,7 @@
 		<tr>
 			<td><?php echo $equipo['EquiposDeTrabajo']['equ_cantidad']; ?></td>
 			<td><?php echo $equipo['EquiposDeTrabajo']['equ_maquinaria_y_herramientas']; ?></td>
-			<td><?php echo $equipo['EquiposDeTrabajo']['equ_tipo_de_adquisicion']; ?></td>
+			<td><?php echo $equipo['EquiposDeTrabajo']['equ_procedencia']; ?></td>
 			<td><?php echo $equipo['EquiposDeTrabajo']['equ_fecha_de_adquisicion']; ?></td>
 			<td><?php echo $equipo['EquiposDeTrabajo']['equ_valor_comercial']; ?></td>
 		</tr>
