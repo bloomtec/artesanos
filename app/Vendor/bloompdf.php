@@ -33,7 +33,7 @@ class BLOOMPDF  extends TCPDF
         //$this->SetFillColor(255, 255, 255,true); 
         $this->SetTextColor(0 , 0, 0); 
 		$this->SetFont($this->xheaderfont,'',$this->xheaderfontsize); 
-        $this->Cell(0,17, "Impreso: ".$year,'B',1,'R');
+        $this->Cell(0,17, "",'B',1,'R');
 
         //$this->Cell(90,26,$this->xheadertext);
     } 
