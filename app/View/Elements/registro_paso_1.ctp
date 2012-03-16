@@ -7,7 +7,7 @@
 			echo $this -> Form -> input('codigo_rama', array('label' => 'Código de la rama', 'col' => '1', 'id' => 'codigoRama','style'=>'width:80px'));
 			echo $this -> Form -> input('grupos_de_rama_id', array('label' => 'Grupo de rama:', 'col' => '1', 'options' => $grupos_de_ramas));
 			echo $this -> Form -> input('Calificacion.rama_id', array('label' => 'Rama:', 'col' => '2', 'options' => array()));
-			echo $this -> Form -> input('art_is_cedula', array('label' => '&nbsp','style'=>'width:70px;', 'type' => 'select','options'=>array('1'=>'Cédula: ','0'=>'Pasaporte: ')));
+			echo $this -> Form -> input('art_is_cedula', array('label' => '&nbsp','style'=>'width:95px;', 'type' => 'select','options'=>array('1'=>'Cédula: ','0'=>'Pasaporte: ')));
 			
 			echo $this -> Form -> input('art_cedula', array('label' => '&nbsp', 'type' => 'text','div'=>'input text','class'=>'number'));
 			echo $this -> Html -> link('validar', "#",array("class"=>'button'));
