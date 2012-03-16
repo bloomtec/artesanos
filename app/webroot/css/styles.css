@@ -608,6 +608,7 @@ a.button.add-row{
 	font-weight: bold;
 	clear: none;
 	padding: 0;
+	
 }
 form .input input {
 	padding: 0 2px;
@@ -905,7 +906,11 @@ form .input label {
     padding: 8px 0 0;
     width: 155px;
 }
+input{
+	text-transform:uppercase;
+}
 form .input input {
+	
 	clear: none;
 	display: block;
 	height: 17px;
