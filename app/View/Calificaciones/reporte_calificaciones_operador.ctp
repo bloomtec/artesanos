@@ -12,20 +12,33 @@
 		?>
 		<tr>
 			<td><?php echo h($calificacion['Calificacion']['id']);?>&nbsp;</td>
-			<td><?php echo h($calificacion['Calificacion']['cal_fecha_expedicion']);?>&nbsp;</td>
-			<td><?php echo h($calificacion['Calificacion']['cal_fecha_expiracion']);?>&nbsp;</td>
+			<td><?php
+				if ($calificacion['Calificacion']['cal_fecha_expedicion']) {
+					echo h($calificacion['Calificacion']['cal_fecha_expedicion']);
+				} else {
+					echo "No asignada";
+				}
+			?>&nbsp;</td>
+			<td><?php
+
+			if ($calificacion['Calificacion']['cal_fecha_expiracion']) {
+				echo h($calificacion['Calificacion']['cal_fecha_expiracion']);
+			} else {
+				echo "No asignada";
+			}
+			?>&nbsp;</td>
 			<td><?php echo h($calificacion['Calificacion']['cal_rama']);?>&nbsp;</td>
 			<td><?php echo h($calificacion['Calificacion']['cal_tipo_de_calificacion']);?>&nbsp;</td>
 			<td class='actions'><?php
-				if ($calificacion['Calificacion']['cal_estado'] == 1 && $this -> requestAction('/usuarios/verificarAcceso/', array('ruta' => array('controllers', 'Calificaciones', 'imprimir')))) {
-					echo $this -> Html -> link('Especie Valorada', array("action" => "imprimir", $calificacion['Calificacion']['id']), array('target' => 'blank_', 'class' => 'informe', 'title' => 'Especie Valorada'));
-				}
-				if ($this -> requestAction('/usuarios/verificarAcceso/', array('ruta' => array('controllers', 'Calificaciones', 'view')))) {
-					echo $this -> Html -> link('Ver', array("action" => "view", $calificacion['Calificacion']['id']), array('target' => 'blank_', 'class' => 'view', 'title' => 'Ver'));
-				}
-				if ($calificacion['Calificacion']['cal_estado'] == 0 && $this -> requestAction('/usuarios/verificarAcceso/', array('ruta' => array('controllers', 'Artesanos', 'modificarCalificacion')))) {
-					echo $this -> Html -> link('Modificar', array("controller" => "artesanos", "action" => "modificarCalificacion", $calificacion['Calificacion']['id']), array('class' => 'edit', 'title' => 'Modificar'));
-				}
+			if ($calificacion['Calificacion']['cal_estado'] == 1 && $this -> requestAction('/usuarios/verificarAcceso/', array('ruta' => array('controllers', 'Calificaciones', 'imprimir')))) {
+				echo $this -> Html -> link('Especie Valorada', array("action" => "imprimir", $calificacion['Calificacion']['id']), array('class' => 'informe', 'title' => 'Especie Valorada'));
+			}
+			if ($this -> requestAction('/usuarios/verificarAcceso/', array('ruta' => array('controllers', 'Calificaciones', 'view')))) {
+				echo $this -> Html -> link('Ver', array("action" => "view", $calificacion['Calificacion']['id']), array('class' => 'view', 'title' => 'Ver'));
+			}
+			if ($calificacion['Calificacion']['cal_estado'] == 0 && $this -> requestAction('/usuarios/verificarAcceso/', array('ruta' => array('controllers', 'Artesanos', 'modificarCalificacion')))) {
+				echo $this -> Html -> link('Modificar', array("controller" => "artesanos", "action" => "modificarCalificacion", $calificacion['Calificacion']['id']), array('class' => 'edit', 'title' => 'Modificar'));
+			}
 			?></td>
 		</tr>
 		<?php endforeach;?>

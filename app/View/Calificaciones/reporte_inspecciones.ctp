@@ -49,7 +49,7 @@
 				<tr>
 					<td><?php
 					if (!empty($calificacion['Calificacion']['cal_nombre_inspector_taller']))
-						echo $this -> Html -> link(__('Ver Inspección Taller'), array('controller' => 'calificaciones', 'action' => 'verInspeccion', $calificacion['Calificacion']['id'], 1), array('target' => '_BLANK'));
+						echo $this -> Html -> link(__('Ver Inspección Taller'), array('controller' => 'calificaciones', 'action' => 'verInspeccion', $calificacion['Calificacion']['id'], 1));
 					?></td>
 				</tr>
 			</table></td>
@@ -93,7 +93,7 @@
 				<tr>
 					<td><?php
 					if (!empty($calificacion['Calificacion']['cal_nombre_inspector_local']))
-						echo $this -> Html -> link(__('Ver Inspección Local'), array('controller' => 'calificaciones', 'action' => 'verInspeccion', $calificacion['Calificacion']['id'], 2), array('target' => '_BLANK'));
+						echo $this -> Html -> link(__('Ver Inspección Local'), array('controller' => 'calificaciones', 'action' => 'verInspeccion', $calificacion['Calificacion']['id'], 2));
 					?></td>
 				</tr>
 			</table></td>
