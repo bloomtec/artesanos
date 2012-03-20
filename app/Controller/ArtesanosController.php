@@ -1120,7 +1120,7 @@ class ArtesanosController extends AppController {
 		
 		if ($resultado_validacion['Calificar'] && isset($resultado_validacion['InfoFecha']['Despues']) && $resultado_validacion['InfoFecha']['Despues']) {
 			$resultado_validacion['Mensaje'] = $resultado_validacion['InfoFecha']['Mensaje'];
-			// $resultado_validacion['Calificar'] = 0;
+			$resultado_validacion['Calificar'] = 0;
 		}
 		
 		if(!empty($calificaciones)) {
@@ -1244,7 +1244,7 @@ class ArtesanosController extends AppController {
 		 */
 		if ($resultado_validacion['Calificar'] && isset($resultado_validacion['InfoFecha']['Despues']) && $resultado_validacion['InfoFecha']['Despues']) {
 			$resultado_validacion['Mensaje'] = $resultado_validacion['InfoFecha']['Mensaje'];
-			// $resultado_validacion['Calificar'] = 0;
+			$resultado_validacion['Calificar'] = 0;
 		}
 		
 		if ($resultado_validacion['Calificar'] && isset($resultado_validacion['InfoFecha']['Multa']) && $resultado_validacion['InfoFecha']['Multa']) {
