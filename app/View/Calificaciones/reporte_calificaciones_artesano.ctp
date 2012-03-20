@@ -12,9 +12,21 @@
 		?>
 		<tr>
 			<td><?php echo h($calificacion['Calificacion']['id']);?>&nbsp;</td>
-			<td><?php echo h($calificacion['Calificacion']['cal_fecha_expedicion']);?>&nbsp;</td>
-			<td><?php echo h($calificacion['Calificacion']['cal_fecha_expiracion']);?>&nbsp;</td>
-			<td><?php echo h($calificacion['Calificacion']['cal_rama']);?>&nbsp;</td>
+			<td><?php
+				if ($calificacion['Calificacion']['cal_fecha_expedicion']) {
+					echo h($calificacion['Calificacion']['cal_fecha_expedicion']);
+				} else {
+					echo "No asignada";
+				}
+			?>&nbsp;</td>
+			<td><?php
+
+			if ($calificacion['Calificacion']['cal_fecha_expiracion']) {
+				echo h($calificacion['Calificacion']['cal_fecha_expiracion']);
+			} else {
+				echo "No asignada";
+			}
+			?>&nbsp;</td><td><?php echo h($calificacion['Calificacion']['cal_rama']);?>&nbsp;</td>
 			<td><?php echo h($calificacion['Calificacion']['cal_tipo_de_calificacion']);?>&nbsp;</td>
 			<td class='actions'><?php
 				if ($calificacion['Calificacion']['cal_estado'] == 1 && $this -> requestAction('/usuarios/verificarAcceso/', array('ruta' => array('controllers', 'Calificaciones', 'imprimir')))) {
