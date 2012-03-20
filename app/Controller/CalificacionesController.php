@@ -23,7 +23,7 @@ class CalificacionesController extends AppController {
 	}
 	
 	public function view($cal_id = null) {
-		$this -> layout = 'pdf';
+		$this -> layout = 'pdf2';
 		$this -> Calificacion -> recursive = 1;
 		
 		$order = array();
