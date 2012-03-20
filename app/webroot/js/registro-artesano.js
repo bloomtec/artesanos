@@ -8,7 +8,7 @@ var indiceOperador = indiceAprendiz = 0;
 $(function() {
 	// FUNCIONALIDAD REGISTRO
 	$('#wizard .page').css('width', $("#wizard").width());
-	$('#wizard').css('height', $(".items").height());
+	//$('#wizard').css('height', $(".items").height());
 	$('.porcentaje').hide();
 	$('.submit').click(function() {
 		$('form').submit();
@@ -179,6 +179,7 @@ $(function() {
 	});
 	$("#TallerCantonId").change(function() {
 		BJS.updateSelect($("#TallerCiudadId"), "/ciudades/getByCanton/" + $("#TallerCantonId option:selected").val(), function() {
+			$("#TallerCiudadId option:eq(1)").attr('selected',true);
 			BJS.updateSelect($("#TallerSectorId"), "/sectores/getByCiudad/" + $("#TallerCiudadId option:selected").val(), function() {
 				BJS.updateSelect($("#TallerParroquiaId"), "/parroquias/getBySector/" + $("#TallerSectorId option:selected").val(), function() {
 				});
@@ -211,6 +212,7 @@ $(function() {
 		actualizarGeoLocal();
 	});
 	$("#LocalCantonId").change(function() {
+		$("#LocalCantonId option:eq(1)").attr('selected',true);
 		BJS.updateSelect($("#LocalCiudadId"), "/ciudades/getByCanton/" + $("#LocalCantonId option:selected").val(), function() {
 			BJS.updateSelect($("#LocalSectorId"), "/sectores/getByCiudad/" + $("#LocalCiudadId option:selected").val(), function() {
 				BJS.updateSelect($("#LocalParroquiaId"), "/parroquias/getBySector/" + $("#LocalSectorId option:selected").val(), function() {
@@ -247,8 +249,12 @@ $(function() {
 	api.onBeforeSeek(function(event, i) {
 		if(api.getIndex() < i) {
 			var page = root.find(".page").eq(api.getIndex()), inputs = page.find(".tovalidate .required :input").removeClass("error"), empty = inputs.filter(function() {
-				console.log($(this).attr('name'));
-				return $(this).val().replace(/\s*/g, '') == '';
+				if($(this).val()){
+					return $(this).val().replace(/\s*/g, '') == '';
+				}else{
+					return true;
+				}
+				
 			});
 			$("#wizard").height(page.next().height());
 			emails = inputs.filter(':email');
