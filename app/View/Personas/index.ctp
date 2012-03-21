@@ -9,7 +9,7 @@
 	<tr>
 		<th><?php echo $this->Paginator->sort('per_nombres', 'Nombres');?></th>
 		<th><?php echo $this->Paginator->sort('per_apellidos', 'Apellidos');?></th>
-		<th><?php echo $this->Paginator->sort('per_cedula_de_identidad', 'Cedula De Identidad');?></th>
+		<th><?php echo $this->Paginator->sort('per_documento_de_identidad', 'Documento de Identidad');?></th>
 		<th><?php echo $this->Paginator->sort('per_departamento', 'Departamento');?></th>
 		<th class="actions"><?php echo __('Acciones');?></th>
 	</tr>
@@ -19,7 +19,7 @@
 	<tr>
 		<td><?php echo h($persona['Persona']['per_nombres']); ?>&nbsp;</td>
 		<td><?php echo h($persona['Persona']['per_apellidos']); ?>&nbsp;</td>
-		<td><?php echo h($persona['Persona']['per_cedula_de_identidad']); ?>&nbsp;</td>
+		<td><?php echo h($persona['Persona']['per_documento_de_identidad']); ?>&nbsp;</td>
 		<td><?php echo h($persona['Persona']['per_departamento']); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $persona['Persona']['id']),array('class'=>'view','title'=>'Ver')); ?>

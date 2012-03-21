@@ -12,7 +12,7 @@
 		</h3>
 		<label><?php echo __('Per Cedula De Identidad'); ?></label>
 		<h3>
-			<?php echo h($persona['Persona']['per_cedula_de_identidad']); ?>
+			<?php echo h($persona['Persona']['per_documento_de_identidad']); ?>
 			&nbsp;
 		</h3>
 		<label><?php echo __('Per Departamento'); ?></label>
