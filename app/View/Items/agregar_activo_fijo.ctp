@@ -17,7 +17,7 @@
 				<?php echo $this -> Form -> input('Persona.per_is_cedula', array('label' => 'Cedula De Ciudadania')); ?>
 			</fieldset>
 		</div>
-		<table id="TablaActivosFijos" class="activos-fijos" show="5" till="20">
+		<table id="TablaActivosFijos" class="activos-fijos items" show="5" till="20">
 			<tr>
 				<th>Activo Fijo</th>
 				<th>Cantidad</th>
