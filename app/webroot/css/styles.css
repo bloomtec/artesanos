@@ -719,7 +719,7 @@ table {
 #content th {
 	border: 0;
 	background-color: #26469e;
-	text-align: center;
+	text-align: left;
 	padding: 2px;
 	height: 25px;
 	color: #fff;
@@ -811,6 +811,10 @@ table td.actions a {
 }
 .actions .edit {
 	background-image: url(/img/edit.png);
+	background-size: 20px;
+}
+.actions .pdf {
+	background-image: url(/img/download-pdf.png);
 	background-size: 20px;
 }
 .actions .delete {

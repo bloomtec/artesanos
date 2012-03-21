@@ -87,19 +87,27 @@
 			</ul>
 		</li>
 		<?php endif; ?>
-		<li class="inventarios">
+		<li class="inventarios last">
 			<a href="#">INVENTARIOS</a>
 			<ul>
-				<li>
-					<a href="/productos">Productos</a>
+				<li> 
+					<a href="#">Mantenimientos</a>
+					<ul>
+						<li>
+							<a href="/productos">Productos</a>
+						</li>
+						<li>
+							<a href="/personas">Personas</a>
+						</li>
+						<li>
+							<a href="/proveedores">Proveedores</a>
+						</li>
+					</ul>	
 				</li>
-				<li>
-					<a href="/personas">Personas</a>
-				</li>
-				<li>
-					<a href="/proveedores">Proveedores</a>
-				</li>
+				<li> <a href="#">INVENTARIOS ACTIVOS FIJOS </a></li>
+				<li> <a href="#">INVENTARIOS SUMINISTRO Y MATERIALES </a></li>
 			</ul>
+			
 		</li>
 	</ul>
 </div>

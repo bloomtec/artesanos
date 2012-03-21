@@ -48,6 +48,7 @@ $pdf->AddPage();
 $css = '<style>
 h2 {
 	text-align:center;
+	font-size:23px;
 
 	
 }	
@@ -97,7 +98,7 @@ $pdf->writeHTML($html, true, false, true, false, '');
 // ---------------------------------------------------------
 
 //Close and output PDF document
-$pdf->Output('especie_valorada.pdf', 'D');
+$pdf->Output('calificacion.pdf', 'D');
  
 //echo $content_for_layout;
 ?> 
