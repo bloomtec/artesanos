@@ -7,6 +7,9 @@ App::uses('AppModel', 'Model');
  * @property IngresosDeInventario $IngresosDeInventario
  */
 class Item extends AppModel {
+	
+	public $useTable = 'items';
+	
 /**
  * Display field
  *
