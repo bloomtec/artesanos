@@ -7,8 +7,8 @@
 		echo $this -> Form -> input('pro_rut', array('label' => 'Rut'));
 		echo $this -> Form -> input('pro_nombre_razon_social', array('label' => 'Nombre Razon Social'));
 		echo $this -> Form -> input('pro_representante_legal', array('label' => 'Representante Legal'));
-		echo $this -> Form -> input('pro_telefono_fijo', array('label' => 'Telefono Fijo'));
-		echo $this -> Form -> input('pro_celular', array('label' => 'Celular'));
+		echo $this -> Form -> input('pro_telefono_fijo', array('label' => 'Telefono Fijo','class'=>'telefono'));
+		echo $this -> Form -> input('pro_celular', array('label' => 'Celular','class'=>'celular'));
 		echo $this -> Form -> input('pro_observaciones', array('label' => 'Observaciones'));
 		?>
 	</fieldset>

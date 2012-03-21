@@ -21,12 +21,45 @@ class Persona extends AppModel {
 	public $displayField = 'datos_completos';
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
+	public $validate = array(
+		'per_nombres' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'per_apellidos' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'per_documento_de_identidad' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+	);
 
 /**
  * hasMany associations
  *
  * @var array
  */
+
 	public $hasMany = array(
 		'EgresosDeInventario' => array(
 			'className' => 'EgresosDeInventario',
