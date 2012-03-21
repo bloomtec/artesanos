@@ -7,12 +7,18 @@ App::uses('AppModel', 'Model');
  * @property IngresosDeInventario $IngresosDeInventario
  */
 class Persona extends AppModel {
+	
+	public $virtualFields = array(
+		'datos_completos' => 'CONCAT(Persona.per_cedula_de_identidad, " - ", Persona.per_nombres, " ", Persona.per_apellidos)'
+	);
+	
 /**
  * Display field
  *
  * @var string
  */
-	public $displayField = 'per_cedula_de_identidad';
+	//public $displayField = 'per_cedula_de_identidad';
+	public $displayField = 'datos_completos';
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 

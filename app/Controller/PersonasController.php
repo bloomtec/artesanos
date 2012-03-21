@@ -6,6 +6,11 @@ App::uses('AppController', 'Controller');
  * @property Persona $Persona
  */
 class PersonasController extends AppController {
+	
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this -> Auth -> allow('getPersonasByDepartment');
+	}
 
 	/**
 	 * index method
@@ -95,6 +100,12 @@ class PersonasController extends AppController {
 		}
 		$this -> Session -> setFlash(__('Persona was not deleted'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
+	}
+	
+	public function getPersonasByDepartment($dep_name = null) {
+		$this -> layout = 'ajax';
+		return $this -> Persona -> find('list', array('conditions' => array('Persona.per_departamento' => $dep_name)));
+		exit(0);
 	}
 
 }

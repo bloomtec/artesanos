@@ -65,7 +65,9 @@ class ItemsController extends AppController {
 		}
 		$items = $this -> Item -> find('list', array('conditions' => array('Item.ite_is_activo_fijo' => true)));
 		$tiposDeItems = $this -> Item -> getValores(15);
-		$this -> set(compact('items', 'tiposDeItems'));
+		$departamentos = $this -> Item -> getValores(14);
+		$personas = $this -> Item -> IngresosDeInventario -> Persona -> find('list');
+		$this -> set(compact('items', 'tiposDeItems', 'departamentos', 'personas'));
 	}
 	
 	/**
