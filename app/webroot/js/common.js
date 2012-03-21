@@ -144,6 +144,25 @@ $(function() {
 			}
 		}
 	});
+	// CREAR Y MODIFICAR PERSONAS
+	$("#PersonaPerIsCedula").change(function(){
+		switch($(this).val()){
+			case "0": // PASAPORTE
+			$('#PersonaPerDocumentoDeIdentidad').setMask({ mask : '*', type : 'repeat' }).val('');
+			break;
+			case "1": // CEDULA
+			$('#PersonaPerDocumentoDeIdentidad').setMask({ mask : '9999', type : 'repeat' }).val();
+			break;
+		}
+	});
+	$("#PersonaAddForm , #PersonaAddForm").submit(function(e){
+		if($("#PersonaPerIsCedula option:selected").val()=="1"){
+			if(!checkCedulaEcuador($("#PersonaPerDocumentoDeIdentidad").val())){
+				e.preventDefault();
+				$("#PersonaPerDocumentoDeIdentidad").focus();
+			}
+		}
+	});
 
 	// ACTUALIZACIONES GEOGRAFICAS USUARIOS
 	
