@@ -6,12 +6,12 @@ App::uses('AppController', 'Controller');
  * @property Item $Item
  */
 class ItemsController extends AppController {
-	
-	function indexSuministros(){
+
+	function indexSuministros() {
 		$this -> Item -> recursive = 0;
-		$this -> set('items', $this -> paginate(array('ite_is_activo_fijo'=>false)));
+		$this -> set('items', $this -> paginate(array('ite_is_activo_fijo' => false)));
 	}
-	
+
 	/**
 	 * view method
 	 *
@@ -25,14 +25,14 @@ class ItemsController extends AppController {
 		}
 		$this -> set('item', $this -> Item -> read(null, $id));
 	}
-	
+
 	private function uploadSuministroFile($tmp_name = null, $filename = null) {
-		if($tmp_name && $filename) {			
-			$url = 'files/uploads/suministros'.$filename;			
+		if ($tmp_name && $filename) {
+			$url = 'files/uploads/suministros' . $filename;
 			return move_uploaded_file($tmp_name, $url);
 		}
 	}
-	
+
 	/**
 	 * add method
 	 *
@@ -62,7 +62,7 @@ class ItemsController extends AppController {
 		$tiposDeItems = $this -> Item -> getValores(15);
 		$this -> set(compact('tiposDeItems'));
 	}
-	
+
 	/**
 	 * edit method
 	 *
@@ -87,7 +87,7 @@ class ItemsController extends AppController {
 		$tiposDeItems = $this -> Item -> getValores(15);
 		$this -> set(compact('tiposDeItems'));
 	}
-	
+
 	/**
 	 * delete method
 	 *
@@ -151,10 +151,10 @@ class ItemsController extends AppController {
 		}
 		$this -> set('item', $this -> Item -> read(null, $id));
 	}
-	
+
 	private function uploadActivoFijoFile($tmp_name = null, $filename = null) {
-		if($tmp_name && $filename) {			
-			$url = 'files/uploads/activosFijos/'.$filename;			
+		if ($tmp_name && $filename) {
+			$url = 'files/uploads/activosFijos/' . $filename;
 			return move_uploaded_file($tmp_name, $url);
 		}
 	}
@@ -172,28 +172,22 @@ class ItemsController extends AppController {
 		 * 3. Generar los items del ingreso de inventario
 		 */
 		if ($this -> request -> is('post')) {
-			if(!empty($this -> request -> data['IngresosDeInventario']['ing_archivo_soporte']['name']) && !$this -> request -> data['IngresosDeInventario']['ing_archivo_soporte']['error']) {
+			if (!empty($this -> request -> data['IngresosDeInventario']['ing_archivo_soporte']['name']) && !$this -> request -> data['IngresosDeInventario']['ing_archivo_soporte']['error']) {
 				$now = new DateTime('now');
-				$filename = $now->format('Y-m-d_H-i-s') . '_' . str_replace(' ', '_', $this -> request -> data['IngresosDeInventario']['ing_archivo_soporte']['name']);
-				if($this -> uploadActivoFijoFile($this -> request -> data['IngresosDeInventario']['ing_archivo_soporte']['tmp_name'], $filename)) {
-					$this -> request -> data['IngresosDeInventario']['ing_archivo_soporte'] = 'files/uploads/activosFijos/'.$filename;
+				$filename = $now -> format('Y-m-d_H-i-s') . '_' . str_replace(' ', '_', $this -> request -> data['IngresosDeInventario']['ing_archivo_soporte']['name']);
+				if ($this -> uploadActivoFijoFile($this -> request -> data['IngresosDeInventario']['ing_archivo_soporte']['tmp_name'], $filename)) {
+					$this -> request -> data['IngresosDeInventario']['ing_archivo_soporte'] = 'files/uploads/activosFijos/' . $filename;
 				}
 			}
-			/*
-			// TODO : Tener en cuenta el tipo de item para este código!!!!
-			$max_id = $this -> Item -> query('SELECT MAX(`id`) FROM `items`');
-			$max_id = $max_id[0][0]['MAX(`id`)'];
-			if (!$max_id) {
-				$max_id = 1;
-			} else {
-				$max_id += 1;
-			}
-			$this -> request -> data['Item']['ite_codigo'] = 1000000 + $max_id;
-			// Asignar el campo de activo fijo
-			$this -> request -> data['Item']['ite_is_activo_fijo'] = true;
-			 */
 			$this -> Item -> IngresosDeInventario -> create();
 			if ($this -> Item -> IngresosDeInventario -> save($this -> request -> data)) {
+				// Registrar los items
+				foreach($this -> request -> data['ActivosFijos'] as $key => $activoFijo) {
+					if($activoFijo['item_id'] && $activoFijo['ing_cantidad']) {
+						
+					}
+				}
+				
 				$this -> Session -> setFlash(__('Se registró el ingreso de activos fijos'), 'crud/success');
 				$this -> redirect(array('action' => 'indexActivosFijos'));
 			} else {
@@ -254,7 +248,7 @@ class ItemsController extends AppController {
 		$this -> Session -> setFlash(__('Item was not deleted'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
 	}
-	
+
 	/**
 	 * index method
 	 *
@@ -264,7 +258,7 @@ class ItemsController extends AppController {
 		$this -> Item -> recursive = 0;
 		$this -> set('items', $this -> paginate());
 	}
-	
+
 	/**
 	 * view method
 	 *
@@ -278,7 +272,7 @@ class ItemsController extends AppController {
 		}
 		$this -> set('item', $this -> Item -> read(null, $id));
 	}
-	
+
 	/**
 	 * add method
 	 *
@@ -306,7 +300,7 @@ class ItemsController extends AppController {
 		$tiposDeItems = $this -> Item -> getValores(15);
 		$this -> set(compact('tiposDeItems'));
 	}
-	
+
 	/**
 	 * edit method
 	 *
@@ -331,7 +325,7 @@ class ItemsController extends AppController {
 		$tiposDeItems = $this -> Item -> getValores(15);
 		$this -> set(compact('tiposDeItems'));
 	}
-	
+
 	/**
 	 * delete method
 	 *

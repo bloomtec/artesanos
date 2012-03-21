@@ -10,22 +10,19 @@ set :cakephp_core_path, "cake"
 set :deploy_to, "/home/embalao/clickneat.bloomweb.co"
 
 # USER & PASSWORD
-set :user, 'embalao'
-set :password, 'Cobr@Verde'
+set :user, 'jndagobe'
+set :password, '20qtxNm6E4'
 
 # ROLES
-role :app, "clickneat.bloomweb.co"
-role :web, "clickneat.bloomweb.co"
-role :db, "clickneat.bloomweb.co", :primary => true
-
-# DREAMHOST INFORMATION
-set :user, "embalao"
+role :app, "artesanos.jnda.gob.ec"
+role :web, "artesanos.jnda.gob.ec"
+role :db, "artesanos.jnda.gob.ec", :primary => true
 
 # VERSION TRACKER INFORMATION
 set :scm, :git
 set :use_sudo, false
-set :repository,  "git@github.com:bloomtec/cake_base.git"
-set :branch, "clickneat"
+set :repository,  "git@github.com:bloomtec/artesanos.git"
+set :branch, "master"
 
 # TASKS
 namespace :deploy do
@@ -41,20 +38,6 @@ namespace :deploy do
     run "chmod 777 /home/embalao/clickneat.bloomweb.co/app/tmp/ -R"
     run "chmod 777 /home/embalao/clickneat.bloomweb.co/app/webroot/img/uploads/ -R"
     run "chmod 777 /home/embalao/clickneat.bloomweb.co/app/webroot/files/uploads/ -R"
-  end
-  
-end
-
-namespace :extras do
-  
-  task :start do ; end
-  
-  task :stop do ; end
-  
-  task :restart, :roles => :app, :except => { :no_release => true } do ; end
-  
-  task :download_uploads do
-    run "scp -r embalao@bloomweb.co:/home/embalao/clickneat.bloomweb.co/app/webroot/img/uploads /var/www/clickneat/app/webroot/img/uploads";
   end
   
 end
