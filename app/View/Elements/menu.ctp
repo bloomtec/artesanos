@@ -87,6 +87,7 @@
 			</ul>
 		</li>
 		<?php endif; ?>
+		<!--
 		<li class="inventarios last">
 			<a href="#">INVENTARIOS</a>
 			<ul>
@@ -109,5 +110,6 @@
 			</ul>
 			
 		</li>
+		-->
 	</ul>
 </div>
