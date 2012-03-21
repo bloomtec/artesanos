@@ -95,7 +95,7 @@
 					<a href="#">Mantenimientos</a>
 					<ul>
 						<li>
-							<a href="/productos">Productos</a>
+							<a href="/items/indexActivosFijos">Activos Fijos</a>
 						</li>
 						<li>
 							<a href="/personas">Personas</a>
@@ -105,8 +105,14 @@
 						</li>
 					</ul>	
 				</li>
-				<li> <a href="#">INVENTARIOS ACTIVOS FIJOS </a></li>
-				<li> <a href="#">INVENTARIOS SUMINISTRO Y MATERIALES </a></li>
+				<li> <a href="/items/indexActivosFijos">Activos Fijos </a>
+					<ul>
+						<li>
+							<a href="/items/agregarActivoFijo">Agregar</a>
+						</li>
+					</ul>
+				</li>
+				<li> <a href="#">Suministros y Materiales </a></li>
 			</ul>
 			
 		</li>
