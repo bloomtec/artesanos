@@ -19,6 +19,23 @@ class PersonasController extends AppController {
 	 */
 	public function index() {
 		$this -> Persona -> recursive = 0;
+		$conditions = array();
+		if (isset($this -> params['named']['query']) && !empty($this -> params['named']['query'])) {
+			//$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
+			$query = $this -> params['named']['query'];
+			$conditions = array(
+						'OR' => array(
+							'Persona.per_nombres LIKE' => "%$query%",
+							'Persona.per_apellidos LIKE' => "%$query%",
+							'Persona.per_departamento LIKE' => "%$query%",
+							'Persona.per_documento_de_identidad	 LIKE' => "%$query%",
+							)
+					);
+
+		}
+		if(!empty($conditions)) {
+			$this -> paginate = array('conditions' => $conditions);
+		}
 		$this -> set('personas', $this -> paginate());
 	}
 
