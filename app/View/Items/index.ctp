@@ -10,6 +10,7 @@
 		<th><?php echo $this->Paginator->sort('ite_codigo', 'Código');?></th>
 		<th><?php echo $this->Paginator->sort('ite_nombre', 'Nombre');?></th>
 		<th><?php echo $this->Paginator->sort('ite_is_activo_fijo', 'Activo Fijo');?></th>
+		<th><?php echo $this->Paginator->sort('ite_cantidad', 'Cantidad');?></th>
 		<!--<th><?php echo $this->Paginator->sort('ite_tipo_de_item', 'Tipo De Item');?></th>-->
 		<th><?php echo $this->Paginator->sort('ite_descripcion', 'Descripción');?></th>
 		<th><?php echo $this->Paginator->sort('ite_observaciones', 'Observaciones');?></th>
@@ -31,6 +32,7 @@
 			?>
 			&nbsp;
 		</td>
+		<td><?php echo h($item['Item']['ite_cantidad']); ?>&nbsp;</td>
 		<!--<td><?php echo h($item['Item']['ite_tipo_de_item']); ?>&nbsp;</td>-->
 		<td><?php echo h($item['Item']['ite_descripcion']); ?>&nbsp;</td>
 		<td><?php echo h($item['Item']['ite_observaciones']); ?>&nbsp;</td>

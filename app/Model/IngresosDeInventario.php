@@ -15,16 +15,6 @@ class IngresosDeInventario extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'ing_archivo_soporte' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				'message' => 'Debe seleccionar un archivo de soporte',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
 		'proveedor_id' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
@@ -41,6 +31,16 @@ class IngresosDeInventario extends AppModel {
 				'message' => 'Debe seleccionar una persona',
 				//'allowEmpty' => false,
 				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'ing_archivo_soporte' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Debe seleccionar un archivo de soporte',
+				//'allowEmpty' => false,
+				//'required' => true,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),

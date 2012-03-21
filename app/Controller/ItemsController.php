@@ -154,10 +154,10 @@ class ItemsController extends AppController {
 		 * 3. Generar los items del ingreso de inventario
 		 */
 		if ($this -> request -> is('post')) {
-			if(!empty($this -> request -> data['Documento']['upload']['name']) && !$this -> request -> data['Documento']['upload']['error']) {
+			if(!empty($this -> request -> data['IngresosDeInventario']['ing_archivo_soporte']['name']) && !$this -> request -> data['IngresosDeInventario']['ing_archivo_soporte']['error']) {
 				$now = new DateTime('now');
-				$filename = $now->format('Y-m-d_H-i-s') . '_' . str_replace(' ', '_', $this -> request -> data['Documento']['upload']['name']);
-				if($this -> uploadActivoFijoFile($this -> request -> data['Documento']['upload']['tmp_name'], $filename)) {
+				$filename = $now->format('Y-m-d_H-i-s') . '_' . str_replace(' ', '_', $this -> request -> data['IngresosDeInventario']['ing_archivo_soporte']['name']);
+				if($this -> uploadActivoFijoFile($this -> request -> data['IngresosDeInventario']['ing_archivo_soporte']['tmp_name'], $filename)) {
 					$this -> request -> data['IngresosDeInventario']['ing_archivo_soporte'] = 'files/uploads/activosFijos/'.$filename;
 				}
 			}

@@ -9,6 +9,7 @@
 	<tr>
 		<th><?php echo $this->Paginator->sort('ite_codigo', 'Código');?></th>
 		<th><?php echo $this->Paginator->sort('ite_nombre', 'Nombre');?></th>
+		<th><?php echo $this->Paginator->sort('ite_cantidad', 'Cantidad');?></th>
 		<!--<th><?php echo $this->Paginator->sort('ite_tipo_de_item', 'Tipo De Item');?></th>-->
 		<th><?php echo $this->Paginator->sort('ite_descripcion', 'Descripción');?></th>
 		<th><?php echo $this->Paginator->sort('ite_observaciones', 'Observaciones');?></th>
@@ -20,6 +21,7 @@
 	<tr>
 		<td><?php echo h($item['Item']['ite_codigo']); ?>&nbsp;</td>
 		<td><?php echo h($item['Item']['ite_nombre']); ?>&nbsp;</td>
+		<td><?php echo h($item['Item']['ite_cantidad']); ?>&nbsp;</td>
 		<!--<td><?php echo h($item['Item']['ite_tipo_de_item']); ?>&nbsp;</td>-->
 		<td><?php echo h($item['Item']['ite_descripcion']); ?>&nbsp;</td>
 		<td><?php echo h($item['Item']['ite_observaciones']); ?>&nbsp;</td>
@@ -29,7 +31,7 @@
 			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $item['Item']['id']), array('class'=>'delete','title'=>'Borrar'), __('Esta seguro que quiere eliminar el registro?', $item['Item']['id'])); ?>
 		</td>
 	</tr>
-<?php endforeach; ?>
+	<?php endforeach; ?>
 	</table>
 
 

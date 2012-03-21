@@ -4,9 +4,10 @@
 			<fieldset>
 				<h2><?php echo __('Ingreso De Activos Fijos');?></h2>
 				<?php echo $this -> Form -> input('IngresosDeInventario.ing_numero_de_memorandum', array('label' => 'No. Memorandum')); ?>
-				<?php echo $this -> Form -> input('Persona.per_departamento', array('label' => 'Departamento', 'type' => 'select', 'empty' => 'Seleccione departamento...', 'options' => $departamentos)); ?>
-				<?php echo $this -> Form -> input('IngresosDeInventario.persona_id', array('empty' => 'Seleccione persona...')); ?>
-				<?php echo $this -> Form -> input('IngresosDeInventario.proveedor_id', array('empty' => 'Seleccione proveedor...')); ?>
+				<?php echo $this -> Form -> input('Persona.per_departamento', array('label' => 'Departamento', 'type' => 'select', 'empty' => 'Seleccione...', 'options' => $departamentos)); ?>
+				<?php echo $this -> Form -> input('IngresosDeInventario.persona_id', array('empty' => 'Seleccione...')); ?>
+				<?php echo $this -> Form -> input('IngresosDeInventario.proveedor_id', array('empty' => 'Seleccione...')); ?>
+				<?php echo $this -> Form -> input('IngresosDeInventario.ing_archivo_soporte', array('type' => 'file', 'label' => 'Documento De Soporte')); ?>
 			</fieldset>
 		</div>
 		<!--<div class="persona">
@@ -28,7 +29,7 @@
 			</tr>
 			<?php for($i = 1; $i <= 20; $i += 1): ?>
 			<tr class="activo-fijo-valores">
-				<td><?php echo $this -> Form -> input("ActivosFijos.$i.item_id", array('options' => $items, 'empty' => 'Seleccione activo fijo...', 'label' => false, 'div' => false)); ?></td>
+				<td><?php echo $this -> Form -> input("ActivosFijos.$i.item_id", array('options' => $items, 'empty' => 'Seleccione...', 'label' => false, 'div' => false)); ?></td>
 				<td><?php echo $this -> Form -> input("ActivosFijos.$i.ing_cantidad", array('label' => false, 'div' => false, 'class' => 'number')); ?></td>
 				<td><?php echo $this -> Form -> input("ActivosFijos.$i.ing_detalle", array('type' => 'textarea', 'label' => false, 'div' => false)); ?></td>
 				<td><?php echo $this -> Form -> input("ActivosFijos.$i.ing_precio_unitario", array('label' => false, 'div' => false, 'class' => 'valor')); ?></td>
@@ -37,16 +38,6 @@
 			<?php endfor; ?>
 		</table>
 		<a class="add-row button" href="#" rel="#TablaActivosFijos">Agregar Otro</a>
-		<table>
-			<tr>
-				<th>
-					Archivo De Soporte
-				</th>
-			</tr>
-			<tr class="activo-fijo-archivo">
-				<td><?php echo $this -> Form -> input('Documento.upload', array('type' => 'file', 'label' => false, 'div' => false)); ?></td>
-			</tr>
-		</table>
 		<!--<div class="item">
 			<fieldset>
 				<h2><?php echo __('Agregar Activo Fijo');?></h2>
