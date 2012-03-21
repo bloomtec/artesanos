@@ -87,16 +87,14 @@
 			</ul>
 		</li>
 		<?php endif; ?>
-		<!--
+		
 		<li class="inventarios last">
 			<a href="#">INVENTARIOS</a>
 			<ul>
 				<li> 
 					<a href="#">Mantenimientos</a>
 					<ul>
-						<li>
-							<a href="/items/indexActivosFijos">Activos Fijos</a>
-						</li>
+						
 						<li>
 							<a href="/personas">Personas</a>
 						</li>
@@ -116,6 +114,6 @@
 			</ul>
 			
 		</li>
-		-->
+		
 	</ul>
 </div>
