@@ -1547,3 +1547,9 @@ tr.diferente td.audit-value, tr.diferente td.audit-data {
 .radios-aprobar input{
 	margin:0 5px;
 }
+
+/*INVENTARIOS*/
+.items textarea{
+	width:200px;
+	height: 40px;
+}
