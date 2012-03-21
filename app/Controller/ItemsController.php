@@ -26,6 +26,13 @@ class ItemsController extends AppController {
 		$this -> set('item', $this -> Item -> read(null, $id));
 	}
 	
+	private function uploadSuministroFile($tmp_name = null, $filename = null) {
+		if($tmp_name && $filename) {			
+			$url = 'files/uploads/suministros'.$filename;			
+			return move_uploaded_file($tmp_name, $url);
+		}
+	}
+	
 	/**
 	 * add method
 	 *
@@ -126,6 +133,13 @@ class ItemsController extends AppController {
 		}
 		$this -> set('item', $this -> Item -> read(null, $id));
 	}
+	
+	private function uploadActivoFijoFile($tmp_name = null, $filename = null) {
+		if($tmp_name && $filename) {			
+			$url = 'files/uploads/activosFijos'.$filename;			
+			return move_uploaded_file($tmp_name, $url);
+		}
+	}
 
 	/**
 	 * add method
@@ -140,6 +154,16 @@ class ItemsController extends AppController {
 		 * 3. Generar los items del ingreso de inventario
 		 */
 		if ($this -> request -> is('post')) {
+			debug($this -> request -> data);
+			if(!empty($this -> request -> data['Documento']['upload']['name']) && !$this -> request -> data['Documento']['upload']['error']) {
+				$now = new DateTime('now');
+				$filename = $now->format('Y-m-d_H-i-s') . '_' . str_replace(' ', '_', $this -> request -> data['Documento']['upload']['name']);
+				if($this -> uploadFile($this -> request -> data['Documento']['upload']['tmp_name'], $filename)) {
+					$this -> request -> data['IngresoDeInventario']['ing_archivo_soporte'] = 'files/uploads/activosFijos/'.$filename;
+				}
+			}
+			debug($this -> request -> data);
+			/*
 			// TODO : Tener en cuenta el tipo de item para este código!!!!
 			$max_id = $this -> Item -> query('SELECT MAX(`id`) FROM `items`');
 			$max_id = $max_id[0][0]['MAX(`id`)'];
@@ -158,6 +182,7 @@ class ItemsController extends AppController {
 			} else {
 				$this -> Session -> setFlash(__('The item could not be saved. Please, try again.'), 'crud/error');
 			}
+			 */
 		}
 		$items = $this -> Item -> find('list', array('conditions' => array('Item.ite_is_activo_fijo' => true)));
 		$tiposDeItems = $this -> Item -> getValores(15);

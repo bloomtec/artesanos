@@ -4,11 +4,11 @@
 			<fieldset>
 				<h2><?php echo __('Ingreso De Activos Fijos');?></h2>
 				<?php echo $this -> Form -> input('IngresosDeInventario.ing_numero_de_memorandum', array('label' => 'No. Memorandum')); ?>
-				<?php echo $this -> Form -> input('Persona.per_departamento', array('label' => 'Departamento', 'type' => 'select', 'empty' => 'Seleccione un departamento...', 'options' => $departamentos)); ?>
-				<?php echo $this -> Form -> input('IngresosDeInventario.persona_id', array('empty' => 'Agregar nueva persona...')); ?>
+				<?php echo $this -> Form -> input('Persona.per_departamento', array('label' => 'Departamento', 'type' => 'select', 'empty' => 'Seleccione departamento...', 'options' => $departamentos)); ?>
+				<?php echo $this -> Form -> input('IngresosDeInventario.persona_id', array('empty' => 'Seleccione persona...')); ?>
 			</fieldset>
 		</div>
-		<div class="persona">
+		<!--<div class="persona">
 			<fieldset>
 				<h2><?php echo __('Agregar Persona');?></h2>
 				<?php echo $this -> Form -> input('Persona.per_nombres', array('label' => 'Nombres')); ?>
@@ -16,7 +16,7 @@
 				<?php echo $this -> Form -> input('Persona.per_documento_de_identidad', array('label' => 'Documento De Identidad')); ?>
 				<?php echo $this -> Form -> input('Persona.per_is_cedula', array('label' => 'Cedula De Ciudadania')); ?>
 			</fieldset>
-		</div>
+		</div>-->
 		<table id="TablaActivosFijos" class="activos-fijos items" show="5" till="20">
 			<tr>
 				<th>Activo Fijo</th>
@@ -43,7 +43,7 @@
 				</th>
 			</tr>
 			<tr class="activo-fijo-archivo">
-				<td><?php echo $this -> Form -> input('ing_archivo_soporte', array('type' => 'file', 'label' => false, 'div' => false)); ?></td>
+				<td><?php echo $this -> Form -> input('Documento.upload', array('type' => 'file', 'label' => false, 'div' => false)); ?></td>
 			</tr>
 		</table>
 		<!--<div class="item">

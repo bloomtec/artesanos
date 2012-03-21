@@ -205,7 +205,7 @@ class CalificacionesController extends AppController {
 			$url = 'files/uploads/'.$filename;			
 			return move_uploaded_file($tmp_name, $url);
 		}
-	}	
+	}
 	
 	public function verInspeccion($cal_id = null, $tipo_inspeccion = null) {
 		$this -> layout ='print';
