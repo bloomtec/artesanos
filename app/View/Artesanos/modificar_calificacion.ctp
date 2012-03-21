@@ -53,7 +53,7 @@
 <?php echo $this -> Html -> script('registro-artesano',false);?>
 <script type="text/javascript">
 	$(function(){
-		BJS.JSON('/artesanos/datosCalificacion/<?php echo $calificacion['Calificacion']['id']?>',null,function(response){
+		BJS.JSON('/artesanos/datosCalificacion/<?php echo $calificacion['Calificacion']['id']?>',{},function(response){
 			if(response.Datos){
 					$("#wizard .validar").css('visibility','visible');
 					$("#wizard .error").removeClass('error');
