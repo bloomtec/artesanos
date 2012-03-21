@@ -179,7 +179,7 @@ $(function() {
 	});
 	$("#TallerCantonId").change(function() {
 		BJS.updateSelect($("#TallerCiudadId"), "/ciudades/getByCanton/" + $("#TallerCantonId option:selected").val(), function() {
-			$("#TallerCiudadId option:eq(1)").attr('selected',true);
+			$("#TallerCiudadId option:eq(1)").attr('selected',true).change();
 			BJS.updateSelect($("#TallerSectorId"), "/sectores/getByCiudad/" + $("#TallerCiudadId option:selected").val(), function() {
 				BJS.updateSelect($("#TallerParroquiaId"), "/parroquias/getBySector/" + $("#TallerSectorId option:selected").val(), function() {
 				});
@@ -213,8 +213,9 @@ $(function() {
 	});
 	$("#LocalCantonId").change(function() {
 		BJS.updateSelect($("#LocalCiudadId"), "/ciudades/getByCanton/" + $("#LocalCantonId option:selected").val(), function() {
+			$("#LocalCiudadId option:eq(1)").attr('selected',true).change();
 			BJS.updateSelect($("#LocalSectorId"), "/sectores/getByCiudad/" + $("#LocalCiudadId option:selected").val(), function() {
-				$("#LocalCiudadId option:eq(1)").attr('selected',true);
+				
 				BJS.updateSelect($("#LocalParroquiaId"), "/parroquias/getBySector/" + $("#LocalSectorId option:selected").val(), function() {
 				});
 			});

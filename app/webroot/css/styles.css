@@ -1501,6 +1501,9 @@ tr.diferente td.audit-value, tr.diferente td.audit-data {
 .datos-local .fila-datos{
 	display:none;
 }
+#wizard .datos-local select, #wizard .datos-taller select{
+	max-width:150px;
+}
 
 .ingreso.button{
 	display: block;
