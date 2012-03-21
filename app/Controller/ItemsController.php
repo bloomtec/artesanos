@@ -6,6 +6,102 @@ App::uses('AppController', 'Controller');
  * @property Item $Item
  */
 class ItemsController extends AppController {
+	
+	function indexSuministros(){
+		$this -> Item -> recursive = 0;
+		$this -> set('items', $this -> paginate(array('ite_is_activo_fijo'=>false)));
+	}
+	
+	/**
+	 * view method
+	 *
+	 * @param string $id
+	 * @return void
+	 */
+	public function viewSuministro($id = null) {
+		$this -> Item -> id = $id;
+		if (!$this -> Item -> exists()) {
+			throw new NotFoundException(__('Invalid item'));
+		}
+		$this -> set('item', $this -> Item -> read(null, $id));
+	}
+	
+	/**
+	 * add method
+	 *
+	 * @return void
+	 */
+	public function agregarSuministro() {
+		if ($this -> request -> is('post')) {
+			// TODO : Tener en cuenta el tipo de item para este código!!!!
+			$max_id = $this -> Item -> query('SELECT MAX(`id`) FROM `items`');
+			$max_id = $max_id[0][0]['MAX(`id`)'];
+			if (!$max_id) {
+				$max_id = 1;
+			} else {
+				$max_id += 1;
+			}
+			$this -> request -> data['Item']['ite_codigo'] = 1000000 + $max_id;
+			// Asignar el campo de activo fijo
+			$this -> request -> data['Item']['ite_is_activo_fijo'] = false;
+			$this -> Item -> create();
+			if ($this -> Item -> save($this -> request -> data)) {
+				$this -> Session -> setFlash(__('The item has been saved'), 'crud/success');
+				$this -> redirect(array('action' => 'index'));
+			} else {
+				$this -> Session -> setFlash(__('The item could not be saved. Please, try again.'), 'crud/error');
+			}
+		}
+		$tiposDeItems = $this -> Item -> getValores(15);
+		$this -> set(compact('tiposDeItems'));
+	}
+	
+	/**
+	 * edit method
+	 *
+	 * @param string $id
+	 * @return void
+	 */
+	public function editSuministro($id = null) {
+		$this -> Item -> id = $id;
+		if (!$this -> Item -> exists()) {
+			throw new NotFoundException(__('Invalid item'));
+		}
+		if ($this -> request -> is('post') || $this -> request -> is('put')) {
+			if ($this -> Item -> save($this -> request -> data)) {
+				$this -> Session -> setFlash(__('The item has been saved'), 'crud/success');
+				$this -> redirect(array('action' => 'index'));
+			} else {
+				$this -> Session -> setFlash(__('The item could not be saved. Please, try again.'), 'crud/error');
+			}
+		} else {
+			$this -> request -> data = $this -> Item -> read(null, $id);
+		}
+		$tiposDeItems = $this -> Item -> getValores(15);
+		$this -> set(compact('tiposDeItems'));
+	}
+	
+	/**
+	 * delete method
+	 *
+	 * @param string $id
+	 * @return void
+	 */
+	public function deleteSuministro($id = null) {
+		if (!$this -> request -> is('post')) {
+			throw new MethodNotAllowedException();
+		}
+		$this -> Item -> id = $id;
+		if (!$this -> Item -> exists()) {
+			throw new NotFoundException(__('Invalid item'));
+		}
+		if ($this -> Item -> delete()) {
+			$this -> Session -> setFlash(__('Item deleted'), 'crud/success');
+			$this -> redirect(array('action' => 'index'));
+		}
+		$this -> Session -> setFlash(__('Item was not deleted'), 'crud/error');
+		$this -> redirect(array('action' => 'index'));
+	}
 
 	/**
 	 * index method
@@ -16,11 +112,6 @@ class ItemsController extends AppController {
 		$this -> Item -> recursive = 0;
 		$this -> set('items', $this -> paginate(array('ite_is_activo_fijo'=>true)));
 	}
-	
-	function indexActivosSuministros(){
-		$this -> Item -> recursive = 0;
-		$this -> set('items', $this -> paginate(array('ite_is_activo_fijo'=>false)));
-	}
 
 	/**
 	 * view method
@@ -28,7 +119,7 @@ class ItemsController extends AppController {
 	 * @param string $id
 	 * @return void
 	 */
-	public function view($id = null) {
+	public function viewActivoFijo($id = null) {
 		$this -> Item -> id = $id;
 		if (!$this -> Item -> exists()) {
 			throw new NotFoundException(__('Invalid item'));
@@ -74,36 +165,6 @@ class ItemsController extends AppController {
 		$personas = $this -> Item -> IngresosDeInventario -> Persona -> find('list');
 		$this -> set(compact('items', 'tiposDeItems', 'departamentos', 'personas'));
 	}
-	
-	/**
-	 * add method
-	 *
-	 * @return void
-	 */
-	public function add() {
-		if ($this -> request -> is('post')) {
-			// TODO : Tener en cuenta el tipo de item para este código!!!!
-			$max_id = $this -> Item -> query('SELECT MAX(`id`) FROM `items`');
-			$max_id = $max_id[0][0]['MAX(`id`)'];
-			if (!$max_id) {
-				$max_id = 1;
-			} else {
-				$max_id += 1;
-			}
-			$this -> request -> data['Item']['ite_codigo'] = 1000000 + $max_id;
-			// Asignar el campo de activo fijo
-			$this -> request -> data['Item']['ite_is_activo_fijo'] = false;
-			$this -> Item -> create();
-			if ($this -> Item -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The item has been saved'), 'crud/success');
-				$this -> redirect(array('action' => 'index'));
-			} else {
-				$this -> Session -> setFlash(__('The item could not be saved. Please, try again.'), 'crud/error');
-			}
-		}
-		$tiposDeItems = $this -> Item -> getValores(15);
-		$this -> set(compact('tiposDeItems'));
-	}
 
 	/**
 	 * edit method
@@ -111,7 +172,7 @@ class ItemsController extends AppController {
 	 * @param string $id
 	 * @return void
 	 */
-	public function edit($id = null) {
+	public function editActivoFijo($id = null) {
 		$this -> Item -> id = $id;
 		if (!$this -> Item -> exists()) {
 			throw new NotFoundException(__('Invalid item'));
@@ -136,7 +197,7 @@ class ItemsController extends AppController {
 	 * @param string $id
 	 * @return void
 	 */
-	public function delete($id = null) {
+	public function deleteActivoFijo($id = null) {
 		if (!$this -> request -> is('post')) {
 			throw new MethodNotAllowedException();
 		}
