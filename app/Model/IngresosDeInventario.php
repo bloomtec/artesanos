@@ -15,30 +15,30 @@ class IngresosDeInventario extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'proveedor_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'ing_codigo' => array(
+		'ing_archivo_soporte' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Debe seleccionar un archivo de soporte',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'ing_is_activo_fijo' => array(
-			'boolean' => array(
-				'rule' => array('boolean'),
-				//'message' => 'Your custom message here',
+		'proveedor_id' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Debe seleccionar un proveedor',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'persona_id' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Debe seleccionar una persona',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule

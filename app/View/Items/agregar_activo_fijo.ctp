@@ -6,6 +6,7 @@
 				<?php echo $this -> Form -> input('IngresosDeInventario.ing_numero_de_memorandum', array('label' => 'No. Memorandum')); ?>
 				<?php echo $this -> Form -> input('Persona.per_departamento', array('label' => 'Departamento', 'type' => 'select', 'empty' => 'Seleccione departamento...', 'options' => $departamentos)); ?>
 				<?php echo $this -> Form -> input('IngresosDeInventario.persona_id', array('empty' => 'Seleccione persona...')); ?>
+				<?php echo $this -> Form -> input('IngresosDeInventario.proveedor_id', array('empty' => 'Seleccione proveedor...')); ?>
 			</fieldset>
 		</div>
 		<!--<div class="persona">
