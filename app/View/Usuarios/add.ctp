@@ -9,7 +9,7 @@
 		echo $this -> Form -> input('usu_contrasena_confirmar', array('label' => 'Confirmar Contraseña', 'type' => 'password'));
 		echo $this -> Form -> input('usu_unidad', array('label' => 'Unidad', 'type' => 'select', 'options' => $usu_unidades));
 		echo $this -> Form -> input('usu_is_cedula', array('label' => false, 'div'=>'input select usu-cedula', 'type' => 'select','options'=>array('1'=>'Cédula: ','0'=>'Pasaporte: ')));	
-		echo $this -> Form -> input('usu_numero_identificacion', array('label' => false,"style"=>"margin-top:5px","class"=>"number"));
+		echo $this -> Form -> input('usu_numero_identificacion', array('label' => false,"style"=>"margin-top:5px","class"=>""));
 		echo $this -> Form -> input('usu_nombres_y_apellidos', array('label' => 'Nombres Y Apellidos'));
 		$rolSelected= isset($this->data['Usuario']['rol_id'])&&$this->data['Usuario']['rol_id']?$this->data['Usuario']['rol_id']:2;
 		echo $this -> Form -> input('rol_id', array('label' => 'Rol', 'value' =>$rolSelected));
@@ -31,5 +31,13 @@
 <script type="text/javascript">
 	$(function(){
 		actualizarGeoUsuario();
+		switch($('#UsuarioUsuIsCedula').val()){
+			case "0": // PASAPORTE
+			$('#UsuarioUsuNumeroIdentificacion').setMask({ mask : '*', type : 'repeat' }).val();
+			break;
+			case "1": // CEDULA
+			$('#UsuarioUsuNumeroIdentificacion').setMask({ mask : '9999', type : 'repeat' }).val();
+			break;
+		}
 	});
 </script>
