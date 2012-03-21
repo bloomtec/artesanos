@@ -12,9 +12,14 @@ class ItemsController extends AppController {
 	 *
 	 * @return void
 	 */
-	public function index() {
+	public function indexActivosFijos() {
 		$this -> Item -> recursive = 0;
-		$this -> set('items', $this -> paginate());
+		$this -> set('items', $this -> paginate(array('ite_is_activo_fijo'=>true)));
+	}
+	
+	function indexActivosSuministros(){
+		$this -> Item -> recursive = 0;
+		$this -> set('items', $this -> paginate(array('ite_is_activo_fijo'=>false)));
 	}
 
 	/**

@@ -1,5 +1,5 @@
 <div class="items index">
-	<h2><?php echo __('Items');?></h2>
+	<h2><?php echo __('Activos Fijos');?></h2>
 	<div class="search">
 		<label>BUSCAR:</label>
 		<input type="text" />
@@ -9,7 +9,7 @@
 	<tr>
 		<th><?php echo $this->Paginator->sort('ite_codigo', 'Código');?></th>
 		<th><?php echo $this->Paginator->sort('ite_nombre', 'Nombre');?></th>
-		<th><?php echo $this->Paginator->sort('ite_tipo_de_item', 'Tipo De Item');?></th>
+		<!--<th><?php echo $this->Paginator->sort('ite_tipo_de_item', 'Tipo De Item');?></th>-->
 		<th><?php echo $this->Paginator->sort('ite_descripcion', 'Descripción');?></th>
 		<th><?php echo $this->Paginator->sort('ite_observaciones', 'Observaciones');?></th>
 		<th class="actions"><?php echo __('Acciones');?></th>
@@ -20,7 +20,7 @@
 	<tr>
 		<td><?php echo h($item['Item']['ite_codigo']); ?>&nbsp;</td>
 		<td><?php echo h($item['Item']['ite_nombre']); ?>&nbsp;</td>
-		<td><?php echo h($item['Item']['ite_tipo_de_item']); ?>&nbsp;</td>
+		<!--<td><?php echo h($item['Item']['ite_tipo_de_item']); ?>&nbsp;</td>-->
 		<td><?php echo h($item['Item']['ite_descripcion']); ?>&nbsp;</td>
 		<td><?php echo h($item['Item']['ite_observaciones']); ?>&nbsp;</td>
 		<td class="actions">
@@ -51,6 +51,6 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $this->Html->link(__('Agregar Item'), array('action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(__('Agregar Activo Fijo'), array('action' => 'agregarActivoFijo')); ?></li>
 	</ul>
 </div>
