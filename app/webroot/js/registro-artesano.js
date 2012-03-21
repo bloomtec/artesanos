@@ -212,9 +212,9 @@ $(function() {
 		actualizarGeoLocal();
 	});
 	$("#LocalCantonId").change(function() {
-		$("#LocalCantonId option:eq(1)").attr('selected',true);
 		BJS.updateSelect($("#LocalCiudadId"), "/ciudades/getByCanton/" + $("#LocalCantonId option:selected").val(), function() {
 			BJS.updateSelect($("#LocalSectorId"), "/sectores/getByCiudad/" + $("#LocalCiudadId option:selected").val(), function() {
+				$("#LocalCiudadId option:eq(1)").attr('selected',true);
 				BJS.updateSelect($("#LocalParroquiaId"), "/parroquias/getBySector/" + $("#LocalSectorId option:selected").val(), function() {
 				});
 			});
@@ -413,32 +413,5 @@ $(function() {
 			}
 		});
 	});
-	// FUNCIONALIDADES AÑADIR FILAS
-	var tables = {};
-	tables.update = function(jtable) {
-		if(jtable['show'] <= jtable['till']) {
-			if(jtable['show'] == jtable['till']) {
-				jtable['button'].addClass('disabled');
-			}
-			jtable['show'] += 1;
-			jtable['jTable'].find('tr').hide();
-			jtable['jTable'].find('tr:lt(' + jtable['show'] + ')').show();
-			$("#wizard").height($("#wizard").find(".page").eq(api.getIndex()).height());
-		}
-	}
-	$.each($('.add-row'), function(i, val) {
-		tables[$(val).attr('rel')] = {};
-		tables[$(val).attr('rel')]['button'] = $(val);
-		tables[$(val).attr('rel')]['jTable'] = $($(val).attr('rel'));
-		tables[$(val).attr('rel')]['show'] = $($(val).attr('rel')).attr('show');
-		tables[$(val).attr('rel')]['till'] = parseInt($($(val).attr('rel')).attr('till'));
-		tables[$(val).attr('rel')]['show'] = parseInt($($(val).attr('rel')).attr('show')) + 1;
-		tables[$(val).attr('rel')]['jTable'].find('tr').hide();
-		tables[$(val).attr('rel')]['jTable'].find('tr:lt(' + tables[$(val).attr('rel')]['show'] + ')').show();
-	});
-
-	$(".add-row").click(function(e) {
-		e.preventDefault();
-		tables.update(tables[$(this).attr('rel')]);
-	});
+	
 });
