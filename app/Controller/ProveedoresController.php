@@ -25,7 +25,7 @@ class ProveedoresController extends AppController {
 							'Proveedor.pro_representante_legal LIKE' => "%$query%",
 							'Proveedor.pro_telefono_fijo LIKE' => "%$query%",
 							'Proveedor.pro_celular LIKE' => "%$query%",
-							'Proveedor.observaciones LIKE' => "%$query%",
+							'Proveedor.pro_observaciones LIKE' => "%$query%",
 							)
 					);
 
