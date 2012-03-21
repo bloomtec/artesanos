@@ -6,20 +6,20 @@ App::uses('AppModel', 'Model');
  * @property EgresosDeInventario $EgresosDeInventario
  * @property IngresosDeInventario $IngresosDeInventario
  */
-class Producto extends AppModel {
+class Item extends AppModel {
 /**
  * Display field
  *
  * @var string
  */
-	public $displayField = 'pro_nombre';
+	public $displayField = 'ite_nombre';
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 	public $hasMany = array(
-		'InventariosDeProducto' => array(
-			'className' => 'InventariosDeProducto',
-			'foreignKey' => 'producto_id',
+		'Inventario' => array(
+			'className' => 'Inventario',
+			'foreignKey' => 'item_id',
 			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
@@ -40,8 +40,8 @@ class Producto extends AppModel {
 	public $hasAndBelongsToMany = array(
 		'EgresosDeInventario' => array(
 			'className' => 'EgresosDeInventario',
-			'joinTable' => 'egresos_de_inventarios_productos',
-			'foreignKey' => 'producto_id',
+			'joinTable' => 'egresos_de_inventarios_items',
+			'foreignKey' => 'item_id',
 			'associationForeignKey' => 'egresos_de_inventario_id',
 			'unique' => true,
 			'conditions' => '',
@@ -55,8 +55,8 @@ class Producto extends AppModel {
 		),
 		'IngresosDeInventario' => array(
 			'className' => 'IngresosDeInventario',
-			'joinTable' => 'ingresos_de_inventarios_productos',
-			'foreignKey' => 'producto_id',
+			'joinTable' => 'ingresos_de_inventarios_items',
+			'foreignKey' => 'item_id',
 			'associationForeignKey' => 'ingresos_de_inventario_id',
 			'unique' => true,
 			'conditions' => '',

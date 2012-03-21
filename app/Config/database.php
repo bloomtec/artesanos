@@ -17,8 +17,10 @@ class DATABASE_CONFIG {
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
 		'host' => 'localhost',
-		'login' => 'root',
-		'password' => '',
+		'login' => 'jndagobe',
+		//'login' => 'root',
+		'password' => '20qtxNm6E4',
+		//'password' => '',
 		'database' => 'jndagobe_artesanos',
 		'encoding' => 'utf8'
 	);
