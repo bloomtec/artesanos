@@ -36,6 +36,36 @@ class ItemsController extends AppController {
 	 *
 	 * @return void
 	 */
+	public function agregarActivoFijo() {
+		if ($this -> request -> is('post')) {
+			// TODO : Tener en cuenta el tipo de item para este código!!!!
+			$max_id = $this -> Item -> query('SELECT MAX(`id`) FROM `items`');
+			$max_id = $max_id[0][0]['MAX(`id`)'];
+			if (!$max_id) {
+				$max_id = 1;
+			} else {
+				$max_id += 1;
+			}
+			$this -> request -> data['Item']['ite_codigo'] = 1000000 + $max_id;
+			// Asignar el campo de activo fijo
+			$this -> request -> data['Item']['ite_is_activo_fijo'] = true;
+			$this -> Item -> create();
+			if ($this -> Item -> save($this -> request -> data)) {
+				$this -> Session -> setFlash(__('The item has been saved'), 'crud/success');
+				$this -> redirect(array('action' => 'index'));
+			} else {
+				$this -> Session -> setFlash(__('The item could not be saved. Please, try again.'), 'crud/error');
+			}
+		}
+		$tiposDeItems = $this -> Item -> getValores(15);
+		$this -> set(compact('tiposDeItems'));
+	}
+	
+	/**
+	 * add method
+	 *
+	 * @return void
+	 */
 	public function add() {
 		if ($this -> request -> is('post')) {
 			// TODO : Tener en cuenta el tipo de item para este código!!!!
@@ -47,6 +77,8 @@ class ItemsController extends AppController {
 				$max_id += 1;
 			}
 			$this -> request -> data['Item']['ite_codigo'] = 1000000 + $max_id;
+			// Asignar el campo de activo fijo
+			$this -> request -> data['Item']['ite_is_activo_fijo'] = false;
 			$this -> Item -> create();
 			if ($this -> Item -> save($this -> request -> data)) {
 				$this -> Session -> setFlash(__('The item has been saved'), 'crud/success');
