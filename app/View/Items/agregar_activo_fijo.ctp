@@ -43,7 +43,7 @@
 				</th>
 			</tr>
 			<tr class="activo-fijo-archivo">
-				<td><?php echo $this -> Form -> input('ing_archivo_soporte', array('type' => 'file', 'label' => false, 'div' => false)); ?></td>
+				<td><?php echo $this -> Form -> input('Documento.upload', array('type' => 'file', 'label' => false, 'div' => false)); ?></td>
 			</tr>
 		</table>
 		<!--<div class="item">
