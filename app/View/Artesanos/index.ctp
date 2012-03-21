@@ -27,7 +27,7 @@
 			<td><?php echo h($artesano['Artesano']['art_cedula']);?>&nbsp;</td>
 			<td><?php echo h($artesano['Artesano']['art_estado_calificacion']);?>&nbsp;</td>
 			<td class="actions">
-				<?php echo $this -> Html -> link(__('Ver'), array('action' => 'view', $artesano['Artesano']['id']), array('class' => 'view','title'=>'Ver'));?>
+				<?php echo $this -> Html -> link(__('Ver'), array('action' => 'view', $artesano['Artesano']['id']), array('class' => 'view','title'=>'Descargar'));?>
 				<?php
 					if ($artesano['Calificacion']['cal_estado'] == 1 && $this -> requestAction('/usuarios/verificarAcceso/', array('ruta' => array('controllers', 'Calificaciones', 'imprimir')))) {
 					echo $this -> Html -> link('Especie Valorada', array('controller'=>'calificaciones',"action" => "imprimir", $artesano['Calificacion']['id']), array( 'class' => 'informe', 'title' => 'Especie Valorada'));
