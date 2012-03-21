@@ -37,6 +37,12 @@ class ItemsController extends AppController {
 	 * @return void
 	 */
 	public function agregarActivoFijo() {
+		/**
+		 * Para el correcto ingreso de item de inventario proceder así:
+		 * 1. Tener el listado de ítems, en caso de no estar permitir crear uno nuevo.
+		 * 2. Generar el ingreso de inventario
+		 * 3. Generar los items del ingreso de inventario
+		 */
 		if ($this -> request -> is('post')) {
 			// TODO : Tener en cuenta el tipo de item para este código!!!!
 			$max_id = $this -> Item -> query('SELECT MAX(`id`) FROM `items`');
@@ -57,8 +63,9 @@ class ItemsController extends AppController {
 				$this -> Session -> setFlash(__('The item could not be saved. Please, try again.'), 'crud/error');
 			}
 		}
+		$items = $this -> Item -> find('list', array('conditions' => array('Item.ite_is_activo_fijo' => true)));
 		$tiposDeItems = $this -> Item -> getValores(15);
-		$this -> set(compact('tiposDeItems'));
+		$this -> set(compact('items', 'tiposDeItems'));
 	}
 	
 	/**
