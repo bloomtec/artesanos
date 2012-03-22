@@ -1,3 +1,4 @@
+<?php echo $this -> Html -> script('inventarios'); ?>
 <div class="items form">
 	<?php echo $this -> Form -> create('Item', array('type' => 'file'));?>
 	<fieldset>
@@ -25,7 +26,7 @@
 				<?php echo $this -> Form -> input('Persona.per_is_cedula', array('label' => 'Cedula De Ciudadania')); ?>
 			</fieldset>
 		</div>-->
-		<table id="TablaActivosFijos" class="activos-fijos items" show="5" till="20">
+		<table id="TablaActivosFijos" class="activos-fijos inventario" show="5" till="20">
 			<tr>
 				<th>Activo Fijo</th>
 				<th>Cantidad</th>
@@ -36,10 +37,10 @@
 			<?php for($i = 1; $i <= 20; $i += 1): ?>
 			<tr class="activo-fijo-valores">
 				<td><?php echo $this -> Form -> input("ActivosFijos.$i.item_id", array('options' => $items, 'empty' => 'Seleccione...', 'label' => false, 'div' => false)); ?></td>
-				<td><?php echo $this -> Form -> input("ActivosFijos.$i.ing_cantidad", array('label' => false, 'div' => false, 'class' => 'number')); ?></td>
+				<td><?php echo $this -> Form -> input("ActivosFijos.$i.ing_cantidad", array('label' => false, 'div' => false, 'class' => 'number cantidad')); ?></td>
 				<td><?php echo $this -> Form -> input("ActivosFijos.$i.ing_detalle", array('type' => 'textarea', 'label' => false, 'div' => false)); ?></td>
-				<td><?php echo $this -> Form -> input("ActivosFijos.$i.ing_precio_unitario", array('label' => false, 'div' => false, 'class' => 'valor')); ?></td>
-				<td><?php echo $this -> Form -> input("ActivosFijos.$i.ing_precio_total", array('label' => false, 'div' => false, 'class' => 'valor')); ?></td>
+				<td><?php echo $this -> Form -> input("ActivosFijos.$i.ing_precio_unitario", array('label' => false, 'div' => false, 'class' => 'valor valorUnitario')); ?></td>
+				<td><?php echo $this -> Form -> input("ActivosFijos.$i.ing_precio_total", array('label' => false, 'div' => false, 'class' => 'valor valorTotal')); ?></td>
 			</tr>
 			<?php endfor; ?>
 		</table>
@@ -54,9 +55,15 @@
 				<?php echo $this -> Form -> input('ite_observaciones', array('label' => 'Observaciones')); ?>
 			</fieldset>
 		</div>-->
-		<?php echo $this -> Form -> input('IngresosDeInventario.ing_subtotal', array('label' => 'Sub Total')); ?>
-		<?php echo $this -> Form -> input('IngresosDeInventario.ing_iva', array('label' => 'I.V.A.')); ?>
-		<?php echo $this -> Form -> input('IngresosDeInventario.ing_total', array('label' => 'Total')); ?>
+		<div style="clear:both"></div>
+		<?php echo $this -> Form -> input('IngresosDeInventario.ing_subtotal', array('label' => 'Sub Total','class'=>'subtotal','disabled'=>true,"type"=>"text")); ?>
+		<?php echo $this -> Form -> hidden('IngresosDeInventario.ing_subtotal', array('label' => 'Sub Total','class'=>'subtotal')); ?>
+		
+		<?php echo $this -> Form -> input('IngresosDeInventario.ing_iva', array('label' => 'I.V.A.','class'=>'iva','disabled'=>true,"type"=>"text")); ?>
+		<?php echo $this -> Form -> hidden('IngresosDeInventario.ing_iva', array('label' => 'I.V.A.','class'=>'iva')); ?>
+		
+		<?php echo $this -> Form -> input('IngresosDeInventario.ing_total', array('label' => 'Total','class'=>'total','disabled'=>true,"type"=>"text")); ?>
+		<?php echo $this -> Form -> hidden('IngresosDeInventario.ing_total', array('label' => 'Total','class'=>'total')); ?>
 	</fieldset>
 	<?php echo $this -> Html -> link(__('Cancelar'), array('action' => 'indexActivosFijos'), array('class' => 'cancelar'));?>
 	<?php echo $this -> Form -> end(__('Guardar'));?>
