@@ -181,13 +181,20 @@ class ItemsController extends AppController {
 			}
 			$this -> Item -> IngresosDeInventario -> create();
 			if ($this -> Item -> IngresosDeInventario -> save($this -> request -> data)) {
+				$id = $this -> Item -> IngresosDeInventario -> id;				
 				// Registrar los items
 				foreach($this -> request -> data['ActivosFijos'] as $key => $activoFijo) {
-					if($activoFijo['item_id'] && $activoFijo['ing_cantidad']) {
-						
+					if($activoFijo['item_id'] && $activoFijo['ing_cantidad'] && ($activoFijo['ing_cantidad'] >= 1) && ($activoFijo['ing_precio_unitario'] > 0) && ($activoFijo['ing_precio_total'] > 0)) {
+						$activoFijo['ingresos_de_inventario_id'] = $id;
+						$this -> Item -> IngresosDeInventario -> IngresosDeInventariosItem -> create();
+						if($this -> Item -> IngresosDeInventario -> IngresosDeInventariosItem -> save($activoFijo)) {
+							$item = $this -> Item -> read(null, $activoFijo['item_id']);
+							$item['Item']['ite_cantidad'] = $item['Item']['ite_cantidad'] + $activoFijo['ing_cantidad'];
+							$item['Item']['item_id'] = $activoFijo['item_id'];
+							$this -> Item -> save($item);
+						}
 					}
-				}
-				
+				}				
 				$this -> Session -> setFlash(__('Se registró el ingreso de activos fijos'), 'crud/success');
 				$this -> redirect(array('action' => 'indexActivosFijos'));
 			} else {
@@ -199,7 +206,22 @@ class ItemsController extends AppController {
 		$departamentos = $this -> Item -> getValores(14);
 		$personas = $this -> Item -> IngresosDeInventario -> Persona -> find('list');
 		$proveedores = $this -> Item -> IngresosDeInventario -> Proveedor -> find('list');
-		$this -> set(compact('items', 'tiposDeItems', 'departamentos', 'personas', 'proveedores'));
+		/**
+		 * Provincias y demas
+		 */
+		$this -> loadModel('Provincia');
+		$this -> loadModel('Canton');
+		$this -> loadModel('Ciudad');
+		// $provincias_con_inspectores = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Usuario -> find('list', array('fields' => array('Usuario.provincia_id'), 'conditions' => array('Usuario.rol_id' => 3)));
+		$provincias = array(0 => 'Seleccione...');
+		// $provincias_tmp = $this -> Artesano -> Calificacion -> Taller -> Provincia -> find('list', array('conditions' => array('Provincia.id' => $provincias_con_inspectores)));
+		$provincias_tmp = $this -> Provincia -> find('list');
+		foreach ($provincias_tmp as $key => $value) {
+			$provincias[$key] = $value;
+		}
+		// $cantones = $this -> Canton -> find('list');
+		// $ciudades = $this -> Ciudad -> find('list');
+		$this -> set(compact('items', 'tiposDeItems', 'departamentos', 'personas', 'proveedores', 'provincias'));
 	}
 
 	/**

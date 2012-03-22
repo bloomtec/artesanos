@@ -1,16 +1,22 @@
 <?php echo $this -> Html -> script('inventarios'); ?>
 <div class="items form">
 	<?php echo $this -> Form -> create('Item', array('type' => 'file'));?>
-		<div class="activo-fijo">
-			<fieldset>
-				<h2><?php echo __('Ingreso De Activos Fijos');?></h2>
-				<?php echo $this -> Form -> input('IngresosDeInventario.ing_numero_de_memorandum', array('label' => 'No. Memorandum')); ?>
-				<?php echo $this -> Form -> input('Persona.per_departamento', array('label' => 'Departamento', 'type' => 'select', 'empty' => 'Seleccione...', 'options' => $departamentos)); ?>
-				<?php echo $this -> Form -> input('IngresosDeInventario.persona_id', array('empty' => 'Seleccione...')); ?>
-				<?php echo $this -> Form -> input('IngresosDeInventario.proveedor_id', array('empty' => 'Seleccione...')); ?>
-				<?php echo $this -> Form -> input('IngresosDeInventario.ing_archivo_soporte', array('type' => 'file', 'label' => 'Documento De Soporte')); ?>
-			</fieldset>
-		</div>
+	<fieldset>
+		<!--<div class="activo-fijo">-->
+			
+		<h2><?php echo __('Ingreso De Activos Fijos');?></h2>
+		<?php echo $this -> Form -> input('IngresosDeInventario.ing_numero_de_memorandum', array('label' => 'No. Memorandum')); ?>
+		<?php echo $this -> Form -> input('Persona.per_departamento', array('label' => 'Departamento', 'type' => 'select', 'options' => $departamentos)); ?>
+		<?php echo $this -> Form -> input('IngresosDeInventario.ing_provincia', array('label' => 'Provincia', 'type' => 'select', 'empty' => 'Seleccione...', 'options' => $provincias)); ?>
+		<?php echo $this -> Form -> input('IngresosDeInventario.ing_canton', array('label' => 'Canton', 'type' => 'select', 'empty' => 'Seleccione...')); ?>
+		<?php echo $this -> Form -> input('IngresosDeInventario.ing_ciudad', array('label' => 'Ciudad', 'type' => 'select', 'empty' => 'Seleccione...')); ?>
+		<?php echo $this -> Form -> input('Persona.per_departamento', array('label' => 'Departamento', 'type' => 'select', 'empty' => 'Seleccione...', 'options' => $departamentos)); ?>
+		<?php echo $this -> Form -> input('Persona.per_departamento', array('label' => 'Departamento', 'type' => 'select', 'empty' => 'Seleccione...', 'options' => $departamentos)); ?>
+		<?php echo $this -> Form -> input('IngresosDeInventario.persona_id', array('empty' => 'Seleccione...')); ?>
+		<?php echo $this -> Form -> input('IngresosDeInventario.proveedor_id', array('empty' => 'Seleccione...')); ?>
+		<?php echo $this -> Form -> input('IngresosDeInventario.ing_archivo_soporte', array('type' => 'file', 'label' => 'Documento De Soporte')); ?>
+			
+		<!--</div>-->
 		<!--<div class="persona">
 			<fieldset>
 				<h2><?php echo __('Agregar Persona');?></h2>
@@ -39,6 +45,7 @@
 			<?php endfor; ?>
 		</table>
 		<a class="add-row button" href="#" rel="#TablaActivosFijos">Agregar Otro</a>
+		
 		<!--<div class="item">
 			<fieldset>
 				<h2><?php echo __('Agregar Activo Fijo');?></h2>
@@ -49,6 +56,10 @@
 				<?php echo $this -> Form -> input('ite_observaciones', array('label' => 'Observaciones')); ?>
 			</fieldset>
 		</div>-->
+		<?php echo $this -> Form -> input('IngresosDeInventario.ing_subtotal', array('label' => 'Sub Total')); ?>
+		<?php echo $this -> Form -> input('IngresosDeInventario.ing_iva', array('label' => 'I.V.A.')); ?>
+		<?php echo $this -> Form -> input('IngresosDeInventario.ing_total', array('label' => 'Total')); ?>
+	</fieldset>
 	<?php echo $this -> Html -> link(__('Cancelar'), array('action' => 'indexActivosFijos'), array('class' => 'cancelar'));?>
 	<?php echo $this -> Form -> end(__('Guardar'));?>
 </div>
