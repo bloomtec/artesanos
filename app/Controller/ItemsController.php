@@ -15,7 +15,11 @@ class ItemsController extends AppController {
 	public function getCantidad($item_id = null) {
 		$this -> layout = 'ajax';
 		$cantidad = $this -> Item -> read('ite_cantidad', $item_id);
-		echo $cantidad['Item']['ite_cantidad'];
+		$options=array('0'=>'0');
+		for($i=1;$i<=$cantidad['Item']['ite_cantidad'];$i++){
+			$options[$i]=$i;
+		}
+		echo json_encode($options);
 		exit(0);
 	}
 

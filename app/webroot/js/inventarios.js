@@ -4,7 +4,6 @@ var valorTotal= 0;
 var inventarios={};
 
 inventarios.actualizarTabla = function(){
-	
 	var subtotal = 0;
 	var iva = 0;
 	var total = 0;
@@ -58,6 +57,10 @@ $(function(){
 	//tabla de inventarios
 	$('.items input.valor, .items input.number').blur(function(){
 		inventarios.actualizarTabla();
+	});
+	$('.getCantidad').change(function(){
+		var select=$(".cantidadValida[row='"+$(this).attr('row')+"']");
+		BJS.updateSelect2(select,'/items/getCantidad/'+$(this).val());
 	});
 	
 });
