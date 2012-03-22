@@ -14,9 +14,9 @@ class EgresosDeInventario extends AppModel {
  */
 	public $validate = array(
 		'persona_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Debe seleccionar una persona',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -26,7 +26,17 @@ class EgresosDeInventario extends AppModel {
 		'egr_archivo_soporte' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Debe seleccionar un archivo de soporte',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'egr_concepto_entrega' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Debe ingresar su comentario',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule

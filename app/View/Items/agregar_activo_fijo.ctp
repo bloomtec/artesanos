@@ -8,7 +8,7 @@
 		<?php echo $this -> Form -> input('IngresosDeInventario.ing_canton', array('label' => 'Canton', 'type' => 'select', 'empty' => 'Seleccione...')); ?>
 		<?php echo $this -> Form -> input('IngresosDeInventario.ing_ciudad', array('label' => 'Ciudad', 'type' => 'select', 'empty' => 'Seleccione...')); ?>
 		<?php echo $this -> Form -> input('Persona.per_departamento', array('label' => 'Departamento', 'type' => 'select', 'options' => $departamentos)); ?>
-		<?php echo $this -> Form -> input('IngresosDeInventario.persona_id', array('empty' => 'Seleccione...')); ?>
+		<?php echo $this -> Form -> input('IngresosDeInventario.persona_id', array('empty' => 'Seleccione...', 'class' => 'inv-persona')); ?>
 		<?php echo $this -> Form -> input('IngresosDeInventario.proveedor_id', array('empty' => 'Seleccione...')); ?>
 		<?php echo $this -> Form -> input('IngresosDeInventario.ing_archivo_soporte', array('type' => 'file', 'label' => 'Documento De Soporte')); ?>
 		<table id="TablaActivosFijos" class="activos-fijos inventario" show="5" till="20">
