@@ -1,3 +1,4 @@
+<?php echo $this -> Html -> script('inventarios'); ?>
 <div class="items form">
 	<?php echo $this -> Form -> create('Item', array('type' => 'file'));?>
 		<div class="activo-fijo">

@@ -121,7 +121,7 @@ class PersonasController extends AppController {
 	
 	public function getPersonasByDepartment($dep_name = null) {
 		$this -> layout = 'ajax';
-		return $this -> Persona -> find('list', array('conditions' => array('Persona.per_departamento' => $dep_name)));
+		echo json_encode($this -> Persona -> find('list', array('conditions' => array('Persona.per_departamento' => $dep_name))));
 		exit(0);
 	}
 

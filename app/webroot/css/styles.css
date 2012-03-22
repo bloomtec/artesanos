@@ -837,9 +837,15 @@ table td.actions a {
 	background-image: url(/img/edit.png);
 	background-size: 20px;
 }
-.actions .pdf {
+.actions .pdf, span .pdf {
 	background-image: url(/img/download-pdf.png);
 	background-size: 20px;
+}
+span .pdf{
+	width:32px;
+	height: 32px;
+	display: inline-block;
+	background-size: 32px;
 }
 .actions .delete {
 	background-image: url(/img/delete.png);

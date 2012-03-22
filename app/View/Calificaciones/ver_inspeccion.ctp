@@ -1,5 +1,5 @@
 <div class="inspecciones view">
-	<h3>DATOS INSPECCIÓN</h3>
+	<h3>DATOS INSPECCIÓN <span><?php echo $this->Html->link(' ',array('controller'=>'calificaciones','action'=>'view',$inspeccion['Calificacion']['id']),array('class'=>'pdf','title'=>'descargar PDF'));?></span></h3> 
 	<table class="inspeccion">
 		<caption>
 			INSPECCIÓN

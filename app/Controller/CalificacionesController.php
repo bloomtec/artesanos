@@ -208,7 +208,7 @@ class CalificacionesController extends AppController {
 	}
 	
 	public function verInspeccion($cal_id = null, $tipo_inspeccion = null) {
-		$this -> layout ='print';
+		//$this -> layout ='print';
 		if ($this -> request -> is('post')) {
 			if(!empty($this -> request -> data)) { // Se enviaron datos
 				if($this -> Calificacion -> save($this -> request -> data)) { // Se puede salvar los datos

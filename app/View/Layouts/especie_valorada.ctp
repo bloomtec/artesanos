@@ -1,8 +1,8 @@
 <?php
 header("Content-type: application/pdf");
 
-App::import('Vendor','bloompdf'); 
-$pdf = new BLOOMPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+App::import('Vendor','especie'); 
+$pdf = new ESPECIE(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
