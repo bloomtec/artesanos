@@ -9,7 +9,7 @@ class UsuariosController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('inicializarAcl', 'logout', 'verificarAcceso', 'getNombre', 'getNombresYApellidos', 'getInfoPermisos', 'getValoresPermisos', 'setInfoPermisos');
+		$this -> Auth -> allow('inicializarAcl', 'logout', 'verificarAcceso', 'getNombre', 'getNombresYApellidos');
 	}
 
 	public function verificarAcceso() {
@@ -475,55 +475,19 @@ class UsuariosController extends AppController {
 	}
 	
 	private function getPermisosInspectores($usuario = null) {
-		
+		// TODO : Se requiere este método?
 	}
 	
-	private $info_permisos = array(
-		
-		11 => array(
-			'Auditorias' => array(
-				'index' => 'Listar Auditorias',
-				'view' => 'Ver Auditoria'
-			)
-		)
-	);
-
-	public function getInfoPermisos() {
-		return $this -> info_permisos;
+	private function setPermisosInventarioActivosFijos($usuario = null, $asignar = null) {
+		if($asignar) {
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/inspecciones');
+		} else {
+			$this -> Acl -> deny($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/inspecciones');
+		}
 	}
 	
-	public function getValoresPermisos($id_usuario = null) {
-		$data = array();
-		$this -> recursive = -1;
-		$usuario = $this -> Usuario -> find('first', array('conditions' => array('Usuario.id' => $id_usuario)));
-		foreach ($this -> Usuario -> info_permisos as $key => $modulo) {
-			foreach ($modulo[key($modulo)] as $key => $accion) {
-				$ruta = 'controllers/' . key($modulo) . '/' . $key;
-				$data[key($modulo)][$key] = $this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], $ruta);
-			}
-		}
-		return $data;
-	}
-
-	public function setInfoPermisos($id_usuario = null, $permisos = null) {
-		$this -> recursive = -1;
-		$usuario = $this -> Usuario -> find('first', array('conditions' => array('Usuario.id' => $id_usuario)));
-		if($usuario['Usuario']['rol_id'] == 2 || $usuario['Usuario']['rol_id'] == 3) {
-			// Se es operador. Asignar acorde los permisos asignados.
-			$aro_id = $this -> Usuario -> query("SELECT `id` FROM `aros` WHERE `model`='Usuario' AND `foreign_key`=$id_usuario");
-			$aro_id = $aro_id[0]['aros']['id'];
-			$this -> Usuario -> query("DELETE FROM `aros_acos` WHERE `aro_id`=$aro_id");
-			foreach ($permisos as $modulo => $acciones) {
-				foreach ($acciones as $accion => $valor) {
-					if($valor) {
-						$ruta = 'controllers/' . $modulo . '/' . $accion;
-						$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], $ruta);
-					}
-				}
-			}
-		} elseif($usuario['Usuario']['rol_id'] == 1) {
-			// Caso en que se es administrador. No se requiere hacer algo por lo que se tiene acceso a todo.
-		}
+	private function getPermisosInventarioActivosFijos($usuario = null) {
+		// TODO : Se requiere este método?
 	}
 	
 	/**
