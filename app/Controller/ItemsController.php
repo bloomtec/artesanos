@@ -194,10 +194,11 @@ class ItemsController extends AppController {
 			$max_id = $max_id[0][0]['MAX(`ing_codigo`)'];
 			if (!$max_id) {
 				$max_id = 1;
+				$this -> request -> data['IngresosDeInventario']['ing_codigo'] = 1000000 + $max_id;
 			} else {
 				$max_id += 1;
-			}
-			$this -> request -> data['IngresosDeInventario']['ing_codigo'] = 1000000 + $max_id;			
+				$this -> request -> data['IngresosDeInventario']['ing_codigo'] = $max_id;
+			}			
 			$this -> Item -> IngresosDeInventario -> create();
 			if ($this -> Item -> IngresosDeInventario -> save($this -> request -> data)) {
 				$id = $this -> Item -> IngresosDeInventario -> id;
