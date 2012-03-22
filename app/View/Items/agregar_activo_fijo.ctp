@@ -44,7 +44,6 @@
 			<?php endfor; ?>
 		</table>
 		<a class="add-row button" href="#" rel="#TablaActivosFijos">Agregar Otro</a>
-		
 		<!--<div class="item">
 			<fieldset>
 				<h2><?php echo __('Agregar Activo Fijo');?></h2>
