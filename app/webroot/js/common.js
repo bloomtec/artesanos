@@ -163,7 +163,27 @@ $(function() {
 			}
 		}
 	});
-
+	
+	// CREAR Y MODIFICAR INSTRUCTOR
+	$("#InstructorInsIsCedula").change(function(){
+		switch($(this).val()){
+			case "0": // PASAPORTE
+			$('#InstructorInsDocumentoDeIdentificacion').setMask({ mask : '*', type : 'repeat' }).val('');
+			break;
+			case "1": // CEDULA
+			$('#InstructorInsDocumentoDeIdentificacion').setMask({ mask : '9999', type : 'repeat' }).val();
+			break;
+		}
+	});
+	$("#InstructorAddForm , #InstructorEditForm").submit(function(e){
+		if($("#InstructorInsIsCedula option:selected").val()=="1"){
+			if(!checkCedulaEcuador($("#InstructorInsDocumentoDeIdentificacion").val())){
+				e.preventDefault();
+				$("#InstructorInsDocumentoDeIdentidad").focus();
+			}
+		}
+	});
+	
 	// ACTUALIZACIONES GEOGRAFICAS USUARIOS
 	
 	$("#UsuarioProvinciaId").change(function(){
