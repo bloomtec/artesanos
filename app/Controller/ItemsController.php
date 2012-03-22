@@ -6,8 +6,20 @@ App::uses('AppController', 'Controller');
  * @property Item $Item
  */
 class ItemsController extends AppController {
+	
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this -> Auth -> allow('getCantidad');
+	}
+	
+	public function getCantidad($item_id = null) {
+		$this -> layout = 'ajax';
+		$cantidad = $this -> Item -> read('ite_cantidad', $item_id);
+		echo $cantidad['Item']['ite_cantidad'];
+		exit(0);
+	}
 
-	function indexSuministros() {
+	public function indexSuministros() {
 		$this -> Item -> recursive = 0;
 		$this -> set('items', $this -> paginate(array('ite_is_activo_fijo' => false)));
 	}

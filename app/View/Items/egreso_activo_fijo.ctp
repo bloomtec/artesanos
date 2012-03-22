@@ -16,7 +16,7 @@
 			<?php for($i = 1; $i <= 20; $i += 1): ?>
 			<tr class="activo-fijo-valores">
 				<td><?php echo $this -> Form -> input("ActivosFijos.$i.item_id", array('options' => $items, 'empty' => 'Seleccione...', 'label' => false, 'div' => false)); ?></td>
-				<td><?php echo $this -> Form -> input("ActivosFijos.$i.egr_cantidad", array('label' => false, 'div' => false, 'type' => 'select')); ?></td>
+				<td><?php echo $this -> Form -> input("ActivosFijos.$i.egr_cantidad", array('label' => false, 'div' => false, 'type' => 'select', 'empty' => 0)); ?></td>
 				<td><?php echo $this -> Form -> input("ActivosFijos.$i.egr_detalle", array('type' => 'textarea', 'label' => false, 'div' => false)); ?></td>
 			</tr>
 			<?php endfor; ?>
