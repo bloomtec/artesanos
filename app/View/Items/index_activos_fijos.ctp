@@ -54,5 +54,6 @@
 <div class="actions">
 	<ul>
 		<li><?php echo $this->Html->link(__('Agregar Activo Fijo'), array('action' => 'agregarActivoFijo')); ?></li>
+		<li><?php echo $this->Html->link(__('Egresar Activo Fijo'), array('action' => 'egresoActivoFijo')); ?></li>
 	</ul>
 </div>
