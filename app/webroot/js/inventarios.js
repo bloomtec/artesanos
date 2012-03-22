@@ -2,7 +2,9 @@ var cantidad=0;
 var valorUnitario=0;
 var valorTotal= 0;
 var inventarios={};
+
 inventarios.actualizarTabla = function(){
+	
 	var subtotal = 0;
 	var iva = 0;
 	var total = 0;
@@ -29,14 +31,28 @@ inventarios.actualizarTabla = function(){
 		}
 		
 	});
+	
 }
+
 $(function(){
 	
 	if(BJS.objectSize($("#PersonaPerDepartamento"))>0){
-		BJS.updateSelect($("#IngresosDeInventarioPersonaId"),'/personas/getPersonasByDepartment/'+$("#PersonaPerDepartamento").val());
+		BJS.updateSelect($(".inv-persona"),'/personas/getPersonasByDepartment/'+$("#PersonaPerDepartamento").val());
 	}
+	
 	$("#PersonaPerDepartamento").change(function(){
-		BJS.updateSelect($("#IngresosDeInventarioPersonaId"),'/personas/getPersonasByDepartment/'+$("#PersonaPerDepartamento").val());
+		BJS.updateSelect($(".inv-persona"),'/personas/getPersonasByDepartment/'+$("#PersonaPerDepartamento").val());
+	});
+	
+	// Selects de para escoger ciudad
+	$("#IngresosDeInventarioIngProvincia").change(function(){
+		BJS.updateSelect($("#IngresosDeInventarioIngCanton"),'/cantones/getByProvincia/'+$("#IngresosDeInventarioIngProvincia").val(), function(){
+			BJS.updateSelect($("#IngresosDeInventarioIngCiudad"),'/ciudades/getByCanton/'+$("#IngresosDeInventarioIngCanton").val());
+		});
+	});
+	
+	$("#IngresosDeInventarioIngCanton").change(function(){
+		BJS.updateSelect($("#IngresosDeInventarioIngCiudad"),'/ciudades/getByCanton/'+$("#IngresosDeInventarioIngCanton").val());
 	});
 	
 	//tabla de inventarios
