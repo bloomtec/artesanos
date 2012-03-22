@@ -14,6 +14,33 @@ class AlumnosController extends AppController {
 	 */
 	public function index() {
 		$this -> Alumno -> recursive = 0;
+		$conditions = array();
+		if (isset($this -> params['named']['query']) && !empty($this -> params['named']['query'])) {
+			//$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
+			$query = $this -> params['named']['query'];
+			$alumnos = $this -> Alumno -> find(
+				'list',
+				array(
+					'conditions' => array(
+						'OR' => array(
+							'Alumno.alu_nombres LIKE' => "%$query%",
+							'Alumno.alu_apellido_paterno LIKE' => "%$query%",
+							'Alumno.alu_apellido_materno LIKE' => "%$query%",
+							'Alumno.alu_nacionalidad LIKE' => "%$query%",
+							'Alumno.alu_documento_de_identificacion LIKE' => "%$query%",
+							'Alumno.alu_fecha_de_nacimiento LIKE' => "%$query%"
+						)
+					),
+					'fields' => array(
+						'Alumno.id'
+					)
+				)
+			);
+			$conditions['Alumno.id'] = $alumnos;
+		}
+		$this -> paginate = array(
+			'conditions' => $conditions
+		);
 		$this -> set('alumnos', $this -> paginate());
 	}
 
