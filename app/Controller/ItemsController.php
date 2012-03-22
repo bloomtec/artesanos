@@ -223,6 +223,10 @@ class ItemsController extends AppController {
 		// $ciudades = $this -> Ciudad -> find('list');
 		$this -> set(compact('items', 'tiposDeItems', 'departamentos', 'personas', 'proveedores', 'provincias'));
 	}
+	
+	public function egresoActivoFijo() {
+		
+	}
 
 	/**
 	 * edit method
