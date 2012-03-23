@@ -295,8 +295,18 @@ class CalificacionesController extends AppController {
 						//$fecha_expiracion = strtotime('+1 month', strtotime($fecha_actual));
 					}
 					
-					$this -> Calificacion -> save($calificacion);
-					$this -> redirect(array('action' => 'inspecciones'));
+					$datos_personales = $this -> Calificacion -> DatosPersonal -> find('first', array('conditions' => array('DatosPersonal.calificacion_id' => $calificacion['Calificacion']['id'])));
+					$fecha_nacimiento = $datos_personales['DatosPersonal']['dat_fecha_nacimiento'];
+					
+					$birthday = new DateTime(date($fecha_nacimiento));
+					$now = new DateTime('now');
+					$interval = $birthday -> diff($now);
+					debug($birthday);
+					debug($now);
+					debug($interval -> format('Y'));
+					
+					//$this -> Calificacion -> save($calificacion);
+					//$this -> redirect(array('action' => 'inspecciones'));
 					
 				} else { // No se puede salvar los datos
 					
