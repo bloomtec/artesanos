@@ -20,8 +20,10 @@
 				}
 			?>&nbsp;</td>
 			<td><?php
-
-			if ($calificacion['Calificacion']['cal_fecha_expiracion']) {
+				
+			if ($calificacion['Calificacion']['cal_fecha_expiracion'] && $calificacion['Calificacion']['cal_fecha_expiracion'] == '3000-00-00') {
+				echo h('Indefinida');
+			} elseif($calificacion['Calificacion']['cal_fecha_expiracion']) {
 				echo h($calificacion['Calificacion']['cal_fecha_expiracion']);
 			} else {
 				echo "No asignada";

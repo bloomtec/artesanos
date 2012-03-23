@@ -92,7 +92,13 @@
 		<tr>
 			<td class="bold">FECHA CADUCIDAD:</td>
 			<td style='padding-left:40px;'>
-				<?php echo $inspeccion['Calificacion']['cal_fecha_expiracion'];?>
+				<?php
+					if($inspeccion['Calificacion']['cal_fecha_expiracion'] == '3000-00-00') {
+						echo 'Indefinida';
+					} else {
+						echo $inspeccion['Calificacion']['cal_fecha_expiracion'];
+					}
+				?>
 			</td>
 		</tr>
 	</table>

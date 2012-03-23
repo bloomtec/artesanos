@@ -301,12 +301,14 @@ class CalificacionesController extends AppController {
 					$birthday = new DateTime(date($fecha_nacimiento));
 					$now = new DateTime('now');
 					$interval = $birthday -> diff($now);
-					debug($birthday);
-					debug($now);
-					debug($interval -> format('Y'));
+					$edad_artesano = $interval -> format('%Y');
 					
-					//$this -> Calificacion -> save($calificacion);
-					//$this -> redirect(array('action' => 'inspecciones'));
+					if((int)$edad_artesano >= 65) {
+						$calificacion['Calificacion']['cal_fecha_expiracion'] = '3000-00-00';
+					}
+					
+					$this -> Calificacion -> save($calificacion);
+					$this -> redirect(array('action' => 'inspecciones'));
 					
 				} else { // No se puede salvar los datos
 					
