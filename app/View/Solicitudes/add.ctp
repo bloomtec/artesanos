@@ -20,14 +20,13 @@
 <script>
 	$(function(){
 		var today= new Date();
-		alert(today.toDateString());
+		var today=today.getFullYear()+"-"+(today.getMonth() + 1)+"-"+today.getDate();
 		$('form').submit(function(e){
-			e.preventDefault();
-			if(BJS.verificarFechaMayor($("#SolicitudSolFechaInicioDeLaCapacitacion").val(),$("#SolicitudSolFechaDeFinDeLaCapacitacion").val())){
+			if(BJS.verificarFechaMayorOIgual($("#SolicitudSolFechaInicioDeLaCapacitacion").val(),$("#SolicitudSolFechaDeFinDeLaCapacitacion").val())){
 				e.preventDefault();
 				alert('La fecha final del curso no puede ser posterior a la fecha de inicio');
 			}else{
-				if(BJS.verificarFechaMayor($("#SolicitudSolFechaInicioDeLaCapacitacion").val(),$("#SolicitudSolFechaDeFinDeLaCapacitacion").val())){
+				if(BJS.verificarFechaMayorOIgual($("#SolicitudSolFechaInicioDeLaCapacitacion").val(),today)){
 					e.preventDefault();
 					alert('La fecha de inicio del curso no puede ser posterior a la fecha de hoy');
 				}

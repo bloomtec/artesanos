@@ -194,7 +194,7 @@ $(function(){
 		
 	}
 	
-	BJS.verificarFechaMayor= function(fecha, fecha2){
+	BJS.verificarFechaMayorOIgual= function(fecha, fecha2){
 		var xMes=fecha.substring(5, 7);
 		var xDia=fecha.substring(8, 10);
 		var xAnio=fecha.substring(0,4);
@@ -209,7 +209,7 @@ $(function(){
 		      		return(true);
 				}
 		 		if (xMes == yMes){
-					if (xDia > yDia){
+					if (xDia > (yDia-1)){
 						return(true);
 					}else{
 						return(false);
