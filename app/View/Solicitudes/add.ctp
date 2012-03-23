@@ -19,11 +19,18 @@
 </div>
 <script>
 	$(function(){
+		var today= new Date();
+		alert(today.toDateString());
 		$('form').submit(function(e){
 			e.preventDefault();
 			if(BJS.verificarFechaMayor($("#SolicitudSolFechaInicioDeLaCapacitacion").val(),$("#SolicitudSolFechaDeFinDeLaCapacitacion").val())){
 				e.preventDefault();
 				alert('La fecha final del curso no puede ser posterior a la fecha de inicio');
+			}else{
+				if(BJS.verificarFechaMayor($("#SolicitudSolFechaInicioDeLaCapacitacion").val(),$("#SolicitudSolFechaDeFinDeLaCapacitacion").val())){
+					e.preventDefault();
+					alert('La fecha de inicio del curso no puede ser posterior a la fecha de hoy');
+				}
 			}
 		});
 	});
