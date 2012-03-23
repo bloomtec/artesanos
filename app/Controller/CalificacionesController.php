@@ -300,13 +300,38 @@ class CalificacionesController extends AppController {
 					
 					$birthday = new DateTime(date($fecha_nacimiento));
 					$now = new DateTime('now');
-					$interval = $birthday -> diff($now);
-					debug($birthday);
-					debug($now);
-					debug($interval -> format('Y'));
 					
-					//$this -> Calificacion -> save($calificacion);
-					//$this -> redirect(array('action' => 'inspecciones'));
+					$a = array('año'=>$birthday->format('Y'), 'mes'=>$birthday->format('m'), 'día'=>$birthday->format('d'));
+					$b = array('año'=>$now->format('Y'), 'mes'=>$now->format('m'), 'día'=>$now->format('d'));
+					
+					if($b['año'] - $a['año'] < 65) {
+						// No aplica
+					} elseif($b['año'] - $a['año'] == 65) {
+						// Comparar meses
+						if($b['mes'] < $a['mes']) {
+							// No aplica
+						} elseif($b['mes'] == $a['mes']) {
+							if($b['día'] < $a['día']) {
+								// No aplica
+							} else {
+								$calificacion['Calificacion']['cal_fecha_expiracion'] = '3000-00-00';
+							}
+						} else {
+							$calificacion['Calificacion']['cal_fecha_expiracion'] = '3000-00-00';
+						}
+					} else {
+						$calificacion['Calificacion']['cal_fecha_expiracion'] = '3000-00-00';
+					}
+					
+					/*$interval = $birthday -> diff($now);
+					$edad_artesano = $interval -> format('%Y');
+					
+					if((int)$edad_artesano >= 65) {
+						$calificacion['Calificacion']['cal_fecha_expiracion'] = '3000-00-00';
+					}*/
+					
+					$this -> Calificacion -> save($calificacion);
+					$this -> redirect(array('action' => 'inspecciones'));
 					
 				} else { // No se puede salvar los datos
 					
@@ -471,6 +496,16 @@ class CalificacionesController extends AppController {
 		$csv_export_data = $this -> Calificacion -> find('all', array('conditions' => $conditions, 'order' => array('Calificacion.id' => 'ASC')));
 		$calificaciones = $this -> paginate();
 		foreach($calificaciones as $key => $calificacion) {
+			if($calificacion['Calificacion']['cal_estado'] == -2) {
+				$calificaciones[$key]['Calificacion']['cal_estado'] = 'Deshabilitada';
+			} elseif($calificacion['Calificacion']['cal_estado'] == -1) {
+				$calificaciones[$key]['Calificacion']['cal_estado'] = 'Denegada';
+			} elseif($calificacion['Calificacion']['cal_estado'] == 0) {
+				$calificaciones[$key]['Calificacion']['cal_estado'] = 'Pendiente';
+			} elseif($calificacion['Calificacion']['cal_estado'] == 1) {
+				$calificaciones[$key]['Calificacion']['cal_estado'] = 'Aprobada';
+			}
+			$csv_export_data[$key]['Calificacion']['cal_estado'] = $calificaciones[$key]['Calificacion']['cal_estado'];
 			$calificaciones[$key]['Calificacion']['cal_rama'] = $this -> requestAction('/ramas/getNombre/' . $calificacion['Calificacion']['rama_id']);
 			$calificaciones[$key]['Calificacion']['cal_tipo_de_calificacion'] = $this -> requestAction('/tipos_de_calificaciones/getNombre/' . $calificacion['Calificacion']['tipos_de_calificacion_id']);
 			$csv_export_data[$key]['Calificacion']['cal_rama'] = $calificaciones[$key]['Calificacion']['cal_rama'];
@@ -491,6 +526,16 @@ class CalificacionesController extends AppController {
 		$csv_export_data = $this -> Calificacion -> find('all', array('conditions' => $conditions, 'order' => array('Calificacion.id' => 'ASC')));
 		$calificaciones = $this -> paginate();
 		foreach($calificaciones as $key => $calificacion) {
+			if($calificacion['Calificacion']['cal_estado'] == -2) {
+				$calificaciones[$key]['Calificacion']['cal_estado'] = 'Deshabilitada';
+			} elseif($calificacion['Calificacion']['cal_estado'] == -1) {
+				$calificaciones[$key]['Calificacion']['cal_estado'] = 'Denegada';
+			} elseif($calificacion['Calificacion']['cal_estado'] == 0) {
+				$calificaciones[$key]['Calificacion']['cal_estado'] = 'Pendiente';
+			} elseif($calificacion['Calificacion']['cal_estado'] == 1) {
+				$calificaciones[$key]['Calificacion']['cal_estado'] = 'Aprobada';
+			}
+			$csv_export_data[$key]['Calificacion']['cal_estado'] = $calificaciones[$key]['Calificacion']['cal_estado'];
 			$calificaciones[$key]['Calificacion']['cal_rama'] = $this -> requestAction('/ramas/getNombre/' . $calificacion['Calificacion']['rama_id']);
 			$calificaciones[$key]['Calificacion']['cal_tipo_de_calificacion'] = $this -> requestAction('/tipos_de_calificaciones/getNombre/' . $calificacion['Calificacion']['tipos_de_calificacion_id']);
 			$csv_export_data[$key]['Calificacion']['cal_rama'] = $calificaciones[$key]['Calificacion']['cal_rama'];

@@ -193,5 +193,33 @@ $(function(){
 		}
 		
 	}
-
+	
+	BJS.verificarFechaMayorOIgual= function(fecha, fecha2){
+		var xMes=fecha.substring(5, 7);
+		var xDia=fecha.substring(8, 10);
+		var xAnio=fecha.substring(0,4);
+		var yMes=fecha2.substring(5, 7);
+		var yDia=fecha2.substring(8, 10);
+		var yAnio=fecha2.substring(0,4);
+		if (xAnio > yAnio){
+			return(true);
+		}else{
+			if (xAnio == yAnio){
+				if (xMes > yMes){
+		      		return(true);
+				}
+		 		if (xMes == yMes){
+					if (xDia > (yDia-1)){
+						return(true);
+					}else{
+						return(false);
+					}
+				}else{
+					return(false);
+				}
+			}else{
+				return(false);
+			}
+		}
+	}
 });

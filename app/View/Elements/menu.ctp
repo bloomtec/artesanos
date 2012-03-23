@@ -97,13 +97,14 @@
 		</li>
 		<?php endif; ?>
 		
-		<li class="inventarios last">
+		
+		
+		<li class="inventarios">
 			<a href="#">INVENTARIOS</a>
 			<ul>
 				<li> 
 					<a href="#">Mantenimientos</a>
 					<ul>
-						
 						<li>
 							<a href="/personas">Personas</a>
 						</li>
@@ -125,6 +126,28 @@
 				<li> <a href="#">Suministros y Materiales </a></li>
 			</ul>
 			
+		</li>
+		
+		<li class="capacitaciones last">
+			<a href="#">CAPACITACIONES</a>
+			<ul>
+				<li> <a href="/solicitudes"> Mantenimientos</a> 
+					<ul>
+						<li> <a href="/alumnos"> Alumnos</a> 
+						<li> <a href="/instructores"> Instructores</a> 
+					</ul>	
+				</li>
+				<li> <a href="/solicitudes"> Solicitudes</a> 
+					<ul>
+						<li> <a href="/solicitudes/add"> Agregar</a> 
+					</ul>	
+				</li>
+				<li> <a href="/cursos"> Cursos</a> 
+					<ul>
+						<li><a href="/cursos/add"> Agregar</a> </li>
+					</ul>	
+				</li>
+			</ul>
 		</li>
 		
 	</ul>

@@ -7,7 +7,7 @@
 	</div>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-		<th><?php echo $this->Paginator->sort('pro_rut', 'Rut');?></th>
+		<th><?php echo $this->Paginator->sort('pro_rut', 'Ruc');?></th>
 		<th><?php echo $this->Paginator->sort('pro_nombre_razon_social', 'Nombre Razon Social');?></th>
 		<th><?php echo $this->Paginator->sort('pro_representante_legal', 'Representante Legal');?></th>
 		<th><?php echo $this->Paginator->sort('pro_telefono_fijo', 'Teléfono Fijo');?></th>
