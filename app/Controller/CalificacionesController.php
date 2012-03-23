@@ -295,6 +295,18 @@ class CalificacionesController extends AppController {
 						//$fecha_expiracion = strtotime('+1 month', strtotime($fecha_actual));
 					}
 					
+					$datos_personales = $this -> Calificacion -> DatosPersonal -> find('first', array('conditions' => array('DatosPersonal.calificacion_id' => $calificacion['Calificacion']['id'])));
+					$fecha_nacimiento = $datos_personales['DatosPersonal']['dat_fecha_nacimiento'];
+					
+					$birthday = new DateTime(date($fecha_nacimiento));
+					$now = new DateTime('now');
+					$interval = $birthday -> diff($now);
+					$edad_artesano = $interval -> format('%Y');
+					
+					if((int)$edad_artesano >= 65) {
+						$calificacion['Calificacion']['cal_fecha_expiracion'] = '3000-00-00';
+					}
+					
 					$this -> Calificacion -> save($calificacion);
 					$this -> redirect(array('action' => 'inspecciones'));
 					
