@@ -395,27 +395,28 @@ p {
 }
 
 #main-menu ul ul ul{
-	left:120px;
+	left:1000px;
 	display: none;
-	top:0;
+	top:-1px;
+	clear:both;
+	background: red;
 	
 }
 #main-menu ul ul ul li{
 	clear:both;
 	
 }
-#main-menu ul ul li:hover ul{
+#main-menu ul  ul li:hover ul{
 	display:block;
 	position: absolute;
 	left:120px;
 	
 }
-#main-menu ul .last ul li:hover ul{
+#main-menu ul  .last ul li:hover ul{
 	display:block;
 	position: absolute;
 	left:-120px;
-	
-}
+}	
 #content {
 	background: #fff;
 	clear: both;
