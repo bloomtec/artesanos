@@ -6,99 +6,107 @@ App::uses('AppController', 'Controller');
  * @property Curso $Curso
  */
 class CursosController extends AppController {
-
-
-/**
- * index method
- *
- * @return void
- */
-	public function index() {
-		$this->Curso->recursive = 0;
-		$this->set('cursos', $this->paginate());
+	
+	private function formatearValor($valor = null) {
+		$valor = str_replace('.', '', $valor);
+		$valor = str_replace(',', '.', $valor);
+		return $valor;
 	}
 
-/**
- * view method
- *
- * @param string $id
- * @return void
- */
+	/**
+	 * index method
+	 *
+	 * @return void
+	 */
+	public function index() {
+		$this -> Curso -> recursive = 0;
+		$this -> set('cursos', $this -> paginate());
+	}
+
+	/**
+	 * view method
+	 *
+	 * @param string $id
+	 * @return void
+	 */
 	public function view($id = null) {
-		$this->Curso->id = $id;
-		if (!$this->Curso->exists()) {
+		$this -> Curso -> id = $id;
+		if (!$this -> Curso -> exists()) {
 			throw new NotFoundException(__('Invalid curso'));
 		}
-		$this->set('curso', $this->Curso->read(null, $id));
+		$this -> set('curso', $this -> Curso -> read(null, $id));
 	}
 
-/**
- * add method
- *
- * @return void
- */
+	/**
+	 * add method
+	 *
+	 * @return void
+	 */
 	public function add() {
-		if ($this->request->is('post')) {
-			$this->Curso->create();
-			if ($this->Curso->save($this->request->data)) {
-				$this->Session->setFlash(__('The curso has been saved'),'crud/success');
-				$this->redirect(array('action' => 'index'));
+		if ($this -> request -> is('post')) {
+			$this -> request -> data['Curso']['cur_costo'] = $this -> formatearValor($this -> request -> data['Curso']['cur_costo']);
+			$this -> Curso -> create();
+			if ($this -> Curso -> save($this -> request -> data)) {
+				$this -> Session -> setFlash(__('The curso has been saved'), 'crud/success');
+				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The curso could not be saved. Please, try again.'),'crud/error');
+				$this -> Session -> setFlash(__('The curso could not be saved. Please, try again.'), 'crud/error');
 			}
 		}
-		$solicitudes = $this->Curso->Solicitud->find('list');
-		$instructores = $this->Curso->Instructor->find('list');
-		$alumnos = $this->Curso->Alumno->find('list');
-		$this->set(compact('solicitudes', 'instructores', 'alumnos'));
+		$solicitudes = $this -> Curso -> Solicitud -> find('list');
+		$instructores = $this -> Curso -> Instructor -> find('list');
+		$alumnos = $this -> Curso -> Alumno -> find('list');
+		$this -> set(compact('solicitudes', 'instructores', 'alumnos'));
 	}
 
-/**
- * edit method
- *
- * @param string $id
- * @return void
- */
+	/**
+	 * edit method
+	 *
+	 * @param string $id
+	 * @return void
+	 */
 	public function edit($id = null) {
-		$this->Curso->id = $id;
-		if (!$this->Curso->exists()) {
+		$this -> Curso -> id = $id;
+		if (!$this -> Curso -> exists()) {
 			throw new NotFoundException(__('Invalid curso'));
 		}
-		if ($this->request->is('post') || $this->request->is('put')) {
-			if ($this->Curso->save($this->request->data)) {
-				$this->Session->setFlash(__('The curso has been saved'),'crud/success');
-				$this->redirect(array('action' => 'index'));
+		if ($this -> request -> is('post') || $this -> request -> is('put')) {
+			$this -> request -> data['Curso']['cur_costo'] = $this -> formatearValor($this -> request -> data['Curso']['cur_costo']);
+			if ($this -> Curso -> save($this -> request -> data)) {
+				$this -> Session -> setFlash(__('The curso has been saved'), 'crud/success');
+				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The curso could not be saved. Please, try again.'),'crud/error');
+				$this -> Session -> setFlash(__('The curso could not be saved. Please, try again.'), 'crud/error');
 			}
 		} else {
-			$this->request->data = $this->Curso->read(null, $id);
+			$this -> request -> data = $this -> Curso -> read(null, $id);
 		}
-		$solicitudes = $this->Curso->Solicitud->find('list');
-		$instructores = $this->Curso->Instructor->find('list');
-		$alumnos = $this->Curso->Alumno->find('list');
-		$this->set(compact('solicitudes', 'instructores', 'alumnos'));
+		$solicitudes = $this -> Curso -> Solicitud -> find('list');
+		$instructores = $this -> Curso -> Instructor -> find('list');
+		$alumnos = $this -> Curso -> Alumno -> find('list');
+		$this -> set(compact('solicitudes', 'instructores', 'alumnos'));
 	}
 
-/**
- * delete method
- *
- * @param string $id
- * @return void
- */
+	/**
+	 * delete method
+	 *
+	 * @param string $id
+	 * @return void
+	 */
 	public function delete($id = null) {
-		if (!$this->request->is('post')) {
+		if (!$this -> request -> is('post')) {
 			throw new MethodNotAllowedException();
 		}
-		$this->Curso->id = $id;
-		if (!$this->Curso->exists()) {
+		$this -> Curso -> id = $id;
+		if (!$this -> Curso -> exists()) {
 			throw new NotFoundException(__('Invalid curso'));
 		}
-		if ($this->Curso->delete()) {
-			$this->Session->setFlash(__('Curso deleted'),'crud/success');
-			$this->redirect(array('action'=>'index'));
+		if ($this -> Curso -> delete()) {
+			$this -> Session -> setFlash(__('Curso deleted'), 'crud/success');
+			$this -> redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('Curso was not deleted'),'crud/error');
-		$this->redirect(array('action' => 'index'));
+		$this -> Session -> setFlash(__('Curso was not deleted'), 'crud/error');
+		$this -> redirect(array('action' => 'index'));
 	}
+
 }
