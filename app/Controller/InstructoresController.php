@@ -47,6 +47,12 @@ class InstructoresController extends AppController {
 				$this->Session->setFlash(__('The instructor could not be saved. Please, try again.'),'crud/error');
 			}
 		}
+		$nacionalidades = $this -> Instructor -> getValores(1);
+		$tipos_de_sangre = $this -> Instructor -> getValores(2);
+		$estados_civiles = $this -> Instructor -> getValores(3);
+		$grados_de_estudio = $this -> Instructor -> getValores(4);
+		$sexos = $this -> Instructor -> getValores(5);
+		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos'));
 	}
 
 /**
@@ -70,6 +76,12 @@ class InstructoresController extends AppController {
 		} else {
 			$this->request->data = $this->Instructor->read(null, $id);
 		}
+		$nacionalidades = $this -> Instructor -> getValores(1);
+		$tipos_de_sangre = $this -> Instructor -> getValores(2);
+		$estados_civiles = $this -> Instructor -> getValores(3);
+		$grados_de_estudio = $this -> Instructor -> getValores(4);
+		$sexos = $this -> Instructor -> getValores(5);
+		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos'));
 	}
 
 /**
