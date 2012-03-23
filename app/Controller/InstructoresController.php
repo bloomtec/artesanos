@@ -14,6 +14,33 @@ class InstructoresController extends AppController {
  * @return void
  */
 	public function index() {
+		$conditions = array();
+		if (isset($this -> params['named']['query']) && !empty($this -> params['named']['query'])) {
+			//$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
+			$query = $this -> params['named']['query'];
+			$instructores = $this -> Instructor -> find(
+				'list',
+				array(
+					'conditions' => array(
+						'OR' => array(
+							'Instructor.ins_nombres LIKE' => "%$query%",
+							'Instructor.ins_apellido_paterno LIKE' => "%$query%",
+							'Instructor.ins_apellido_materno LIKE' => "%$query%",
+							'Instructor.ins_nacionalidad LIKE' => "%$query%",
+							'Instructor.ins_documento_de_identificacion LIKE' => "%$query%",
+							'Instructor.ins_fecha_de_nacimiento LIKE' => "%$query%"
+						)
+					),
+					'fields' => array(
+						'Instructor.id'
+					)
+				)
+			);
+			$conditions['Instructor.id'] = $alumnos;
+		}
+		$this -> paginate = array(
+			'conditions' => $conditions
+		);
 		$this->Instructor->recursive = 0;
 		$this->set('instructores', $this->paginate());
 	}
