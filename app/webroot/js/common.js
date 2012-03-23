@@ -116,7 +116,7 @@ $(function() {
 	//Mascaras
 //	$.mask.rules['u']=/[1-9]/;
 	//$("input.date").setMask({'mask':"9999-19-39", });
-	$("input.date").dateEntry({dateFormat: 'ymd-',spinnerImage:null});
+	$("input.date").dateEntry({dateFormat: 'ymd-',spinnerImage:""});
 	//$(":date , input.date").attr('placeholder','aaaa-mm-dd');
 	$('input.valor').setMask({ mask : '99,999.999.999.999', type : 'reverse', defaultValue: '000' });
 	$('input.number').setMask({ mask : '9999', type : 'repeat' });
