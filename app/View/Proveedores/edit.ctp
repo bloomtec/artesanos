@@ -4,7 +4,7 @@
 		<h2><?php echo __('Modificar Proveedor');?></h2>
 		<?php
 		echo $this -> Form -> input('id');
-		echo $this -> Form -> input('pro_rut', array('label' => 'Rut'));
+		echo $this -> Form -> input('pro_rut', array('label' => 'Ruc'));
 		echo $this -> Form -> input('pro_nombre_razon_social', array('label' => 'Nombre Razon Social'));
 		echo $this -> Form -> input('pro_representante_legal', array('label' => 'Representante Legal'));
 		echo $this -> Form -> input('pro_telefono_fijo', array('label' => 'Telefono Fijo','class'=>'telefono'));

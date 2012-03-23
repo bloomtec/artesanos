@@ -1,6 +1,6 @@
 <div class="proveedores view">
 <h2><?php  echo __('Proveedor');?></h2>
-		<label><?php echo __('Pro Rut'); ?></label>
+		<label><?php echo __('Pro Ruc'); ?></label>
 		<h3>
 			<?php echo h($proveedor['Proveedor']['pro_rut']); ?>
 			&nbsp;
