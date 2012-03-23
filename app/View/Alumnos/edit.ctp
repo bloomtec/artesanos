@@ -5,8 +5,11 @@
 		<?php
 		echo $this -> Form -> input('id');
 		echo $this -> Form -> input('alu_nacionalidad', array('label' => 'Nacionalidad', 'options' => $nacionalidades));
-		echo $this -> Form -> input('alu_is_cedula', array('label' => 'Es Cedula'));
-		echo $this -> Form -> input('alu_documento_de_identificacion', array('label' => 'Documento De Identificación'));
+		$selectedCedula = $this->data['Alumno']['alu_is_cedula']?$this->data['Alumno']['alu_is_cedula']:0;
+		echo $this->Form->input('alu_is_cedula', array('label' => false, 'div'=>'input select usu-cedula', 'type' => 'select','options'=>array('1'=>'Cédula: ','0'=>'Pasaporte: '),'value'=>$selectedCedula));	
+		
+		
+		echo $this -> Form -> input('alu_documento_de_identificacion', array('label' => false,"style"=>"margin-top:5px"));
 		echo $this -> Form -> input('alu_apellido_paterno', array('label' => 'Apellido Paterno'));
 		echo $this -> Form -> input('alu_apellido_materno', array('label' => 'Apellido Materno'));
 		echo $this -> Form -> input('alu_nombres', array('label' => 'Nombres'));

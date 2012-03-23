@@ -4,8 +4,9 @@
 		<h2><?php echo __('Agregar Alumno');?></h2>
 		<?php
 		echo $this -> Form -> input('alu_nacionalidad', array('label' => 'Nacionalidad', 'options' => $nacionalidades, 'empty' => 'Seleccione...'));
-		echo $this -> Form -> input('alu_is_cedula', array('label' => 'Es Cédula'));
-		echo $this -> Form -> input('alu_documento_de_identificacion', array('label' => 'Documento De Identificación'));
+		echo $this -> Form -> input('alu_is_cedula', array('label' => false, 'div'=>'input select usu-cedula', 'type' => 'select','options'=>array('1'=>'Cédula: ','0'=>'Pasaporte: ')));	
+		
+		echo $this -> Form -> input('alu_documento_de_identificacion', array('label' => false,"style"=>"margin-top:5px"));
 		echo $this -> Form -> input('alu_apellido_paterno', array('label' => 'Apellido Paterno'));
 		echo $this -> Form -> input('alu_apellido_materno', array('label' => 'Apellido Materno'));
 		echo $this -> Form -> input('alu_nombres', array('label' => 'Nombres'));
@@ -19,3 +20,15 @@
 	<?php echo $this -> Html -> link(__('Cancelar'), array('action' => 'index'), array('class' => 'cancelar'));?>
 	<?php echo $this -> Form -> end(__('Guardar'));?>
 </div>
+<script type="text/javascript">
+	$(function(){
+		switch($('#AlumnoAluIsCedula').val()){
+			case "0": // PASAPORTE
+			$('#AlumnoAluDocumentoDeIdentificacion').setMask({ mask : '*', type : 'repeat' }).val();
+			break;
+			case "1": // CEDULA
+			$('#AlumnoAluDocumentoDeIdentificacion').setMask({ mask : '9999', type : 'repeat' }).val();
+			break;
+		}
+	});
+</script>

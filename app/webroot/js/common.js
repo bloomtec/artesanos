@@ -184,6 +184,26 @@ $(function() {
 		}
 	});
 	
+	// CREAR Y MODIFICAR ALUMNO
+	$("#AlumnoAluIsCedula").change(function(){
+		switch($(this).val()){
+			case "0": // PASAPORTE
+			$('#AlumnoAluDocumentoDeIdentificacion').setMask({ mask : '*', type : 'repeat' }).val('');
+			break;
+			case "1": // CEDULA
+			$('#AlumnoAluDocumentoDeIdentificacion').setMask({ mask : '9999', type : 'repeat' }).val();
+			break;
+		}
+	});
+	$("#AlumnoAddForm , #AlumnoEditForm").submit(function(e){
+		if($("#AlumnoAluIsCedula option:selected").val()=="1"){
+			if(!checkCedulaEcuador($("#AlumnoAluDocumentoDeIdentificacion").val())){
+				e.preventDefault();
+				$("#AlumnoAluDocumentoDeIdentidad").focus();
+			}
+		}
+	});
+	
 	// ACTUALIZACIONES GEOGRAFICAS USUARIOS
 	
 	$("#UsuarioProvinciaId").change(function(){
