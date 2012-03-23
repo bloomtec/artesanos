@@ -127,6 +127,12 @@
 		<li class="capacitaciones last">
 			<a href="#">CAPACITACIONES</a>
 			<ul>
+				<li> <a href="/solicitudes"> Mantenimientos</a> 
+					<ul>
+						<li> <a href="/alumnos"> Alumnos</a> 
+						<li> <a href="/instructores"> Instructores</a> 
+					</ul>	
+				</li>
 				<li> <a href="/solicitudes"> Solicitudes</a> 
 					<ul>
 						<li> <a href="/solicitudes/add"> Agregar</a> 
