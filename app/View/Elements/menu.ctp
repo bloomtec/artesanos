@@ -89,6 +89,10 @@
 					<a href="/ingresosDeInventarios/reporteIngresosInventarios">Ingresos inventarios</a>
 				</li>
 				
+				<li>
+					<a href="/EgresosDeInventarios/reporteEgresosInventarios">Egresos inventarios</a>
+				</li>
+				
 			</ul>
 		</li>
 		<?php endif; ?>
