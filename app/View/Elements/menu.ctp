@@ -84,6 +84,11 @@
 					<a href="/reportes/reporteInspecciones">Inspecciones</a>
 				</li>
 				<?php endif; ?>
+				
+				<li>
+					<a href="/ingresosDeInventarios/reporteIngresosInventarios">Ingresos inventarios</a>
+				</li>
+				
 			</ul>
 		</li>
 		<?php endif; ?>

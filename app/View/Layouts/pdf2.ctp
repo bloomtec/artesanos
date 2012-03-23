@@ -98,7 +98,7 @@ $pdf->writeHTML($html, true, false, true, false, '');
 // ---------------------------------------------------------
 
 //Close and output PDF document
-$pdf->Output('calificacion.pdf', 'D');
+$pdf->Output('reporte.pdf', 'D');
  
 //echo $content_for_layout;
 ?> 

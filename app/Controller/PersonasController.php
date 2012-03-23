@@ -124,5 +124,4 @@ class PersonasController extends AppController {
 		echo json_encode($this -> Persona -> find('list', array('conditions' => array('Persona.per_departamento' => $dep_name))));
 		exit(0);
 	}
-
 }

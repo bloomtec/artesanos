@@ -12,25 +12,19 @@ class ProveedoresController extends AppController {
 	 *
 	 * @return void
 	 */
+
+	//var $uses = array('Proveedor','IngresosDeInventario');
+
 	public function index() {
 		$this -> Proveedor -> recursive = 0;
 		$conditions = array();
 		if (isset($this -> params['named']['query']) && !empty($this -> params['named']['query'])) {
 			//$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
 			$query = $this -> params['named']['query'];
-			$conditions = array(
-						'OR' => array(
-							'Proveedor.pro_rut' => "%$query%",
-							'Proveedor.pro_nombre_razon_social LIKE' => "%$query%",
-							'Proveedor.pro_representante_legal LIKE' => "%$query%",
-							'Proveedor.pro_telefono_fijo LIKE' => "%$query%",
-							'Proveedor.pro_celular LIKE' => "%$query%",
-							'Proveedor.pro_observaciones LIKE' => "%$query%",
-							)
-					);
+			$conditions = array('OR' => array('Proveedor.pro_rut' => "%$query%", 'Proveedor.pro_nombre_razon_social LIKE' => "%$query%", 'Proveedor.pro_representante_legal LIKE' => "%$query%", 'Proveedor.pro_telefono_fijo LIKE' => "%$query%", 'Proveedor.pro_celular LIKE' => "%$query%", 'Proveedor.pro_observaciones LIKE' => "%$query%", ));
 
 		}
-		if(!empty($conditions)) {
+		if (!empty($conditions)) {
 			$this -> paginate = array('conditions' => $conditions);
 		}
 		$this -> set('proveedores', $this -> paginate());
@@ -111,5 +105,6 @@ class ProveedoresController extends AppController {
 		$this -> Session -> setFlash(__('Proveedor was not deleted'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
 	}
+
 
 }
