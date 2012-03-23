@@ -26,8 +26,8 @@
 		<th class="actions"><?php echo "<?php echo __('Activo');?>";?></th>
 	<?php endif; ?>
 	<?php  foreach ($fields as $field):?>
-		<?php if(!in_array($field, array('id','is_active'))): ?>
-		<th><?php echo "<?php echo \$this->Paginator->sort('{$field}');?>";?></th>
+		<?php if(!in_array($field, array('id','is_active','created','modified'))): ?>
+		<th><?php echo "<?php echo \$this->Paginator->sort('{$field}','".ucfirst(Inflector::humanize(substr($field,4,strlen($field))))."');?>";?></th>
 		<?php endif; ?>
 	<?php endforeach;?>
 		<th class="actions"><?php echo "<?php echo __('Acciones');?>";?></th>
@@ -58,7 +58,7 @@
 				}
 			}
 			if ($isKey !== true) {
-				if(!in_array($field, array('id','is_active'))){
+				if(!in_array($field, array('id','is_active','created','updated','modified'))){
 				echo "\t\t<td><?php echo h(\${$singularVar}['{$modelClass}']['{$field}']); ?>&nbsp;</td>\n";
 				}
 			}

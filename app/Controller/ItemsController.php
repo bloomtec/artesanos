@@ -15,7 +15,11 @@ class ItemsController extends AppController {
 	public function getCantidad($item_id = null) {
 		$this -> layout = 'ajax';
 		$cantidad = $this -> Item -> read('ite_cantidad', $item_id);
-		echo $cantidad['Item']['ite_cantidad'];
+		$options=array('0'=>'0');
+		for($i=1;$i<=$cantidad['Item']['ite_cantidad'];$i++){
+			$options[$i]=$i;
+		}
+		echo json_encode($options);
 		exit(0);
 	}
 
@@ -194,10 +198,11 @@ class ItemsController extends AppController {
 			$max_id = $max_id[0][0]['MAX(`ing_codigo`)'];
 			if (!$max_id) {
 				$max_id = 1;
+				$this -> request -> data['IngresosDeInventario']['ing_codigo'] = 1000000 + $max_id;
 			} else {
 				$max_id += 1;
+				$this -> request -> data['IngresosDeInventario']['ing_codigo'] = $max_id;
 			}
-			$this -> request -> data['IngresosDeInventario']['ing_codigo'] = 1000000 + $max_id;			
 			$this -> Item -> IngresosDeInventario -> create();
 			if ($this -> Item -> IngresosDeInventario -> save($this -> request -> data)) {
 				$id = $this -> Item -> IngresosDeInventario -> id;
@@ -245,45 +250,57 @@ class ItemsController extends AppController {
 	
 	public function egresoActivoFijo() {
 		if ($this -> request -> is('post')) {
-			if (!empty($this -> request -> data['EgresosDeInventario']['egr_archivo_soporte']['name']) && !$this -> request -> data['EgresosDeInventario']['egr_archivo_soporte']['error']) {
-				$now = new DateTime('now');
-				$this -> request ->data['EgresosDeInventario']['egr_fecha_de_egreso'] = $now -> format('Y-m-d H:i:s');
-				$filename = $now -> format('Y-m-d_H-i-s') . '_' . str_replace(' ', '_', $this -> request -> data['EgresosDeInventario']['egr_archivo_soporte']['name']);
-				if ($this -> uploadActivoFijoFile($this -> request -> data['EgresosDeInventario']['egr_archivo_soporte']['tmp_name'], $filename)) {
-					$this -> request -> data['EgresosDeInventario']['egr_archivo_soporte'] = 'files/uploads/activosFijos/' . $filename;
+			
+			$cantidades_validas = true;
+			foreach($this -> request -> data['ActivosFijos'] as $key => $activoFijo) {
+				if($activoFijo['item_id'] && $activoFijo['egr_cantidad'] && ($activoFijo['egr_cantidad'] >= 1)) {
+					$item = $this -> Item -> read(null, $activoFijo['item_id']);
+					if($activoFijo['egr_cantidad'] > $item['Item']['ite_cantidad']) $cantidades_validas = false;
 				}
 			}
-			$this -> request -> data['EgresosDeInventario']['egr_is_activo_fijo'] = true;
-			
-			$max_id = $this -> Item -> query('SELECT MAX(`egr_codigo`) FROM `egresos_de_inventarios` WHERE `egr_is_activo_fijo` = 1');
-			$max_id = $max_id[0][0]['MAX(`egr_codigo`)'];
-			if (!$max_id) {
-				$max_id = 1;
-				$this -> request -> data['EgresosDeInventario']['egr_codigo'] = 1000000 + $max_id;
-			} else {
-				$max_id += 1;
-				$this -> request -> data['EgresosDeInventario']['egr_codigo'] = $max_id;
-			}
-			$this -> Item -> EgresosDeInventario -> create();
-			if ($this -> Item -> EgresosDeInventario -> save($this -> request -> data)) {
-				$id = $this -> Item -> EgresosDeInventario -> id;
-				// Registrar los items
-				foreach($this -> request -> data['ActivosFijos'] as $key => $activoFijo) {
-					if($activoFijo['item_id'] && $activoFijo['egr_cantidad'] && ($activoFijo['egr_cantidad'] >= 1)) {
-						$activoFijo['egresos_de_inventario_id'] = $id;
-						$this -> Item -> EgresosDeInventario -> EgresosDeInventariosItem -> create();
-						if($this -> Item -> EgresosDeInventario -> EgresosDeInventariosItem -> save($activoFijo)) {
-							$item = $this -> Item -> read(null, $activoFijo['item_id']);
-							$item['Item']['ite_cantidad'] = $item['Item']['ite_cantidad'] - $activoFijo['egr_cantidad'];
-							$item['Item']['item_id'] = $activoFijo['item_id'];
-							$this -> Item -> save($item);
-						}
+			if($cantidades_validas) {
+				if (!empty($this -> request -> data['EgresosDeInventario']['egr_archivo_soporte']['name']) && !$this -> request -> data['EgresosDeInventario']['egr_archivo_soporte']['error']) {
+					$now = new DateTime('now');
+					$this -> request ->data['EgresosDeInventario']['egr_fecha_de_egreso'] = $now -> format('Y-m-d H:i:s');
+					$filename = $now -> format('Y-m-d_H-i-s') . '_' . str_replace(' ', '_', $this -> request -> data['EgresosDeInventario']['egr_archivo_soporte']['name']);
+					if ($this -> uploadActivoFijoFile($this -> request -> data['EgresosDeInventario']['egr_archivo_soporte']['tmp_name'], $filename)) {
+						$this -> request -> data['EgresosDeInventario']['egr_archivo_soporte'] = 'files/uploads/activosFijos/' . $filename;
 					}
 				}
-				$this -> Session -> setFlash(__('Se registró el egreso de activos fijos'), 'crud/success');
-				$this -> redirect(array('action' => 'indexActivosFijos'));
+				$this -> request -> data['EgresosDeInventario']['egr_is_activo_fijo'] = true;
+				
+				$max_id = $this -> Item -> query('SELECT MAX(`egr_codigo`) FROM `egresos_de_inventarios` WHERE `egr_is_activo_fijo` = 1');
+				$max_id = $max_id[0][0]['MAX(`egr_codigo`)'];
+				if (!$max_id) {
+					$max_id = 1;
+					$this -> request -> data['EgresosDeInventario']['egr_codigo'] = 1000000 + $max_id;
+				} else {
+					$max_id += 1;
+					$this -> request -> data['EgresosDeInventario']['egr_codigo'] = $max_id;
+				}
+				$this -> Item -> EgresosDeInventario -> create();
+				if ($this -> Item -> EgresosDeInventario -> save($this -> request -> data)) {
+					$id = $this -> Item -> EgresosDeInventario -> id;
+					// Registrar los items
+					foreach($this -> request -> data['ActivosFijos'] as $key => $activoFijo) {
+						if($activoFijo['item_id'] && $activoFijo['egr_cantidad'] && ($activoFijo['egr_cantidad'] >= 1)) {
+							$activoFijo['egresos_de_inventario_id'] = $id;
+							$this -> Item -> EgresosDeInventario -> EgresosDeInventariosItem -> create();
+							if($this -> Item -> EgresosDeInventario -> EgresosDeInventariosItem -> save($activoFijo)) {
+								$item = $this -> Item -> read(null, $activoFijo['item_id']);
+								$item['Item']['ite_cantidad'] = $item['Item']['ite_cantidad'] - $activoFijo['egr_cantidad'];
+								$item['Item']['item_id'] = $activoFijo['item_id'];
+								$this -> Item -> save($item);
+							}
+						}
+					}
+					$this -> Session -> setFlash(__('Se registró el egreso de activos fijos'), 'crud/success');
+					$this -> redirect(array('action' => 'indexActivosFijos'));
+				} else {
+					$this -> Session -> setFlash(__('No se pudo hacer el egreso de activos fijos. Por favor, intente de nuevo.'), 'crud/error');
+				}
 			} else {
-				$this -> Session -> setFlash(__('No se pudo hacer el egreso de activos fijos. Por favor, intente de nuevo.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo hacer el egreso de activos fijos por una cantidad seleccionada. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
 		$items = $this -> Item -> find('list', array('conditions' => array('Item.ite_is_activo_fijo' => true)));

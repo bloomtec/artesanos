@@ -113,6 +113,9 @@
 						<li>
 							<a href="/items/agregarActivoFijo">Agregar</a>
 						</li>
+						<li>
+							<a href="/items/egresoActivoFijo">Egresar</a>
+						</li>
 					</ul>
 				</li>
 				<li> <a href="#">Suministros y Materiales </a></li>

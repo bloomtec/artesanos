@@ -34,8 +34,8 @@
 		<?php echo $this -> Form -> input('IngresosDeInventario.ing_subtotal', array('label' => 'Sub Total','class'=>'subtotal','disabled'=>true,"type"=>"text")); ?>
 		<?php echo $this -> Form -> hidden('IngresosDeInventario.ing_subtotal', array('label' => 'Sub Total','class'=>'subtotal')); ?>
 		
-		<?php echo $this -> Form -> input('IngresosDeInventario.ing_iva', array('label' => 'I.V.A.','class'=>'iva','disabled'=>true,"type"=>"text")); ?>
-		<?php echo $this -> Form -> hidden('IngresosDeInventario.ing_iva', array('label' => 'I.V.A.','class'=>'iva')); ?>
+		<?php echo $this -> Form -> input('IngresosDeInventario.ing_iva', array('label' => '12% I.V.A.','class'=>'iva','disabled'=>true,"type"=>"text")); ?>
+		<?php echo $this -> Form -> hidden('IngresosDeInventario.ing_iva', array('label' => '12% I.V.A.','class'=>'iva')); ?>
 		
 		<?php echo $this -> Form -> input('IngresosDeInventario.ing_total', array('label' => 'Total','class'=>'total','disabled'=>true,"type"=>"text")); ?>
 		<?php echo $this -> Form -> hidden('IngresosDeInventario.ing_total', array('label' => 'Total','class'=>'total')); ?>

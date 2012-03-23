@@ -133,6 +133,38 @@ $(function(){
 			}
 		});	
 	}
+	BJS.updateSelect2 = function($select, $address, $callback){
+		$select.html('');
+		firstArguments = arguments;
+		var selected= $select.attr('val')?$select.attr('val'):false;
+		BJS.JSON($address,{},function(options){
+			var count=0;
+			var objectSize= BJS.objectSize(options);
+			if(objectSize){
+				
+				$.each(options,function(i,val){
+					if(selected && i==selected){
+						$select.append('<option value="'+i+'" selected="selected">'+val+'</option>');
+					}else{
+						$select.append('<option value="'+i+'">'+val+'</option>');
+					}
+					
+					count += 1;
+					if(firstArguments.length == 3 && count ==  objectSize){
+							if($callback) $callback();
+					}
+					
+				});	
+			}else{
+				$select.html('');
+				$select.append('<option value="">Seleccione..</option>');
+				if($callback){
+					$callback()
+				};
+
+			}
+		});	
+	}
 	BJS.objectSize = function(obj) {
 	    var size = 0, key;
 	    for (key in obj) {
