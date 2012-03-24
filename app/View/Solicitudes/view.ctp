@@ -2,7 +2,7 @@
 <h2><?php  echo __('Solicitud');?></h2>
 		<label><?php echo __('Juntas Provincial'); ?></label>
 		<h3>
-			<?php echo $this->Html->link($solicitud['JuntasProvincial']['id'], array('controller' => 'juntas_provinciales', 'action' => 'view', $solicitud['JuntasProvincial']['id'])); ?>
+			<?php echo $this->Html->link($solicitud['JuntasProvincial']['jun_nombre'], array('controller' => 'juntas_provinciales', 'action' => 'view', $solicitud['JuntasProvincial']['id'])); ?>
 			&nbsp;
 		</h3>
 		<label><?php echo __('Sol Fecha Solicitud'); ?></label>

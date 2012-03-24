@@ -47,10 +47,10 @@ class CursosController extends AppController {
 			$this -> request -> data['Curso']['cur_costo'] = $this -> formatearValor($this -> request -> data['Curso']['cur_costo']);
 			$this -> Curso -> create();
 			if ($this -> Curso -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The curso has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('El curso ha sido crearo'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The curso could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo crear el curso. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
 		$solicitudes = $this -> Curso -> Solicitud -> find('list');
@@ -73,10 +73,10 @@ class CursosController extends AppController {
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			$this -> request -> data['Curso']['cur_costo'] = $this -> formatearValor($this -> request -> data['Curso']['cur_costo']);
 			if ($this -> Curso -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The curso has been saved'), 'crud/success');
-				$this -> redirect(array('action' => 'index'));
+				$this -> Session -> setFlash(__('La inforamción del curso ha sido actualizada'), 'crud/success');
+			//	$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The curso could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo actualizar el curso. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		} else {
 			$this -> request -> data = $this -> Curso -> read(null, $id);
@@ -86,7 +86,28 @@ class CursosController extends AppController {
 		$alumnos = $this -> Curso -> Alumno -> find('list');
 		$this -> set(compact('solicitudes', 'instructores', 'alumnos'));
 	}
-
+	public function verAlumnos($id = null){
+		$this -> Curso -> id = $id;
+		if (!$this -> Curso -> exists()) {
+			throw new NotFoundException(__('Invalid curso'));
+		}
+		$this -> Curso -> recursive = -1;
+		$curso = $this -> Curso -> read(null,$id);
+		$alumnos = $this -> Curso -> CursosAlumno -> bindModel(array(
+			'belongsTo' => array(
+				'Alumno'
+			)
+		));
+		$alumnos = $this -> Curso -> CursosAlumno -> find('all',array('conditions'=>array('CursosAlumno.curso_id'=>$id)));
+		$this -> set(compact('curso','alumnos'));
+	}
+	public function ingresarCalificaciones($id = null){
+		$this -> Curso -> id = $id;
+		if (!$this -> Curso -> exists()) {
+			throw new NotFoundException(__('Invalid curso'));
+		}
+		$this -> set('curso',$this -> Curso -> read(null,$id));
+	}
 	/**
 	 * delete method
 	 *
@@ -102,10 +123,10 @@ class CursosController extends AppController {
 			throw new NotFoundException(__('Invalid curso'));
 		}
 		if ($this -> Curso -> delete()) {
-			$this -> Session -> setFlash(__('Curso deleted'), 'crud/success');
+			$this -> Session -> setFlash(__('Curso borrado'), 'crud/success');
 			$this -> redirect(array('action' => 'index'));
 		}
-		$this -> Session -> setFlash(__('Curso was not deleted'), 'crud/error');
+		$this -> Session -> setFlash(__('No se pudo borrar el curso'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
 	}
 

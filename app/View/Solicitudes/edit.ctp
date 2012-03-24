@@ -10,15 +10,17 @@
 		echo $this -> Form -> input('sol_duracion', array('label' => 'Duracion En Días', 'type' => 'text','class'=>'number'));
 		echo $this -> Form -> input('sol_fecha_inicio_de_la_capacitacion', array('label' => 'Fecha Inicio De La Capacitacion','type'=>'text','class'=>'date'));
 		echo $this -> Form -> input('sol_fecha_de_fin_de_la_capacitacion', array('label' => 'Fecha De Fin De La Capacitacion','type'=>'text','class'=>'date'));
-		echo $this -> Form -> input('sol_costos', array('label' => 'Costos', 'type' => 'text', 'value' => 0, 'class' => 'valor'));
-		echo $this -> Form -> input('sol_numero_de_participantes', array('label' => 'Numero De Participantes','type'=>'text','class'=>'number'));	
+		echo $this -> Form -> input('sol_costos', array('label' => 'Costos', 'type' => 'text', 'value' => str_replace('.',',',$this->data['Solicitud']['sol_costos']), 'class' => 'valor'));
+		echo $this -> Form -> input('sol_numero_de_participantes', array('label' => 'Numero De Participantes','type'=>'text','class'=>'number'));
 	?>
+	
 	</fieldset>
 <?php echo $this->Html->link(__('Cancelar'),array('action'=>'index'),array('class'=>'cancelar'));?>
 <?php echo $this->Form->end(__('Guardar'));?>
 </div>
 <script>
 	$(function(){
+
 		var today= new Date();
 		var today=today.getFullYear()+"-"+(today.getMonth() + 1)+"-"+today.getDate();
 		$('form').submit(function(e){

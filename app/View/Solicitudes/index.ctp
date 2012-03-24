@@ -21,7 +21,7 @@
 	<?php $i = 0; foreach ($solicitudes as $solicitud): ?>
 	<tr>
 		<td>
-			<?php echo $this->Html->link($solicitud['JuntasProvincial']['id'], array('controller' => 'juntas_provinciales', 'action' => 'view', $solicitud['JuntasProvincial']['id'])); ?>
+			<?php echo $this->Html->link($solicitud['JuntasProvincial']['jun_nombre'], array('controller' => 'juntas_provinciales', 'action' => 'view', $solicitud['JuntasProvincial']['id'])); ?>
 		</td>
 		<td><?php echo h($solicitud['Solicitud']['sol_fecha_solicitud']); ?>&nbsp;</td>
 		<td><?php echo h($solicitud['Solicitud']['sol_numero_de_memorandum']); ?>&nbsp;</td>
@@ -34,6 +34,7 @@
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $solicitud['Solicitud']['id']),array('class'=>'view','title'=>'Ver')); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $solicitud['Solicitud']['id']),array('class'=>'edit','title'=>'Modificar')); ?>
+			<?php if($solicitud['Solicitud']['sol_estado']==0) echo $this->Html->link(__('aprobar'), array('action' => 'aprobar', $solicitud['Solicitud']['id']),array('class'=>'aprobar','title'=>'Aprobar')); ?>
 			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $solicitud['Solicitud']['id']), array('class'=>'delete','title'=>'Borrar'), __('Esta seguro que quiere eliminar el registro?', $solicitud['Solicitud']['id'])); ?>
 		</td>
 	</tr>

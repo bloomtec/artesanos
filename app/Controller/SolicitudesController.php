@@ -47,12 +47,14 @@ class SolicitudesController extends AppController {
 			$now = new DateTime('now');
 			$this -> request -> data['Solicitud']['sol_fecha_solicitud'] = $now -> format('Y-m-d H:i:s');
 			$this -> request -> data['Solicitud']['sol_costos'] = $this -> formatearValor($this -> request -> data['Solicitud']['sol_costos']);
+			$this -> request -> data['Solicitud']['sol_esta_aprobada'] = false;
 			$this -> Solicitud -> create();
+			
 			if ($this -> Solicitud -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The solicitud has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('La solicitud ha sido guardada'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The solicitud could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo guardar la solicitud. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
 		$juntasProvinciales = $this -> Solicitud -> JuntasProvincial -> find('list');
@@ -68,15 +70,15 @@ class SolicitudesController extends AppController {
 	public function edit($id = null) {
 		$this -> Solicitud -> id = $id;
 		if (!$this -> Solicitud -> exists()) {
-			throw new NotFoundException(__('Invalid solicitud'));
+			throw new NotFoundException(__('Solicitud no valida'));
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			$this -> request -> data['Solicitud']['sol_costos'] = $this -> formatearValor($this -> request -> data['Solicitud']['sol_costos']);
 			if ($this -> Solicitud -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The solicitud has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('La solicitud ha sido guardada'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The solicitud could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo guardar la solicitud. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		} else {
 			$this -> request -> data = $this -> Solicitud -> read(null, $id);
@@ -97,14 +99,38 @@ class SolicitudesController extends AppController {
 		}
 		$this -> Solicitud -> id = $id;
 		if (!$this -> Solicitud -> exists()) {
-			throw new NotFoundException(__('Invalid solicitud'));
+			throw new NotFoundException(__('Solicitud no valida'));
 		}
 		if ($this -> Solicitud -> delete()) {
-			$this -> Session -> setFlash(__('Solicitud deleted'), 'crud/success');
+			$this -> Session -> setFlash(__('Solicitud borrada'), 'crud/success');
 			$this -> redirect(array('action' => 'index'));
 		}
-		$this -> Session -> setFlash(__('Solicitud was not deleted'), 'crud/error');
+		$this -> Session -> setFlash(__('La Solicitud no fue borrada'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
+	}
+	
+	public function aprobar($id = null){
+		$this -> Solicitud -> id = $id;
+		if (!$this -> Solicitud -> exists()) {
+			throw new NotFoundException(__('Solicitud no valida'));
+		}
+		$solicitud = $this -> Solicitud -> read(null,$id);
+		$solicitud['Solicitud']['sol_estado']=2;//estado 2 aprobada
+		if($this->Solicitud->save($solicitud)){
+			$curso['Curso']=array(
+				"solicitud_id"=>$solicitud['Solicitud']['id'],
+				"cur_nombre"=>$solicitud['Solicitud']['sol_nombre_de_la_capacitacion'],
+				"cur_fecha_de_inicio"=>$solicitud['Solicitud']['sol_fecha_inicio_de_la_capacitacion'],
+				"cur_fecha_de_fin"=>$solicitud['Solicitud']['sol_fecha_de_fin_de_la_capacitacion'],
+				"cur_costo"=>$solicitud['Solicitud']['sol_costos'],
+			);
+			if($this -> Solicitud -> Curso -> save($curso)){
+					$this -> Session -> setFlash(__('Se ha aprobado la solicitud.'), 'crud/success');
+					$this -> redirect(array('controller'=>'cursos','action' => 'edit',$this -> Solicitud -> Curso -> id));
+			}else{
+				
+			}	
+		}
 	}
 
 }
