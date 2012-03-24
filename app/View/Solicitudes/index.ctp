@@ -34,6 +34,7 @@
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $solicitud['Solicitud']['id']),array('class'=>'view','title'=>'Ver')); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $solicitud['Solicitud']['id']),array('class'=>'edit','title'=>'Modificar')); ?>
+			<?php echo $this->Html->link(__('aprobar'), array('action' => 'aprobar', $solicitud['Solicitud']['id']),array('class'=>'aprobar','title'=>'Aprobar')); ?>
 			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $solicitud['Solicitud']['id']), array('class'=>'delete','title'=>'Borrar'), __('Esta seguro que quiere eliminar el registro?', $solicitud['Solicitud']['id'])); ?>
 		</td>
 	</tr>
