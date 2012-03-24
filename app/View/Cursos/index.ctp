@@ -32,6 +32,8 @@
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $curso['Curso']['id']),array('class'=>'view','title'=>'Ver')); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $curso['Curso']['id']),array('class'=>'edit','title'=>'Modificar')); ?>
+			<?php echo $this->Html->link(__('Ver Alumnos'), array('action' => 'verAlumnos', $curso['Curso']['id']),array('class'=>'verAlumnos','title'=>'Ver alumnos')); ?>
+			<?php echo $this->Html->link(__('Ingresar notas'), array('action' => 'ingresarCalificaciones', $curso['Curso']['id']),array('class'=>'calificaciones','title'=>'Ingresar Calificaciones')); ?>
 			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $curso['Curso']['id']), array('class'=>'delete','title'=>'Borrar'), __('Esta seguro que quiere eliminar el registro?', $curso['Curso']['id'])); ?>
 		</td>
 	</tr>

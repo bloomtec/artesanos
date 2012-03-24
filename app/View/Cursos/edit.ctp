@@ -1,4 +1,4 @@
-<div class="cursos form">
+<div class="cursos form form2">
 	<?php echo $this -> Form -> create('Curso');?>
 	<fieldset>
 		<h2><?php echo __('Administrar Curso');?></h2>
@@ -15,10 +15,14 @@
 		?>
 	</fieldset>
 	<fieldset>
+		<h2><?php echo __('Registro de alumnos');?></h2>
 		<?php 
-		echo $this -> Form -> input('Alumno', array('label' => 'Alumnos'));
+		echo $this -> element('registro_de_alumnos');
+		//echo $this -> Form -> input('Alumno', array('label' => 'Alumnos'));
 		?>
 	</fieldset>
+	<div style="clear:both;">
 	<?php echo $this -> Html -> link(__('Cancelar'), array('action' => 'index'), array('class' => 'cancelar'));?>
 	<?php echo $this -> Form -> end(__('Guardar'));?>
+	</div>
 </div>

@@ -131,5 +131,10 @@ class AlumnosController extends AppController {
 		$this -> Session -> setFlash(__('Alumno was not deleted'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
 	}
-
+	public function get($document){
+		$this -> autorender = false;
+		$this -> Alumno -> recursive = 0;
+		echo json_encode($this -> Alumno -> find('first',array('conditions'=>array('Alumno.alu_documento_de_identificacion'=>$document))));
+		exit(0);
+	}
 }

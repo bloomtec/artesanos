@@ -699,6 +699,13 @@ form .input input {
 .fila-datos{
 	clear:left;
 }
+.form2 form{
+	width:900px;
+}
+.form2 fieldset{
+	width:50%;
+	float:left;
+}
 /** END FORMS **/
 
 /** Users Module**/
