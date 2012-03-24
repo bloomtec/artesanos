@@ -115,8 +115,22 @@ class SolicitudesController extends AppController {
 			throw new NotFoundException(__('Solicitud no valida'));
 		}
 		$solicitud = $this -> Solicitud -> read(null,$id);
-		$solicitud['Solicitud']['esta_aprobada']=true;
-		
+		$solicitud['Solicitud']['sol_estado']=2;//estado 2 aprobada
+		if($this->Solicitud->save($solicitud)){
+			$curso['Curso']=array(
+				"solicitud_id"=>$solicitud['Solicitud']['id'],
+				"cur_nombre"=>$solicitud['Solicitud']['sol_nombre_de_la_capacitacion'],
+				"cur_fecha_de_inicio"=>$solicitud['Solicitud']['sol_fecha_inicio_de_la_capacitacion'],
+				"cur_fecha_de_fin"=>$solicitud['Solicitud']['sol_fecha_de_fin_de_la_capacitacion'],
+				"cur_costo"=>$solicitud['Solicitud']['sol_costos'],
+			);
+			if($this -> Solicitud -> Curso -> save($curso)){
+					$this -> Session -> setFlash(__('Se ha aprobado la solicitud.'), 'crud/success');
+					$this -> redirect(array('controller'=>'cursos','action' => 'edit',$this -> Solicitud -> Curso -> id));
+			}else{
+				
+			}	
+		}
 	}
 
 }
