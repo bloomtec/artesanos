@@ -5,23 +5,19 @@ App::uses('AppController', 'Controller');
  *
  * @property IngresosDeInventario $IngresosDeInventario
  */
-class IngresosDeInventariosController extends AppController {
+class EgresosDeInventariosController extends AppController {
 
-	//Reporte reporteIngresosProveedores
-
-	public function reporteIngresosInventarios() {
-
+	public function reporteEgresosInventarios() {
+		
 		$this -> loadModel('Item', true);
 		$this -> loadModel('IngresosDeInventariosItem', true);
 		$this -> loadModel('IngresosDeInventario', true);
 		$this -> loadModel('Persona', true);
 
 		if ($this -> request -> is('post')) {
-
 			$this -> Recursive = 0;
 
 			$condiciones = array();
-			$idProveedor = $this -> data['Reporte']['proveedor'];
 			$idPersona = $this -> data['Reporte']['persona'];
 			$nomDepartamento = $this -> data['Reporte']['departamento'];
 			$idProducto = $this -> data['Reporte']['producto'];
@@ -33,20 +29,16 @@ class IngresosDeInventariosController extends AppController {
 
 			if (!empty($nomDepartamento)) {
 				$idsPersonasDep = $this -> Persona -> find('list', array('fields' => array('id'), 'conditions' => array('Persona.per_departamento' => $nomDepartamento)));
-				$conditions[] = array('IngresosDeInventario.persona_id' => $idsPersonasDep);
+				$conditions[] = array('EgresosDeInventario.persona_id' => $idsPersonasDep);
 			}
 
 			if (!empty($idProducto)) {
-				$idsProductos = $this -> IngresosDeInventariosItem -> find('list', array('fields' => array('ingresos_de_inventario_id'), 'conditions' => array('IngresosDeInventariosItem.item_id' => $idProducto)));
-				$conditions[] = array('IngresosDeInventario.id' => $idsProductos);
+				$idsProductos = $this -> EgresosDeInventariosItem -> find('list', array('fields' => array('egresos_de_inventario_id'), 'conditions' => array('EgresosDeInventariosItem.item_id' => $idProducto)));
+				$conditions[] = array('EgresosDeInventariosItem.id' => $idsProductos);
 			}
 
 			if (!empty($idPersona)) {
-				$conditions[] = array('IngresosDeInventario.persona_id' => $idPersona);
-			}
-
-			if (!empty($idProveedor)) {
-				$conditions[] = array('IngresosDeInventario.proveedor_id' => $idProveedor);
+				$conditions[] = array('EgresosDeInventario.persona_id' => $idPersona);
 			}
 
 			if ($fecha1 != null && $fecha2 != null) {
@@ -73,29 +65,30 @@ class IngresosDeInventariosController extends AppController {
 				$conditions[] = array('IngresosDeInventario.created >=' => $fecha1);
 			}
 
-			//Reporte ingresos
-			$reporteIngresos = $this -> IngresosDeInventario -> find('all', array('conditions' => $conditions));
-			$this -> Session -> write('reporteIngresos', $reporteIngresos);
-			$this -> set(compact('reporteIngresos'));
+			//Reporte egresos
+			$reporteEgresos = $this -> EgresosDeInventario -> find('all', array('conditions' => $conditions));
+			$this -> Session -> write('reporteEgresos', $reporteEgresos);
+			//debug($reporteEgresos);
+			$this -> set(compact('reporteEgresos'));
 			
 		} else {
-
-			$lstProveedores = $this -> IngresosDeInventario -> Proveedor -> find('list', array('fields' => array('id', 'pro_nombre_razon_social')));
-			$lstPersonas = $this -> IngresosDeInventario -> Persona -> find('list', array('fields' => array('id', 'datos_completos')));
+			$lstPersonas = $this -> EgresosDeInventario -> Persona -> find('list', array('fields' => array('id', 'datos_completos')));
 			$lstProductos = $this -> Item -> find('list', array('fields' => array('id', 'ite_nombre')));
-			$lstDepartamentos = $this -> IngresosDeInventario -> getValores(14);
-			$this -> set(compact('lstProveedores', 'lstPersonas', 'lstDepartamentos', 'lstProductos'));
+			$lstDepartamentos = $this -> EgresosDeInventario -> getValores(14);
+			$this -> set(compact('lstPersonas', 'lstDepartamentos', 'lstProductos'));
 		}
+		
 	}
-
-	function impReporteIngresosInventarios() {
+	
+	function impReporteEgresosInventarios() {
 		$this -> layout = 'pdf2';
-		$reporteIngresos = $this -> Session -> read('reporteIngresos');
-		$titulo = "ReporteIngresosDeInventarios";
+		$reporteEgresos = $this -> Session -> read('reporteEgresos');
+		$titulo = "ReporteEgresosDeInventarios";
 		//Tamaño de la fuente
 		$tamano = 5;
 		//$this -> Session -> delete('reporteIngresos');
-		$this -> set(compact('reporteIngresos','titulo','tamano'));
+		$this -> set(compact('reporteEgresos','titulo','tamano'));
 	}
+	
 
 }
