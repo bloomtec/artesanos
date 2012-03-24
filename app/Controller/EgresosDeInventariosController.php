@@ -1,5 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
+App::import('Helper', 'csv');
+
 /**
  * IngresosDeInventarios Controller
  *
@@ -90,5 +92,37 @@ class EgresosDeInventariosController extends AppController {
 		$this -> set(compact('reporteEgresos','titulo','tamano'));
 	}
 	
+	function export_csv() {
 
+		$this -> layout = "";
+		$this -> render(false);
+	
+		$csv = new csvHelper();
+		$reporteEgresos = $this -> Session -> read('reporteEgresos');
+		$cabeceras = array('Código', 'Persona', 'Concepto', 'Fecha egreso','Items');
+		$csv -> addRow($cabeceras);	
+		
+		for($i=0;$i < count($reporteEgresos);$i++) {
+			$items = "";
+			foreach ($reporteEgresos[$i]['Item'] as $key => $value) {
+				if ($reporteEgresos[$i]['Item'] != array())
+					 if($items==""){
+					 	$items = $value['ite_nombre'];
+					 }else {
+					 	$items = $items.' '.$value['ite_nombre'];
+				}
+		   }
+			
+			$filas = array($reporteEgresos[$i]['EgresosDeInventario']['egr_codigo'],
+					$reporteEgresos[$i]['Persona']['per_nombres'],
+					$reporteEgresos[$i]['EgresosDeInventario']['egr_concepto_entrega'],
+					$reporteEgresos[$i]['EgresosDeInventario']['egr_fecha_de_egreso'],
+					$items);
+			
+			$csv -> addRow($filas);	
+		}
+		
+		$titulo = "csvEgresosInventarios_".date("Y-m-d H:i:s", time()).".csv";
+		echo $csv -> render($titulo); 
+	}
 }

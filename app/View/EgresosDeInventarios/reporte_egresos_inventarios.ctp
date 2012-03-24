@@ -1,18 +1,18 @@
-<h2><?php echo __('Reporte egresos de inventarios');?></h2>
 <?php if(isset($lstPersonas)) {
 ?>
 <div class="reportes form">
 	<?php echo $this -> Form -> create('Reporte');?>
+	<h2><?php echo __('Reporte egresos de inventarios');?></h2>
 	<fieldset>
 		<?php
 		//Personas
-		echo $this -> Form -> input('persona', array('type' => 'select', 'label' => 'Personas', 'empty' => '', 'options' => $lstPersonas));
+		echo $this -> Form -> input('persona', array('type' => 'select', 'label' => 'Personas', 'empty' => 'Seleccione...', 'options' => $lstPersonas));
 
 		//Departamentos
-		echo $this -> Form -> input('departamento', array('type' => 'select', 'label' => 'Departamentos', 'empty' => '', 'options' => $lstDepartamentos));
+		echo $this -> Form -> input('departamento', array('type' => 'select', 'label' => 'Departamentos', 'empty' => 'Seleccione...', 'options' => $lstDepartamentos));
 
 		//Productos
-		echo $this -> Form -> input('producto', array('type' => 'select', 'label' => 'Productos', 'empty' => '', 'options' => $lstProductos));
+		echo $this -> Form -> input('producto', array('type' => 'select', 'label' => 'Productos', 'empty' => 'Seleccione...', 'options' => $lstProductos));
 
 		//Fecha inicial
 		echo $this -> Form -> input('fecha1', array('type' => 'text', 'label' => 'Fecha inicial', 'class' => 'date'));
@@ -21,10 +21,13 @@
 		echo $this -> Form -> input('fecha2', array('type' => 'text', 'label' => 'Fecha final', 'class' => 'date'));
 		?>
 	</fieldset>
-	<?php echo $this -> Form -> submit('Buscar');?> 
+	<?php echo $this -> Form -> submit('Buscar');?>
 	<?php echo $this -> Form -> end();?>
 </div>
-<?php } else { ?>
+<?php } else {?>
+<br />
+<br />
+<h2><?php echo __('Reporte egresos de inventarios');?></h2>
 <table>
 	<tr>
 		<th>Código egreso</th>
@@ -34,32 +37,30 @@
 		<th>Items</th>
 	</tr>
 	<?php
-	//debug($reporteEgresos);
-	for($i=0;$i < count($reporteEgresos);$i++) {
+//debug($reporteEgresos);
+for($i=0;$i < count($reporteEgresos);$i++) {
 	?>
 	<tr>
-		<td><?php echo $reporteEgresos[$i]['EgresosDeInventario']['egr_codigo'];?> </td>
-		<td><?php echo $reporteEgresos[$i]['Persona']['per_nombres'];?> </td>
-		<td><?php echo $reporteEgresos[$i]['EgresosDeInventario']['egr_concepto_entrega'];?> </td>
-		<td><?php echo $reporteEgresos[$i]['EgresosDeInventario']['egr_fecha_de_egreso'];?> </td>
-		<td> 
-			<?php
-				foreach ($reporteEgresos[$i]['Item'] as $key => $value) {
-					if ($reporteEgresos[$i]['Item'] != array())
-						echo $value['ite_nombre'] . "<br />";
-		
-				}
-			?> 
-		</td>
+		<td><?php echo $reporteEgresos[$i]['EgresosDeInventario']['egr_codigo'];?></td>
+		<td><?php echo $reporteEgresos[$i]['Persona']['per_nombres'];?></td>
+		<td><?php echo $reporteEgresos[$i]['EgresosDeInventario']['egr_concepto_entrega'];?></td>
+		<td><?php echo $reporteEgresos[$i]['EgresosDeInventario']['egr_fecha_de_egreso'];?></td>
+		<td><?php
+		foreach ($reporteEgresos[$i]['Item'] as $key => $value) {
+			if ($reporteEgresos[$i]['Item'] != array())
+				echo $value['ite_nombre'] . "<br />";
+
+		}
+		?></td>
 	</tr>
 	<?php
 
 	}
 	?>
 </table>
-
-	<a class='button' href="/egresosDeInventarios/reporteEgresosInventarios">Regresar</a>
-	&nbsp;
-	<a class='button' href="/egresosDeInventarios/impReporteEgresosInventarios">Imprimir</a>
-
-<?php } ?>
+<a class='button' href="/egresosDeInventarios/reporteEgresosInventarios">Volver</a>
+&nbsp; 
+<a class='button' href="/egresosDeInventarios/impReporteEgresosInventarios">Imprimir</a>
+&nbsp;
+<a class='button' href="/egresosDeInventarios/export_csv">Exportar el resulrado a CSV</a>
+<?php }?>

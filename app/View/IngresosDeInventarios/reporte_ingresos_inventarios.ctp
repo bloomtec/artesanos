@@ -1,18 +1,18 @@
-<h2><?php echo __('Reporte ingresos de inventarios');?></h2>
 <?php if(isset($lstProveedores)) {
 ?>
 <div class="reportes form">
 	<?php echo $this -> Form -> create('Reporte');?>
+	<h2><?php echo __('Reporte De Calificaciones Por Operador'); ?></h2>
 	<fieldset>
 		<?php
 		//Proveedores
-		echo $this -> Form -> input('proveedor', array('type' => 'select', 'label' => 'Proveedores', 'empty' => '', 'options' => $lstProveedores));
+		echo $this -> Form -> input('proveedor', array('type' => 'select', 'label' => 'Proveedores', 'empty' => 'Seleccione...', 'options' => $lstProveedores));
 
 		//Personas
-		echo $this -> Form -> input('persona', array('type' => 'select', 'label' => 'Personas', 'empty' => '', 'options' => $lstPersonas));
+		echo $this -> Form -> input('persona', array('type' => 'select', 'label' => 'Personas', 'empty' => 'Seleccione...', 'options' => $lstPersonas));
 
 		//Departamentos
-		echo $this -> Form -> input('departamento', array('type' => 'select', 'label' => 'Departamentos', 'empty' => '', 'options' => $lstDepartamentos));
+		echo $this -> Form -> input('departamento', array('type' => 'select', 'label' => 'Departamentos', 'empty' => 'Seleccione...', 'options' => $lstDepartamentos));
 
 		//Productos
 		echo $this -> Form -> input('producto', array('type' => 'select', 'label' => 'Productos', 'empty' => '', 'options' => $lstProductos));
@@ -28,6 +28,9 @@
 	<?php echo $this -> Form -> end();?>
 </div>
 <?php } else { ?>
+<br />
+<br />
+<h2><?php echo __('Reporte egresos de inventarios');?></h2>
 <table>
 	<tr>
 		<th>Proveedor</th>
@@ -71,8 +74,10 @@
 	?>
 </table>
 
-	<a class='button' href="/ingresosDeInventarios/reporteIngresosInventarios">Regresar</a>
+	<a class='button' href="/ingresosDeInventarios/reporteIngresosInventarios">Volver</a>
 	&nbsp;
 	<a class='button' href="/ingresosDeInventarios/impReporteIngresosInventarios">Imprimir</a>
+	&nbsp;
+	<a class='button' href="/ingresosDeInventarios/export_csv">Exportar el resulrado a CSV</a>
 
 <?php } ?>
