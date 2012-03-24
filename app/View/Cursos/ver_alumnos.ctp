@@ -1,5 +1,32 @@
 <div class='alumnos view verAlumnos'>
-	
+	<table>
+	  <tr>
+	  	<th>Numero de documento</th>
+	  	<th>Apellidos</th>
+	  	<th>Nombres</th>
+	  	<th>Asistecias</th>
+	  	<th>Calificacion</th>
+	  </tr>
+	  <?php foreach($alumnos as $alumno): ?>
+	  <tr>
+	  	<td>
+	  		<?php echo $alumno['Alumno']['alu_documento_de_identificacion']; ?>	
+	  	</td>
+	  	<td>
+	  		<?php echo $alumno['Alumno']['alu_apellido_materno']." ".$alumno['Alumno']['alu_apellido_materno']; ?>		
+	  	</td>
+	  	<td>
+	  		<?php echo $alumno['Alumno']['alu_nombres']; ?>	
+	  	</td>
+	  	<td>
+	  		<?php echo $alumno['CursosAlumno']['cur_asistencias']; ?>		
+	  	</td>
+	  	<td>
+	  		<?php echo $alumno['CursosAlumno']['cur_nota_final']; ?>		
+	  	</td>
+	  </tr>
+	  <?php endforeach;?>
+	</table>
 </div>
 <div class="actions">
 	<ul>

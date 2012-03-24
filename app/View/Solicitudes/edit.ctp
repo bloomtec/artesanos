@@ -13,6 +13,7 @@
 		echo $this -> Form -> input('sol_costos', array('label' => 'Costos', 'type' => 'text', 'value' => str_replace('.',',',$this->data['Solicitud']['sol_costos']), 'class' => 'valor'));
 		echo $this -> Form -> input('sol_numero_de_participantes', array('label' => 'Numero De Participantes','type'=>'text','class'=>'number'));
 	?>
+	
 	</fieldset>
 <?php echo $this->Html->link(__('Cancelar'),array('action'=>'index'),array('class'=>'cancelar'));?>
 <?php echo $this->Form->end(__('Guardar'));?>

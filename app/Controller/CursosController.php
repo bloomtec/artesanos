@@ -91,7 +91,15 @@ class CursosController extends AppController {
 		if (!$this -> Curso -> exists()) {
 			throw new NotFoundException(__('Invalid curso'));
 		}
-		$this -> set('curso',$this -> Curso -> read(null,$id));
+		$this -> Curso -> recursive = -1;
+		$curso = $this -> Curso -> read(null,$id);
+		$alumnos = $this -> Curso -> CursosAlumno -> bindModel(array(
+			'belongsTo' => array(
+				'Alumno'
+			)
+		));
+		$alumnos = $this -> Curso -> CursosAlumno -> find('all',array('conditions'=>array('CursosAlumno.curso_id'=>$id)));
+		$this -> set(compact('curso','alumnos'));
 	}
 	public function ingresarCalificaciones($id = null){
 		$this -> Curso -> id = $id;
