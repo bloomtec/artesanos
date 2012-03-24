@@ -5,19 +5,10 @@
 	<h2><?php echo __('Reporte egresos de inventarios');?></h2>
 	<fieldset>
 		<?php
-		//Personas
 		echo $this -> Form -> input('persona', array('type' => 'select', 'label' => 'Personas', 'empty' => 'Seleccione...', 'options' => $lstPersonas));
-
-		//Departamentos
 		echo $this -> Form -> input('departamento', array('type' => 'select', 'label' => 'Departamentos', 'empty' => 'Seleccione...', 'options' => $lstDepartamentos));
-
-		//Productos
 		echo $this -> Form -> input('producto', array('type' => 'select', 'label' => 'Productos', 'empty' => 'Seleccione...', 'options' => $lstProductos));
-
-		//Fecha inicial
 		echo $this -> Form -> input('fecha1', array('type' => 'text', 'label' => 'Fecha inicial', 'class' => 'date'));
-
-		//Fecha Fecha final
 		echo $this -> Form -> input('fecha2', array('type' => 'text', 'label' => 'Fecha final', 'class' => 'date'));
 		?>
 	</fieldset>
