@@ -51,7 +51,6 @@
 				foreach ($reporteIngresos[$i]['Item'] as $key => $value) {
 					if ($reporteIngresos[$i]['Item'] != array())
 						echo $value['ite_nombre'] . "<br />";
-		
 				}
 			?> 
 		</td>
