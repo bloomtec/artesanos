@@ -169,9 +169,34 @@ class ItemsController extends AppController {
 	}
 
 	private function uploadActivoFijoFile($tmp_name = null, $filename = null) {
+		$this -> cleanupActivoFijoFiles();
 		if ($tmp_name && $filename) {
 			$url = 'files/uploads/activosFijos/' . $filename;
 			return move_uploaded_file($tmp_name, $url);
+		}
+	}
+	
+	private function cleanupActivoFijoFiles() {
+		$items = $this -> Item -> IngresosDeInventario -> find('all', array('conditions' => array('IngresosDeInventario.ing_is_activo_fijo' => true)));
+		$db_files = array();
+		foreach ($items as $key => $item) {
+			$db_files[] = $item['IngresosDeInventario']['ing_archivo_soporte'];
+		}
+		$dir_files = array();
+		$dir_path = APP . 'webroot/files/uploads/activosFijos';
+		if ($handle = opendir($dir_path)) {
+			while (false !== ($entry = readdir($handle))) {
+				if(is_file($dir_path . DS . $entry)) $dir_files[] = 'files/uploads/activosFijos/' . $entry;
+			}
+			closedir($handle);
+		}
+		foreach($dir_files as $file) {
+			if(!in_array($file, $db_files)) {
+				$file = explode('/', $file);
+				$file = $file[count($file) - 1];
+				$tmp_file_path = $dir_path . DS . $file;
+				unlink($tmp_file_path);
+			}
 		}
 	}
 

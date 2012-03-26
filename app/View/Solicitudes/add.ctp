@@ -3,7 +3,7 @@
 	<fieldset>
 		<h2><?php echo __('Agregar Solicitud');?></h2>
 		<?php
-		echo $this -> Form -> input('juntas_provincial_id', array('empty' => 'Seleccione...'));
+		echo $this -> Form -> input('juntas_provincial_id', array('label' => 'Junta Provincial', 'empty' => 'Seleccione...'));
 		// echo $this->Form->input('sol_fecha_solicitud',array('label'=>'Fecha Solicitud'));
 		echo $this -> Form -> input('sol_numero_de_memorandum', array('label' => 'Numero De Memorandum','type'=>'text','class'=>'number'));
 		echo $this -> Form -> input('sol_nombre_de_la_capacitacion', array('label' => 'Nombre De La Capacitacion', 'type' => 'text'));

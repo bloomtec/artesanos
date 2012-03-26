@@ -105,6 +105,22 @@ class Curso extends AppModel {
 			'order' => ''
 		)
 	);
+	
+	public $hasMany = array(
+		'DocumentosCurso' => array(
+			'className' => 'DocumentosCurso',
+			'foreignKey' => 'curso_id',
+			'dependent' => true,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+	);
 
 /**
  * hasAndBelongsToMany associations
