@@ -24,7 +24,7 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $this->Html->link(__('Volver'), array('controller' => 'geograficos', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('Volver'), array('controller' => 'Parroquias', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('Modificar Parroquia'), array('action' => 'edit', $parroquia['Parroquia']['id'])); ?> </li>
 	</ul>
 </div>

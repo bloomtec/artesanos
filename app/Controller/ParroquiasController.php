@@ -13,7 +13,7 @@ class ParroquiasController extends AppController {
 	}
 
 	public function beforeRender() {
-		$this -> layout = "parametros";
+		//$this -> layout = "parametros";
 	}
 
 	public function getBySector($secId=null) {
@@ -23,10 +23,11 @@ class ParroquiasController extends AppController {
 	}
 
 	public function getParroquias($sector_id = null) {
+		$this -> Parroquia ->recursive=0;
 		if ($sector_id) {
-			return $this -> Parroquia -> find('all', array('order' => array('Parroquia.par_nombre' => 'ASC'), 'conditions' => array('Parroquia.sector_id' => $sector_id)));
+			return $this -> Parroquia -> find('list', array('order' => array('Parroquia.par_nombre' => 'ASC'), 'conditions' => array('Parroquia.sector_id' => $sector_id)));
 		} else {
-			return $this -> Parroquia -> find('all', array('order' => array('Parroquia.par_nombre' => 'ASC')));
+			return $this -> Parroquia -> find('list', array('order' => array('Parroquia.par_nombre' => 'ASC')));
 		}
 	}
 
@@ -100,5 +101,9 @@ class ParroquiasController extends AppController {
 		$sectores = $this -> Parroquia -> Sector -> find('list');
 		$this -> set(compact('sectores', 'ciudades', 'cantones', 'provincias'));
 	}
-
+	
+	public function index() {
+		$parroquias = $this -> getParroquias();
+		$this -> set(compact('parroquias'));
+	}
 }
