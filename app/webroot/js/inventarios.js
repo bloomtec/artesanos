@@ -23,9 +23,12 @@ inventarios.actualizarTabla = function(){
 		if(i == length){
 			$('input.subtotal').val(BJS.formatComma(BJS.formatNumber(subtotal)));
 			iva=subtotal * 0.12;
-			total=iva + subtotal;
-			$('input.iva').val(BJS.formatComma(BJS.formatNumber(iva)));
-			$('input.total').val(BJS.formatComma(BJS.formatNumber(total)));
+			iva= (new Number(iva)).toFixed(2);
+			total= parseFloat(iva) + parseFloat(subtotal);
+			total = (new Number(total)).toFixed(2);
+			console.log(total);
+			$('input.iva').val(BJS.formatComma(iva));
+			$('input.total').val(BJS.formatComma(total));
 			
 		}
 		

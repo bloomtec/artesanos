@@ -104,7 +104,7 @@ class Calificacion extends AppModel {
 		'DatosPersonal' => array(
 			'className' => 'DatosPersonal',
 			'foreignKey' => 'calificacion_id',
-			'dependent' => false,
+			'dependent' => true,
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
@@ -117,7 +117,7 @@ class Calificacion extends AppModel {
 		'Local' => array(
 			'className' => 'Local',
 			'foreignKey' => 'calificacion_id',
-			'dependent' => false,
+			'dependent' => true,
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
@@ -130,7 +130,7 @@ class Calificacion extends AppModel {
 		'Taller' => array(
 			'className' => 'Taller',
 			'foreignKey' => 'calificacion_id',
-			'dependent' => false,
+			'dependent' => true,
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
@@ -143,7 +143,7 @@ class Calificacion extends AppModel {
 		'Documento' => array(
 			'className' => 'Documento',
 			'foreignKey' => 'calificacion_id',
-			'dependent' => false,
+			'dependent' => true,
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',

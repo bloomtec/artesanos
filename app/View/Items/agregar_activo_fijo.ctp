@@ -4,7 +4,7 @@
 	<fieldset>
 		<h2><?php echo __('Ingreso De Activos Fijos');?></h2>
 		<?php echo $this -> Form -> input('IngresosDeInventario.ing_numero_de_memorandum', array('label' => 'No. Memorandum')); ?>
-		<?php echo $this -> Form -> input('IngresosDeInventario.ing_provincia', array('label' => 'Provincia', 'type' => 'select', 'empty' => 'Seleccione...', 'options' => $provincias)); ?>
+		<?php echo $this -> Form -> input('IngresosDeInventario.ing_provincia', array('label' => 'Provincia', 'type' => 'select', 'options' => $provincias)); ?>
 		<?php echo $this -> Form -> input('IngresosDeInventario.ing_canton', array('label' => 'Canton', 'type' => 'select', 'empty' => 'Seleccione...')); ?>
 		<?php echo $this -> Form -> input('IngresosDeInventario.ing_ciudad', array('label' => 'Ciudad', 'type' => 'select', 'empty' => 'Seleccione...')); ?>
 		<?php echo $this -> Form -> input('Persona.per_departamento', array('label' => 'Departamento', 'type' => 'select', 'options' => $departamentos)); ?>
