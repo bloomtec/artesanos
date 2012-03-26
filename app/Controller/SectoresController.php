@@ -13,7 +13,7 @@ class SectoresController extends AppController {
 	}
 
 	public function beforeRender() {
-		$this -> layout = "parametros";
+		//$this -> layout = "parametros";
 	}
 
 	public function getByCiudad($ciuId = null) {
@@ -26,10 +26,11 @@ class SectoresController extends AppController {
 	}
 
 	public function getSectores($ciudad_id = null) {
+		$this -> Sector ->recursive=-1;
 		if ($ciudad_id) {
-			return $this -> Sector -> find('all', array('order' => array('Sector.sec_nombre' => 'ASC'), 'conditions' => array('Sector.ciudad_id' => $ciudad_id)));
+			return $this -> Sector -> find('list', array('order' => array('Sector.sec_nombre' => 'ASC'), 'conditions' => array('Sector.ciudad_id' => $ciudad_id)));
 		} else {
-			return $this -> Sector -> find('all', array('order' => array('Sector.sec_nombre' => 'ASC')));
+			return $this -> Sector -> find('list', array('order' => array('Sector.sec_nombre' => 'ASC')));
 		}
 	}
 
@@ -104,6 +105,11 @@ class SectoresController extends AppController {
 		$cantones = $this -> Sector -> Ciudad -> Canton -> find('list');
 		$ciudades = $this -> Sector -> Ciudad -> find('list');
 		$this -> set(compact('ciudades', 'cantones', 'provincias'));
+	}
+	
+	public function index() {
+		$sectores = $this -> getSectores();
+		$this -> set(compact('sectores'));
 	}
 
 }
