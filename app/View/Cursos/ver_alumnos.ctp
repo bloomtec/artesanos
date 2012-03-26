@@ -6,6 +6,7 @@
 	  	<th>Nombres</th>
 	  	<th>Asistecias</th>
 	  	<th>Calificacion</th>
+	  	<th clas='action'> Acciones </th>
 	  </tr>
 	  <?php foreach($alumnos as $alumno): ?>
 	  <tr>
@@ -23,6 +24,9 @@
 	  	</td>
 	  	<td>
 	  		<?php echo $alumno['CursosAlumno']['cur_nota_final']; ?>		
+	  	</td>
+	  	<td class="actions">
+	  		<?php  if($alumno['CursosAlumno']['cur_aprobo']) echo $this -> Html -> link('certificado',array("#"),array('class'=>'certificaro','title'=>'Descargar certificado	'));?>
 	  	</td>
 	  </tr>
 	  <?php endforeach;?>
