@@ -162,6 +162,9 @@ $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('contr
 					<a href="#">Mantenimientos</a>
 					<ul>
 						<li>
+							<a href="/juntas_provinciales">Juntas Provinciales</a>
+						</li>
+						<li>
 							<a href="/personas">Personas</a>
 						</li>
 						<li>

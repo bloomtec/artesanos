@@ -6,6 +6,8 @@ App::uses('AppModel', 'Model');
  * @property Curso $Curso
  */
 class Instructor extends AppModel {
+	
+	public $displayField = 'nombre_completo';
 /**
  * Validation rules
  *
@@ -14,11 +16,12 @@ class Instructor extends AppModel {
 	public $virtualFields=array(
 		'nombre_completo'=>'CONCAT(ins_nombres," ",ins_apellido_paterno," ",ins_apellido_materno )'
 	);
+	
 	public $validate = array(
 		'ins_nacionalidad' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Seleccione la nacionalidad',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -38,7 +41,7 @@ class Instructor extends AppModel {
 		'ins_documento_de_identificacion' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Ingrese la identificación',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -48,7 +51,7 @@ class Instructor extends AppModel {
 		'ins_apellido_paterno' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Ingrese el apellido paterno',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -58,7 +61,7 @@ class Instructor extends AppModel {
 		'ins_apellido_materno' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Ingrese el apellido materno',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -68,7 +71,7 @@ class Instructor extends AppModel {
 		'ins_nombres' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Ingrese el nombre',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -78,7 +81,7 @@ class Instructor extends AppModel {
 		'ins_fecha_de_nacimiento' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Ingrese la fecha de nacimiento',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -88,7 +91,7 @@ class Instructor extends AppModel {
 		'ins_tipo_de_sangre' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Seleccione el tipo de sangre',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -98,7 +101,7 @@ class Instructor extends AppModel {
 		'ins_estado_civil' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Seleccione el estado civil',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -108,7 +111,7 @@ class Instructor extends AppModel {
 		'ins_especialidad' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Ingrese la especialidad',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -118,7 +121,7 @@ class Instructor extends AppModel {
 		'ins_experiencia' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Ingrese la experiencia',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule

@@ -5,7 +5,7 @@
 	<?php
 		echo $this->Form->input('id');
 		
-		echo $this->Form->input('ins_nacionalidad',array('label'=>'Nacionalidad'));
+		echo $this->Form->input('ins_nacionalidad',array('label'=>'Nacionalidad', 'options' => $nacionalidades, 'empty' => 'Seleccione...'));
 		$selectedCedula = $this->data['Instructor']['ins_is_cedula']?$this->data['Instructor']['ins_is_cedula']:0;
 		echo $this->Form->input('ins_is_cedula', array('label' => false, 'div'=>'input select usu-cedula', 'type' => 'select','options'=>array('1'=>'Cédula: ','0'=>'Pasaporte: '),'value'=>$selectedCedula));	
 		
