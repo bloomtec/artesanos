@@ -100,7 +100,7 @@ class CantonesController extends AppController {
 	}
 
 	public function index() {
-		$cantones = $this -> Canton -> find('list');
+		$cantones = $this -> paginate();
 		//debug($cantones);
 		$this -> set(compact('cantones'));
 	}

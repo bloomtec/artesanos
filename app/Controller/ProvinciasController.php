@@ -91,7 +91,7 @@ class ProvinciasController extends AppController {
 	}
 
 	public function index() {
-		$provincias = $this -> getProvincias();
+		$provincias = $this -> paginate();
 		$this -> set(compact('provincias'));
 	}
 
