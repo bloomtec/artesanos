@@ -108,7 +108,7 @@ class SectoresController extends AppController {
 	}
 	
 	public function index() {
-		$sectores = $this -> getSectores();
+		$sectores = $this -> paginate();
 		$this -> set(compact('sectores'));
 	}
 

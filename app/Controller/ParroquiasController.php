@@ -103,7 +103,7 @@ class ParroquiasController extends AppController {
 	}
 	
 	public function index() {
-		$parroquias = $this -> getParroquias();
+		$parroquias = $this -> paginate();
 		$this -> set(compact('parroquias'));
 	}
 }

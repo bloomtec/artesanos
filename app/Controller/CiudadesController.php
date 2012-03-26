@@ -102,7 +102,7 @@ class CiudadesController extends AppController {
 	}
 	
 	public function index() {
-		$ciudades = $this -> getCiudades();	
+		$ciudades = $this -> paginate();	
 		$this -> set(compact('ciudades'));
 	}
 
