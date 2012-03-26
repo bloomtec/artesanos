@@ -88,4 +88,9 @@ class ProvinciasController extends AppController {
 		}
 	}
 
+	public function index() {
+		$provincias = $this -> requestAction('/provincias/getProvincias');
+		$this -> set(compact('provincias'));
+	}
+
 }
