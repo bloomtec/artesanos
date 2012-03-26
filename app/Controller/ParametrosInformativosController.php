@@ -13,7 +13,7 @@ class ParametrosInformativosController extends AppController {
 	}
 	
 	public function beforeRender() {
-		$this -> layout = "parametros";
+		//$this -> layout = "parametros";
 	}
 	
 	public function getNombre($id) {

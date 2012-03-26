@@ -13,7 +13,7 @@ class ConfiguracionesController extends AppController {
 	}
 	
 	public function beforeRender() {
-		$this -> layout = "parametros";
+		//$this -> layout = "parametros";
 	}
 	
 	public function getValorConfiguracion($valor = null) {

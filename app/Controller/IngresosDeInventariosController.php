@@ -15,10 +15,9 @@ class IngresosDeInventariosController extends AppController {
 		$this -> loadModel('IngresosDeInventariosItem', true);
 		$this -> loadModel('IngresosDeInventario', true);
 		$this -> loadModel('Persona', true);
-
+		$reporte = false;
+		
 		if ($this -> request -> is('post')) {
-
-	
 
 			$condiciones = array();
 			$idProveedor = $this -> data['Reporte']['proveedor'];
@@ -81,8 +80,9 @@ class IngresosDeInventariosController extends AppController {
 			
 			$reporteIngresos = $this -> IngresosDeInventario -> find('all', array('conditions' => $conditions));
 			//debug($reporteIngresos);
+			$reporte = true;
 			$this -> Session -> write('reporteIngresos', $reporteIngresos);
-			$this -> set(compact('reporteIngresos'));
+			$this -> set(compact('reporteIngresos','reporte'));
 
 		} else {
 			//ids de personas en ingresos
@@ -99,7 +99,7 @@ class IngresosDeInventariosController extends AppController {
 			//debug($lstProductos);
 			
 			$lstDepartamentos = $this -> IngresosDeInventario -> getValores(14);
-			$this -> set(compact('lstProveedores', 'lstPersonas', 'lstDepartamentos', 'lstProductos'));
+			$this -> set(compact('lstProveedores', 'lstPersonas', 'lstDepartamentos', 'lstProductos','reporte'));
 		}
 	}
 

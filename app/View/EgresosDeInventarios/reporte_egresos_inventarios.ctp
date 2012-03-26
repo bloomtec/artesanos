@@ -1,4 +1,4 @@
-<?php if(isset($lstPersonas)) {
+<?php if($reporte==false) {
 ?>
 <div class="reportes form">
 	<?php echo $this -> Form -> create('Reporte');?>
@@ -51,7 +51,7 @@ for($i=0;$i < count($reporteEgresos);$i++) {
 </table>
 <a class='button' href="/egresosDeInventarios/reporteEgresosInventarios">Volver</a>
 &nbsp; 
-<a class='button' href="/egresosDeInventarios/impReporteEgresosInventarios">Imprimir</a>
+<a class='button' href="/egresosDeInventarios/impReporteEgresosInventarios">Descargar pdf</a>
 &nbsp;
-<a class='button' href="/egresosDeInventarios/export_csv">Exportar el resulrado a CSV</a>
+<a class='button' href="/egresosDeInventarios/export_csv">Exportar a CSV</a>
 <?php }?>

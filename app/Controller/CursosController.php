@@ -25,8 +25,9 @@ class CursosController extends AppController {
 			$this->layout='pdf2';
 		}
 		
+		$titulo = "Cursos";
 		$cursos =  $this -> paginate();
-		$this -> set(compact('cursos', 'pdf'));
+		$this -> set(compact('cursos', 'pdf','titulo'));
 	}
 
 	/**

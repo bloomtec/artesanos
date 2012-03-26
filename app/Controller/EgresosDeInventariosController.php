@@ -15,7 +15,7 @@ class EgresosDeInventariosController extends AppController {
 		$this -> loadModel('EgresosDeInventariosItem', true);
 		$this -> loadModel('EgresosDeInventario', true);
 		$this -> loadModel('Persona', true);
-
+		$reporte = false;
 		if ($this -> request -> is('post')) {
 			$this -> Recursive = 0;
 
@@ -75,7 +75,8 @@ class EgresosDeInventariosController extends AppController {
 			$reporteEgresos = $this -> EgresosDeInventario -> find('all', array('conditions' => $conditions));
 			$this -> Session -> write('reporteEgresos', $reporteEgresos);
 			//debug($reporteEgresos);
-			$this -> set(compact('reporteEgresos'));
+			$reporte=true;
+			$this -> set(compact('reporteEgresos','reporte'));
 			
 		} else {
 			//ids de personas en egresos
@@ -86,7 +87,7 @@ class EgresosDeInventariosController extends AppController {
 			$idsItems = $this -> EgresosDeInventariosItem -> find("list", array("fields"=>array("item_id")));
 			$lstProductos = $this -> Item -> find('list', array('fields' => array('id', 'ite_nombre'),'conditions' => array('Item.id' => $idsItems)));
 			$lstDepartamentos = $this -> EgresosDeInventario -> getValores(14);
-			$this -> set(compact('lstPersonas', 'lstDepartamentos', 'lstProductos'));
+			$this -> set(compact('lstPersonas', 'lstDepartamentos', 'lstProductos','reporte'));
 		}
 		
 	}
@@ -96,9 +97,9 @@ class EgresosDeInventariosController extends AppController {
 		$reporteEgresos = $this -> Session -> read('reporteEgresos');
 		$titulo = "ReporteEgresosDeInventarios";
 		//Tamaño de la fuente
-		$tamano = 5;
+		$tamano = 6;
 		//$this -> Session -> delete('reporteIngresos');
-		$this -> set(compact('reporteEgresos','titulo','tamano'));
+		$this -> set(compact('reporteEgresos','titulo','tamano','reporte'));
 	}
 	
 	function export_csv() {

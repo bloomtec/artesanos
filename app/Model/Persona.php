@@ -52,6 +52,17 @@ class Persona extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
+		
+		'per_departamento' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Debes seleccionar un departamento',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		)
 	);
 
 /**

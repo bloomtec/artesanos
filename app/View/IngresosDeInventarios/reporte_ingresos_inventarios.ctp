@@ -1,8 +1,7 @@
-<?php if(isset($lstProveedores)) {
-?>
+<?php if($reporte==false) { ?>
 <div class="reportes form">
 	<?php echo $this -> Form -> create('Reporte');?>
-	<h2><?php echo __('Reporte De Calificaciones Por Operador'); ?></h2>
+	<h2><?php echo __('Reporte ingresos de inventarios'); ?></h2>
 	<fieldset>
 		<?php
 		echo $this -> Form -> input('proveedor', array('type' => 'select', 'label' => 'Proveedores', 'empty' => 'Seleccione...', 'options' => $lstProveedores));
@@ -64,8 +63,8 @@
 
 	<a class='button' href="/ingresosDeInventarios/reporteIngresosInventarios">Volver</a>
 	&nbsp;
-	<a class='button' href="/ingresosDeInventarios/impReporteIngresosInventarios">Imprimir</a>
+	<a class='button' href="/ingresosDeInventarios/impReporteIngresosInventarios">Descargar pdf</a>
 	&nbsp;
-	<a class='button' href="/ingresosDeInventarios/export_csv">Exportar el resulrado a CSV</a>
+	<a class='button' href="/ingresosDeInventarios/export_csv">Exportar a CSV</a>
 
 <?php } ?>
