@@ -406,17 +406,38 @@ p {
 	clear:both;
 	
 }
-#main-menu ul  ul li:hover ul{
+#main-menu ul  ul li:hover > ul{
 	display:block;
 	position: absolute;
 	left:120px;
 	
 }
-#main-menu ul  .last ul li:hover ul{
+#main-menu ul  .last ul li:hover > ul{
 	display:block;
 	position: absolute;
 	left:-120px;
+}
+
+#main-menu ul ul ul ul{
+	left:1000px;
+	display: none;
+	top:-1px;
+	clear:both;
 }	
+#main-menu ul ul ul ul li{
+	clear:both;
+	
+}
+#main-menu ul  ul  ul  li:hover ul{
+	display:block;
+	position: absolute;
+	left:120px;
+}
+#main-menu ul  .last ul ul li:hover > ul{
+	display:block;
+	position: absolute;
+	left: -120px;
+}		
 #content {
 	background: #fff;
 	clear: both;
@@ -866,6 +887,18 @@ span .pdf{
 .actions .privileges {
 	background-image: url(/img/permisos.png);
 	background-size: 20px;
+}
+.actions .verAlumnos {
+	background-image: url(/img/ver_alumnos.png);
+	background-size: 25px;
+}
+.actions .calificaciones {
+	background-image: url(/img/cerrar_curso.png);
+	background-size: 25px;
+}
+.actions .certificado, .actions .carnet {
+	background-image: url(/img/calificar.png);
+	background-size: 32px;
 }
 /** Paging **/
 .paging {
