@@ -26,7 +26,7 @@
 	  		<?php echo $alumno['CursosAlumno']['cur_nota_final']; ?>		
 	  	</td>
 	  	<td class="actions">
-	  		<?php  if($alumno['CursosAlumno']['cur_aprobo']) echo $this -> Html -> link('certificado',array("#"),array('class'=>'certificaro','title'=>'Descargar certificado	'));?>
+	  		<?php  if($alumno['CursosAlumno']['cur_aprobo']) echo $this -> Html -> link('certificado',array("action"=>'certificado',$alumno['CursosAlumno']['id']),array('class'=>'certificaro','title'=>'Descargar certificado	'));?>
 	  	</td>
 	  </tr>
 	  <?php endforeach;?>

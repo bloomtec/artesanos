@@ -114,13 +114,21 @@ class CursosController extends AppController {
 			throw new NotFoundException(__('Invalid curso'));
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
-			foreach($this -> request -> data['CursosAlumnos'] as $cursosAlumno){
-				$cursosAlumno['cur_nota_final']=$this -> formatearValor($cursosAlumno['cur_nota_final']);
+			foreach($this -> request -> data['CursosAlumno'] as $cursosAlumno){
+				 $this -> Curso -> CursosAlumno -> id=$cursosAlumno['id'];
+				 $this -> Curso -> CursosAlumno -> saveField('cur_nota_final',$this -> formatearValor($cursosAlumno['cur_nota_final']));
+				  $this -> Curso -> CursosAlumno -> saveField('cur_asistencias',$cursosAlumno['cur_asistencias']);
+				 if((float)$this -> formatearValor($cursosAlumno['cur_nota_final'] >= 3)){
+				 	$this -> Curso -> CursosAlumno -> saveField('cur_aprobo',true);
+				 }else{
+				 	$this -> Curso -> CursosAlumno -> saveField('cur_aprobo',false);
+				 }
+				
 			}
 				
 		} else{		
 			$curso = $this -> Curso -> read(null,$id);
-			$alumnos = $this -> Curso -> CursosAlumno -> bindModel(array(
+			 $this -> Curso -> CursosAlumno -> bindModel(array(
 				'belongsTo' => array(
 					'Alumno'
 				)
@@ -128,6 +136,16 @@ class CursosController extends AppController {
 			$alumnos = $this -> Curso -> CursosAlumno -> find('all',array('conditions'=>array('CursosAlumno.curso_id'=>$id)));
 			$this -> set(compact('curso','alumnos'));
 		}
+	}
+
+	public function certificado($alumnoCursoId){
+		$this -> Curso -> CursosAlumno -> bindModel(array(
+				'belongsTo' => array(
+					'Alumno'
+				)
+			));
+		$alumno =  $this -> Curso -> CursosAlumno -> read(null,$alumnoCursoId);
+		debug($alumno);
 	}
 	/**
 	 * delete method
