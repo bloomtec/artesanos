@@ -103,7 +103,7 @@ $pdf -> writeHTML($html, true, false, true, false, '');
 // ---------------------------------------------------------
 
 //Close and output PDF document
-if (isset($titulo)) {
+if (isset($nombre_archivo)) {
 	$pdf -> Output($nombre_archivo . "_" . date("Y-m-d_H:i:s", time()).".pdf", 'D');
 } else {
 	$pdf -> Output('reporte.pdf', 'D');
