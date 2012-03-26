@@ -18,12 +18,11 @@ class CursosController extends AppController {
 	 *
 	 * @return void
 	 */
-	public function index($pdf=null) {
+	public function index($pdf="") {
 		$this -> Curso -> recursive = 0;
 		
-		if($pdf) {
+		if($pdf!="") {
 			$this->layout='pdf2';
-			
 		}
 		
 		$cursos =  $this -> paginate();

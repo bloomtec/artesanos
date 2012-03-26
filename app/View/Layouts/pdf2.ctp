@@ -63,11 +63,12 @@ table {
 }
 
 tr td {
-	padding: 2px;
+	padding: 4px;
 	text-align: left;
 	vertical-align: middle;
 	border: 1px solid black;
 	height: auto;
+	margin-top:2px;
 }
 th{
 	height: auto;

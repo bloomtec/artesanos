@@ -1,20 +1,20 @@
 <div class="cursos index">
 	<h2><?php echo __('Cursos');?></h2>
 	<div class="search">
-		<?php if($pdf==null) { ?> 
+		<?php if($pdf=="") { ?> 
 		<label>BUSCAR:</label>
 		<input type="text" />
-		<<?php } ?>
+		<?php } ?>
 		<input type="button" class="submit search-generic" value="Search" />
 	</div>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-		<?php if($pdf==null) { ?> 
+		<?php if($pdf!="") { ?> 
 		<th>Solicitud</th>
 		<th>Instructor</th>
 		<th>Nombre</th>
 		<th>Descripción</th>
-		<th>Fecha De Inicio');?></th>
+		<th>Fecha De Inicio</th>
 		<th>Fecha De Fin</th>
 		<th>Costo</th>
 		<?php }else { ?>
@@ -25,26 +25,30 @@
 		<th><?php echo $this->Paginator->sort('cur_fecha_de_inicio','Fecha De Inicio');?></th>
 		<th><?php echo $this->Paginator->sort('cur_fecha_de_fin','Fecha De Fin');?></th>
 		<th><?php echo $this->Paginator->sort('cur_costo','Costo');?></th>
-		<?php }if($pdf==null) { ?> 
+		<?php } if($pdf=="") { ?>
 		<th class="actions"><?php echo __('Acciones');?></th>
 		<?php } ?> 
 	</tr>
 	<?php $i = 0; foreach ($cursos as $curso): ?>
 	<tr>
 		<td>
-			<?php echo $this->Html->link($curso['Solicitud']['id'], array('controller' => 'solicitudes', 'action' => 'view', $curso['Solicitud']['id'])); ?>
+			<?php if($pdf=="") { 
+			 echo $this->Html->link($curso['Solicitud']['id'], array('controller' => 'solicitudes', 'action' => 'view', $curso['Solicitud']['id']));
+			} else { echo $curso['Solicitud']['id']; } ?>
 		</td>
 		<td>
-			<?php echo $this->Html->link($curso['Instructor']['id'], array('controller' => 'instructores', 'action' => 'view', $curso['Instructor']['id'])); ?>
+			<?php if($pdf=="") { 
+			 echo $this->Html->link($curso['Instructor']['id'], array('controller' => 'instructores', 'action' => 'view', $curso['Instructor']['id']));
+			} else { echo $curso['Instructor']['id']; } ?>
 		</td>
 		<td><?php echo h($curso['Curso']['cur_nombre']); ?>&nbsp;</td>
 		<td><?php echo h($curso['Curso']['cur_descripcion']); ?>&nbsp;</td>
 		<td><?php echo h($curso['Curso']['cur_fecha_de_inicio']); ?>&nbsp;</td>
 		<td><?php echo h($curso['Curso']['cur_fecha_de_fin']); ?>&nbsp;</td>
 		<td><?php echo h($curso['Curso']['cur_costo']); ?>&nbsp;</td>
-		<?php if($pdf==null) { ?> 
+		<?php if($pdf=="") { ?> 
 		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $curso['Curso']['id']),array('class'=>'view','title'=>'Ver')); ?>
+			<?php echo $this->Html->link(__('View'), array('action' => 'view', $curso['Curso']['id']), array('class'=>'view','title'=>'Ver')); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $curso['Curso']['id']),array('class'=>'edit','title'=>'Modificar')); ?>
 			<?php echo $this->Html->link(__('Ver Alumnos'), array('action' => 'verAlumnos', $curso['Curso']['id']),array('class'=>'verAlumnos','title'=>'Ver alumnos')); ?>
 			<?php echo $this->Html->link(__('Ingresar notas'), array('action' => 'ingresarCalificaciones', $curso['Curso']['id']),array('class'=>'calificaciones','title'=>'Ingresar Calificaciones')); ?>
@@ -55,7 +59,7 @@
 	<?php endforeach; ?>
 	</table>
 
-<?php if($pdf==null) { ?> 
+<?php if($pdf=="") { ?> 
 	<div class="paging">
 	<!--<p>
 	<?php
