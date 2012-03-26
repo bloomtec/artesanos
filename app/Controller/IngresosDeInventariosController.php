@@ -18,7 +18,7 @@ class IngresosDeInventariosController extends AppController {
 
 		if ($this -> request -> is('post')) {
 
-			$this -> Recursive = 0;
+	
 
 			$condiciones = array();
 			$idProveedor = $this -> data['Reporte']['proveedor'];
@@ -30,6 +30,7 @@ class IngresosDeInventariosController extends AppController {
 
 			//Condiciones
 			$conditions = array();
+			$conditions[] = array('IngresosDeInventario.ing_is_activo_fijo' => 1);
 
 			if (!empty($nomDepartamento)) {
 				$idsPersonasDep = $this -> Persona -> find('list', array('fields' => array('id'), 'conditions' => array('Persona.per_departamento' => $nomDepartamento)));
@@ -37,7 +38,8 @@ class IngresosDeInventariosController extends AppController {
 			}
 
 			if (!empty($idProducto)) {
-				$idsProductos = $this -> IngresosDeInventariosItem -> find('list', array('fields' => array('ingresos_de_inventario_id'), 'conditions' => array('IngresosDeInventariosItem.item_id' => $idProducto)));
+				//$this -> IngresosDeInventariosItem ->recursive=-1;
+				$idsProductos = $this -> IngresosDeInventariosItem -> find('list', array('fields' => array('ingresos_de_inventario_id'), 'conditions' => array('IngresosDeInventariosItem.item_id' => $idProducto,'ite_is_activo_fijo'=>1)));
 				$conditions[] = array('IngresosDeInventario.id' => $idsProductos);
 			}
 
@@ -71,18 +73,31 @@ class IngresosDeInventariosController extends AppController {
 
 			} else if ($fecha1 != null) {
 				$conditions[] = array('IngresosDeInventario.created >=' => $fecha1);
+			} else if ($fecha2 != null) {
+				$conditions[] = array('IngresosDeInventario.created <=' => $fecha2);
 			}
 
 			//Reporte ingresos
+			
 			$reporteIngresos = $this -> IngresosDeInventario -> find('all', array('conditions' => $conditions));
+			//debug($reporteIngresos);
 			$this -> Session -> write('reporteIngresos', $reporteIngresos);
 			$this -> set(compact('reporteIngresos'));
 
 		} else {
-
-			$lstProveedores = $this -> IngresosDeInventario -> Proveedor -> find('list', array('fields' => array('id', 'pro_nombre_razon_social')));
-			$lstPersonas = $this -> IngresosDeInventario -> Persona -> find('list', array('fields' => array('id', 'datos_completos')));
-			$lstProductos = $this -> Item -> find('list', array('fields' => array('id', 'ite_nombre')));
+			//ids de personas en ingresos
+			$lstPersonasId = $this -> IngresosDeInventario -> find('list', array("fields" => array('persona_id')));
+			//ids de proveedor en ingresos
+			$lstProveedoresId = $this -> IngresosDeInventario -> find('list', array("fields" => array('proveedor_id')));
+			//Solamente los  proveedores que aparecen en ingresos
+			$lstProveedores = $this -> IngresosDeInventario -> Proveedor -> find('list', array('conditions' => array('Proveedor.id' => $lstProveedoresId), 'fields' => array('id', 'pro_nombre_razon_social')));
+			//Solamente las personas que han hecho ingresos
+			$lstPersonas = $this -> IngresosDeInventario -> Persona -> find('list', array('conditions' => array('Persona.id' => $lstPersonasId), 'fields' => array('id', 'datos_completos'), 'order' => array('per_documento_de_identidad')));
+			//ids Items en IngresosDeInventariosItem
+			$idsItems = $this -> IngresosDeInventariosItem -> find("list", array("fields"=>array("item_id")));
+			$lstProductos = $this -> Item -> find('list', array('fields' => array('id', 'ite_nombre'), 'conditions' => array('Item.id' => $idsItems)));
+			//debug($lstProductos);
+			
 			$lstDepartamentos = $this -> IngresosDeInventario -> getValores(14);
 			$this -> set(compact('lstProveedores', 'lstPersonas', 'lstDepartamentos', 'lstProductos'));
 		}
@@ -102,40 +117,32 @@ class IngresosDeInventariosController extends AppController {
 
 		$this -> layout = "";
 		$this -> render(false);
-	
+
 		$csv = new csvHelper();
 		$reporteIngresos = $this -> Session -> read('reporteIngresos');
 
-		$cabeceras = array('Proveedor', 'Ciudad', 'Persona', '# Memorando','Asunto', 'Sub total', 'IVA', 'Total', 'Items', 'Fecha');
-		
+		$cabeceras = array('Proveedor', 'Ciudad', 'Persona', '# Memorando', 'Asunto', 'Sub total', 'IVA', 'Total', 'Items', 'Fecha');
+
 		$csv -> addRow($cabeceras);
 
 		for ($i = 0; $i < count($reporteIngresos); $i++) {
 			$items = "";
 			foreach ($reporteIngresos[$i]['Item'] as $key => $value) {
-					 if ($reporteIngresos[$i]['Item'] != array())
-					 if($items==""){
-					 	$items = $value['ite_nombre'];
-					 }else {
-					 	$items = $items.' '.$value['ite_nombre'];
-					 }
-			 }
+				if ($reporteIngresos[$i]['Item'] != array())
+					if ($items == "") {
+						$items = $value['ite_nombre'];
+					} else {
+						$items = $items . ' ' . $value['ite_nombre'];
+					}
+			}
 
-			$filas = array($reporteIngresos[$i]['Proveedor']['pro_nombre_razon_social'], 
-			$reporteIngresos[$i]['Ciudad']['ciu_nombre'], 
-			$reporteIngresos[$i]['Persona']['per_nombres'], 
-			$reporteIngresos[$i]['IngresosDeInventario']['ing_numero_de_memorandum'], 
-			$reporteIngresos[$i]['IngresosDeInventario']['ing_asunto'], 
-			$reporteIngresos[$i]['IngresosDeInventario']['ing_subtotal'], 
-			$reporteIngresos[$i]['IngresosDeInventario']['ing_iva'], 
-			$reporteIngresos[$i]['IngresosDeInventario']['ing_total'], 
-			$items, 
-			$reporteIngresos[$i]['IngresosDeInventario']['created']);
+			$filas = array($reporteIngresos[$i]['Proveedor']['pro_nombre_razon_social'], $reporteIngresos[$i]['Ciudad']['ciu_nombre'], $reporteIngresos[$i]['Persona']['per_nombres'], $reporteIngresos[$i]['IngresosDeInventario']['ing_numero_de_memorandum'], $reporteIngresos[$i]['IngresosDeInventario']['ing_asunto'], $reporteIngresos[$i]['IngresosDeInventario']['ing_subtotal'], $reporteIngresos[$i]['IngresosDeInventario']['ing_iva'], $reporteIngresos[$i]['IngresosDeInventario']['ing_total'], $items, $reporteIngresos[$i]['IngresosDeInventario']['created']);
 
 			$csv -> addRow($filas);
-		
+
 		}
-		$titulo = "csvIngresosInventarios_".date("Y-m-d H:i:s", time()).".csv";
-		echo $csv -> render($titulo); 
+		$titulo = "csvIngresosInventarios_" . date("Y-m-d H:i:s", time()) . ".csv";
+		echo $csv -> render($titulo);
 	}
+
 }

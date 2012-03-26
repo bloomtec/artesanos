@@ -19,7 +19,7 @@
 <?php } else { ?>
 <br />
 <br />
-<h2><?php echo __('Reporte egresos de inventarios');?></h2>
+<h2><?php echo __('Reporte ingresos de inventarios');?></h2>
 <table>
 	<tr>
 		<th>Proveedor</th>

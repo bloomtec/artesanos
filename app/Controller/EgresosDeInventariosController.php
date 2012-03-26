@@ -12,8 +12,8 @@ class EgresosDeInventariosController extends AppController {
 	public function reporteEgresosInventarios() {
 		
 		$this -> loadModel('Item', true);
-		$this -> loadModel('IngresosDeInventariosItem', true);
-		$this -> loadModel('IngresosDeInventario', true);
+		$this -> loadModel('EgresosDeInventariosItem', true);
+		$this -> loadModel('EgresosDeInventario', true);
 		$this -> loadModel('Persona', true);
 
 		if ($this -> request -> is('post')) {
@@ -28,15 +28,17 @@ class EgresosDeInventariosController extends AppController {
 
 			//Condiciones
 			$conditions = array();
-
+			$conditions[] = array('EgresosDeInventario.egr_is_activo_fijo' => 1);
+			
+			
 			if (!empty($nomDepartamento)) {
 				$idsPersonasDep = $this -> Persona -> find('list', array('fields' => array('id'), 'conditions' => array('Persona.per_departamento' => $nomDepartamento)));
 				$conditions[] = array('EgresosDeInventario.persona_id' => $idsPersonasDep);
 			}
 
 			if (!empty($idProducto)) {
-				$idsProductos = $this -> EgresosDeInventariosItem -> find('list', array('fields' => array('egresos_de_inventario_id'), 'conditions' => array('EgresosDeInventariosItem.item_id' => $idProducto)));
-				$conditions[] = array('EgresosDeInventariosItem.id' => $idsProductos);
+				$idsProductos = $this -> EgresosDeInventariosItem -> find('list', array('fields' => array('egresos_de_inventario_id'), 'conditions' => array('EgresosDeInventariosItem.item_id' => $idProducto,'ite_is_activo_fijo'=>1)));
+				$conditions[] = array('EgresosDeInventario.id' => $idsProductos);
 			}
 
 			if (!empty($idPersona)) {
@@ -65,8 +67,10 @@ class EgresosDeInventariosController extends AppController {
 			
 			} else if ($fecha1 != null) {
 				$conditions[] = array('IngresosDeInventario.created >=' => $fecha1);
+			} else if ($fecha2 != null) {
+				$conditions[] = array('IngresosDeInventario.created <=' => $fecha2);
 			}
-
+			
 			//Reporte egresos
 			$reporteEgresos = $this -> EgresosDeInventario -> find('all', array('conditions' => $conditions));
 			$this -> Session -> write('reporteEgresos', $reporteEgresos);
@@ -74,8 +78,13 @@ class EgresosDeInventariosController extends AppController {
 			$this -> set(compact('reporteEgresos'));
 			
 		} else {
-			$lstPersonas = $this -> EgresosDeInventario -> Persona -> find('list', array('fields' => array('id', 'datos_completos')));
-			$lstProductos = $this -> Item -> find('list', array('fields' => array('id', 'ite_nombre')));
+			//ids de personas en egresos
+			$lstPersonasId = $this -> EgresosDeInventario -> find('list', array("fields" => array('persona_id')));
+			//Solamente los  proveedores que aparecen en egresos
+			$lstPersonas = $this -> Persona -> find('list', array('order' => array('per_documento_de_identidad'),'fields' => array('id', 'datos_completos'),'conditions' => array('Persona.id' => $lstPersonasId)));
+			//ids Items en EgresosDeInventariosItem
+			$idsItems = $this -> EgresosDeInventariosItem -> find("list", array("fields"=>array("item_id")));
+			$lstProductos = $this -> Item -> find('list', array('fields' => array('id', 'ite_nombre'),'conditions' => array('Item.id' => $idsItems)));
 			$lstDepartamentos = $this -> EgresosDeInventario -> getValores(14);
 			$this -> set(compact('lstPersonas', 'lstDepartamentos', 'lstProductos'));
 		}

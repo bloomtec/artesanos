@@ -1,12 +1,23 @@
 <div class="cursos index">
 	<h2><?php echo __('Cursos');?></h2>
 	<div class="search">
+		<?php if($pdf==null) { ?> 
 		<label>BUSCAR:</label>
 		<input type="text" />
+		<<?php } ?>
 		<input type="button" class="submit search-generic" value="Search" />
 	</div>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
+		<?php if($pdf==null) { ?> 
+		<th>Solicitud</th>
+		<th>Instructor</th>
+		<th>Nombre</th>
+		<th>Descripción</th>
+		<th>Fecha De Inicio');?></th>
+		<th>Fecha De Fin</th>
+		<th>Costo</th>
+		<?php }else { ?>
 		<th><?php echo $this->Paginator->sort('solicitud_id','Solicitud');?></th>
 		<th><?php echo $this->Paginator->sort('instructor_id','Instructor');?></th>
 		<th><?php echo $this->Paginator->sort('cur_nombre','Nombre');?></th>
@@ -14,7 +25,9 @@
 		<th><?php echo $this->Paginator->sort('cur_fecha_de_inicio','Fecha De Inicio');?></th>
 		<th><?php echo $this->Paginator->sort('cur_fecha_de_fin','Fecha De Fin');?></th>
 		<th><?php echo $this->Paginator->sort('cur_costo','Costo');?></th>
+		<?php }if($pdf==null) { ?> 
 		<th class="actions"><?php echo __('Acciones');?></th>
+		<?php } ?> 
 	</tr>
 	<?php $i = 0; foreach ($cursos as $curso): ?>
 	<tr>
@@ -29,6 +42,7 @@
 		<td><?php echo h($curso['Curso']['cur_fecha_de_inicio']); ?>&nbsp;</td>
 		<td><?php echo h($curso['Curso']['cur_fecha_de_fin']); ?>&nbsp;</td>
 		<td><?php echo h($curso['Curso']['cur_costo']); ?>&nbsp;</td>
+		<?php if($pdf==null) { ?> 
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $curso['Curso']['id']),array('class'=>'view','title'=>'Ver')); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $curso['Curso']['id']),array('class'=>'edit','title'=>'Modificar')); ?>
@@ -36,11 +50,12 @@
 			<?php echo $this->Html->link(__('Ingresar notas'), array('action' => 'ingresarCalificaciones', $curso['Curso']['id']),array('class'=>'calificaciones','title'=>'Ingresar Calificaciones')); ?>
 			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $curso['Curso']['id']), array('class'=>'delete','title'=>'Borrar'), __('Esta seguro que quiere eliminar el registro?', $curso['Curso']['id'])); ?>
 		</td>
+		<?php } ?> 
 	</tr>
 	<?php endforeach; ?>
 	</table>
 
-
+<?php if($pdf==null) { ?> 
 	<div class="paging">
 	<!--<p>
 	<?php
@@ -57,8 +72,11 @@
 	?>
 	</div>
 </div>
+
 <div class="actions">
 	<ul>
 		<li><?php echo $this->Html->link(__('Agregar Curso'), array('action' => 'add')); ?></li>
+		<?php echo $this->Html->link(' ', array('action' => 'index','pdf'),array('class'=>'pdf','title'=>'Descargar pdf')); ?>
 	</ul>
 </div>
+<?php } ?> 
