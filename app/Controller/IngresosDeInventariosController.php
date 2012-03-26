@@ -106,11 +106,11 @@ class IngresosDeInventariosController extends AppController {
 	function impReporteIngresosInventarios() {
 		$this -> layout = 'pdf2';
 		$reporteIngresos = $this -> Session -> read('reporteIngresos');
-		$titulo = "ReporteIngresosDeInventarios";
+		$nombre_archivo = "ReporteIngresosDeInventarios";
 		//Tamaño de la fuente
 		$tamano = 5;
 		//$this -> Session -> delete('reporteIngresos');
-		$this -> set(compact('reporteIngresos', 'titulo', 'tamano'));
+		$this -> set(compact('reporteIngresos', 'nombre_archivo', 'tamano'));
 	}
 
 	function export_csv() {
