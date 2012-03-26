@@ -9,6 +9,51 @@ $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('contr
 <li class="parametros">
 	<a href="/pages/display/parametros">PARAMETROS</a>
 	<ul>
+		
+		<li>
+			<a href="#">Mantenimientos</a>
+			<ul>
+				<li>
+					<a href="/juntas_provinciales">Juntas Provinciales</a>
+					<ul>
+						<li>
+							<a href="/juntas_provinciales/add"> Agregar</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="/personas">Personas</a>
+					<ul>
+						<li>
+							<a href="/personas/add"> Agregar</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="/proveedores">Proveedores</a>
+					<ul>
+						<li>
+							<a href="/proveedores/add"> Agregar</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="/alumnos"> Alumnos</a>
+					<ul>
+						<li>
+							<a href="/alumnos/add"> Agregar</a>
+						</li>
+					</ul>
+				<li>
+					<a href="/instructores"> Instructores</a>
+					<ul>
+						<li>
+							<a href="/instructores/add"> Agregar</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
 		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'ParametrosInformativos', 'index')))) :
 		?>
 		<li>

@@ -1,20 +1,7 @@
 <li class="inventarios">
 	<a href="#">INVENTARIOS</a>
 	<ul>
-		<li>
-			<a href="#">Mantenimientos</a>
-			<ul>
-				<li>
-					<a href="/juntas_provinciales">Juntas Provinciales</a>
-				</li>
-				<li>
-					<a href="/personas">Personas</a>
-				</li>
-				<li>
-					<a href="/proveedores">Proveedores</a>
-				</li>
-			</ul>
-		</li>
+		
 		<li>
 			<a href="/items/indexActivosFijos">Activos Fijos </a>
 			<ul>
