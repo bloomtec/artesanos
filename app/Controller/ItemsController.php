@@ -186,7 +186,7 @@ class ItemsController extends AppController {
 		$dir_path = APP . 'webroot/files/uploads/activosFijos';
 		if ($handle = opendir($dir_path)) {
 			while (false !== ($entry = readdir($handle))) {
-				if(is_file($dir_path . DS . $entry)) $dir_files[] = 'files/uploads/activosFijos/' . $entry;
+				if($entry != 'empty' && is_file($dir_path . DS . $entry)) $dir_files[] = 'files/uploads/activosFijos/' . $entry;
 			}
 			closedir($handle);
 		}

@@ -95,7 +95,7 @@ class CalificacionesController extends AppController {
 		$dir_path = APP . 'webroot/files/uploads';
 		if ($handle = opendir($dir_path)) {
 			while (false !== ($entry = readdir($handle))) {
-				if(is_file($dir_path . DS . $entry)) $dir_files[] = 'files/uploads/' . $entry;
+				if($entry != 'empty' && is_file($dir_path . DS . $entry)) $dir_files[] = 'files/uploads/' . $entry;
 			}
 			closedir($handle);
 		}
