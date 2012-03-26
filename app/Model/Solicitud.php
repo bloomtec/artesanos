@@ -22,7 +22,7 @@ class Solicitud extends AppModel {
 		'juntas_provincial_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
-				'message' => 'Debe seleccionar una junta provincial',
+				'message' => 'Seleccione junta provincial',
 				'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -32,7 +32,7 @@ class Solicitud extends AppModel {
 		'sol_numero_de_memorandum' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				'message' => 'Debe ingresar un número de memorandum',
+				'message' => 'Ingrese un número de memorandum',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -50,7 +50,7 @@ class Solicitud extends AppModel {
 		'sol_nombre_de_la_capacitacion' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				'message' => 'Debe ingresar un nombre para la capacitación',
+				'message' => 'Ingrese un nombre',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -60,7 +60,7 @@ class Solicitud extends AppModel {
 		'sol_fecha_inicio_de_la_capacitacion' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				'message' => 'Debe ingresar la fecha de inicio de la capacitacion',
+				'message' => 'Ingrese la fecha de inicio',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -70,7 +70,7 @@ class Solicitud extends AppModel {
 		'sol_fecha_de_fin_de_la_capacitacion' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				'message' => 'Debe ingresar la fecha de fin de la capacitación',
+				'message' => 'Ingrese la fecha de finalización',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -80,7 +80,7 @@ class Solicitud extends AppModel {
 		'sol_costos' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				'message' => 'Debe ingresar los costros de la capacitación',
+				'message' => 'Ingrese los costos',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -90,7 +90,7 @@ class Solicitud extends AppModel {
 		'sol_duracion' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				'message' => 'Debe ingresar la duración de la capacitación solicitada',
+				'message' => 'Ingrese la duración',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -108,7 +108,7 @@ class Solicitud extends AppModel {
 		'sol_numero_de_participantes' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				'message' => 'Debe ingresar el numero de duración',
+				'message' => 'Ingrese la cantidad de participantes',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -116,7 +116,7 @@ class Solicitud extends AppModel {
 			),
 			'numeric' => array(
 				'rule' => array('numeric'),
-				'message' => 'La duración debe ser un valor numérico',
+				'message' => 'Participantes es un valor númerico',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule

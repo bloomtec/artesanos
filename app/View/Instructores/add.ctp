@@ -3,7 +3,7 @@
 	<fieldset>
 		<h2><?php echo __('Agregar Instructor'); ?></h2>
 	<?php
-		echo $this->Form->input('ins_nacionalidad',array('label'=>'Nacionalidad'));
+		echo $this->Form->input('ins_nacionalidad', array('label'=>'Nacionalidad', 'options' => $nacionalidades, 'empty' => 'Seleccione...'));
 		
 		echo $this -> Form -> input('ins_is_cedula', array('label' => false, 'div'=>'input select usu-cedula', 'type' => 'select','options'=>array('1'=>'Cédula: ','0'=>'Pasaporte: ')));	
 		echo $this->Form->input('ins_documento_de_identificacion',array('label' => false,"style"=>"margin-top:5px"));

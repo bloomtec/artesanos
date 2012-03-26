@@ -21,7 +21,7 @@ class Alumno extends AppModel {
 		'alu_documento_de_identificacion' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				'message' => 'Debe ingresar el documento del alumno',
+				'message' => 'Ingrese la identificación',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -31,7 +31,7 @@ class Alumno extends AppModel {
 		'alu_apellido_paterno' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				'message' => 'Debe ingresar el apellido paterno del alumno',
+				'message' => 'Ingrese el apellido paterno',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -41,7 +41,7 @@ class Alumno extends AppModel {
 		'alu_apellido_materno' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				'message' => 'Debe ingresar el apellido materno del alumno',
+				'message' => 'Ingrese el apellido materno',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -51,7 +51,7 @@ class Alumno extends AppModel {
 		'alu_nombres' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				'message' => 'Debe ingresar el nombre del alumno',
+				'message' => 'Ingrese el nombre',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -61,7 +61,7 @@ class Alumno extends AppModel {
 		'alu_tipo_de_sangre' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				'message' => 'Debe seleccionar el tipo de sangre del alumno',
+				'message' => 'Seleccione el tipo de sangre',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -71,7 +71,7 @@ class Alumno extends AppModel {
 		'alu_estado_civil' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				'message' => 'Debe ingresar el estado civil del alumno',
+				'message' => 'Seleccione el estado civil',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -81,7 +81,7 @@ class Alumno extends AppModel {
 		'alu_grado_de_estudio' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				'message' => 'Debe ingresar el grado de estudio del alumno',
+				'message' => 'Seleccione el grado de estudio',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -91,7 +91,7 @@ class Alumno extends AppModel {
 		'alu_sexo' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				'message' => 'Debe ingresar el sexo del alumno',
+				'message' => 'Seleccione sexo',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -101,7 +101,7 @@ class Alumno extends AppModel {
 		'alu_nacionalidad' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				'message' => 'Debe ingresar la nacionalidad del alumno',
+				'message' => 'Seleccione nacionalidad',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
