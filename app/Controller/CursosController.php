@@ -106,7 +106,21 @@ class CursosController extends AppController {
 		if (!$this -> Curso -> exists()) {
 			throw new NotFoundException(__('Invalid curso'));
 		}
-		$this -> set('curso',$this -> Curso -> read(null,$id));
+		if ($this -> request -> is('post') || $this -> request -> is('put')) {
+			foreach($this -> request -> data['CursosAlumnos'] as $cursosAlumno){
+				$cursosAlumno['cur_nota_final']=$this -> formatearValor($cursosAlumno['cur_nota_final']);
+			}
+				
+		} else{		
+			$curso = $this -> Curso -> read(null,$id);
+			$alumnos = $this -> Curso -> CursosAlumno -> bindModel(array(
+				'belongsTo' => array(
+					'Alumno'
+				)
+			));
+			$alumnos = $this -> Curso -> CursosAlumno -> find('all',array('conditions'=>array('CursosAlumno.curso_id'=>$id)));
+			$this -> set(compact('curso','alumnos'));
+		}
 	}
 	/**
 	 * delete method
