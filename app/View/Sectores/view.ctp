@@ -40,7 +40,7 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $this->Html->link(__('Volver'), array('controller' => 'geograficos', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('Volver'), array('controller' => 'sectores', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('Modificar Sector'), array('action' => 'edit', $sector['Sector']['id'])); ?> </li>
 	</ul>
 </div>

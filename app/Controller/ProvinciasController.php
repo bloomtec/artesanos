@@ -13,11 +13,13 @@ class ProvinciasController extends AppController {
 	}
 	
 	public function beforeRender() {
-		$this -> layout = "parametros";
+		//$this -> layout = "parametros";
 	}
 	
 	public function getProvincias() {
-		return $this -> Provincia -> find('all', array('order' => array('Provincia.pro_nombre' => 'ASC')));
+		//return $this -> Provincia -> find('all', array('order' => array('Provincia.pro_nombre' => 'ASC')));
+		$this -> Provincia ->recursive=-1;
+		return $this -> Provincia -> find('list', array('order' => array('Provincia.pro_nombre' => 'ASC')));
 	}
 	
 	public function getNombre($id) {
@@ -86,6 +88,11 @@ class ProvinciasController extends AppController {
 		} else {
 			$this -> request -> data = $this -> Provincia -> read(null, $id);
 		}
+	}
+
+	public function index() {
+		$provincias = $this -> getProvincias();
+		$this -> set(compact('provincias'));
 	}
 
 }

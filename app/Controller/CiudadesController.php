@@ -13,7 +13,7 @@ class CiudadesController extends AppController {
 	}
 
 	public function beforeRender() {
-		$this -> layout = "parametros";
+		//$this -> layout = "parametros";
 	}
 
 	public function getByCanton($canId=null) {
@@ -26,6 +26,7 @@ class CiudadesController extends AppController {
 	}
 
 	public function getCiudades($canton_id = null) {
+		$this -> Ciudad ->recursive=-1;
 		if ($canton_id) {
 			return $this -> Ciudad -> find('all', array('order' => array('Ciudad.ciu_nombre' => 'ASC'), 'conditions' => array('Ciudad.canton_id' => $canton_id)));
 		} else {
@@ -98,6 +99,11 @@ class CiudadesController extends AppController {
 		$provincias = $this -> Ciudad -> Canton -> Provincia -> find('list');
 		$cantones = $this -> Ciudad -> Canton -> find('list');
 		$this -> set(compact('cantones', 'provincias'));
+	}
+	
+	public function index() {
+		$ciudades = $this -> getCiudades();	
+		$this -> set(compact('ciudades'));
 	}
 
 }

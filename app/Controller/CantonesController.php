@@ -13,7 +13,7 @@ class CantonesController extends AppController {
 	}
 
 	public function beforeRender() {
-		$this -> layout = "parametros";
+		//$this -> layout = "parametros";
 	}
 
 	public function getByProvincia($provId=null) {
@@ -26,10 +26,11 @@ class CantonesController extends AppController {
 	}
 
 	public function getCantones($provincia_id = null) {
+		$this -> Canton ->recursive=-1;
 		if ($provincia_id) {
-			return $this -> Canton -> find('all', array('order' => array('Canton.can_nombre' => 'ASC'), 'conditions' => array('Canton.provincia_id' => $provincia_id)));
+			return $this -> Canton -> find('list', array('order' => array('Canton.can_nombre' => 'ASC'), 'conditions' => array('Canton.provincia_id' => $provincia_id)));
 		} else {
-			return $this -> Canton -> find('all', array('order' => array('Canton.can_nombre' => 'ASC')));
+			return $this -> Canton -> find('list', array('order' => array('Canton.can_nombre' => 'ASC')));
 		}
 	}
 
@@ -98,4 +99,9 @@ class CantonesController extends AppController {
 		$this -> set(compact('provincias'));
 	}
 
+	public function index() {
+		$cantones = $this -> Canton -> find('list');
+		//debug($cantones);
+		$this -> set(compact('cantones'));
+	}
 }

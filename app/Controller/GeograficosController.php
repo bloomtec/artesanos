@@ -8,7 +8,7 @@ App::uses('AppController', 'Controller');
 class GeograficosController extends AppController {
 	
 	public function beforeRender() {
-		$this -> layout = "parametros";
+		//$this -> layout = "parametros";
 	}
 
 	/**
