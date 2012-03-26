@@ -1,26 +1,15 @@
-<h2><?php echo __('Reporte ingresos de inventarios');?></h2>
 <?php if(isset($lstProveedores)) {
 ?>
 <div class="reportes form">
 	<?php echo $this -> Form -> create('Reporte');?>
+	<h2><?php echo __('Reporte De Calificaciones Por Operador'); ?></h2>
 	<fieldset>
 		<?php
-		//Proveedores
-		echo $this -> Form -> input('proveedor', array('type' => 'select', 'label' => 'Proveedores', 'empty' => '', 'options' => $lstProveedores));
-
-		//Personas
-		echo $this -> Form -> input('persona', array('type' => 'select', 'label' => 'Personas', 'empty' => '', 'options' => $lstPersonas));
-
-		//Departamentos
-		echo $this -> Form -> input('departamento', array('type' => 'select', 'label' => 'Departamentos', 'empty' => '', 'options' => $lstDepartamentos));
-
-		//Productos
+		echo $this -> Form -> input('proveedor', array('type' => 'select', 'label' => 'Proveedores', 'empty' => 'Seleccione...', 'options' => $lstProveedores));
+		echo $this -> Form -> input('persona', array('type' => 'select', 'label' => 'Personas', 'empty' => 'Seleccione...', 'options' => $lstPersonas));
+		echo $this -> Form -> input('departamento', array('type' => 'select', 'label' => 'Departamentos', 'empty' => 'Seleccione...', 'options' => $lstDepartamentos));
 		echo $this -> Form -> input('producto', array('type' => 'select', 'label' => 'Productos', 'empty' => '', 'options' => $lstProductos));
-
-		//Fecha inicial
 		echo $this -> Form -> input('fecha1', array('type' => 'text', 'label' => 'Fecha inicial', 'class' => 'date'));
-
-		//Fecha Fecha final
 		echo $this -> Form -> input('fecha2', array('type' => 'text', 'label' => 'Fecha final', 'class' => 'date'));
 		?>
 	</fieldset>
@@ -28,6 +17,9 @@
 	<?php echo $this -> Form -> end();?>
 </div>
 <?php } else { ?>
+<br />
+<br />
+<h2><?php echo __('Reporte egresos de inventarios');?></h2>
 <table>
 	<tr>
 		<th>Proveedor</th>
@@ -59,7 +51,6 @@
 				foreach ($reporteIngresos[$i]['Item'] as $key => $value) {
 					if ($reporteIngresos[$i]['Item'] != array())
 						echo $value['ite_nombre'] . "<br />";
-		
 				}
 			?> 
 		</td>
@@ -71,8 +62,10 @@
 	?>
 </table>
 
-	<a class='button' href="/ingresosDeInventarios/reporteIngresosInventarios">Regresar</a>
+	<a class='button' href="/ingresosDeInventarios/reporteIngresosInventarios">Volver</a>
 	&nbsp;
 	<a class='button' href="/ingresosDeInventarios/impReporteIngresosInventarios">Imprimir</a>
+	&nbsp;
+	<a class='button' href="/ingresosDeInventarios/export_csv">Exportar el resulrado a CSV</a>
 
 <?php } ?>

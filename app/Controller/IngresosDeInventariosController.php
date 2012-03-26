@@ -1,13 +1,13 @@
 <?php
 App::uses('AppController', 'Controller');
+App::import('Helper', 'csv');
+
 /**
  * IngresosDeInventarios Controller
  *
  * @property IngresosDeInventario $IngresosDeInventario
  */
 class IngresosDeInventariosController extends AppController {
-
-	//Reporte reporteIngresosProveedores
 
 	public function reporteIngresosInventarios() {
 
@@ -68,7 +68,7 @@ class IngresosDeInventariosController extends AppController {
 				}
 
 				$conditions[] = array('IngresosDeInventario.created between ? and ?' => array($fecha1, $fecha2));
-			
+
 			} else if ($fecha1 != null) {
 				$conditions[] = array('IngresosDeInventario.created >=' => $fecha1);
 			}
@@ -77,7 +77,7 @@ class IngresosDeInventariosController extends AppController {
 			$reporteIngresos = $this -> IngresosDeInventario -> find('all', array('conditions' => $conditions));
 			$this -> Session -> write('reporteIngresos', $reporteIngresos);
 			$this -> set(compact('reporteIngresos'));
-			
+
 		} else {
 
 			$lstProveedores = $this -> IngresosDeInventario -> Proveedor -> find('list', array('fields' => array('id', 'pro_nombre_razon_social')));
@@ -95,7 +95,47 @@ class IngresosDeInventariosController extends AppController {
 		//Tamaño de la fuente
 		$tamano = 5;
 		//$this -> Session -> delete('reporteIngresos');
-		$this -> set(compact('reporteIngresos','titulo','tamano'));
+		$this -> set(compact('reporteIngresos', 'titulo', 'tamano'));
 	}
 
+	function export_csv() {
+
+		$this -> layout = "";
+		$this -> render(false);
+	
+		$csv = new csvHelper();
+		$reporteIngresos = $this -> Session -> read('reporteIngresos');
+
+		$cabeceras = array('Proveedor', 'Ciudad', 'Persona', '# Memorando','Asunto', 'Sub total', 'IVA', 'Total', 'Items', 'Fecha');
+		
+		$csv -> addRow($cabeceras);
+
+		for ($i = 0; $i < count($reporteIngresos); $i++) {
+			$items = "";
+			foreach ($reporteIngresos[$i]['Item'] as $key => $value) {
+					 if ($reporteIngresos[$i]['Item'] != array())
+					 if($items==""){
+					 	$items = $value['ite_nombre'];
+					 }else {
+					 	$items = $items.' '.$value['ite_nombre'];
+					 }
+			 }
+
+			$filas = array($reporteIngresos[$i]['Proveedor']['pro_nombre_razon_social'], 
+			$reporteIngresos[$i]['Ciudad']['ciu_nombre'], 
+			$reporteIngresos[$i]['Persona']['per_nombres'], 
+			$reporteIngresos[$i]['IngresosDeInventario']['ing_numero_de_memorandum'], 
+			$reporteIngresos[$i]['IngresosDeInventario']['ing_asunto'], 
+			$reporteIngresos[$i]['IngresosDeInventario']['ing_subtotal'], 
+			$reporteIngresos[$i]['IngresosDeInventario']['ing_iva'], 
+			$reporteIngresos[$i]['IngresosDeInventario']['ing_total'], 
+			$items, 
+			$reporteIngresos[$i]['IngresosDeInventario']['created']);
+
+			$csv -> addRow($filas);
+		
+		}
+		$titulo = "csvIngresosInventarios_".date("Y-m-d H:i:s", time()).".csv";
+		echo $csv -> render($titulo); 
+	}
 }
