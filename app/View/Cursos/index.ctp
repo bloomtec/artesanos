@@ -79,7 +79,7 @@
 
 <div class="actions">
 	<ul>
-		<li><?php echo $this->Html->link(__('Agregar Curso'), array('action' => 'add')); ?></li>
+		<!--<li><?php echo $this->Html->link(__('Agregar Curso'), array('action' => 'add')); ?></li> -->
 		<li><?php echo $this->Html->link(__('Descargar pdf'), array('action' => 'index','pdf'),array('class'=>'','title'=>'Descargar pdf')); ?></li>
 	</ul>
 </div>

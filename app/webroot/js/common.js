@@ -260,8 +260,9 @@ $(function() {
 	//$("input.date").setMask({'mask':"9999-19-39", });
 	$("input.date").dateEntry({dateFormat: 'ymd-',spinnerImage:""});
 	//$(":date , input.date").attr('placeholder','aaaa-mm-dd');
-	$('input.valor').setMask({ mask : '99,999.999.999.999', type : 'reverse', defaultValue: '000' });
+	$('input.valor').setMask({ mask : '99,999.999.999.999.999', type : 'reverse', defaultValue: '000' });
 	$('input.number').setMask({ mask : '9999', type : 'repeat' });
+	$('input.mil').setMask({ mask : '999.999.999.999.999.999.999', type : 'repeat',type : 'reverse' });
 	$('input.porcentaje').setMask({ mask : '999%'});
 	$(".telefono").setMask({mask:"9-999 99 99"}); 
 	$(".celular").setMask({mask:"999-999-999"}); 

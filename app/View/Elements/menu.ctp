@@ -16,7 +16,7 @@
 			echo $this -> element('menu/capacitaciones');
 		?>
 		<?php 
-			//echo $this -> element('menu/especies');
+			echo $this -> element('menu/especies');
 		?>
 	</ul>
 </div>

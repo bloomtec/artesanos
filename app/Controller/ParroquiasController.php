@@ -103,7 +103,6 @@ class ParroquiasController extends AppController {
 	}
 	
 	public function index() {
-		
 		$this->Recursive=0;
 		$conditions = array();
 		if (isset($this -> params['named']['query']) && !empty($this -> params['named']['query'])) {
@@ -144,8 +143,6 @@ class ParroquiasController extends AppController {
 		if(!empty($conditions)) {
 			$this -> paginate = array('conditions' => $conditions);
 		}
-		
-		
 		$parroquias = $this -> paginate();
 		$this -> set(compact('parroquias'));
 	}

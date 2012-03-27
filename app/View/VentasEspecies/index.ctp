@@ -1,0 +1,63 @@
+<div class="ventasEspecies index">
+	<h2><?php echo __('Ventas Especies');?></h2>
+	<div class="search">
+		<label>BUSCAR:</label>
+		<input type="text" />
+		<input type="button" class="submit search-generic" value="Search" />
+	</div>
+	<table cellpadding="0" cellspacing="0">
+	<tr>
+									<th><?php echo $this->Paginator->sort('juntas_provincial_id','As Provincial Id');?></th>
+							<th><?php echo $this->Paginator->sort('artesano_id','Sano Id');?></th>
+							<th><?php echo $this->Paginator->sort('ven_serie_inicial','Serie Inicial');?></th>
+							<th><?php echo $this->Paginator->sort('ven_serie_final','Serie Final');?></th>
+							<th><?php echo $this->Paginator->sort('ven_cantidad_total','Cantidad Total');?></th>
+							<th><?php echo $this->Paginator->sort('ven_valor_total','Valor Total');?></th>
+										<th><?php echo $this->Paginator->sort('updated','Ted');?></th>
+					<th class="actions"><?php echo __('Acciones');?></th>
+	</tr>
+	<?php
+	$i = 0;
+	foreach ($ventasEspecies as $ventasEspecie): ?>
+	<tr>
+		<td>
+			<?php echo $this->Html->link($ventasEspecie['JuntasProvincial']['jun_nombre'], array('controller' => 'juntas_provinciales', 'action' => 'view', $ventasEspecie['JuntasProvincial']['id'])); ?>
+		</td>
+		<td>
+			<?php echo $this->Html->link($ventasEspecie['Artesano']['id'], array('controller' => 'artesanos', 'action' => 'view', $ventasEspecie['Artesano']['id'])); ?>
+		</td>
+		<td><?php echo h($ventasEspecie['VentasEspecie']['ven_serie_inicial']); ?>&nbsp;</td>
+		<td><?php echo h($ventasEspecie['VentasEspecie']['ven_serie_final']); ?>&nbsp;</td>
+		<td><?php echo h($ventasEspecie['VentasEspecie']['ven_cantidad_total']); ?>&nbsp;</td>
+		<td><?php echo h($ventasEspecie['VentasEspecie']['ven_valor_total']); ?>&nbsp;</td>
+		<td class="actions">
+			<?php echo $this->Html->link(__('View'), array('action' => 'view', $ventasEspecie['VentasEspecie']['id']),array('class'=>'view','title'=>'Ver')); ?>
+			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $ventasEspecie['VentasEspecie']['id']),array('class'=>'edit','title'=>'Modificar')); ?>
+			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $ventasEspecie['VentasEspecie']['id']), array('class'=>'delete','title'=>'Borrar'), __('Esta seguro que quiere eliminar el registro?', $ventasEspecie['VentasEspecie']['id'])); ?>
+		</td>
+	</tr>
+<?php endforeach; ?>
+	</table>
+
+
+	<div class="paging">
+	<!--<p>
+	<?php
+	echo $this->Paginator->counter(array(
+	'format' => __('Page {:page} of {:pages}, mostrando {:current} registro de {:count} totales, comenzando en el registro record {:start}, hasta el registro {:end}')
+	));
+	?>	</p>-->
+	<?php
+		echo $this->Paginator->first('<< ', array(), null, array('class' => 'prev disabled'));
+		echo $this->Paginator->prev('< ' . __('Anterior'), array(), null, array('class' => 'prev disabled'));
+		echo $this->Paginator->numbers(array('separator' => ''));
+		echo $this->Paginator->next(__('Siguiente') . ' >', array(), null, array('class' => 'next disabled'));
+		echo $this->Paginator->last('>> ', array(), null, array('class' => 'next disabled'));
+	?>
+	</div>
+</div>
+<div class="actions">
+	<ul>
+		<li><?php echo $this->Html->link(__('Agregar Ventas Especie'), array('action' => 'add')); ?></li>
+	</ul>
+</div>
