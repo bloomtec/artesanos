@@ -12,10 +12,6 @@ class CantonesController extends AppController {
 		$this -> Auth -> allow('getNombre', 'getCantones', 'getByProvincia');
 	}
 
-	public function beforeRender() {
-		//$this -> layout = "parametros";
-	}
-
 	public function getByProvincia($provId=null) {
 		$this -> layout = "ajax";
 		//$cantones_con_inspectores = $this -> Canton -> Usuario -> find('list', array('fields' => array('Usuario.canton_id'), 'conditions' => array('Usuario.rol_id' => 3)));

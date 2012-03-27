@@ -58,10 +58,17 @@
 	<?php echo $this -> Form -> end(__('Guardar'));?>
 </div>
 <style>
+	table.permisos {
+		
+	}
+	table.permisos tr.modulo {
+		
+	}
 	table.permisos tr.modulo th.nombre {
-		width: 100px;
+		max-width: 120px;
+		min-width: 120px;
 	}
 	table.permisos tr.modulo td.accion {
-		/*width: 100px;*/
+		max-width: 120px;
 	}
 </style>

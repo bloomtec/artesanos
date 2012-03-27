@@ -30,7 +30,6 @@ class ProvinciasController extends AppController {
 	 * @return void
 	 */
 	public function view($id = null) {
-		
 		$this -> Provincia -> id = $id;
 		if (!$this -> Provincia -> exists()) {
 			throw new NotFoundException(__('Provincia no válida'));
