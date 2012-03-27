@@ -52,33 +52,6 @@ class IngresosEspeciesController extends AppController {
 
 
 
-
-	/**
-	 * edit method
-	 *
-	 * @param string $id
-	 * @return void
-	 */
-	public function edit($id = null) {
-		$this -> IngresosEspecie -> id = $id;
-		if (!$this -> IngresosEspecie -> exists()) {
-			throw new NotFoundException(__('Invalid ingresos especie'));
-		}
-		if ($this -> request -> is('post') || $this -> request -> is('put')) {
-			if ($this -> IngresosEspecie -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The ingresos especie has been saved'), 'crud/success');
-				$this -> redirect(array('action' => 'index'));
-			} else {
-				$this -> Session -> setFlash(__('The ingresos especie could not be saved. Please, try again.'), 'crud/error');
-			}
-		} else {
-			$this -> request -> data = $this -> IngresosEspecie -> read(null, $id);
-		}
-		$especiesValoradas = $this -> IngresosEspecie -> EspeciesValorada -> find('list');
-		$this -> set(compact('especiesValoradas'));
-	}
->>>>>>> f36b6420f875fe801cd75d99c4e91506f779f353
-
 	/**
 	 * delete method
 	 *
