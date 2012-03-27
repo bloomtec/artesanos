@@ -53,9 +53,31 @@ Cache::config('default', array('engine' => 'File'));
  * Inflector::rules('plural', array('rules' => array(), 'irregular' => array(), 'uninflected' => array()));
  *
  */
-
+/*
 Inflector::rules('singular', array('rules' => array('/([r|d|j|n|l|m|y|z])es$/i' => '\1', '/as$/i' => 'a', '/([ti])a$/i' => '\1a'), 'irregular' => array(), 'uninflected' => array()));
 Inflector::rules('plural', array('rules' => array('/([r|d|j|n|l|m|y|z])$/i' => '\1es', '/a$/i' => '\1as'), 'irregular' => array('aprendiz' => 'aprendices'), 'uninflected' => array()));
+Inflector::rules('plural', array('irregular' => array('ventasEspecies' => 'VentasEspecie')));
+*/
+ Inflector::rules('singular', array(
+                'rules' => array(
+                        '/([r|d|j|n|l|m|y|z])es$/i' => '\1',
+                        '/as$/i' => 'a',
+                        '/([ti])a$/i' => '\1a',
+                        '/es$/i' => '\1e'
+                        )
+                , 'uninflected' => array()
+                , 'irregular' => array()
+        ));
+
+        Inflector::rules('plural', array(
+                'rules' => array(
+                                        '/([r|d|j|n|l|m|y|z])$/i' => '\1es',
+                                        '/a$/i' => '\1as',
+                                        '/e$/i' => '\1es'
+                                )
+                , 'uninflected' => array()
+                , 'irregular' => array()
+        ));
 /**
  * Plugins need to be loaded manually, you can either load them one by one or all of them in a single call
  * Uncomment one of the lines below, as you need. make sure you read the documentation on CakePlugin to use more

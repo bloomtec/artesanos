@@ -1,8 +1,14 @@
 <li>
 	<a href="/especies_valorada">ESPECIES VALORADAS</a>
 	<ul>
-		<li> <a href="/especies_valorada/ingresar">Ingresar</a></li>
-		<li> <a href="/especies_valorada/egresar">Egresar</a></li>
+		<li>  
+			<a href="#"> Mantenimientos </a>
+			<ul>
+				<li><<a href="/especies_valoradas/index">Especies Valoradas</a></li>
+			</ul>
+		</li>
+		<li> <a href="/especies_valoradas/add">Ingresar Especies</a></li>
+		<li> <a href="/especies_valorada/egresar">Egresar Especies</a></li>
 		<li> 
 			<a href="#">Reportes</a>
 			<ul>
