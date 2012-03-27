@@ -2,7 +2,7 @@
 <h2><?php  echo __('Curso');?></h2>
 		<label><?php echo __('Solicitud'); ?></label>
 		<h3>
-			<?php echo $this->Html->link($curso['Solicitud']['id'], array('controller' => 'solicitudes', 'action' => 'view', $curso['Solicitud']['id'])); ?>
+			<?php echo $this->Html->link($curso['Solicitud']['sol_numero_de_memorandum'], array('controller' => 'solicitudes', 'action' => 'view', $curso['Solicitud']['id'])); ?>
 			&nbsp;
 		</h3>
 		<label><?php echo __('Instructor'); ?></label>
@@ -41,6 +41,18 @@
 			&nbsp;
 		</h3>
 	
+</div>
+<div style="clear: both;"></div>
+<div class="archivos">
+	<h2><?php echo __('Archivos'); ?></h2>
+	<br />
+	<br />
+	<?php foreach($curso['DocumentosCurso'] as $key => $doc) : ?>
+		<br />
+		<a href="/<?php echo $doc['doc_path'];?>" class="button"><?php echo $doc['doc_name']; ?></a>
+		<br />
+		<br />
+	<?php endforeach; ?>
 </div>
 <div class="actions">
 	<ul>
