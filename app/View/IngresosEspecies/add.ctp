@@ -28,21 +28,23 @@
 				<td>
 					<p>
 						<?php echo $tiposEspecie['TiposEspeciesValorada']['tip_nombre']?>
-						<?php echo $this->Form->hidden('IngresosEspecie.'.$i.'.especie_valorada_id',array('value'=>$tiposEspecie['TiposEspeciesValorada']['id'])); ?>
+						<?php echo $this->Form->hidden('EspeciesValorada.'.$i.'.tipos_especies_valorada_id',array('value'=>$tiposEspecie['TiposEspeciesValorada']['id'])); ?>
 					</p>
 				</td>
 				<td>
-					<?php 	echo $this->Form->input('IngresosEspecie.'.$i.'.ing_serie_inicial',array('label'=>false,'class'=>'mil serie_inicial','type'=>'text')); ?>
+					<?php 	echo $this->Form->input('EspeciesValorada.'.$i.'.serie_inicial',array('label'=>false,'class'=>'mil serie_inicial','type'=>'text')); ?>
 				</td>
 				<td>
-					<?php 	echo $this->Form->input('IngresosEspecie.'.$i.'.ing_serie_final',array('label'=>false,'class'=>'mil serie_final','type'=>'text')); ?>
+					<?php 	echo $this->Form->input('EspeciesValorada.'.$i.'.iserie_final',array('label'=>false,'class'=>'mil serie_final','type'=>'text')); ?>
 				</td>
 				<td>
-					<?php 	echo $this->Form->input('IngresosEspecie.'.$i.'.ing_cantidad',array('label'=>false,'class'=>'cantidad mil','disabled'=>true)); ?>
-					<?php 	echo $this->Form->hidden('IngresosEspecie.'.$i.'.ing_cantidad',array('label'=>false,'class'=>'cantidad')); ?>
-				</td>
+					<?php 	echo $this->Form->input('EspeciesValorada.'.$i.'.cantidad',array('label'=>false,'class'=>'cantidad mil','disabled'=>true)); ?>
+					<?php 	echo $this->Form->hidden('EspeciesValorada.'.$i.'.cantidad',array('label'=>false,'class'=>'cantidad')); ?>
+				</td
 			</tr>
-			<?php endforeach; ?>
+			<?php 	$i++ ;
+					endforeach; 
+			?>
 		</table>		
 	<?php
 		echo $this->Form->input('ing_fecha',array('label'=>'Fecha','type'=>'text','class'=>'date'));
