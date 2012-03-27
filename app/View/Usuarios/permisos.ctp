@@ -4,7 +4,7 @@
 		<h2><?php echo __('Asignar Permisos Usuario');?></h2>
 		<br />
 		<br />
-		<h4>Modulos Y Acciones Disponibles</h4>
+		<h4>MODULOS</h4>
 		<?php echo $this -> Form -> input('id');?>
 		<table class="permisos">
 			<tr class="modulo">
@@ -37,6 +37,7 @@
 				<td class="accion"></td>
 			</tr>
 		</table>
+		<h4>MANTENIMIENTOS</h4>
 		<table class="permisos">
 			<tr class="modulo">
 				<th class="nombre">PARAMETROS</th>
@@ -48,11 +49,62 @@
 		</table>
 		<table class="permisos">
 			<tr class="modulo">
-				<th class="nombre">REPORTES</th>
+				<th class="nombre">JUNTAS PROVINCIALES</th>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.JuntasProvinciales.index', array('label' => 'Listar', 'type' => 'checkbox'));?></td>
+				<td class="accion"></td>
+				<td class="accion"></td>
+				<td class="accion"></td>
+			</tr>
+		</table>
+		<table class="permisos">
+			<tr class="modulo">
+				<th class="nombre">PERSONAS</th>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.Personas.index', array('label' => 'Listar', 'type' => 'checkbox'));?></td>
+				<td class="accion"></td>
+				<td class="accion"></td>
+				<td class="accion"></td>
+			</tr>
+		</table>
+		<table class="permisos">
+			<tr class="modulo">
+				<th class="nombre">PROVEEDORES</th>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.Proveedores.index', array('label' => 'Listar', 'type' => 'checkbox'));?></td>
+				<td class="accion"></td>
+				<td class="accion"></td>
+				<td class="accion"></td>
+			</tr>
+		</table>
+		<table class="permisos">
+			<tr class="modulo">
+				<th class="nombre">ALUMNOS</th>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.Alumnos.index', array('label' => 'Listar', 'type' => 'checkbox'));?></td>
+				<td class="accion"></td>
+				<td class="accion"></td>
+				<td class="accion"></td>
+			</tr>
+		</table>
+		<table class="permisos">
+			<tr class="modulo">
+				<th class="nombre">INSTRUCTORES</th>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.Instructores.index', array('label' => 'Listar', 'type' => 'checkbox'));?></td>
+				<td class="accion"></td>
+				<td class="accion"></td>
+				<td class="accion"></td>
+			</tr>
+		</table>
+		<h4>REPORTES</h4>
+		<table class="permisos">
+			<tr class="modulo">
 				<td class="accion"><?php echo $this -> Form -> input('Permisos.Reportes.artesanos', array('label' => 'Artesanos', 'type' => 'checkbox'));?></td>
 				<td class="accion"><?php echo $this -> Form -> input('Permisos.Reportes.calificaciones_operador', array('label' => 'Calificaciones Por Operador', 'type' => 'checkbox'));?></td>
 				<td class="accion"><?php echo $this -> Form -> input('Permisos.Reportes.calificaciones_artesano', array('label' => 'Calificaciones Por Artesano', 'type' => 'checkbox'));?></td>
 				<td class="accion"><?php echo $this -> Form -> input('Permisos.Reportes.inspecciones', array('label' => 'Inspecciones', 'type' => 'checkbox'));?></td>
+			</tr>
+			<tr class="modulo">
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.Reportes.artesanos', array('label' => 'Activos Fijos', 'type' => 'checkbox'));?></td>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.Reportes.calificaciones_operador', array('label' => 'Suministros', 'type' => 'checkbox'));?></td>
+				<td class="accion"></td>
+				<td class="accion"></td>
 			</tr>
 		</table>
 	</fieldset>
