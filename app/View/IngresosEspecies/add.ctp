@@ -17,29 +17,29 @@
 	
 	<table id="tablaIngresoEspecies" class="ingreso-especies">
 			<tr>
-				<th>Especie valorda</th>
+				<th>Tipo Especie valorda</th>
 				<th>Serie Inicial</th>
 				<th>Serie Final</th>
 				<th>Cantidad</th>
 
 			</tr>
-			<?php $i = 1; foreach($especiesValoradas as $especie): ?>
+			<?php $i = 1; foreach($tiposEspeciesValoradas as $tiposEspecie): ?>
 			<tr class="activo-fijo-valores">
 				<td>
 					<p>
-						<?php echo $especie['EspeciesValorada']['esp_nombre']?>
-						<?php echo $this->Form->hidden('EspeciesValoradasIngresosEspecie.'.$i.'.especie_valorada_id',array('label'=>'Fecha')); ?>
+						<?php echo $tiposEspecie['TiposEspeciesValorada']['tip_nombre']?>
+						<?php echo $this->Form->hidden('IngresosEspecie.'.$i.'.especie_valorada_id',array('value'=>$tiposEspecie['TiposEspeciesValorada']['id'])); ?>
 					</p>
 				</td>
 				<td>
-					<?php 	echo $this->Form->input('EspeciesValoradasIngresosEspecie.'.$i.'.esp_serie_inicial',array('label'=>false,'class'=>'mil serie_inicial','type'=>'text')); ?>
+					<?php 	echo $this->Form->input('IngresosEspecie.'.$i.'.ing_serie_inicial',array('label'=>false,'class'=>'mil serie_inicial','type'=>'text')); ?>
 				</td>
 				<td>
-					<?php 	echo $this->Form->input('EspeciesValoradasIngresosEspecie.'.$i.'.esp_serie_final',array('label'=>false,'class'=>'mil serie_final','type'=>'text')); ?>
+					<?php 	echo $this->Form->input('IngresosEspecie.'.$i.'.ing_serie_final',array('label'=>false,'class'=>'mil serie_final','type'=>'text')); ?>
 				</td>
 				<td>
-					<?php 	echo $this->Form->input('EspeciesValoradasIngresosEspecie.'.$i.'.cantidad',array('label'=>false,'class'=>'cantidad mil','disabled'=>true)); ?>
-					<?php 	echo $this->Form->hidden('EspeciesValoradasIngresosEspecie.'.$i.'.cantidad',array('label'=>false,'class'=>'cantidad')); ?>
+					<?php 	echo $this->Form->input('IngresosEspecie.'.$i.'.ing_cantidad',array('label'=>false,'class'=>'cantidad mil','disabled'=>true)); ?>
+					<?php 	echo $this->Form->hidden('IngresosEspecie.'.$i.'.ing_cantidad',array('label'=>false,'class'=>'cantidad')); ?>
 				</td>
 			</tr>
 			<?php endforeach; ?>

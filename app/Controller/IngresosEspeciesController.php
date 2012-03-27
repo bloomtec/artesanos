@@ -47,34 +47,11 @@ class IngresosEspeciesController extends AppController {
 				$this->Session->setFlash(__('The ingresos especie could not be saved. Please, try again.'),'crud/error');
 			}
 		}
-		$especiesValoradas = $this->IngresosEspecie->EspeciesValorada->find('all');
-		$this->set(compact('especiesValoradas'));
+		$tiposEspeciesValoradas = $this->IngresosEspecie->EspeciesValorada->TiposEspeciesValorada->find('all');
+		$this->set(compact('tiposEspeciesValoradas'));
 	}
 
-/**
- * edit method
- *
- * @param string $id
- * @return void
- */
-	public function edit($id = null) {
-		$this->IngresosEspecie->id = $id;
-		if (!$this->IngresosEspecie->exists()) {
-			throw new NotFoundException(__('Invalid ingresos especie'));
-		}
-		if ($this->request->is('post') || $this->request->is('put')) {
-			if ($this->IngresosEspecie->save($this->request->data)) {
-				$this->Session->setFlash(__('The ingresos especie has been saved'),'crud/success');
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The ingresos especie could not be saved. Please, try again.'),'crud/error');
-			}
-		} else {
-			$this->request->data = $this->IngresosEspecie->read(null, $id);
-		}
-		$especiesValoradas = $this->IngresosEspecie->EspeciesValorada->find('list');
-		$this->set(compact('especiesValoradas'));
-	}
+
 
 /**
  * delete method

@@ -5,10 +5,10 @@
 			<a href="#"> Mantenimientos </a>
 			<ul>
 				<li>
-					<a href="/especies_valoradas/index">Especies Valoradas</a>
+					<a href="/tipos_especies_valoradas">Tipos  de Especie Valoradas</a>
 					<ul>
 						<li>
-							<a href="/especies_valoradas/add">Agregar</a>
+							<a href="/tipos_especies_valoradas/add">Agregar</a>
 						</li>
 					</ul>
 				</li>
