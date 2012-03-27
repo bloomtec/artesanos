@@ -4,9 +4,7 @@
 		<h2><?php echo __('Asignar Permisos Usuario');?></h2>
 		<br />
 		<br />
-		<caption>
-			Modulos Y Acciones Disponibles
-		</caption>
+		<h4>Modulos Y Acciones Disponibles</h4>
 		<?php echo $this -> Form -> input('id');?>
 		<table class="permisos">
 			<tr class="modulo">
@@ -36,12 +34,16 @@
 				<td class="accion"><?php echo $this -> Form -> input('Permisos.Calificaciones.view', array('label' => 'Ver', 'type' => 'checkbox'));?></td>
 				<td class="accion"><?php echo $this -> Form -> input('Permisos.Calificaciones.imprimir', array('label' => 'Imprimir', 'type' => 'checkbox'));?></td>
 				<td class="accion"><?php echo $this -> Form -> input('Permisos.Calificaciones.modificarCalificacion', array('label' => 'Modificar', 'type' => 'checkbox'));?></td>
+				<td class="accion"></td>
 			</tr>
 		</table>
 		<table class="permisos">
 			<tr class="modulo">
 				<th class="nombre">PARAMETROS</th>
 				<td class="accion"><?php echo $this -> Form -> input('Permisos.Parametros.edit', array('label' => 'Editar', 'type' => 'checkbox'));?></td>
+				<td class="accion"></td>
+				<td class="accion"></td>
+				<td class="accion"></td>
 			</tr>
 		</table>
 		<table class="permisos">
@@ -57,18 +59,3 @@
 	<?php echo $this -> Html -> link(__('Cancelar'), array('action' => 'index'), array('class' => 'cancelar button'));?>
 	<?php echo $this -> Form -> end(__('Guardar'));?>
 </div>
-<style>
-	table.permisos {
-		
-	}
-	table.permisos tr.modulo {
-		
-	}
-	table.permisos tr.modulo th.nombre {
-		max-width: 120px;
-		min-width: 120px;
-	}
-	table.permisos tr.modulo td.accion {
-		max-width: 120px;
-	}
-</style>

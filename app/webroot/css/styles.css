@@ -1603,3 +1603,11 @@ tr.diferente td.audit-value, tr.diferente td.audit-data {
 	width:200px;
 	height: 30px;
 }
+
+/* Vista De Permisos */
+#content form#UsuarioPermisosForm {}	
+#content table.permisos {max-width: 95%; min-width: 95%;}
+#content table.permisos .checkbox input, #content table.permisos .checkbox label {clear: none; float: left; margin: 0; }	
+#content table.permisos .checkbox label {padding: 0; width: auto; margin-left: 10px; max-width: 140px;}
+#content table.permisos tr.modulo th.nombre {max-width: 130px; min-width: 130px; vertical-align: middle; text-align: center;}
+#content table.permisos tr.modulo td.accion {min-width: 170px;}
