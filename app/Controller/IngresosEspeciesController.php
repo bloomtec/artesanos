@@ -37,16 +37,16 @@ class IngresosEspeciesController extends AppController {
 	 * @return void
 	 */
 	public function add() {
-		debug($this -> request -> data);
-		/*if ($this -> request -> is('post')) {
-			$this -> IngresosEspecie -> create();
+		if ($this -> request -> is('post')) {
+			debug($this -> request -> data);
+			/*$this -> IngresosEspecie -> create();
 			if ($this -> IngresosEspecie -> save($this -> request -> data)) {
 				$this -> Session -> setFlash(__('The ingresos especie has been saved'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
 				$this -> Session -> setFlash(__('The ingresos especie could not be saved. Please, try again.'), 'crud/error');
-			}
-		}*/
+			}*/
+		}
 		$tiposEspeciesValoradas = $this->IngresosEspecie->EspeciesValorada->TiposEspeciesValorada->find('all');
 		$this->set(compact('tiposEspeciesValoradas'));
 	}

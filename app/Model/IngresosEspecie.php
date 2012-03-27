@@ -19,7 +19,17 @@ class IngresosEspecie extends AppModel {
 		'ing_fecha' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Digite la fecha',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'ing_documento_soporte' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Seleccione el documento de soporte',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule

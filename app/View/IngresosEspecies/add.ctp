@@ -11,17 +11,16 @@
 </style>
 
 <div class="ingresosEspecies form">
-<?php echo $this->Form->create('IngresosEspecie');?>
+<?php echo $this->Form->create('IngresosEspecie', array('type' => 'file'));?>
 	<fieldset>
 		<h2><?php echo __('Ingresos De Especies'); ?></h2>
-	
+	<?php echo $this -> Form -> input('ing_documento_soporte', array('label'=>'Documento De Soporte', 'type' => 'file')); ?>
 	<table id="tablaIngresoEspecies" class="ingreso-especies">
 			<tr>
 				<th>Tipo Especie valorda</th>
 				<th>Serie Inicial</th>
 				<th>Serie Final</th>
 				<th>Cantidad</th>
-
 			</tr>
 			<?php $i = 1; foreach($tiposEspeciesValoradas as $tiposEspecie): ?>
 			<tr class="activo-fijo-valores">
@@ -76,7 +75,7 @@ ingresoEspecies.actualizar = function(){
 			serieFinal=parseFloat(serieFinal?serieFinal.replace(/[.]/g,'').replace('.',''):0);
 		}
 		if(serieInicial && serieFinal){
-			cantidad = parseInt(serieFinal)-parseInt(serieInicial);
+			cantidad = parseInt(serieFinal)-parseInt(serieInicial)+1;
 			if(cantidad > 0){
 				cantidadTotal+=cantidad;
 				tieneErrores=false;
