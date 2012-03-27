@@ -7,8 +7,8 @@
 	</div>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-									<th><?php echo $this->Paginator->sort('canton_id','On Id');?></th>
-							<th><?php echo $this->Paginator->sort('ciu_nombre','Nombre');?></th>
+									<th><?php echo $this->Paginator->sort('canton_id','Canton');?></th>
+							<th><?php echo $this->Paginator->sort('ciu_nombre','Ciudad');?></th>
 											<th class="actions"><?php echo __('Acciones');?></th>
 	</tr>
 	<?php

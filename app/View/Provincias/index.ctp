@@ -7,7 +7,7 @@
 	</div>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-									<th><?php echo $this->Paginator->sort('pro_nombre','Nombre');?></th>
+									<th><?php echo $this->Paginator->sort('pro_nombre','Provincia');?></th>
 									<th class="actions"><?php echo __('Acciones');?></th>
 	</tr>
 	<?php

@@ -7,9 +7,9 @@
 	</div>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-									<th><?php echo $this->Paginator->sort('ciudad_id','Ad Id');?></th>
-							<th><?php echo $this->Paginator->sort('sec_nombre','Nombre');?></th>
-											<th class="actions"><?php echo __('Acciones');?></th>
+							<th><?php echo $this->Paginator->sort('ciudad_id','Ciudad');?></th>
+							<th><?php echo $this->Paginator->sort('sec_nombre','Sector');?></th>
+							<th class="actions"><?php echo __('Acciones');?></th>
 	</tr>
 	<?php
 	$i = 0;

@@ -22,6 +22,7 @@
 		</h3>
 	
 </div>
+<!--
 <div class="ciudades related">
 	<?php $sectores = $this -> requestAction('/sectores/getSectores/'.$ciudad['Ciudad']['id']); ?>
 	<table>
@@ -38,6 +39,7 @@
 		<?php endforeach; ?>
 	</table>
 </div>
+-->
 <div class="actions">
 	<ul>
 		<li><?php echo $this->Html->link(__('Volver'), array('controller' => 'Provincias', 'action' => 'index')); ?> </li>

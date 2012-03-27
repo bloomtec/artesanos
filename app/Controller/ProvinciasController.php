@@ -11,11 +11,7 @@ class ProvinciasController extends AppController {
 		parent::beforeFilter();
 		$this -> Auth -> allow('getNombre', 'getProvincias');
 	}
-	
-	public function beforeRender() {
-		//$this -> layout = "parametros";
-	}
-	
+
 	public function getProvincias() {
 		//return $this -> Provincia -> find('all', array('order' => array('Provincia.pro_nombre' => 'ASC')));
 		$this -> Provincia ->recursive=-1;
@@ -34,6 +30,7 @@ class ProvinciasController extends AppController {
 	 * @return void
 	 */
 	public function view($id = null) {
+		
 		$this -> Provincia -> id = $id;
 		if (!$this -> Provincia -> exists()) {
 			throw new NotFoundException(__('Provincia no válida'));
@@ -91,6 +88,31 @@ class ProvinciasController extends AppController {
 	}
 
 	public function index() {
+		$this->Recursive=0;
+		$conditions = array();
+		if (isset($this -> params['named']['query']) && !empty($this -> params['named']['query'])) {
+			//$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
+			$query = $this -> params['named']['query'];
+			
+			$idsProvincias = $this -> Provincia -> find(
+				'list',
+				array(
+					'conditions' => array(
+						'OR' => array(
+							'Provincia.pro_nombre LIKE' => "%$query%",
+						)
+					),
+					'fields' => array(
+						'Provincia.id'
+					)
+				)
+			);
+			
+			$conditions['OR']['Provincia.id'] = $idsProvincias;
+		}
+		if(!empty($conditions)) {
+			$this -> paginate = array('conditions' => $conditions);
+		}
 		$provincias = $this -> paginate();
 		$this -> set(compact('provincias'));
 	}

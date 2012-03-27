@@ -22,12 +22,13 @@
 		</h3>
 	
 </div>
+<!--
 <div class="sectores related">
 	<?php $parroquias = $this -> requestAction('/parroquias/getParroquias/'.$sector['Sector']['id']); ?>
 	<table>
 		<caption>Parroquias Relacionadas</caption>
 		<tr><th>Nombre</th><th>Acciones</th></tr>
-		<?php foreach($parroquias as $key => $parroquia) : ?>
+		<?php debug($parroquias); foreach($parroquias as $key => $parroquia) : ?>
 			<tr>
 				<td><?php echo $parroquia['Parroquia']['par_nombre']; ?></td>
 				<td class="actions">
@@ -38,6 +39,7 @@
 		<?php endforeach; ?>
 	</table>
 </div>
+-->
 <div class="actions">
 	<ul>
 		<li><?php echo $this->Html->link(__('Volver'), array('controller' => 'sectores', 'action' => 'index')); ?> </li>

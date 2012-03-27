@@ -102,6 +102,47 @@ class CiudadesController extends AppController {
 	}
 	
 	public function index() {
+		$this->Recursive=0;
+		$conditions = array();
+		if (isset($this -> params['named']['query']) && !empty($this -> params['named']['query'])) {
+			//$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
+			$query = $this -> params['named']['query'];
+			
+			$idsCiudades = $this -> Ciudad -> find(
+				'list',
+				array(
+					'conditions' => array(
+						'OR' => array(
+							'Ciudad.ciu_nombre LIKE' => "%$query%",
+						)
+					),
+					'fields' => array(
+						'Ciudad.id'
+					)
+				)
+			);
+			
+			$idsCantones = $this -> Ciudad -> Canton -> find(
+				'list',
+				array(
+					'conditions' => array(
+						'OR' => array(
+							'Canton.can_nombre LIKE' => "%$query%",
+						)
+					),
+					'fields' => array(
+						'Canton.id'
+					)
+				)
+			);
+			
+			$conditions['OR']['Ciudad.id'] = $idsCiudades;
+			$conditions['OR']['Ciudad.canton_id'] = $idsCantones;
+		}
+		if(!empty($conditions)) {
+			$this -> paginate = array('conditions' => $conditions);
+		}
+		
 		$ciudades = $this -> paginate();	
 		$this -> set(compact('ciudades'));
 	}

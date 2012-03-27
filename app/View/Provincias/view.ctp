@@ -16,6 +16,7 @@
 			&nbsp;
 		</h3>	
 </div>
+<!--
 <div class="provincias related">
 	<?php $cantones = $this -> requestAction('/cantones/getCantones/'.$provincia['Provincia']['id']); ?>
 	<table>
@@ -32,6 +33,7 @@
 		<?php endforeach; ?>
 	</table>
 </div>
+-->
 <div class="actions">
 	<ul>
 		<li><?php echo $this->Html->link(__('Volver'), array('controller' => 'Provincias', 'action' => 'index')); ?> </li>

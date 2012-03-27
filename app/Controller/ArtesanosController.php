@@ -54,6 +54,7 @@ class ArtesanosController extends AppController {
 		if (isset($this -> params['named']['query']) && !empty($this -> params['named']['query'])) {
 			//$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
 			$query = $this -> params['named']['query'];
+			
 			$calificaciones = $this -> Artesano -> Calificacion -> DatosPersonal -> find(
 				'list',
 				array(

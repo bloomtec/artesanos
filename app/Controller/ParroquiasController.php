@@ -103,6 +103,49 @@ class ParroquiasController extends AppController {
 	}
 	
 	public function index() {
+		
+		$this->Recursive=0;
+		$conditions = array();
+		if (isset($this -> params['named']['query']) && !empty($this -> params['named']['query'])) {
+			//$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
+			$query = $this -> params['named']['query'];
+					
+			$idsParroquias = $this -> Parroquia -> find(
+			'list',
+				array(
+					'conditions' => array(
+						'OR' => array(
+							'Parroquia.par_nombre LIKE' => "%$query%",
+						)
+					),
+					'fields' => array(
+						'Parroquia.id'
+					)
+				)
+			);
+			
+			$idsSectores = $this -> Parroquia->Sector -> find(
+				'list',
+				array(
+					'conditions' => array(
+						'OR' => array(
+							'Sector.sec_nombre LIKE' => "%$query%",
+						)
+					),
+					'fields' => array(
+						'Sector.id'
+					)
+				)
+			);
+			
+			$conditions['OR']['Parroquia.id'] = $idsParroquias;
+			$conditions['OR']['Parroquia.sector_id'] = $idsSectores;
+		}
+		if(!empty($conditions)) {
+			$this -> paginate = array('conditions' => $conditions);
+		}
+		
+		
 		$parroquias = $this -> paginate();
 		$this -> set(compact('parroquias'));
 	}

@@ -100,7 +100,49 @@ class CantonesController extends AppController {
 	}
 
 	public function index() {
+		$this->Recursive=0;
+		$conditions = array();
+		if (isset($this -> params['named']['query']) && !empty($this -> params['named']['query'])) {
+			//$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
+			$query = $this -> params['named']['query'];
+			
+			$idsCanton = $this -> Canton -> find(
+				'list',
+				array(
+					'conditions' => array(
+						'OR' => array(
+							'Canton.can_nombre LIKE' => "%$query%",
+						)
+					),
+					'fields' => array(
+						'Canton.id'
+					)
+				)
+			);
+			
+			$idsProvincia = $this -> Canton -> Provincia -> find(
+				'list',
+				array(
+					'conditions' => array(
+						'OR' => array(
+							'Provincia.pro_nombre LIKE' => "%$query%",
+						)
+					),
+					'fields' => array(
+						'Provincia.id'
+					)
+				)
+			);
+			
+			$conditions['OR']['Canton.id'] = $idsCanton;
+			$conditions['OR']['Canton.provincia_id'] = $idsProvincia;
+		}
+		if(!empty($conditions)) {
+			$this -> paginate = array('conditions' => $conditions);
+		}
+		
 		$cantones = $this -> paginate();
+		
 		//debug($cantones);
 		$this -> set(compact('cantones'));
 	}

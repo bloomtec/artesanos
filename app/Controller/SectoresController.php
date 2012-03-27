@@ -50,6 +50,7 @@ class SectoresController extends AppController {
 	 * @return void
 	 */
 	public function view($id = null) {
+		
 		$this -> Sector -> id = $id;
 		if (!$this -> Sector -> exists()) {
 			throw new NotFoundException(__('Sector no válido'));
@@ -108,6 +109,48 @@ class SectoresController extends AppController {
 	}
 	
 	public function index() {
+		$this->Recursive=0;
+		$conditions = array();
+		if (isset($this -> params['named']['query']) && !empty($this -> params['named']['query'])) {
+			//$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
+			$query = $this -> params['named']['query'];
+			
+			$idsSectores = $this -> Sector -> find(
+				'list',
+				array(
+					'conditions' => array(
+						'OR' => array(
+							'Sector.sec_nombre LIKE' => "%$query%",
+						)
+					),
+					'fields' => array(
+						'Sector.id'
+					)
+				)
+			);
+			
+			
+			$idsCiudades = $this -> Sector -> Ciudad -> find(
+				'list',
+				array(
+					'conditions' => array(
+						'OR' => array(
+							'Ciudad.ciu_nombre LIKE' => "%$query%",
+						)
+					),
+					'fields' => array(
+						'Ciudad.id'
+					)
+				)
+			);
+			
+			
+			$conditions['OR']['Sector.id'] = $idsSectores;
+			$conditions['OR']['Sector.ciudad_id'] = $idsCiudades;
+		}
+		if(!empty($conditions)) {
+			$this -> paginate = array('conditions' => $conditions);
+		}
 		$sectores = $this -> paginate();
 		$this -> set(compact('sectores'));
 	}
