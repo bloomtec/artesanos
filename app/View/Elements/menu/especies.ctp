@@ -1,5 +1,5 @@
 <li>
-	<a href="/especies_valorada">ESPECIES VALORADAS</a>
+	<a href="/especies_valoradas">ESPECIES VALORADAS</a>
 	<ul>
 		<li>  
 			<a href="#"> Mantenimientos </a>
@@ -19,8 +19,8 @@
 		<li> 
 			<a href="#">Reportes</a>
 			<ul>
-				<li> <a  href="/ingresos_especies/reporte"> Ingresos</a> </li>
-				<li> <a  href="/especies_valorada/reporte"> Egresos</a> </li>
+				<li> <a  href="/ingresos_especies/reporte">Ingresos</a> </li>
+				<li> <a  href="/especies_valoradas/reporte">Egresos</a> </li>
 			</ul>
 		</li>
 	</ul>
