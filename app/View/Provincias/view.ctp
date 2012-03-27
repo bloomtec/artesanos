@@ -5,7 +5,7 @@
 			<?php echo h($provincia['Provincia']['pro_nombre']); ?>
 			&nbsp;
 		</h3>
-		<label><?php echo __('Creado'); ?></label>
+		<!--<label><?php echo __('Creado'); ?></label>
 		<h3>
 			<?php echo h($provincia['Provincia']['created']); ?>
 			&nbsp;
@@ -14,26 +14,24 @@
 		<h3>
 			<?php echo h($provincia['Provincia']['modified']); ?>
 			&nbsp;
-		</h3>	
+		</h3>-->
 </div>
-<!--
 <div class="provincias related">
-	<?php $cantones = $this -> requestAction('/cantones/getCantones/'.$provincia['Provincia']['id']); ?>
+	<?php $cantones = $this -> requestAction('/cantones/getCantones/'.$provincia['Provincia']['id']); //debug($cantones); ?>
 	<table>
 		<caption>Cantones Relacionados</caption>
-		<tr><th>Nombre</th><th>Acciones</th></tr>
+		<tr><th>Nombre</th><!--<th>Acciones</th></tr>-->
 		<?php foreach($cantones as $key => $canton) : ?>
 			<tr>
-				<td><?php echo $canton['Canton']['can_nombre']; ?></td>
-				<td class="actions">
+				<td><?php echo $canton; //['Canton']['can_nombre']; ?></td>
+				<!--<td class="actions">
 					<a href="/cantones/view/<?php echo $canton['Canton']['id']; ?>" class="view">Ver</a>
 					<a href="/cantones/edit/<?php echo $canton['Canton']['id']; ?>" class="edit">Editar</a>
-				</td>
+				</td>-->
 			</tr>
 		<?php endforeach; ?>
 	</table>
 </div>
--->
 <div class="actions">
 	<ul>
 		<li><?php echo $this->Html->link(__('Volver'), array('controller' => 'Provincias', 'action' => 'index')); ?> </li>

@@ -43,6 +43,38 @@ class CursosController extends AppController {
 		}
 		$this -> set('curso', $this -> Curso -> read(null, $id));
 	}
+	
+	private function uploadFile($tmp_name = null, $filename = null) {
+		$this -> cleanupFiles();
+		if ($tmp_name && $filename) {
+			$url = 'files/uploads/cursos/' . $filename;
+			return move_uploaded_file($tmp_name, $url);
+		}
+	}
+
+	private function cleanupFiles() {
+		$documentos = $this -> Curso -> DocumentosCurso -> find('all');
+		$db_files = array();
+		foreach ($documentos as $key => $documento) {
+			$db_files[] = $documento['DocumentosCurso']['doc_path'];
+		}
+		$dir_files = array();
+		$dir_path = APP . 'webroot/files/uploads/cursos';
+		if ($handle = opendir($dir_path)) {
+			while (false !== ($entry = readdir($handle))) {
+				if($entry != 'empty' && is_file($dir_path . DS . $entry)) $dir_files[] = 'files/uploads/cursos/' . $entry;
+			}
+			closedir($handle);
+		}
+		foreach($dir_files as $file) {
+			if(!in_array($file, $db_files)) {
+				$file = explode('/', $file);
+				$file = $file[count($file) - 1];
+				$tmp_file_path = $dir_path . DS . $file;
+				unlink($tmp_file_path);
+			}
+		}
+	}
 
 	/**
 	 * add method
@@ -54,7 +86,28 @@ class CursosController extends AppController {
 			$this -> request -> data['Curso']['cur_costo'] = $this -> formatearValor($this -> request -> data['Curso']['cur_costo']);
 			$this -> Curso -> create();
 			if ($this -> Curso -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('El curso ha sido crearo'), 'crud/success');
+				
+				foreach ($this -> request -> data['Documentos'] as $key => $documento) {
+					if (!empty($documento['name']) && !$documento['error']) {
+						$now = new DateTime('now');
+						$filename = $now -> format('Y-m-d_H-i-s') . '_' . str_replace(' ', '_', $documento['name']);
+						if ($this -> uploadFile($documento['tmp_name'], $filename)) {
+							$this -> Curso -> DocumentosCurso -> create();
+							$documento = array(
+								'DocumentosCurso' => array(
+									'curso_id' => $this -> Curso -> id,
+									'doc_name' => $documento['name'],
+									'doc_path' => 'files/uploads/cursos/' . $filename,
+									'is_documento_de_creacion' => 1,
+									'is_documento_de_cierre' => 0
+								)
+							);
+							$this -> Curso -> DocumentosCurso -> save($documento);
+						}
+					}
+				}				
+				
+				$this -> Session -> setFlash(__('El curso ha sido creado'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
 				$this -> Session -> setFlash(__('No se pudo crear el curso. Por favor, intente de nuevo.'), 'crud/error');
