@@ -39,7 +39,7 @@
 				<td>
 					<?php 	echo $this->Form->input('EspeciesValorada.'.$i.'.cantidad',array('label'=>false,'class'=>'cantidad mil','disabled'=>true)); ?>
 					<?php 	echo $this->Form->hidden('EspeciesValorada.'.$i.'.cantidad',array('label'=>false,'class'=>'cantidad')); ?>
-				</td
+				</td>
 			</tr>
 			<?php 	$i++ ;
 					endforeach; 

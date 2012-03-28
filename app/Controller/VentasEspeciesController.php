@@ -48,9 +48,8 @@ class VentasEspeciesController extends AppController {
 			}
 		}
 		$juntasProvinciales = $this->VentasEspecie->JuntasProvincial->find('list');
-		$artesanos = $this->VentasEspecie->Artesano->find('list');
-		$especiesValoradas = $this->VentasEspecie->EspeciesValorada->find('list');
-		$this->set(compact('juntasProvinciales', 'artesanos', 'especiesValoradas'));
+		$tiposEspeciesValorada = $this -> VentasEspecie -> EspeciesValorada -> TiposEspeciesValorada -> find('all');
+		$this->set(compact('juntasProvinciales', 'tiposEspeciesValorada'));
 	}
 
 /**
