@@ -56,6 +56,19 @@ class JuntasProvincial extends AppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
+		),
+		'VentasEspecie' => array(
+			'className' => 'VentasEspecie',
+			'foreignKey' => 'juntas_provincial_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
 		)
 	);
 	
