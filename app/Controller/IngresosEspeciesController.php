@@ -156,7 +156,7 @@ class IngresosEspeciesController extends AppController {
 	}
 
 	public function reporte() {
-
+		$this -> set('reporte', null);
 	}
 
 }

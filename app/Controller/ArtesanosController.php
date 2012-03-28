@@ -9,7 +9,7 @@ class ArtesanosController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('datosCalificacion', 'verificarCedula', 'getID', 'validarCalificacion', 'setMultaPagada');
+		$this -> Auth -> allow('datosCalificacion', 'verificarCedula', 'getID', 'validarCalificacion', 'setMultaPagada', 'getDatosPersonales');
 	}
 	
 	function pruebas(){
@@ -41,6 +41,24 @@ class ArtesanosController extends AppController {
 		} else {
 			return null;
 		}
+	}
+	
+	public function getDatosPersonales($documento = null) {
+		$this -> autoRender = false;
+		if($documento) {
+			$artesano = $this -> Artesano -> findByArtCedula($documento);
+			if(!empty($artesano)) {
+				$calificacion = $artesano['Calificacion'][count($artesano['Calificacion']) - 1];
+				$this -> Artesano -> Calificacion -> DatosPersonal -> recursive = -1;
+				$datos_personales = $this -> Artesano -> Calificacion -> DatosPersonal -> findByCalificacionId($calificacion['id']);
+				echo json_encode($datos_personales);
+			} else {
+				return null;
+			}
+		} else {
+			return null;
+		}
+		exit(0);
 	}
 
 	/**
