@@ -156,7 +156,21 @@ class IngresosEspeciesController extends AppController {
 	}
 
 	public function reporte() {
-		$this -> set('reporte', null);
+		$ingresos = null;
+		
+		if($this -> request -> is('post')) {
+			debug($this -> request -> data);
+			
+			$especies = $this -> IngresosEspecie -> EspeciesValorada -> find('list', array('conditions' => array('EspeciesValorada.tipos_especies_valorada_id' => $this -> request -> data['IngresosEspecie']['tipo'])));
+			
+			$options = array();
+			if(!empty($this -> request -> data['IngresosEspecie']['serial'])) {}
+			if(!empty($this -> request -> data['IngresosEspecie']['fecha'])) {}
+			$this -> paginate = array('options' => $options);
+		}
+		
+		$this -> set('tipos_de_especie', $this -> IngresosEspecie -> EspeciesValorada -> TiposEspeciesValorada -> find('list'));
+		$this -> set('ingresos', $ingresos);
 	}
 
 }

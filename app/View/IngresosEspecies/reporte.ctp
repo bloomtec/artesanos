@@ -1,13 +1,12 @@
-<?php if($reporte==false) { ?>
+<?php if($ingresos==false) { ?>
 <div class="reportes form">
-	<?php echo $this -> Form -> create('Reporte');?>
+	<?php echo $this -> Form -> create('IngresosEspecie');?>
 	<h2><?php echo __('Reporte ingresos de especies'); ?></h2>
 	<fieldset>
 		<?php
-		echo $this -> Form -> input('cantidad', array('type' => 'text', 'class' => 'number'));
-		echo $this -> Form -> input('cantidad', array('type' => 'text', 'class' => 'number'));
-		echo $this -> Form -> input('fecha1', array('type' => 'text', 'label' => 'Fecha inicial', 'class' => 'date'));
-		echo $this -> Form -> input('fecha2', array('type' => 'text', 'label' => 'Fecha final', 'class' => 'date'));
+		echo $this -> Form -> input('tipo', array('type' => 'select', 'label' => 'Tipo De Especie', 'options' => $tipos_de_especie));
+		echo $this -> Form -> input('serial', array('type' => 'text', 'label' => 'Serial', 'class' => 'number'));
+		echo $this -> Form -> input('fecha', array('type' => 'text', 'label' => 'Fecha', 'class' => 'date'));
 		?>
 	</fieldset>
 	<?php echo $this -> Form -> submit('Buscar');?> 
@@ -16,7 +15,7 @@
 <?php } else { ?>
 <br />
 <br />
-<h2><?php echo __('Reporte ingresos de inventarios');?></h2>
+<h2><?php echo __('Reporte ingresos de especies');?></h2>
 <table>
 	<tr>
 		<th>Proveedor</th>
@@ -31,27 +30,27 @@
 		<th>Fecha</th>
 	</tr>
 	<?php
-	//debug($reporteIngresos);
-	for($i=0;$i < count($reporteIngresos);$i++) {
+	//debug($ingresosIngresos);
+	for($i=0;$i < count($ingresosIngresos);$i++) {
 	?>
 	<tr>
-		<td><?php echo $reporteIngresos[$i]['Proveedor']['pro_nombre_razon_social'];?> </td>
-		<td><?php echo $reporteIngresos[$i]['Ciudad']['ciu_nombre'];?> </td>
-		<td><?php echo $reporteIngresos[$i]['Persona']['per_nombres'];?> </td>
-		<td><?php echo $reporteIngresos[$i]['IngresosDeInventario']['ing_numero_de_memorandum'];?> </td>
-		<td><?php echo $reporteIngresos[$i]['IngresosDeInventario']['ing_asunto'];?> </td>
-		<td><?php echo $reporteIngresos[$i]['IngresosDeInventario']['ing_subtotal'];?> </td>
-		<td><?php echo $reporteIngresos[$i]['IngresosDeInventario']['ing_iva'];?> </td>
-		<td><?php echo $reporteIngresos[$i]['IngresosDeInventario']['ing_total'];?> </td>
+		<td><?php echo $ingresosIngresos[$i]['Proveedor']['pro_nombre_razon_social'];?> </td>
+		<td><?php echo $ingresosIngresos[$i]['Ciudad']['ciu_nombre'];?> </td>
+		<td><?php echo $ingresosIngresos[$i]['Persona']['per_nombres'];?> </td>
+		<td><?php echo $ingresosIngresos[$i]['IngresosDeInventario']['ing_numero_de_memorandum'];?> </td>
+		<td><?php echo $ingresosIngresos[$i]['IngresosDeInventario']['ing_asunto'];?> </td>
+		<td><?php echo $ingresosIngresos[$i]['IngresosDeInventario']['ing_subtotal'];?> </td>
+		<td><?php echo $ingresosIngresos[$i]['IngresosDeInventario']['ing_iva'];?> </td>
+		<td><?php echo $ingresosIngresos[$i]['IngresosDeInventario']['ing_total'];?> </td>
 		<td> 
 			<?php
-				foreach ($reporteIngresos[$i]['Item'] as $key => $value) {
-					if ($reporteIngresos[$i]['Item'] != array())
+				foreach ($ingresosIngresos[$i]['Item'] as $key => $value) {
+					if ($ingresosIngresos[$i]['Item'] != array())
 						echo $value['ite_nombre'] . "<br />";
 				}
 			?> 
 		</td>
-		<td><?php echo $reporteIngresos[$i]['IngresosDeInventario']['created'];?> </td>
+		<td><?php echo $ingresosIngresos[$i]['IngresosDeInventario']['created'];?> </td>
 	</tr>
 	<?php
 
