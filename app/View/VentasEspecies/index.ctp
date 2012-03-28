@@ -7,14 +7,11 @@
 	</div>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-									<th><?php echo $this->Paginator->sort('juntas_provincial_id','As Provincial Id');?></th>
-							<th><?php echo $this->Paginator->sort('artesano_id','Sano Id');?></th>
-							<th><?php echo $this->Paginator->sort('ven_serie_inicial','Serie Inicial');?></th>
-							<th><?php echo $this->Paginator->sort('ven_serie_final','Serie Final');?></th>
-							<th><?php echo $this->Paginator->sort('ven_cantidad_total','Cantidad Total');?></th>
-							<th><?php echo $this->Paginator->sort('ven_valor_total','Valor Total');?></th>
-										<th><?php echo $this->Paginator->sort('updated','Ted');?></th>
-					<th class="actions"><?php echo __('Acciones');?></th>
+		<th><?php echo $this->Paginator->sort('juntas_provincial_id','Junta Provincial');?></th>
+		<th><?php echo $this->Paginator->sort('artesano_id','Artesano');?></th>
+		<th><?php echo $this->Paginator->sort('ven_cantidad','Cantidad');?></th>
+		<th><?php echo $this->Paginator->sort('ven_valor','Valor');?></th>
+		<th class="actions"><?php echo __('Acciones');?></th>
 	</tr>
 	<?php
 	$i = 0;
@@ -24,12 +21,10 @@
 			<?php echo $this->Html->link($ventasEspecie['JuntasProvincial']['jun_nombre'], array('controller' => 'juntas_provinciales', 'action' => 'view', $ventasEspecie['JuntasProvincial']['id'])); ?>
 		</td>
 		<td>
-			<?php echo $this->Html->link($ventasEspecie['Artesano']['id'], array('controller' => 'artesanos', 'action' => 'view', $ventasEspecie['Artesano']['id'])); ?>
+			<?php echo $this->Html->link($ventasEspecie['Artesano']['nombre_completo'], array('controller' => 'artesanos', 'action' => 'view', $ventasEspecie['Artesano']['id'])); ?>
 		</td>
-		<td><?php echo h($ventasEspecie['VentasEspecie']['ven_serie_inicial']); ?>&nbsp;</td>
-		<td><?php echo h($ventasEspecie['VentasEspecie']['ven_serie_final']); ?>&nbsp;</td>
-		<td><?php echo h($ventasEspecie['VentasEspecie']['ven_cantidad_total']); ?>&nbsp;</td>
-		<td><?php echo h($ventasEspecie['VentasEspecie']['ven_valor_total']); ?>&nbsp;</td>
+		<td><?php echo h($ventasEspecie['VentasEspecie']['ven_cantidad']); ?>&nbsp;</td>
+		<td><?php echo h($ventasEspecie['VentasEspecie']['ven_valor']); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $ventasEspecie['VentasEspecie']['id']),array('class'=>'view','title'=>'Ver')); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $ventasEspecie['VentasEspecie']['id']),array('class'=>'edit','title'=>'Modificar')); ?>

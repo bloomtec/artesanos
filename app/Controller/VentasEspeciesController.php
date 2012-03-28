@@ -28,6 +28,7 @@ class VentasEspeciesController extends AppController {
 		if (!$this -> VentasEspecie -> exists()) {
 			throw new NotFoundException(__('Venta De Especie no válida'));
 		}
+		$this -> set('especiesValoradas', $this -> VentasEspecie -> EspeciesValorada -> find('all', array('conditions' => array('EspeciesValorada.ventas_especie_id' => $id))));
 		$this -> set('ventasEspecie', $this -> VentasEspecie -> read(null, $id));
 	}
 
@@ -38,32 +39,45 @@ class VentasEspeciesController extends AppController {
 	 */
 	public function add() {
 		if ($this -> request -> is('post')) {
-			debug($this -> request -> data);
-			$juntas_provincial_id = null;
+			//debug($this -> request -> data);
 			if(
 				(!$this -> request -> data['VentasEspecie']['juntas_provincial_id'] && $this -> request -> data['VentasEspecie']['artesano_id'])
 				|| ($this -> request -> data['VentasEspecie']['juntas_provincial_id'] && !$this -> request -> data['VentasEspecie']['artesano_id'])
 			) {
 				$this -> VentasEspecie -> create();
+				
+				$this -> request -> data['VentasEspecie']['ven_cantidad'] = 0;
+				$this -> request -> data['VentasEspecie']['ven_valor'] = 0;
+				
+				foreach($this -> request -> data['EspeciesValorada'] as $key => $datosEspecieValorada) {
+					//debug($datosEspecieValorada);
+					if($datosEspecieValorada['cantidad']) {
+						$tipoEspecie = $this -> VentasEspecie -> EspeciesValorada -> TiposEspeciesValorada -> read(null, $datosEspecieValorada['tipos_especies_valorada_id']);
+						$this -> request -> data['VentasEspecie']['ven_valor'] += ($tipoEspecie['TiposEspeciesValorada']['tip_valor_unitario'] * $datosEspecieValorada['cantidad']);
+						$this -> request -> data['VentasEspecie']['ven_cantidad'] += $datosEspecieValorada['cantidad'];
+					}
+				}
+				
 				if ($this -> VentasEspecie -> save($this -> request -> data)) {
-					
+					//debug($this -> request -> data);
 					foreach($this -> request -> data['EspeciesValorada'] as $key => $datosEspecieValorada) {
+						//debug($datosEspecieValorada);
 						if($datosEspecieValorada['cantidad']) {
-							
-							$especieValorada = $this -> VentasEspecie -> EspeciesValorada -> find(
-								'first',
-								array(
-									'conditions' => array(
-										'EspeciesValorada.tipos_especies_valorada_id' => $datosEspecieValorada['tipos_especies_valorada_id'],
-										'EspeciesValorada.ventas_especie_id' => null
+							for($tmp = $datosEspecieValorada['cantidad']; $tmp > 0 ; $tmp-=1) {
+								$especieValorada = $this -> VentasEspecie -> EspeciesValorada -> find(
+									'first',
+									array(
+										'conditions' => array(
+											'EspeciesValorada.tipos_especies_valorada_id' => $datosEspecieValorada['tipos_especies_valorada_id'],
+											'EspeciesValorada.ventas_especie_id' => null
+										)
 									)
-								)
-							);
-							
-							$especieValorada['EspeciesValorada']['ventas_especie_id'] = $this -> VentasEspecie -> id;
-							
-							$this -> VentasEspecie -> EspeciesValorada -> save($especieValorada); 
-							
+								);
+								
+								$especieValorada['EspeciesValorada']['ventas_especie_id'] = $this -> VentasEspecie -> id;
+								
+								$this -> VentasEspecie -> EspeciesValorada -> save($especieValorada);
+							}
 						}
 					}
 					
@@ -132,22 +146,20 @@ class VentasEspeciesController extends AppController {
 
 	public function reporte() {
 		if($this -> request -> is('post')) {
-			debug($this -> request -> data);
-			/*
-			if(!empty($this -> request -> data['IngresosEspecie']['fecha_inicio']) && !empty($this -> request -> data['IngresosEspecie']['fecha_fin'])) {
-				$conditions = array('IngresosEspecie.ing_fecha BETWEEN ? AND ?' => array($this -> request -> data['IngresosEspecie']['fecha_inicio'], $this -> request -> data['IngresosEspecie']['fecha_fin']));
+			if(!empty($this -> request -> data['VentasEspecie']['fecha_inicio']) && !empty($this -> request -> data['VentasEspecie']['fecha_fin'])) {
+				$conditions = array('VentasEspecie.created BETWEEN ? AND ?' => array($this -> request -> data['VentasEspecie']['fecha_inicio'], $this -> request -> data['VentasEspecie']['fecha_fin']));
 				$this -> paginate = array('conditions' => $conditions);
 				$this -> Session -> delete('conditions');
 				$this -> Session -> write('conditions', $conditions);
 				$this -> set('ingresos', $this -> paginate());
-			} elseif(!empty($this -> request -> data['IngresosEspecie']['fecha_inicio'])) {
-				$conditions = array('IngresosEspecie.ing_fecha >=' => $this -> request -> data['IngresosEspecie']['fecha_inicio']);
+			} elseif(!empty($this -> request -> data['VentasEspecie']['fecha_inicio'])) {
+				$conditions = array('VentasEspecie.created >=' => $this -> request -> data['VentasEspecie']['fecha_inicio']);
 				$this -> paginate = array('conditions' => $conditions);
 				$this -> Session -> delete('conditions');
 				$this -> Session -> write('conditions', $conditions);
 				$this -> set('ingresos', $this -> paginate());
-			} elseif(!empty($this -> request -> data['IngresosEspecie']['fecha_fin'])) {
-				$conditions = array('IngresosEspecie.ing_fecha <=' => $this -> request -> data['IngresosEspecie']['fecha_fin']);
+			} elseif(!empty($this -> request -> data['VentasEspecie']['fecha_fin'])) {
+				$conditions = array('VentasEspecie.created <=' => $this -> request -> data['VentasEspecie']['fecha_fin']);
 				$this -> paginate = array('conditions' => $conditions);
 				$this -> Session -> delete('conditions');
 				$this -> Session -> write('conditions', $conditions);
@@ -155,7 +167,6 @@ class VentasEspeciesController extends AppController {
 			} else {
 				$this -> set('ingresos', $this -> paginate());
 			}
-			*/
 		}
 		if(isset($this -> params['named']['sort'])) {
 			$this -> paginate = array('conditions' => $this -> Session -> read('conditions'));
@@ -165,7 +176,7 @@ class VentasEspeciesController extends AppController {
 	
 	public function imprimirReporte() {
 		$this -> layout = 'pdf2';
-		$nombre_archivo = "ReporteEgresosEspecies";
+		$nombre_archivo = "ReporteVentasEspecies";
 		$tamano = 5;
 		$this -> paginate = array('conditions' => $this -> Session -> read('conditions'));
 		$ingresos = $this -> paginate();

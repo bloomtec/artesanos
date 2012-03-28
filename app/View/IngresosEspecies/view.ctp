@@ -10,12 +10,25 @@
 			<?php echo h($ingresosEspecie['IngresosEspecie']['ing_cantidad_total']); ?>
 			&nbsp;
 		</h3>
-		<label><?php echo __('Modified'); ?></label>
-		<h3>
-			<?php echo h($ingresosEspecie['IngresosEspecie']['modified']); ?>
-			&nbsp;
-		</h3>
 	
+</div>
+<div style="clear: both;"></div>
+<div class="related">
+	<h2><?php echo __('Especies Valoradas Relacionadas'); ?></h2>
+	<table>
+		<tr>
+			<th>Tipo Especie</th>
+			<th>Serie</th>
+			<th>Valor Unitario</th>
+		</tr>
+		<?php foreach($especiesValoradas as $key => $especieValorada) : ?>
+		<tr>
+			<td><?php echo h($especieValorada['TiposEspeciesValorada']['tip_nombre']); ?></td>
+			<td><?php echo h($especieValorada['EspeciesValorada']['esp_serie']); ?></td>
+			<td><?php echo h($especieValorada['TiposEspeciesValorada']['tip_valor_unitario']); ?></td>
+		</tr>
+		<?php endforeach; ?>
+	</table>
 </div>
 <div class="actions">
 	<ul>

@@ -6,7 +6,7 @@
 		echo $this -> Form -> input('what_is', array('label' => false, 'div'=>'input select usu-cedula', 'type' => 'select','options'=>array('artesanoSelect'=>'Artesano: ','juntaSelect'=>'Junta: '),'id'=>'whatIs'));	
 	?>
 	<div class="cliente">
-	<?php	echo $this->Form->input('juntas_provincial_id',array('class'=>'juntaSelect controlSelects','label'=>false)); ?>
+	<?php	echo $this->Form->input('juntas_provincial_id',array('empty' => 'Seleccione...', 'class'=>'juntaSelect controlSelects','label'=>false)); ?>
 		<div class='cedula-box'>
 		<?php echo $this->Form->input('cedula_artesanos',array('class'=>'artesanoSelect controlSelects cedula','label'=>false,'type'=>'text')); ?>
 		<a class='button validarCedula' href='#'>validar</a>
@@ -32,8 +32,8 @@
 					<td> 
 						<?php 
 							$totales[0]=0; 
-							for($i=1;$i <=$tiposEspecie['TiposEspeciesValorada']['total_especies_para_vender'];$i++){
-								$totales[$i]=$i;
+							for($j=1;$j <=$tiposEspecie['TiposEspeciesValorada']['total_especies_para_vender'];$j++){
+								$totales[$j]=$j;
 							}
 						?>
 						<?php 	echo $this->Form->input('EspeciesValorada.'.$i.'.cantidad',array('label'=>false,'class'=>'cantidad',"options"=>$totales,'value'=>0)); ?>
