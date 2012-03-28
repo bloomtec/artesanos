@@ -73,6 +73,8 @@ class IngresosEspeciesController extends AppController {
 			// Validar que no hayan seriados existentes entre los rangos ingresados
 			$seriados_validos = true;
 			$tipo_especie = null;
+			$rango_inicio = null;
+			$rango_fin = null;
 			foreach ($this -> request -> data['EspeciesValorada'] as $key => $especieValorada) {
 				$tmp_especie_valorada = $this -> IngresosEspecie -> EspeciesValorada -> find(
 					'all',
@@ -85,7 +87,9 @@ class IngresosEspeciesController extends AppController {
 				);
 				if($tmp_especie_valorada) {
 					$seriados_validos = false;
-					$tipo_especie = $tmp_especie_valorada['TipoEspeciesValorada']['tip_nombre'];
+					$tipo_especie = $tmp_especie_valorada[0]['TiposEspeciesValorada']['tip_nombre'];
+					$rango_inicio = $tmp_especie_valorada[0]['EspeciesValorada']['esp_serie'];
+					$rango_fin = $tmp_especie_valorada[count($tmp_especie_valorada) - 1]['EspeciesValorada']['esp_serie'];
 					break;
 				}
 			}
@@ -116,7 +120,7 @@ class IngresosEspeciesController extends AppController {
 					$this -> Session -> setFlash(__('No se registró el ingreso de especies valoradas. Por favor, intente de nuevo.'), 'crud/error');
 				}
 			} else {
-				$this -> Session -> setFlash(__("El ingreso de especies valoradas $tipo_especie contiene un rango con valores existentes."), 'crud/error');
+				$this -> Session -> setFlash(__("El ingreso de especies valoradas $tipo_especie contiene un rango con valores existentes. Conflicto de valor con valores existentes entre $rango_inicio y $rango_fin."), 'crud/error');
 			}
 		}
 		$tiposEspeciesValoradas = $this->IngresosEspecie->EspeciesValorada->TiposEspeciesValorada->find('all');
