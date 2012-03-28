@@ -6,20 +6,32 @@ App::uses('AppModel', 'Model');
  * @property EspeciesValorada $EspeciesValorada
  */
 class IngresosEspecie extends AppModel {
-
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
-
 /**
- * hasAndBelongsToMany associations
+ * Display field
+ *
+ * @var string
+ */
+	public $displayField = 'id';
+/**
+ * Validation rules
  *
  * @var array
  */
-
- 	public $validate = array(
+	public $validate = array(
 		'ing_fecha' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				'message' => 'Digite la fecha',
+			'date' => array(
+				'rule' => array('date'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'ing_cantidad_total' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
+				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -29,7 +41,7 @@ class IngresosEspecie extends AppModel {
 		'ing_documento_soporte' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				'message' => 'Seleccione el documento de soporte',
+				'message' => 'Debe seleccionar el documento de soporte',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -37,22 +49,27 @@ class IngresosEspecie extends AppModel {
 			),
 		),
 	);
-	
-	public $hasAndBelongsToMany = array(
+
+	//The Associations below have been created with all possible keys, those that are not needed can be removed
+
+/**
+ * hasMany associations
+ *
+ * @var array
+ */
+	public $hasMany = array(
 		'EspeciesValorada' => array(
 			'className' => 'EspeciesValorada',
-			'joinTable' => 'especies_valoradas_ingresos_especies',
 			'foreignKey' => 'ingresos_especie_id',
-			'associationForeignKey' => 'especies_valorada_id',
-			'unique' => true,
+			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
 			'limit' => '',
 			'offset' => '',
+			'exclusive' => '',
 			'finderQuery' => '',
-			'deleteQuery' => '',
-			'insertQuery' => ''
+			'counterQuery' => ''
 		)
 	);
 

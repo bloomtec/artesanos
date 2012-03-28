@@ -34,7 +34,7 @@
 					<?php 	echo $this->Form->input('EspeciesValorada.'.$i.'.serie_inicial',array('label'=>false,'class'=>'mil serie_inicial','type'=>'text')); ?>
 				</td>
 				<td>
-					<?php 	echo $this->Form->input('EspeciesValorada.'.$i.'.iserie_final',array('label'=>false,'class'=>'mil serie_final','type'=>'text')); ?>
+					<?php 	echo $this->Form->input('EspeciesValorada.'.$i.'.serie_final',array('label'=>false,'class'=>'mil serie_final','type'=>'text')); ?>
 				</td>
 				<td>
 					<?php 	echo $this->Form->input('EspeciesValorada.'.$i.'.cantidad',array('label'=>false,'class'=>'cantidad mil','disabled'=>true)); ?>

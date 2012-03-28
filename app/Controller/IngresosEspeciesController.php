@@ -6,6 +6,38 @@ App::uses('AppController', 'Controller');
  * @property IngresosEspecie $IngresosEspecie
  */
 class IngresosEspeciesController extends AppController {
+	
+	private function uploadIngresoEspecieFile($tmp_name = null, $filename = null) {
+		$this -> cleanupIngresoEspecieFiles();
+		if ($tmp_name && $filename) {
+			$url = 'files/uploads/especiesValoradas/' . $filename;
+			return move_uploaded_file($tmp_name, $url);
+		}
+	}
+	
+	private function cleanupIngresoEspecieFiles() {
+		$items = $this -> IngresosEspecie -> find('all');
+		$db_files = array();
+		foreach ($items as $key => $item) {
+			$db_files[] = $item['IngresosEspecie']['ing_documento_soporte'];
+		}
+		$dir_files = array();
+		$dir_path = APP . 'webroot/files/uploads/especiesValoradas';
+		if ($handle = opendir($dir_path)) {
+			while (false !== ($entry = readdir($handle))) {
+				if($entry != 'empty' && is_file($dir_path . DS . $entry)) $dir_files[] = 'files/uploads/especiesValoradas/' . $entry;
+			}
+			closedir($handle);
+		}
+		foreach($dir_files as $file) {
+			if(!in_array($file, $db_files)) {
+				$file = explode('/', $file);
+				$file = $file[count($file) - 1];
+				$tmp_file_path = $dir_path . DS . $file;
+				unlink($tmp_file_path);
+			}
+		}
+	}
 
 	/**
 	 * index method
@@ -26,7 +58,7 @@ class IngresosEspeciesController extends AppController {
 	public function view($id = null) {
 		$this -> IngresosEspecie -> id = $id;
 		if (!$this -> IngresosEspecie -> exists()) {
-			throw new NotFoundException(__('Invalid ingresos especie'));
+			throw new NotFoundException(__('Ingreso Especie no válido'));
 		}
 		$this -> set('ingresosEspecie', $this -> IngresosEspecie -> read(null, $id));
 	}
@@ -38,14 +70,54 @@ class IngresosEspeciesController extends AppController {
 	 */
 	public function add() {
 		if ($this -> request -> is('post')) {
-			debug($this -> request -> data);
-			/*$this -> IngresosEspecie -> create();
-			if ($this -> IngresosEspecie -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The ingresos especie has been saved'), 'crud/success');
-				$this -> redirect(array('action' => 'index'));
+			// Validar que no hayan seriados existentes entre los rangos ingresados
+			$seriados_validos = true;
+			$tipo_especie = null;
+			foreach ($this -> request -> data['EspeciesValorada'] as $key => $especieValorada) {
+				$tmp_especie_valorada = $this -> IngresosEspecie -> EspeciesValorada -> find(
+					'all',
+					array(
+						'conditions' => array(
+							'EspeciesValorada.esp_serie BETWEEN ? AND ?' => array($especieValorada['serie_inicial'], $especieValorada['serie_final']),
+							'EspeciesValorada.tipos_especies_valorada_id' => $especieValorada['tipos_especies_valorada_id']
+						)
+					)
+				);
+				if($tmp_especie_valorada) {
+					$seriados_validos = false;
+					$tipo_especie = $tmp_especie_valorada['TipoEspeciesValorada']['tip_nombre'];
+					break;
+				}
+			}
+			if($seriados_validos) {
+				if (!empty($this -> request -> data['IngresosEspecie']['ing_documento_soporte']['name']) && !$this -> request -> data['IngresosEspecie']['ing_documento_soporte']['error']) {
+					$now = new DateTime('now');
+					$filename = $now -> format('Y-m-d_H-i-s') . '_' . str_replace(' ', '_', $this -> request -> data['IngresosEspecie']['ing_documento_soporte']['name']);
+					if ($this -> uploadIngresoEspecieFile($this -> request -> data['IngresosEspecie']['ing_documento_soporte']['tmp_name'], $filename)) {
+						$this -> request -> data['IngresosEspecie']['ing_documento_soporte'] = 'files/uploads/especiesValoradas/' . $filename;
+					}
+				}
+				$this -> IngresosEspecie -> create();
+				if ($this -> IngresosEspecie -> save($this -> request -> data)) {
+					
+					foreach ($this -> request -> data['EspeciesValorada'] as $key => $especieValorada) {
+						$especieValorada['ingresos_especie_id'] = $this -> IngresosEspecie -> id;
+						while($especieValorada['serie_inicial'] <= $especieValorada['serie_final']) {
+							$this -> IngresosEspecie -> EspeciesValorada -> create();
+							$especieValorada['esp_serie'] = $especieValorada['serie_inicial'];
+							$this -> IngresosEspecie -> EspeciesValorada -> save($especieValorada);
+							$especieValorada['serie_inicial'] += 1;
+						}
+					}
+					
+					$this -> Session -> setFlash(__('Se registró el ingreso de especies valoradas'), 'crud/success');
+					$this -> redirect(array('action' => 'index'));
+				} else {
+					$this -> Session -> setFlash(__('No se registró el ingreso de especies valoradas. Por favor, intente de nuevo.'), 'crud/error');
+				}
 			} else {
-				$this -> Session -> setFlash(__('The ingresos especie could not be saved. Please, try again.'), 'crud/error');
-			}*/
+				$this -> Session -> setFlash(__("El ingreso de especies valoradas $tipo_especie contiene un rango con valores existentes."), 'crud/error');
+			}
 		}
 		$tiposEspeciesValoradas = $this->IngresosEspecie->EspeciesValorada->TiposEspeciesValorada->find('all');
 		$this->set(compact('tiposEspeciesValoradas'));
@@ -65,13 +137,13 @@ class IngresosEspeciesController extends AppController {
 		}
 		$this -> IngresosEspecie -> id = $id;
 		if (!$this -> IngresosEspecie -> exists()) {
-			throw new NotFoundException(__('Invalid ingresos especie'));
+			throw new NotFoundException(__('Ingreso Especie no válido'));
 		}
 		if ($this -> IngresosEspecie -> delete()) {
-			$this -> Session -> setFlash(__('Ingresos especie deleted'), 'crud/success');
+			$this -> Session -> setFlash(__('Se eliminó el ingreso de especie'), 'crud/success');
 			$this -> redirect(array('action' => 'index'));
 		}
-		$this -> Session -> setFlash(__('Ingresos especie was not deleted'), 'crud/error');
+		$this -> Session -> setFlash(__('No se eliminó el ingreso de especie'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
 	}
 
