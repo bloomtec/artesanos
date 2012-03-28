@@ -30,7 +30,13 @@
 						</p>
 					</td>
 					<td> 
-						<?php 	echo $this->Form->input('EspeciesValorada.'.$i.'.cantidad',array('label'=>false,'class'=>'cantidad mil')); ?>
+						<?php 
+							$totales[0]=0; 
+							for($i=1;$i <=$tiposEspecie['TiposEspeciesValorada']['total_especies_para_vender'];$i++){
+								$totales[$i]=$i;
+							}
+						?>
+						<?php 	echo $this->Form->input('EspeciesValorada.'.$i.'.cantidad',array('label'=>false,'class'=>'cantidad',"options"=>$totales,'value'=>0)); ?>
 					</td>
 				</tr>
 			<?php 
@@ -101,6 +107,26 @@ $(function(){
 			}
 			
 		});
+	});
+	$('body').keyup(function(e){
+		var code = (e.keyCode ? e.keyCode : e.which);
+		if(code == 13){
+			
+		}
+	});
+	$('form').submit(function(e){
+		var cantidadTotal=0;
+		var length = $('.cantidad').length - 1 ;
+		$.each($('.cantidad'),function(i,val){
+			cantidadTotal+=parseInt($(val).val());
+			if(i == length){
+				if(!cantidadTotal){
+					e.preventDefault();
+					alert('No ha completado el formulario');
+				}
+			}
+		});
+		
 	});
 });
 </script>
