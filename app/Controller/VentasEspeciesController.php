@@ -44,15 +44,34 @@ class VentasEspeciesController extends AppController {
 				(!$this -> request -> data['VentasEspecie']['juntas_provincial_id'] && $this -> request -> data['VentasEspecie']['artesano_id'])
 				|| ($this -> request -> data['VentasEspecie']['juntas_provincial_id'] && !$this -> request -> data['VentasEspecie']['artesano_id'])
 			) {
-				/*
 				$this -> VentasEspecie -> create();
 				if ($this -> VentasEspecie -> save($this -> request -> data)) {
+					
+					foreach($this -> request -> data['EspeciesValorada'] as $key => $datosEspecieValorada) {
+						if($datosEspecieValorada['cantidad']) {
+							
+							$especieValorada = $this -> VentasEspecie -> EspeciesValorada -> find(
+								'first',
+								array(
+									'conditions' => array(
+										'EspeciesValorada.tipos_especies_valorada_id' => $datosEspecieValorada['tipos_especies_valorada_id'],
+										'EspeciesValorada.ventas_especie_id' => null
+									)
+								)
+							);
+							
+							$especieValorada['EspeciesValorada']['ventas_especie_id'] = $this -> VentasEspecie -> id;
+							
+							$this -> VentasEspecie -> EspeciesValorada -> save($especieValorada); 
+							
+						}
+					}
+					
 					$this -> Session -> setFlash(__('Se registró la venta de especie valorada'), 'crud/success');
 					$this -> redirect(array('action' => 'index'));
 				} else {
 					$this -> Session -> setFlash(__('No se registró la venta de especie valorada. Por favor, intente de nuevo.'), 'crud/error');
 				}
-				*/
 			} else {
 				$this -> Session -> setFlash('La venta de especies es para un individuo o una junta provincial', 'crud/error');
 			}
