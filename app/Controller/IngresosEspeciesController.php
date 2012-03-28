@@ -193,5 +193,37 @@ class IngresosEspeciesController extends AppController {
 		$ingresos = $this -> paginate();
 		$this -> set(compact('ingresos', 'nombre_archivo', 'tamano'));
 	}
+	
+	function export_csv() {
+
+		$this -> layout = "";
+		$this -> render(false);
+
+		$csv = new csvHelper();
+		$reporteIngresos = $this -> Session -> read('reporteIngresos');
+
+		$cabeceras = array('Proveedor', 'Ciudad', 'Persona', '# Memorando', 'Asunto', 'Sub total', 'IVA', 'Total', 'Items', 'Fecha');
+
+		$csv -> addRow($cabeceras);
+
+		for ($i = 0; $i < count($reporteIngresos); $i++) {
+			$items = "";
+			foreach ($reporteIngresos[$i]['Item'] as $key => $value) {
+				if ($reporteIngresos[$i]['Item'] != array())
+					if ($items == "") {
+						$items = $value['ite_nombre'];
+					} else {
+						$items = $items . ' ' . $value['ite_nombre'];
+					}
+			}
+
+			$filas = array($reporteIngresos[$i]['Proveedor']['pro_nombre_razon_social'], $reporteIngresos[$i]['Ciudad']['ciu_nombre'], $reporteIngresos[$i]['Persona']['per_nombres'], $reporteIngresos[$i]['IngresosDeInventario']['ing_numero_de_memorandum'], $reporteIngresos[$i]['IngresosDeInventario']['ing_asunto'], $reporteIngresos[$i]['IngresosDeInventario']['ing_subtotal'], $reporteIngresos[$i]['IngresosDeInventario']['ing_iva'], $reporteIngresos[$i]['IngresosDeInventario']['ing_total'], $items, $reporteIngresos[$i]['IngresosDeInventario']['created']);
+
+			$csv -> addRow($filas);
+
+		}
+		$titulo = "csvIngresosInventarios_" . date("Y-m-d H:i:s", time()) . ".csv";
+		echo $csv -> render($titulo);
+	}
 
 }
