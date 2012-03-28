@@ -156,21 +156,42 @@ class IngresosEspeciesController extends AppController {
 	}
 
 	public function reporte() {
-		$ingresos = null;
-		
 		if($this -> request -> is('post')) {
-			debug($this -> request -> data);
-			
-			$especies = $this -> IngresosEspecie -> EspeciesValorada -> find('list', array('conditions' => array('EspeciesValorada.tipos_especies_valorada_id' => $this -> request -> data['IngresosEspecie']['tipo'])));
-			
-			$options = array();
-			if(!empty($this -> request -> data['IngresosEspecie']['serial'])) {}
-			if(!empty($this -> request -> data['IngresosEspecie']['fecha'])) {}
-			$this -> paginate = array('options' => $options);
+			if(!empty($this -> request -> data['IngresosEspecie']['fecha_inicio']) && !empty($this -> request -> data['IngresosEspecie']['fecha_fin'])) {
+				$conditions = array('IngresosEspecie.ing_fecha BETWEEN ? AND ?' => array($this -> request -> data['IngresosEspecie']['fecha_inicio'], $this -> request -> data['IngresosEspecie']['fecha_fin']));
+				$this -> paginate = array('conditions' => $conditions);
+				$this -> Session -> delete('conditions');
+				$this -> Session -> write('conditions', $conditions);
+				$this -> set('ingresos', $this -> paginate());
+			} elseif(!empty($this -> request -> data['IngresosEspecie']['fecha_inicio'])) {
+				$conditions = array('IngresosEspecie.ing_fecha >=' => $this -> request -> data['IngresosEspecie']['fecha_inicio']);
+				$this -> paginate = array('conditions' => $conditions);
+				$this -> Session -> delete('conditions');
+				$this -> Session -> write('conditions', $conditions);
+				$this -> set('ingresos', $this -> paginate());
+			} elseif(!empty($this -> request -> data['IngresosEspecie']['fecha_fin'])) {
+				$conditions = array('IngresosEspecie.ing_fecha <=' => $this -> request -> data['IngresosEspecie']['fecha_fin']);
+				$this -> paginate = array('conditions' => $conditions);
+				$this -> Session -> delete('conditions');
+				$this -> Session -> write('conditions', $conditions);
+				$this -> set('ingresos', $this -> paginate());
+			} else {
+				$this -> set('ingresos', $this -> paginate());
+			}
 		}
-		
-		$this -> set('tipos_de_especie', $this -> IngresosEspecie -> EspeciesValorada -> TiposEspeciesValorada -> find('list'));
-		$this -> set('ingresos', $ingresos);
+		if(isset($this -> params['named']['sort'])) {
+			$this -> paginate = array('conditions' => $this -> Session -> read('conditions'));
+			$this -> set('ingresos', $this -> paginate());
+		}
+	}
+	
+	public function imprimirReporte() {
+		$this -> layout = 'pdf2';
+		$nombre_archivo = "ReporteIngresosEspecies";
+		$tamano = 5;
+		$this -> paginate = array('conditions' => $this -> Session -> read('conditions'));
+		$ingresos = $this -> paginate();
+		$this -> set(compact('ingresos', 'nombre_archivo', 'tamano'));
 	}
 
 }
