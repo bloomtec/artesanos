@@ -14,6 +14,22 @@ $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('contr
 			<a href="#">Mantenimientos</a>
 			<ul>
 				<li>
+					<a href="/items"> Activos y Suministros </a>
+					<ul>
+						<li>
+							<a href="/items/add">Agregar</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="/tipos_especies_valoradas">Tipos  de Especie Valoradas</a>
+					<ul>
+						<li>
+							<a href="/tipos_especies_valoradas/add">Agregar</a>
+						</li>
+					</ul>
+				</li>
+				<li>
 					<a href="/juntas_provinciales">Juntas Provinciales</a>
 					<ul>
 						<li>
