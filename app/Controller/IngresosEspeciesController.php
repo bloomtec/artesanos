@@ -120,7 +120,11 @@ class IngresosEspeciesController extends AppController {
 					$this -> Session -> setFlash(__('No se registró el ingreso de especies valoradas. Por favor, intente de nuevo.'), 'crud/error');
 				}
 			} else {
-				$this -> Session -> setFlash(__("El ingreso de especies valoradas $tipo_especie contiene un rango con valores existentes. Conflicto de valor con valores existentes entre $rango_inicio y $rango_fin."), 'crud/error');
+				if($rango_inicio != $rango_fin) {
+					$this -> Session -> setFlash(__("El ingreso de especies valoradas $tipo_especie contiene un rango con valores existentes. Conflicto de valor con valores existentes entre $rango_inicio y $rango_fin."), 'crud/error');
+				} else {
+					$this -> Session -> setFlash(__("El ingreso de especies valoradas $tipo_especie contiene un rango con valores existentes. Conflicto de valor con el valor existente $rango_inicio."), 'crud/error');
+				}
 			}
 		}
 		$tiposEspeciesValoradas = $this->IngresosEspecie->EspeciesValorada->TiposEspeciesValorada->find('all');
