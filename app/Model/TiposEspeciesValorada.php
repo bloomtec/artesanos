@@ -12,6 +12,20 @@ class TiposEspeciesValorada extends AppModel {
  * @var string
  */
 	public $displayField = 'tip_nombre';
+	
+	public $virtualFields = array(
+		'total_especies_para_vender' => 'SELECT COUNT(*)
+							FROM especies_valoradas, tipos_especies_valoradas
+							WHERE especies_valoradas.tipos_especies_valorada_id = tipos_especies_valoradas.id 
+							AND tipos_especies_valoradas.id = TiposEspeciesValorada.id
+							AND especies_valoradas.ventas_especie_id IS NULL',
+		'total_especies_vendidas' => 'SELECT COUNT(*)
+							FROM especies_valoradas, tipos_especies_valoradas
+							WHERE especies_valoradas.tipos_especies_valorada_id = tipos_especies_valoradas.id 
+							AND tipos_especies_valoradas.id = TiposEspeciesValorada.id
+							AND especies_valoradas.ventas_especie_id IS NOT NULL'
+	);
+	
 /**
  * Validation rules
  *

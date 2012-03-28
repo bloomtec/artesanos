@@ -26,7 +26,7 @@ class VentasEspeciesController extends AppController {
 	public function view($id = null) {
 		$this -> VentasEspecie -> id = $id;
 		if (!$this -> VentasEspecie -> exists()) {
-			throw new NotFoundException(__('Invalid ventas especie'));
+			throw new NotFoundException(__('Venta De Especie no válida'));
 		}
 		$this -> set('ventasEspecie', $this -> VentasEspecie -> read(null, $id));
 	}
@@ -38,12 +38,23 @@ class VentasEspeciesController extends AppController {
 	 */
 	public function add() {
 		if ($this -> request -> is('post')) {
-			$this -> VentasEspecie -> create();
-			if ($this -> VentasEspecie -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The ventas especie has been saved'), 'crud/success');
-				$this -> redirect(array('action' => 'index'));
+			debug($this -> request -> data);
+			$juntas_provincial_id = null;
+			if(
+				(!$this -> request -> data['VentasEspecie']['juntas_provincial_id'] && $this -> request -> data['VentasEspecie']['artesano_id'])
+				|| ($this -> request -> data['VentasEspecie']['juntas_provincial_id'] && !$this -> request -> data['VentasEspecie']['artesano_id'])
+			) {
+				/*
+				$this -> VentasEspecie -> create();
+				if ($this -> VentasEspecie -> save($this -> request -> data)) {
+					$this -> Session -> setFlash(__('Se registró la venta de especie valorada'), 'crud/success');
+					$this -> redirect(array('action' => 'index'));
+				} else {
+					$this -> Session -> setFlash(__('No se registró la venta de especie valorada. Por favor, intente de nuevo.'), 'crud/error');
+				}
+				*/
 			} else {
-				$this -> Session -> setFlash(__('The ventas especie could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash('La venta de especies es para un individuo o una junta provincial', 'crud/error');
 			}
 		}
 		$juntasProvinciales = $this -> VentasEspecie -> JuntasProvincial -> find('list');
@@ -60,14 +71,14 @@ class VentasEspeciesController extends AppController {
 	public function edit($id = null) {
 		$this -> VentasEspecie -> id = $id;
 		if (!$this -> VentasEspecie -> exists()) {
-			throw new NotFoundException(__('Invalid ventas especie'));
+			throw new NotFoundException(__('Venta De Especie no válida'));
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			if ($this -> VentasEspecie -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The ventas especie has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se registró la venta de especie valorada'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The ventas especie could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se registró la venta de especie valorada. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		} else {
 			$this -> request -> data = $this -> VentasEspecie -> read(null, $id);
@@ -90,13 +101,13 @@ class VentasEspeciesController extends AppController {
 		}
 		$this -> VentasEspecie -> id = $id;
 		if (!$this -> VentasEspecie -> exists()) {
-			throw new NotFoundException(__('Invalid ventas especie'));
+			throw new NotFoundException(__('Venta De Especie no válida'));
 		}
 		if ($this -> VentasEspecie -> delete()) {
-			$this -> Session -> setFlash(__('Ventas especie deleted'), 'crud/success');
+			$this -> Session -> setFlash(__('Se eliminó la venta de especie'), 'crud/success');
 			$this -> redirect(array('action' => 'index'));
 		}
-		$this -> Session -> setFlash(__('Ventas especie was not deleted'), 'crud/error');
+		$this -> Session -> setFlash(__('No se eliminó la venta de especie'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
 	}
 

@@ -128,6 +128,7 @@ class IngresosEspeciesController extends AppController {
 			}
 		}
 		$tiposEspeciesValoradas = $this->IngresosEspecie->EspeciesValorada->TiposEspeciesValorada->find('all');
+		debug($tiposEspeciesValoradas);
 		$this->set(compact('tiposEspeciesValoradas'));
 	}
 
