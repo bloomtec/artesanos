@@ -28,7 +28,16 @@ class VentasEspeciesController extends AppController {
 		if (!$this -> VentasEspecie -> exists()) {
 			throw new NotFoundException(__('Venta De Especie no válida'));
 		}
-		$this -> set('especiesValoradas', $this -> VentasEspecie -> EspeciesValorada -> find('all', array('conditions' => array('EspeciesValorada.ventas_especie_id' => $id))));
+		$this -> paginate = array(
+			'EspeciesValorada' => array(
+				'limit' => 10,
+				'conditions' => array(
+					'EspeciesValorada.ventas_especie_id' => $id
+				)
+			)
+		);
+		$especiesValoradas = $this -> paginate('EspeciesValorada');
+		$this -> set('especiesValoradas', $especiesValoradas);
 		$this -> set('ventasEspecie', $this -> VentasEspecie -> read(null, $id));
 	}
 

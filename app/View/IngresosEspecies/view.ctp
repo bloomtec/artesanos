@@ -17,9 +17,9 @@
 	<h2><?php echo __('Especies Valoradas Relacionadas'); ?></h2>
 	<table>
 		<tr>
-			<th>Tipo Especie</th>
-			<th>Serie</th>
-			<th>Valor Unitario</th>
+			<th><?php echo $this -> Paginator -> sort('TiposEspeciesValorada.tip_nombre', 'Tipo Especie'); ?></th>
+			<th><?php echo $this -> Paginator -> sort('esp_serie', 'Serie'); ?></th>
+			<th><?php echo $this -> Paginator -> sort('TiposEspeciesValorada.tip_valor_unitario', 'Valor Unitario'); ?></th>
 		</tr>
 		<?php foreach($especiesValoradas as $key => $especieValorada) : ?>
 		<tr>
