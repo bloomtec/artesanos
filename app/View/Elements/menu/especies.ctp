@@ -1,5 +1,5 @@
 <li>
-	<a href="/especies_valoradas">ESPECIES VALORADAS</a>
+	<a href="/ingresos_especies">ESPECIES VALORADAS</a>
 	<ul>
 		
 		<li> <a href="/ingresos_especies/add">Ingresar Especies</a></li>
