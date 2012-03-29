@@ -17,9 +17,9 @@
 	<h2><?php echo __('Especies Valoradas Relacionadas'); ?></h2>
 	<table>
 		<tr>
-			<th>Tipo Especie</th>
-			<th>Serie</th>
-			<th>Valor Unitario</th>
+			<th><?php echo $this -> Paginator -> sort('TiposEspeciesValorada.tip_nombre', 'Tipo Especie'); ?></th>
+			<th><?php echo $this -> Paginator -> sort('esp_serie', 'Serie'); ?></th>
+			<th><?php echo $this -> Paginator -> sort('TiposEspeciesValorada.tip_valor_unitario', 'Valor Unitario'); ?></th>
 		</tr>
 		<?php foreach($especiesValoradas as $key => $especieValorada) : ?>
 		<tr>
@@ -29,6 +29,21 @@
 		</tr>
 		<?php endforeach; ?>
 	</table>
+	<div class="paging">
+	<!--<p>
+	<?php
+	echo $this->Paginator->counter(array(
+	'format' => __('Page {:page} of {:pages}, mostrando {:current} registro de {:count} totales, comenzando en el registro record {:start}, hasta el registro {:end}')
+	));
+	?>	</p>-->
+	<?php
+		echo $this->Paginator->first('<< ', array(), null, array('class' => 'prev disabled'));
+		echo $this->Paginator->prev('< ' . __('Anterior'), array(), null, array('class' => 'prev disabled'));
+		echo $this->Paginator->numbers(array('separator' => ''));
+		echo $this->Paginator->next(__('Siguiente') . ' >', array(), null, array('class' => 'next disabled'));
+		echo $this->Paginator->last('>> ', array(), null, array('class' => 'next disabled'));
+	?>
+	</div>
 </div>
 <div class="actions">
 	<ul>

@@ -60,7 +60,16 @@ class IngresosEspeciesController extends AppController {
 		if (!$this -> IngresosEspecie -> exists()) {
 			throw new NotFoundException(__('Ingreso Especie no válido'));
 		}
-		$this -> set('especiesValoradas', $this -> IngresosEspecie -> EspeciesValorada -> find('all', array('conditions' => array('EspeciesValorada.ingresos_especie_id' => $id))));
+		$this -> paginate = array(
+			'EspeciesValorada' => array(
+				'limit' => 10,
+				'conditions' => array(
+					'EspeciesValorada.ingresos_especie_id' => $id
+				)
+			)
+		);
+		$especiesValoradas = $this -> paginate('EspeciesValorada');
+		$this -> set('especiesValoradas', $especiesValoradas);
 		$this -> set('ingresosEspecie', $this -> IngresosEspecie -> read(null, $id));
 	}
 
