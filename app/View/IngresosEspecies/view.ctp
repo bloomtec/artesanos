@@ -29,6 +29,21 @@
 		</tr>
 		<?php endforeach; ?>
 	</table>
+	<div class="paging">
+	<!--<p>
+	<?php
+	echo $this->Paginator->counter(array(
+	'format' => __('Page {:page} of {:pages}, mostrando {:current} registro de {:count} totales, comenzando en el registro record {:start}, hasta el registro {:end}')
+	));
+	?>	</p>-->
+	<?php
+		echo $this->Paginator->first('<< ', array(), null, array('class' => 'prev disabled'));
+		echo $this->Paginator->prev('< ' . __('Anterior'), array(), null, array('class' => 'prev disabled'));
+		echo $this->Paginator->numbers(array('separator' => ''));
+		echo $this->Paginator->next(__('Siguiente') . ' >', array(), null, array('class' => 'next disabled'));
+		echo $this->Paginator->last('>> ', array(), null, array('class' => 'next disabled'));
+	?>
+	</div>
 </div>
 <div class="actions">
 	<ul>
