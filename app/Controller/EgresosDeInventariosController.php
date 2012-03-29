@@ -72,6 +72,7 @@ class EgresosDeInventariosController extends AppController {
 			}
 			
 			//Reporte egresos
+			$reporteEgresos=$this->paginate();
 			$reporteEgresos = $this -> EgresosDeInventario -> find('all', array('conditions' => $conditions));
 			$this -> Session -> write('reporteEgresos', $reporteEgresos);
 			//debug($reporteEgresos);
@@ -116,10 +117,10 @@ class EgresosDeInventariosController extends AppController {
 			$items = "";
 			foreach ($reporteEgresos[$i]['Item'] as $key => $value) {
 				if ($reporteEgresos[$i]['Item'] != array())
-					 if($items==""){
-					 	$items = $value['ite_nombre'];
-					 }else {
-					 	$items = $items.' '.$value['ite_nombre'];
+					 if ($items==""){
+					 	 $items = $value['ite_nombre'];
+					 } else {
+					 	 $items = $items.' '.$value['ite_nombre'];
 				}
 		   }
 			

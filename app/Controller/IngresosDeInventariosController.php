@@ -16,9 +16,8 @@ class IngresosDeInventariosController extends AppController {
 		$this -> loadModel('IngresosDeInventario', true);
 		$this -> loadModel('Persona', true);
 		$reporte = false;
-		
-		if ($this -> request -> is('post')) {
 
+		if ($this -> request -> is('post')) {
 			$condiciones = array();
 			$idProveedor = $this -> data['Reporte']['proveedor'];
 			$idPersona = $this -> data['Reporte']['persona'];
@@ -77,9 +76,8 @@ class IngresosDeInventariosController extends AppController {
 			}
 
 			//Reporte ingresos
-			
+			$this->Paginate();
 			$reporteIngresos = $this -> IngresosDeInventario -> find('all', array('conditions' => $conditions));
-			//debug($reporteIngresos);
 			$reporte = true;
 			$this -> Session -> write('reporteIngresos', $reporteIngresos);
 			$this -> set(compact('reporteIngresos','reporte'));

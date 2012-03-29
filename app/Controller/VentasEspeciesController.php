@@ -211,7 +211,7 @@ class VentasEspeciesController extends AppController {
 			$csv -> addRow($filas);
 
 		}
-		$titulo = "csvIngresosInventarios_" . date("Y-m-d H:i:s", time()) . ".csv";
+		$titulo = "csvVentasEspecies_" . date("Y-m-d H:i:s", time()) . ".csv";
 		echo $csv -> render($titulo);
 	}
 

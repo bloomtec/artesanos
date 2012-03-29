@@ -152,6 +152,7 @@ class SectoresController extends AppController {
 			$this -> paginate = array('conditions' => $conditions);
 		}
 		$sectores = $this -> paginate();
+		debug($sectores);
 		$this -> set(compact('sectores'));
 	}
 
