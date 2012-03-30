@@ -10,6 +10,7 @@
 		echo $this -> Form -> input('con_anos_renovacion_artesanos_normales', array('label' => 'Años Para Renovación Artesanos Normales'));
 		echo $this -> Form -> input('con_anos_pasar_de_aprendiz_a_operario', array('label' => 'Años Para Pasar De Aprendiz A Operario'));
 		echo $this -> Form -> input('con_anos_operario_se_pueda_calificar', array('label' => 'Años Para Que Un Operario Se Pueda Calificar'));
+		echo $this -> Form -> input('con_correos_solicitudes', array('label' => 'Correos Solicitudes (Ingrese los correos deseados separados por coma (,))'));
 		?>
 	</fieldset>
 	<?php echo $this -> Html -> link(__('Cancelar'), array('action' => 'index'), array('class' => 'cancelar'));?>
