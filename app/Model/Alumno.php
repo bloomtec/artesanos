@@ -38,6 +38,16 @@ class Alumno extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
+		'alu_fecha_de_nacimiento' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Ingrese el apellido paterno',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
 		'alu_apellido_materno' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),

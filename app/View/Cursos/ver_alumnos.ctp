@@ -27,6 +27,7 @@
 	  	</td>
 	  	<td class="actions">
 	  		<?php  if($alumno['CursosAlumno']['cur_aprobo']) echo $this -> Html -> link('certificado',array("action"=>'certificado',$alumno['CursosAlumno']['id']),array('class'=>'certificado','title'=>'Descargar certificado	'));?>
+	  		<?php if($alumno['Curso']['cur_activo']) echo  $this -> Html -> link('certificado',array("action"=>'quitarAlumno',$alumno['CursosAlumno']['id']),array('class'=>'delete','title'=>'Quitar Alumno'));  ?>
 	  	</td>
 	  </tr>
 	  <?php endforeach;?>

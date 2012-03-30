@@ -45,6 +45,7 @@ class SolicitudesController extends AppController {
 	public function add() {
 		if ($this -> request -> is('post')) {
 			$now = new DateTime('now');
+			$this -> request -> data['Solicitud']['sol_estado'] = 1;
 			$this -> request -> data['Solicitud']['sol_fecha_solicitud'] = $now -> format('Y-m-d H:i:s');
 			$this -> request -> data['Solicitud']['sol_costos'] = $this -> formatearValor($this -> request -> data['Solicitud']['sol_costos']);
 			$this -> request -> data['Solicitud']['sol_esta_aprobada'] = false;
@@ -52,6 +53,7 @@ class SolicitudesController extends AppController {
 			
 			if ($this -> Solicitud -> save($this -> request -> data)) {
 				$this -> Session -> setFlash(__('La solicitud ha sido guardada'), 'crud/success');
+				/*ENVIAR CORREO ELECTRONICO AL LOS CORREOS QUE ESTAN EN EL PARAMETRO DE correos_solicitudes*/
 				$this -> redirect(array('action' => 'index'));
 			} else {
 				$this -> Session -> setFlash(__('No se pudo guardar la solicitud. Por favor, intente de nuevo.'), 'crud/error');

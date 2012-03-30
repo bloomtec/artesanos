@@ -133,8 +133,8 @@ class CursosController extends AppController {
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			$this -> request -> data['Curso']['cur_costo'] = $this -> formatearValor($this -> request -> data['Curso']['cur_costo']);
 			if ($this -> Curso -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('La inforamción del curso ha sido actualizada'), 'crud/success');
-			//	$this -> redirect(array('action' => 'index'));
+				$this -> Session -> setFlash(__('La información del curso ha sido actualizada'), 'crud/success');
+				$this -> redirect(array('action' => 'index'));
 			} else {
 				$this -> Session -> setFlash(__('No se pudo actualizar el curso. Por favor, intente de nuevo.'), 'crud/error');
 			}
@@ -155,7 +155,7 @@ class CursosController extends AppController {
 		$curso = $this -> Curso -> read(null,$id);
 		$alumnos = $this -> Curso -> CursosAlumno -> bindModel(array(
 			'belongsTo' => array(
-				'Alumno'
+				'Alumno','Curso'
 			)
 		));
 		$alumnos = $this -> Curso -> CursosAlumno -> find('all',array('conditions'=>array('CursosAlumno.curso_id'=>$id)));

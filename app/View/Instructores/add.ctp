@@ -14,7 +14,7 @@
 		echo $this->Form->input('ins_tipo_de_sangre',array('label'=>'Tipo De Sangre', 'options' => $tipos_de_sangre, 'empty' => 'Seleccione...'));
 		echo $this->Form->input('ins_estado_civil',array('label'=>'Estado Civil', 'options' => $estados_civiles, 'empty' => 'Seleccione...'));
 		echo $this->Form->input('ins_especialidad',array('label'=>'Especialidad'));
-		echo $this->Form->input('ins_experiencia',array('label'=>'Experiencia'));
+		echo $this->Form->input('ins_experiencia',array('label'=>'Experiencia en Años','class'=>'number'));
 	?>
 	</fieldset>
 <?php echo $this->Html->link(__('Cancelar'),array('action'=>'index'),array('class'=>'cancelar'));?>

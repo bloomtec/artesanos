@@ -1,11 +1,12 @@
 <div class="cursos form form2">
 	<?php echo $this -> Form -> create('Curso');?>
+	<?php //debug($this -> data);?>
 	<fieldset>
 		<h2><?php echo __('Administrar Curso');?></h2>
 		<?php
 		echo $this -> Form -> input('id');
 		echo $this -> Form -> input('solicitud_id');
-		echo $this -> Form -> input('instructor_id');
+		echo $this -> Form -> input('instructor_id',array('empty'=>'Seleccione...'));
 		echo $this -> Form -> input('cur_nombre', array('label' => 'Nombre'));
 		echo $this -> Form -> input('cur_descripcion', array('label' => 'Descripcion'));
 		echo $this -> Form -> input('cur_fecha_de_inicio', array('label' => 'Fecha De Inicio', 'type' => 'text', 'class' => 'date'));
