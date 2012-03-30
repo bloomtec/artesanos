@@ -8,6 +8,7 @@
 			<th><?php echo $this -> Paginator -> sort('con_anos_renovacion_artesanos_normales', 'Años Para Renovación Artesanos Normales');?></th>
 			<th><?php echo $this -> Paginator -> sort('con_anos_pasar_de_aprendiz_a_operario', 'Años Para Pasar De Aprendiz A Operario');?></th>
 			<th><?php echo $this -> Paginator -> sort('con_anos_operario_se_pueda_calificar', 'Años Para Que Un Operario Se Pueda Calificar');?></th>
+			<th><?php echo $this -> Paginator -> sort('con_correos_solicitudes', 'Correos Solicitudes');?></th>
 			<th class="actions"><?php echo __('Acciones');?></th>
 		</tr>
 		<?php $i = 0; foreach ($configuraciones as $configuracion):	?>
@@ -18,6 +19,7 @@
 			<td><?php echo h($configuracion['Configuracion']['con_anos_renovacion_artesanos_normales']);?>&nbsp;</td>
 			<td><?php echo h($configuracion['Configuracion']['con_anos_pasar_de_aprendiz_a_operario']);?>&nbsp;</td>
 			<td><?php echo h($configuracion['Configuracion']['con_anos_operario_se_pueda_calificar']);?>&nbsp;</td>
+			<td><?php echo h($configuracion['Configuracion']['con_correos_solicitudes']);?>&nbsp;</td>
 			<td class="actions">
 				<?php
 					if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Configuraciones', 'edit')))) {

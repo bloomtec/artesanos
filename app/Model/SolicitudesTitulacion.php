@@ -1,25 +1,31 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * Titulacion Model
+ * SolicitudesTitulacion Model
  *
+ * @property EstadosSolicitudesTitulacion $EstadosSolicitudesTitulacion
  * @property Titulo $Titulo
- * @property SolicitudesTitulacion $SolicitudesTitulacion
- * @property JuntasProvincial $JuntasProvincial
+ * @property TiposSolicitudesTitulacion $TiposSolicitudesTitulacion
+ * @property Artesano $Artesano
+ * @property Titulacion $Titulacion
  */
-class Titulacion extends AppModel {
-/**
- * Display field
- *
- * @var string
- */
-	public $displayField = 'titulo_id';
+class SolicitudesTitulacion extends AppModel {
 /**
  * Validation rules
  *
  * @var array
  */
 	public $validate = array(
+		'estados_solicitudes_titulacion_id' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
 		'titulo_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
@@ -30,7 +36,7 @@ class Titulacion extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'solicitudes_titulacion_id' => array(
+		'tipos_solicitudes_titulacion_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
@@ -40,7 +46,7 @@ class Titulacion extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'juntas_provincial_id' => array(
+		'artesano_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
@@ -60,6 +66,13 @@ class Titulacion extends AppModel {
  * @var array
  */
 	public $belongsTo = array(
+		'EstadosSolicitudesTitulacion' => array(
+			'className' => 'EstadosSolicitudesTitulacion',
+			'foreignKey' => 'estados_solicitudes_titulacion_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
 		'Titulo' => array(
 			'className' => 'Titulo',
 			'foreignKey' => 'titulo_id',
@@ -67,19 +80,41 @@ class Titulacion extends AppModel {
 			'fields' => '',
 			'order' => ''
 		),
-		'SolicitudesTitulacion' => array(
-			'className' => 'SolicitudesTitulacion',
-			'foreignKey' => 'solicitudes_titulacion_id',
+		'TiposSolicitudesTitulacion' => array(
+			'className' => 'TiposSolicitudesTitulacion',
+			'foreignKey' => 'tipos_solicitudes_titulacion_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
 		),
-		'JuntasProvincial' => array(
-			'className' => 'JuntasProvincial',
-			'foreignKey' => 'juntas_provincial_id',
+		'Artesano' => array(
+			'className' => 'Artesano',
+			'foreignKey' => 'artesano_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
 		)
 	);
+
+/**
+ * hasMany associations
+ *
+ * @var array
+ */
+	public $hasMany = array(
+		'Titulacion' => array(
+			'className' => 'Titulacion',
+			'foreignKey' => 'solicitudes_titulacion_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
+	);
+
 }

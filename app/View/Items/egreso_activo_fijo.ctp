@@ -2,7 +2,7 @@
 <div class="items form">
 	<?php echo $this -> Form -> create('Item', array('type' => 'file'));?>
 	<fieldset>
-		<h2><?php echo __('Egreso De Activo Fijo');?></h2>
+		<h2><?php echo __(' Dar de Baja  Activo Fijo');?></h2>
 		<?php echo $this -> Form -> input('Persona.per_departamento', array('label' => 'Departamento', 'type' => 'select', 'options' => $departamentos)); ?>
 		<?php echo $this -> Form -> input('EgresosDeInventario.persona_id', array('empty' => 'Seleccione...', 'class' => 'inv-persona')); ?>
 		<?php echo $this -> Form -> input('EgresosDeInventario.egr_concepto_entrega', array('label' => 'Concepto De Entrega')); ?>

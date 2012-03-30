@@ -14,7 +14,7 @@
 	  		<?php echo $alumno['Alumno']['alu_documento_de_identificacion']; ?>	
 	  	</td>
 	  	<td>
-	  		<?php echo $alumno['Alumno']['alu_apellido_materno']." ".$alumno['Alumno']['alu_apellido_materno']; ?>		
+	  		<?php echo $alumno['Alumno']['alu_apellido_paterno']." ".$alumno['Alumno']['alu_apellido_materno']; ?>		
 	  	</td>
 	  	<td>
 	  		<?php echo $alumno['Alumno']['alu_nombres']; ?>	
@@ -27,6 +27,7 @@
 	  	</td>
 	  	<td class="actions">
 	  		<?php  if($alumno['CursosAlumno']['cur_aprobo']) echo $this -> Html -> link('certificado',array("action"=>'certificado',$alumno['CursosAlumno']['id']),array('class'=>'certificado','title'=>'Descargar certificado	'));?>
+	  		<?php if($alumno['Curso']['cur_activo']) echo  $this -> Html -> link('quitar alumno',array("action"=>'quitar',$alumno['CursosAlumno']['id']),array('class'=>'delete','title'=>'Quitar Alumno'));  ?>
 	  	</td>
 	  </tr>
 	  <?php endforeach;?>

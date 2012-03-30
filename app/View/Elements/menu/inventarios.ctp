@@ -9,7 +9,7 @@
 					<a href="/items/agregarActivoFijo">Agregar</a>
 				</li>
 				<li>
-					<a href="/items/egresoActivoFijo">Egresar</a>
+					<a href="/items/egresoActivoFijo"> Dar de baja </a>
 				</li>
 				<li>
 					<a href="#">Reportes</a>
