@@ -1,4 +1,4 @@
-<?php if(!isset($ingresos)) : ?>
+<?php if(!isset($especies)) : ?>
 <div class="reportes form">
 	<?php echo $this -> Form -> create('IngresosEspecie');?>
 	<h2><?php echo __('Reporte ingresos de especies'); ?></h2>
@@ -12,26 +12,43 @@
 	<?php echo $this -> Form -> end();?>
 </div>
 <?php endif; ?>
-<?php if(isset($ingresos)) : ?>
+<?php if(isset($especies)) : //debug($especies); ?>
 <br />
 <br />
 <h2><?php echo __('Reporte ingresos de especies');?></h2>
 <table>
 	<tr>
-		<th><?php echo $this -> Paginator -> sort('ing_fecha', 'Fecha'); ?></th>
-		<th><?php echo $this -> Paginator -> sort('ing_cantidad_total', 'Cantidad'); ?></th>
-		<th class="actions"><?php echo __('Acciones'); ?></th>
+		<th><?php echo $this -> Paginator -> sort('IngresosEspecie.ing_fecha', 'Fecha De Ingreso'); ?></th>
+		<th><?php echo $this -> Paginator -> sort('esp_serie', 'Serie Especie Valorada'); ?></th>
+		<th><?php echo $this -> Paginator -> sort('TiposEspeciesValorada.tip_nombre', 'Tipo Especie Valorada'); ?></th>
 	</tr>
-	<?php foreach($ingresos as $key => $ingreso) : ?>
+	<?php
+		foreach($especies as $key => $especie) :
+	?>
 	<tr>
-		<td><?php echo $ingreso['IngresosEspecie']['ing_fecha']; ?> </td>
-		<td><?php echo $ingreso['IngresosEspecie']['ing_cantidad_total']; ?></td>
-		<td class="actions">
-			<?php echo $this->Html->link(__('Ver'), array('action' => 'view', $ingreso['IngresosEspecie']['id']),array('class'=>'view','title'=>'Ver')); ?>
-		</td>
+		<td><?php echo $especie['IngresosEspecie']['ing_fecha']; ?> </td>
+		<td><?php echo $especie['EspeciesValorada']['esp_serie']; ?></td>
+		<td><?php echo $especie['TiposEspeciesValorada']['tip_nombre']; ?> </td>
 	</tr>
-	<?php endforeach; ?>
+	<?php
+		endforeach;
+	?>
 </table>
+<div class="paging">
+	<!--<p>
+	<?php
+	echo $this->Paginator->counter(array(
+	'format' => __('Page {:page} of {:pages}, mostrando {:current} registro de {:count} totales, comenzando en el registro record {:start}, hasta el registro {:end}')
+	));
+	?>	</p>-->
+	<?php
+		echo $this -> Paginator -> first('<< ', array(), null, array('class' => 'prev disabled'));
+		echo $this -> Paginator -> prev('< ' . __('Anterior'), array(), null, array('class' => 'prev disabled'));
+		echo $this -> Paginator -> numbers(array('separator' => ''));
+		echo $this -> Paginator -> next(__('Siguiente') . ' >', array(), null, array('class' => 'next disabled'));
+		echo $this -> Paginator -> last('>> ', array(), null, array('class' => 'next disabled'));
+	?>
+</div>
 <div class="actions">
 	<a class='button' href="/ingresos_especies/reporte">Volver</a>
 	&nbsp;

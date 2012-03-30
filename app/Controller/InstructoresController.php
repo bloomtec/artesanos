@@ -58,7 +58,8 @@ class InstructoresController extends AppController {
 		$estados_civiles = $this -> Instructor -> getValores(3);
 		$grados_de_estudio = $this -> Instructor -> getValores(4);
 		$sexos = $this -> Instructor -> getValores(5);
-		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos'));
+		$especialidades = $this -> Instructor -> getValores(17); 
+		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos', 'especialidades'));
 	}
 
 	/**
@@ -87,7 +88,8 @@ class InstructoresController extends AppController {
 		$estados_civiles = $this -> Instructor -> getValores(3);
 		$grados_de_estudio = $this -> Instructor -> getValores(4);
 		$sexos = $this -> Instructor -> getValores(5);
-		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos'));
+		$especialidades = $this -> Instructor -> getValores(17); 
+		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos', 'especialidades'));
 	}
 
 	/**

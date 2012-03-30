@@ -168,36 +168,39 @@ class IngresosEspeciesController extends AppController {
 
 	public function reporte() {
 		if($this -> request -> is('post')) {
+			$conditions = array();
 			if(!empty($this -> request -> data['IngresosEspecie']['fecha_inicio']) && !empty($this -> request -> data['IngresosEspecie']['fecha_fin'])) {
 				$conditions = array('IngresosEspecie.ing_fecha BETWEEN ? AND ?' => array($this -> request -> data['IngresosEspecie']['fecha_inicio'], $this -> request -> data['IngresosEspecie']['fecha_fin']));
-				$this -> paginate = array('conditions' => $conditions);
-				$this -> Session -> delete('conditions');
-				$this -> Session -> write('conditions', $conditions);
-				$this -> Session -> write('ingresos', $this -> paginate());
-				$this -> set('ingresos', $this -> paginate());
 			} elseif(!empty($this -> request -> data['IngresosEspecie']['fecha_inicio'])) {
 				$conditions = array('IngresosEspecie.ing_fecha >=' => $this -> request -> data['IngresosEspecie']['fecha_inicio']);
-				$this -> paginate = array('conditions' => $conditions);
-				$this -> Session -> delete('conditions');
-				$this -> Session -> write('conditions', $conditions);
-				$this -> Session -> write('ingresos', $this -> paginate());
-				$this -> set('ingresos', $this -> paginate());
 			} elseif(!empty($this -> request -> data['IngresosEspecie']['fecha_fin'])) {
 				$conditions = array('IngresosEspecie.ing_fecha <=' => $this -> request -> data['IngresosEspecie']['fecha_fin']);
-				$this -> paginate = array('conditions' => $conditions);
-				$this -> Session -> delete('conditions');
-				$this -> Session -> write('conditions', $conditions);
-				$this -> Session -> write('ingresos', $this -> paginate());
-				$this -> set('ingresos', $this -> paginate());
-			} else {
-				$this -> Session -> write('ingresos', $this -> paginate());
-				$this -> set('ingresos', $this -> paginate());
 			}
+			$ingresos = $this -> IngresosEspecie -> find('list', array('fields' => array('IngresosEspecie.id'), 'conditions' => $conditions));
+			$this -> paginate = array(
+				'EspeciesValorada' => array(
+					'limit' => 10,
+					'conditions' => array(
+						'EspeciesValorada.ingresos_especie_id' => $ingresos
+					)
+				)
+			);
+			$this -> Session -> delete('conditions');
+			$this -> Session -> write('conditions', $conditions);
+			$this -> Session -> write('especies', $this -> paginate('EspeciesValorada'));
+			$this -> set('especies', $this -> paginate('EspeciesValorada'));
 		}
-		if(isset($this -> params['named']['sort'])) {
-			$this -> paginate = array('conditions' => $this -> Session -> read('conditions'));
-			$this -> Session -> write('ingresos', $this -> paginate());
-			$this -> set('ingresos', $this -> paginate());
+		if(isset($this -> params['named']['sort']) || isset($this -> params['named']['page'])) {
+			$ingresos = $this -> IngresosEspecie -> find('list', array('fields' => array('IngresosEspecie.id'), 'conditions' => $this -> Session -> read('conditions')));
+			$this -> paginate = array(
+				'EspeciesValorada' => array(
+					'limit' => 10,
+					'conditions' => array(
+						'EspeciesValorada.ingresos_especie_id' => $ingresos
+					)
+				)
+			);
+			$this -> set('especies', $this -> paginate('EspeciesValorada'));
 		}
 	}
 	
@@ -205,9 +208,17 @@ class IngresosEspeciesController extends AppController {
 		$this -> layout = 'pdf2';
 		$nombre_archivo = "ReporteIngresosEspecies";
 		$tamano = 5;
-		$this -> paginate = array('conditions' => $this -> Session -> read('conditions'));
-		$ingresos = $this -> paginate();
-		$this -> set(compact('ingresos', 'nombre_archivo', 'tamano'));
+		$ingresos = $this -> IngresosEspecie -> find('list', array('fields' => array('IngresosEspecie.id'), 'conditions' => $this -> Session -> read('conditions')));
+		$this -> paginate = array(
+			'EspeciesValorada' => array(
+				'limit' => 10,
+				'conditions' => array(
+					'EspeciesValorada.ingresos_especie_id' => $ingresos
+				)
+			)
+		);
+		$this -> set('especies', $this -> paginate('EspeciesValorada'));
+		$this -> set(compact('nombre_archivo', 'tamano'));
 	}
 	
 	function export_csv() {
@@ -216,9 +227,9 @@ class IngresosEspeciesController extends AppController {
 		$this -> render(false);
 
 		$csv = new csvHelper();
-		$reporteIngresos = $this -> Session -> read('ingresos');
+		$reporteIngresos = $this -> Session -> read('especies');
 		
-		debug($reporteIngresos); return;
+		return;
 
 		$cabeceras = array('Proveedor', 'Ciudad', 'Persona', '# Memorando', 'Asunto', 'Sub total', 'IVA', 'Total', 'Items', 'Fecha');
 
