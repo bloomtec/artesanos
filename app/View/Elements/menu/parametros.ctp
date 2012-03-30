@@ -73,7 +73,7 @@ $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('contr
 		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'ParametrosInformativos', 'index')))) :
 		?>
 		<li>
-			<a href="/parametros_informativos">Informativos</a>
+			<a href="/parametros_informativos">Campos Parametrizables</a>
 		</li>
 		<?php endif;?>
 		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Geograficos', 'index')))) :
