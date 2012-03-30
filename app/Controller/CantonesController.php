@@ -102,7 +102,7 @@ class CantonesController extends AppController {
 			//$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
 			$query = $this -> params['named']['query'];
 			
-			$idsCanton = $this -> Canton -> find(
+			$idsCapacitacion = $this -> Canton -> find(
 				'list',
 				array(
 					'conditions' => array(

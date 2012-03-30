@@ -20,6 +20,49 @@ class SolicitudesController extends AppController {
 	 */
 	public function index() {
 		$this -> Solicitud -> recursive = 0;
+		$this->Recursive=0;
+		$conditions = array();
+		if (isset($this -> params['named']['query']) && !empty($this -> params['named']['query'])) {
+			//$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
+			$query = $this -> params['named']['query'];
+			
+			$idsSolicitudes = $this -> Solicitud -> find(
+				'list',
+				array(
+					'conditions' => array(
+						'OR' => array(
+							'Solicitud.sol_nombre_de_la_capacitacion LIKE' => "%$query%",
+							'Solicitud.sol_numero_de_memorandum LIKE' => "%$query%"
+						)
+					),
+					'fields' => array(
+						'Solicitud.id'
+					)
+				)
+			);
+			
+			
+			$idsJuntas = $this -> Solicitud -> JuntasProvincial -> find(
+				'list',
+				array(
+					'conditions' => array(
+						'OR' => array(
+							'JuntasProvincial.jun_nombre LIKE' => "%$query%",
+						)
+					),
+					'fields' => array(
+						'JuntasProvincial.id'
+					)
+				)
+			);
+				
+			$conditions['OR']['Solicitud.id'] = $idsSolicitudes;
+			$conditions['OR']['Solicitud.juntas_provincial_id'] = $idsJuntas;
+		}
+		if(!empty($conditions)) {
+			$this -> paginate = array('conditions' => $conditions);
+		}
+		
 		$this -> set('solicitudes', $this -> paginate());
 	}
 

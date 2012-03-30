@@ -228,8 +228,6 @@ class IngresosEspeciesController extends AppController {
 
 		$csv = new csvHelper();
 		$reporteIngresos = $this -> Session -> read('especies');
-		
-		return;
 
 		$cabeceras = array('Proveedor', 'Ciudad', 'Persona', '# Memorando', 'Asunto', 'Sub total', 'IVA', 'Total', 'Items', 'Fecha');
 

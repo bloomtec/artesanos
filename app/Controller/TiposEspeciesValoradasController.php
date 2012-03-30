@@ -20,6 +20,35 @@ class TiposEspeciesValoradasController extends AppController {
 	public function index() {
 		
 		$this->TiposEspeciesValorada->recursive = 0;
+		
+		$conditions = array();
+		if (isset($this -> params['named']['query']) && !empty($this -> params['named']['query'])) {
+			//$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
+			$query = $this -> params['named']['query'];
+			
+			$idsEspecies = $this -> TiposEspeciesValorada -> find(
+				'list',
+				array(
+					'conditions' => array(
+						'OR' => array(
+							'TiposEspeciesValorada.tip_nombre LIKE' => "%$query%",
+							'TiposEspeciesValorada.tip_codigo LIKE' => "%$query%",
+							'TiposEspeciesValorada.tip_valor_unitario' => "%$query%"
+						)
+					),
+					'fields' => array(
+						'TiposEspeciesValorada.id'
+					)
+				)
+			);
+			
+			$conditions['OR']['TiposEspeciesValorada.id'] = $idsEspecies;
+			//$conditions['OR']['Solicitud.juntas_provincial_id'] = $idsJuntas;
+		}
+		if(!empty($conditions)) {
+			$this -> paginate = array('conditions' => $conditions);
+		}
+		
 		$this->set('tiposEspeciesValoradas', $this->paginate());
 	}
 
