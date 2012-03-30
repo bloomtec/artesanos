@@ -178,19 +178,24 @@ class CursosController extends AppController {
 				$this -> Curso -> CursosAlumno -> saveField('cur_nota_final', $this -> formatearValor($cursosAlumno['cur_nota_final']));
 				$this -> Curso -> CursosAlumno -> saveField('cur_asistencias', $cursosAlumno['cur_asistencias']);
 				if ((float)$this -> formatearValor($cursosAlumno['cur_nota_final'] >= 3)) {
+					
 					$this -> Curso -> CursosAlumno -> saveField('cur_aprobo', true);
 				} else {
 					$this -> Curso -> CursosAlumno -> saveField('cur_aprobo', false);
+					
 				}
 
 			}
+			$this -> Curso -> saveField('cur_activo',false);
+			$this -> Session -> setFlash(__('Se han actualizado las notas del curso.'), 'crud/success');
+			$this -> redirect(array('action'=>'verAlumnos',$id));
 
-		} else {
+		} 
 			$curso = $this -> Curso -> read(null, $id);
 			$this -> Curso -> CursosAlumno -> bindModel(array('belongsTo' => array('Alumno')));
 			$alumnos = $this -> Curso -> CursosAlumno -> find('all', array('conditions' => array('CursosAlumno.curso_id' => $id)));
 			$this -> set(compact('curso', 'alumnos'));
-		}
+		
 	}
 
 	public function certificado($alumnoCursoId) {
