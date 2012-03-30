@@ -1,5 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
+App::import('Helper', 'csv');
 /**
  * IngresosEspecies Controller
  *
@@ -172,25 +173,30 @@ class IngresosEspeciesController extends AppController {
 				$this -> paginate = array('conditions' => $conditions);
 				$this -> Session -> delete('conditions');
 				$this -> Session -> write('conditions', $conditions);
+				$this -> Session -> write('ingresos', $this -> paginate());
 				$this -> set('ingresos', $this -> paginate());
 			} elseif(!empty($this -> request -> data['IngresosEspecie']['fecha_inicio'])) {
 				$conditions = array('IngresosEspecie.ing_fecha >=' => $this -> request -> data['IngresosEspecie']['fecha_inicio']);
 				$this -> paginate = array('conditions' => $conditions);
 				$this -> Session -> delete('conditions');
 				$this -> Session -> write('conditions', $conditions);
+				$this -> Session -> write('ingresos', $this -> paginate());
 				$this -> set('ingresos', $this -> paginate());
 			} elseif(!empty($this -> request -> data['IngresosEspecie']['fecha_fin'])) {
 				$conditions = array('IngresosEspecie.ing_fecha <=' => $this -> request -> data['IngresosEspecie']['fecha_fin']);
 				$this -> paginate = array('conditions' => $conditions);
 				$this -> Session -> delete('conditions');
 				$this -> Session -> write('conditions', $conditions);
+				$this -> Session -> write('ingresos', $this -> paginate());
 				$this -> set('ingresos', $this -> paginate());
 			} else {
+				$this -> Session -> write('ingresos', $this -> paginate());
 				$this -> set('ingresos', $this -> paginate());
 			}
 		}
 		if(isset($this -> params['named']['sort'])) {
 			$this -> paginate = array('conditions' => $this -> Session -> read('conditions'));
+			$this -> Session -> write('ingresos', $this -> paginate());
 			$this -> set('ingresos', $this -> paginate());
 		}
 	}
@@ -210,7 +216,9 @@ class IngresosEspeciesController extends AppController {
 		$this -> render(false);
 
 		$csv = new csvHelper();
-		$reporteIngresos = $this -> Session -> read('reporteIngresos');
+		$reporteIngresos = $this -> Session -> read('ingresos');
+		
+		debug($reporteIngresos); return;
 
 		$cabeceras = array('Proveedor', 'Ciudad', 'Persona', '# Memorando', 'Asunto', 'Sub total', 'IVA', 'Total', 'Items', 'Fecha');
 

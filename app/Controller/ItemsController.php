@@ -254,7 +254,8 @@ class ItemsController extends AppController {
 		$tiposDeItems = $this -> Item -> getValores(15);
 		$departamentos = $this -> Item -> getValores(14);
 		$personas = $this -> Item -> IngresosDeInventario -> Persona -> find('list');
-		$proveedores = $this -> Item -> IngresosDeInventario -> Proveedor -> find('list');
+		$proveedores = $this -> Item -> IngresosDeInventario -> Proveedor -> find('list', array('fields'=>'datos_completos'));
+	
 		/**
 		 * Provincias y demas
 		 */

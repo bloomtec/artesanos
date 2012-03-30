@@ -10,94 +10,93 @@ App::import('Helper', 'csv');
 class IngresosDeInventariosController extends AppController {
 
 	public function reporteIngresosInventarios() {
-
 		$this -> loadModel('Item', true);
 		$this -> loadModel('IngresosDeInventariosItem', true);
 		$this -> loadModel('IngresosDeInventario', true);
 		$this -> loadModel('Persona', true);
 		$reporte = false;
 
-		if ($this -> request -> is('post')) {
-			$condiciones = array();
-			$idProveedor = $this -> data['Reporte']['proveedor'];
-			$idPersona = $this -> data['Reporte']['persona'];
-			$nomDepartamento = $this -> data['Reporte']['departamento'];
-			$idProducto = $this -> data['Reporte']['producto'];
-			$fecha1 = $this -> data['Reporte']['fecha1'];
-			$fecha2 = $this -> data['Reporte']['fecha2'];
-
-			//Condiciones
+		$pagina = "";
+		if (isset($this -> params['named']['page'])) {
+			$pagina = $this -> params['named']['page'];
+		} else {
+			$pagina = true;
+		}
+		if ($this -> request -> is('post') or $pagina) {
 			$conditions = array();
-			$conditions[] = array('IngresosDeInventario.ing_is_activo_fijo' => 1);
+			if (!isset($pagina)) {
 
-			if (!empty($nomDepartamento)) {
-				$idsPersonasDep = $this -> Persona -> find('list', array('fields' => array('id'), 'conditions' => array('Persona.per_departamento' => $nomDepartamento)));
-				$conditions[] = array('IngresosDeInventario.persona_id' => $idsPersonasDep);
-			}
+				$idProveedor = $this -> data['Reporte']['proveedor'];
+				$idPersona = $this -> data['Reporte']['persona'];
+				$nomDepartamento = $this -> data['Reporte']['departamento'];
+				$idProducto = $this -> data['Reporte']['producto'];
+				$fecha1 = $this -> data['Reporte']['fecha1'];
+				$fecha2 = $this -> data['Reporte']['fecha2'];
 
-			if (!empty($idProducto)) {
-				//$this -> IngresosDeInventariosItem ->recursive=-1;
-				$idsProductos = $this -> IngresosDeInventariosItem -> find('list', array('fields' => array('ingresos_de_inventario_id'), 'conditions' => array('IngresosDeInventariosItem.item_id' => $idProducto,'ite_is_activo_fijo'=>1)));
-				$conditions[] = array('IngresosDeInventario.id' => $idsProductos);
-			}
+				$conditions[] = array('IngresosDeInventario.ing_is_activo_fijo' => 1);
 
-			if (!empty($idPersona)) {
-				$conditions[] = array('IngresosDeInventario.persona_id' => $idPersona);
-			}
-
-			if (!empty($idProveedor)) {
-				$conditions[] = array('IngresosDeInventario.proveedor_id' => $idProveedor);
-			}
-
-			if ($fecha1 != null && $fecha2 != null) {
-
-				if ($fecha1 > $fecha2) {
-					$this -> Session -> setFlash(__('La fecha inicial debe ser menor a la fecha final', true));
-					return;
+				if (!empty($nomDepartamento)) {
+					$idsPersonasDep = $this -> Persona -> find('list', array('fields' => array('id'), 'conditions' => array('Persona.per_departamento' => $nomDepartamento)));
+					$conditions[] = array('IngresosDeInventario.persona_id' => $idsPersonasDep);
 				}
 
-				list($ano, $mes, $dia) = explode("-", $fecha1);
-				$fecha1 = $ano . "-" . $mes . "-" . ($dia);
-
-				list($ano, $mes, $dia) = explode("-", $fecha2);
-
-				if ($dia == 31) {
-					$fecha2 = $ano . "-" . $mes . "-" . ($dia);
-				} else {
-					$fecha2 = $ano . "-" . $mes . "-" . ($dia + 1);
+				if (!empty($idProducto)) {
+					//$this -> IngresosDeInventariosItem ->recursive=-1;
+					$idsProductos = $this -> IngresosDeInventariosItem -> find('list', array('fields' => array('ingresos_de_inventario_id'), 'conditions' => array('IngresosDeInventariosItem.item_id' => $idProducto, 'ite_is_activo_fijo' => 1)));
+					$conditions[] = array('IngresosDeInventario.id' => $idsProductos);
 				}
 
-				$conditions[] = array('IngresosDeInventario.created between ? and ?' => array($fecha1, $fecha2));
+				if (!empty($idPersona)) {
+					$conditions[] = array('IngresosDeInventario.persona_id' => $idPersona);
+				}
 
-			} else if ($fecha1 != null) {
-				$conditions[] = array('IngresosDeInventario.created >=' => $fecha1);
-			} else if ($fecha2 != null) {
-				$conditions[] = array('IngresosDeInventario.created <=' => $fecha2);
+				if (!empty($idProveedor)) {
+					$conditions[] = array('IngresosDeInventario.proveedor_id' => $idProveedor);
+				}
+
+				if ($fecha1 != null && $fecha2 != null) {
+
+					if ($fecha1 > $fecha2) {
+						$this -> Session -> setFlash(__('La fecha inicial debe ser menor a la fecha final', true));
+						return;
+					}
+
+					list($ano, $mes, $dia) = explode("-", $fecha1);
+					$fecha1 = $ano . "-" . $mes . "-" . ($dia);
+
+					list($ano, $mes, $dia) = explode("-", $fecha2);
+
+					if ($dia == 31) {
+						$fecha2 = $ano . "-" . $mes . "-" . ($dia);
+					} else {
+						$fecha2 = $ano . "-" . $mes . "-" . ($dia + 1);
+					}
+
+					$conditions[] = array('IngresosDeInventario.created between ? and ?' => array($fecha1, $fecha2));
+
+				} else if ($fecha1 != null) {
+					$conditions[] = array('IngresosDeInventario.created >=' => $fecha1);
+				} else if ($fecha2 != null) {
+					$conditions[] = array('IngresosDeInventario.created <=' => $fecha2);
+				}
+
 			}
 
-			//Reporte ingresos
-			$this->Paginate();
-			$reporteIngresos = $this -> IngresosDeInventario -> find('all', array('conditions' => $conditions));
+			$this -> paginate = array('IngresosDeInventario' => array('limit' => 20, 'conditions' => $conditions));
+			$reporteIngresos = $this -> paginate('IngresosDeInventario');
 			$reporte = true;
 			$this -> Session -> write('reporteIngresos', $reporteIngresos);
-			$this -> set(compact('reporteIngresos','reporte'));
+			$this -> set(compact('reporteIngresos', 'reporte'));
 
 		} else {
-			//ids de personas en ingresos
 			$lstPersonasId = $this -> IngresosDeInventario -> find('list', array("fields" => array('persona_id')));
-			//ids de proveedor en ingresos
 			$lstProveedoresId = $this -> IngresosDeInventario -> find('list', array("fields" => array('proveedor_id')));
-			//Solamente los  proveedores que aparecen en ingresos
 			$lstProveedores = $this -> IngresosDeInventario -> Proveedor -> find('list', array('conditions' => array('Proveedor.id' => $lstProveedoresId), 'fields' => array('id', 'pro_nombre_razon_social')));
-			//Solamente las personas que han hecho ingresos
 			$lstPersonas = $this -> IngresosDeInventario -> Persona -> find('list', array('conditions' => array('Persona.id' => $lstPersonasId), 'fields' => array('id', 'datos_completos'), 'order' => array('per_documento_de_identidad')));
-			//ids Items en IngresosDeInventariosItem
-			$idsItems = $this -> IngresosDeInventariosItem -> find("list", array("fields"=>array("item_id")));
+			$idsItems = $this -> IngresosDeInventariosItem -> find("list", array("fields" => array("item_id")));
 			$lstProductos = $this -> Item -> find('list', array('fields' => array('id', 'ite_nombre'), 'conditions' => array('Item.id' => $idsItems)));
-			//debug($lstProductos);
-			
 			$lstDepartamentos = $this -> IngresosDeInventario -> getValores(14);
-			$this -> set(compact('lstProveedores', 'lstPersonas', 'lstDepartamentos', 'lstProductos','reporte'));
+			$this -> set(compact('lstProveedores', 'lstPersonas', 'lstDepartamentos', 'lstProductos', 'reporte'));
 		}
 	}
 

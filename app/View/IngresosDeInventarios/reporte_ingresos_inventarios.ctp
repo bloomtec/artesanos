@@ -15,22 +15,22 @@
 	<?php echo $this -> Form -> submit('Buscar');?> 
 	<?php echo $this -> Form -> end();?>
 </div>
-<?php } else { ?>
+<?php } else {  /*debug($reporteIngresos);*/ ?>
 <br />
 <br />
 <h2><?php echo __('Reporte ingresos de inventarios');?></h2>
 <table>
 	<tr>
 		<th><?php echo $this->Paginator->sort('proveedor_id','Proveedor'); ?></th>
-		<th>Ciudad</th>
-		<th>Persona</th>
-		<th># Memorando</th>
-		<th>Asunto</th>
-		<th>Sub total</th>
-		<th>IVA</th>
-		<th>Total</th>
-		<th>Items</th>
-		<th>Fecha</th>
+		<th><?php echo $this->Paginator->sort('ciudad_id','Ciudad'); ?></th>
+		<th><?php echo $this->Paginator->sort('persona_id','Persona'); ?></th>
+		<th><?php echo $this->Paginator->sort('ing_numero_de_memorandum','# Memorando'); ?></th>
+		<th><?php echo $this->Paginator->sort('ing_asunto','Asunto'); ?></th>
+		<th><?php echo $this->Paginator->sort('ing_subtotal','Sub total'); ?></th>
+		<th><?php echo $this->Paginator->sort('ing_iva','Iva'); ?></th>
+		<th><?php echo $this->Paginator->sort('ing_total','Total'); ?></th>
+		<th><?php echo $this->Paginator->sort('Item','Items'); ?></th>
+		<th><?php echo $this->Paginator->sort('created','Fecha'); ?></th>
 	</tr>
 	<?php
 	//debug($reporteIngresos);
