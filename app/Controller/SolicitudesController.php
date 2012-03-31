@@ -20,6 +20,49 @@ class SolicitudesController extends AppController {
 	 */
 	public function index() {
 		$this -> Solicitud -> recursive = 0;
+		$this->Recursive=0;
+		$conditions = array();
+		if (isset($this -> params['named']['query']) && !empty($this -> params['named']['query'])) {
+			//$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
+			$query = $this -> params['named']['query'];
+			
+			$idsSolicitudes = $this -> Solicitud -> find(
+				'list',
+				array(
+					'conditions' => array(
+						'OR' => array(
+							'Solicitud.sol_nombre_de_la_capacitacion LIKE' => "%$query%",
+							'Solicitud.sol_numero_de_memorandum LIKE' => "%$query%"
+						)
+					),
+					'fields' => array(
+						'Solicitud.id'
+					)
+				)
+			);
+			
+			
+			$idsJuntas = $this -> Solicitud -> JuntasProvincial -> find(
+				'list',
+				array(
+					'conditions' => array(
+						'OR' => array(
+							'JuntasProvincial.jun_nombre LIKE' => "%$query%",
+						)
+					),
+					'fields' => array(
+						'JuntasProvincial.id'
+					)
+				)
+			);
+				
+			$conditions['OR']['Solicitud.id'] = $idsSolicitudes;
+			$conditions['OR']['Solicitud.juntas_provincial_id'] = $idsJuntas;
+		}
+		if(!empty($conditions)) {
+			$this -> paginate = array('conditions' => $conditions);
+		}
+		
 		$this -> set('solicitudes', $this -> paginate());
 	}
 
@@ -45,6 +88,7 @@ class SolicitudesController extends AppController {
 	public function add() {
 		if ($this -> request -> is('post')) {
 			$now = new DateTime('now');
+			$this -> request -> data['Solicitud']['sol_estado'] = 1;
 			$this -> request -> data['Solicitud']['sol_fecha_solicitud'] = $now -> format('Y-m-d H:i:s');
 			$this -> request -> data['Solicitud']['sol_costos'] = $this -> formatearValor($this -> request -> data['Solicitud']['sol_costos']);
 			$this -> request -> data['Solicitud']['sol_esta_aprobada'] = false;
@@ -52,6 +96,7 @@ class SolicitudesController extends AppController {
 			
 			if ($this -> Solicitud -> save($this -> request -> data)) {
 				$this -> Session -> setFlash(__('La solicitud ha sido guardada'), 'crud/success');
+				/*ENVIAR CORREO ELECTRONICO AL LOS CORREOS QUE ESTAN EN EL PARAMETRO DE correos_solicitudes*/
 				$this -> redirect(array('action' => 'index'));
 			} else {
 				$this -> Session -> setFlash(__('No se pudo guardar la solicitud. Por favor, intente de nuevo.'), 'crud/error');

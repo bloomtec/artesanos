@@ -13,6 +13,10 @@ class Proveedor extends AppModel {
  */
 	public $displayField = 'pro_rut';
 
+	public $virtualFields = array(
+			'datos_completos' => 'CONCAT(Proveedor.pro_rut, " - ", Proveedor.pro_nombre_razon_social)'
+		);
+	
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	public $validate = array(
 		'pro_rut' => array(

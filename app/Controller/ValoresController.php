@@ -7,10 +7,6 @@ App::uses('AppController', 'Controller');
  */
 class ValoresController extends AppController {
 	
-	public function beforeRender() {
-		$this -> layout = "parametros";
-	}
-	
 	public function getNombre($id) {
 		$valor = $this -> Valor -> read('val_nombre', $id);
 		if(empty($valor)) {

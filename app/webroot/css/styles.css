@@ -896,6 +896,10 @@ span .pdf{
 	background-image: url(/img/cerrar_curso.png);
 	background-size: 25px;
 }
+.actions .aprobar {
+	background-image: url(/img/aprovar.png);
+	background-size: 25px;
+}
 .actions .certificado, .actions .carnet {
 	background-image: url(/img/calificar.png);
 	background-size: 32px;
