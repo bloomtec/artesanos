@@ -97,6 +97,9 @@ class SolicitudesController extends AppController {
 			if ($this -> Solicitud -> save($this -> request -> data)) {
 				$this -> Session -> setFlash(__('La solicitud ha sido guardada'), 'crud/success');
 				/*ENVIAR CORREO ELECTRONICO AL LOS CORREOS QUE ESTAN EN EL PARAMETRO DE correos_solicitudes*/
+				$this -> loadModel('Configuracion');
+				$configuracion = $this -> Configuracion -> read(null,1);
+				CakeEmail::deliver($configuracion['Configuracion']['con_correos_solicitudes'], 'Solicitud de curso','Tiene una nueva solicitud de creación de cursos en el sistema: '.$this -> request -> data['Solicitud']['sol_nombre_de_la_capacitacion'], array('from' => array('no-reply@jnda.gob.ec' => 'JNDA SOLICITUDES')));
 				$this -> redirect(array('action' => 'index'));
 			} else {
 				$this -> Session -> setFlash(__('No se pudo guardar la solicitud. Por favor, intente de nuevo.'), 'crud/error');
