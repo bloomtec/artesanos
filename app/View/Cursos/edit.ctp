@@ -3,6 +3,7 @@
 	<?php //debug($this -> data);?>
 	<fieldset>
 		<h2><?php echo __('Administrar Curso');?></h2>
+		
 		<?php
 		echo $this -> Form -> input('id');
 		echo $this -> Form -> input('solicitud_id');
@@ -24,6 +25,7 @@
 		?>
 	</fieldset>
 	<div style="clear:both;">
+		<?php echo $this -> Html -> link(__('Cancelar'), array('action' => 'index'), array('class' => 'cancelar'));?>
 		<?php echo $this -> Html -> link(__('Cancelar'), array('action' => 'index'), array('class' => 'cancelar'));?>
 		<?php echo $this -> Form -> end(__('Guardar'));?>
 	</div>
