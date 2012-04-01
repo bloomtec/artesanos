@@ -17,7 +17,7 @@
 		echo $this -> Form -> input('ins_experiencia', array('label' => 'Experiencia en Años', 'class' => 'number'));
 		echo $this -> Form -> input('ins_direccion_1', array('label' => 'Dirección 1'));
 		echo $this -> Form -> input('ins_direccion_2', array('label' => 'Dirección 2'));
-		echo $this -> Form -> input('provincia_id', array('label' => 'Provincia'));
+		echo $this -> Form -> input('provincia_id', array('label' => 'Provincia', 'options' => $provincias));
 		echo $this -> Form -> input('canton_id', array('label' => 'Canton'));
 		echo $this -> Form -> input('ciudad_id', array('label' => 'Ciudad'));
 		echo $this -> Form -> input('ins_telefono', array('label' => 'Teléfono'));
