@@ -139,7 +139,15 @@ class CursosController extends AppController {
 		$instructores = $this -> Curso -> Instructor -> find('list');
 		$this -> Curso -> CursosAlumno -> bindModel(array('belongsTo' => array('Alumno')));
 		$losAlumnos = $this -> Curso -> CursosAlumno -> find('all', array('conditions' => array('curso_id' => $id)));
-		$this -> set(compact('solicitudes', 'instructores', 'losAlumnos'));
+		
+		$this->loadModel("Alumno");
+		$nacionalidades = $this -> Alumno -> getValores(1);
+		$tipos_de_sangre = $this -> Alumno -> getValores(2);
+		$estados_civiles = $this -> Alumno -> getValores(3);
+		$grados_de_estudio = $this -> Alumno -> getValores(4);
+		$sexos = $this -> Alumno -> getValores(5);
+				
+		$this -> set(compact('solicitudes', 'instructores', 'losAlumnos', 'nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos'));
 	}
 
 	public function quitar($id = null) {
