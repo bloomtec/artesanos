@@ -9,7 +9,7 @@ class ItemsController extends AppController {
 	
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('getCantidad');
+		$this -> Auth -> allow('getCantidad', 'getCantidadAsignada');
 	}
 	
 	public function getCantidad($item_id = null) {
@@ -346,7 +346,113 @@ class ItemsController extends AppController {
 		$this -> set(compact('items', 'tiposDeItems', 'departamentos', 'personas', 'proveedores', 'provincias'));
 	}
 	
+	public function asignarActivoFijo($activoFijoId = null) {
+		if(!$activoFijoId) {
+			
+		}
+		if($this -> request -> is('post')) {
+			$this -> Item -> ItemsPersona -> create();
+			if($this -> Item -> ItemsPersona -> save($this -> request -> data)) {
+				$this -> Session -> setFlash('Se asigno el activo fijo a la persona.', 'crud/success');
+				$this -> redirect(array('action' => 'index'));
+			} else {
+				$this -> Session -> setFlash('No se asigno el activo fijo a la persona. Por favor, intente de nuevo.', 'crud/error');
+			}
+		}
+		$this -> Item -> recursive = -1;
+		$item = $this -> Item -> read(null, $activoFijoId);
+		$departamentos = $this -> Item -> getValores(14);
+		$cantidades = $this -> Item -> query("SELECT SUM(`ite_cantidad`) FROM `items_personas` WHERE `item_id` = $activoFijoId");
+		$cantidades = $cantidades[0][0]['SUM(`ite_cantidad`)'];
+		$tmp_cantidades = $item['Item']['ite_cantidad'] - $cantidades;
+		$cantidades = array();
+		for($i = 0; $i <= $tmp_cantidades; $i += 1) {
+			$cantidades[$i] = $i;
+		}
+		$this -> set(compact('item', 'departamentos', 'cantidades'));
+	}
 	
+	public function traspasoActivoFijo() {
+		if($this -> request -> is('post')) {
+			$this -> Item -> ItemsPersona -> recursive = -1;
+			$asignacionOriginal = $this -> Item -> ItemsPersona -> read(null, $this -> request -> data['ItemsPersona']['id']);
+			//debug($asignacionOriginal);
+			$asignacionNueva = $this -> request -> data;
+			unset($asignacionNueva['Item']);
+			$asignacionNueva['ItemsPersona']['item_id'] = $asignacionOriginal['ItemsPersona']['item_id'];
+			//debug($asignacionNueva);
+			if($asignacionNueva['ItemsPersona']['ite_cantidad'] == $asignacionOriginal['ItemsPersona']['ite_cantidad']) {
+				// Traspaso total, cambiar la persona solamente
+				$tmp_asignacion = $this -> Item -> ItemsPersona -> find(
+					'first',
+					array(
+						'conditions' => array(
+							'ItemsPersona.item_id' => $asignacionNueva['ItemsPersona']['item_id'],
+							'ItemsPersona.persona_id' => $asignacionNueva['ItemsPersona']['persona_id']
+						),
+						'recursive' => -1
+					)
+				);
+				if($tmp_asignacion) {
+					$tmp_asignacion['ItemsPersona']['ite_cantidad'] += $asignacionNueva['ItemsPersona']['ite_cantidad'];
+					if($this -> Item -> ItemsPersona -> save($tmp_asignacion)) {
+						$this -> Item -> ItemsPersona -> delete($asignacionOriginal['ItemsPersona']['id']);
+						$this -> Session -> setFlash('Se traspasó el activo fijo a la persona.', 'crud/success');
+						$this -> redirect(array('action' => 'index'));
+					} else {
+						$this -> Session -> setFlash('No se traspasó el activo fijo a la persona. Por favor, intente de nuevo.', 'crud/success');
+					}
+				} else {
+					if($this -> Item -> ItemsPersona -> save($asignacionNueva)) {
+						$this -> Session -> setFlash('Se traspasó el activo fijo a la persona.', 'crud/success');
+						$this -> redirect(array('action' => 'index'));
+					} else {
+						$this -> Session -> setFlash('No se traspasó el activo fijo a la persona. Por favor, intente de nuevo.', 'crud/success');
+					}
+				}
+			} else {
+				// Traspaso parcial, crear nuevo registro y reducir la cantidad asignada de la original
+				unset($asignacionNueva['ItemsPersona']['id']);
+				$this -> Item -> ItemsPersona -> create();
+				if($this -> Item -> ItemsPersona -> save($asignacionNueva)) {
+					$asignacionOriginal['ItemsPersona']['ite_cantidad'] -= $asignacionNueva['ItemsPersona']['ite_cantidad'];
+					if($this -> Item -> ItemsPersona -> save($asignacionOriginal)) {
+						$this -> Session -> setFlash('Se traspasó el activo fijo a la persona.', 'crud/success');
+						$this -> redirect(array('action' => 'index'));
+					} else {
+						$this -> Session -> setFlash('No se traspasó el activo fijo a la persona. Por favor, intente de nuevo.', 'crud/success');
+					}
+				} else {
+					$this -> Session -> setFlash('No se traspasó el activo fijo a la persona. Por favor, intente de nuevo.', 'crud/success');
+				}
+			}
+			/*$this -> Item -> ItemsPersona -> create();
+			if($this -> Item -> ItemsPersona -> save($this -> request -> data)) {
+				$this -> Session -> setFlash('Se asigno el activo fijo a la persona.', 'crud/success');
+				$this -> redirect(array('action' => 'index'));
+			} else {
+				$this -> Session -> setFlash('No se asigno el activo fijo a la persona. Por favor, intente de nuevo.', 'crud/error');
+			}*/
+		}
+		$tmp_asignaciones = $this -> Item -> ItemsPersona -> find('all');
+		$asignaciones = array();
+		foreach($tmp_asignaciones as $key => $asignacion) {
+			$asignaciones[$asignacion['ItemsPersona']['id']] = $asignacion['Item']['ite_codigo'] . ' - ' . $asignacion['Item']['ite_nombre'] . ' -> ' . $asignacion['Persona']['datos_completos'] . ' -> ' . $asignacion['ItemsPersona']['ite_cantidad'];
+		}
+		$departamentos = $this -> Item -> getValores(14);
+		$this -> set(compact('departamentos', 'asignaciones'));
+	}
+	
+	public function getCantidadAsignada($asginacion_id = null) {
+		$this -> Item -> ItemsPersona -> recursive = -1;
+		$asignacion = $this -> Item -> ItemsPersona -> read(null, $asginacion_id);
+		$cantidades = array();
+		for($i = 1; $i <= $asignacion['ItemsPersona']['ite_cantidad']; $i += 1) {
+			$cantidades[$i] = $i;
+		}
+		echo json_encode($cantidades);
+		exit(0);
+	}
 
 	public function deleteSuministro() {
 		if ($this -> request -> is('post')) {
@@ -490,15 +596,21 @@ class ItemsController extends AppController {
 	 */
 	public function add() {
 		if ($this -> request -> is('post')) {
-			// TODO : Tener en cuenta el tipo de item para este código!!!!
-			$max_id = $this -> Item -> query('SELECT MAX(`id`) FROM `items`');
-			$max_id = $max_id[0][0]['MAX(`id`)'];
+			$activoFijo = $this -> request -> data['Item']['ite_is_activo_fijo'];
+			if($activoFijo) {
+				$activoFijo = 1;
+			} else {
+				$activoFijo = 0;
+			}
+			$max_id = $this -> Item -> query("SELECT MAX(`ite_codigo`) FROM `items` WHERE `ite_is_activo_fijo` = $activoFijo");
+			$max_id = $max_id[0][0]['MAX(`ite_codigo`)'];
 			if (!$max_id) {
 				$max_id = 1;
+				$this -> request -> data['Item']['ite_codigo'] = 1000000 + $max_id;
 			} else {
 				$max_id += 1;
+				$this -> request -> data['Item']['ite_codigo'] = $max_id;
 			}
-			$this -> request -> data['Item']['ite_codigo'] = 1000000 + $max_id;
 			$this -> Item -> create();
 			if ($this -> Item -> save($this -> request -> data)) {
 				$this -> Session -> setFlash(__('The item has been saved'), 'crud/success');

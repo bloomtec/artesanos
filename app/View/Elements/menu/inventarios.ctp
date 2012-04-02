@@ -12,6 +12,9 @@
 					<a href="/items/egresoActivoFijo"> Dar de baja </a>
 				</li>
 				<li>
+					<a href="/items/traspasoActivoFijo">Traspaso Activo Fijo</a>
+				</li>
+				<li>
 					<a href="#">Reportes</a>
 					<ul>
 						<li>

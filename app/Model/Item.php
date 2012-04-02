@@ -54,6 +54,21 @@ class Item extends AppModel {
 			'finderQuery' => '',
 			'deleteQuery' => '',
 			'insertQuery' => ''
+		),
+		'ItemsPersona' => array(
+			'className' => 'ItemsPersona',
+			'joinTable' => 'items_personas',
+			'foreignKey' => 'item_id',
+			'associationForeignKey' => 'persona_id',
+			'unique' => true,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'finderQuery' => '',
+			'deleteQuery' => '',
+			'insertQuery' => ''
 		)
 	);
 

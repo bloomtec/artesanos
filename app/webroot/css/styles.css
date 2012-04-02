@@ -866,6 +866,10 @@ table td.actions a {
 	background-image: url(/img/edit.png);
 	background-size: 20px;
 }
+.actions .traspaso {
+	background-image: url(/img/auditorias.png);
+	background-size: 23px;
+}
 .actions .pdf, span .pdf {
 	background-image: url(/img/download-pdf.png);
 	background-size: 20px;
