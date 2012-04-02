@@ -9,11 +9,24 @@ class FeriadosController extends AppController {
 	
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('esFechaValida');
+		$this -> Auth -> allow('esFechaValida', 'anadirDiasValidosFecha');
 	}
 	
-	public function beforeRender() {
-		//$this -> layout = "parametros";
+	public function anadirDiasValidosFecha($fecha = null, $dias = null) {
+		if($fecha && $dias) {
+			// Fecha de expiración más treinta días habiles
+			for($i = $dias - 1; $i > 0; $i -= 1) {
+				do {
+					$dias_sumados = 1;
+					$fecha = strtotime("+$dias_sumados day", strtotime($fecha));
+					$fecha = date('Y-m-d', $fecha);
+				} while(!$this -> esFechaValida($fecha));
+			}
+			echo json_encode($fecha);
+		} else {
+			echo json_encode(false);
+		}
+		exit(0);
 	}
 	
 	public function esFechaValida($fecha = null) {
