@@ -3,7 +3,7 @@
 <div class="reportes form">
 	<?php echo $this -> Form -> create('Reporte');?>
 	<h2><?php
-		debug($this->params);
+	
 	if (!empty($suministro))
 		echo __('Reporte ingresos de suministros');
 	else if (empty($suministro))
