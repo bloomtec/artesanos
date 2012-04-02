@@ -27,8 +27,9 @@
 				</li>
 			</ul>
 		</li>
+		<!--
 		<li>
-			<a href="/items/indexActivosFijos">Suministros y Materiales </a>
+			<a href="/items/indexSuministros">Suministros y Materiales </a>
 			<ul>
 				<li>
 					<a href="/items/agregarSuministro">Agregar</a>
@@ -49,5 +50,6 @@
 				</li>
 			</ul>
 		</li>
+		-->
 	</ul>
 </li>
