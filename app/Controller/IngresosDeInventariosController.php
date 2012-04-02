@@ -9,7 +9,8 @@ App::import('Helper', 'csv');
  */
 class IngresosDeInventariosController extends AppController {
 
-	public function reporteIngresosInventarios() {
+	public function reporteIngresosInventarios($suministro = "") {
+
 		$this -> loadModel('Item', true);
 		$this -> loadModel('IngresosDeInventariosItem', true);
 		$this -> loadModel('IngresosDeInventario', true);
@@ -20,9 +21,10 @@ class IngresosDeInventariosController extends AppController {
 		if (isset($this -> params['named']['page'])) {
 			$pagina = $this -> params['named']['page'];
 		} else {
-			$pagina = true;
+			$pagina = false;
 		}
-		if ($this -> request -> is('post') or $pagina) {
+		if ($this -> request -> is('post') or $pagina != false) {
+
 			$conditions = array();
 			if (!isset($pagina)) {
 
@@ -33,7 +35,11 @@ class IngresosDeInventariosController extends AppController {
 				$fecha1 = $this -> data['Reporte']['fecha1'];
 				$fecha2 = $this -> data['Reporte']['fecha2'];
 
-				$conditions[] = array('IngresosDeInventario.ing_is_activo_fijo' => 1);
+				if (empty($suministro)) {
+					$conditions[] = array('IngresosDeInventario.ing_is_activo_fijo' => 1);
+				} else {
+					$conditions[] = array('IngresosDeInventario.ing_is_activo_fijo' => 0);
+				}
 
 				if (!empty($nomDepartamento)) {
 					$idsPersonasDep = $this -> Persona -> find('list', array('fields' => array('id'), 'conditions' => array('Persona.per_departamento' => $nomDepartamento)));
@@ -42,7 +48,14 @@ class IngresosDeInventariosController extends AppController {
 
 				if (!empty($idProducto)) {
 					//$this -> IngresosDeInventariosItem ->recursive=-1;
-					$idsProductos = $this -> IngresosDeInventariosItem -> find('list', array('fields' => array('ingresos_de_inventario_id'), 'conditions' => array('IngresosDeInventariosItem.item_id' => $idProducto, 'ite_is_activo_fijo' => 1)));
+					$var = "";
+					if (empty($suministro)) {
+						$var = 1;
+					} else {
+						$var = 0;
+					}
+
+					$idsProductos = $this -> IngresosDeInventariosItem -> find('list', array('fields' => array('ingresos_de_inventario_id'), 'conditions' => array('IngresosDeInventariosItem.item_id' => $idProducto, 'ite_is_activo_fijo' => $var)));
 					$conditions[] = array('IngresosDeInventario.id' => $idsProductos);
 				}
 
@@ -84,19 +97,28 @@ class IngresosDeInventariosController extends AppController {
 
 			$this -> paginate = array('IngresosDeInventario' => array('limit' => 20, 'conditions' => $conditions));
 			$reporteIngresos = $this -> paginate('IngresosDeInventario');
-			$reporte = true;
 			$this -> Session -> write('reporteIngresos', $reporteIngresos);
-			$this -> set(compact('reporteIngresos', 'reporte'));
+			$reporte=true;
+			$this -> set(compact('reporteIngresos', 'reporte', 'suministro'));
 
 		} else {
 			$lstPersonasId = $this -> IngresosDeInventario -> find('list', array("fields" => array('persona_id')));
 			$lstProveedoresId = $this -> IngresosDeInventario -> find('list', array("fields" => array('proveedor_id')));
 			$lstProveedores = $this -> IngresosDeInventario -> Proveedor -> find('list', array('conditions' => array('Proveedor.id' => $lstProveedoresId), 'fields' => array('id', 'pro_nombre_razon_social')));
 			$lstPersonas = $this -> IngresosDeInventario -> Persona -> find('list', array('conditions' => array('Persona.id' => $lstPersonasId), 'fields' => array('id', 'datos_completos'), 'order' => array('per_documento_de_identidad')));
+
+			$var = "";
+			if (empty($suministro)) {
+				$var = 1;
+			} else {
+				$var = 0;
+			}
+
 			$idsItems = $this -> IngresosDeInventariosItem -> find("list", array("fields" => array("item_id")));
-			$lstProductos = $this -> Item -> find('list', array('fields' => array('id', 'ite_nombre'), 'conditions' => array('Item.id' => $idsItems)));
+
+			$lstProductos = $this -> Item -> find('list', array('fields' => array('id', 'ite_nombre'), 'conditions' => array('Item.id' => $idsItems, 'ite_is_activo_fijo' => $var)));
 			$lstDepartamentos = $this -> IngresosDeInventario -> getValores(14);
-			$this -> set(compact('lstProveedores', 'lstPersonas', 'lstDepartamentos', 'lstProductos', 'reporte'));
+			$this -> set(compact('lstProveedores', 'lstPersonas', 'lstDepartamentos', 'lstProductos', 'reporte', 'suministro'));
 		}
 	}
 
