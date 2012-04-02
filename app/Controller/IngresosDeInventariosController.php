@@ -10,7 +10,11 @@ App::import('Helper', 'csv');
 class IngresosDeInventariosController extends AppController {
 
 	public function reporteIngresosInventarios($suministro = "") {
-
+		$titulo = "";	
+		if($suministro!=""){
+			$titulo = $suministro;
+		}
+		
 		$this -> loadModel('Item', true);
 		$this -> loadModel('IngresosDeInventariosItem', true);
 		$this -> loadModel('IngresosDeInventario', true);
@@ -99,7 +103,7 @@ class IngresosDeInventariosController extends AppController {
 			$reporteIngresos = $this -> paginate('IngresosDeInventario');
 			$this -> Session -> write('reporteIngresos', $reporteIngresos);
 			$reporte = true;
-			$this -> set(compact('reporteIngresos', 'reporte', 'suministro'));
+			$this -> set(compact('reporteIngresos', 'reporte', 'suministro','titulo'));
 
 		} else {
 			$lstPersonasId = $this -> IngresosDeInventario -> find('list', array("fields" => array('persona_id')));
@@ -118,7 +122,7 @@ class IngresosDeInventariosController extends AppController {
 
 			$lstProductos = $this -> Item -> find('list', array('fields' => array('id', 'ite_nombre'), 'conditions' => array('Item.id' => $idsItems, 'ite_is_activo_fijo' => $var)));
 			$lstDepartamentos = $this -> IngresosDeInventario -> getValores(14);
-			$this -> set(compact('lstProveedores', 'lstPersonas', 'lstDepartamentos', 'lstProductos', 'reporte', 'suministro'));
+			$this -> set(compact('lstProveedores', 'lstPersonas', 'lstDepartamentos', 'lstProductos', 'reporte', 'titulo'));
 		}
 	}
 

@@ -2,13 +2,15 @@
 ?>
 <div class="reportes form">
 	<?php echo $this -> Form -> create('Reporte');?>
-	<h2><<?php
-	if (!empty($suministro)) {
+	<h2>
+	<?php
+	if (!empty($titulo)) {
 		echo __('Reporte egresos de suministros');
-	} else if (empty($suministro)) {
+	} else {
 		echo __('Reporte egresos de inventarios');
 	}
-	?></h2>
+	?>
+	</h2>
 	<fieldset>
 		<?php
 		echo $this -> Form -> input('persona', array('type' => 'select', 'label' => 'Personas', 'empty' => 'Seleccione...', 'options' => $lstPersonas));
