@@ -98,7 +98,7 @@ class IngresosDeInventariosController extends AppController {
 			$this -> paginate = array('IngresosDeInventario' => array('limit' => 20, 'conditions' => $conditions));
 			$reporteIngresos = $this -> paginate('IngresosDeInventario');
 			$this -> Session -> write('reporteIngresos', $reporteIngresos);
-			$reporte=true;
+			$reporte = true;
 			$this -> set(compact('reporteIngresos', 'reporte', 'suministro'));
 
 		} else {
