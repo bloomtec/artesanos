@@ -124,14 +124,15 @@ class AlumnosController extends AppController {
 	public function modalRegNuevoAlumno() {
         $this->autoRender = false;
         $this->layout = 'ajax';
-   
-       $msj="";
+        $msj="";
 		if ($this -> request -> is('post')) {;
 			$this -> Alumno -> create();
 			if ($this -> Alumno -> save($this -> request -> data)) {
-				$msj='Se ha registrado el alumno';
+				$msj["msj"]='Se ha registrado el alumno';
+				$msj["res"]=true;
 			} else {
 				$msj='No se pudo registrar el alumno. Por favor, intente de nuevo.';
+				$msj["res"]=false;
 			}
 			echo json_encode($msj);
 		}

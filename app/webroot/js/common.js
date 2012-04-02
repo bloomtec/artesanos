@@ -466,6 +466,10 @@ $(function() {
 		e.preventDefault();
 		tables.update(tables[$(this).attr('rel')]);
 	});
+	
+	$('#divCampos').validate();
+	
+	
 	//Formulario modal
 	$('#regAlumno').click(function(e) {
 		// alert("Hola");
@@ -474,12 +478,54 @@ $(function() {
 		});
 		return false;
 	});
-
+	
+	
 	$("#btnModalRegAlumno").click(function() {
-		$.post("/alumnos/modalRegNuevoAlumno", $('#divCampos :input').serialize(), resultado, "json");
-		function resultado(msj) {
-			alert(msj);
+	
+	   if($("#txtTipoDoc option:selected").val() == "1") {
+			if(!checkCedulaEcuador($("#txtId").val())) {
+				e.preventDefault();
+				$("#txtId").focus();
+			}
 		}
-
+		
+		$.post("/alumnos/modalRegNuevoAlumno", $('#divCampos :input').serialize(), resultado, "json");
+		
+		function resultado(msj) {
+			if (msj.res==true) {
+				alert(msj.msj);
+				$(".modal #btnCerrar").click();
+			} else if(msj.res==false){
+				alert(msj.msj);
+			} else {
+				alert("No se pudo registrar el alumno. Por favor, intente de nuevo");
+			}
+		}
 	});
+	
+	 
+    $(".modal #btnCerrar").click(function(){
+        $(".modalCloseImg").click();
+    });
+    
+    // CREAR Y MODIFICAR ALUMNO
+	$("#txtTipoDoc").change(function() {
+		switch($(this).val()) {
+			case "0":
+				// PASAPORTE
+				$('#txtId').setMask({
+					mask : '*',
+					type : 'repeat'
+				}).val('');
+				break;
+			case "1":
+				// CEDULA
+				$('#txtId').setMask({
+					mask : '9999',
+					type : 'repeat'
+				}).val();
+				break;
+		}
+	});
+	
 });

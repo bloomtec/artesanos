@@ -85,8 +85,8 @@
 					<td><?php echo $this -> Form -> input('Alumno.alu_nacionalidad', array('label' => false, 'options' => $nacionalidades, 'empty' => 'Seleccione...'));?></td>
 				</tr>
 				<tr>
-					<td><?php echo $this -> Form -> input('Alumno.alu_is_cedula', array('label' => false, 'div' => 'input select usu-cedula', 'type' => 'select', 'options' => array('1' => 'Cédula: ', '0' => 'Pasaporte: ')));?></td>
-					<td><?php echo $this -> Form -> input('Alumno.alu_documento_de_identificacion', array('label' => false,"style"=>"margin-top:5px")); ?></td>
+					<td><?php echo $this -> Form -> input('Alumno.alu_is_cedula', array('label' => false, 'id' => 'txtTipoDoc', 'type' => 'select', 'options' => array('1' => 'Cédula: ', '0' => 'Pasaporte: ')));?></td>
+					<td><?php echo $this -> Form -> input('Alumno.alu_documento_de_identificacion', array('label' => false, "id"=>"txtId","class"=>"number required","style"=>"margin-top:5px")); ?></td>
 				</tr>
 				<tr>
 					<td>Apellido paterno</td>
@@ -122,6 +122,7 @@
 				</tr>
 			</table>
 		</fieldset>
-		<a href="#" id="btnModalRegAlumno" class="button">Guardar</a>
+		<a href="#" id="btnModalRegAlumno" class="button submit">Guardar</a>
+		<a href="#" id="btnCerrar" class="button">Cerrar</a>
 	</div>
 	<div>

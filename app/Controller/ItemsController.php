@@ -274,6 +274,8 @@ class ItemsController extends AppController {
 		$this -> set(compact('items', 'tiposDeItems', 'departamentos', 'personas', 'proveedores', 'provincias'));
 	}
 	
+	
+
 	public function egresoActivoFijo() {
 		if ($this -> request -> is('post')) {
 			
