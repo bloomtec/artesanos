@@ -13,15 +13,19 @@ class FeriadosController extends AppController {
 	}
 	
 	public function anadirDiasValidosFecha($fecha = null, $dias = null) {
-		// Fecha de expiración más treinta días habiles
-		for($i = $dias; $i > 0; $i -= 1) {
-			do {
-				$dias_sumados = 1;
-				$fecha = strtotime("+$dias_sumados day", strtotime($fecha));
-				$fecha = date('Y-m-d', $fecha);
-			} while(!$this -> esFechaValida($fecha));
+		if($fecha && $dias) {
+			// Fecha de expiración más treinta días habiles
+			for($i = $dias - 1; $i > 0; $i -= 1) {
+				do {
+					$dias_sumados = 1;
+					$fecha = strtotime("+$dias_sumados day", strtotime($fecha));
+					$fecha = date('Y-m-d', $fecha);
+				} while(!$this -> esFechaValida($fecha));
+			}
+			echo json_encode($fecha);
+		} else {
+			echo json_encode(false);
 		}
-		echo $fecha;
 		exit(0);
 	}
 	
