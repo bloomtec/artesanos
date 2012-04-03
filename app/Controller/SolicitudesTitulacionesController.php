@@ -46,6 +46,7 @@ class SolicitudesTitulacionesController extends AppController {
 				$this -> Session -> setFlash(__('The solicitudes titulacion could not be saved. Please, try again.'), 'crud/error');
 			}
 		}
+		
 		$estadosSolicitudesTitulaciones = $this -> SolicitudesTitulacion -> EstadosSolicitudesTitulacion -> find('list');
 		$titulos = $this -> SolicitudesTitulacion -> Titulo -> find('list');
 		$tiposSolicitudesTitulaciones = $this -> SolicitudesTitulacion -> TiposSolicitudesTitulacion -> find('list');

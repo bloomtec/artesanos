@@ -528,4 +528,9 @@ $(function() {
 		}
 	});
 	
+	
+	//Solicitudes titulación
+	$("#SolicitudesTitulacionTiposSolicitudesTitulacionId").change(function(){
+		
+	});
 });
