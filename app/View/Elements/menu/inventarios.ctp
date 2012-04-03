@@ -27,7 +27,6 @@
 				</li>
 			</ul>
 		</li>
-		<!--
 		<li>
 			<a href="/items/indexSuministros">Suministros y Materiales </a>
 			<ul>
@@ -50,6 +49,5 @@
 				</li>
 			</ul>
 		</li>
-		-->
 	</ul>
 </li>

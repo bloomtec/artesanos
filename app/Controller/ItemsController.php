@@ -36,6 +36,7 @@ class ItemsController extends AppController {
 	 * @return void
 	 */
 	public function viewSuministro($id = null) {
+		$this -> Item -> recursive = -1;
 		$this -> Item -> id = $id;
 		if (!$this -> Item -> exists()) {
 			throw new NotFoundException(__('Invalid item'));
@@ -608,6 +609,7 @@ class ItemsController extends AppController {
 	 * @return void
 	 */
 	public function view($id = null) {
+		$this -> Item -> recursive = 0;
 		$this -> Item -> id = $id;
 		if (!$this -> Item -> exists()) {
 			throw new NotFoundException(__('Invalid item'));
