@@ -40,10 +40,10 @@
 					<a href="#">Reportes</a>
 					<ul>
 						<li>
-							<a href="/ingresosDeInventarios/reporteIngresosInventarios/sum">Ingresos</a>
+							<a href="/ingresosDeInventarios/reporteIngresosSuministros">Ingresos</a>
 						</li>
 						<li>
-							<a href="/EgresosDeInventarios/reporteEgresosInventarios/sum">Egresos</a>
+							<a href="/EgresosDeInventarios/reporteEgresosSuministros">Egresos</a>
 						</li>
 					</ul>
 				</li>
