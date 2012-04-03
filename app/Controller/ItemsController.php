@@ -234,6 +234,7 @@ class ItemsController extends AppController {
 	 * @return void
 	 */
 	public function viewActivoFijo($id = null) {
+		
 		$this -> Item -> id = $id;
 		if (!$this -> Item -> exists()) {
 			throw new NotFoundException(__('Invalid item'));
