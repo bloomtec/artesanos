@@ -1,5 +1,5 @@
 <div class="items index">
-	<h2><?php echo __('Activos Fijos');?></h2>
+	<h2><?php echo __('Suministros');?></h2>
 	<div class="search">
 		<label>BUSCAR:</label>
 		<input type="text" />
