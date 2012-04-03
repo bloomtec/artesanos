@@ -177,12 +177,10 @@ class CursosController extends AppController {
 				$this -> Curso -> CursosAlumno -> id = $cursosAlumno['id'];
 				$this -> Curso -> CursosAlumno -> saveField('cur_nota_final', $this -> formatearValor($cursosAlumno['cur_nota_final']));
 				$this -> Curso -> CursosAlumno -> saveField('cur_asistencias', $cursosAlumno['cur_asistencias']);
-				if ((float)$this -> formatearValor($cursosAlumno['cur_nota_final'] >= 3)) {
-					
+				if ((float)$this -> formatearValor($cursosAlumno['cur_nota_final'] >= 3)) {					
 					$this -> Curso -> CursosAlumno -> saveField('cur_aprobo', true);
 				} else {
-					$this -> Curso -> CursosAlumno -> saveField('cur_aprobo', false);
-					
+					$this -> Curso -> CursosAlumno -> saveField('cur_aprobo', false);	
 				}
 
 			}
