@@ -2,7 +2,15 @@
 ?>
 <div class="reportes form">
 	<?php echo $this -> Form -> create('Reporte');?>
-	<h2><?php echo __('Reporte egresos de inventarios');?></h2>
+	<h2>
+	<?php
+	if (!empty($titulo)) {
+		echo __('Reporte egresos de suministros');
+	} else {
+		echo __('Reporte egresos de inventarios');
+	}
+	?>
+	</h2>
 	<fieldset>
 		<?php
 		echo $this -> Form -> input('persona', array('type' => 'select', 'label' => 'Personas', 'empty' => 'Seleccione...', 'options' => $lstPersonas));
@@ -66,7 +74,7 @@ for($i=0;$i < count($reporteEgresos);$i++) {
 	</div>
 <a class='button' href="/egresosDeInventarios/reporteEgresosInventarios">Volver</a>
 &nbsp; 
-<a class='button' href="/egresosDeInventarios/impReporteEgresosInventarios">Descargar pdf</a>
+<a class='button' href="/egresosDeInventarios/impReporte">Descargar pdf</a>
 &nbsp;
 <a class='button' href="/egresosDeInventarios/export_csv">Exportar a CSV</a>
 <?php }?>

@@ -866,6 +866,10 @@ table td.actions a {
 	background-image: url(/img/edit.png);
 	background-size: 20px;
 }
+.actions .traspaso {
+	background-image: url(/img/auditorias.png);
+	background-size: 23px;
+}
 .actions .pdf, span .pdf {
 	background-image: url(/img/download-pdf.png);
 	background-size: 20px;
@@ -1608,6 +1612,27 @@ tr.diferente td.audit-value, tr.diferente td.audit-data {
 	height: 30px;
 }
 
+/* FORMULARIO MODAL */
+.modal {
+	display: block;
+	font-size: 18px;
+	line-height: 1;
+	font-weight: 300;
+	background-color: white;
+	position: relative;
+	text-align: center;
+	padding: 10px;
+	margin: 0 auto 0;
+	overflow: hidden;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 1px 1px 20px rgba(0,0,0,0.35);
+	-moz-box-shadow: 1px 1px 20px rgba(0,0,0,0.35);
+	box-shadow: 1px 1px 20px rgba(0,0,0,0.35);
+	width:420px;
+}
+
 /* Vista De Permisos */
 #content form#UsuarioPermisosForm {}	
 #content table.permisos {max-width: 95%; min-width: 95%;}
@@ -1615,3 +1640,47 @@ tr.diferente td.audit-value, tr.diferente td.audit-data {
 #content table.permisos .checkbox label {padding: 0; width: auto; margin-left: 10px; max-width: 140px;}
 #content table.permisos tr.modulo th.nombre {max-width: 130px; min-width: 130px; vertical-align: middle; text-align: center;}
 #content table.permisos tr.modulo td.accion {min-width: 170px;}
+
+/* CERTIFICADO */
+.centro {
+	text-align: center;
+	font-size: 36px;
+}
+centro1 {
+	text-align: center;
+}
+body p {
+	text-align: center;
+}
+.centro1 {
+	text-align: center;
+}
+.certificado {
+	text-align: center;
+	font-size: xx-large;
+}
+.bold {
+	font-weight: bold;
+}
+.centro {
+	text-align: center;
+}
+.centro {
+	text-align: center;
+}
+.centro {
+	text-align: center;
+}
+.centro {
+	text-align: center;
+}
+.centro {
+	text-align: center;
+	font-size: 16px;
+}
+.centro {
+	text-align: center;
+}
+.encabezado {
+	font-size: xx-large;
+}

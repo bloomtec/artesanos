@@ -58,8 +58,14 @@ class InstructoresController extends AppController {
 		$estados_civiles = $this -> Instructor -> getValores(3);
 		$grados_de_estudio = $this -> Instructor -> getValores(4);
 		$sexos = $this -> Instructor -> getValores(5);
-		$especialidades = $this -> Instructor -> getValores(17); 
-		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos', 'especialidades'));
+		$especialidades = $this -> Instructor -> getValores(17);
+		$provincias = array(0 => 'Seleccione...');
+		// $provincias_tmp = $this -> Artesano -> Calificacion -> Taller -> Provincia -> find('list', array('conditions' => array('Provincia.id' => $provincias_con_inspectores)));
+		$provincias_tmp = $this -> Instructor -> Provincia -> find('list');
+		foreach ($provincias_tmp as $key => $value) {
+			$provincias[$key] = $value;
+		}
+		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos', 'especialidades', 'provincias'));
 	}
 
 	/**
@@ -89,7 +95,13 @@ class InstructoresController extends AppController {
 		$grados_de_estudio = $this -> Instructor -> getValores(4);
 		$sexos = $this -> Instructor -> getValores(5);
 		$especialidades = $this -> Instructor -> getValores(17); 
-		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos', 'especialidades'));
+		$provincias = array(0 => 'Seleccione...');
+		// $provincias_tmp = $this -> Artesano -> Calificacion -> Taller -> Provincia -> find('list', array('conditions' => array('Provincia.id' => $provincias_con_inspectores)));
+		$provincias_tmp = $this -> Instructor -> Provincia -> find('list');
+		foreach ($provincias_tmp as $key => $value) {
+			$provincias[$key] = $value;
+		}
+		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos', 'especialidades', 'provincias'));
 	}
 
 	/**

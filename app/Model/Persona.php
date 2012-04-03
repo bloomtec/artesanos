@@ -99,5 +99,23 @@ class Persona extends AppModel {
 			'counterQuery' => ''
 		)
 	);
+	
+	public $hasAndBelongsToMany = array(
+		'ItemsPersona' => array(
+			'className' => 'ItemsPersona',
+			'joinTable' => 'items_personas',
+			'foreignKey' => 'persona_id',
+			'associationForeignKey' => 'item_id',
+			'unique' => true,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'finderQuery' => '',
+			'deleteQuery' => '',
+			'insertQuery' => ''
+		)
+	);
 
 }

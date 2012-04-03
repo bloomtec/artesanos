@@ -28,7 +28,7 @@ $cakeDescription = __d('cake_dev', 'Junta Nacional de defensa del artesano');
 			
 			echo $this -> Html -> css('tabs-no-images');
 			echo $this -> Html -> css('styles');
-			
+			echo $this -> Html -> css('basic');
 			echo $this -> Html -> script('jquery');
 			echo $this -> Html -> script('jquery.tools.min');
 			echo $this -> Html -> script('bjs');
@@ -36,6 +36,10 @@ $cakeDescription = __d('cake_dev', 'Junta Nacional de defensa del artesano');
 			echo $this -> Html -> script('common');
 			echo $this -> Html -> script('jquery.meio.mask');
 			echo $this -> Html -> script('jquery.dateentry.min');
+			echo $this -> Html -> script('jquery.simplemodal');
+			echo $this -> Html -> script('modal');
+			echo $this -> Html -> script('jquery.validate.min');
+			
 			//echo $this -> Html -> script('jquery.maskedinput-1.2.2');
 			
 			/*

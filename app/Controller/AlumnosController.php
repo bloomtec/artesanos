@@ -119,5 +119,22 @@ class AlumnosController extends AppController {
 		echo json_encode($this -> Alumno -> find('first', array('conditions' => array('Alumno.alu_documento_de_identificacion' => $document))));
 		exit(0);
 	}
-
+	
+	//Función para registrar el nuevo alumno
+	public function modalRegNuevoAlumno() {
+        $this->autoRender = false;
+        $this->layout = 'ajax';
+        $msj="";
+		if ($this -> request -> is('post')) {;
+			$this -> Alumno -> create();
+			if ($this -> Alumno -> save($this -> request -> data)) {
+				$msj["msj"]='Se ha registrado el alumno';
+				$msj["res"]=true;
+			} else {
+				$msj='No se pudo registrar el alumno. Por favor, intente de nuevo.';
+				$msj["res"]=false;
+			}
+			echo json_encode($msj);
+		}
+   }
 }
