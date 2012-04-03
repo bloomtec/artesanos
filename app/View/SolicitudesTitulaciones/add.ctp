@@ -8,18 +8,19 @@
 		echo $this -> Form -> input('tipos_solicitudes_titulacion_id', array('empty'=>'Seleccione...'));
 		echo $this -> Form -> input('artesano_id', array('empty'=>'Seleccione...'));
 		?>
-		<div class="archivos">
+		<div class="archivos1">
 			<!--
 				poner aca lo de los archivos
 				formato :: echo $this -> Form -> input('Archivos.$i.archivo', array('type' => 'file'));
 			--> 
+			
 		 <?php 
-			 echo $this -> Form -> input('Archivos.$i.archivo', array('type' => 'file','label'=>'Cedula de identidad o ciudadanía')); 
-			 echo $this -> Form -> input('Archivos.$i.archivo', array('type' => 'file','label'=>'Certificado de votación'));
-			 echo $this -> Form -> input('Archivos.$i.archivo', array('type' => 'file','label'=>'Copia cedula militar(Opcional)'));
-			 echo $this -> Form -> input('Archivos.$i.archivo', array('type' => 'file','label'=>'Declaracion juramentada')); 
-			 echo $this -> Form -> input('Archivos.$i.archivo', array('type' => 'file','label'=>'Certificado instrucción')); 
-			 echo $this -> Form -> input('Archivos.$i.archivo', array('type' => 'file','label'=>'Memoria descriptiva')); 
+			 echo $this -> Form -> input('Archivos1.1.cedula', array('type' => 'file','label'=>'Cedula de identidad o ciudadanía')); 
+			 echo $this -> Form -> input('Archivos1.2.certificadoVotacion', array('type' => 'file','label'=>'Certificado de votación'));
+			 echo $this -> Form -> input('Archivos1.3.cedulaMilitar', array('type' => 'file','label'=>'Copia cedula militar(Opcional)'));
+			 echo $this -> Form -> input('Archivos1.4.declaracion', array('type' => 'file','label'=>'Declaracion juramentada')); 
+			 echo $this -> Form -> input('Archivos1.5.certificadoInstruccion', array('type' => 'file','label'=>'Certificado instrucción')); 
+			 echo $this -> Form -> input('Archivos1.6.memoriaDescriptiva', array('type' => 'file','label'=>'Memoria descriptiva')); 
 		 ?>
 		</div>
 	</fieldset>
