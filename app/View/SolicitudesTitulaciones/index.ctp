@@ -7,12 +7,11 @@
 	</div>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-									<th><?php echo $this->Paginator->sort('estados_solicitudes_titulacion_id','Dos Solicitudes Titulacion Id');?></th>
-							<th><?php echo $this->Paginator->sort('titulo_id','Lo Id');?></th>
-							<th><?php echo $this->Paginator->sort('tipos_solicitudes_titulacion_id','S Solicitudes Titulacion Id');?></th>
-							<th><?php echo $this->Paginator->sort('artesano_id','Sano Id');?></th>
-							<th><?php echo $this->Paginator->sort('sol_mensaje','Mensaje');?></th>
-											<th class="actions"><?php echo __('Acciones');?></th>
+		<th><?php echo $this->Paginator->sort('estados_solicitudes_titulacion_id','Estado Solicitud');?></th>
+		<th><?php echo $this->Paginator->sort('titulo_id','Titulo');?></th>
+		<th><?php echo $this->Paginator->sort('tipos_solicitudes_titulacion_id','Tipo De Solicitud');?></th>
+		<th><?php echo $this->Paginator->sort('artesano_id','Artesano');?></th>
+		<th class="actions"><?php echo __('Acciones');?></th>
 	</tr>
 	<?php
 	$i = 0;
@@ -30,14 +29,18 @@
 		<td>
 			<?php echo $this->Html->link($solicitudesTitulacion['Artesano']['id'], array('controller' => 'artesanos', 'action' => 'view', $solicitudesTitulacion['Artesano']['id'])); ?>
 		</td>
-		<td><?php echo h($solicitudesTitulacion['SolicitudesTitulacion']['sol_mensaje']); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $solicitudesTitulacion['SolicitudesTitulacion']['id']),array('class'=>'view','title'=>'Ver')); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $solicitudesTitulacion['SolicitudesTitulacion']['id']),array('class'=>'edit','title'=>'Modificar')); ?>
+			<?php
+				if($solicitudesTitulacion['EstadosSolicitudesTitulacion']['id'] == 1) {
+					echo $this->Html->link(__('Revisar'), array('action' => 'revision', $solicitudesTitulacion['SolicitudesTitulacion']['id']),array('class'=>'revision','title'=>'Revision'));					
+				}
+			?>
 			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $solicitudesTitulacion['SolicitudesTitulacion']['id']), array('class'=>'delete','title'=>'Borrar'), __('Esta seguro que quiere eliminar el registro?', $solicitudesTitulacion['SolicitudesTitulacion']['id'])); ?>
 		</td>
 	</tr>
-<?php endforeach; ?>
+	<?php endforeach; ?>
 	</table>
 
 
@@ -59,6 +62,6 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $this->Html->link(__('Agregar Solicitudes Titulacion'), array('action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(__('Agregar Solicitud De Titulación'), array('action' => 'add')); ?></li>
 	</ul>
 </div>
