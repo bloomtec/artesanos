@@ -25,6 +25,6 @@ class DATABASE_CONFIG {
 		'database' => 'jndagobe_artesanos',
 		'encoding' => 'utf8'
 	);
-	
 	*/
+	
 }
