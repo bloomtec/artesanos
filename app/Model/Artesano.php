@@ -27,6 +27,8 @@ class Artesano extends AppModel {
 								AND datosA.id > datosB.id'
 	);
 	
+	public $displayField = 'art_cedula';
+	
 /**
  * Validation rules
  *

@@ -103,6 +103,17 @@ class SolicitudesTitulacionesController extends AppController {
 		$this -> redirect(array('action' => 'index'));
 	}
 	
+	public function revision($id = null) {
+		if(!$id) {
+			
+		} else {
+			$this -> set('solicitud', $this -> SolicitudesTitulacion -> read(null, $id));
+		}
+		if($this -> request -> is('post')) {
+			
+		}
+	}
+	
 	public function reporte() {
 		if($this -> request -> is('post')) {
 			if(!empty($this -> request -> data['VentasEspecie']['fecha_inicio']) && !empty($this -> request -> data['VentasEspecie']['fecha_fin'])) {
