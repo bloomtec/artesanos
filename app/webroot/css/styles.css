@@ -1640,3 +1640,47 @@ tr.diferente td.audit-value, tr.diferente td.audit-data {
 #content table.permisos .checkbox label {padding: 0; width: auto; margin-left: 10px; max-width: 140px;}
 #content table.permisos tr.modulo th.nombre {max-width: 130px; min-width: 130px; vertical-align: middle; text-align: center;}
 #content table.permisos tr.modulo td.accion {min-width: 170px;}
+
+/* CERTIFICADO */
+.centro {
+	text-align: center;
+	font-size: 36px;
+}
+centro1 {
+	text-align: center;
+}
+body p {
+	text-align: center;
+}
+.centro1 {
+	text-align: center;
+}
+.certificado {
+	text-align: center;
+	font-size: xx-large;
+}
+.bold {
+	font-weight: bold;
+}
+.centro {
+	text-align: center;
+}
+.centro {
+	text-align: center;
+}
+.centro {
+	text-align: center;
+}
+.centro {
+	text-align: center;
+}
+.centro {
+	text-align: center;
+	font-size: 16px;
+}
+.centro {
+	text-align: center;
+}
+.encabezado {
+	font-size: xx-large;
+}
