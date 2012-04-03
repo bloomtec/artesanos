@@ -3,14 +3,7 @@
 <div class="reportes form">
 	<?php echo $this -> Form -> create('Reporte');?>
 	<h2>
-		<?php
-	
-	if (!empty($titulo)){
-		echo __('Reporte ingresos de suministros');
-	} else {
-		echo __('Reporte ingresos de inventarios');
-	}
-	?>
+		<?php echo __('Reporte ingresos de suministros'); ?>
 	</h2>
 	<fieldset>
 		<?php
@@ -25,7 +18,7 @@
 	<?php echo $this -> Form -> submit('Buscar');?>
 	<?php echo $this -> Form -> end();?>
 </div>
-<?php } else {  /*debug($reporteIngresos);*/?>
+<?php } else {  ?>
 <br />
 <br />
 <h2><?php echo __('Reporte ingresos de inventarios');?></h2>

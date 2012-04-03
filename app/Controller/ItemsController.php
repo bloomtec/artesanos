@@ -23,11 +23,12 @@ class ItemsController extends AppController {
 		exit(0);
 	}
 
+/*
 	public function indexSuministros() {
 		$this -> Item -> recursive = 0;
 		$this -> set('items', $this -> paginate(array('ite_is_activo_fijo' => false)));
 	}
-
+*/
 	/**
 	 * view method
 	 *
@@ -227,6 +228,31 @@ class ItemsController extends AppController {
 		$this -> set('items', $this -> paginate());
 	}
 
+	public function indexSuministros() {
+		$this -> Item -> recursive = 0;
+		$conditions = array();
+		if (isset($this -> params['named']['query']) && !empty($this -> params['named']['query'])) {
+			//$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
+			$query = $this -> params['named']['query'];
+			$conditions = array(
+						'OR' => array(
+							'Item.ite_codigo' => "%$query%",
+							'Item.ite_nombre LIKE' => "%$query%",
+							'Item.ite_descripcion LIKE' => "%$query%",
+				
+							)
+					);
+
+		}
+		$conditions['ite_is_activo_fijo']=false;
+		if(!empty($conditions)) {
+			$this -> paginate = array('conditions' => $conditions);
+		}
+		$this -> set('items', $this -> paginate());
+	}
+	
+	
+	
 	/**
 	 * view method
 	 *
