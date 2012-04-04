@@ -1,5 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
+App::import('Helper', 'csv');
+
 /**
  * SolicitudesTitulaciones Controller
  *
@@ -203,9 +205,9 @@ class SolicitudesTitulacionesController extends AppController {
 		if ($this -> request -> is('post') or $pagina != false) {
 			$conditions = array();
 
-			if (!isset($pagina)) {
+			if ($pagina == false) {
 				$rama = $this -> data["Reporte"]["rama"];
-				$titulo = $this -> data["Reporte"]["rama"];
+				$titulo = $this -> data["Reporte"]["titulo"];
 				$fecha1 = $this -> data["Reporte"]["fecha1"];
 				$fecha2 = $this -> data["Reporte"]["fecha2"];
 
@@ -245,6 +247,8 @@ class SolicitudesTitulacionesController extends AppController {
 				}
 			}
 
+			//debug($conditions);
+
 			$this -> paginate = array('SolicitudesTitulacion' => array('limit' => 20, 'conditions' => $conditions));
 			$reporteSolicitudesTitulacion = $this -> paginate('SolicitudesTitulacion');
 			//debug($reporteSolicitudesTitulacion); return;
@@ -257,7 +261,36 @@ class SolicitudesTitulacionesController extends AppController {
 
 		$ramas = $this -> Rama -> find("list");
 		$titulos = $this -> Titulo -> find("list");
-		$this -> set(compact('ramas', "titulos","reporte"));
+		$this -> set(compact('ramas', "titulos", "reporte"));
+	}
+
+	function impReporte() {
+		$this -> layout = 'pdf2';
+		$reporteSolicitudesTitulacion = $this -> Session -> read('reporte');
+		$nombre_archivo = $this -> Session -> read('archivo');
+		//Tamaño de la fuente
+		$tamano = 5;
+		//debug($reporteSolicitudesTitulacion);
+		$this -> set(compact('reporteSolicitudesTitulacion', 'nombre_archivo', 'tamano'));
+	}
+
+	function export_csv2() {
+
+		$this -> layout = "";
+		$this -> render(false);
+
+		$csv = new csvHelper();
+		$reporteSolicitudesTitulacion = $this -> Session -> read('reporte');
+		$cabeceras = array('Id solicitud', 'Titulo', 'Estado', 'Tipo solicitud', 'Artesano', 'Mensaje', 'Fecha');
+		$csv -> addRow($cabeceras);
+
+		for ($i = 0; $i < count($reporteSolicitudesTitulacion); $i++) {
+			$filas = array($reporteSolicitudesTitulacion[$i]['SolicitudesTitulacion']['id'], $reporteSolicitudesTitulacion[$i]['Titulo']['tit_nombre'], $reporteSolicitudesTitulacion[$i]['EstadosSolicitudesTitulacion']['est_estado'], $reporteSolicitudesTitulacion[$i]['TiposSolicitudesTitulacion']['tip_nombre'], $reporteSolicitudesTitulacion[$i]['Artesano']['nombre_completo'], $reporteSolicitudesTitulacion[$i]['SolicitudesTitulacion']['sol_mensaje'], $reporteSolicitudesTitulacion[$i]['SolicitudesTitulacion']['created']);
+			$csv -> addRow($filas);
+		}
+
+		$titulo = "csvSolicitudesTitulacion_" . date("Y-m-d H:i:s", time()) . ".csv";
+		echo $csv -> render($titulo);
 	}
 
 }

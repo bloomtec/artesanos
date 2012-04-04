@@ -25,8 +25,7 @@ class IngresosDeInventariosController extends AppController {
 		if ($this -> request -> is('post') or $pagina != false) {
 
 			$conditions = array();
-			if (!isset($pagina)) {
-
+			if ($pagina == false) {
 				$idProveedor = $this -> data['Reporte']['proveedor'];
 				$idPersona = $this -> data['Reporte']['persona'];
 				$nomDepartamento = $this -> data['Reporte']['departamento'];
@@ -81,7 +80,8 @@ class IngresosDeInventariosController extends AppController {
 				}
 
 			}
-
+			
+			//debug($conditions);
 			$this -> paginate = array('IngresosDeInventario' => array('limit' => 20, 'conditions' => $conditions));
 			$reporteIngresos = $this -> paginate('IngresosDeInventario');
 			$this -> Session -> write('reporte', $reporteIngresos);
@@ -117,7 +117,7 @@ class IngresosDeInventariosController extends AppController {
 		if ($this -> request -> is('post') or $pagina != false) {
 
 			$conditions = array();
-			if (!isset($pagina)) {
+			if ($pagina==false) {
 
 				$idProveedor = $this -> data['Reporte']['proveedor'];
 				$idPersona = $this -> data['Reporte']['persona'];

@@ -54,9 +54,9 @@
 	echo $this -> Paginator -> last('>> ', array(), null, array('class' => 'next disabled'));
 	?>
 </div>
-<a class='button' href="/ingresosDeInventarios/reporteIngresosInventarios">Volver</a>
-&nbsp; <a class='button' href="/ingresosDeInventarios/impReporte">Descargar pdf</a>
-&nbsp; <a class='button' href="/ingresosDeInventarios/export_csv">Exportar a CSV</a>
+<a class='button' href="/solicitudesTitulaciones/reporteSolicitudesTitulacion">Volver</a>
+&nbsp; <a class='button' href="/solicitudesTitulaciones/impReporte">Descargar pdf</a>
+&nbsp; <a class='button' href="/solicitudesTitulaciones/export_csv2">Exportar a CSV</a>
 <?php }?>
 <!--
 
