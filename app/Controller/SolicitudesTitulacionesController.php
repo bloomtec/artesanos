@@ -1,6 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
 App::import('Helper', 'csv');
+App::import('EspeciesValoradasController', 'EspeciesValoradasController');
 
 /**
  * SolicitudesTitulaciones Controller
@@ -31,19 +32,11 @@ class SolicitudesTitulacionesController extends AppController {
 			throw new NotFoundException(__('Invalid solicitudes titulacion'));
 		}
 		$this -> loadModel('Archivo');
-		$archivos = $this -> Archivo -> find(
-			'all',
-			array(
-				'conditions' => array(
-					'Archivo.model' => 'SolicitudesTitulacion',
-					'Archivo.foreign_key' => $id
-				)
-			)
-		);
+		$archivos = $this -> Archivo -> find('all', array('conditions' => array('Archivo.model' => 'SolicitudesTitulacion', 'Archivo.foreign_key' => $id)));
 		$this -> set('archivos', $archivos);
 		$this -> set('solicitudesTitulacion', $this -> SolicitudesTitulacion -> read(null, $id));
 	}
-	
+
 	private function cleanupFiles() {
 		$this -> loadModel('Archivo');
 		$items = $this -> Archivo -> find('all');
@@ -55,12 +48,13 @@ class SolicitudesTitulacionesController extends AppController {
 		$dir_path = APP . 'webroot/files/uploads/solicitudesTitulacion';
 		if ($handle = opendir($dir_path)) {
 			while (false !== ($entry = readdir($handle))) {
-				if($entry != 'empty' && is_file($dir_path . DS . $entry)) $dir_files[] = 'files/uploads/solicitudesTitulacion/' . $entry;
+				if ($entry != 'empty' && is_file($dir_path . DS . $entry))
+					$dir_files[] = 'files/uploads/solicitudesTitulacion/' . $entry;
 			}
 			closedir($handle);
 		}
-		foreach($dir_files as $file) {
-			if(!in_array($file, $db_files)) {
+		foreach ($dir_files as $file) {
+			if (!in_array($file, $db_files)) {
 				$file = explode('/', $file);
 				$file = $file[count($file) - 1];
 				$tmp_file_path = $dir_path . DS . $file;
@@ -78,24 +72,24 @@ class SolicitudesTitulacionesController extends AppController {
 		if ($this -> request -> is('post')) {
 			//debug($this -> request -> data);
 			$archivos = null;
-			if($this -> request -> data['SolicitudesTitulacion']['tipos_solicitudes_titulacion_id'] == 1) {
+			if ($this -> request -> data['SolicitudesTitulacion']['tipos_solicitudes_titulacion_id'] == 1) {
 				$archivos = $this -> request -> data['Archivos1'];
-			} elseif($this -> request -> data['SolicitudesTitulacion']['tipos_solicitudes_titulacion_id'] == 2 || $this -> request -> data['SolicitudesTitulacion']['tipos_solicitudes_titulacion_id'] == 3) {
+			} elseif ($this -> request -> data['SolicitudesTitulacion']['tipos_solicitudes_titulacion_id'] == 2 || $this -> request -> data['SolicitudesTitulacion']['tipos_solicitudes_titulacion_id'] == 3) {
 				$archivos = $this -> request -> data['Archivos2'];
 			}
 			// Verificar los documentos requeridos
 			$documentosValidos = true;
-			foreach($archivos as $key => $archivo) {
-				if((key($archivo) != 'cedulaMilitar') && $archivo[key($archivo)]['error']) {
+			foreach ($archivos as $key => $archivo) {
+				if ((key($archivo) != 'cedulaMilitar') && $archivo[key($archivo)]['error']) {
 					$documentosValidos = false;
 				}
 			}
-			if($documentosValidos) {
+			if ($documentosValidos) {
 				$this -> SolicitudesTitulacion -> create();
 				if ($this -> SolicitudesTitulacion -> save($this -> request -> data)) {
 					$this -> loadModel('Archivo');
-					foreach($archivos as $key => $archivo) {
-						if(!$archivo[key($archivo)]['error']) {
+					foreach ($archivos as $key => $archivo) {
+						if (!$archivo[key($archivo)]['error']) {
 							$this -> Archivo -> create();
 							$this -> Archivo -> set('model', 'SolicitudesTitulacion');
 							$this -> Archivo -> set('foreign_key', $this -> SolicitudesTitulacion -> id);
@@ -103,14 +97,14 @@ class SolicitudesTitulacionesController extends AppController {
 							$filename = $now -> format('Y-m-d_H-i-s') . '_' . key($archivo) . '_' . $this -> SolicitudesTitulacion -> id . '_' . $archivo[key($archivo)]['name'];
 							$this -> Archivo -> set('nombre', $filename);
 							$this -> Archivo -> set('ruta', 'files/uploads/solicitudesTitulacion/' . $filename);
-							if($this -> Archivo -> save()) {
+							if ($this -> Archivo -> save()) {
 								$url = 'files/uploads/solicitudesTitulacion/' . $filename;
 								move_uploaded_file($archivo[key($archivo)]['tmp_name'], $url);
 								$this -> cleanupFiles();
 							}
 						}
 					}
-					
+
 					$this -> Session -> setFlash(__('Se registro la solicitud de titulación'), 'crud/success');
 					$this -> redirect(array('action' => 'index'));
 				} else {
@@ -133,27 +127,27 @@ class SolicitudesTitulacionesController extends AppController {
 	 * @param string $id
 	 * @return void
 	 *
-	public function edit($id = null) {
-		$this -> SolicitudesTitulacion -> id = $id;
-		if (!$this -> SolicitudesTitulacion -> exists()) {
-			throw new NotFoundException(__('Invalid solicitudes titulacion'));
-		}
-		if ($this -> request -> is('post') || $this -> request -> is('put')) {
-			if ($this -> SolicitudesTitulacion -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The solicitudes titulacion has been saved'), 'crud/success');
-				$this -> redirect(array('action' => 'index'));
-			} else {
-				$this -> Session -> setFlash(__('The solicitudes titulacion could not be saved. Please, try again.'), 'crud/error');
-			}
-		} else {
-			$this -> request -> data = $this -> SolicitudesTitulacion -> read(null, $id);
-		}
-		$estadosSolicitudesTitulaciones = $this -> SolicitudesTitulacion -> EstadosSolicitudesTitulacion -> find('list');
-		$titulos = $this -> SolicitudesTitulacion -> Titulo -> find('list');
-		$tiposSolicitudesTitulaciones = $this -> SolicitudesTitulacion -> TiposSolicitudesTitulacion -> find('list');
-		$artesanos = $this -> SolicitudesTitulacion -> Artesano -> find('list');
-		$this -> set(compact('estadosSolicitudesTitulaciones', 'titulos', 'tiposSolicitudesTitulaciones', 'artesanos'));
-	}*/
+	 public function edit($id = null) {
+	 $this -> SolicitudesTitulacion -> id = $id;
+	 if (!$this -> SolicitudesTitulacion -> exists()) {
+	 throw new NotFoundException(__('Invalid solicitudes titulacion'));
+	 }
+	 if ($this -> request -> is('post') || $this -> request -> is('put')) {
+	 if ($this -> SolicitudesTitulacion -> save($this -> request -> data)) {
+	 $this -> Session -> setFlash(__('The solicitudes titulacion has been saved'), 'crud/success');
+	 $this -> redirect(array('action' => 'index'));
+	 } else {
+	 $this -> Session -> setFlash(__('The solicitudes titulacion could not be saved. Please, try again.'), 'crud/error');
+	 }
+	 } else {
+	 $this -> request -> data = $this -> SolicitudesTitulacion -> read(null, $id);
+	 }
+	 $estadosSolicitudesTitulaciones = $this -> SolicitudesTitulacion -> EstadosSolicitudesTitulacion -> find('list');
+	 $titulos = $this -> SolicitudesTitulacion -> Titulo -> find('list');
+	 $tiposSolicitudesTitulaciones = $this -> SolicitudesTitulacion -> TiposSolicitudesTitulacion -> find('list');
+	 $artesanos = $this -> SolicitudesTitulacion -> Artesano -> find('list');
+	 $this -> set(compact('estadosSolicitudesTitulaciones', 'titulos', 'tiposSolicitudesTitulaciones', 'artesanos'));
+	 }*/
 
 	/**
 	 * delete method
@@ -179,8 +173,8 @@ class SolicitudesTitulacionesController extends AppController {
 
 	public function revision($id = null) {
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
-			if($this -> request -> data['SolicitudesTitulacion']['tipos_especies_valorada_id']) {
-				if($this -> SolicitudesTitulacion -> save($this -> request -> data)) {
+			if ($this -> request -> data['SolicitudesTitulacion']['tipos_especies_valorada_id']) {
+				if ($this -> SolicitudesTitulacion -> save($this -> request -> data)) {
 					$this -> Session -> setFlash(__('Se registró el cambio'), 'crud/success');
 					$this -> redirect(array('action' => 'index'));
 				} else {
@@ -192,19 +186,11 @@ class SolicitudesTitulacionesController extends AppController {
 				$this -> redirect(array('action' => 'index'));
 			}
 		} else {
-			if(!$id) {
-				
+			if (!$id) {
+
 			} else {
 				$this -> loadModel('Archivo');
-				$archivos = $this -> Archivo -> find(
-					'all',
-					array(
-						'conditions' => array(
-							'Archivo.model' => 'SolicitudesTitulacion',
-							'Archivo.foreign_key' => $id
-						)
-					)
-				);
+				$archivos = $this -> Archivo -> find('all', array('conditions' => array('Archivo.model' => 'SolicitudesTitulacion', 'Archivo.foreign_key' => $id)));
 				$estadosSolicitudesTitulaciones = $this -> SolicitudesTitulacion -> EstadosSolicitudesTitulacion -> find('list');
 				$tiposEspeciesValoradas = $this -> SolicitudesTitulacion -> TiposEspeciesValorada -> find('list');
 				$this -> set(compact('estadosSolicitudesTitulaciones', 'tiposEspeciesValoradas'));
@@ -389,6 +375,14 @@ class SolicitudesTitulacionesController extends AppController {
 
 		$titulo = "csvSolicitudesTitulacion_" . date("Y-m-d H:i:s", time()) . ".csv";
 		echo $csv -> render($titulo);
+	}
+
+	function refrendacion($idArtesano, $idEspecie) {
+		$this -> layout = "";
+		$this -> render(false);
+		$EspeciesValoradasController = new EspeciesValoradasController();
+		$res = $this -> EspeciesValoradasController -> verificarEspecieArtesano($idArtesano, $idEspecie);
+		debug($res);
 	}
 
 }
