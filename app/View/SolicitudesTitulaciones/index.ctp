@@ -18,25 +18,25 @@
 	foreach ($solicitudesTitulaciones as $solicitudesTitulacion): ?>
 	<tr>
 		<td>
-			<?php echo $this->Html->link($solicitudesTitulacion['EstadosSolicitudesTitulacion']['id'], array('controller' => 'estados_solicitudes_titulaciones', 'action' => 'view', $solicitudesTitulacion['EstadosSolicitudesTitulacion']['id'])); ?>
+			<?php echo $this->Html->link($solicitudesTitulacion['EstadosSolicitudesTitulacion']['est_estado'], array('controller' => 'estados_solicitudes_titulaciones', 'action' => 'view', $solicitudesTitulacion['EstadosSolicitudesTitulacion']['id'])); ?>
 		</td>
 		<td>
 			<?php echo $this->Html->link($solicitudesTitulacion['Titulo']['tit_nombre'], array('controller' => 'titulos', 'action' => 'view', $solicitudesTitulacion['Titulo']['id'])); ?>
 		</td>
 		<td>
-			<?php echo $this->Html->link($solicitudesTitulacion['TiposSolicitudesTitulacion']['id'], array('controller' => 'tipos_solicitudes_titulaciones', 'action' => 'view', $solicitudesTitulacion['TiposSolicitudesTitulacion']['id'])); ?>
+			<?php echo $this->Html->link($solicitudesTitulacion['TiposSolicitudesTitulacion']['tip_nombre'], array('controller' => 'tipos_solicitudes_titulaciones', 'action' => 'view', $solicitudesTitulacion['TiposSolicitudesTitulacion']['id'])); ?>
 		</td>
 		<td>
-			<?php echo $this->Html->link($solicitudesTitulacion['Artesano']['id'], array('controller' => 'artesanos', 'action' => 'view', $solicitudesTitulacion['Artesano']['id'])); ?>
+			<?php echo $this->Html->link($solicitudesTitulacion['Artesano']['art_cedula'], array('controller' => 'artesanos', 'action' => 'view', $solicitudesTitulacion['Artesano']['id'])); ?>
 		</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $solicitudesTitulacion['SolicitudesTitulacion']['id']),array('class'=>'view','title'=>'Ver')); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $solicitudesTitulacion['SolicitudesTitulacion']['id']),array('class'=>'edit','title'=>'Modificar')); ?>
 			<?php
 				if($solicitudesTitulacion['EstadosSolicitudesTitulacion']['id'] == 1) {
 					echo $this->Html->link(__('Revisar'), array('action' => 'revision', $solicitudesTitulacion['SolicitudesTitulacion']['id']),array('class'=>'revision','title'=>'Revision'));					
 				}
 			?>
+			<?php echo $this->Html->link(__('View'), array('action' => 'view', $solicitudesTitulacion['SolicitudesTitulacion']['id']),array('class'=>'view','title'=>'Ver')); ?>
+			<?php // echo $this->Html->link(__('Edit'), array('action' => 'edit', $solicitudesTitulacion['SolicitudesTitulacion']['id']),array('class'=>'edit','title'=>'Modificar')); ?>
 			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $solicitudesTitulacion['SolicitudesTitulacion']['id']), array('class'=>'delete','title'=>'Borrar'), __('Esta seguro que quiere eliminar el registro?', $solicitudesTitulacion['SolicitudesTitulacion']['id'])); ?>
 		</td>
 	</tr>
