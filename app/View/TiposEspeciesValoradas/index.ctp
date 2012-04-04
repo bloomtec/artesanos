@@ -42,10 +42,10 @@ foreach ($tiposEspeciesValoradas as $tiposEspeciesValorada):
 		?>
 	</div>
 </div>
-<div class="actions">
+<!--<div class="actions">
 	<ul>
 		<li>
 			<?php echo $this -> Html -> link(__('Agregar Especies Valorada'), array('action' => 'add'));?>
 		</li>
 	</ul>
-</div>
+</div>-->

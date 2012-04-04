@@ -108,7 +108,8 @@ class SolicitudesTitulacionesController extends AppController {
 		if(!$id) {
 			
 		} else {
-			$this -> set('solicitud', $this -> SolicitudesTitulacion -> read(null, $id));
+			$solicitud = $this -> SolicitudesTitulacion -> read(null, $id);
+			$this -> set('solicitud', $solicitud);
 		}
 		if($this -> request -> is('post')) {
 			
