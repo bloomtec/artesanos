@@ -269,6 +269,8 @@ p {
 	background: linear-gradient(top, #ffffff 51%,#d9dadd 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#d9dadd',GradientType=0 ); /* IE6-9 */
 }
+
+
 .search .submit {
 	font-size: 13px;
 	font-weight: bold;

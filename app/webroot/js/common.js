@@ -531,6 +531,13 @@ $(function() {
 	
 	//Solicitudes titulación
 	$("#SolicitudesTitulacionTiposSolicitudesTitulacionId").change(function(){
-		
+		var val = $("#SolicitudesTitulacionTiposSolicitudesTitulacionId option:selected").val();
+		if (val==1){
+			$("#archivos1").show(); 
+			$("#archivos2").hide(); 
+		} else if(val==2 || val==3){
+			$("#archivos1").hide(); 
+			$("#archivos2").show(); 
+		}
 	});
 });
