@@ -46,6 +46,7 @@ class SolicitudesTitulacionesController extends AppController {
 				$this -> Session -> setFlash(__('The solicitudes titulacion could not be saved. Please, try again.'), 'crud/error');
 			}
 		}
+		
 		$estadosSolicitudesTitulaciones = $this -> SolicitudesTitulacion -> EstadosSolicitudesTitulacion -> find('list');
 		$titulos = $this -> SolicitudesTitulacion -> Titulo -> find('list');
 		$tiposSolicitudesTitulaciones = $this -> SolicitudesTitulacion -> TiposSolicitudesTitulacion -> find('list');
@@ -101,6 +102,17 @@ class SolicitudesTitulacionesController extends AppController {
 		}
 		$this -> Session -> setFlash(__('Solicitudes titulacion was not deleted'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
+	}
+	
+	public function revision($id = null) {
+		if(!$id) {
+			
+		} else {
+			$this -> set('solicitud', $this -> SolicitudesTitulacion -> read(null, $id));
+		}
+		if($this -> request -> is('post')) {
+			
+		}
 	}
 	
 	public function reporte() {
