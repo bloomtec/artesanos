@@ -864,6 +864,10 @@ table td.actions a {
 	background-image: url(/img/view.png);
 	background-size: 20px;
 }
+.actions .revision {
+	background-image: url(/img/permisos.png);
+	background-size: 18px;
+}
 .actions .edit {
 	background-image: url(/img/edit.png);
 	background-size: 20px;
