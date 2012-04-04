@@ -46,7 +46,7 @@ class SolicitudesTitulacionesController extends AppController {
 				$this -> Session -> setFlash(__('The solicitudes titulacion could not be saved. Please, try again.'), 'crud/error');
 			}
 		}
-		
+
 		$estadosSolicitudesTitulaciones = $this -> SolicitudesTitulacion -> EstadosSolicitudesTitulacion -> find('list');
 		$titulos = $this -> SolicitudesTitulacion -> Titulo -> find('list');
 		$tiposSolicitudesTitulaciones = $this -> SolicitudesTitulacion -> TiposSolicitudesTitulacion -> find('list');
@@ -103,34 +103,34 @@ class SolicitudesTitulacionesController extends AppController {
 		$this -> Session -> setFlash(__('Solicitudes titulacion was not deleted'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
 	}
-	
+
 	public function revision($id = null) {
-		if(!$id) {
-			
+		if (!$id) {
+
 		} else {
 			$solicitud = $this -> SolicitudesTitulacion -> read(null, $id);
 			$this -> set('solicitud', $solicitud);
 		}
-		if($this -> request -> is('post')) {
-			
+		if ($this -> request -> is('post')) {
+
 		}
 	}
-	
+
 	public function reporte() {
-		if($this -> request -> is('post')) {
-			if(!empty($this -> request -> data['VentasEspecie']['fecha_inicio']) && !empty($this -> request -> data['VentasEspecie']['fecha_fin'])) {
+		if ($this -> request -> is('post')) {
+			if (!empty($this -> request -> data['VentasEspecie']['fecha_inicio']) && !empty($this -> request -> data['VentasEspecie']['fecha_fin'])) {
 				$conditions = array('VentasEspecie.created BETWEEN ? AND ?' => array($this -> request -> data['VentasEspecie']['fecha_inicio'], $this -> request -> data['VentasEspecie']['fecha_fin']));
 				$this -> paginate = array('conditions' => $conditions);
 				$this -> Session -> delete('conditions');
 				$this -> Session -> write('conditions', $conditions);
 				$this -> set('ingresos', $this -> paginate());
-			} elseif(!empty($this -> request -> data['VentasEspecie']['fecha_inicio'])) {
+			} elseif (!empty($this -> request -> data['VentasEspecie']['fecha_inicio'])) {
 				$conditions = array('VentasEspecie.created >=' => $this -> request -> data['VentasEspecie']['fecha_inicio']);
 				$this -> paginate = array('conditions' => $conditions);
 				$this -> Session -> delete('conditions');
 				$this -> Session -> write('conditions', $conditions);
 				$this -> set('ingresos', $this -> paginate());
-			} elseif(!empty($this -> request -> data['VentasEspecie']['fecha_fin'])) {
+			} elseif (!empty($this -> request -> data['VentasEspecie']['fecha_fin'])) {
 				$conditions = array('VentasEspecie.created <=' => $this -> request -> data['VentasEspecie']['fecha_fin']);
 				$this -> paginate = array('conditions' => $conditions);
 				$this -> Session -> delete('conditions');
@@ -140,12 +140,12 @@ class SolicitudesTitulacionesController extends AppController {
 				$this -> set('ingresos', $this -> paginate());
 			}
 		}
-		if(isset($this -> params['named']['sort'])) {
+		if (isset($this -> params['named']['sort'])) {
 			$this -> paginate = array('conditions' => $this -> Session -> read('conditions'));
 			$this -> set('ingresos', $this -> paginate());
 		}
 	}
-	
+
 	public function imprimirReporte() {
 		$this -> layout = 'pdf2';
 		$nombre_archivo = "ReporteSolicitudesTitulaciones";
@@ -154,7 +154,7 @@ class SolicitudesTitulacionesController extends AppController {
 		$ingresos = $this -> paginate();
 		$this -> set(compact('ingresos', 'nombre_archivo', 'tamano'));
 	}
-	
+
 	function export_csv() {
 
 		$this -> layout = "";
@@ -185,6 +185,79 @@ class SolicitudesTitulacionesController extends AppController {
 		}
 		$titulo = "csvVentasEspecies_" . date("Y-m-d H:i:s", time()) . ".csv";
 		echo $csv -> render($titulo);
+	}
+
+	function reporteSolicitudesTitulacion() {
+		$this -> loadModel("Rama", true);
+		$this -> loadModel("Titulo", true);
+
+		$reporte = false;
+
+		$pagina = "";
+		if (isset($this -> params['named']['page'])) {
+			$pagina = $this -> params['named']['page'];
+		} else {
+			$pagina = false;
+		}
+
+		if ($this -> request -> is('post') or $pagina != false) {
+			$conditions = array();
+
+			if (!isset($pagina)) {
+				$rama = $this -> data["Reporte"]["rama"];
+				$titulo = $this -> data["Reporte"]["rama"];
+				$fecha1 = $this -> data["Reporte"]["fecha1"];
+				$fecha2 = $this -> data["Reporte"]["fecha2"];
+
+				if (!empty($rama)) {
+					$idTitulos = $this -> Titulo -> find("list", array("fields" => array("id"), "conditions" => array("Titulo.rama_id" => $rama)));
+					$conditions[] = array('SolicitudesTitulacion.titulo_id' => $idTitulos);
+				}
+
+				if (!empty($titulo)) {
+					$conditions[] = array('SolicitudesTitulacion.titulo_id' => $titulo);
+				}
+
+				if ($fecha1 != null && $fecha2 != null) {
+
+					if ($fecha1 > $fecha2) {
+						$this -> Session -> setFlash(__('La fecha inicial debe ser menor a la fecha final', true));
+						return;
+					}
+
+					list($ano, $mes, $dia) = explode("-", $fecha1);
+					$fecha1 = $ano . "-" . $mes . "-" . ($dia);
+
+					list($ano, $mes, $dia) = explode("-", $fecha2);
+
+					if ($dia == 31) {
+						$fecha2 = $ano . "-" . $mes . "-" . ($dia);
+					} else {
+						$fecha2 = $ano . "-" . $mes . "-" . ($dia + 1);
+					}
+
+					$conditions[] = array('SolicitudesTitulacion.created between ? and ?' => array($fecha1, $fecha2));
+
+				} else if ($fecha1 != null) {
+					$conditions[] = array('SolicitudesTitulacion.created >=' => $fecha1);
+				} else if ($fecha2 != null) {
+					$conditions[] = array('SolicitudesTitulacion.created <=' => $fecha2);
+				}
+			}
+
+			$this -> paginate = array('SolicitudesTitulacion' => array('limit' => 20, 'conditions' => $conditions));
+			$reporteSolicitudesTitulacion = $this -> paginate('SolicitudesTitulacion');
+			//debug($reporteSolicitudesTitulacion); return;
+			$this -> Session -> write('reporte', $reporteSolicitudesTitulacion);
+			$this -> Session -> write('archivo', "ReporteSolicitudesTitulacion");
+			$reporte = true;
+			$this -> set(compact('reporteSolicitudesTitulacion', 'reporte'));
+
+		}
+
+		$ramas = $this -> Rama -> find("list");
+		$titulos = $this -> Titulo -> find("list");
+		$this -> set(compact('ramas', "titulos","reporte"));
 	}
 
 }
