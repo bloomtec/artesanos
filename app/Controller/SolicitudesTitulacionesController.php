@@ -179,11 +179,17 @@ class SolicitudesTitulacionesController extends AppController {
 
 	public function revision($id = null) {
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
-			if($this -> SolicitudesTitulacion -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('Se registró el cambio'), 'crud/success');
-				$this -> redirect(array('action' => 'index'));
+			if($this -> request -> data['SolicitudesTitulacion']['tipos_especies_valorada_id']) {
+				if($this -> SolicitudesTitulacion -> save($this -> request -> data)) {
+					$this -> Session -> setFlash(__('Se registró el cambio'), 'crud/success');
+					$this -> redirect(array('action' => 'index'));
+				} else {
+					$this -> Session -> setFlash(__('No se pudo registrar el cambio. Por favor, intente de nuevo.'), 'crud/error');
+					$this -> redirect(array('action' => 'index'));
+				}
 			} else {
-				$this -> Session -> setFlash(__('No se pudo registrar el cambio. Por favor, intente de nuevo.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo registrar el cambio. Seleccione el tipo de especie valorada. Por favor, intente de nuevo.'), 'crud/error');
+				$this -> redirect(array('action' => 'index'));
 			}
 		} else {
 			if(!$id) {
@@ -200,7 +206,8 @@ class SolicitudesTitulacionesController extends AppController {
 					)
 				);
 				$estadosSolicitudesTitulaciones = $this -> SolicitudesTitulacion -> EstadosSolicitudesTitulacion -> find('list');
-				$this -> set(compact('estadosSolicitudesTitulaciones'));
+				$tiposEspeciesValoradas = $this -> SolicitudesTitulacion -> TiposEspeciesValorada -> find('list');
+				$this -> set(compact('estadosSolicitudesTitulaciones', 'tiposEspeciesValoradas'));
 				$this -> set('archivos', $archivos);
 				$solicitud = $this -> SolicitudesTitulacion -> read(null, $id);
 				$this -> request -> data = $solicitud;

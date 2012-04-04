@@ -82,6 +82,19 @@ class TiposEspeciesValorada extends AppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
+		),
+		'SolicitudesTitulacion' => array(
+			'className' => 'SolicitudesTitulacion',
+			'foreignKey' => 'tipos_especies_valorada_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
 		)
 	);
 

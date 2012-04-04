@@ -93,6 +93,13 @@ class SolicitudesTitulacion extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
+		),
+		'TiposEspeciesValorada' => array(
+			'className' => 'TiposEspeciesValorada',
+			'foreignKey' => 'tipos_especies_valorada_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
 		)
 	);
 
