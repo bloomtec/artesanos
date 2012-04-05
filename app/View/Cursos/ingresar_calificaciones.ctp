@@ -41,7 +41,7 @@
 		endforeach;
 		?>
 	</table>
-	<?php echo $this -> Form -> input('Curso.cur_activo', array('label' => false, 'before' => '<label for="CursoCurActivo">Cerrar Curso</label>', 'style' => 'width:40px;'));?>
+	<?php echo $this -> Form -> input('Curso.cur_activo', array('checked'=>!$curso['Curso']['cur_activo'],'label' => false, 'before' => '<label for="CursoCurActivo">Cerrar Curso</label>', 'style' => 'width:40px;'));?>
 	<p style='text-align:left;'>
 		Debe cerrar el curso para que se puedan imprimir los certificados, una vez se cierre no se podrán modificar las notas
 	</p>

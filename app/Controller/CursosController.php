@@ -195,7 +195,7 @@ class CursosController extends AppController {
 					$this -> Curso -> CursosAlumno -> saveField('cur_aprobo', false);	
 				}
 			}
-			$this -> Curso -> saveField('cur_activo',$this -> request -> data['Curso']['cur_activo']);
+			$this -> Curso -> saveField('cur_activo',!$this -> request -> data['Curso']['cur_activo']);
 			$this -> Session -> setFlash(__('Se han actualizado las notas del curso.'), 'crud/success');
 			$this -> redirect(array('action'=>'verAlumnos',$id));
 
