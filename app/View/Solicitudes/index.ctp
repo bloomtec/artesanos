@@ -16,6 +16,7 @@
 		<th><?php echo $this->Paginator->sort('sol_fecha_de_fin_de_la_capacitacion','Fecha De Fin De La Capacitación');?></th>
 		<th><?php echo $this->Paginator->sort('sol_costos','Costos');?></th>
 		<th><?php echo $this->Paginator->sort('sol_numero_de_participantes','Número De Participantes');?></th>
+		<th><?php echo $this->Paginator->sort('sol_estado','Estado');?></th>
 		<th class="actions"><?php echo __('Acciones');?></th>
 	</tr>
 	<?php $i = 0; foreach ($solicitudes as $solicitud): ?>
@@ -31,9 +32,24 @@
 		<td><?php echo h($solicitud['Solicitud']['sol_fecha_de_fin_de_la_capacitacion']); ?>&nbsp;</td>
 		<td><?php echo h($solicitud['Solicitud']['sol_costos']); ?>&nbsp;</td>
 		<td><?php echo h($solicitud['Solicitud']['sol_numero_de_participantes']); ?>&nbsp;</td>
+		<td>
+			<?php 
+				switch ($solicitud['Solicitud']['sol_estado']) {
+					case '1':
+						echo "PENDIENTE";
+						break;
+					case '2':
+						echo "APROBADA";
+						break;
+					case '3':
+						echo "RECHAZADA";
+						break;
+				}
+			 ?>&nbsp;
+		</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $solicitud['Solicitud']['id']),array('class'=>'view','title'=>'Ver')); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $solicitud['Solicitud']['id']),array('class'=>'edit','title'=>'Modificar')); ?>
+			<?php  if($solicitud['Solicitud']['sol_estado']!=2) echo $this->Html->link(__('Edit'), array('action' => 'edit', $solicitud['Solicitud']['id']),array('class'=>'edit','title'=>'Modificar')); ?>
 			<?php if($solicitud['Solicitud']['sol_estado']==1) echo $this->Html->link(__('aprobar'), array('action' => 'aprobar', $solicitud['Solicitud']['id']),array('class'=>'aprobar','title'=>'Aprobar')); ?>
 			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $solicitud['Solicitud']['id']), array('class'=>'delete','title'=>'Borrar'), __('Esta seguro que quiere eliminar el registro?', $solicitud['Solicitud']['id'])); ?>
 		</td>
