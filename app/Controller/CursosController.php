@@ -133,6 +133,7 @@ class CursosController extends AppController {
 			}
 		} else {
 			$this -> request -> data = $this -> Curso -> read(null, $id);
+			$this -> request -> data['Curso']['cur_costo'] = 100 * $this -> request -> data['Curso']['cur_costo'];
 			//$this -> Session -> setFlash(__('No se pudo actualizar el curso. Por favor, intente de nuevo.'), 'crud/error');
 		}
 		$solicitudes = $this -> Curso -> Solicitud -> find('list');
@@ -180,19 +181,21 @@ class CursosController extends AppController {
 		if (!$this -> Curso -> exists()) {
 			throw new NotFoundException(__('Invalid curso'));
 		}
+		$calificacionMinima=($this -> requestAction('/configuraciones/getValorConfiguracion/con_calificacion_minima'));
+		$calificacionMaxima=($this -> requestAction('/configuraciones/getValorConfiguracion/con_calificacion_maxima'));
+		$necesarioParaAprobar=($this -> requestAction('/configuraciones/getValorConfiguracion/con_calificacion_para_aprobar_curso'));
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			foreach ($this -> request -> data['CursosAlumno'] as $cursosAlumno) {
 				$this -> Curso -> CursosAlumno -> id = $cursosAlumno['id'];
 				$this -> Curso -> CursosAlumno -> saveField('cur_nota_final', $this -> formatearValor($cursosAlumno['cur_nota_final']));
 				$this -> Curso -> CursosAlumno -> saveField('cur_asistencias', $cursosAlumno['cur_asistencias']);
-				if ((float)$this -> formatearValor($cursosAlumno['cur_nota_final'] >= 3)) {					
+				if ((float) $this -> formatearValor($cursosAlumno['cur_nota_final']) >= $necesarioParaAprobar) {					
 					$this -> Curso -> CursosAlumno -> saveField('cur_aprobo', true);
 				} else {
 					$this -> Curso -> CursosAlumno -> saveField('cur_aprobo', false);	
 				}
-
 			}
-			$this -> Curso -> saveField('cur_activo',false);
+			$this -> Curso -> saveField('cur_activo',$this -> request -> data['Curso']['cur_activo']);
 			$this -> Session -> setFlash(__('Se han actualizado las notas del curso.'), 'crud/success');
 			$this -> redirect(array('action'=>'verAlumnos',$id));
 
@@ -200,7 +203,7 @@ class CursosController extends AppController {
 			$curso = $this -> Curso -> read(null, $id);
 			$this -> Curso -> CursosAlumno -> bindModel(array('belongsTo' => array('Alumno')));
 			$alumnos = $this -> Curso -> CursosAlumno -> find('all', array('conditions' => array('CursosAlumno.curso_id' => $id)));
-			$this -> set(compact('curso', 'alumnos'));
+			$this -> set(compact('curso', 'alumnos','calificacionMinima','calificacionMaxima'));
 		
 	}
 
