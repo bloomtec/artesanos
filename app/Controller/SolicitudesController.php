@@ -185,5 +185,8 @@ class SolicitudesController extends AppController {
 			}	
 		}
 	}
-
+	
+	function revision(){
+		
+	}
 }
