@@ -44,7 +44,7 @@ class EgresosDeInventariosController extends AppController {
 				}
 
 				if (!empty($idProducto)) {
-					$idsProductos = $this -> EgresosDeInventariosItem -> find('list', array('fields' => array('egresos_de_inventario_id'), 'conditions' => array('EgresosDeInventariosItem.item_id' => $idProducto, 'ite_is_activo_fijo' => 1)));
+					$idsProductos = $this -> EgresosDeInventariosItem -> find('list', array('fields' => array('egresos_de_inventario_id'), 'conditions' => array('EgresosDeInventariosItem.item_id' => $idProducto)));
 					$conditions[] = array('EgresosDeInventario.id' => $idsProductos);
 				}
 
