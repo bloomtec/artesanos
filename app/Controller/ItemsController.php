@@ -87,7 +87,10 @@ class ItemsController extends AppController {
 		/**
 		 * falta el código que debe ser consecutivo acorde a los activos fijos o suministros
 		 */
+		
+		
 		if ($this -> request -> is('post')) {
+			
 			if (!empty($this -> request -> data['IngresosDeInventario']['ing_archivo_soporte']['name']) && !$this -> request -> data['IngresosDeInventario']['ing_archivo_soporte']['error']) {
 				$now = new DateTime('now');
 				$filename = $now -> format('Y-m-d_H-i-s') . '_' . str_replace(' ', '_', $this -> request -> data['IngresosDeInventario']['ing_archivo_soporte']['name']);
@@ -122,16 +125,16 @@ class ItemsController extends AppController {
 						}
 					}
 				}
-				$this -> Session -> setFlash(__('Se registró el ingreso de activos fijos'), 'crud/success');
-				$this -> redirect(array('action' => 'indexActivosFijos'));
+				$this -> Session -> setFlash(__('Se registró el suministro'), 'crud/success');
+				$this -> redirect(array('action' => 'indexSuministros'));
 			} else {
-				$this -> Session -> setFlash(__('No se pudo hacer el registro de activos fijos. Por favor, intente de nuevo.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo hacer el registro del suministro. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
 		$items = $this -> Item -> find('list', array('conditions' => array('Item.ite_is_activo_fijo' => false)));
 		$tiposDeItems = $this -> Item -> getValores(15);
 		$departamentos = $this -> Item -> getValores(14);
-		$personas = $this -> Item -> IngresosDeInventario -> Persona -> find('list');
+		//$personas = $this -> Item -> IngresosDeInventario -> Persona -> find('list');
 		$proveedores = $this -> Item -> IngresosDeInventario -> Proveedor -> find('list', array('fields'=>'datos_completos'));
 	
 		/**
@@ -149,7 +152,7 @@ class ItemsController extends AppController {
 		}
 		// $cantones = $this -> Canton -> find('list');
 		// $ciudades = $this -> Ciudad -> find('list');
-		$this -> set(compact('items', 'tiposDeItems', 'departamentos', 'personas', 'proveedores', 'provincias'));
+		$this -> set(compact('items', 'tiposDeItems', 'departamentos',/* 'personas',*/ 'proveedores', 'provincias'));
 	}
 
 	/**
@@ -528,13 +531,13 @@ class ItemsController extends AppController {
 							}
 						}
 					}
-					$this -> Session -> setFlash(__('Se registró el egreso de activos fijos'), 'crud/success');
-					$this -> redirect(array('action' => 'indexActivosFijos'));
+					$this -> Session -> setFlash(__('Se registró el suministro'), 'crud/success');
+					$this -> redirect(array('action' => 'indexSuministros'));
 				} else {
-					$this -> Session -> setFlash(__('No se pudo hacer el egreso de activos fijos. Por favor, intente de nuevo.'), 'crud/error');
+					$this -> Session -> setFlash(__('No se pudo hacer el egreso del suministro. Por favor, intente de nuevo.'), 'crud/error');
 				}
 			} else {
-				$this -> Session -> setFlash(__('No se pudo hacer el egreso de activos fijos por una cantidad seleccionada. Por favor, intente de nuevo.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo hacer el egreso de suministros por una cantidad seleccionada. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
 		$items = $this -> Item -> find('list', array('conditions' => array('Item.ite_is_activo_fijo' => false)));
