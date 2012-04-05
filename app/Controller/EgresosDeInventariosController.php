@@ -36,7 +36,7 @@ class EgresosDeInventariosController extends AppController {
 				$fecha1 = $this -> data['Reporte']['fecha1'];
 				$fecha2 = $this -> data['Reporte']['fecha2'];
 
-				$conditions[] = array('EgresoDeInventario.ing_is_activo_fijo' => 1);
+				$conditions[] = array('EgresosDeInventario.egr_is_activo_fijo' => 1);
 				
 				if (!empty($nomDepartamento)) {
 					$idsPersonasDep = $this -> Persona -> find('list', array('fields' => array('id'), 'conditions' => array('Persona.per_departamento' => $nomDepartamento)));
@@ -44,7 +44,7 @@ class EgresosDeInventariosController extends AppController {
 				}
 
 				if (!empty($idProducto)) {
-					$idsProductos = $this -> EgresosDeInventariosItem -> find('list', array('fields' => array('egresos_de_inventario_id'), 'conditions' => array('EgresosDeInventariosItem.item_id' => $idProducto, 'ite_is_activo_fijo' => 1)));
+					$idsProductos = $this -> EgresosDeInventariosItem -> find('list', array('fields' => array('egresos_de_inventario_id'), 'conditions' => array('EgresosDeInventariosItem.item_id' => $idProducto)));
 					$conditions[] = array('EgresosDeInventario.id' => $idsProductos);
 				}
 
@@ -91,8 +91,9 @@ class EgresosDeInventariosController extends AppController {
 			$lstPersonasId = $this -> EgresosDeInventario -> find('list', array("fields" => array('persona_id')));
 			$lstPersonas = $this -> Persona -> find('list', array('order' => array('per_documento_de_identidad'), 'fields' => array('id', 'datos_completos'), 'conditions' => array('Persona.id' => $lstPersonasId)));
 
-			$idsItems = $this -> EgresosDeInventariosItem -> find("list", array("fields" => array("item_id")));
-			$lstProductos = $this -> Item -> find('list', array('fields' => array('id', 'ite_nombre'), 'conditions' => array('Item.id' => $idsItems, 'ite_is_activo_fijo' => 1)));
+			//$idsItems = $this -> EgresosDeInventariosItem -> find("list", array("fields" => array("item_id")));
+			//$lstProductos = $this -> Item -> find('list', array('fields' => array('id', 'ite_nombre'), 'conditions' => array('Item.id' => $idsItems, 'ite_is_activo_fijo' => 1)));
+			$lstProductos = $this -> Item -> find('list', array('conditions' => array('ite_is_activo_fijo' => 1)));
 			$lstDepartamentos = $this -> EgresosDeInventario -> getValores(14);
 			$this -> set(compact('lstPersonas', 'lstDepartamentos', 'lstProductos', 'reporte'));
 		}
@@ -118,14 +119,13 @@ class EgresosDeInventariosController extends AppController {
 			$this -> Recursive = 0;
 			$conditions = array();
 			if ($pagina==false) {
-				$condiciones = array();
 				$idPersona = $this -> data['Reporte']['persona'];
 				$nomDepartamento = $this -> data['Reporte']['departamento'];
 				$idProducto = $this -> data['Reporte']['producto'];
 				$fecha1 = $this -> data['Reporte']['fecha1'];
 				$fecha2 = $this -> data['Reporte']['fecha2'];
 
-				$conditions[] = array('EgresoDeInventario.ing_is_activo_fijo' => 0);
+				$conditions[] = array('EgresosDeInventario.egr_is_activo_fijo' => 0);
 				
 				if (!empty($nomDepartamento)) {
 					$idsPersonasDep = $this -> Persona -> find('list', array('fields' => array('id'), 'conditions' => array('Persona.per_departamento' => $nomDepartamento)));
@@ -133,7 +133,7 @@ class EgresosDeInventariosController extends AppController {
 				}
 
 				if (!empty($idProducto)) {
-					$idsProductos = $this -> EgresosDeInventariosItem -> find('list', array('fields' => array('egresos_de_inventario_id'), 'conditions' => array('EgresosDeInventariosItem.item_id' => $idProducto, 'ite_is_activo_fijo' => 0)));
+					$idsProductos = $this -> EgresosDeInventariosItem -> find('list', array('fields' => array('egresos_de_inventario_id'), 'conditions' => array('EgresosDeInventariosItem.item_id' => $idProducto)));
 					$conditions[] = array('EgresosDeInventario.id' => $idsProductos);
 				}
 
@@ -179,8 +179,9 @@ class EgresosDeInventariosController extends AppController {
 
 			$lstPersonasId = $this -> EgresosDeInventario -> find('list', array("fields" => array('persona_id')));
 			$lstPersonas = $this -> Persona -> find('list', array('order' => array('per_documento_de_identidad'), 'fields' => array('id', 'datos_completos'), 'conditions' => array('Persona.id' => $lstPersonasId)));
-			$idsItems = $this -> EgresosDeInventariosItem -> find("list", array("fields" => array("item_id")));
-			$lstProductos = $this -> Item -> find('list', array('fields' => array('id', 'ite_nombre'), 'conditions' => array('Item.id' => $idsItems, 'ite_is_activo_fijo' => 0)));
+			//$idsItems = $this -> EgresosDeInventariosItem -> find("list", array("fields" => array("item_id")));
+			//$lstProductos = $this -> Item -> find('list', array('fields' => array('id', 'ite_nombre'), 'conditions' => array('Item.id' => $idsItems, 'ite_is_activo_fijo' => 0)));
+			$lstProductos = $this -> Item -> find('list', array('conditions' => array('ite_is_activo_fijo' => 0)));
 			$lstDepartamentos = $this -> EgresosDeInventario -> getValores(14);
 			$this -> set(compact('lstPersonas', 'lstDepartamentos', 'lstProductos', 'reporte'));
 		}

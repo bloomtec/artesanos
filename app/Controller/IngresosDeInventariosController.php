@@ -41,7 +41,7 @@ class IngresosDeInventariosController extends AppController {
 				}
 
 				if (!empty($idProducto)) {
-					$idsProductos = $this -> IngresosDeInventariosItem -> find('list', array('fields' => array('ingresos_de_inventario_id'), 'conditions' => array('IngresosDeInventariosItem.item_id' => $idProducto, 'ite_is_activo_fijo' => 1)));
+					$idsProductos = $this -> IngresosDeInventariosItem -> find('list', array('fields' => array('ingresos_de_inventario_id'), 'conditions' => array('IngresosDeInventariosItem.item_id' => $idProducto)));
 					$conditions[] = array('IngresosDeInventario.id' => $idsProductos);
 				}
 
@@ -94,8 +94,9 @@ class IngresosDeInventariosController extends AppController {
 			$lstProveedoresId = $this -> IngresosDeInventario -> find('list', array("fields" => array('proveedor_id')));
 			$lstProveedores = $this -> IngresosDeInventario -> Proveedor -> find('list', array('conditions' => array('Proveedor.id' => $lstProveedoresId), 'fields' => array('id', 'pro_nombre_razon_social')));
 			$lstPersonas = $this -> IngresosDeInventario -> Persona -> find('list', array('conditions' => array('Persona.id' => $lstPersonasId), 'fields' => array('id', 'datos_completos'), 'order' => array('per_documento_de_identidad')));
-			$idsItems = $this -> IngresosDeInventariosItem -> find("list", array("fields" => array("item_id")));
-			$lstProductos = $this -> Item -> find('list', array('fields' => array('id', 'ite_nombre'), 'conditions' => array('Item.id' => $idsItems, 'ite_is_activo_fijo' => 1)));
+			//$idsItems = $this -> IngresosDeInventariosItem -> find("list", array("fields" => array("item_id")));
+			//$lstProductos = $this -> Item -> find('list', array('fields' => array('id', 'ite_nombre'), 'conditions' => array('Item.id' => $idsItems, 'ite_is_activo_fijo' => 1)));
+			$lstProductos = $this -> Item -> find('list', array('conditions' => array('ite_is_activo_fijo' => 1)));
 			$lstDepartamentos = $this -> IngresosDeInventario -> getValores(14);
 			$this -> set(compact('lstProveedores', 'lstPersonas', 'lstDepartamentos', 'lstProductos', 'reporte', 'titulo'));
 		}
@@ -134,7 +135,7 @@ class IngresosDeInventariosController extends AppController {
 				}
 
 				if (!empty($idProducto)) {
-					$idsProductos = $this -> IngresosDeInventariosItem -> find('list', array('fields' => array('ingresos_de_inventario_id'), 'conditions' => array('IngresosDeInventariosItem.item_id' => $idProducto, 'ite_is_activo_fijo' => 0)));
+					$idsProductos = $this -> IngresosDeInventariosItem -> find('list', array('fields' => array('ingresos_de_inventario_id'), 'conditions' => array('IngresosDeInventariosItem.item_id' => $idProducto)));
 					$conditions[] = array('IngresosDeInventario.id' => $idsProductos);
 				}
 
@@ -186,8 +187,9 @@ class IngresosDeInventariosController extends AppController {
 			$lstProveedoresId = $this -> IngresosDeInventario -> find('list', array("fields" => array('proveedor_id')));
 			$lstProveedores = $this -> IngresosDeInventario -> Proveedor -> find('list', array('conditions' => array('Proveedor.id' => $lstProveedoresId), 'fields' => array('id', 'pro_nombre_razon_social')));
 			$lstPersonas = $this -> IngresosDeInventario -> Persona -> find('list', array('conditions' => array('Persona.id' => $lstPersonasId), 'fields' => array('id', 'datos_completos'), 'order' => array('per_documento_de_identidad')));
-			$idsItems = $this -> IngresosDeInventariosItem -> find("list", array("fields" => array("item_id")));
-			$lstProductos = $this -> Item -> find('list', array('fields' => array('id', 'ite_nombre'), 'conditions' => array('Item.id' => $idsItems, 'ite_is_activo_fijo' => 0)));
+			//$idsItems = $this -> IngresosDeInventariosItem -> find("list", array("fields" => array("item_id")));
+			//$lstProductos = $this -> Item -> find('list', array('fields' => array('id', 'ite_nombre'), 'conditions' => array('Item.id' => $idsItems, 'ite_is_activo_fijo' => 0)));
+			$lstProductos = $this -> Item -> find('list', array('conditions' => array('ite_is_activo_fijo' => 0)));
 			$lstDepartamentos = $this -> IngresosDeInventario -> getValores(14);
 			$this -> set(compact('lstProveedores', 'lstPersonas', 'lstDepartamentos', 'lstProductos', 'reporte', 'titulo'));
 		}
