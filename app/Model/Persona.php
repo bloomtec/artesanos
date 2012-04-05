@@ -101,7 +101,7 @@ class Persona extends AppModel {
 	);
 	
 	public $hasAndBelongsToMany = array(
-		'ItemsPersona' => array(
+		'Item' => array(
 			'className' => 'ItemsPersona',
 			'joinTable' => 'items_personas',
 			'foreignKey' => 'persona_id',

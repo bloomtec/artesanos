@@ -48,7 +48,7 @@ class PersonasController extends AppController {
 	public function view($id = null) {
 		$this -> Persona -> id = $id;
 		if (!$this -> Persona -> exists()) {
-			throw new NotFoundException(__('Invalid persona'));
+			throw new NotFoundException(__('Persona no encontrada'));
 		}
 		$this -> set('persona', $this -> Persona -> read(null, $id));
 	}
@@ -62,10 +62,10 @@ class PersonasController extends AppController {
 		if ($this -> request -> is('post')) {
 			$this -> Persona -> create();
 			if ($this -> Persona -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The persona has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('La persona se ha guardado'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The persona could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo guardar la persona. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
 		$departamentos = $this -> Persona -> getValores(14);
@@ -81,14 +81,14 @@ class PersonasController extends AppController {
 	public function edit($id = null) {
 		$this -> Persona -> id = $id;
 		if (!$this -> Persona -> exists()) {
-			throw new NotFoundException(__('Invalid persona'));
+			throw new NotFoundException(__('Persona no encontrada'));
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			if ($this -> Persona -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The persona has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('La persona se ha guardado'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The persona could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo guardar la persona. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		} else {
 			$this -> request -> data = $this -> Persona -> read(null, $id);
@@ -109,13 +109,13 @@ class PersonasController extends AppController {
 		}
 		$this -> Persona -> id = $id;
 		if (!$this -> Persona -> exists()) {
-			throw new NotFoundException(__('Invalid persona'));
+			throw new NotFoundException(__('Persona no encontrada'));
 		}
 		if ($this -> Persona -> delete()) {
-			$this -> Session -> setFlash(__('Persona deleted'), 'crud/success');
+			$this -> Session -> setFlash(__('Persona borrada'), 'crud/success');
 			$this -> redirect(array('action' => 'index'));
 		}
-		$this -> Session -> setFlash(__('Persona was not deleted'), 'crud/error');
+		$this -> Session -> setFlash(__('No se pudo borrar la persona'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
 	}
 	
