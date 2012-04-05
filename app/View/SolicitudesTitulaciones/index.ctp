@@ -17,6 +17,7 @@
 	$i = 0;
 	foreach ($solicitudesTitulaciones as $solicitudesTitulacion): ?>
 	<tr>
+		
 		<td>
 			<?php echo $this->Html->link($solicitudesTitulacion['EstadosSolicitudesTitulacion']['est_estado'], array('controller' => 'estados_solicitudes_titulaciones', 'action' => 'view', $solicitudesTitulacion['EstadosSolicitudesTitulacion']['id'])); ?>
 		</td>
@@ -32,7 +33,8 @@
 		<td class="actions">
 			<?php
 				if($solicitudesTitulacion['EstadosSolicitudesTitulacion']['id'] == 1) {
-					echo $this->Html->link(__('Revisar'), array('action' => 'revision', $solicitudesTitulacion['SolicitudesTitulacion']['id']),array('class'=>'revision','title'=>'Revision'));					
+					echo $this->Html->link(__('Revisar'),   array('action' => 'revision', $solicitudesTitulacion['SolicitudesTitulacion']['id']),array('class'=>'revision','title'=>'Revision'));		
+					echo $this->Html->link(__('Refrendar'), array('action' => 'refrendar', $solicitudesTitulacion['SolicitudesTitulacion']['id']),array('class'=>'aprobacion','title'=>'Refrendar'));						
 				}
 			?>
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $solicitudesTitulacion['SolicitudesTitulacion']['id']),array('class'=>'view','title'=>'Ver')); ?>

@@ -1,7 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
 App::import('Helper', 'csv');
-App::import('EspeciesValoradasController', 'EspeciesValoradasController');
 
 /**
  * SolicitudesTitulaciones Controller
@@ -377,12 +376,19 @@ class SolicitudesTitulacionesController extends AppController {
 		echo $csv -> render($titulo);
 	}
 
-	function refrendacion($idArtesano, $idEspecie) {
+	function refrendar($idSolicitudTitulacion) {
 		$this -> layout = "";
 		$this -> render(false);
-		$EspeciesValoradasController = new EspeciesValoradasController();
-		$res = $this -> EspeciesValoradasController -> verificarEspecieArtesano($idArtesano, $idEspecie);
-		debug($res);
+		$idArtesano= $this->SolicitudesTitulacion->find("list", array("fields"=>array("artesano_id"),"conditions"=>array("SolicitudesTitulacion.id"=>$idSolicitudTitulacion)));								
+		$idTipoEspecieValorada = $this->SolicitudesTitulacion->find("list", array("fields"=>array("tipos_especies_valorada_id"),"conditions"=>array("SolicitudesTitulacion.id"=>$idSolicitudTitulacion)));					
+		$res = $this->requestAction('/EspeciesValoradas/verificarEspecieArtesano/'.$idArtesano[1]."/".$idTipoEspecieValorada[1]);
+		
+		if($res["EspeciesValorada"]["se_uso"]==1){
+				$this -> Session -> setFlash(__('No se puede refrendar la especie valorada ya esta en uso', true));
+		} else {
+			$this -> Session -> setFlash(__('Se puede refrendar', true));
+			$this->SolicitudesTitulacion->query("UPDATE especies_valoradas set se_uso=1 WHERE tipos_especies_valoradas_id = "+$idTipoEspecieValorada);
+		}
 	}
 
 }
