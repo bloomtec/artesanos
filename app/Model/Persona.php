@@ -5,6 +5,7 @@ App::uses('AppModel', 'Model');
  *
  * @property EgresosDeInventario $EgresosDeInventario
  * @property IngresosDeInventario $IngresosDeInventario
+ * @property Item $Item
  */
 class Persona extends AppModel {
 	
@@ -19,8 +20,12 @@ class Persona extends AppModel {
  */
 	//public $displayField = 'per_cedula_de_identidad';
 	public $displayField = 'datos_completos';
-
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
+	
+/**
+ * Validation rules
+ *
+ * @var array
+ */
 	public $validate = array(
 		'per_nombres' => array(
 			'notempty' => array(
@@ -52,25 +57,25 @@ class Persona extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		
-		'per_departamento' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				'message' => 'Debes seleccionar un departamento',
+		'per_is_cedula' => array(
+			'boolean' => array(
+				'rule' => array('boolean'),
+				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-		)
+		),
 	);
+
+	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 /**
  * hasMany associations
  *
  * @var array
  */
-
 	public $hasMany = array(
 		'EgresosDeInventario' => array(
 			'className' => 'EgresosDeInventario',
@@ -99,10 +104,16 @@ class Persona extends AppModel {
 			'counterQuery' => ''
 		)
 	);
-	
+
+
+/**
+ * hasAndBelongsToMany associations
+ *
+ * @var array
+ */
 	public $hasAndBelongsToMany = array(
 		'Item' => array(
-			'className' => 'ItemsPersona',
+			'className' => 'Item',
 			'joinTable' => 'items_personas',
 			'foreignKey' => 'persona_id',
 			'associationForeignKey' => 'item_id',
