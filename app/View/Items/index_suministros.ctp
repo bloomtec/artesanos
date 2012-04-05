@@ -29,7 +29,7 @@
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $item['Item']['id']),array('class'=>'view','title'=>'Ver')); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $item['Item']['id']),array('class'=>'edit','title'=>'Modificar')); ?>
 			<?php if($item['Item']['ite_is_activo_fijo']) echo $this->Html->link(__('Asignar'), array('action' => 'asignarActivoFijo', $item['Item']['id']), array('class'=>'traspaso','title'=>'Asignar Activo Fijo')); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $item['Item']['id']), array('class'=>'delete','title'=>'Borrar'), __('Esta seguro que quiere eliminar el registro?', $item['Item']['id'])); ?>
+			<?php //echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $item['Item']['id']), array('class'=>'delete','title'=>'Borrar'), __('Esta seguro que quiere eliminar el registro?', $item['Item']['id'])); ?>
 		</td>
 	</tr>
 	<?php endforeach; ?>
@@ -54,7 +54,7 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $this->Html->link(__('Agregar Activo Fijo'), array('action' => 'agregarActivoFijo')); ?></li>
-		<li><?php echo $this->Html->link(__('Egresar Activo Fijo'), array('action' => 'egresoActivoFijo')); ?></li>
+		<li><?php echo $this->Html->link(__('Agregar Activo Fijo'), array('action' => 'agregarSuministro')); ?></li>
+		<li><?php echo $this->Html->link(__('Egresar Activo Fijo'), array('action' => 'deleteSuministro')); ?></li>
 	</ul>
 </div>
