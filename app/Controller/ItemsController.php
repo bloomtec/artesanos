@@ -466,6 +466,15 @@ class ItemsController extends AppController {
 			}*/
 		}
 		$tmp_asignaciones = $this -> Item -> ItemsPersona -> find('all');
+		foreach($tmp_asignaciones as $key => $asignacion) {
+			$this -> Item -> recursive = -1;
+			$this -> Item -> Persona -> recursive = -1;
+			$tmpItem = $this -> Item -> find('first', array('conditions' => array('Item.id' => $asignacion['ItemsPersona']['item_id'])));
+			$tmp_asignaciones[$key]['Item'] = $tmpItem['Item'];
+			//$tmp_asignaciones[] = $this -> Item -> ItemsPersona -> Persona -> findById($asignacion['ItemsPersona']['persona_id']);
+			$tmpPersona = $this -> Item -> Persona -> find('first', array('conditions' => array('Persona.id' => $asignacion['ItemsPersona']['persona_id'])));
+			$tmp_asignaciones[$key]['Persona'] = $tmpPersona['Persona'];
+		}
 		$asignaciones = array();
 		foreach($tmp_asignaciones as $key => $asignacion) {
 			$asignaciones[$asignacion['ItemsPersona']['id']] = $asignacion['Item']['ite_codigo'] . ' - ' . $asignacion['Item']['ite_nombre'] . ' -> ' . $asignacion['Persona']['datos_completos'] . ' -> ' . $asignacion['ItemsPersona']['ite_cantidad'];

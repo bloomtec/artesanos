@@ -1,7 +1,7 @@
 <div class="items form">
 	<?php echo $this -> Form -> create('Item');?>
 	<fieldset>
-		<h2><?php echo __('Traspaso Activo Fijo');?></h2>
+		<h2><?php echo __('Asignar Activo Fijo');?></h2>
 		<table>
 			<tr>
 				<td>Código</td><td><?php echo $item['Item']['ite_codigo'];?></td>

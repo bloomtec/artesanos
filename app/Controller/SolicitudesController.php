@@ -163,12 +163,17 @@ class SolicitudesController extends AppController {
 	}
 	
 	public function aprobar($id = null){
+		//$this -> Solicitud -> id = $id;
+		$id = $this->data["Solicitud"]["id"];
 		$this -> Solicitud -> id = $id;
+		//debug($this->data); exit;
 		if (!$this -> Solicitud -> exists()) {
 			throw new NotFoundException(__('Solicitud no valida'));
 		}
 		$solicitud = $this -> Solicitud -> read(null,$id);
-		$solicitud['Solicitud']['sol_estado']=2;//estado 2 aprobada
+		//$solicitud['Solicitud']['sol_estado']=2;//estado 2 aprobada
+		$solicitud['Solicitud']['sol_estado'] 	= $this->data["Solicitud"]["sol_estado"];
+		$solicitud['Solicitud']['comentarios'] 	= $this->data["Solicitud"]["sol_comentario"];
 		if($this->Solicitud->save($solicitud)){
 			$curso['Curso']=array(
 				"solicitud_id"=>$solicitud['Solicitud']['id'],
@@ -176,7 +181,9 @@ class SolicitudesController extends AppController {
 				"cur_fecha_de_inicio"=>$solicitud['Solicitud']['sol_fecha_inicio_de_la_capacitacion'],
 				"cur_fecha_de_fin"=>$solicitud['Solicitud']['sol_fecha_de_fin_de_la_capacitacion'],
 				"cur_costo"=>$solicitud['Solicitud']['sol_costos'],
+				
 			);
+			echo "Guardado";
 			if($this -> Solicitud -> Curso -> save($curso)){
 					$this -> Session -> setFlash(__('Se ha aprobado la solicitud.'), 'crud/success');
 					$this -> redirect(array('controller'=>'cursos','action' => 'edit',$this -> Solicitud -> Curso -> id));
@@ -185,5 +192,8 @@ class SolicitudesController extends AppController {
 			}	
 		}
 	}
-
+	
+	function revision($id = null){
+		$this -> set(compact('id'));
+	}
 }
