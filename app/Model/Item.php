@@ -55,7 +55,7 @@ class Item extends AppModel {
 			'deleteQuery' => '',
 			'insertQuery' => ''
 		),
-		'ItemsPersona' => array(
+		'Persona' => array(
 			'className' => 'ItemsPersona',
 			'joinTable' => 'items_personas',
 			'foreignKey' => 'item_id',
