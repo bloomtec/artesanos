@@ -379,15 +379,34 @@ class SolicitudesTitulacionesController extends AppController {
 	function refrendar($idSolicitudTitulacion) {
 		$this -> layout = "";
 		$this -> render(false);
-		$idArtesano= $this->SolicitudesTitulacion->find("list", array("fields"=>array("artesano_id"),"conditions"=>array("SolicitudesTitulacion.id"=>$idSolicitudTitulacion)));								
-		$idTipoEspecieValorada = $this->SolicitudesTitulacion->find("list", array("fields"=>array("tipos_especies_valorada_id"),"conditions"=>array("SolicitudesTitulacion.id"=>$idSolicitudTitulacion)));					
-		
-		$res = $this->requestAction('/EspeciesValoradas/verificarEspecieArtesano/'.$idArtesano[1]."/".$idTipoEspecieValorada[1]);
-		if($res["EspeciesValorada"]["se_uso"]==1){
-				$this -> Session -> setFlash(__('No se puede refrendar la especie valorada ya esta en uso', true));
+		$this->SolicitudesTitulacion->recursive=-1;
+		$solicitudTitulacion = $this -> SolicitudesTitulacion -> find("all", array("conditions" => array("SolicitudesTitulacion.id" => $idSolicitudTitulacion)));
+		//$idTipoEspecieValorada = $this -> SolicitudesTitulacion -> find("list", array("fields" => array("tipos_especies_valorada_id"), "conditions" => array("SolicitudesTitulacion.id" => $idSolicitudTitulacion)));
+		$idTipoEspecieValorada = $solicitudTitulacion[0]["SolicitudesTitulacion"]["tipos_especies_valorada_id"];
+		//$idTitulo = $this -> SolicitudesTitulacion -> find("list", array("fields" => array("titulo_id"), "conditions" => array("SolicitudesTitulacion.id" => $idSolicitudTitulacion)));
+		$idTitulo = $solicitudTitulacion[0]["SolicitudesTitulacion"]["titulo_id"];
+		$idArtesano = $solicitudTitulacion[0]["SolicitudesTitulacion"]["artesano_id"];
+		$res = $this -> requestAction('/EspeciesValoradas/verificarEspecieArtesano/' . $idArtesano . "/" . $idTipoEspecieValorada);
+		//debug($res); return;
+		if ($res["EspeciesValorada"]["se_uso"] == 1) {
+			$this -> Session -> setFlash(__('No se puede refrendar la especie valorada ya esta en uso', true));
 		} else {
 			$this -> Session -> setFlash(__('Se puede refrendar', true));
+			//HAcer la modificación del campo se_uso y agregar el titulo
+			$data = array();
+			$this->loadModel("Titulo", true);
+			$data["Titulo"]["titulo_id"] = $idTitulo;
+			$data["Titulo"]["solicitudes_titulacion_id"] = $idSolicitudTitulacion;
+			$data["Titulo"]["juntas_provincial_id"] = $res["VentasEspecie"]["juntas_provincial_id"];
+			$data["Titulo"]["especies_valoradas_id"] = $res["EspeciesValorada"]["id"];
 			
+			$this -> Titulo -> create();
+			if ($this -> Titulo -> save($data)) {
+				
+				$this -> Session -> setFlash(__('Se puede refrendar', true));
+			}else {
+				echo "error ".mysql_error();
+			}
 		}
 	}
 
