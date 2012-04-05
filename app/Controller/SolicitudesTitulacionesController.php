@@ -387,7 +387,7 @@ class SolicitudesTitulacionesController extends AppController {
 				$this -> Session -> setFlash(__('No se puede refrendar la especie valorada ya esta en uso', true));
 		} else {
 			$this -> Session -> setFlash(__('Se puede refrendar', true));
-			$this->SolicitudesTitulacion->query("UPDATE especies_valoradas set se_uso=1 WHERE tipos_especies_valoradas_id = "+$idTipoEspecieValorada);
+			
 		}
 	}
 
