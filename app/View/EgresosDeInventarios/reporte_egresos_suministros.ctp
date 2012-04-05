@@ -18,7 +18,7 @@
 <?php } else { ?>
 <br />
 <br />
-<h2><?php echo __('Reporte egresos de inventarios');?></h2>
+<h2><?php echo __('Reporte egresos de suministros');?></h2>
 <table>
 	<tr>
 		<th><?php echo $this->Paginator->sort('egr_codigo','Código egreso'); ?></th>
@@ -64,7 +64,7 @@ for($i=0;$i < count($reporteEgresos);$i++) {
 		echo $this->Paginator->last('>> ', array(), null, array('class' => 'next disabled'));
 	?>
 	</div>
-<a class='button' href="/egresosDeInventarios/reporteEgresosInventarios">Volver</a>
+<a class='button' href="/egresosDeInventarios/reporteEgresosSuministros">Volver</a>
 &nbsp; 
 <a class='button' href="/egresosDeInventarios/impReporte">Descargar pdf</a>
 &nbsp;
