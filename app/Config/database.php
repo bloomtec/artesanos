@@ -4,7 +4,7 @@ class DATABASE_CONFIG {
 	public  $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
-		'host' => 'mysql.bloomweb.co',
+		'host' => 'localhost',
 		'login' => 'jndagobe',
 		'password' => '20qtxNm6E4',
 		'database' => 'jndagobe_artesanos',
