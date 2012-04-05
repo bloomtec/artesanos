@@ -5,6 +5,7 @@ class DATABASE_CONFIG {
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
 		'host' => 'localhost',
+		//'host' => 'mysql.bloomweb.co',
 		'login' => 'jndagobe',
 		'password' => '20qtxNm6E4',
 		'database' => 'jndagobe_artesanos',

@@ -92,7 +92,7 @@ class ItemsController extends AppController {
 				$now = new DateTime('now');
 				$filename = $now -> format('Y-m-d_H-i-s') . '_' . str_replace(' ', '_', $this -> request -> data['IngresosDeInventario']['ing_archivo_soporte']['name']);
 				if ($this -> uploadActivoFijoFile($this -> request -> data['IngresosDeInventario']['ing_archivo_soporte']['tmp_name'], $filename)) {
-					$this -> request -> data['IngresosDeInventario']['ing_archivo_soporte'] = 'files/uploads/activosFijos/' . $filename;
+					$this -> request -> data['IngresosDeInventario']['ing_archivo_soporte'] = 'files/uploads/sumnistros/' . $filename;
 				}
 			}
 			$this -> request -> data['IngresosDeInventario']['ing_is_activo_fijo'] = false;
@@ -498,7 +498,7 @@ class ItemsController extends AppController {
 					$this -> request ->data['EgresosDeInventario']['egr_fecha_de_egreso'] = $now -> format('Y-m-d H:i:s');
 					$filename = $now -> format('Y-m-d_H-i-s') . '_' . str_replace(' ', '_', $this -> request -> data['EgresosDeInventario']['egr_archivo_soporte']['name']);
 					if ($this -> uploadActivoFijoFile($this -> request -> data['EgresosDeInventario']['egr_archivo_soporte']['tmp_name'], $filename)) {
-						$this -> request -> data['EgresosDeInventario']['egr_archivo_soporte'] = 'files/uploads/activosFijos/' . $filename;
+						$this -> request -> data['EgresosDeInventario']['egr_archivo_soporte'] = 'files/uploads/suministros/' . $filename;
 					}
 				}
 				$this -> request -> data['EgresosDeInventario']['egr_is_activo_fijo'] = false;
