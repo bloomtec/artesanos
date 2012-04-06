@@ -181,7 +181,6 @@ class SolicitudesController extends AppController {
 				"cur_fecha_de_inicio"=>$solicitud['Solicitud']['sol_fecha_inicio_de_la_capacitacion'],
 				"cur_fecha_de_fin"=>$solicitud['Solicitud']['sol_fecha_de_fin_de_la_capacitacion'],
 				"cur_costo"=>$solicitud['Solicitud']['sol_costos'],
-				"solicitud_id"=>$solicitud['Curso']['cur_activo']=true,
 				"cur_activo"=>true
 			);
 	

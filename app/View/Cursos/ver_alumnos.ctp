@@ -36,6 +36,8 @@
 <div class="actions">
 	<ul>
 		<li><?php echo $this->Html->link(__('Volver Cursos'), array('action' => 'index')); ?> </li>
+		<?php if($curso['Curso']['cur_activo']):?>
 		<li><?php echo $this->Html->link(__('Modificar Curso'), array('action' => 'edit', $curso['Curso']['id'])); ?> </li>
+		<?php endif; ?>
 	</ul>
 </div>
