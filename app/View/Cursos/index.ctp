@@ -17,6 +17,7 @@
 		<th>Fecha De Inicio</th>
 		<th>Fecha De Fin</th>
 		<th>Costo</th>
+		<th>Estado</th>
 		<?php }else { ?>
 		<th><?php echo $this->Paginator->sort('solicitud_id','Solicitud');?></th>
 		<th><?php echo $this->Paginator->sort('instructor_id','Instructor');?></th>
@@ -25,6 +26,7 @@
 		<th><?php echo $this->Paginator->sort('cur_fecha_de_inicio','Fecha De Inicio');?></th>
 		<th><?php echo $this->Paginator->sort('cur_fecha_de_fin','Fecha De Fin');?></th>
 		<th><?php echo $this->Paginator->sort('cur_costo','Costo');?></th>
+		<th><?php echo $this->Paginator->sort('cur_activo','Estado');?></th>
 		<?php } if($pdf=="") { ?>
 		<th class="actions"><?php echo __('Acciones');?></th>
 		<?php } ?> 
@@ -46,12 +48,13 @@
 		<td><?php echo h($curso['Curso']['cur_fecha_de_inicio']); ?>&nbsp;</td>
 		<td><?php echo h($curso['Curso']['cur_fecha_de_fin']); ?>&nbsp;</td>
 		<td><?php echo h($curso['Curso']['cur_costo']); ?>&nbsp;</td>
+		<td><?php $echo = $curso['Curso']['cur_activo']? 'Activo': 'Cerrado'; echo $echo; ?>&nbsp;</td>
 		<?php if($pdf=="") { ?> 
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $curso['Curso']['id']), array('class'=>'view','title'=>'Ver')); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $curso['Curso']['id']),array('class'=>'edit','title'=>'Modificar')); ?>
+			<?php if($curso['Curso']['cur_activo']) echo $this->Html->link(__('Edit'), array('action' => 'edit', $curso['Curso']['id']),array('class'=>'edit','title'=>'Modificar')); ?>
 			<?php echo $this->Html->link(__('Ver Alumnos'), array('action' => 'verAlumnos', $curso['Curso']['id']),array('class'=>'verAlumnos','title'=>'Ver alumnos')); ?>
-			<?php echo $this->Html->link(__('Ingresar notas'), array('action' => 'ingresarCalificaciones', $curso['Curso']['id']),array('class'=>'calificaciones','title'=>'Ingresar Calificaciones')); ?>
+			<?php if($curso['Curso']['cur_activo']) echo $this->Html->link(__('Ingresar notas'), array('action' => 'ingresarCalificaciones', $curso['Curso']['id']),array('class'=>'calificaciones','title'=>'Ingresar Calificaciones')); ?>
 			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $curso['Curso']['id']), array('class'=>'delete','title'=>'Borrar'), __('Esta seguro que quiere eliminar el registro?', $curso['Curso']['id'])); ?>
 		</td>
 		<?php } ?> 
