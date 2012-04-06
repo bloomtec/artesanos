@@ -423,4 +423,87 @@ class SolicitudesTitulacionesController extends AppController {
 		}
 	}
 
+	function reporteTitulaciones() {
+		$this -> loadModel("JuntasProvincial", true);
+		$this -> loadModel("Titulo", true);
+		$this -> loadModel("Titulacion", true);
+		$this -> loadModel("EspeciesValorada", true);
+
+		$reporte = false;
+
+		$pagina = "";
+		if (isset($this -> params['named']['page'])) {
+			$pagina = $this -> params['named']['page'];
+		} else {
+			$pagina = false;
+		}
+
+		if ($this -> request -> is('post') or $pagina != false) {
+			$conditions = array();
+
+			if ($pagina == false) {
+				$rama = $this -> data["Reporte"]["rama"];
+				$titulo = $this -> data["Reporte"]["titulo"];
+				$fecha1 = $this -> data["Reporte"]["fecha1"];
+				$fecha2 = $this -> data["Reporte"]["fecha2"];
+
+				if (!empty($rama)) {
+					$idTitulos = $this -> Titulo -> find("list", array("fields" => array("id"), "conditions" => array("Titulo.rama_id" => $rama)));
+					$conditions[] = array('SolicitudesTitulacion.titulo_id' => $idTitulos);
+				}
+
+				if (!empty($titulo)) {
+					$conditions[] = array('SolicitudesTitulacion.titulo_id' => $titulo);
+				}
+
+				if ($fecha1 != null && $fecha2 != null) {
+
+					if ($fecha1 > $fecha2) {
+						$this -> Session -> setFlash(__('La fecha inicial debe ser menor a la fecha final', true));
+						return;
+					}
+
+					list($ano, $mes, $dia) = explode("-", $fecha1);
+					$fecha1 = $ano . "-" . $mes . "-" . ($dia);
+
+					list($ano, $mes, $dia) = explode("-", $fecha2);
+
+					if ($dia == 31) {
+						$fecha2 = $ano . "-" . $mes . "-" . ($dia);
+					} else {
+						$fecha2 = $ano . "-" . $mes . "-" . ($dia + 1);
+					}
+
+					$conditions[] = array('SolicitudesTitulacion.created between ? and ?' => array($fecha1, $fecha2));
+
+				} else if ($fecha1 != null) {
+					$conditions[] = array('SolicitudesTitulacion.created >=' => $fecha1);
+				} else if ($fecha2 != null) {
+					$conditions[] = array('SolicitudesTitulacion.created <=' => $fecha2);
+				}
+			}
+
+			//debug($conditions);
+
+			$this -> paginate = array('SolicitudesTitulacion' => array('limit' => 20, 'conditions' => $conditions));
+			$reporteSolicitudesTitulacion = $this -> paginate('SolicitudesTitulacion');
+			//debug($reporteSolicitudesTitulacion); return;
+			$this -> Session -> write('reporte', $reporteSolicitudesTitulacion);
+			$this -> Session -> write('archivo', "ReporteSolicitudesTitulacion");
+			$reporte = true;
+			$this -> set(compact('reporteSolicitudesTitulacion', 'reporte'));
+
+		}
+
+		$juntasProvinciales = $this -> JuntasProvincial -> find("list");
+		$titulos = $this -> Titulo -> find("list");
+		
+		//$this -> loadModel("Titulacion", true);
+		$idsEspeciesValoradasTitulaciones = $this->Titulacion->find("list", array("fields"=>array("Titulacion.especies_valoradas_id")));
+		
+		debug($idsEspeciesValoradasTitulaciones);
+		//$especiesValoradas = $this -> EspeciesValorada -> find("list", array("conditions"=>array("EspeciesValorada.id"=>$idsEspeciesValoradasTitulaciones)));
+		//$this -> set(compact('juntasProvinciales', "titulos", "reporte",'especiesValoradas'));
+	}
+
 }
