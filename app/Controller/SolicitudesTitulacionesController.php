@@ -69,7 +69,7 @@ class SolicitudesTitulacionesController extends AppController {
 	 */
 	public function add() {
 		if ($this -> request -> is('post')) {
-			debug($this -> request -> data);
+			//debug($this -> request -> data);
 			$archivos = null;
 			if ($this -> request -> data['SolicitudesTitulacion']['tipos_solicitudes_titulacion_id'] == 1) {
 				$archivos = $this -> request -> data['Archivos1'];
