@@ -1,5 +1,5 @@
 <li class="titulaciones">
-	<a href="#">Titulaciones</a>
+	<a href="#">TITULACIONES</a>
 	<ul>
 		
 		<li>
