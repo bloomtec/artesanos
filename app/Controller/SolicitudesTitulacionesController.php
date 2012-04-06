@@ -388,9 +388,13 @@ class SolicitudesTitulacionesController extends AppController {
 		$idArtesano = $solicitudTitulacion[0]["SolicitudesTitulacion"]["artesano_id"];
 		$res = $this -> requestAction('/EspeciesValoradas/verificarEspecieArtesano/' . $idArtesano . "/" . $idTipoEspecieValorada);
 
+		debug($res); return;
+		
 		if ($res["EspeciesValorada"]["se_uso"] == 1) {
 			$this -> Session -> setFlash(__('No se puede refrendar la especie valorada, ya esta en uso', true));
 			$this -> redirect(array('action' => 'index'));
+		} else if ($res["EspeciesValorada"]["se_uso"] == 1) {
+				
 		} else {
 			//HAcer la modificación del campo se_uso y agregar el titulo
 			$data = array();
