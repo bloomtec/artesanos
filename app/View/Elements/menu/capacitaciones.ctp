@@ -12,12 +12,5 @@
 		<li>
 			<a href="/cursos"> Cursos</a>
 		</li>
-		<li>
-			<a href="/solicitudesTitulaciones"> Titulaciones</a>
-			<ul>
-				<li>
-					<a href="/solicitudesTitulaciones/add"> Agregar</a>
-			</ul>
-		</li>
 	</ul>
 </li>
