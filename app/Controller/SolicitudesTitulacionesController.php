@@ -412,7 +412,7 @@ class SolicitudesTitulacionesController extends AppController {
 			$this -> Titulacion -> create();
 			if ($this -> Titulacion -> save($data)) {
 				$this->loadModel("EspeciesValorada", true);
-				$this->EspeciesValorada->id = $res["EspeciesValorada"];
+				$this->EspeciesValorada->id = $res["EspeciesValorada"]["id"];
 				$data["EspeciesValorada"]["se_uso"]=1;
 				$this->EspeciesValorada->save($data);
 				$this -> Session -> setFlash(__('Se puede refrendar', true));
