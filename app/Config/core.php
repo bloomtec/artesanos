@@ -23,12 +23,16 @@
  * Configuraciones extra
  */
 	Configure::write('cal_autonomo', array(
-		1 => 1, // Actualización de datos y/o duplicado de calificación, autónomo y carne profesional artesanal
 		10 => 10 // Solicitud de calificación e identificación profesional artesanal autónomo
 	));
-	Configure::write('cal_normal', array(
+	Configure::write('edi_cal_autonomo', array(
 		1 => 1, // Actualización de datos y/o duplicado de calificación, autónomo y carne profesional artesanal
+	));
+	Configure::write('cal_normal', array(
 		9 => 9 // Solicitud de calificación e identificación profesional artesanal
+	));
+	Configure::write('edi_cal_normal', array(
+		1 => 1, // Actualización de datos y/o duplicado de calificación, autónomo y carne profesional artesanal
 	));
 	Configure::write('recal', array(
 		2 => 2, // Solicitud cambio de dirección de la recalificación artesanal
