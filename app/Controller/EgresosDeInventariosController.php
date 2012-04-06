@@ -18,9 +18,10 @@ class EgresosDeInventariosController extends AppController {
 		$reporte = false;
 
 		$pagina = "";
-
 		if (isset($this -> params['named']['page'])) {
 			$pagina = $this -> params['named']['page'];
+		} else if (isset($this -> params["named"]["sort"])) {
+			$pagina = true;
 		} else {
 			$pagina = false;
 		}
@@ -109,8 +110,11 @@ class EgresosDeInventariosController extends AppController {
 		$reporte = false;
 		$pagina = "";
 
+		$pagina = "";
 		if (isset($this -> params['named']['page'])) {
 			$pagina = $this -> params['named']['page'];
+		} else if (isset($this -> params["named"]["sort"])) {
+			$pagina = true;
 		} else {
 			$pagina = false;
 		}

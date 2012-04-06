@@ -16,6 +16,79 @@ class SolicitudesTitulacionesController extends AppController {
 	 */
 	public function index() {
 		$this -> SolicitudesTitulacion -> recursive = 0;
+		$conditions = array();
+		if (isset($this -> params['named']['query']) && !empty($this -> params['named']['query'])) {
+			//$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
+			$query = $this -> params['named']['query'];
+			
+			$idsTitulos = $this -> SolicitudesTitulacion -> Titulo-> find(
+				'list',
+				array(
+					'conditions' => array(
+						'OR' => array(
+							'Titulo.tit_nombre LIKE' => "%$query%",
+						)
+					),
+					'fields' => array(
+						'Titulo.id'
+					)
+				)
+			);
+			
+			
+			$idsTiposSolicitudes = $this -> SolicitudesTitulacion -> TiposSolicitudesTitulacion -> find(
+				'list',
+				array(
+					'conditions' => array(
+						'OR' => array(
+							'TiposSolicitudesTitulacion.tip_nombre LIKE' => "%$query%",
+						)
+					),
+					'fields' => array(
+						'TiposSolicitudesTitulacion.id'
+					)
+				)
+			);
+			
+			$idsArtesanos = $this -> SolicitudesTitulacion -> Artesano -> find(
+				'list',
+				array(
+					'conditions' => array(
+						'OR' => array(
+							'Artesano.art_cedula LIKE' => "%$query%",
+						)
+					),
+					'fields' => array(
+						'Artesano.id'
+					)
+				)
+			);
+			
+			$idsEstados = $this -> SolicitudesTitulacion -> EstadosSolicitudesTitulacion -> find(
+				'list',
+				array(
+					'conditions' => array(
+						'OR' => array(
+							'EstadosSolicitudesTitulacion.est_estado LIKE' => "%$query%",
+						)
+					),
+					'fields' => array(
+						'EstadosSolicitudesTitulacion.id'
+					)
+				)
+			);
+			
+			
+			$conditions['OR']['SolicitudesTitulacion.titulo_id'] = $idsTitulos;
+			$conditions['OR']['SolicitudesTitulacion.tipos_solicitudes_titulacion_id'] = $idsTiposSolicitudes;
+			$conditions['OR']['SolicitudesTitulacion.artesano_id'] = $idsArtesanos;
+			$conditions['OR']['SolicitudesTitulacion.estados_solicitudes_titulacion_id'] = $idsEstados;
+		}
+		if(!empty($conditions)) {
+			$this -> paginate = array('conditions' => $conditions);
+		}
+		
+		
 		$this -> set('solicitudesTitulaciones', $this -> paginate());
 	}
 
@@ -275,12 +348,15 @@ class SolicitudesTitulacionesController extends AppController {
 	function reporteSolicitudesTitulacion() {
 		$this -> loadModel("Rama", true);
 		$this -> loadModel("Titulo", true);
+		$this -> loadModel("Artesano", true);
 
 		$reporte = false;
 
 		$pagina = "";
 		if (isset($this -> params['named']['page'])) {
 			$pagina = $this -> params['named']['page'];
+		} else if (isset($this -> params["named"]["sort"])) {
+			$pagina = true;
 		} else {
 			$pagina = false;
 		}
@@ -293,7 +369,13 @@ class SolicitudesTitulacionesController extends AppController {
 				$titulo = $this -> data["Reporte"]["titulo"];
 				$fecha1 = $this -> data["Reporte"]["fecha1"];
 				$fecha2 = $this -> data["Reporte"]["fecha2"];
-
+				
+				if (!empty($artesano)) {
+					//Id de las titulaciones donde un artesano x
+					//$idArtesanos = $this -> SolicitudesTitulacion -> find("list", array("fields" => array("id"), "conditions" => array("SolicitudesTitulacion.artesano_id" => $artesano)));
+					$conditions[] = array('SolicitudesTitulacion.artesano_id' => $artesano);
+				}
+				
 				if (!empty($rama)) {
 					$idTitulos = $this -> Titulo -> find("list", array("fields" => array("id"), "conditions" => array("Titulo.rama_id" => $rama)));
 					$conditions[] = array('SolicitudesTitulacion.titulo_id' => $idTitulos);
@@ -337,16 +419,20 @@ class SolicitudesTitulacionesController extends AppController {
 			//debug($reporteSolicitudesTitulacion); return;
 			$this -> Session -> write('reporte', $reporteSolicitudesTitulacion);
 			$this -> Session -> write('archivo', "ReporteSolicitudesTitulacion");
+			$cabeceras = array('Id solicitud', 'Titulo', 'Estado', 'Tipo solicitud', 'Artesano', 'Mensaje', 'Fecha');
 			$reporte = true;
 			$this -> set(compact('reporteSolicitudesTitulacion', 'reporte'));
 
 		}
 
+		$idArtesanosSolitudesTitulacion = $this -> SolicitudesTitulacion -> find("list", array("fields" => "artesano_id"));
+		$artesanos = $this -> Artesano -> find("list", array("conditions" => array("Artesano.id" => $idArtesanosSolitudesTitulacion)));
 		$ramas = $this -> Rama -> find("list");
 		$titulos = $this -> Titulo -> find("list");
-		$this -> set(compact('ramas', "titulos", "reporte"));
+		$this -> set(compact('ramas', "titulos", "reporte","artesanos"));
 	}
 
+	//Reporte solicitudes titulaciones
 	function impReporte() {
 		$this -> layout = 'pdf2';
 		$reporteSolicitudesTitulacion = $this -> Session -> read('reporte');
@@ -357,8 +443,19 @@ class SolicitudesTitulacionesController extends AppController {
 		$this -> set(compact('reporteSolicitudesTitulacion', 'nombre_archivo', 'tamano'));
 	}
 
-	function export_csv2() {
+	//Reporte titulaciones
+	function impReporte2() {
+		$this -> layout = 'pdf2';
+		$reporteTitulaciones = $this -> Session -> read('reporte');
+		$nombre_archivo = "ReporteTitulaciones";
+		//Tamaño de la fuente
+		$tamano = 5;
+		//debug($reporteSolicitudesTitulacion);
+		$this -> set(compact('reporteTitulaciones', 'nombre_archivo', 'tamano'));
+	}
 
+	//CSV solicitudes titulaciones
+	function export_csv2() {
 		$this -> layout = "";
 		$this -> render(false);
 
@@ -376,12 +473,31 @@ class SolicitudesTitulacionesController extends AppController {
 		echo $csv -> render($titulo);
 	}
 
+	//CSV  titulaciones
+	function export_csv3() {
+		$this -> layout = "";
+		$this -> render(false);
+
+		$csv = new csvHelper();
+		$reporteTitulaciones = $this -> Session -> read('reporte');
+		$cabeceras = array('Id titulacion', 'Titulo', 'Junta provincial', 'Cedula artesano', 'Fecha');
+		$csv -> addRow($cabeceras);
+
+		for ($i = 0; $i < count($reporteTitulaciones); $i++) {
+			$filas = array($reporteTitulaciones[$i]['Titulacion']['id'], $reporteTitulaciones[$i]['Titulo']['tit_nombre'], $reporteTitulaciones[$i]['JuntasProvincial']['jun_nombre'], $reporteTitulaciones[$i]['SolicitudesTitulacion']['cedula_artesano'], $reporteTitulaciones[$i]['Titulacion']['created']);
+			$csv -> addRow($filas);
+		}
+
+		$titulo = "csvTitulaciones_" . date("Y-m-d H:i:s", time()) . ".csv";
+		echo $csv -> render($titulo);
+	}
+
 	function refrendar($idSolicitudTitulacion) {
 		//$this -> layout = "";
 		$this -> render(false);
-		$this->SolicitudesTitulacion->recursive=-1;
+		$this -> SolicitudesTitulacion -> recursive = -1;
 		$solicitudTitulacion = $this -> SolicitudesTitulacion -> find("all", array("conditions" => array("SolicitudesTitulacion.id" => $idSolicitudTitulacion)));
-		
+
 		//$idTipoEspecieValorada = $this -> SolicitudesTitulacion -> find("list", array("fields" => array("tipos_especies_valorada_id"), "conditions" => array("SolicitudesTitulacion.id" => $idSolicitudTitulacion)));
 		$idTipoEspecieValorada = $solicitudTitulacion[0]["SolicitudesTitulacion"]["tipos_especies_valorada_id"];
 		//$idTitulo = $this -> SolicitudesTitulacion -> find("list", array("fields" => array("titulo_id"), "conditions" => array("SolicitudesTitulacion.id" => $idSolicitudTitulacion)));
@@ -389,32 +505,31 @@ class SolicitudesTitulacionesController extends AppController {
 		$idArtesano = $solicitudTitulacion[0]["SolicitudesTitulacion"]["artesano_id"];
 		$res = $this -> requestAction('/EspeciesValoradas/verificarEspecieArtesano/' . $idArtesano . "/" . $idTipoEspecieValorada);
 
-		if(!isset($res['VentasEspecie'])) { //Si existe la venta
+		//debug($res); return;
+
+		if (!isset($res['VentasEspecie'])) {//Si existe la venta
 			$this -> Session -> setFlash(__('No se puede refrendar la especie valorada, primero se debe comprar una', true));
 			$this -> redirect(array('action' => 'index'));
 		}
-		
+
 		if ($res["EspeciesValorada"]["se_uso"] == 1) {
 			$this -> Session -> setFlash(__('No se puede refrendar la especie valorada, ya esta en uso', true));
 			$this -> redirect(array('action' => 'index'));
-			
+
 		} else {
-			//$this -> Session -> setFlash(__('Se puede refrendar', true));
-			//$this -> redirect(array('action' => 'index'));
 			//Hacer la modificación del campo se_uso y agregar el titulo
 			$data = array();
-			$this->loadModel("Titulacion", true);
+			$this -> loadModel("Titulacion", true);
 			$data["Titulacion"]["titulo_id"] = $idTitulo;
 			$data["Titulacion"]["solicitudes_titulacion_id"] = $idSolicitudTitulacion;
 			$data["Titulacion"]["juntas_provincial_id"] = $res["VentasEspecie"]["juntas_provincial_id"];
-			$data["Titulacion"]["especies_valoradas_id"] = $res["EspeciesValorada"]["id"];
-			
+			//$data["Titulacion"]["especies_valoradas_id"] = $res["EspeciesValorada"]["id"];
 			$this -> Titulacion -> create();
 			if ($this -> Titulacion -> save($data)) {
-				$this->loadModel("EspeciesValorada", true);
-				$this->EspeciesValorada->id = $res["EspeciesValorada"]["id"];
-				$data["EspeciesValorada"]["se_uso"]=1;
-				$this->EspeciesValorada->save($data);
+				$this -> loadModel("EspeciesValorada", true);
+				$this -> EspeciesValorada -> id = $res["EspeciesValorada"]["id"];
+				$data["EspeciesValorada"]["se_uso"] = 1;
+				$this -> EspeciesValorada -> save($data);
 				$this -> Session -> setFlash(__('Se puede refrendar', true));
 			} else {
 				$this -> Session -> setFlash(__('Error al intentar refrendar', true));
@@ -427,13 +542,15 @@ class SolicitudesTitulacionesController extends AppController {
 		$this -> loadModel("JuntasProvincial", true);
 		$this -> loadModel("Titulo", true);
 		$this -> loadModel("Titulacion", true);
-		$this -> loadModel("EspeciesValorada", true);
+		$this -> loadModel("Artesano", true);
 
 		$reporte = false;
 
 		$pagina = "";
 		if (isset($this -> params['named']['page'])) {
 			$pagina = $this -> params['named']['page'];
+		} else if (isset($this -> params["named"]["sort"])) {
+			$pagina = true;
 		} else {
 			$pagina = false;
 		}
@@ -442,18 +559,24 @@ class SolicitudesTitulacionesController extends AppController {
 			$conditions = array();
 
 			if ($pagina == false) {
-				$rama = $this -> data["Reporte"]["rama"];
+				$artesano = $this -> data["Reporte"]["artesano"];
 				$titulo = $this -> data["Reporte"]["titulo"];
+				$juntaProvincial = $this -> data["Reporte"]["junta_provincial"];
 				$fecha1 = $this -> data["Reporte"]["fecha1"];
 				$fecha2 = $this -> data["Reporte"]["fecha2"];
 
-				if (!empty($rama)) {
-					$idTitulos = $this -> Titulo -> find("list", array("fields" => array("id"), "conditions" => array("Titulo.rama_id" => $rama)));
-					$conditions[] = array('SolicitudesTitulacion.titulo_id' => $idTitulos);
+				if (!empty($artesano)) {
+					//Id de las titulaciones donde un artesano x
+					$idTitulaciones = $this -> SolicitudesTitulacion -> find("list", array("fields" => array("id"), "conditions" => array("SolicitudesTitulacion.artesano_id" => $artesano)));
+					$conditions[] = array('Titulacion.solicitudes_titulacion_id' => $idTitulaciones);
 				}
 
 				if (!empty($titulo)) {
-					$conditions[] = array('SolicitudesTitulacion.titulo_id' => $titulo);
+					$conditions[] = array('Titulacion.titulo_id' => $titulo);
+				}
+
+				if (!empty($juntaProvincial)) {
+					$conditions[] = array('Titulacion.juntas_provincial_id' => $juntaProvincial);
 				}
 
 				if ($fecha1 != null && $fecha2 != null) {
@@ -474,36 +597,43 @@ class SolicitudesTitulacionesController extends AppController {
 						$fecha2 = $ano . "-" . $mes . "-" . ($dia + 1);
 					}
 
-					$conditions[] = array('SolicitudesTitulacion.created between ? and ?' => array($fecha1, $fecha2));
+					$conditions[] = array('Titulacion.created between ? and ?' => array($fecha1, $fecha2));
 
 				} else if ($fecha1 != null) {
-					$conditions[] = array('SolicitudesTitulacion.created >=' => $fecha1);
+					$conditions[] = array('Titulacion.created >=' => $fecha1);
 				} else if ($fecha2 != null) {
-					$conditions[] = array('SolicitudesTitulacion.created <=' => $fecha2);
+					$conditions[] = array('Titulacion.created <=' => $fecha2);
 				}
 			}
 
-			//debug($conditions);
-
-			$this -> paginate = array('SolicitudesTitulacion' => array('limit' => 20, 'conditions' => $conditions));
-			$reporteSolicitudesTitulacion = $this -> paginate('SolicitudesTitulacion');
-			//debug($reporteSolicitudesTitulacion); return;
-			$this -> Session -> write('reporte', $reporteSolicitudesTitulacion);
-			$this -> Session -> write('archivo', "ReporteSolicitudesTitulacion");
+			$this -> paginate = array('Titulacion' => array('limit' => 20, 'conditions' => $conditions));
+			$reporteTitulaciones = $this -> paginate('Titulacion');
+			//Agregar cedula artesano
+			for ($i = 0; $i < count($reporteTitulaciones); $i++) {
+				foreach ($reporteTitulaciones[$i]['SolicitudesTitulacion'] as $key => $value) {
+					if ($key == "artesano_id") {
+						$ced_artesano = $this -> Artesano -> find("list", array("fields" => array("art_cedula"), "conditions" => array("Artesano.id" => $value)));
+						$reporteTitulaciones[$i]['SolicitudesTitulacion']["cedula_artesano"] = $ced_artesano[1];
+					}
+				}
+			}
+			//debug($reporteTitulaciones);
+			//return;
+			$this -> Session -> write('reporte', $reporteTitulaciones);
+			$this -> Session -> write('archivo', "$reporteTitulaciones");
 			$reporte = true;
-			$this -> set(compact('reporteSolicitudesTitulacion', 'reporte'));
+			$this -> set(compact('reporteTitulaciones', 'reporte'));
 
 		}
 
 		$juntasProvinciales = $this -> JuntasProvincial -> find("list");
-		$titulos = $this -> Titulo -> find("list");
-		
-		//$this -> loadModel("Titulacion", true);
-		$idsEspeciesValoradasTitulaciones = $this->Titulacion->find("list", array("fields"=>array("Titulacion.especies_valoradas_id")));
-		
-		debug($idsEspeciesValoradasTitulaciones);
-		//$especiesValoradas = $this -> EspeciesValorada -> find("list", array("conditions"=>array("EspeciesValorada.id"=>$idsEspeciesValoradasTitulaciones)));
-		//$this -> set(compact('juntasProvinciales', "titulos", "reporte",'especiesValoradas'));
+		//Solamente los titulos que han sido otorgados
+		$idsTitulosOtorgados = $this -> Titulacion -> find("list", array("fields" => array("titulo_id")));
+		$titulos = $this -> Titulo -> find("list", array("conditions" => array("Titulo.id" => $idsTitulosOtorgados)));
+		//Solamente artesanos que han solicitado titulacion
+		$idArtesanosSolitudesTitulacion = $this -> SolicitudesTitulacion -> find("list", array("fields" => "artesano_id"));
+		$artesanos = $this -> Artesano -> find("list", array("conditions" => array("Artesano.id" => $idArtesanosSolitudesTitulacion)));
+		$this -> set(compact('juntasProvinciales', "titulos", "reporte", 'especiesValoradas', 'artesanos'));
 	}
 
 }

@@ -1,5 +1,3 @@
-<div class="reportes form">
-
 <h2><?php echo __('Reporte solicitudes titulación');?></h2>
 <table>
 	<tr>

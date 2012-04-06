@@ -6,6 +6,7 @@
 	</h2>
 	<fieldset>
 		<?php
+		echo $this -> Form -> input('artesano', array('type' => 'select', 'label' => 'Artesanos', 'empty' => 'Seleccione...', 'options' => $artesanos));
 		echo $this -> Form -> input('rama', array('type' => 'select', 'label' => 'Ramas', 'empty' => 'Seleccione...', 'options' => $ramas));
 		echo $this -> Form -> input('titulo', array('type' => 'select', 'label' => 'Titulos', 'empty' => 'Seleccione...', 'options' => $titulos));
 		echo $this -> Form -> input('fecha1', array('type' => 'text', 'label' => 'Fecha inicial', 'class' => 'date'));

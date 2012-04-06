@@ -19,9 +19,12 @@ class IngresosDeInventariosController extends AppController {
 		$pagina = "";
 		if (isset($this -> params['named']['page'])) {
 			$pagina = $this -> params['named']['page'];
+		} else if (isset($this -> params["named"]["sort"])) {
+			$pagina = true;
 		} else {
 			$pagina = false;
 		}
+		
 		if ($this -> request -> is('post') or $pagina != false) {
 
 			$conditions = array();
@@ -112,9 +115,12 @@ class IngresosDeInventariosController extends AppController {
 		$pagina = "";
 		if (isset($this -> params['named']['page'])) {
 			$pagina = $this -> params['named']['page'];
+		} else if (isset($this -> params["named"]["sort"])) {
+			$pagina = true;
 		} else {
 			$pagina = false;
 		}
+		
 		if ($this -> request -> is('post') or $pagina != false) {
 
 			$conditions = array();
