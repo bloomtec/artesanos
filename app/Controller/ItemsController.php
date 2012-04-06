@@ -376,6 +376,10 @@ class ItemsController extends AppController {
 		// $ciudades = $this -> Ciudad -> find('list');
 		$this -> set(compact('items', 'tiposDeItems', 'departamentos', 'personas', 'proveedores', 'provincias'));
 	}
+
+	public function darDeBajaActivoFijo() {
+		
+	}
 	
 	public function asignarActivoFijo($activoFijoId = null) {
 		if(!$activoFijoId) {
@@ -401,6 +405,10 @@ class ItemsController extends AppController {
 			$cantidades[$i] = $i;
 		}
 		$this -> set(compact('item', 'departamentos', 'cantidades'));
+	}
+	
+	public function desasignarActivoFijo($activoFijoId = null) {
+		
 	}
 	
 	public function traspasoActivoFijo() {

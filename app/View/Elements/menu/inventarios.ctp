@@ -1,16 +1,15 @@
 <li class="inventarios">
 	<a href="#">INVENTARIOS</a>
 	<ul>
-		
 		<li>
 			<a href="/items/indexActivosFijos">Activos Fijos </a>
 			<ul>
 				<li>
 					<a href="/items/agregarActivoFijo">Agregar</a>
 				</li>
-				<li>
-					<a href="/items/egresoActivoFijo"> Dar de baja </a>
-				</li>
+				<!--<li>
+					<a href="/items/darDeBajaActivoFijo">Dar de baja</a>
+				</li>-->
 				<li>
 					<a href="/items/traspasoActivoFijo">Traspaso Activo Fijo</a>
 				</li>
