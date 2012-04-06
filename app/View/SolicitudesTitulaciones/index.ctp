@@ -34,7 +34,12 @@
 			<?php
 				if($solicitudesTitulacion['EstadosSolicitudesTitulacion']['id'] == 1) {
 					echo $this->Html->link(__('Revisar'),   array('action' => 'revision', $solicitudesTitulacion['SolicitudesTitulacion']['id']),array('class'=>'revision','title'=>'Revision'));		
-					echo $this->Html->link(__('Refrendar'), array('action' => 'refrendar', $solicitudesTitulacion['SolicitudesTitulacion']['id']),array('class'=>'aprobacion','title'=>'Refrendar'));						
+					//echo $this->Html->link(__('Refrendar'), array('action' => 'refrendar', $solicitudesTitulacion['SolicitudesTitulacion']['id']),array('class'=>'aprobar','title'=>'Refrendar'));						
+				}
+				
+				if($solicitudesTitulacion['EstadosSolicitudesTitulacion']['id'] == 2) {
+					//echo $this->Html->link(__('Revisar'),   array('action' => 'revision', $solicitudesTitulacion['SolicitudesTitulacion']['id']),array('class'=>'revision','title'=>'Revision'));		
+					echo $this->Html->link(__('Refrendar'), array('action' => 'refrendar', $solicitudesTitulacion['SolicitudesTitulacion']['id']),array('class'=>'aprobar','title'=>'Refrendar'));						
 				}
 			?>
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $solicitudesTitulacion['SolicitudesTitulacion']['id']),array('class'=>'view','title'=>'Ver')); ?>

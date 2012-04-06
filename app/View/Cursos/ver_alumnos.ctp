@@ -26,7 +26,7 @@
 	  		<?php echo $alumno['CursosAlumno']['cur_nota_final']; ?>		
 	  	</td>
 	  	<td class="actions">
-	  		<?php  if($alumno['CursosAlumno']['cur_aprobo']) echo $this -> Html -> link('certificado',array("action"=>'certificado',$alumno['CursosAlumno']['id']),array('class'=>'certificado','title'=>'Descargar certificado	'));?>
+	  		<?php  if($alumno['CursosAlumno']['cur_aprobo'] && !$alumno['Curso']['cur_activo']) echo $this -> Html -> link('certificado',array("action"=>'certificado',$alumno['CursosAlumno']['id']),array('class'=>'certificado','title'=>'Descargar certificado	'));?>
 	  		<?php if($alumno['Curso']['cur_activo']) echo  $this -> Html -> link('quitar alumno',array("action"=>'quitar',$alumno['CursosAlumno']['id']),array('class'=>'delete','title'=>'Quitar Alumno'));  ?>
 	  	</td>
 	  </tr>
@@ -36,6 +36,8 @@
 <div class="actions">
 	<ul>
 		<li><?php echo $this->Html->link(__('Volver Cursos'), array('action' => 'index')); ?> </li>
+		<?php if($curso['Curso']['cur_activo']):?>
 		<li><?php echo $this->Html->link(__('Modificar Curso'), array('action' => 'edit', $curso['Curso']['id'])); ?> </li>
+		<?php endif; ?>
 	</ul>
 </div>

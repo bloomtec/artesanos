@@ -11,9 +11,8 @@
 		<th><?php echo $this->Paginator->sort('sol_fecha_solicitud','Fecha De Solicitud');?></th>
 		<th><?php echo $this->Paginator->sort('sol_numero_de_memorandum','Número De Memorandum');?></th>
 		<th><?php echo $this->Paginator->sort('sol_nombre_de_la_capacitacion','Nombre De La Capacitación');?></th>
-		<th><?php echo $this->Paginator->sort('sol_duracion','Duración');?></th>
 		<th><?php echo $this->Paginator->sort('sol_fecha_inicio_de_la_capacitacion','Fecha De Inicio De La Capacitación');?></th>
-		<th><?php echo $this->Paginator->sort('sol_fecha_de_fin_de_la_capacitacion','Fecha De Fin De La Capacitación');?></th>
+		<th><?php echo $this->Paginator->sort('sol_duracion','Duración');?></th>
 		<th><?php echo $this->Paginator->sort('sol_costos','Costos');?></th>
 		<th><?php echo $this->Paginator->sort('sol_numero_de_participantes','Número De Participantes');?></th>
 		<th><?php echo $this->Paginator->sort('sol_estado','Estado');?></th>
@@ -27,9 +26,9 @@
 		<td><?php echo h($solicitud['Solicitud']['sol_fecha_solicitud']); ?>&nbsp;</td>
 		<td><?php echo h($solicitud['Solicitud']['sol_numero_de_memorandum']); ?>&nbsp;</td>
 		<td><?php echo h($solicitud['Solicitud']['sol_nombre_de_la_capacitacion']); ?>&nbsp;</td>
-		<td><?php echo h($solicitud['Solicitud']['sol_duracion']); ?>&nbsp;</td>
 		<td><?php echo h($solicitud['Solicitud']['sol_fecha_inicio_de_la_capacitacion']); ?>&nbsp;</td>
-		<td><?php echo h($solicitud['Solicitud']['sol_fecha_de_fin_de_la_capacitacion']); ?>&nbsp;</td>
+		<td><?php echo h($solicitud['Solicitud']['sol_duracion']); ?>&nbsp;</td>
+		
 		<td><?php echo h($solicitud['Solicitud']['sol_costos']); ?>&nbsp;</td>
 		<td><?php echo h($solicitud['Solicitud']['sol_numero_de_participantes']); ?>&nbsp;</td>
 		<td>
@@ -50,8 +49,8 @@
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $solicitud['Solicitud']['id']),array('class'=>'view','title'=>'Ver')); ?>
 			<?php  if($solicitud['Solicitud']['sol_estado']!=2) echo $this->Html->link(__('Edit'), array('action' => 'edit', $solicitud['Solicitud']['id']),array('class'=>'edit','title'=>'Modificar')); ?>
-			<?php if($solicitud['Solicitud']['sol_estado']==1) echo $this->Html->link(__('aprobar'), array('action' => 'aprobar', $solicitud['Solicitud']['id']),array('class'=>'aprobar','title'=>'Aprobar')); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $solicitud['Solicitud']['id']), array('class'=>'delete','title'=>'Borrar'), __('Esta seguro que quiere eliminar el registro?', $solicitud['Solicitud']['id'])); ?>
+			<?php if($solicitud['Solicitud']['sol_estado']==1) echo $this->Html->link(__('aprobar'), array('action' => 'revision', $solicitud['Solicitud']['id']),array('class'=>'aprobar','title'=>'Aprobar / Rechazar')); ?>
+			<?php if($solicitud['Solicitud']['sol_estado']!=2) echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $solicitud['Solicitud']['id']), array('class'=>'delete','title'=>'Borrar'), __('Esta seguro que quiere eliminar el registro?', $solicitud['Solicitud']['id'])); ?>
 		</td>
 	</tr>
 	<?php endforeach; ?>

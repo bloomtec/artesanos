@@ -163,10 +163,10 @@ class SolicitudesTitulacionesController extends AppController {
 			throw new NotFoundException(__('Invalid solicitudes titulacion'));
 		}
 		if ($this -> SolicitudesTitulacion -> delete()) {
-			$this -> Session -> setFlash(__('Solicitudes titulacion deleted'), 'crud/success');
+			$this -> Session -> setFlash(__('La solicitud fue borrada'), 'crud/success');
 			$this -> redirect(array('action' => 'index'));
 		}
-		$this -> Session -> setFlash(__('Solicitudes titulacion was not deleted'), 'crud/error');
+		$this -> Session -> setFlash(__('La solicitud no pudo ser borrada'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
 	}
 
@@ -377,17 +377,49 @@ class SolicitudesTitulacionesController extends AppController {
 	}
 
 	function refrendar($idSolicitudTitulacion) {
-		$this -> layout = "";
+		//$this -> layout = "";
 		$this -> render(false);
-		$idArtesano= $this->SolicitudesTitulacion->find("list", array("fields"=>array("artesano_id"),"conditions"=>array("SolicitudesTitulacion.id"=>$idSolicitudTitulacion)));								
-		$idTipoEspecieValorada = $this->SolicitudesTitulacion->find("list", array("fields"=>array("tipos_especies_valorada_id"),"conditions"=>array("SolicitudesTitulacion.id"=>$idSolicitudTitulacion)));					
+		$this->SolicitudesTitulacion->recursive=-1;
+		$solicitudTitulacion = $this -> SolicitudesTitulacion -> find("all", array("conditions" => array("SolicitudesTitulacion.id" => $idSolicitudTitulacion)));
 		
-		$res = $this->requestAction('/EspeciesValoradas/verificarEspecieArtesano/'.$idArtesano[1]."/".$idTipoEspecieValorada[1]);
-		if($res["EspeciesValorada"]["se_uso"]==1){
-				$this -> Session -> setFlash(__('No se puede refrendar la especie valorada ya esta en uso', true));
-		} else {
-			$this -> Session -> setFlash(__('Se puede refrendar', true));
+		//$idTipoEspecieValorada = $this -> SolicitudesTitulacion -> find("list", array("fields" => array("tipos_especies_valorada_id"), "conditions" => array("SolicitudesTitulacion.id" => $idSolicitudTitulacion)));
+		$idTipoEspecieValorada = $solicitudTitulacion[0]["SolicitudesTitulacion"]["tipos_especies_valorada_id"];
+		//$idTitulo = $this -> SolicitudesTitulacion -> find("list", array("fields" => array("titulo_id"), "conditions" => array("SolicitudesTitulacion.id" => $idSolicitudTitulacion)));
+		$idTitulo = $solicitudTitulacion[0]["SolicitudesTitulacion"]["titulo_id"];
+		$idArtesano = $solicitudTitulacion[0]["SolicitudesTitulacion"]["artesano_id"];
+		$res = $this -> requestAction('/EspeciesValoradas/verificarEspecieArtesano/' . $idArtesano . "/" . $idTipoEspecieValorada);
+
+		if(!isset($res['VentasEspecie'])) { //Si existe la venta
+			$this -> Session -> setFlash(__('No se puede refrendar la especie valorada, primero se debe comprar una', true));
+			$this -> redirect(array('action' => 'index'));
+		}
+		
+		if ($res["EspeciesValorada"]["se_uso"] == 1) {
+			$this -> Session -> setFlash(__('No se puede refrendar la especie valorada, ya esta en uso', true));
+			$this -> redirect(array('action' => 'index'));
 			
+		} else {
+			//$this -> Session -> setFlash(__('Se puede refrendar', true));
+			//$this -> redirect(array('action' => 'index'));
+			//Hacer la modificación del campo se_uso y agregar el titulo
+			$data = array();
+			$this->loadModel("Titulacion", true);
+			$data["Titulacion"]["titulo_id"] = $idTitulo;
+			$data["Titulacion"]["solicitudes_titulacion_id"] = $idSolicitudTitulacion;
+			$data["Titulacion"]["juntas_provincial_id"] = $res["VentasEspecie"]["juntas_provincial_id"];
+			$data["Titulacion"]["especies_valoradas_id"] = $res["EspeciesValorada"]["id"];
+			
+			$this -> Titulacion -> create();
+			if ($this -> Titulacion -> save($data)) {
+				$this->loadModel("EspeciesValorada", true);
+				$this->EspeciesValorada->id = $res["EspeciesValorada"]["id"];
+				$data["EspeciesValorada"]["se_uso"]=1;
+				$this->EspeciesValorada->save($data);
+				$this -> Session -> setFlash(__('Se puede refrendar', true));
+			} else {
+				$this -> Session -> setFlash(__('Error al intentar refrendar', true));
+			}
+			$this -> redirect(array('action' => 'index'));
 		}
 	}
 
