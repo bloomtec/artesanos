@@ -25,8 +25,12 @@
 				?>
 			</td>
 			<td class="actions">
-				<?php echo $this->Html->link(__('View'), array('action' => 'verInspeccion', $taller['Calificacion']['id'], 1), array('class'=>'view','title'=>'Ver')); ?>
-
+				<?php
+					echo $this->Html->link(__('View'), array('action' => 'verInspeccion', $taller['Calificacion']['id'], 1), array('class'=>'view','title'=>'Ver'));
+					if ($this -> requestAction('/usuarios/verificarAcceso/', array('ruta' => array('controllers', 'Artesanos', 'modificarCalificacion')))) {
+						echo $this -> Html -> link('Modificar', array("controller" => "artesanos", "action" => "modificarCalificacion", $calificacion['Calificacion']['id']), array('class' => 'edit', 'title' => 'Modificar'));
+					}
+				?>
 			</td>
 		</tr>
 		<?php endforeach; ?>
