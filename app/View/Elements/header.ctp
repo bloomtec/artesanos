@@ -1,6 +1,5 @@
 <div id="header">
 	<a class="logo" href="/pages/display/home"><img src="/img/logo_header.png" /></a> 
-	<div class='menu-container'>
 	<ul id='user-menu'>
 		<?php if(!$this -> Session -> read("Auth.User.id")) { ?>
 		<li>
@@ -13,7 +12,8 @@
 		</li>
 		<?php } ?>
 	</ul>
-	<div style='clear:both;'></div>
+	<div class='menu-container'>	
 	<?php echo $this -> element('menu');?>
 	</div>
+	<div style="clear: both;"></div>
 </div>

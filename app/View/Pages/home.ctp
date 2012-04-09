@@ -104,4 +104,49 @@ $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('contr
 		</div>
 	</div>
 	<?php endif?>
+	<div class="home_description" >
+		<h2 class="inventarios"> Inventarios </h2>
+		<p>
+			Inspecciones que se deben realizar
+		</p>
+		<div class="acciones_home">
+			<a href="/items/indexActivosFijos">Activos Fijos</a>
+			<a href="/items//items/indexSuministros">Suministros y Materiales</a>
+		</div>
+	</div>
+	<div class="home_description" >
+		<h2 class="capacitaciones"> Capacitaciones </h2>
+		<p>
+			Inspecciones que se deben realizar
+		</p>
+		<div class="acciones_home">
+			<a href="/solicitudes"> Solicitudes</a>
+			<a href="/cursos"> Cursos</a>
+		</div>
+	</div>
+	<div class="home_description" >
+		<h2 class="titulaciones"> Titulaciones </h2>
+		<p>
+			Inspecciones que se deben realizar
+		</p>
+		<div class="acciones_home">
+			<a href="/solicitudesTitulaciones/add">Solicitar Titulaciones</a>
+			<a href="/solicitudesTitulaciones/reporteSolicitudesTitulacion">Reporte de solicitudes</a>
+			<a href="/solicitudesTitulaciones/reporteTitulaciones">Reporte de titulaciones</a>
+		</div>
+	</div>
+	<div class="home_description" >
+		<h2 class="especies"> Especies Valoradas </h2>
+		<p>
+			Inspecciones que se deben realizar
+		</p>
+		<div class="acciones_home">
+			<a href="/ingresos_especies/add">Ingresar Especies</a>
+			<a href="/ventas_especies/add">Egresar Especies</a>
+			<a href="/ingresos_especies/reporte">Reporte de ingresos</a>
+			<a href="/ventas_especies/reporte">Reporte de egresos</a>
+			
+			
+		</div>
+	</div>
 </div>

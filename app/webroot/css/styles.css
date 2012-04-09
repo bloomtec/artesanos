@@ -131,6 +131,8 @@ p {
 }
 #container.login #header {
 	text-align: center;
+	background: none;
+	width: auto;
 }
 #container.login #content {
 	width: 488px;
@@ -194,6 +196,7 @@ p {
 	margin-left: 50px;
 	margin-top: 15px;
 	width: 48%;
+	text-align: left;
 }
 .home_description .usuarios {
 	background: url(/img/users.png) no-repeat center left;
@@ -213,7 +216,18 @@ p {
 .home_description .inspecciones {
 	background-image: url(/img/inspecciones.png);
 }
-
+.home_description .inventarios {
+	background-image: url(/img/inventario.png);
+}
+.home_description .capacitaciones {
+	background-image: url(/img/capacitacion.png);
+}
+.home_description .titulaciones {
+	background-image: url(/img/titulacion.png);
+}
+.home_description .especies {
+	background-image: url(/img/especies.png);
+}
 /** END HOME **/
 
 /** Layout **/
@@ -232,9 +246,13 @@ p {
 	overflow:auto;
 }
 #header {
-	padding: 10px 20px;
-	margin-bottom: 19px;
-	
+	background-image: url("/img/header.jpg");
+    background-position: center top;
+    background-repeat: no-repeat;
+    margin: 0 auto 20px;
+    padding: 0;
+    width: 950px;
+
 }
 #header .logo img {
 	margin-left: 25px;
@@ -302,7 +320,19 @@ p {
 	
 }
 #main-menu {
-	float: right;
+	float: left;
+	width: 100%;
+	
+	/** css3 gradient **/
+		
+	background: #4778ff; /* Old browsers */
+	background: -moz-linear-gradient(top, #4778ff 0%, #26469e 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4778ff), color-stop(100%,#26469e)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #4778ff 0%,#26469e 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #4778ff 0%,#26469e 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #4778ff 0%,#26469e 100%); /* IE10+ */
+	background: linear-gradient(top, #4778ff 0%,#26469e 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4778ff', endColorstr='#26469e',GradientType=0 ); /* IE6-9 */		
 }
 #main-menu .logo {
 	display: block;
@@ -315,18 +345,17 @@ p {
 }
 #main-menu ul {
 	list-style: none outside none;
-	margin-top: 19px;
 }
 #main-menu ul li {
 	float: left;
 	background: #2047A0;
 	float: left;
 	display: block;
-	padding: 7px 0;
-	width: 120px;
+	padding: 13px 14px;
 	border-right: solid #152554 1px;
 	position: relative;
 	text-align:center;
+
 
 	
 	/** css3 gradient **/
@@ -353,6 +382,7 @@ p {
 	background: linear-gradient(top, #f7dd7e 0%,#efbc00 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7dd7e', endColorstr='#efbc00',GradientType=0 ); /* IE6-9 */
 }
+
 #main-menu ul a {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 13px;
@@ -371,7 +401,7 @@ p {
     margin-top: 0;
     padding-left: 0;
     position: absolute;
-    top: 27px
+    top: 39px
 }
 #main-menu ul li:hover ul {
 	display: block;
@@ -388,9 +418,12 @@ p {
 	border-bottom: 1px solid #D3A500;
 	border-top: 1px solid #FCC500;
 	position:relative;
+	text-align: left;
+	border-left: 1px solid #D3A500;
+	border-right: 1px solid #D3A500;
 }
 #main-menu ul ul li:hover{
-	background: #EFBC00;
+	background: #DBA800;
 }
 #main-menu ul ul a{
 	
@@ -411,13 +444,13 @@ p {
 #main-menu ul  ul li:hover > ul{
 	display:block;
 	position: absolute;
-	left:120px;
+	left:148px;
 	
 }
 #main-menu ul  .last ul li:hover > ul{
 	display:block;
 	position: absolute;
-	left:-120px;
+	left:-148px;
 }
 
 #main-menu ul ul ul ul{
@@ -433,12 +466,12 @@ p {
 #main-menu ul  ul  ul  li:hover ul{
 	display:block;
 	position: absolute;
-	left:120px;
+	left:148px;
 }
 #main-menu ul  .last ul ul li:hover > ul{
 	display:block;
 	position: absolute;
-	left: -120px;
+	left: -153px;
 }		
 #content {
 	background: #fff;
@@ -734,27 +767,34 @@ form .input input {
 /** Users Module**/
 .menu-container {
 	float: right;
+    width: 100%;
+    margin-top: 35px;
 }
 #user-menu {
 	float: right;
 	margin-top: 30px;
 }
 #user-menu li {
-	display: inline;
-	position: relative;
-	margin-right: 10px;
+	color: #FFFFFF;
+    display: inline;
+    font-weight: bold;
+    margin-right: 10px;
+    position: relative;
+    text-shadow: 0 0 4px #000000;
 }
 #user-menu li a {
 	background-image: url("/img/logout.png");
-	background-position: left top;
-	background-repeat: no-repeat;
-	color: #CD0000;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	font-weight: bold;
-	padding-bottom: 5px;
-	padding-left: 32px;
-	padding-top: 13px;
+    background-position: left top;
+    background-repeat: no-repeat;
+    color: #F7DD7E;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    padding-bottom: 5px;
+    padding-left: 32px;
+    padding-top: 13px;
+    text-decoration: underline;
+
 }
 #user-menu div.ajax-login {
 	position: absolute;

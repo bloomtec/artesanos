@@ -38,19 +38,19 @@
 			</td>
 			<td><?php echo h($calificacion['Calificacion']['cal_rama']);?>&nbsp;</td>
 			<td><?php echo h($calificacion['Calificacion']['cal_tipo_de_calificacion']);?>&nbsp;</td>
-			<td class='actions'><?php
+			<td class='actions'>
+			<?php
 				if ($calificacion['Calificacion']['cal_estado'] == 1 && $this -> requestAction('/usuarios/verificarAcceso/', array('ruta' => array('controllers', 'Calificaciones', 'imprimir')))) {
 					echo $this -> Html -> link('Especie Valorada', array("action" => "imprimir", $calificacion['Calificacion']['id']), array( 'class' => 'informe', 'title' => 'Especie Valorada'));
 				}
 				if ($this -> requestAction('/usuarios/verificarAcceso/', array('ruta' => array('controllers', 'Calificaciones', 'view')))) {
-
 					echo $this -> Html -> link('Ver', array("action" => "view", $calificacion['Calificacion']['id']), array('class' => 'pdf', 'title' => 'Descargar'));
-
 				}
-				if ($calificacion['Calificacion']['cal_estado'] == 0 && $this -> requestAction('/usuarios/verificarAcceso/', array('ruta' => array('controllers', 'Artesanos', 'modificarCalificacion')))) {
+				if ($this -> requestAction('/usuarios/verificarAcceso/', array('ruta' => array('controllers', 'Artesanos', 'modificarCalificacion')))) {
 					echo $this -> Html -> link('Modificar', array("controller" => "artesanos", "action" => "modificarCalificacion", $calificacion['Calificacion']['id']), array('class' => 'edit', 'title' => 'Modificar'));
 				}
-			?></td>
+			?>
+			</td>
 		</tr>
 		<?php endforeach;?>
 	</table>
