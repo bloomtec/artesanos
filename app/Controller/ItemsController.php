@@ -377,8 +377,34 @@ class ItemsController extends AppController {
 		$this -> set(compact('items', 'tiposDeItems', 'departamentos', 'personas', 'proveedores', 'provincias'));
 	}
 
-	public function darDeBajaActivoFijo() {
-		
+	public function darDeBajaActivoFijo($activoFijoId = null) {
+		if(!$activoFijoId) {
+			
+		}
+		if($this -> request -> is('post') || $this -> request -> is('put')) {
+			if($this -> request -> data['Item']['para_dar_de_baja']) {
+				$this -> request -> data['Item']['ite_cantidad'] -= $this -> request -> data['Item']['para_dar_de_baja'];
+				if($this -> Item -> save($this -> request -> data)) {
+					$this -> Session -> setFlash('Se dio de baja la cantidad especificada', 'crud/success');
+					$this -> redirect(array('action' => 'indexActivosFijos'));
+				} else {
+					$this -> Session -> setFlash('No se dio de baja la cantidad especificada. Por favor, intente de nuevo', 'crud/error');
+				}
+			}
+		}
+		$this -> Item -> recursive = -1;
+		$item = $this -> Item -> read(null, $activoFijoId);
+		$cantidades = $this -> Item -> query("SELECT SUM(`ite_cantidad`) FROM `items_personas` WHERE `item_id` = $activoFijoId");
+		$cantidades = $cantidades[0][0]['SUM(`ite_cantidad`)'];
+		$tmp_cantidades = $item['Item']['ite_cantidad'] - $cantidades;
+		$cantidades = array();
+		for($i = 0; $i <= $tmp_cantidades; $i += 1) {
+			$cantidades[$i] = $i;
+		}
+		if($item) {
+			$this -> request -> data = $item;
+		}
+		$this -> set(compact('item', 'cantidades'));
 	}
 	
 	public function asignarActivoFijo($activoFijoId = null) {
@@ -389,7 +415,7 @@ class ItemsController extends AppController {
 			$this -> Item -> ItemsPersona -> create();
 			if($this -> Item -> ItemsPersona -> save($this -> request -> data)) {
 				$this -> Session -> setFlash('Se asigno el activo fijo a la persona.', 'crud/success');
-				$this -> redirect(array('action' => 'index'));
+				$this -> redirect(array('action' => 'indexActivosFijos'));
 			} else {
 				$this -> Session -> setFlash('No se asigno el activo fijo a la persona. Por favor, intente de nuevo.', 'crud/error');
 			}
