@@ -1259,9 +1259,15 @@ class ArtesanosController extends AppController {
 
 		// Rangos para igualaciones
 		$fecha_12_meses = strtotime('+12 month', strtotime($fecha_expiracion));
+		$fecha_12_meses = date('Y-m-d', $fecha_12_meses);
+		$fecha_12_meses = new DateTime($fecha_12_meses);
 		$fecha_24_meses = strtotime('+24 month', strtotime($fecha_expiracion));
+		$fecha_24_meses = date('Y-m-d', $fecha_24_meses);
+		$fecha_24_meses = new DateTime($fecha_24_meses);
 		$fecha_36_meses = strtotime('+36 month', strtotime($fecha_expiracion));
-
+		$fecha_36_meses = date('Y-m-d', $fecha_36_meses);
+		$fecha_36_meses = new DateTime($fecha_36_meses);
+		
 		$tmp_fecha_final = $fecha_expiracion;
 
 		// Fecha de expiración más treinta días habiles
