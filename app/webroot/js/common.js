@@ -323,6 +323,34 @@ $(function() {
 			}
 		}
 	});
+	// CREAR Y MODIFICAR ARTESANOS
+	$("#ArtesanoArtIsCedula").change(function() {
+		switch($(this).val()) {
+			case "0":
+				// PASAPORTE
+				$('#ArtesanoArtCedula').setMask({
+					mask : '*',
+					type : 'repeat'
+				}).val('');
+				break;
+			case "1":
+				// CEDULA
+				$('#ArtesanoArtCedula').setMask({
+					mask : '9999',
+					type : 'repeat'
+				}).val();
+				break;
+		}
+	});
+	$("#ArtesanoAgregarArtesanoForm").submit(function(e) {
+		//alert($("#ArtesanoArtIsCedula option:selected").val());
+		if($("#ArtesanoArtIsCedula option:selected").val() == "1") {
+			if(!checkCedulaEcuador($("#ArtesanoArtCedula").val())) {
+				e.preventDefault();
+				$("#ArtesanoArtCedula").focus();
+			}
+		}
+	});
 	//VALIDAR RUC EN PROVEEDORES
 	$("#ProveedorEditForm , #ProveedorAddForm").submit(function(e) {
 		//if($("#UsuarioUsuIsCedula option:selected").val()=="1"){
@@ -541,13 +569,7 @@ $(function() {
 		}
 	});
 	
-	//Agregar artesano
-	$("#ArtesanoAgregarArtesanoForm").submit(function(e) {
-		if(!checkCedulaEcuador($("#ArtesanoArtCedula").val())) {
-			e.preventDefault();
-			$("#ArtesanoArtCedula").focus();
-		}
-	});
+	
 	
 	$("#btnModalRegArtesano").click(function() {
 		$('#modal_registro_artesano').modal({
