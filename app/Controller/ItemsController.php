@@ -410,7 +410,20 @@ class ItemsController extends AppController {
 	public function desasignarActivoFijo($activoFijoId = null) {
 		if($activoFijoId) {
 			if($this -> request -> is('post')) {
-				debug($this -> request -> data);
+				foreach($this -> request -> data as $itemsPersona) {
+					if($itemsPersona['ItemsPersona']['cantidad_desasignar']) {
+						if($itemsPersona['ItemsPersona']['ite_cantidad'] == $itemsPersona['ItemsPersona']['cantidad_desasignar']) {
+							// Eliminar el registro
+							$this -> Item -> ItemsPersona -> delete($itemsPersona['ItemsPersona']['id']);
+						} else {
+							// Reducir cantidad
+							$itemsPersona['ItemsPersona']['ite_cantidad'] -= $itemsPersona['ItemsPersona']['cantidad_desasignar'];
+							$this -> Item -> ItemsPersona -> save($itemsPersona);
+						}
+					}
+				}
+				$this -> Session -> setFlash('Se registraron los cambios', 'crud/success');
+				$this -> redirect(array('action' => 'indexActivosFijos'));
 			}
 			$itemsPersonas = $this -> Item -> ItemsPersona -> find('all', array('conditions' => array('ItemsPersona.item_id' => $activoFijoId)));
 			$personas = array();
