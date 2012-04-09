@@ -838,6 +838,27 @@ class ArtesanosController extends AppController {
 	}
 	
 	function modificarCalificacion($calificacionId = null){
+		$calificacion = null;
+		if($calificacionId && $calificacion = $this -> Artesano -> Calificacion -> read(null, $calificacionId)) {
+			$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $calificacion['Calificacion']['artesano_id'] . '/1');
+			//if(($calificacion['Calificacion']['cal_estado'] >= 1) && (($calificacion['Calificacion']['cal_estado'] == 0) || ($especieValorada && !$especieValorada['EspeciesValorada']['se_uso']))) {}
+			if(!($calificacion['Calificacion']['cal_estado'] >= 1) || !(!($calificacion['Calificacion']['cal_estado'] == 0) && !(!$especieValorada || $especieValorada['EspeciesValorada']['se_uso']))) {
+				if($calificacion['Calificacion']['cal_estado'] < 0) {
+					$this -> Session -> setFlash('Esta calificación esta deshabilitada o negada');
+				} elseif(!(!($calificacion['Calificacion']['cal_estado'] == 0) && !(!$especieValorada || $especieValorada['EspeciesValorada']['se_uso']))) {
+					if(!$calificacion['Calificacion']['cal_estado'] == 0) {
+						$this -> Session -> setFlash('La calificación ya no esta pendiente para calificar, verifique que se tiene la especie valorada para modificar datos.');
+					} elseif(!$especieValorada || !$especieValorada['EspeciesValorada']['se_uso']) {
+						$this -> Session -> setFlash('No se tiene la especie valorada para modificar datos');
+					} else {
+						$this -> Session -> setFlash('=/');
+					}
+				} else {
+					$this -> Session -> setFlash('=/');
+				}
+				$this -> redirect($this -> referer());
+			}
+		}
 		if($this -> request -> is('post')) {
 			foreach ($this -> request -> data['MateriasPrima'] as $key => $value) {
 				if (!$value['mat_cantidad'] || !$value['mat_tipo_de_materia_prima'] || !$value['mat_procedencia'] || !$value['mat_valor_comercial']) {
