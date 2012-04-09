@@ -1347,4 +1347,33 @@ class ArtesanosController extends AppController {
 		exit(0);
 	}
 
+	public function agregarArtesano(){
+		if ($this -> request -> is('post')) {
+			$this -> Artesano -> create();
+			if ($this -> Artesano -> save($this -> request -> data)) {
+				$this -> Session -> setFlash(__('Se registro el nuevo artesano'), 'crud/success');
+				$this -> redirect(array('action' => 'index'));
+			} else {
+				$this -> Session -> setFlash(__('No se pudo registrar el artesano. Por favor, intente de nuevo.'), 'crud/error');
+			}
+		}
+	}
+	
+	//Función para registrar el nuevo alumno
+	public function modalRegNuevoArtesano() {
+        $this->autoRender = false;
+        $this->layout = 'ajax';
+        $msj="";
+		if ($this -> request -> is('post')) {;
+			$this -> Artesano -> create();
+			if ($this -> Artesano -> save($this -> request -> data)) {
+				$msj["msj"]='Se ha registrado el artesano';
+				$msj["res"]=true;
+			} else {
+				$msj='No se pudo registrar el artesano. Por favor, intente de nuevo.';
+				$msj["res"]=false;
+			}
+			echo json_encode($msj);
+		}
+   }
 }

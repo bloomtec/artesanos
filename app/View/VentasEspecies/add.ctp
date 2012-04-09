@@ -9,7 +9,8 @@
 	<?php	echo $this->Form->input('juntas_provincial_id',array('empty' => 'Seleccione...', 'class'=>'juntaSelect controlSelects','label'=>false)); ?>
 		<div class='cedula-box'>
 		<?php echo $this->Form->input('cedula_artesanos',array('class'=>'artesanoSelect controlSelects cedula','label'=>false,'type'=>'text')); ?>
-		<a class='button validarCedula' href='#'>validar</a>
+		<a class='button validarCedula' href='#'>validar</a><a class='button' id="btnModalRegArtesano" href='#'>Registrar artesano</a>
+		
 		</div>
 	</div>
 	</fieldset>
@@ -49,6 +50,7 @@
 	<?php echo $this->Form->end(__('Guardar'));?>
 	</div>	
 </div>
+
 <style>
 	.ventasEspecies.form form{
 		width: 550px;
@@ -130,3 +132,5 @@ $(function(){
 	});
 });
 </script>
+
+<?php echo $this -> element('registrar_artesano'); ?>

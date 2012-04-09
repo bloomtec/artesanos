@@ -7,6 +7,9 @@
 	?>
 	<ul>
 		<li>
+			<a href="/artesanos/agregarArtesano">Agregar</a>
+		</li>
+		<li>
 			<a href="/artesanos/add">Calificar</a>
 		</li>
 		<?php

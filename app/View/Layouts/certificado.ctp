@@ -49,48 +49,199 @@ if(isset($tamano)) {
 $pdf -> AddPage();
 
 $css = '<style>
-/* CERTIFICADO */
-.centro {
-	text-align: center;
-	font-size: 36px;
+#contenedor{
+	margin:auto;
+	border:1px solid #339;
+	width: 1122px;
+	height:793px;
 }
-centro1 {
-	text-align: center;
+
+#contenedor2 {
+	width: 950px;
+	margin:50px auto;
+	height:680px;
 }
-body p {
-	text-align: center;
+
+#sub_cont1{
+	height:100px;
 }
-.centro1 {
-	text-align: center;
+
+#sub_cont2{
+	height:100px;
 }
-.certificado {
-	text-align: center;
-	font-size: xx-large;
+
+#imagen1{
+	width:100px;
+	height:100px;
+	float:left;
 }
-.bold {
-	font-weight: bold;
+
+#imagen2{
+	width:100px;
+	height:100px;
+	float:left;
+	
 }
-.centro {
-	text-align: center;
+
+#encabezado1{
+	width:820px;
+	height:84px;
+	float:right;
+	padding:8px;
+	
 }
-.centro {
-	text-align: center;
+
+#titulo {
+	font-size:36px;
 }
-.centro {
-	text-align: center;
+#encabezado2{
+	width:750px;
+	height:80px;
+	float:left;
+	font-family: serif;
+	font-size: 88px;
+	padding:8px;
+	text-align:center;
 }
-.centro {
-	text-align: center;
+
+#parrafo {
+	width:100%;
+	height:25px;
+	margin-top: 6px;
+	font-size: 20px;
+	
 }
-.centro {
-	text-align: center;
-	font-size: 16px;
+
+#texto {
+	float:left;
+	height:25px;
 }
-.centro {
-	text-align: center;
+
+#texto_sub1 {
+	height:25px;
+	float:left;
+	margin-left:4px;
+	width:926px;
+	border-bottom:1px solid #000;
 }
-.encabezado {
-	font-size: xx-large;
+
+#texto_sub2 {
+	height:25px;
+	float:left;
+	margin-left:4px;
+	width:748px;
+	border-bottom:1px solid #000;
+}
+
+#texto_sub3 {
+	height:25px;
+	float:left;
+	margin-left:4px;
+	width:735px;
+}
+
+#texto_sub4 {
+	height:25px;
+	float:left;
+	margin-top:6px;
+	width:100%;
+	border-bottom:1px solid #000;
+}
+
+#texto_sub5 {
+	height:25px;
+	float:left;
+	margin-top:6px;
+	width:100%;
+	border-bottom:1px solid #000;
+}
+
+#texto_sub6 {
+	height:25px;
+	float:left;
+	margin-top:6px;
+	width:240px;
+	border-bottom:1px solid #000;
+}
+
+#texto_sub7 {
+	height:25px;
+	float:left;
+	width:330px;
+	margin-top:6px;
+	border-bottom:1px solid #000;
+}
+
+#texto_sub8 {
+	height:25px;
+	float:left;
+	width:145px;
+	margin-top:6px;
+	border-bottom:1px solid #000;
+}
+
+#texto_sub9 {
+	height:25px;
+	float:left;
+	width:100px;
+	margin-top:6px;
+	border-bottom:1px solid #000;
+}
+
+#firmas {
+	margin-top: 60px;
+	height:auto;
+	float:left;
+	width:100%;
+}
+
+#firma1{
+	width:auto;
+	text-align:center;
+	float: left;
+}
+
+#firma2 {
+	width:auto;
+	text-align:center;
+	float: left;
+	margin-left: 175px;
+}
+
+#firma3{
+	width:auto;
+	text-align:center;
+	float: right;
+}
+
+#directores {
+	float:left;
+	margin-top:60px;
+	width:100%;
+}
+
+#director{
+	float:left;
+	margin-left:150px;
+	width:auto;
+}
+
+#instructor{
+	float:right;
+	margin-right:180px;
+	width:auto;
+}
+
+#slogan {
+	float:left;
+	margin-top:40px;
+	width:100%;
+	text-align:center;
+	font-size: 22px;
+}
+
+#capa1{
+	font-size: 20px;	
 }
 </style>';
 
@@ -107,7 +258,7 @@ $pdf -> writeHTML($html, true, false, true, false, '');
 if (isset($nombre_archivo)) {
 	$pdf -> Output($nombre_archivo . "_" . date("Y-m-d_H:i:s", time()).".pdf", 'D');
 } else {
-	$pdf -> Output('reporte.pdf', 'D');
+	$pdf -> Output('certificado.pdf', 'D');
 }
 
 //echo $content_for_layout;

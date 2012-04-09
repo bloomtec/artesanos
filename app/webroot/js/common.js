@@ -540,4 +540,40 @@ $(function() {
 			$("#archivos2").show(); 
 		}
 	});
+	
+	//Agregar artesano
+	$("#ArtesanoAgregarArtesanoForm").submit(function(e) {
+		if(!checkCedulaEcuador($("#ArtesanoArtCedula").val())) {
+			e.preventDefault();
+			$("#ArtesanoArtCedula").focus();
+		}
+	});
+	
+	$("#btnModalRegArtesano").click(function() {
+		$('#modal_registro_artesano').modal({
+			close : true
+		});
+		return false;
+	});
+	
+	
+	$("#btnModalRegArtesano2").click(function() {
+		if(!checkCedulaEcuador($("#txtCedula").val())) {
+			e.preventDefault();
+			$("#txtCedula").focus();
+		}
+		
+		$.post("/artesanos/modalRegNuevoArtesano", $('#divCampos :input').serialize(), resultado, "json");
+		
+		function resultado(msj) {
+			if (msj.res==true) {
+				alert(msj.msj);
+				$(".modal #btnCerrar").click();
+			} else if(msj.res==false){
+				alert(msj.msj);
+			} else {
+				alert("No se pudo registrar el artesano. Por favor, intente de nuevo");
+			}
+		} 
+	});
 });
