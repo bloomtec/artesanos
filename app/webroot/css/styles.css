@@ -196,6 +196,7 @@ p {
 	margin-left: 50px;
 	margin-top: 15px;
 	width: 48%;
+	text-align: left;
 }
 .home_description .usuarios {
 	background: url(/img/users.png) no-repeat center left;
@@ -215,7 +216,18 @@ p {
 .home_description .inspecciones {
 	background-image: url(/img/inspecciones.png);
 }
-
+.home_description .inventarios {
+	background-image: url(/img/inventario.png);
+}
+.home_description .capacitaciones {
+	background-image: url(/img/capacitacion.png);
+}
+.home_description .titulaciones {
+	background-image: url(/img/titulacion.png);
+}
+.home_description .especies {
+	background-image: url(/img/especies.png);
+}
 /** END HOME **/
 
 /** Layout **/
