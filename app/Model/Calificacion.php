@@ -154,5 +154,5 @@ class Calificacion extends AppModel {
 			'counterQuery' => ''
 		)
 	);
-
+	
 }
