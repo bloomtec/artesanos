@@ -66,6 +66,7 @@ $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('contr
 $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Reportes', 'reporteInspecciones')))
 ):
 	?>
+	<!--
 	<div class="home_description">
 		<h2 class="reportes"> REPORTES </h2>
 		<p>
@@ -92,6 +93,7 @@ $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('contr
 		</div>
 		<?php endif;?>
 	</div>
+	-->
 	<?php if($this -> Session -> read('Auth.User.rol_id')==3) :
 	?>
 	<div class="home_description" >
@@ -107,7 +109,7 @@ $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('contr
 	<div class="home_description" >
 		<h2 class="inventarios"> Inventarios </h2>
 		<p>
-			Inspecciones que se deben realizar
+			Gestión de inventarios de activos fijos y suministros de la JNDA
 		</p>
 		<div class="acciones_home">
 			<a href="/items/indexActivosFijos">Activos Fijos</a>
@@ -117,7 +119,7 @@ $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('contr
 	<div class="home_description" >
 		<h2 class="capacitaciones"> Capacitaciones </h2>
 		<p>
-			Inspecciones que se deben realizar
+			Solicitudes y Gestion de capacitaiones
 		</p>
 		<div class="acciones_home">
 			<a href="/solicitudes"> Solicitudes</a>
@@ -127,7 +129,7 @@ $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('contr
 	<div class="home_description" >
 		<h2 class="titulaciones"> Titulaciones </h2>
 		<p>
-			Inspecciones que se deben realizar
+			Solicitudes, gestión y reportes de Titulos
 		</p>
 		<div class="acciones_home">
 			<a href="/solicitudesTitulaciones/add">Solicitar Titulaciones</a>
@@ -138,7 +140,7 @@ $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('contr
 	<div class="home_description" >
 		<h2 class="especies"> Especies Valoradas </h2>
 		<p>
-			Inspecciones que se deben realizar
+			Gestión de las especies valorada de la JNDA
 		</p>
 		<div class="acciones_home">
 			<a href="/ingresos_especies/add">Ingresar Especies</a>
