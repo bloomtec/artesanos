@@ -408,7 +408,22 @@ class ItemsController extends AppController {
 	}
 	
 	public function desasignarActivoFijo($activoFijoId = null) {
-		
+		if($activoFijoId) {
+			if($this -> request -> is('post')) {
+				debug($this -> request -> data);
+			}
+			$itemsPersonas = $this -> Item -> ItemsPersona -> find('all', array('conditions' => array('ItemsPersona.item_id' => $activoFijoId)));
+			$personas = array();
+			foreach($itemsPersonas as $key => $value) {
+				$personas[$value['ItemsPersona']['persona_id']] = $value['ItemsPersona']['persona_id'];
+			}
+			$personas = $this -> Item -> Persona -> find('all', array('conditions' => array('Persona.id' => $personas), 'recursive' => -1));
+			foreach($personas as $key => $persona) {
+				$item = $this -> Item -> ItemsPersona -> find('first', array('conditions' => array('ItemsPersona.item_id' => $activoFijoId, 'ItemsPersona.persona_id' => $persona['Persona']['id'])));
+				$personas[$key]['ItemsPersona'] = $item['ItemsPersona'];
+			}
+			$this -> set(compact('personas'));
+		}
 	}
 	
 	public function traspasoActivoFijo() {
