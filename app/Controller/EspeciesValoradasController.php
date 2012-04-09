@@ -25,19 +25,23 @@ class EspeciesValoradasController extends AppController {
 					)
 				)
 			);
-			$especieValorada = $this -> EspeciesValorada -> find(
-				'first',
-				array(
-					'conditions' => array(
-						'EspeciesValorada.ventas_especie_id' => $ventasEspecie,
-						'EspeciesValorada.tipos_especies_valorada_id' => $tipo_especie_id
-					),
-					'order' => array(
-						'EspeciesValorada.created' => 'DESC'
+			if($ventasEspecie) {
+				$especieValorada = $this -> EspeciesValorada -> find(
+					'first',
+					array(
+						'conditions' => array(
+							'EspeciesValorada.ventas_especie_id' => $ventasEspecie,
+							'EspeciesValorada.tipos_especies_valorada_id' => $tipo_especie_id
+						),
+						'order' => array(
+							'EspeciesValorada.created' => 'DESC'
+						)
 					)
-				)
-			);
-			return $especieValorada;
+				);
+				return $especieValorada;
+			} else {
+				return array();
+			}
 		} else {
 			return array();
 		}
