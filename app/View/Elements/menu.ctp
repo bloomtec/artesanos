@@ -21,6 +21,7 @@
 		<?php 
 			echo $this -> element('menu/especies');
 		?>
+		<div style="clear: both"></div>
 	</ul>
 </div>
 <script type="text/javascript">
