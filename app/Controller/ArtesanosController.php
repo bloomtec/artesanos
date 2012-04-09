@@ -187,6 +187,12 @@ class ArtesanosController extends AppController {
 				$datos_personales = array();
 				$datos_personales['DatosPersonal'] = $this -> request -> data['DatosPersonal'];
 				if ($this -> Artesano -> Calificacion -> DatosPersonal -> save($datos_personales)) {
+					$this -> Artesano -> Calificacion -> recursive = -1;
+					$lacalificacion=$this -> Artesano -> Calificacion -> read('',$calificacion['Calificacion']['id']);
+					
+					if($lacalificacion['Calificacion']['cal_estado'] >= 0){
+						$this -> actualizarArtesano($datos_personales,$lacalificacion['Calificacion']['artesano_id']);	
+					}
 					$this -> Session -> setFlash(__('Los datos del artesano han sido registrados.'), 'crud/success');
 
 					// Guardar el taller
@@ -310,6 +316,17 @@ class ArtesanosController extends AppController {
 		} else {
 			// TODO : Por definir
 		}
+	}
+
+	private function actualizarArtesano($datosPersonales,$artesanoId){
+		$artesano['Artesano']['id']=$artesanoId;
+		foreach($datosPersonales['DatosPersonal'] as $key=>$val){
+			if(strpos($key, 'dat_') === 0){
+				$artesano['Artesano'][str_replace('dat_', 'art_', $key)]=$val;
+			}
+		}
+		//debug($artesano);
+		$this -> Artesano -> save($artesano);
 	}
 
 	/**
