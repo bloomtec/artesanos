@@ -1096,12 +1096,24 @@ class ArtesanosController extends AppController {
 							/**
 							 * Se está haciendo una recalificación
 							 */
-							$resultado_validacion['Calificar'] = 1;
+							$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $artesano['Artesano']['id'] . '/' . Configure::read('recal'));
+							if($especieValorada) {
+								$resultado_validacion['Calificar'] = 1;
+							} else {
+								$resultado_validacion['Calificar'] = 0;
+								$resultado_validacion['Mensaje'] = 'No se tiene la especie valorada correspondiente a recalificación';
+							}
 						} elseif ($calificaciones[0]['Calificacion']['tipos_de_calificacion_id'] == 2) {// Calificación previa tipo Autónomo
 							/**
 							 * Se esta calificando como normal por primera vez
 							 */
-							$resultado_validacion['Calificar'] = 1;
+							$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $artesano['Artesano']['id'] . '/' . Configure::read('cal_normal'));
+							if($especieValorada) {
+								$resultado_validacion['Calificar'] = 1;
+							} else {
+								$resultado_validacion['Calificar'] = 0;
+								$resultado_validacion['Mensaje'] = 'No se tiene la especie valorada correspondiente a calificación normal';
+							}
 						} else {// Error
 							$resultado_validacion['Mensaje'] = 'Tipo de calificación erronea';
 						}
@@ -1140,8 +1152,34 @@ class ArtesanosController extends AppController {
 		}
 		
 		if ($resultado_validacion['Calificar'] && isset($resultado_validacion['InfoFecha']['Despues']) && $resultado_validacion['InfoFecha']['Despues']) {
-			$resultado_validacion['Mensaje'] = $resultado_validacion['InfoFecha']['Mensaje'];
-			$resultado_validacion['Calificar'] = 0;
+			// $resultado_validacion['Mensaje'] = $resultado_validacion['InfoFecha']['Mensaje'];
+			// $resultado_validacion['Calificar'] = 0;
+			/**
+			 * Aquí se ha pasado el rango de tiempo de recalificación.
+			 * Verificar si se tiene o no la especie correspondiente
+			 * 11 => 11,	-- 1 - 12 meses
+			 * 12 => 12,	-- 12 - 24 meses
+			 * 13 => 13,	-- 24 - 36 mese
+			 * 14 => 14		-- 36+ meses
+			 */
+			$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $artesano['Artesano']['id'] . '/' . $resultado_validacion['InfoFecha']['TipoEspecie']);
+			if($especieValorada) {
+				$resultado_validacion['Mensaje'] = 'Se paso del tiempo dado para la recalificación. Se tiene la especie valorada que corresponde.';
+				$resultado_validacion['Calificar'] = 1;
+			} else {
+				$resultado_validacion['Mensaje'] = 'Se paso del tiempo dado para la recalificación. Se debe comprar la especie valorada correspondiente';
+				if($resultado_validacion['InfoFecha']['TipoEspecie'] == 11) {
+					$resultado_validacion['Mensaje'] .= ' a 1 - 12  meses';
+				} elseif($resultado_validacion['InfoFecha']['TipoEspecie'] == 12) {
+					$resultado_validacion['Mensaje'] .= ' a 12 - 24  meses';
+				} elseif($resultado_validacion['InfoFecha']['TipoEspecie'] == 13) {
+					$resultado_validacion['Mensaje'] .= ' a 24 - 36  meses';
+				} elseif($resultado_validacion['InfoFecha']['TipoEspecie'] == 14) {
+					$resultado_validacion['Mensaje'] .= ' a 36+  meses';
+				}
+				$resultado_validacion['Calificar'] = 0;
+			}
+			
 		}
 		
 		if(!empty($calificaciones)) {
@@ -1290,6 +1328,11 @@ class ArtesanosController extends AppController {
 		$fecha_rango_menor_registro = strtotime('-2 month', strtotime($fecha_expiracion));
 		$fecha_rango_menor_registro = date('Y-m-d', $fecha_rango_menor_registro);
 		
+		// Rangos para igualaciones
+		$fecha_12_meses = strtotime('+12 month', strtotime($fecha_expiracion));
+		$fecha_24_meses = strtotime('+24 month', strtotime($fecha_expiracion));
+		$fecha_36_meses = strtotime('+36 month', strtotime($fecha_expiracion));
+		
 		$tmp_fecha_final = $fecha_expiracion;
 		
 		// Fecha de expiración más treinta días habiles
@@ -1321,8 +1364,17 @@ class ArtesanosController extends AppController {
 				$fechas['Antes'] = 1;
 			} else {
 				$fechas['Despues'] = 1;
-				$fechas['Mensaje'] = 'Se ha pasado la fecha limite de registro y se debe revisar primero si hay o no multa';
-				$fechas['Multa'] = 1;
+				$fechas['Mensaje'] = 'Se ha pasado la fecha limite de registro y se debe revisar si se tiene la especie correspondiente';
+				// Revisión de tiempo para periodos de igualación
+				if($fecha_actual < $fecha_12_meses) {
+					$fechas['TipoEspecie'] = 11;
+				} elseif($fecha_actual < $fecha_24_meses) {
+					$fechas['TipoEspecie'] = 12;
+				} elseif($fecha_actual < $fecha_36_meses) {
+					$fechas['TipoEspecie'] = 13;
+				} else {
+					$fechas['TipoEspecie'] = 14;
+				}
 			}
 		}
 
