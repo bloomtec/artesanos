@@ -469,6 +469,7 @@ class UsuariosController extends AppController {
 	private function setPermisosInspectores($usuario = null, $asignar = null) {
 		if($asignar) {
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/inspecciones');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/modificarCalificacion');
 		} else {
 			$this -> Acl -> deny($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/inspecciones');
 		}
