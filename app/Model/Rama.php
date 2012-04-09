@@ -110,8 +110,8 @@ class Rama extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
-		'Titulacion' => array(
-			'className' => 'Titulacion',
+		'Titulo' => array(
+			'className' => 'Titulo',
 			'foreignKey' => 'rama_id',
 			'dependent' => false,
 			'conditions' => '',
