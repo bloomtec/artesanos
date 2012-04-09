@@ -108,9 +108,8 @@ class EgresosDeInventariosController extends AppController {
 		$this -> loadModel('Persona', true);
 		
 		$reporte = false;
-		$pagina = "";
+		$pagina = ""; 
 
-		$pagina = "";
 		if (isset($this -> params['named']['page'])) {
 			$pagina = $this -> params['named']['page'];
 		} else if (isset($this -> params["named"]["sort"])) {
