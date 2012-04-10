@@ -99,6 +99,7 @@ class PagesController extends AppController {
 			$ciudades = $this -> Artesano -> Calificacion -> Taller -> Ciudad -> find('list');
 			$parroquias = $this -> Artesano -> Calificacion -> Taller -> Parroquia -> find('list');
 			$ramas = $this -> Artesano -> Calificacion -> Rama -> find('list');
+			$attachments=array();
 			foreach ($this -> request -> data['Page'] as $key => $value) {
 				switch ($key) {
 					case 'provincia' :
@@ -118,16 +119,21 @@ class PagesController extends AppController {
 						break;
 					case 'productos' :
 						$mensaje .= "Productos: <br /> <ul>";
-						foreach ($value as $producto) {
-							$mensaje .= "<li>" . $producto . "</li>";
+						if(!empty($value)){
+							foreach ($value as $producto) {
+								$mensaje .= "<li>" . $producto . "</li>";
+							}
 						}
 						$mensaje .= "</ul>";
 						break;
 					case 'imagen_1' :
+						$attachments['imagen1.jpg' ]=IMAGES.'header_cal_normal.jpg';
 						break;
 					case 'imagen_2' :
+						$attachments['imagen2.jpg' ]=IMAGES.'header_cal_normal.jpg';
 						break;
 					case 'imagen_3' :
+						$attachments['imagen3.jpg' ]=IMAGES.'header_cal_normal.jpg';
 						break;
 					default :
 					//debug(Inflector::humanize($key));
@@ -137,10 +143,13 @@ class PagesController extends AppController {
 
 			}
 			$email = new CakeEmail();
-			$email -> from(array('me@example.com' => 'My Site'));
+			$email -> emailFormat('html');
+			$email -> from(array('no-reply@jnda.gob.ec' => 'Vitrina Virtual'));
 			$email -> to('ricardopandales@gmail.com');
-			$email -> subject('About');
-			$email->attachments(array('photo.jpg' => IMAGES.'header_cal_normal.jpg'));
+			$email -> subject('Solicitud Vitrina Virtual');
+			if(!empty($attachments)){
+				$email->attachments($attachments);
+			}
 			$email -> send($mensaje);
 
 			// ENVIAR MENSAJE

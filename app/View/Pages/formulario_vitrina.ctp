@@ -1,5 +1,5 @@
 <?php if(isset($se_envio)){ ?>
-<div class='message-mail' style='display:none;'>
+<div class='message-mail'>
 	<h1>GRACIAS POR CONTACTARNOS</h1>
 </div>
 <?php }else{ ?>
