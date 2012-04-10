@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="modal2" id="modal_registro_artesano" style="display: none;" >
 <div class="artesanos form">
 	<?php echo $this -> Form -> create('Artesano');?>
@@ -70,7 +71,7 @@
 </script>
 </div>
 
-<!-- REGISTRAR ALUMNO 
+<!-- REGISTRAR ARTESANO 
 <div class="modal" id="modal_registro_artesano" style="display: none;" >
 	<div id="divCampos">
 		<fieldset>
@@ -78,13 +79,12 @@
 			<table border=1>
 				<tr>
 					<td>Cedula artesano</td>
-					<td><?php echo $this -> Form -> input('art_cedula', array('label' => false,"id"=>"txtCedula"));?></td>
+					<td><?php echo $this -> Form -> input('art_cedula', array('label' => false, "id" => "txtCedula"));?></td>
 				</tr>
-
 			</table>
 		</fieldset>
 		<a href="#" id="btnModalRegArtesano2" class="button">Guardar</a>
-		<a href="#" id="btnCerrar" class="button">Cerrar</a><br/><br/>
-	</div>
-<div>
--->
+		<a href="#" id="btnCerrar" class="button">Cerrar</a>
+		<br/>
+		<br/>
+	</div>-->

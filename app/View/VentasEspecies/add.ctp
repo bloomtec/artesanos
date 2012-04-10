@@ -3,14 +3,15 @@
 	<fieldset>
 		<h2><?php echo __('Ventas De Especies Valoradas'); ?></h2>
 	<?php
-		echo $this -> Form -> input('what_is', array('label' => false, 'div'=>'input select usu-cedula', 'type' => 'select','options'=>array('artesanoSelect'=>'Artesano: ','juntaSelect'=>'Junta: '),'id'=>'whatIs'));	
+		echo $this -> Form -> input('what_is', array('label' => false, 'div'=>'input select usu-cedula', 'type' => 'select','options'=>array('artesanoSelect'=>'Artesano: '),'id'=>'whatIs'));	
 	?>
 	<div class="cliente">
 	<?php	echo $this->Form->input('juntas_provincial_id',array('empty' => 'Seleccione...', 'class'=>'juntaSelect controlSelects','label'=>false)); ?>
 		<div class='cedula-box'>
-		<?php echo $this->Form->input('cedula_artesanos',array('class'=>'artesanoSelect controlSelects cedula','label'=>false,'type'=>'text')); ?>
-		<a class='button validarCedula' href='#'>validar</a><a class='button' id="btnModalRegArtesano" href='#'>Registrar artesano</a>
-		
+		<?php echo $this->Form->input('cedula_artesanos',array('class'=>'artesanoSelect controlSelects cedula','label'=>false,'type'=>'text','placeholder'=>'digite la cedula del artesano')); ?>
+		<a class='button validarCedula' href='#'>validar</a>
+		<!--<a class='button' id="btnModalRegArtesano" href='#'>Registrar artesano</a>
+		-->
 		</div>
 	</div>
 	</fieldset>

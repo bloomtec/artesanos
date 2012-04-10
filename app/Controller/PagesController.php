@@ -54,7 +54,7 @@ class PagesController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('display', 'lanzador');
+		$this -> Auth -> allow('display', 'lanzador','formularioVitrina');
 	}
 
 	/**
@@ -88,5 +88,22 @@ class PagesController extends AppController {
 	public function lanzador() {
 		$this -> layout = 'login';
 	}
-
+	public function formularioVitrina(){
+		$this -> layout='externas';
+		$this -> loadModel('Artesano');
+		if(!empty($this -> request -> data)){
+			foreach($this -> request -> data['Page'] as $key => $value){
+				//debug(Inflector::humanize($key));
+			}
+		}
+		//$nacionalidades = $this -> Artesano -> getValores(1);
+		//$tipos_de_sangre = $this -> Artesano -> getValores(2);
+		//$estados_civiles = $this -> Artesano -> getValores(3);
+		//$grados_de_estudio = $this -> Artesano -> getValores(4);
+		//$sexos = $this -> Artesano -> getValores(5);
+		$ramas = $this -> Artesano -> Calificacion -> Rama -> find('list');
+		$productos = $this -> Artesano -> getValores(18);
+		$provincias = $this -> Artesano -> Calificacion -> Taller -> Provincia -> find('list');
+		$this -> set(compact('ramas','productos','provincias'));
+	}
 }
