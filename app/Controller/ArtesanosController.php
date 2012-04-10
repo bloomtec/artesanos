@@ -48,11 +48,12 @@ class ArtesanosController extends AppController {
 		if ($documento) {
 			$artesano = $this -> Artesano -> findByArtCedula($documento);
 			if (!empty($artesano)) {
-				$calificacion = $artesano['Calificacion'][count($artesano['Calificacion']) - 1];
+				/*$calificacion = $artesano['Calificacion'][count($artesano['Calificacion']) - 1];
 				$this -> Artesano -> Calificacion -> DatosPersonal -> recursive = -1;
 				$datos_personales = $this -> Artesano -> Calificacion -> DatosPersonal -> findByCalificacionId($calificacion['id']);
 				$datos_personales['Artesano'] = $artesano['Artesano'];
-				echo json_encode($datos_personales);
+				echo json_encode($datos_personales);*/
+				echo json_encode($artesano);
 			} else {
 				return null;
 			}
@@ -1072,7 +1073,7 @@ class ArtesanosController extends AppController {
 							 * Se está haciendo una recalificación
 							 */
 							$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $artesano['Artesano']['id'] . '/' . Configure::read('recal'));
-							if ($especieValorada) {
+							if ($especieValorada && !$especieValorada['EspecieValorada']['se_uso']) {
 								$resultado_validacion['Calificar'] = 1;
 							} else {
 								$resultado_validacion['Calificar'] = 0;
@@ -1082,13 +1083,20 @@ class ArtesanosController extends AppController {
 							/**
 							 * Se esta calificando como normal por primera vez
 							 */
-							$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $artesano['Artesano']['id'] . '/' . Configure::read('cal_normal'));
-							if ($especieValorada) {
-								$resultado_validacion['Calificar'] = 1;
+							$titulacion = $this -> requestAction('/titulaciones/verificarTituloRamaArtesano/' . $artesano['Artesano']['id'] . '/' . $calificaciones[0]['Calificacion']['rama_id']);
+							if(!empty($titulacion)) {
+								$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $artesano['Artesano']['id'] . '/' . Configure::read('cal_normal'));
+								if ($especieValorada && !$especieValorada['EspecieValorada']['se_uso']) {
+									$resultado_validacion['Calificar'] = 1;
+								} else {
+									$resultado_validacion['Calificar'] = 0;
+									$resultado_validacion['Mensaje'] = 'No se tiene la especie valorada correspondiente a calificación normal';
+								}
 							} else {
 								$resultado_validacion['Calificar'] = 0;
-								$resultado_validacion['Mensaje'] = 'No se tiene la especie valorada correspondiente a calificación normal';
+								$resultado_validacion['Mensaje'] = 'El artesano no tiene el titulo correspondiente para ser calificado como artesano normal';
 							}
+							
 						} else {// Error
 							$resultado_validacion['Mensaje'] = 'Tipo de calificación erronea';
 						}
@@ -1138,7 +1146,7 @@ class ArtesanosController extends AppController {
 			 * 14 => 14		-- 36+ meses
 			 */
 			$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $artesano['Artesano']['id'] . '/' . $resultado_validacion['InfoFecha']['TipoEspecie']);
-			if ($especieValorada) {
+			if ($especieValorada && !$especieValorada['EspecieValorada']['se_uso']) {
 				$resultado_validacion['Mensaje'] = 'Se paso del tiempo dado para la recalificación. Se tiene la especie valorada que corresponde.';
 				$resultado_validacion['Calificar'] = 1;
 			} else {
@@ -1196,60 +1204,67 @@ class ArtesanosController extends AppController {
 		 * ¿Hay un artesano registrado?
 		 */
 		if (!empty($artesano)) {// Si
-			/**
-			 * Como el artesano existe, verificar si ya tiene calificaciones previas.
-			 * ¿Tiene calificaciones previas?
-			 */
-			if (!empty($calificaciones)) {// Si
+			
+			// TODO : AQUI VA LA VALIDACION DE SI TIENE LA ESPECIE
+			$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $artesano['Artesano']['id'] . '/' . Configure::read('cal_autonomo'));
+			if ($especieValorada && !$especieValorada['EspecieValorada']['se_uso']) {
 				/**
-				 * Obtener las fechas relacionadas con la última calificación creada
+				 * Como el artesano existe, verificar si ya tiene calificaciones previas.
+				 * ¿Tiene calificaciones previas?
 				 */
-				$fecha_expiracion = explode(' ', $calificaciones[0]['Calificacion']['cal_fecha_expiracion']);
-				$resultado_validacion['InfoFecha'] = $this -> validarCalificacionObtenerFechas($fecha_expiracion[0]);
-
-				/**
-				 * Se tienen calificaciones previas. Revisar si ya esta como artesano normal o no.
-				 */
-				$existe_calificacion_como_artesano_normal = false;
-				foreach ($calificaciones as $key => $calificacion) {
-					if ($calificacion['Calificacion']['tipos_de_calificacion_id'] == 1) {
-						$existe_calificacion_como_artesano_normal = true;
-						break;
-					}
-				}
-				/**
-				 * ¿Es un artesano normal?
-				 */
-				if ($existe_calificacion_como_artesano_normal) {// Si
-					$resultado_validacion['Mensaje'] = 'Este artesano ya esta calificado como artesano normal';
-				} else {// No
+				if (!empty($calificaciones)) {// Si
 					/**
-					 * Verificar si hay calificaciones previas con la misma rama
+					 * Obtener las fechas relacionadas con la última calificación creada
 					 */
-					$existe_calificacion_en_la_misma_rama = false;
+					$fecha_expiracion = explode(' ', $calificaciones[0]['Calificacion']['cal_fecha_expiracion']);
+					$resultado_validacion['InfoFecha'] = $this -> validarCalificacionObtenerFechas($fecha_expiracion[0]);
+	
+					/**
+					 * Se tienen calificaciones previas. Revisar si ya esta como artesano normal o no.
+					 */
+					$existe_calificacion_como_artesano_normal = false;
 					foreach ($calificaciones as $key => $calificacion) {
-						if ($calificacion['Calificacion']['rama_id'] == $rama_id) {
-							$existe_calificacion_en_la_misma_rama = true;
+						if ($calificacion['Calificacion']['tipos_de_calificacion_id'] == 1) {
+							$existe_calificacion_como_artesano_normal = true;
 							break;
 						}
 					}
 					/**
-					 * ¿Hay calificaciones de la misma rama?
+					 * ¿Es un artesano normal?
 					 */
-					if ($existe_calificacion_en_la_misma_rama) {// Si
-						$resultado_validacion['Mensaje'] = 'Este artesano ya se ha registrado con la rama seleccionada';
+					if ($existe_calificacion_como_artesano_normal) {// Si
+						$resultado_validacion['Mensaje'] = 'Este artesano ya esta calificado como artesano normal';
 					} else {// No
-						$resultado_validacion['Calificar'] = 1;
+						/**
+						 * Verificar si hay calificaciones previas con la misma rama
+						 */
+						$existe_calificacion_en_la_misma_rama = false;
+						foreach ($calificaciones as $key => $calificacion) {
+							if ($calificacion['Calificacion']['rama_id'] == $rama_id) {
+								$existe_calificacion_en_la_misma_rama = true;
+								break;
+							}
+						}
+						/**
+						 * ¿Hay calificaciones de la misma rama?
+						 */
+						if ($existe_calificacion_en_la_misma_rama) {// Si
+							$resultado_validacion['Mensaje'] = 'Este artesano ya se ha registrado con la rama seleccionada';
+						} else {// No
+							$resultado_validacion['Calificar'] = 1;
+						}
 					}
+				} else { // No 
+				//REVISAR****** EXISTE EL ARTESANO, PERO NO TIENE CALIFICACIONES, deberia tambien validar que haya comprado la especie			
+					$resultado_validacion['Calificar'] = 1;
+					$resultado_validacion['Artesano'] = $artesano['Artesano'];
 				}
-			} else {// No 
-//REVISAR****** EXISTE EL ARTESANO, PERO NO TIENE CALIFICACIONES, deberia tambien validar que haya comprado la especie			
-				$resultado_validacion['Calificar'] = 1;
-				$resultado_validacion['Artesano'] = $artesano['Artesano'];
+			} else { // No se tiene la especie valorada
+				$resultado_validacion['Calificar'] = 0;
+				$resultado_validacion['Mensaje'] = 'No se tiene la especie requerida para calificar como artesano autonomo';
 			}
-		} else {// No EXISTE EL ARTESANO SE DEBE REGISTRAR PRIMERO
+		} else { // No EXISTE EL ARTESANO SE DEBE REGISTRAR PRIMERO
 			$resultado_validacion['Calificar'] = 1;
-			
 		}
 
 		/**
