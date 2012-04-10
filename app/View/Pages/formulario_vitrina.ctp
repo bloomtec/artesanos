@@ -7,7 +7,7 @@
 	<?php
 	echo $this -> Form -> create('Page', array('type' => 'file'));
 	echo $this -> Form -> input('nombre_del_artesano',array('required'=>true));
-	echo $this -> Form -> input('ruc',array('required'=>true));
+	echo $this -> Form -> input('ruc',array('required'=>true,'class'=>'number'));
 	echo $this -> Form -> input('razon_social',array('required'=>true));
 	echo $this -> Form -> input('rama', array('required'=>true,'options' => $ramas, 'label' => 'Rama Artesanal a la que pertenece'));
 	echo $this -> Form -> input('productos', array('options' => $productos, 'label' => 'Productos de elaboración', 'multiple' => 'checkbox'));
@@ -53,6 +53,12 @@
 			BJS.updateSelect($("#PageParroquia"), "/parroquias/getByCiudad/" +$("#PageCiudad option:selected").val());
 
 		});
+		$('#PageFormularioVitrinaForm').submit(function(e){
+			if(!checkRucEcuador($('#PageRuc').val())){
+				e.preventDefault();
+			}
+		});
+		
 
 	});
 </script>
