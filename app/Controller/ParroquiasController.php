@@ -9,7 +9,7 @@ class ParroquiasController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('getNombre', 'getParroquias', 'getBySector');
+		$this -> Auth -> allow('getNombre', 'getParroquias', 'getBySector','getByCiudad');
 	}
 
 	public function beforeRender() {
@@ -25,6 +25,7 @@ class ParroquiasController extends AppController {
 		$this -> layout = "ajax";
 		$sectores = $this -> Parroquia -> Sector -> find('list',array('conditions'=>array('ciudad_id'=>$ciudadId),'fields'=>array('id','id')));
 		echo json_encode($this -> Parroquia -> find('list', array('order' => array('Parroquia.par_nombre' => 'ASC'), 'conditions' => array('Parroquia.sector_id' => $sectores))));
+		//echo json_encode($sectores);
 		exit(0);
 	}
 
