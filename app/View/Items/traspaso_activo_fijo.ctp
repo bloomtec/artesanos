@@ -9,7 +9,7 @@
 		echo $this -> Form -> input('ItemsPersona.ite_cantidad', array('label' => 'Cantidad', 'type' => 'select', 'empty' => 'Seleccione...'));
 		?>
 	</fieldset>
-	<?php echo $this -> Html -> link(__('Cancelar'), array('action' => 'index'), array('class' => 'cancelar'));?>
+	<?php echo $this -> Html -> link(__('Cancelar'), array('action' => 'indexActivosFijos'), array('class' => 'cancelar'));?>
 	<?php echo $this -> Form -> end(__('Guardar'));?>
 </div>
 <script type="text/javascript">

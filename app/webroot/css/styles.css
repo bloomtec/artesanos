@@ -912,8 +912,12 @@ table td.actions a {
 	background-image: url(/img/edit.png);
 	background-size: 20px;
 }
-.actions .traspaso {
+.actions .asignar {
 	background-image: url(/img/auditorias.png);
+	background-size: 23px;
+}
+.actions .desasignar {
+	background-image: url(/img/desactivar.png);
 	background-size: 23px;
 }
 .actions .pdf, span .pdf {

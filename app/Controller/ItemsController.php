@@ -377,8 +377,34 @@ class ItemsController extends AppController {
 		$this -> set(compact('items', 'tiposDeItems', 'departamentos', 'personas', 'proveedores', 'provincias'));
 	}
 
-	public function darDeBajaActivoFijo() {
-		
+	public function darDeBajaActivoFijo($activoFijoId = null) {
+		if(!$activoFijoId) {
+			
+		}
+		if($this -> request -> is('post') || $this -> request -> is('put')) {
+			if($this -> request -> data['Item']['para_dar_de_baja']) {
+				$this -> request -> data['Item']['ite_cantidad'] -= $this -> request -> data['Item']['para_dar_de_baja'];
+				if($this -> Item -> save($this -> request -> data)) {
+					$this -> Session -> setFlash('Se dio de baja la cantidad especificada', 'crud/success');
+					$this -> redirect(array('action' => 'indexActivosFijos'));
+				} else {
+					$this -> Session -> setFlash('No se dio de baja la cantidad especificada. Por favor, intente de nuevo', 'crud/error');
+				}
+			}
+		}
+		$this -> Item -> recursive = -1;
+		$item = $this -> Item -> read(null, $activoFijoId);
+		$cantidades = $this -> Item -> query("SELECT SUM(`ite_cantidad`) FROM `items_personas` WHERE `item_id` = $activoFijoId");
+		$cantidades = $cantidades[0][0]['SUM(`ite_cantidad`)'];
+		$tmp_cantidades = $item['Item']['ite_cantidad'] - $cantidades;
+		$cantidades = array();
+		for($i = 0; $i <= $tmp_cantidades; $i += 1) {
+			$cantidades[$i] = $i;
+		}
+		if($item) {
+			$this -> request -> data = $item;
+		}
+		$this -> set(compact('item', 'cantidades'));
 	}
 	
 	public function asignarActivoFijo($activoFijoId = null) {
@@ -389,7 +415,7 @@ class ItemsController extends AppController {
 			$this -> Item -> ItemsPersona -> create();
 			if($this -> Item -> ItemsPersona -> save($this -> request -> data)) {
 				$this -> Session -> setFlash('Se asigno el activo fijo a la persona.', 'crud/success');
-				$this -> redirect(array('action' => 'index'));
+				$this -> redirect(array('action' => 'indexActivosFijos'));
 			} else {
 				$this -> Session -> setFlash('No se asigno el activo fijo a la persona. Por favor, intente de nuevo.', 'crud/error');
 			}
@@ -408,7 +434,35 @@ class ItemsController extends AppController {
 	}
 	
 	public function desasignarActivoFijo($activoFijoId = null) {
-		
+		if($activoFijoId) {
+			if($this -> request -> is('post')) {
+				foreach($this -> request -> data as $itemsPersona) {
+					if($itemsPersona['ItemsPersona']['cantidad_desasignar']) {
+						if($itemsPersona['ItemsPersona']['ite_cantidad'] == $itemsPersona['ItemsPersona']['cantidad_desasignar']) {
+							// Eliminar el registro
+							$this -> Item -> ItemsPersona -> delete($itemsPersona['ItemsPersona']['id']);
+						} else {
+							// Reducir cantidad
+							$itemsPersona['ItemsPersona']['ite_cantidad'] -= $itemsPersona['ItemsPersona']['cantidad_desasignar'];
+							$this -> Item -> ItemsPersona -> save($itemsPersona);
+						}
+					}
+				}
+				$this -> Session -> setFlash('Se registraron los cambios', 'crud/success');
+				$this -> redirect(array('action' => 'indexActivosFijos'));
+			}
+			$itemsPersonas = $this -> Item -> ItemsPersona -> find('all', array('conditions' => array('ItemsPersona.item_id' => $activoFijoId)));
+			$personas = array();
+			foreach($itemsPersonas as $key => $value) {
+				$personas[$value['ItemsPersona']['persona_id']] = $value['ItemsPersona']['persona_id'];
+			}
+			$personas = $this -> Item -> Persona -> find('all', array('conditions' => array('Persona.id' => $personas), 'recursive' => -1));
+			foreach($personas as $key => $persona) {
+				$item = $this -> Item -> ItemsPersona -> find('first', array('conditions' => array('ItemsPersona.item_id' => $activoFijoId, 'ItemsPersona.persona_id' => $persona['Persona']['id'])));
+				$personas[$key]['ItemsPersona'] = $item['ItemsPersona'];
+			}
+			$this -> set(compact('personas'));
+		}
 	}
 	
 	public function traspasoActivoFijo() {
