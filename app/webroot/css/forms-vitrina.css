@@ -1,0 +1,95 @@
+/** FORMS **/
+.form label {
+	clear: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	font-weight: bold;
+	margin-bottom: 5px;
+	margin-top: 11px;
+	text-align: left;
+	text-transform: capitalize;
+	display: block;
+}
+.form .checkbox label{
+	display:inline;
+}
+.form input, form textarea, form .input input {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	font-weight: bold;
+	clear: none;
+	padding: 0;
+	
+}
+form .input input {
+	padding: 0 2px;
+}
+#container.login .submit input {
+	margin-top: 5px;
+	border: 1px solid #152554;
+	cursor: pointer;
+	
+	/** css3 gradient **/
+		
+	background: #4778ff; /* Old browsers */
+	background: -moz-linear-gradient(top, #4778ff 0%, #26469e 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4778ff), color-stop(100%,#26469e)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #4778ff 0%,#26469e 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #4778ff 0%,#26469e 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #4778ff 0%,#26469e 100%); /* IE10+ */
+	background: linear-gradient(top, #4778ff 0%,#26469e 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4778ff', endColorstr='#26469e',GradientType=0 ); /* IE6-9 */
+}
+#container.login .submit input:hover{
+/** css3 gradient **/
+	background: #26469e; /* Old browsers */
+	background: -moz-linear-gradient(top, #26469e 0%, #4778ff 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#26469e), color-stop(100%,#4778ff)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #26469e 0%,#4778ff 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #26469e 0%,#4778ff 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #26469e 0%,#4778ff 100%); /* IE10+ */
+	background: linear-gradient(top, #26469e 0%,#4778ff 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#26469e', endColorstr='#4778ff',GradientType=0 ); /* IE6-9 */		
+}
+.form input.time {
+	width: 2.5em;
+}
+.form .description {
+	padding-top: 10px;
+	display: block;
+	float: left;
+}
+.error-form {
+	/* supply height to ensure consistent positioning for every browser */
+	background-color: #CD0000;
+	background-image: url("/img/triangulo.jpg");
+	background-position: left center;
+	background-repeat: no-repeat;
+	color: #FFFFFF;
+	font-size: 11px;
+	font-weight: bold;
+	height: 15px;
+	margin-left: -30px;
+	margin-top: -1px;
+	padding: 6px 10px 6px 33px;
+	/* CSS3 spicing for mozilla and webkit */
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius-bottomleft: 0;
+	-moz-border-radius-topleft: 0;
+	-webkit-border-bottom-left-radius: 0;
+	-webkit-border-top-left-radius: 0;
+	-moz-box-shadow: 0 0 6px #ddd;
+	-webkit-box-shadow: 0 0 6px #ddd;
+}
+.fila-datos{
+	clear:left;
+}
+.form2 form{
+	width:900px;
+}
+.form2 fieldset{
+	width:50%;
+	float:left;
+}
+/** END FORMS **/
