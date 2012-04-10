@@ -19,8 +19,8 @@
 		<td><?php echo h($ingresosEspecie['IngresosEspecie']['ing_cantidad_total']); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $ingresosEspecie['IngresosEspecie']['id']),array('class'=>'view','title'=>'Ver')); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $ingresosEspecie['IngresosEspecie']['id']),array('class'=>'edit','title'=>'Modificar')); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $ingresosEspecie['IngresosEspecie']['id']), array('class'=>'delete','title'=>'Borrar'), __('Esta seguro que quiere eliminar el registro?', $ingresosEspecie['IngresosEspecie']['id'])); ?>
+			<?php //echo $this->Html->link(__('Edit'), array('action' => 'edit', $ingresosEspecie['IngresosEspecie']['id']),array('class'=>'edit','title'=>'Modificar')); ?>
+			<?php //echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $ingresosEspecie['IngresosEspecie']['id']), array('class'=>'delete','title'=>'Borrar'), __('Esta seguro que quiere eliminar el registro?', $ingresosEspecie['IngresosEspecie']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

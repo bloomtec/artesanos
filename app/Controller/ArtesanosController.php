@@ -520,6 +520,15 @@ class ArtesanosController extends AppController {
 			}
 			// Asignar inspector a la calificacion
 			$this -> asignarInspector($calificacion['Calificacion']['id']);
+			$especieValorada = null;
+			if($calificacion['Calificacion']['tipos_de_calificacion_id'] == 1) {
+				$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $artesano['Artesano']['id'] . '/' . Configure::read('cal_normal'));
+			} elseif($calificacion['Calificacion']['tipos_de_calificacion_id'] == 2) {
+				$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $artesano['Artesano']['id'] . '/' . Configure::read('cal_autonomo'));
+			}
+			$especieValorada['EspeciesValorada']['se_uso'] = 1;
+			$this -> loadModel('EspeciesValorada');
+			$this -> EspeciesValorada -> save($especieValorada);
 			$this -> redirect(array('controller' => 'calificaciones', 'action' => 'resumen', $calificacion['Calificacion']['id']));
 
 		} else {
@@ -1073,7 +1082,7 @@ class ArtesanosController extends AppController {
 							 * Se está haciendo una recalificación
 							 */
 							$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $artesano['Artesano']['id'] . '/' . Configure::read('recal'));
-							if ($especieValorada && !$especieValorada['EspecieValorada']['se_uso']) {
+							if ($especieValorada && !$especieValorada['EspeciesValorada']['se_uso']) {
 								$resultado_validacion['Calificar'] = 1;
 							} else {
 								$resultado_validacion['Calificar'] = 0;
@@ -1086,7 +1095,7 @@ class ArtesanosController extends AppController {
 							$titulacion = $this -> requestAction('/titulaciones/verificarTituloRamaArtesano/' . $artesano['Artesano']['id'] . '/' . $calificaciones[0]['Calificacion']['rama_id']);
 							if(!empty($titulacion)) {
 								$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $artesano['Artesano']['id'] . '/' . Configure::read('cal_normal'));
-								if ($especieValorada && !$especieValorada['EspecieValorada']['se_uso']) {
+								if ($especieValorada && !$especieValorada['EspeciesValorada']['se_uso']) {
 									$resultado_validacion['Calificar'] = 1;
 								} else {
 									$resultado_validacion['Calificar'] = 0;
@@ -1146,7 +1155,7 @@ class ArtesanosController extends AppController {
 			 * 14 => 14		-- 36+ meses
 			 */
 			$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $artesano['Artesano']['id'] . '/' . $resultado_validacion['InfoFecha']['TipoEspecie']);
-			if ($especieValorada && !$especieValorada['EspecieValorada']['se_uso']) {
+			if ($especieValorada && !$especieValorada['EspeciesValorada']['se_uso']) {
 				$resultado_validacion['Mensaje'] = 'Se paso del tiempo dado para la recalificación. Se tiene la especie valorada que corresponde.';
 				$resultado_validacion['Calificar'] = 1;
 			} else {
@@ -1203,11 +1212,10 @@ class ArtesanosController extends AppController {
 		/**
 		 * ¿Hay un artesano registrado?
 		 */
-		if (!empty($artesano)) {// Si
-			
-			// TODO : AQUI VA LA VALIDACION DE SI TIENE LA ESPECIE
+		if (!empty($artesano)) { // Si
+
 			$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $artesano['Artesano']['id'] . '/' . Configure::read('cal_autonomo'));
-			if ($especieValorada && !$especieValorada['EspecieValorada']['se_uso']) {
+			if ($especieValorada && !$especieValorada['EspeciesValorada']['se_uso']) {
 				/**
 				 * Como el artesano existe, verificar si ya tiene calificaciones previas.
 				 * ¿Tiene calificaciones previas?

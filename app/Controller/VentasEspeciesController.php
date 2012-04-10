@@ -49,16 +49,18 @@ class VentasEspeciesController extends AppController {
 	 */
 	public function add() {
 		if ($this -> request -> is('post')) {
-			//debug($this -> request -> data);
+			
 			if(
 				(!$this -> request -> data['VentasEspecie']['juntas_provincial_id'] && $this -> request -> data['VentasEspecie']['artesano_id'])
 				|| ($this -> request -> data['VentasEspecie']['juntas_provincial_id'] && !$this -> request -> data['VentasEspecie']['artesano_id'])
 			) {
+				
 				$this -> VentasEspecie -> create();
 				
 				$this -> request -> data['VentasEspecie']['ven_cantidad'] = 0;
 				$this -> request -> data['VentasEspecie']['ven_valor'] = 0;
 				
+				//debug($this -> request -> data);
 				foreach($this -> request -> data['EspeciesValorada'] as $key => $datosEspecieValorada) {
 					//debug($datosEspecieValorada);
 					if($datosEspecieValorada['cantidad']) {
@@ -80,12 +82,13 @@ class VentasEspeciesController extends AppController {
 										'conditions' => array(
 											'EspeciesValorada.tipos_especies_valorada_id' => $datosEspecieValorada['tipos_especies_valorada_id'],
 											'EspeciesValorada.ventas_especie_id' => null
-										)
+										),
+										'recursive' => -1
 									)
 								);
 								
 								$especieValorada['EspeciesValorada']['ventas_especie_id'] = $this -> VentasEspecie -> id;
-								
+								//debug($especieValorada);
 								$this -> VentasEspecie -> EspeciesValorada -> save($especieValorada);
 							}
 						}
