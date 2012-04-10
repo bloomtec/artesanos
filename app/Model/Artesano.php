@@ -10,21 +10,7 @@ class Artesano extends AppModel {
 	public $currentUsrId = -1;
 	
 	public $virtualFields = array(
-		'nombre_completo' =>	'SELECT CONCAT(datosA.dat_nombres, " ", datosA.dat_apellido_paterno, " ", datosA.dat_apellido_materno)
-								FROM datos_personales AS datosA, datos_personales AS datosB
-								WHERE datosA.calificacion_id IN(
-								SELECT calificaciones.id
-									FROM calificaciones, artesanos
-									WHERE calificaciones.artesano_id = artesanos.id
-									AND artesanos.id = Artesano.id
-								)
-								AND datosB.calificacion_id IN(
-								SELECT calificaciones.id
-									FROM calificaciones, artesanos
-									WHERE calificaciones.artesano_id = artesanos.id
-									AND artesanos.id = Artesano.id
-								)
-								AND datosA.id > datosB.id'
+		'nombre_completo' =>	'concat(art_nombres," ",art_apellido_paterno," ",art_apellido_materno)'
 	);
 	
 	public $displayField = 'art_cedula';

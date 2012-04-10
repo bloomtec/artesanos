@@ -6,12 +6,16 @@
 			<?php echo $this -> Form -> input('cedula_artesanos', array('class' => 'artesanoSelect controlSelects cedula', 'label' => false, 'type' => 'text', 'placeholder' => 'digite la cedula del artesano'));?>
 			<a class='button validarCedula' href='#'>validar</a>
 		</div>
-		<div style='clear:both;' class="form-titulacion">
+	</fieldset>
+	<div style='clear:both;' class="form-titulacion">
+		<fieldset>
+			<br />
+			<h1 class='nombre'></h1>
 			<?php
 			echo $this -> Form -> hidden('estados_solicitudes_titulacion_id', array('value' => 1));
 			echo $this -> Form -> input('titulo_id', array('empty' => 'Seleccione...'));
 			echo $this -> Form -> input('tipos_solicitudes_titulacion_id', array('empty' => 'Seleccione...'));
-			echo $this -> Form -> input('artesano_id', array('empty' => 'Seleccione...'));
+			echo $this -> Form -> hidden('artesano_id');
 			?>
 			<div id="archivos1" style="display:none;">
 				<!--
@@ -41,12 +45,12 @@
 				echo $this -> Form -> input('Archivos2.6.memoriaDescriptiva', array('type' => 'file', 'label' => 'Memoria descriptiva'));
 				?>
 			</div>
-		</div>
-	</fieldset>
-	<br />
-	<br />
-	<?php echo $this -> Html -> link(__('Cancelar'), array('action' => 'index'), array('class' => 'cancelar'));?>
-	<?php echo $this -> Form -> end(__('Guardar'));?>
+		</fieldset>
+		<br />
+		<br />
+		<?php echo $this -> Html -> link(__('Cancelar'), array('action' => 'index'), array('class' => 'cancelar'));?>
+		<?php echo $this -> Form -> end(__('Guardar'));?>
+	</div>
 </div>
 <style>
 	.ventasEspecies.form form {
@@ -64,11 +68,13 @@
 			BJS.JSON('/artesanos/getDatosPersonales/' + $('.cedula').val(), {}, function(datosPersonales) {
 				if(datosPersonales) {
 					$('.form-titulacion').show();
-					$('#VentasEspecieArtesanoId').val(datosPersonales.Artesano.id);
-					console.log(datosPersonales.DatosPersonal.nombre_completo);
+					$('#SolicitudesTitulacionArtesanoId').val(datosPersonales.Artesano.id);
+					$('h1.nombre').text(datosPersonales.Artesano.nombre_completo);
 				} else {
 					$('.form-titulacion').hide();
 					alert('No existe un artesano con este documento en la base de datos');
+					$('#SolicitudesTitulacionArtesanoId').val('');
+					$('h1.nombre').text('');
 				}
 
 			});
