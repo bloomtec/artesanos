@@ -579,18 +579,23 @@ $(function() {
 	});
 	
 	
+	 $(".modal2 #btnCerrar").click(function(){
+        $(".modalCloseImg").click();
+    });
+    
+    
 	$("#btnModalRegArtesano2").click(function() {
-		if(!checkCedulaEcuador($("#txtCedula").val())) {
+		/*if(!checkCedulaEcuador($("#txtCedula").val())) {
 			e.preventDefault();
 			$("#txtCedula").focus();
-		}
+		} */
 		
-		$.post("/artesanos/modalRegNuevoArtesano", $('#divCampos :input').serialize(), resultado, "json");
+		$.post("/artesanos/modalRegNuevoArtesano", $('#camposModalRegArtesano :input').serialize(), resultado2, "json");
 		
-		function resultado(msj) {
+		function resultado2(msj) {
 			if (msj.res==true) {
 				alert(msj.msj);
-				$(".modal #btnCerrar").click();
+				$(".modal2 #btnCerrar").click();
 			} else if(msj.res==false){
 				alert(msj.msj);
 			} else {

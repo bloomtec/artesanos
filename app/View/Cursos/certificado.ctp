@@ -1,3 +1,4 @@
+<?php //debug($alumno); ?>
 <style type="text/css">
 #contenedor{
 	margin:auto;

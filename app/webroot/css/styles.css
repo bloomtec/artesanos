@@ -1659,7 +1659,7 @@ tr.diferente td.audit-value, tr.diferente td.audit-data {
 }
 
 /* FORMULARIO MODAL */
-.modal {
+.modal, .modal2{
 	display: block;
 	font-size: 18px;
 	line-height: 1;
@@ -1676,7 +1676,15 @@ tr.diferente td.audit-value, tr.diferente td.audit-data {
 	-webkit-box-shadow: 1px 1px 20px rgba(0,0,0,0.35);
 	-moz-box-shadow: 1px 1px 20px rgba(0,0,0,0.35);
 	box-shadow: 1px 1px 20px rgba(0,0,0,0.35);
+}
+
+.modal{
 	width:420px;
+}
+
+.modal2{
+	width:auto;
+	height: auto;
 }
 
 /* Vista De Permisos */

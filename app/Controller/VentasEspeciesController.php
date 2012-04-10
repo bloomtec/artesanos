@@ -103,7 +103,18 @@ class VentasEspeciesController extends AppController {
 		$juntasProvinciales = $this -> VentasEspecie -> JuntasProvincial -> find('list');
 		$tiposEspeciesValorada = $this -> VentasEspecie -> EspeciesValorada -> TiposEspeciesValorada -> find('all');
 		$this -> set(compact('juntasProvinciales', 'tiposEspeciesValorada'));
-	}
+	
+		//Para el modal agregar artesano
+		$this->loadModel("Artesano", true);
+		$nacionalidades = $this -> Artesano -> getValores(1);
+		$tipos_de_sangre = $this -> Artesano -> getValores(2);
+		$estados_civiles = $this -> Artesano -> getValores(3);
+		$grados_de_estudio = $this -> Artesano -> getValores(4);
+		$sexos = $this -> Artesano -> getValores(5);
+		$tipos_de_discapacidad = $this -> Artesano -> getValores(6);
+		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos', 'tipos_de_discapacidad'));
+	
+}
 
 	/**
 	 * edit method
