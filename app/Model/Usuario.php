@@ -229,14 +229,29 @@ class Usuario extends AppModel {
 		if(!isset($this -> data['Usuario']['usu_unidad'])) {
 			$this -> data['Usuario']['usu_unidad'] = '';
 		}
-		if(isset($this -> data['Usuario']['id'])) {
+		/*if(isset($this -> data['Usuario']['id'])) {
 			$this -> data['OldData'] = $this -> find('first', array('conditions' => array('Usuario.id' => $this -> data['Usuario']['id'])));
 			//$this -> data['OldData']['Permisos'] = $this -> requestAction('/usuarios/getValoresPermisos/' . $this->data['Usuario']['id']);
-		}
+		}*/
 	    return true;
 	}
-
-	public function afterSave($created) {
+	
+	function parentNode() {
+	    if (!$this->id && empty($this->data)) {
+	        return null;
+	    }
+	    $data = $this->data;
+	    if (empty($this->data)) {
+	        $data = $this->read();
+	    }
+	    if (!isset($data['Usuario']['rol_id']) || !$data['Usuario']['rol_id']) {
+	        return null;
+	    } else {
+	        return array('Rol' => array('id' => $data['Usuario']['rol_id']));
+	    }
+	}
+	
+	/*public function afterSave($created) {
 		$data = $this -> parseData($this -> data);
 		$auditoria = array();
 		// Corregir añadir el primer usuario
@@ -303,7 +318,7 @@ class Usuario extends AppModel {
 					}
 					$new_data['Antes'] .= '<tr><td class="audit-value">' . $modelo . '::' . $accion . '</td><td class="audit-data">' . $permiso . '</td></tr>';
 				}
-			}*/
+			}
 			$new_data['Antes'] .= '</table>';
 		}
 		
@@ -391,21 +406,6 @@ class Usuario extends AppModel {
 		$new_data['Despues'] .= '</table>';
 		
 		return $new_data;
-	}
-	
-	function parentNode() {
-	    if (!$this->id && empty($this->data)) {
-	        return null;
-	    }
-	    $data = $this->data;
-	    if (empty($this->data)) {
-	        $data = $this->read();
-	    }
-	    if (!$data['Usuario']['rol_id']) {
-	        return null;
-	    } else {
-	        return array('Rol' => array('id' => $data['Usuario']['rol_id']));
-	    }
-	}
+	}*/
 
 }
