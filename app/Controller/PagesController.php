@@ -165,5 +165,13 @@ class PagesController extends AppController {
 		$provincias = $this -> Artesano -> Calificacion -> Taller -> Provincia -> find('list');
 		$this -> set(compact('ramas', 'productos', 'provincias'));
 	}
+	
+	private function uploadIngresoEspecieFile($tmp_name = null, $filename = null) {
+		$this -> cleanupIngresoEspecieFiles();
+		if ($tmp_name && $filename) {
+			$url = 'files/uploads/especiesValoradas/' . $filename;
+			return move_uploaded_file($tmp_name, $url);
+		}
+	}
 
 }
