@@ -244,7 +244,7 @@ class Usuario extends AppModel {
 	    if (empty($this->data)) {
 	        $data = $this->read();
 	    }
-	    if (!isset($data['Usuario']['rol_id']) || !$data['Usuario']['rol_id']) {
+	    if (!$data['Usuario']['rol_id']) {
 	        return null;
 	    } else {
 	        return array('Rol' => array('id' => $data['Usuario']['rol_id']));
