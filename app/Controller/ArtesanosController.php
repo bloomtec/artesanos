@@ -48,11 +48,7 @@ class ArtesanosController extends AppController {
 		if ($documento) {
 			$artesano = $this -> Artesano -> findByArtCedula($documento);
 			if (!empty($artesano)) {
-				$calificacion = $artesano['Calificacion'][count($artesano['Calificacion']) - 1];
-				$this -> Artesano -> Calificacion -> DatosPersonal -> recursive = -1;
-				$datos_personales = $this -> Artesano -> Calificacion -> DatosPersonal -> findByCalificacionId($calificacion['id']);
-				$datos_personales['Artesano'] = $artesano['Artesano'];
-				echo json_encode($datos_personales);
+				echo json_encode($artesano);
 			} else {
 				return null;
 			}

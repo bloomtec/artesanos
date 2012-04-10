@@ -16,6 +16,8 @@
 	</div>
 	</fieldset>
 	<div class="form-venta">
+		<br />
+		<h1 class='nombre'></h1>
 		<table id="ventasEspeciesValoradas">
 			<tr>
 				<th>Tipo Especie valorda</th>
@@ -103,10 +105,12 @@ $(function(){
 			if(datosPersonales){
 				$('.form-venta').show();
 				$('#VentasEspecieArtesanoId').val(datosPersonales.Artesano.id);
-				console.log(datosPersonales.DatosPersonal.nombre_completo);
+				$('hi.nombre').text(datosPersonales.Artesano.nombre_completo);
 			}else{
 				$('.form-venta').hide();
 				alert('No existe un artesano con este documento en la base de datos');
+				$('#VentasEspecieArtesanoId').val('');
+				$('h1.nombre').text('');
 			}
 			
 		});
