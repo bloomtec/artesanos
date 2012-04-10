@@ -54,7 +54,7 @@ class PagesController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('display', 'lanzador','formularioVitrina');
+		$this -> Auth -> allow('display', 'lanzador', 'formularioVitrina');
 	}
 
 	/**
@@ -88,59 +88,63 @@ class PagesController extends AppController {
 	public function lanzador() {
 		$this -> layout = 'login';
 	}
-	public function formularioVitrina(){
-		$this -> layout='externas';
+
+	public function formularioVitrina() {
+		$this -> layout = 'externas';
 		$this -> loadModel('Artesano');
-		if(!empty($this -> request -> data)){
-			$mensaje="";
+		if (!empty($this -> request -> data)) {
+			$mensaje = "";
 			$provincias = $this -> Artesano -> Calificacion -> Taller -> Provincia -> find('list');
 			$cantones = $this -> Artesano -> Calificacion -> Taller -> Canton -> find('list');
 			$ciudades = $this -> Artesano -> Calificacion -> Taller -> Ciudad -> find('list');
 			$parroquias = $this -> Artesano -> Calificacion -> Taller -> Parroquia -> find('list');
 			$ramas = $this -> Artesano -> Calificacion -> Rama -> find('list');
-			foreach($this -> request -> data['Page'] as $key => $value){
+			foreach ($this -> request -> data['Page'] as $key => $value) {
 				switch ($key) {
-					case 'provincia':
-						$mensaje.="Provincia: ".$provincias[$value]." <br />";
+					case 'provincia' :
+						$mensaje .= "Provincia: " . $provincias[$value] . " <br />";
 						break;
-					case 'canton':
-						$mensaje.="Cantón: ".$cantones[$value]." <br />";
+					case 'canton' :
+						$mensaje .= "Cantón: " . $cantones[$value] . " <br />";
 						break;
-					case 'ciudad':
-						$mensaje.="Ciudad: ".$ciudades[$value]." <br />";
+					case 'ciudad' :
+						$mensaje .= "Ciudad: " . $ciudades[$value] . " <br />";
 						break;
-					case 'parroquia':
-						$mensaje.="Parroquia: ".$parroquias[$value]." <br />";
+					case 'parroquia' :
+						$mensaje .= "Parroquia: " . $parroquias[$value] . " <br />";
 						break;
-					case 'rama':
-						$mensaje.="Rama: ".$ramas[$value]." <br />";
+					case 'rama' :
+						$mensaje .= "Rama: " . $ramas[$value] . " <br />";
 						break;
-					case 'productos':
-						$mensaje.="Productos: <br /> <ul>";
-						foreach($value as $producto){
-							$mensaje.="<li>".$producto."</li>";
+					case 'productos' :
+						$mensaje .= "Productos: <br /> <ul>";
+						foreach ($value as $producto) {
+							$mensaje .= "<li>" . $producto . "</li>";
 						}
-						$mensaje.="</ul>";
+						$mensaje .= "</ul>";
 						break;
-					case 'imagen_1':
-
+					case 'imagen_1' :
 						break;
-					case 'imagen_2':
-
+					case 'imagen_2' :
 						break;
-					case 'imagen_3':
-
+					case 'imagen_3' :
 						break;
-					default:
-						//debug(Inflector::humanize($key));
-					
-						$mensaje.=Inflector::humanize($key).": ".$value." <br />";
+					default :
+					//debug(Inflector::humanize($key));
+						$mensaje .= Inflector::humanize($key) . ": " . $value . " <br />";
 						break;
 				}
-				
+
 			}
-			echo ($mensaje); // ENVIAR MENSAJE
-			$this -> set('se_envio',true);
+			$email = new CakeEmail();
+			$email -> from(array('me@example.com' => 'My Site'));
+			$email -> to('ricardopandales@gmail.com');
+			$email -> subject('About');
+			$email->attachments(array('photo.jpg' => IMAGES.'header_cal_normal.jpg'));
+			$email -> send($mensaje);
+
+			// ENVIAR MENSAJE
+			$this -> set('se_envio', true);
 		}
 		//$nacionalidades = $this -> Artesano -> getValores(1);
 		//$tipos_de_sangre = $this -> Artesano -> getValores(2);
@@ -150,6 +154,7 @@ class PagesController extends AppController {
 		$ramas = $this -> Artesano -> Calificacion -> Rama -> find('list');
 		$productos = $this -> Artesano -> getValores(18);
 		$provincias = $this -> Artesano -> Calificacion -> Taller -> Provincia -> find('list');
-		$this -> set(compact('ramas','productos','provincias'));
+		$this -> set(compact('ramas', 'productos', 'provincias'));
 	}
+
 }
