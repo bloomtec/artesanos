@@ -22,24 +22,12 @@
 /**
  * Configuraciones extra
  */
-	Configure::write('cal_autonomo', array(
-		10 => 10 // Solicitud de calificación e identificación profesional artesanal autónomo
-	));
-	Configure::write('edi_cal_autonomo', array(
-		1 => 1, // Actualización de datos y/o duplicado de calificación, autónomo y carne profesional artesanal
-	));
-	Configure::write('cal_normal', array(
-		9 => 9 // Solicitud de calificación e identificación profesional artesanal
-	));
-	Configure::write('edi_cal_normal', array(
-		1 => 1, // Actualización de datos y/o duplicado de calificación, autónomo y carne profesional artesanal
-	));
-	Configure::write('edi_recal', array(
-		2 => 2, // Solicitud cambio de dirección de la recalificación artesanal
-	));
-	Configure::write('recal', array(
-		3 => 3 // Solicitud de recalificación e identificación profesional artesanal
-	));
+	Configure::write('cal_normal', 9); // Solicitud de calificación e identificación profesional artesanal
+	Configure::write('cal_autonomo', 10); // Solicitud de calificación e identificación profesional artesanal autónomo
+	Configure::write('edi_cal_autonomo', 1); // Actualización de datos y/o duplicado de calificación, autónomo y carne profesional artesanal
+	Configure::write('edi_cal_normal', 1); // Actualización de datos y/o duplicado de calificación, autónomo y carne profesional artesanal
+	Configure::write('edi_recal', 2); // Solicitud cambio de dirección de la recalificación artesanal
+	Configure::write('recal', 3); // Solicitud de recalificación e identificación profesional artesanal
 	Configure::write('igualaciones', array(
 		11 => 11, // 1 - 12 meses
 		12 => 12, // 12 - 24 meses
