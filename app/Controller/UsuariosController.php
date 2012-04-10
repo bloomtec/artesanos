@@ -216,7 +216,41 @@ class UsuariosController extends AppController {
 		$sectores = $this -> Usuario -> Sector -> find('list');
 		$this -> set(compact('roles', 'permisos', 'usu_unidades', 'cantones', 'provincias','ciudades', 'sectores'));
 	}
-	
+	/**
+	 * modificar contraseña method
+	 *
+	 * @param string $id
+	 * @return void
+	 */
+	public function modificarContrasena($id = null) {
+		$this -> Usuario -> id =  $this -> Auth -> user('id');;
+		if (!$this -> Usuario -> exists()) {
+			throw new NotFoundException(__('Usuario no válido'));
+		}
+		if ($this -> request -> is('post') || $this -> request -> is('put')) {
+			if ($this -> Usuario -> save($this -> request -> data)) {
+				$this -> Session -> setFlash(__('Se guardó el usuario'), 'crud/success');
+				$this -> redirect(array('action' => 'index'));
+			} else {
+				$this -> Session -> setFlash(__('No se pudo guardar el usuario. Por favor, intente de nuevo.'), 'crud/error');
+				if($this -> request -> data['Usuario']['usu_contrasena']!= $this -> request -> data['Usuario']['usu_contrasena_confirmar']){
+					$this -> Session -> setFlash(__('Las contraseñas no coinciden. Por favor intente de nuevo'), 'crud/error');	
+				}
+				//$this -> request -> data = $this -> Usuario -> read(null, $id);
+			}
+		} else {
+			$this -> request -> data = $this -> Usuario -> read(null, $id);
+		}
+		$usu_unidades = $this -> Usuario -> getUnidades();
+		$roles = $this -> Usuario -> Rol -> find('list');
+		$this -> loadModel('Provincia');
+		$this -> loadModel('Canton');
+		$provincias = $this -> Provincia -> find('list');
+		$cantones = $this -> Canton -> find('list');
+		$ciudades = $this -> Usuario -> Ciudad -> find('list');
+		$sectores = $this -> Usuario -> Sector -> find('list');
+		$this -> set(compact('roles', 'permisos', 'usu_unidades', 'cantones', 'provincias','ciudades', 'sectores'));
+	}
 	/**
 	 * Sección manejo ACL
 	 */

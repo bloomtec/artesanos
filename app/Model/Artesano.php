@@ -44,6 +44,10 @@ class Artesano extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
+			'isUnique'=>array(
+				'rule'    => 'isUnique',
+        		'message' => 'Este número de identidad ya se encuentra registrado.'
+			),
 		),
 	);
 

@@ -1,14 +1,21 @@
-<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Usuarios', 'index')))):
-?>
+
 <li class="usuarios">
+	<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Usuarios', 'index')))){
+?>
 	<a href="/usuarios">USUARIOS</a>
-	<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Usuarios', 'add')))):
-	?>
+	<?php }else{ ?>
+	<a href="#">USUARIOS</a>
+	<?php } ?>
+	
 	<ul>
+		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Usuarios', 'add')))): ?>
 		<li>
 			<a href="/usuarios/add">Agregar</a>
 		</li>
+		<?php endif;?>
+		<li>
+			<a href="/usuarios/modificarContrasena">Cambiar Contraseña</a>
+		</li>
 	</ul>
-	<?php endif;?>
 </li>
-<?php endif;?>
+

@@ -1242,11 +1242,14 @@ class ArtesanosController extends AppController {
 						$resultado_validacion['Calificar'] = 1;
 					}
 				}
-			} else {// No
+			} else {// No 
+//REVISAR****** EXISTE EL ARTESANO, PERO NO TIENE CALIFICACIONES, deberia tambien validar que haya comprado la especie			
 				$resultado_validacion['Calificar'] = 1;
+				$resultado_validacion['Artesano'] = $artesano['Artesano'];
 			}
-		} else {// No
+		} else {// No EXISTE EL ARTESANO SE DEBE REGISTRAR PRIMERO
 			$resultado_validacion['Calificar'] = 1;
+			
 		}
 
 		/**
