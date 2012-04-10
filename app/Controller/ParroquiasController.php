@@ -21,6 +21,12 @@ class ParroquiasController extends AppController {
 		echo json_encode($this -> Parroquia -> find('list', array('order' => array('Parroquia.par_nombre' => 'ASC'), 'conditions' => array('Parroquia.sector_id' => $secId))));
 		exit(0);
 	}
+	public function getByCiudad($ciudadId=null) {
+		$this -> layout = "ajax";
+		$sectores = $this -> Parroquia -> Sector -> find('list',array('conditions'=>array('ciudad_id'=>$ciudadId)));
+		echo json_encode($this -> Parroquia -> find('list', array('order' => array('Parroquia.par_nombre' => 'ASC'), 'conditions' => array('Parroquia.sector_id' => $sectores))));
+		exit(0);
+	}
 
 	public function getParroquias($sector_id = null) {
 		$this -> Parroquia ->recursive=0;
