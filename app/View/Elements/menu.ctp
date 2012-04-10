@@ -1,5 +1,14 @@
 <div id="main-menu">
 	<ul>
+		<?php
+			if($this -> Session -> read('Auth.User.rol_id') == 3) :
+		?>
+		<li>
+			<a href="/calificaciones/inspecciones">MIS INSPECCIONES</a>
+		</li>
+		<?php
+			endif;
+		?>
 		<?php 
 			echo $this -> element('menu/usuarios');
 		?>
