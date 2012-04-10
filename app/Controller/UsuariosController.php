@@ -225,6 +225,19 @@ class UsuariosController extends AppController {
 	public function modificarContrasena() {
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			if ($this -> Usuario -> save($this -> request -> data)) {
+				// tratando de arreglar lo del alias en la tabla aros
+				$id = $user_id = $this -> request -> data['Usuario']['id'];
+				$user_alias = $this -> request -> data['Usuario']['usu_nombre_de_usuario'];
+				$this -> Usuario -> query("UPDATE `aros` SET `alias`='$user_alias' WHERE `model`='Usuario' AND `foreign_key`=$user_id");
+				$usuario = $this -> Usuario -> read(null, $user_id);
+				$aro_id = $this -> Usuario -> query("SELECT `id` FROM `aros` WHERE `model`='Usuario' AND `foreign_key`=$id");
+				$aro_id = $aro_id[0]['aros']['id'];
+				$this -> Usuario -> query("DELETE FROM `aros_acos` WHERE `aro_id`=$aro_id");
+				if($usuario['Usuario']['rol_id'] == 3) {
+					$this -> setPermisosInspectores($usuario, true);
+				} else {
+					$this -> setPermisosInspectores($usuario, false);
+				}
 				$this -> Session -> setFlash(__('Se modificó la contraseña'), 'crud/success');
 				//$this -> redirect(array('action' => 'index'));
 			} else {
