@@ -18,7 +18,7 @@ class ReportesController extends AppController {
 				$conditions['Calificacion.rama_id'] = $this -> request -> data['Reporte']['rama_id'];
 			}
 			if(!empty($this -> request -> data['Reporte']['provincia_id'])) {
-				$conditions['Provincia.provincia_id'] =$this -> request -> data['Reporte']['rama_id'];
+				$conditions['Provincia.provincia_id'] =$this -> request -> data['Reporte']['provincia_id'];
 			}
 			if(!empty($this -> request -> data['Reporte']['apellido_materno'])) {
 				$conditions['DatosPersonal.dat_apellido_materno LIKE'] = '%' . $this -> request -> data['Reporte']['apellido_materno'] . '%';
