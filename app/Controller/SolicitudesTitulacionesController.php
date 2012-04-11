@@ -480,11 +480,11 @@ class SolicitudesTitulacionesController extends AppController {
 
 		$csv = new csvHelper();
 		$reporteTitulaciones = $this -> Session -> read('reporte');
-		$cabeceras = array('Id titulacion', 'Titulo', 'Junta provincial', 'Cedula artesano', 'Fecha');
+		$cabeceras = array('Id titulacion', 'Titulo', 'Rama', 'Provincia', 'Cedula artesano', 'Fecha');
 		$csv -> addRow($cabeceras);
 
 		for ($i = 0; $i < count($reporteTitulaciones); $i++) {
-			$filas = array($reporteTitulaciones[$i]['Titulacion']['id'], $reporteTitulaciones[$i]['Titulo']['tit_nombre'], $reporteTitulaciones[$i]['JuntasProvincial']['jun_nombre'], $reporteTitulaciones[$i]['SolicitudesTitulacion']['cedula_artesano'], $reporteTitulaciones[$i]['Titulacion']['created']);
+			$filas = array($reporteTitulaciones[$i]['Titulacion']['id'], $reporteTitulaciones[$i]['Titulo']['tit_nombre'], $reporteTitulaciones[$i]['Titulo']['nom_rama'],$reporteTitulaciones[$i]['JuntasProvincial']['nom_provincia'], $reporteTitulaciones[$i]['SolicitudesTitulacion']['cedula_artesano'], $reporteTitulaciones[$i]['Titulacion']['created']);
 			$csv -> addRow($filas);
 		}
 
@@ -517,7 +517,7 @@ class SolicitudesTitulacionesController extends AppController {
 			$this -> redirect(array('action' => 'index'));
 
 		} else {
-			//Hacer la modificación del campo se_uso y agregar el titulo
+			//Hacer la modificación del campo se_uso y agregar el titulo			
 			$data = array();
 			$this -> loadModel("Titulacion", true);
 			$data["Titulacion"]["titulo_id"] = $idTitulo;
@@ -543,6 +543,8 @@ class SolicitudesTitulacionesController extends AppController {
 		$this -> loadModel("Titulo", true);
 		$this -> loadModel("Titulacion", true);
 		$this -> loadModel("Artesano", true);
+		$this -> loadModel("Rama", true);
+		$this -> loadModel("Provincia", true);
 
 		$reporte = false;
 
@@ -561,7 +563,8 @@ class SolicitudesTitulacionesController extends AppController {
 			if ($pagina == false) {
 				$artesano = $this -> data["Reporte"]["artesano"];
 				$titulo = $this -> data["Reporte"]["titulo"];
-				$juntaProvincial = $this -> data["Reporte"]["junta_provincial"];
+				$provincia = $this -> data["Reporte"]["provincia"];
+				$rama = $this -> data["Reporte"]["rama"];
 				$fecha1 = $this -> data["Reporte"]["fecha1"];
 				$fecha2 = $this -> data["Reporte"]["fecha2"];
 
@@ -575,10 +578,17 @@ class SolicitudesTitulacionesController extends AppController {
 					$conditions[] = array('Titulacion.titulo_id' => $titulo);
 				}
 
-				if (!empty($juntaProvincial)) {
-					$conditions[] = array('Titulacion.juntas_provincial_id' => $juntaProvincial);
+				if (!empty($provincia)) {
+					$idsJuntasProvinciales = $this -> JuntasProvincial -> find("list", array("conditions"=>array("JuntasProvincial.provincia_id"=>$provincia)));
+					$conditions[] = array('Titulacion.juntas_provincial_id' => $idsJuntasProvinciales);
 				}
-
+				
+				if (!empty($rama)) {
+					$idTitulos = $this -> Titulo -> find("list", array("conditions"=>array("Titulo.rama_id"=>$rama)));
+					$conditions[] = array('Titulacion.titulo_id' => $idTitulos);
+				}
+				
+				
 				if ($fecha1 != null && $fecha2 != null) {
 
 					if ($fecha1 > $fecha2) {
@@ -608,15 +618,50 @@ class SolicitudesTitulacionesController extends AppController {
 
 			$this -> paginate = array('Titulacion' => array('limit' => 20, 'conditions' => $conditions));
 			$reporteTitulaciones = $this -> paginate('Titulacion');
+			
 			//Agregar cedula artesano
 			for ($i = 0; $i < count($reporteTitulaciones); $i++) {
 				foreach ($reporteTitulaciones[$i]['SolicitudesTitulacion'] as $key => $value) {
 					if ($key == "artesano_id") {
 						$ced_artesano = $this -> Artesano -> find("list", array("fields" => array("art_cedula"), "conditions" => array("Artesano.id" => $value)));
-						$reporteTitulaciones[$i]['SolicitudesTitulacion']["cedula_artesano"] = $ced_artesano[1];
+						$cedula = "";
+						foreach($ced_artesano as $ced_artesano){
+							$cedula = $ced_artesano;
+						}
+						$reporteTitulaciones[$i]['SolicitudesTitulacion']["cedula_artesano"] = $cedula;
 					}
 				}
 			}
+			
+			//Agregar nombre provincia
+			for ($i = 0; $i < count($reporteTitulaciones); $i++) {
+				foreach ($reporteTitulaciones[$i]['JuntasProvincial'] as $key => $value) {
+					if ($key == "provincia_id") {
+						$nombre_provincia = $this -> Provincia -> find("list", array("fields" => array("pro_nombre"), "conditions" => array("Provincia.id" => $value)));
+						$nombre = "";
+						foreach($nombre_provincia as $nombre_provincia){
+							$nombre = $nombre_provincia;
+						}
+						$reporteTitulaciones[$i]['JuntasProvincial']["nom_provincia"] = $nombre;
+						//debug($nombre_provincia);
+					}
+				}
+			}
+			
+			//Agregar nombre rama
+			for ($i = 0; $i < count($reporteTitulaciones); $i++) {
+				foreach ($reporteTitulaciones[$i]['Titulo'] as $key => $value) {
+					if ($key == "rama_id") {
+						$nombre_rama = $this -> Rama -> find("list", array("fields" => array("ram_nombre"), "conditions" => array("Rama.id" => $value)));
+						foreach($nombre_rama as $nombre_rama){
+							$nombre = $nombre_rama;
+						}
+						$reporteTitulaciones[$i]['Titulo']["nom_rama"] = $nombre_rama;
+						//debug($nombre_rama);
+					}
+				}
+			}
+			
 			//debug($reporteTitulaciones);
 			//return;
 			$this -> Session -> write('reporte', $reporteTitulaciones);
@@ -626,14 +671,15 @@ class SolicitudesTitulacionesController extends AppController {
 
 		}
 
-		$juntasProvinciales = $this -> JuntasProvincial -> find("list");
+		$provincias = $this -> JuntasProvincial -> Provincia -> find("list");
 		//Solamente los titulos que han sido otorgados
 		$idsTitulosOtorgados = $this -> Titulacion -> find("list", array("fields" => array("titulo_id")));
 		$titulos = $this -> Titulo -> find("list", array("conditions" => array("Titulo.id" => $idsTitulosOtorgados)));
 		//Solamente artesanos que han solicitado titulacion
 		$idArtesanosSolitudesTitulacion = $this -> SolicitudesTitulacion -> find("list", array("fields" => "artesano_id"));
 		$artesanos = $this -> Artesano -> find("list", array("conditions" => array("Artesano.id" => $idArtesanosSolitudesTitulacion)));
-		$this -> set(compact('juntasProvinciales', "titulos", "reporte", 'especiesValoradas', 'artesanos'));
+		$ramas = $this -> Titulo ->Rama -> find("list");
+		$this -> set(compact('provincias', "titulos", "reporte", 'ramas','especiesValoradas', 'artesanos'));
 	}
 
 }

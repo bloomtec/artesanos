@@ -3,7 +3,8 @@
 	<tr>
 		<th>Id titulacion</th>
 		<th>Titulo</th>
-		<th>Junta provincial</th>
+		<th>Rama</th>
+		<th>Provincia</th>
 		<th>Cedula artesano</th>
 		<th>Fecha</th>
 	</tr>
@@ -11,7 +12,8 @@
 	<tr>
 		<td><?php echo $reporteTitulaciones[$i]['Titulacion']['id'];?></td>
 		<td><?php echo $reporteTitulaciones[$i]['Titulo']['tit_nombre'];?></td>
-		<td><?php echo $reporteTitulaciones[$i]['JuntasProvincial']['jun_nombre'];?></td>
+		<td><?php echo $reporteTitulaciones[$i]['Titulo']['nom_rama'];?></td>
+		<td><?php echo $reporteTitulaciones[$i]['JuntasProvincial']['nom_provincia'];?></td>
 		<td><?php echo $reporteTitulaciones[$i]['SolicitudesTitulacion']['cedula_artesano'];?></td>
 		<td><?php echo $reporteTitulaciones[$i]['Titulacion']['created'];?></td>
 	</tr>

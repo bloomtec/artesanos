@@ -1,4 +1,5 @@
-<style>
+
+	<style>
 #calificacion{
 	width:750px;
 	margin: 0 auto;
@@ -62,7 +63,8 @@ h5{
 	 <?php if($inspeccion['Calificacion']['tipos_de_calificacion_id']==1){
 	 			echo $this -> element('especie_normal');
 	 		}else{
-	 			echo $this -> element('especie_autonomo');
+	 			//echo $this -> element('especie_autonomo');
+	 			echo $this -> element('especie_normal');
 	 		}
 	 ?> 
 	<?php break; ?>
