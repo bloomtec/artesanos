@@ -1,4 +1,4 @@
-
+<!--
 	<style>
 #calificacion{
 	width:750px;
@@ -54,8 +54,8 @@ h4{
 h5{
 	font-size:30px;
 }
-</style>
-<div id="calificacion">
+</style> -->
+<div id="calificaciondd"> 
 <?php switch ( $inspeccion['Calificacion']['cal_estado']) { 
 	case 1:
 ?>
@@ -63,8 +63,7 @@ h5{
 	 <?php if($inspeccion['Calificacion']['tipos_de_calificacion_id']==1){
 	 			echo $this -> element('especie_normal');
 	 		}else{
-	 			//echo $this -> element('especie_autonomo');
-	 			echo $this -> element('especie_normal');
+	 			echo $this -> element('especie_autonomo');
 	 		}
 	 ?> 
 	<?php break; ?>
