@@ -18,28 +18,43 @@ class DatosPersonalesController extends AppController {
 		$this -> Session -> delete('conditions');
 		// FUNCIONALIDAD PARA PROVINCIAS Y PARA RAMAS
 		$calificacionesId=array();
-		$calificacionesRama=array();
-		$calificacionesLocales=array();
-		$calificacionesTalleres=array();
-		debug($conditions);
+		$calificacionesRama=null;
+		$calificacionesLocales=null;
+		$calificacionesTalleres=null;
+		$calificacionesPorProvincia=null;
+		
+		
 		if(isset($conditions['Calificacion.rama_id'])){
-			$calificacionesRama=$this -> DatosPersonal -> Calificacion -> find('list',array('fields'=>array('id','id'),'conditions'=>array('Calificacion.rama_id'=>$conditions['Calificacion.rama_id'])));
-			debug($calificacionesRama);
+			$calificacionesRama=$this -> DatosPersonal -> Calificacion -> find('list',array('fields'=>array('id','id'),'conditions'=>array('Calificacion.rama_id'=>$conditions['Calificacion.rama_id'],'Calificacion.cal_estado'=>1)));
+			//debug($calificacionesRama);
 			unset($conditions['Calificacion.rama_id']);
+			$calificacionesId=$calificacionesRama;
 		}
 		if(isset($conditions['Provincia.provincia_id'])){
+		//	debug($conditions['Provincia.provincia_id']);
 			$calificacionesLocales=$this -> DatosPersonal -> Calificacion -> Local -> find('list',array('fields'=>array('calificacion_id','calificacion_id'),'conditions'=>array('Local.provincia_id'=>$conditions['Provincia.provincia_id'])));
 			$calificacionesTalleres=$this -> DatosPersonal -> Calificacion -> Taller -> find('list',array('fields'=>array('calificacion_id','calificacion_id'),'conditions'=>array('Taller.provincia_id'=>$conditions['Provincia.provincia_id'])));
+			$calificacionesPorProvincia=array_merge($calificacionesLocales,$calificacionesTalleres);
+			//debug($calificacionesLocales);
+			//debug($calificacionesTalleres);
 			unset($conditions['Provincia.provincia_id']);
+			if(!empty($calificacionesId)){
+				$calificacionesId=array_intersect($calificacionesId, $calificacionesPorProvincia);
+			}else{
+				$calificacionesId=$calificacionesPorProvincia;
+			}
+			
 		}
-		$calificacionesId=array_merge($calificacionesRama,$calificacionesLocales,$calificacionesTalleres);
-		//debug($calificacionesRama);
-		//debug($calificacionesLocales);
-		//debug($calificacionesTalleres);
-		//debug($calificacionesId);
-		if($calificacionesId){
+		//$calificacionesId=array_merge($calificacionesRama,$calificacionesLocales,$calificacionesTalleres);
+		
+		//$calificacionesId=array_intersect($calificacionesRama, $calificacionesPorProvincia);
+		
+		if(!empty($calificacionesId)){
 			$conditions['DatosPersonal.calificacion_id']=$calificacionesId;
+		}else{
+			$conditions['DatosPersonal.calificacion_id']=-1;
 		}
+
 		//___________________________________________
 		
 		$this -> paginate = array('conditions' => $conditions, 'order' => array('DatosPersonal.dat_nombres' => 'ASC'));

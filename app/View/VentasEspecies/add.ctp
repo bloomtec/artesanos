@@ -28,7 +28,7 @@
 			?>
 				<tr>
 					<td>
-						<p>
+						<p style='text-align: left;'>
 							<?php echo $tiposEspecie['TiposEspeciesValorada']['tip_nombre']?>
 							<?php echo $this->Form->hidden('EspeciesValorada.'.$i.'.tipos_especies_valorada_id',array('value'=>$tiposEspecie['TiposEspeciesValorada']['id'])); ?>
 						</p>
