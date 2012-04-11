@@ -143,6 +143,9 @@ class ItemsController extends AppController {
 		$this -> loadModel('Provincia');
 		$this -> loadModel('Canton');
 		$this -> loadModel('Ciudad');
+		$this -> loadModel('Configuracion');
+		$config = $this -> Configuracion -> read(null, 1);
+		$this -> set('iva', $config['Configuracion']['con_iva']);
 		// $provincias_con_inspectores = $this -> Artesano -> Calificacion -> Taller -> Provincia -> Usuario -> find('list', array('fields' => array('Usuario.provincia_id'), 'conditions' => array('Usuario.rol_id' => 3)));
 		$provincias = array(0 => 'Seleccione...');
 		// $provincias_tmp = $this -> Artesano -> Calificacion -> Taller -> Provincia -> find('list', array('conditions' => array('Provincia.id' => $provincias_con_inspectores)));

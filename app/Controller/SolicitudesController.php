@@ -126,11 +126,19 @@ class SolicitudesController extends AppController {
 			$this -> request -> data['Solicitud']['sol_costos'] = $this -> formatearValor($this -> request -> data['Solicitud']['sol_costos']);
 			if ($this -> Solicitud -> save($this -> request -> data)) {
 				$this -> Session -> setFlash(__('La solicitud ha sido guardada'), 'crud/success');
-				CakeEmail::deliver($configuracion['Configuracion']['con_correos_solicitudes'], 'Solicitud de curso','Se modifico una solicitud en el sistema: '.$this -> request -> data['Solicitud']['sol_nombre_de_la_capacitacion'], array('from' => array('no-reply@jnda.gob.ec' => 'JNDA SOLICITUDES')));
+				
+				$this -> loadModel('Configuracion');
+				$correos = $this -> Configuracion -> read(null, 1);
+				$correos = $correos['Configuracion']['con_correos_solicitudes'];
+				$correos = explode(',', $correos);
+				
+				foreach($correos as $key => $correo) {
+					CakeEmail::deliver(trim($correo), 'Solicitud de curso','Se modifico una solicitud en el sistema: '.$this -> request -> data['Solicitud']['sol_nombre_de_la_capacitacion'], array('from' => array('no-reply@jnda.gob.ec' => 'JNDA SOLICITUDES')));
+				}
+				
 				$this -> redirect(array('action' => 'index'));
 			} else {
 				$this -> Session -> setFlash(__('No se pudo guardar la solicitud. Por favor, intente de nuevo.'), 'crud/error');
-				
 			}
 		} else {
 			$this -> request -> data = $this -> Solicitud -> read(null, $id);

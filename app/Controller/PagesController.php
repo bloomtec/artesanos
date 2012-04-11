@@ -106,7 +106,7 @@ class PagesController extends AppController {
 						$mensaje .= "Provincia: " . $provincias[$value] . " <br />";
 						break;
 					case 'canton' :
-						$mensaje .= "Cantón: " . $cantones[$value] . " <br />";
+						$mensaje .= "Cant贸n: " . $cantones[$value] . " <br />";
 						break;
 					case 'ciudad' :
 						$mensaje .= "Ciudad: " . $ciudades[$value] . " <br />";
@@ -148,18 +148,25 @@ class PagesController extends AppController {
 				}
 
 			}
-			$email = new CakeEmail();
-			$email -> emailFormat('html');
-			$email -> from(array('no-reply@jnda.gob.ec' => 'Vitrina Virtual'));
+			
+			
 			$this -> loadModel('Configuracion');
 			$correos = $this -> Configuracion -> read(null, 1);
 			$correos = $correos['Configuracion']['con_correo_vitrina'];
-			$email -> to($correos);
-			$email -> subject('Solicitud Vitrina Virtual');
-			if(!empty($attachments)){
-				$email->attachments($attachments);
+			$correos = explode(',', $correos);
+			
+			foreach($correos as $key => $correo) {
+				$email = new CakeEmail();
+				$email -> emailFormat('html');
+				$email -> from(array('no-reply@jnda.gob.ec' => 'Vitrina Virtual'));
+				$email -> subject('Solicitud Vitrina Virtual');
+				if(!empty($attachments)){
+					$email->attachments($attachments);
+				}
+				$email -> to(trim($correo));
+				$email -> send($mensaje);
+				$email -> reset();
 			}
-			$email -> send($mensaje);
 
 			// ENVIAR MENSAJE
 			$this -> set('se_envio', true);
