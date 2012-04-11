@@ -403,6 +403,7 @@ class CalificacionesController extends AppController {
 
 	public function imprimir($id = null) {
 		$this -> layout = 'especie_valorada';
+		//$this -> layout ="pdf3";
 		$inspeccion = $this -> Calificacion -> read(null, $id);
 		$this -> set(compact('inspeccion'));
 	}

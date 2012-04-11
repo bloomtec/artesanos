@@ -127,16 +127,22 @@ class PagesController extends AppController {
 						$mensaje .= "</ul>";
 						break;
 					case 'imagen_1' :
-						$attachments['imagen1.jpg' ]=IMAGES.'header_cal_normal.jpg';
+						if(!$value['error']) {
+							$attachments['1 - ' . $value['name']] = $value['tmp_name'];
+						}
 						break;
 					case 'imagen_2' :
-						$attachments['imagen2.jpg' ]=IMAGES.'header_cal_normal.jpg';
+						if(!$value['error']) {
+							$attachments['2 - ' . $value['name']] = $value['tmp_name'];
+						}
 						break;
 					case 'imagen_3' :
-						$attachments['imagen3.jpg' ]=IMAGES.'header_cal_normal.jpg';
+						if(!$value['error']) {
+							$attachments['3 - ' . $value['name']] = $value['tmp_name'];
+						}
 						break;
 					default :
-					//debug(Inflector::humanize($key));
+						//debug(Inflector::humanize($key));
 						$mensaje .= Inflector::humanize($key) . ": " . $value . " <br />";
 						break;
 				}
@@ -145,7 +151,10 @@ class PagesController extends AppController {
 			$email = new CakeEmail();
 			$email -> emailFormat('html');
 			$email -> from(array('no-reply@jnda.gob.ec' => 'Vitrina Virtual'));
-			$email -> to('ricardopandales@gmail.com');
+			$this -> loadModel('Configuracion');
+			$correos = $this -> Configuracion -> read(null, 1);
+			$correos = $correos['Configuracion']['con_correo_vitrina'];
+			$email -> to($correos);
 			$email -> subject('Solicitud Vitrina Virtual');
 			if(!empty($attachments)){
 				$email->attachments($attachments);
@@ -164,6 +173,14 @@ class PagesController extends AppController {
 		$productos = $this -> Artesano -> getValores(18);
 		$provincias = $this -> Artesano -> Calificacion -> Taller -> Provincia -> find('list');
 		$this -> set(compact('ramas', 'productos', 'provincias'));
+	}
+	
+	private function uploadIngresoEspecieFile($tmp_name = null, $filename = null) {
+		$this -> cleanupIngresoEspecieFiles();
+		if ($tmp_name && $filename) {
+			$url = 'files/uploads/especiesValoradas/' . $filename;
+			return move_uploaded_file($tmp_name, $url);
+		}
 	}
 
 }

@@ -11,10 +11,11 @@
 		echo $this -> Form -> input('con_anos_pasar_de_aprendiz_a_operario', array('label' => 'Años Para Pasar De Aprendiz A Operario','type'=>'text','class'=>'number'));
 		echo $this -> Form -> input('con_anos_operario_se_pueda_calificar', array('label' => 'Años Para Que Un Operario Se Pueda Calificar','type'=>'text','class'=>'number'));
 		echo $this -> Form -> input('con_correos_solicitudes', array('label' => 'Correos Solicitudes (Ingrese los correos deseados separados por coma (,))'));
-		
+		echo $this -> Form -> input('con_correo_vitrina', array('label' => 'Correos Vitrina (Ingrese los correos deseados separados por coma (,))'));
 		echo $this -> Form -> input('con_calificacion_minima', array('label' => 'Calificación mínima para los cursos','type'=>'text','class'=>'valor'));
 		echo $this -> Form -> input('con_calificacion_maxima', array('label' => 'Calificación máxima para los cursos','type'=>'text','class'=>'valor'));
 		echo $this -> Form -> input('con_calificacion_para_aprobar_curso', array('label' => 'Calificación minima para parobar los cursos','type'=>'text','class'=>'valor'));
+		echo $this -> Form -> input('con_iva', array('label' => 'I.V.A.','type'=>'text','class'=>'valor'));
 		?>
 	</fieldset>
 	<?php echo $this -> Html -> link(__('Cancelar'), array('action' => 'index'), array('class' => 'cancelar'));?>

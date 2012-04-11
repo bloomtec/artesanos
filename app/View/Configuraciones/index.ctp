@@ -35,6 +35,11 @@
 			<?php echo h($configuracion['Configuracion']['con_correos_solicitudes']); ?>
 			&nbsp;
 		</h3>
+		<label><?php echo __('Con Correo Vitrina'); ?></label>
+		<h3>
+			<?php echo h($configuracion['Configuracion']['con_correo_vitrina']); ?>
+			&nbsp;
+		</h3>
 		<label><?php echo __('Con Calificacion Minima'); ?></label>
 		<h3>
 			<?php echo h($configuracion['Configuracion']['con_calificacion_minima']); ?>
@@ -48,6 +53,11 @@
 		<label><?php echo __('Con Calificacion Para Aprobar Curso'); ?></label>
 		<h3>
 			<?php echo h($configuracion['Configuracion']['con_calificacion_para_aprobar_curso']); ?>
+			&nbsp;
+		</h3>
+		<label><?php echo __('I.V.A.'); ?></label>
+		<h3>
+			<?php echo h($configuracion['Configuracion']['con_iva']); ?>
 			&nbsp;
 		</h3>
 		<label><?php echo __('Modified'); ?></label>

@@ -859,8 +859,7 @@ class ArtesanosController extends AppController {
 					if(!$calificacion['Calificacion']['cal_estado'] == 0) {
 						$this -> Session -> setFlash('La calificación ya no esta pendiente para calificar, verifique que se tiene la especie valorada para modificar datos.');
 					} elseif(!$especieValorada || !$especieValorada['EspeciesValorada']['se_uso']) {
-						if($this -> Auth -> user('rol_id') == 3) { goto continuar; }
-						$this -> Session -> setFlash('No se tiene la especie valorada para modificar datos');
+						if($this -> Auth -> user('rol_id') != 3) $this -> Session -> setFlash('No se tiene la especie valorada para modificar datos');
 					} else {
 						$this -> Session -> setFlash('=/');
 					}
@@ -870,7 +869,6 @@ class ArtesanosController extends AppController {
 				$this -> redirect($this -> referer());
 			}
 		}
-		continuar:
 		if($this -> request -> is('post')) {
 			foreach ($this -> request -> data['MateriasPrima'] as $key => $value) {
 				if (!$value['mat_cantidad'] || !$value['mat_tipo_de_materia_prima'] || !$value['mat_procedencia'] || !$value['mat_valor_comercial']) {

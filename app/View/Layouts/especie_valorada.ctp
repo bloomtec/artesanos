@@ -2,7 +2,7 @@
 header("Content-type: application/pdf");
 
 App::import('Vendor','especie'); 
-$pdf = new ESPECIE(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+$pdf = new ESPECIE(PDF_PAGE_ORIENTATION, PDF_UNIT, "A4", PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
@@ -38,7 +38,7 @@ $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO); //3217020347
 // ---------------------------------------------------------
 
 // set font
-$pdf->SetFont('helvetica', '', 10);
+$pdf->SetFont('helvetica', '', 7);
 
 // add a page
 $pdf->AddPage();

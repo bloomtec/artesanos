@@ -1,4 +1,5 @@
-<style>
+<!--
+	<style>
 #calificacion{
 	width:750px;
 	margin: 0 auto;
@@ -53,8 +54,8 @@ h4{
 h5{
 	font-size:30px;
 }
-</style>
-<div id="calificacion">
+</style> -->
+<div id="calificaciondd"> 
 <?php switch ( $inspeccion['Calificacion']['cal_estado']) { 
 	case 1:
 ?>
