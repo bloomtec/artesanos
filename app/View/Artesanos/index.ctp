@@ -54,7 +54,7 @@ foreach ($artesanos as $artesano):
 <div class="actions">
 	<ul>
 		<li>
-			<?php echo $this -> Html -> link(__('Agregar Artesano'), array('action' => 'add'), array('class' => 'button'));?>
+			<?php echo $this -> Html -> link(__('Agregar Artesano'), array('action' => 'agregarArtesano'), array('class' => 'button'));?>
 		</li>
 	</ul>
 </div>
