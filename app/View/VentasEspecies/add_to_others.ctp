@@ -2,8 +2,16 @@
 	.form form, table {
 		width: 100%;
 	}
+	table tr td{
+		vertical-align: top;
+			padding: 20px 0;
+	}
 	table tr td td {
 		height: auto;
+		padding: 5px 0;
+	}
+	input {
+		width: 50%;
 	}
 </style>
 <div class="ventasEspecies form">
@@ -11,9 +19,9 @@
 	<div class='especie'>
 		<table id="ventasEspeciesValoradas" >
 			<tr>
-				<th>Tipo Especie valorda</th>
-				<th>Cantidad</th>
-				<th>Artesanos</th>
+				<th style='width:40%;'>Tipo Especie valorda</th>
+				<th style='width:10%;'>Cantidad</th>
+				<th style='width:50%;'>Artesanos</th>
 			</tr>
 			<?php $i=0;
 foreach($tiposEspeciesValorada as $tiposEspecie):
@@ -34,23 +42,22 @@ foreach($tiposEspeciesValorada as $tiposEspecie):
 				?>
 				<?php
 				if (count($totales) > 1) {
-					echo $this -> Form -> input('EspeciesValorada.' . $i . '.cantidad', array('div'=>false,'label' => false, 'class' => 'cantidad', "options" => $totales, 'value' => 0));
+					echo $this -> Form -> input('EspeciesValorada.' . $i . '.cantidad', array('div' => false, 'label' => false, 'class' => 'cantidad', "options" => $totales, 'value' => 0));
 				} else {
-					echo $this -> Form -> hidden('EspeciesValorada.' . $i . '.cantidad', array('div'=>false,'label' => false, 'class' => 'cantidad', "options" => $totales, 'value' => 0));
+					echo $this -> Form -> hidden('EspeciesValorada.' . $i . '.cantidad', array('div' => false, 'label' => false, 'class' => 'cantidad', "options" => $totales, 'value' => 0));
 					echo 'No hay especies disponibles';
 				}
 				?></td>
-				<td><?php  for($k=1; $k<10; $k++):
-				?>
+				<td>
 				<table>
-					<tr row='<?php echo $i;?>'>
-						<td row="<?php echo $k;?>">
-							<?php echo $this -> Form -> input('EspeciesValorada.' . $i . '.Artesanos.' . $k, array('class' => 'cedula', 'placeHolder' => 'cedula','row'=>$k, 'label' => false, 'div' => false));?>
-							<?php echo $this -> Form -> hidden('EspeciesValorada.' . $i . '.Artesanos.' . $k, array('class' => 'cedula', 'placeHolder' => 'cedula','row'=>$k,'label' => false, 'div' => false));?>
-						</td>
-						<td row="<?php echo $k;?>"> &nbsp; </td>
+					<?php  for($k=1; $k<50; $k++): ?>
+					<tr row='<?php echo $i;?>'  style='display:none;'>
+						<td row="<?php echo $k;?>"><?php echo $this -> Form -> input('EspeciesValorada.' . $i . '.Artesanos.' . $k, array('disabled' => true,'class' => 'cedula', 'placeHolder' => 'cedula', 'fila' => $i, 'row' => $k, 'label' => false, 'div' => false, 'style' => 'display:none;'));?>
+						<?php echo $this -> Form -> hidden('EspeciesValorada.' . $i . '.Artesanos.' . $k, array('disabled' => true,'class' => 'cedula', 'placeHolder' => 'cedula', 'fila' => $i, 'row' => $k, 'label' => false, 'div' => false));?></td>
+						<td row="<?php echo $k;?>"></td>
 					</tr>
-				</table><?php endfor;?></td>
+					<?php endfor;?>
+				</table></td>
 			</tr>
 			<?php
 			$i++;
@@ -62,30 +69,39 @@ foreach($tiposEspeciesValorada as $tiposEspecie):
 </div>
 <script type="text/javascript">
 	$(function() {
-		$('.cantidad').change(function(){
-			$that=$(this);
-			$inputs=$that.parent().next().find('input');
-			console.log($that.val());
-			$inputs.val('').show();
-			$inputs.filter(':gt(3)').hide();
-			
+		$('.cantidad').change(function() {
+			$that = $(this);
+			$inputs = $that.parent().next().find('input');
+			cantidad = parseInt($that.val());
+			row = 0;
+			$.each($inputs, function(i, val) {
+				row = parseInt($(val).attr('row'));
+				if(row > cantidad) {
+					$(val).val('').hide().attr('disabled',true).parent().parent().hide();
+				} else {
+					$(val).show().removeAttr('disabled').parent().show().parent().show();
+				}
+			});
 		});
 		$('.cedula').blur(function() {
 			var $that = $(this);
 			if($that.val()) {
 				BJS.JSON('/artesanos/getDatosPersonales/' + $that.val(), {}, function(datosPersonales) {
 					if(datosPersonales) {
-						$('input[type="hidden"][row="'+$that.attr('row')+'"]').val(datosPersonales.Artesano.id);
-						$('hi.nombre').text(datosPersonales.Artesano.nombre_completo);
+						$('input[type="hidden"][row="' + $that.attr('row') + '"][fila="' + $that.attr('fila') + '"]').val(datosPersonales.Artesano.id);
+						$('input[type="hidden"][row="' + $that.attr('row') + '"][fila="' + $that.attr('fila') + '"]').parent().next().text(datosPersonales.Artesano.art_nombres);
 					} else {
 						alert('el artesano no esta registrado');
-						$('input[type="hidden"][row="'+$that.attr('row')+'"]').val('');
+						$('input[type="hidden"][row="' + $that.attr('row') + '"]').val('');
 						$that.focus();
 					}
 
 				});
 			}
 		});
+	});
+	$('#VentasEspecieAddToOthersForm').submit(function(e){
+		//e.preventDefault();
 	});
 
 </script>
