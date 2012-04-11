@@ -1,5 +1,5 @@
 <div class="artesanos form">
-	<?php echo $this -> Form -> create('Artesano');?>
+	<?php echo $this -> Form -> create('Artesano', array('type' => 'file'));?>
 	<fieldset>
 		<h2><?php echo __('Agregar Artesano');?></h2>
 		<?php
@@ -29,6 +29,12 @@
 			echo $this -> Form -> input('art_tipo_discapacidad', array('label' => 'Tipo de discapacidad:', 'type' => 'select', 'options' => $tipos_de_discapacidad, 'empty' => 'Ninguna', 'col' => '2'));
 			echo $this -> Form -> input('art_porcentaje_de_discapacidad', array('style' => 'width:60px;', 'label' => 'Porcentaje:', 'div' => 'input porcentaje', 'col' => '3', 'class' => 'porcentaje', 'type' => 'text'));
 			?>
+			<div style="clear:both"></div>
+		</div>
+		<h2><?php echo __('Subir multiples artesanos por Archivo');?></h2>
+		<div class="fila-archivo">
+			<?php echo $this -> Form -> input('archivo', array('label' => 'Archivo (formato CSV)', 'type' => 'file')); ?>
+			<a href="/files/subida_artesanos.csv" class="button">Documento Formato</a>
 			<div style="clear:both"></div>
 		</div>
 	</fieldset>
