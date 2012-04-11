@@ -101,9 +101,12 @@ class VentasEspeciesController extends AppController {
 	}
 
 	public function addToOthers() {
-	
-		$tiposEspeciesValorada = $this -> VentasEspecie -> EspeciesValorada -> TiposEspeciesValorada -> find('all');
-		debug($tiposEspeciesValorada);
+		
+		if($this -> request -> data){
+			debug($this -> request -> data);
+		}
+		$tiposEspeciesValorada = $this -> VentasEspecie -> EspeciesValorada -> TiposEspeciesValorada -> find('all',array('conditions'=>array('TiposEspeciesValorada.total_especies_para_vender >'=>0)));
+		//debug($tiposEspeciesValorada);
 		$this -> set(compact('tiposEspeciesValorada'));
 	}
 
