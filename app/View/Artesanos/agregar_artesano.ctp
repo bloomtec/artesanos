@@ -34,6 +34,16 @@
 	</fieldset>
 	<?php echo $this -> Html -> link(__('Cancelar'), array('action' => 'index'), array('class' => 'cancelar'));?>
 	<?php echo $this -> Form -> end(__('Guardar'));?>
+	<?php echo $this -> Form -> create('Artesano', array('type' => 'file'));?>
+	<fieldset>
+		<h2><?php echo __('Subir multiples artesanos por Archivo');?></h2>
+		<div class="fila-archivo">
+			<?php echo $this -> Form -> input('archivo', array('label' => 'Archivo (formato CSV)', 'type' => 'file')); ?>
+			<a href="/files/subida_artesanos.csv" class="button">Documento Formato</a>
+			<div style="clear:both"></div>
+		</div>
+	</fieldset>
+	<?php echo $this -> Form -> end(__('Subir Archivo'));?>
 </div>
 <script type="text/javascript">
 	$(function() {
