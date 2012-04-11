@@ -16,14 +16,17 @@
 	</div>
 	</fieldset>
 	<div class="form-venta">
+		<div id="DatosFactura"><?php echo $this -> element('factura'); ?></div>
+		<div style="clear: both;"></div>
 		<br />
+		<h3>Especies</h3>
 		<h1 class='nombre'></h1>
 		Nota: Solo se muestran las especies disponibles en inventario
 		<br style="clear:both;" />
 		<br style="clear:both;" />
 		<table id="ventasEspeciesValoradas">
 			<tr>
-				<th>Tipo Especie valorda</th>
+				<th>Tipo Especie valorada</th>
 				<th>Cantidad</th>
 			</tr>
 			<?php $i=0; 
