@@ -109,11 +109,16 @@ class ItemsController extends AppController {
 				$max_id += 1;
 				$this -> request -> data['IngresosDeInventario']['ing_codigo'] = $max_id;
 			}
+			$ingresoDeInventario = array();
+			$ingresoDeInventario['IngresosDeInventario'] = $this -> request -> data['IngresosDeInventario']; 
 			$this -> Item -> IngresosDeInventario -> create();
-			if ($this -> Item -> IngresosDeInventario -> save($this -> request -> data)) {
+			if ($this -> Item -> IngresosDeInventario -> save($ingresoDeInventario)) {
 				$id = $this -> Item -> IngresosDeInventario -> id;
 				// Registrar los items
 				foreach($this -> request -> data['ActivosFijos'] as $key => $activoFijo) {
+					//debug($activoFijo);
+					$activoFijo['ing_precio_unitario'] = $this -> formatearValor($activoFijo['ing_precio_unitario']);
+					$activoFijo['ing_precio_total'] = $this -> formatearValor($activoFijo['ing_precio_total']);
 					if($activoFijo['item_id'] && $activoFijo['ing_cantidad'] && ($activoFijo['ing_cantidad'] >= 1) && ($activoFijo['ing_precio_unitario'] > 0) && ($activoFijo['ing_precio_total'] > 0)) {
 						$activoFijo['ingresos_de_inventario_id'] = $id;
 						$this -> Item -> IngresosDeInventario -> IngresosDeInventariosItem -> create();
@@ -123,6 +128,7 @@ class ItemsController extends AppController {
 							$item['Item']['item_id'] = $activoFijo['item_id'];
 							$this -> Item -> save($item);
 						}
+						//debug($activoFijo);
 					}
 				}
 				$this -> Session -> setFlash(__('Se registró el suministro'), 'crud/success');
@@ -218,14 +224,12 @@ class ItemsController extends AppController {
 			//$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
 			$query = $this -> params['named']['query'];
 			$conditions = array(
-						'OR' => array(
-							'Item.ite_codigo' => "%$query%",
-							'Item.ite_nombre LIKE' => "%$query%",
-							'Item.ite_descripcion LIKE' => "%$query%",
-				
-							)
-					);
-
+				'OR' => array(
+					'Item.ite_codigo' => "%$query%",
+					'Item.ite_nombre LIKE' => "%$query%",
+					'Item.ite_descripcion LIKE' => "%$query%",
+					)
+			);
 		}
 		$conditions['ite_is_activo_fijo']=true;
 		if(!empty($conditions)) {
@@ -241,16 +245,14 @@ class ItemsController extends AppController {
 			//$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
 			$query = $this -> params['named']['query'];
 			$conditions = array(
-						'OR' => array(
-							'Item.ite_codigo' => "%$query%",
-							'Item.ite_nombre LIKE' => "%$query%",
-							'Item.ite_descripcion LIKE' => "%$query%",
-				
-							)
-					);
-
+				'OR' => array(
+					'Item.ite_codigo' => "%$query%",
+					'Item.ite_nombre LIKE' => "%$query%",
+					'Item.ite_descripcion LIKE' => "%$query%",
+					)
+			);
 		}
-		$conditions['ite_is_activo_fijo']=false;
+		$conditions['ite_is_activo_fijo'] = false;
 		if(!empty($conditions)) {
 			$this -> paginate = array('conditions' => $conditions);
 		}
@@ -266,7 +268,6 @@ class ItemsController extends AppController {
 	 * @return void
 	 */
 	public function viewActivoFijo($id = null) {
-		
 		$this -> Item -> id = $id;
 		if (!$this -> Item -> exists()) {
 			throw new NotFoundException(__('Invalid item'));
@@ -339,6 +340,8 @@ class ItemsController extends AppController {
 				$id = $this -> Item -> IngresosDeInventario -> id;
 				// Registrar los items
 				foreach($this -> request -> data['ActivosFijos'] as $key => $activoFijo) {
+					$activoFijo['ing_precio_unitario'] = $this -> formatearValor($activoFijo['ing_precio_unitario']);
+					$activoFijo['ing_precio_total'] = $this -> formatearValor($activoFijo['ing_precio_total']);
 					if($activoFijo['item_id'] && $activoFijo['ing_cantidad'] && ($activoFijo['ing_cantidad'] >= 1) && ($activoFijo['ing_precio_unitario'] > 0) && ($activoFijo['ing_precio_total'] > 0)) {
 						$activoFijo['ingresos_de_inventario_id'] = $id;
 						$this -> Item -> IngresosDeInventario -> IngresosDeInventariosItem -> create();
@@ -774,6 +777,12 @@ class ItemsController extends AppController {
 		}
 		$this -> Session -> setFlash(__('Item was not deleted'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
+	}
+	
+	private function formatearValor($valor = null) {
+		$valor = str_replace('.', '', $valor);
+		$valor = str_replace(',', '.', $valor);
+		return $valor;
 	}
 
 }
