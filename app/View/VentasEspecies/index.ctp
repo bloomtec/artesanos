@@ -27,8 +27,8 @@
 		<td><?php echo h($ventasEspecie['VentasEspecie']['ven_valor']); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $ventasEspecie['VentasEspecie']['id']),array('class'=>'view','title'=>'Ver')); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $ventasEspecie['VentasEspecie']['id']),array('class'=>'edit','title'=>'Modificar')); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $ventasEspecie['VentasEspecie']['id']), array('class'=>'delete','title'=>'Borrar'), __('Esta seguro que quiere eliminar el registro?', $ventasEspecie['VentasEspecie']['id'])); ?>
+			<?php //echo $this->Html->link(__('Edit'), array('action' => 'edit', $ventasEspecie['VentasEspecie']['id']),array('class'=>'edit','title'=>'Modificar')); ?>
+			<?php //echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $ventasEspecie['VentasEspecie']['id']), array('class'=>'delete','title'=>'Borrar'), __('Esta seguro que quiere eliminar el registro?', $ventasEspecie['VentasEspecie']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

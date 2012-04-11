@@ -1,8 +1,8 @@
-var isCheckbox = function(input){
+var isCheckbox = function(input) {
 	var length = input.length;
 	var toReturn = false;
-	if(length == 2){
-		if($(input[1]).is(":checkbox")){
+	if(length == 2) {
+		if($(input[1]).is(":checkbox")) {
 			toReturn = true;
 		}
 	}
@@ -13,9 +13,9 @@ var llenarDatosIndexado = function(Model, datos, indice) {
 	for(atributo in datos) {
 		input = $("[name='data[" + Model + "][" + indice + "][" + atributo + "]']");
 		if(input.length) {
-			if(input.is('.valor')){
+			if(input.is('.valor')) {
 				input.val(BJS.formatComma(BJS.formatNumber(datos[atributo])));
-			}else{
+			} else {
 				input.val(datos[atributo]);
 			}
 		}
@@ -36,27 +36,45 @@ var llenarTrabajadoresIndexado = function(Model, datos, indice) {
 	for(atributo in datos) {
 		input = $("[name='data[" + Model + "][" + indice + "][" + atributo + "]']");
 		if(input.length) {
-			if(input.is('.valor')){
+			if(input.is('.valor')) {
 				input.val(BJS.formatComma(BJS.formatNumber(datos[atributo])));
-			}else{
-				if(input.is('select')){	
-					if(typeof(datos[atributo])== 'boolean' ){
-						datos[atributo]=datos[atributo]?1:0;
+			} else {
+				if(input.is('select')) {
+					if( typeof (datos[atributo]) == 'boolean') {
+						datos[atributo] = datos[atributo] ? 1 : 0;
 					}
-					
+
 				}
-				if(isCheckbox(input)){
-						if(datos[atributo]) {input.click();}
-				}else{
-					input.val(datos[atributo]);	
-				}			
+				if(isCheckbox(input)) {
+					if(datos[atributo]) {
+						input.click();
+					}
+				} else {
+					input.val(datos[atributo]);
+				}
 			}
 		}
 	}
 	return true;
 }
+var llenarDatosArtesano = function(Model, datosPersonales) {
+	var input = null;
+	for(atributo in datosPersonales) {
+		//console.log(atributo);
+		atributo2=atributo.replace(/art_/i, "dat_")
+		input = $("[name='data[" + Model + "][" + atributo2 + "]']");
+		//console.log(input);
+		if(input.length) {
+			console.log(input);
+			console.log(datosPersonales[atributo]);
+			input.val(datosPersonales[atributo]);
+			//input.hide();
+		}
+		
+	}
+}
 var llenarDatos = function(Model, datosPersonales) {
-	if(Model=="Local"){
+	if(Model == "Local") {
 		$("#ArtesanoHasLocal").click();
 		$(".datos-local").addClass('tovalidate');
 		$(".datos-local .fila-datos").show();
@@ -68,43 +86,43 @@ var llenarDatos = function(Model, datosPersonales) {
 		input = $("[name='data[" + Model + "][" + atributo + "]']");
 		if(input.length) {
 			if(atributo != "tipos_de_calificacion_id" && atributo != "grupos_de_rama_id" && atributo != "rama_id" && atributo != "art_is_cedula") {
-				switch(atributo){// FUNCIONALIDAD PARA LLENADO DE DATOS GEOGRAFICOS
+				switch(atributo) {// FUNCIONALIDAD PARA LLENADO DE DATOS GEOGRAFICOS
 					case 'canton_id':
-						input.attr('val',datosPersonales[atributo]);
-						BJS.updateSelect(input,"/cantones/getByProvincia/"+datosPersonales['provincia_id'])
-						isGeo=true;
+						input.attr('val', datosPersonales[atributo]);
+						BJS.updateSelect(input, "/cantones/getByProvincia/" + datosPersonales['provincia_id'])
+						isGeo = true;
 						break;
 					case 'ciudad_id':
-						input.attr('val',datosPersonales[atributo]);
-						BJS.updateSelect(input,"/ciudades/getByCanton/"+datosPersonales['canton_id'])
-						isGeo=true;
+						input.attr('val', datosPersonales[atributo]);
+						BJS.updateSelect(input, "/ciudades/getByCanton/" + datosPersonales['canton_id'])
+						isGeo = true;
 						break;
 					case 'sector_id':
-						input.attr('val',datosPersonales[atributo]);
-						BJS.updateSelect(input,"/sectores/getByCiudad/"+datosPersonales['ciudad_id'])
-						isGeo=true;
+						input.attr('val', datosPersonales[atributo]);
+						BJS.updateSelect(input, "/sectores/getByCiudad/" + datosPersonales['ciudad_id'])
+						isGeo = true;
 						break;
 					case 'parroquia_id':
-						input.attr('val',datosPersonales[atributo]);
-						BJS.updateSelect(input,"/parroquias/getBySector/"+datosPersonales['sector_id'])
-						isGeo=true;
+						input.attr('val', datosPersonales[atributo]);
+						BJS.updateSelect(input, "/parroquias/getBySector/" + datosPersonales['sector_id'])
+						isGeo = true;
 						break;
 				}
-				if(!isGeo){// si no son datos geograficos
-					if(input.is('.valor')){
+				if(!isGeo) {// si no son datos geograficos
+					if(input.is('.valor')) {
 						input.val(BJS.formatComma(BJS.formatNumber(datosPersonales[atributo])));
-					}else{
-						if(isCheckbox(input)){// atributos tipo checkbox
-							if(datosPersonales[atributo]){
+					} else {
+						if(isCheckbox(input)) {// atributos tipo checkbox
+							if(datosPersonales[atributo]) {
 								$(input[1]).click();
-								if($(input[1]).is("input[rel]")){
-									$($(input[1]).attr('rel')).attr($(input[1]).attr('action'),true);
+								if($(input[1]).is("input[rel]")) {
+									$($(input[1]).attr('rel')).attr($(input[1]).attr('action'), true);
 								}
 							}
-						}else{
-							input.val(datosPersonales[atributo]);	
+						} else {
+							input.val(datosPersonales[atributo]);
 						}
-					}	
+					}
 				}
 			}
 		}

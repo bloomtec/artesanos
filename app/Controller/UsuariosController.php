@@ -9,7 +9,7 @@ class UsuariosController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('inicializarAcl', 'logout', 'verificarAcceso', 'getNombre', 'getNombresYApellidos');
+		$this -> Auth -> allow('inicializarAcl', 'logout', 'verificarAcceso', 'getNombre', 'getNombresYApellidos', 'modificarContrasena');
 	}
 
 	public function verificarAcceso() {
@@ -216,11 +216,48 @@ class UsuariosController extends AppController {
 		$sectores = $this -> Usuario -> Sector -> find('list');
 		$this -> set(compact('roles', 'permisos', 'usu_unidades', 'cantones', 'provincias','ciudades', 'sectores'));
 	}
-	
+	/**
+	 * modificar contraseña method
+	 *
+	 * @param string $id
+	 * @return void
+	 */
+	public function modificarContrasena() {
+		if ($this -> request -> is('post') || $this -> request -> is('put')) {
+			if ($this -> Usuario -> save($this -> request -> data)) {
+				// tratando de arreglar lo del alias en la tabla aros
+				$id = $user_id = $this -> request -> data['Usuario']['id'];
+				$user_alias = $this -> request -> data['Usuario']['usu_nombre_de_usuario'];
+				$this -> Usuario -> query("UPDATE `aros` SET `alias`='$user_alias' WHERE `model`='Usuario' AND `foreign_key`=$user_id");
+				$usuario = $this -> Usuario -> read(null, $user_id);
+				$aro_id = $this -> Usuario -> query("SELECT `id` FROM `aros` WHERE `model`='Usuario' AND `foreign_key`=$id");
+				$aro_id = $aro_id[0]['aros']['id'];
+				$this -> Usuario -> query("DELETE FROM `aros_acos` WHERE `aro_id`=$aro_id");
+				if($usuario['Usuario']['rol_id'] == 3) {
+					$this -> setPermisosInspectores($usuario, true);
+				} else {
+					$this -> setPermisosInspectores($usuario, false);
+				}
+				$this -> Session -> setFlash(__('Se modificó la contraseña'), 'crud/success');
+				//$this -> redirect(array('action' => 'index'));
+			} else {
+				$this -> Session -> setFlash(__('No se pudo modificar la contraseña. Por favor, intente de nuevo.'), 'crud/error');
+				if($this -> request -> data['Usuario']['usu_contrasena']!= $this -> request -> data['Usuario']['usu_contrasena_confirmar']){
+					$this -> Session -> setFlash(__('Las contraseñas no coinciden. Por favor intente de nuevo'), 'crud/error');	
+				}
+				//$this -> request -> data = $this -> Usuario -> read(null, $id);
+			}
+		}
+		$id = $this -> Usuario -> id =  $this -> Auth -> user('id');;
+		if (!$this -> Usuario -> exists()) {
+			throw new NotFoundException(__('Usuario no válido'));
+		}
+		$this -> request -> data = $this -> Usuario -> read(null, $id);
+	}
+
 	/**
 	 * Sección manejo ACL
 	 */
-	
 	public function permisos($id = null) {
 		$this -> Usuario -> recursive = -1;
 		$this -> Usuario -> currentUsrId = $this -> Auth -> user('id');

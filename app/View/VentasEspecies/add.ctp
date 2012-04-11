@@ -16,6 +16,8 @@
 	</div>
 	</fieldset>
 	<div class="form-venta">
+		<br />
+		<h1 class='nombre'></h1>
 		<table id="ventasEspeciesValoradas">
 			<tr>
 				<th>Tipo Especie valorda</th>
@@ -33,12 +35,20 @@
 					</td>
 					<td> 
 						<?php 
-							$totales[0]=0; 
-							for($j=1;$j <=$tiposEspecie['TiposEspeciesValorada']['total_especies_para_vender'];$j++){
-								$totales[$j]=$j;
+							$totales = array(); 
+							for($j = 0; $j <= $tiposEspecie['TiposEspeciesValorada']['total_especies_para_vender']; $j += 1){
+								$totales[$j] = $j;
+							}
+							//debug($tiposEspecie);
+						?>
+						<?php
+							if(count($totales) > 1) {
+								echo $this->Form->input('EspeciesValorada.'.$i.'.cantidad',array('label'=>false,'class'=>'cantidad',"options"=>$totales,'value'=>0));
+							} else {
+								echo $this->Form->hidden('EspeciesValorada.'.$i.'.cantidad',array('label'=>false,'class'=>'cantidad',"options"=>$totales,'value'=>0));
+								echo 'No hay especies disponibles';
 							}
 						?>
-						<?php 	echo $this->Form->input('EspeciesValorada.'.$i.'.cantidad',array('label'=>false,'class'=>'cantidad',"options"=>$totales,'value'=>0)); ?>
 					</td>
 				</tr>
 			<?php 
@@ -103,10 +113,12 @@ $(function(){
 			if(datosPersonales){
 				$('.form-venta').show();
 				$('#VentasEspecieArtesanoId').val(datosPersonales.Artesano.id);
-				console.log(datosPersonales.DatosPersonal.nombre_completo);
+				$('hi.nombre').text(datosPersonales.Artesano.nombre_completo);
 			}else{
 				$('.form-venta').hide();
 				alert('No existe un artesano con este documento en la base de datos');
+				$('#VentasEspecieArtesanoId').val('');
+				$('h1.nombre').text('');
 			}
 			
 		});

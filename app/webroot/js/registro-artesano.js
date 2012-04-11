@@ -71,14 +71,22 @@ $(function() {
 	actualizarRentabilidad();
 
 	// FUNCIONALIDAD PARA VALIDAR CALIFICACION Y CONTROLLAR LOS LLENADOS DE DATOS
-	$('.validarCalificacion #ArtesanoArtIsCedula').change(function(){
-		switch($(this).val()){
-			case "0": // PASAPORTE
-			$('#ArtesanoArtCedula').setMask({ mask : '*', type : 'repeat' }).val('');
-			break;
-			case "1": // CEDULA
-			$('#ArtesanoArtCedula').setMask({ mask : '9999', type : 'repeat' }).val();
-			break;
+	$('.validarCalificacion #ArtesanoArtIsCedula').change(function() {
+		switch($(this).val()) {
+			case "0":
+				// PASAPORTE
+				$('#ArtesanoArtCedula').setMask({
+					mask : '*',
+					type : 'repeat'
+				}).val('');
+				break;
+			case "1":
+				// CEDULA
+				$('#ArtesanoArtCedula').setMask({
+					mask : '9999',
+					type : 'repeat'
+				}).val();
+				break;
 		}
 	});
 	var validarCalificacion = function() {
@@ -105,9 +113,11 @@ $(function() {
 				if(response.Calificar) {
 					$("#wizard .validar").css('visibility', 'visible');
 					$("#wizard .error").removeClass('error');
+
 					if( typeof response.Datos != 'undefined') {
-						if(response.Datos.DatosPersonal.length)
-							llenarDatos('DatosPersonal', response.Datos.DatosPersonal[0]);
+						if(response.Artesano.id != 'undefined') {// LLEGARON DATOS DE ARTESANO (esta registrado y tiene calificaciones anteriores)
+								llenarDatosArtesano('DatosPersonal', response.Artesano);
+						}
 						indiceOperador = indiceAprendiz = 0;
 						if(response.Datos.Local.length)
 							llenarDatos('Local', response.Datos.Local[0]);
@@ -124,8 +134,15 @@ $(function() {
 							}
 						}
 					} else {
-						$(".validar input[type!='hidden'][type!='checkbox']").val("");
-						$(".validar input[type='checkbox']").attr('checked', false);
+						if( typeof response.Artesano == 'undefined') {
+							$(".validar input[type!='hidden'][type!='checkbox']").val("");
+							$(".validar input[type='checkbox']").attr('checked', false);
+						} else {//LLEGARON LOS DATOS DEL ARTESANO (esta registrado pero no tiene calificaciones)
+							if(response.Artesano.id != 'undefined') {
+								llenarDatosArtesano('DatosPersonal', response.Artesano);
+							}
+						}
+
 						//$('.validar select option:first-child').attr('selected',true).parent().change();
 					}
 				} else {
@@ -146,7 +163,7 @@ $(function() {
 				BJS.updateSelect($("#CalificacionRamaId"), "/ramas/obtenerPorGrupo/" + rama.Rama.grupos_de_rama_id, function() {
 					$("#CalificacionRamaId").val(rama.Rama.id);
 				});
-			}else{
+			} else {
 				alert('código de rama no valido');
 			}
 
@@ -179,7 +196,7 @@ $(function() {
 	});
 	$("#TallerCantonId").change(function() {
 		BJS.updateSelect($("#TallerCiudadId"), "/ciudades/getByCanton/" + $("#TallerCantonId option:selected").val(), function() {
-			$("#TallerCiudadId option:eq(1)").attr('selected',true);
+			$("#TallerCiudadId option:eq(1)").attr('selected', true);
 			BJS.updateSelect($("#TallerSectorId"), "/sectores/getByCiudad/" + $("#TallerCiudadId option:selected").val(), function() {
 				BJS.updateSelect($("#TallerParroquiaId"), "/parroquias/getBySector/" + $("#TallerSectorId option:selected").val(), function() {
 				});
@@ -213,9 +230,9 @@ $(function() {
 	});
 	$("#LocalCantonId").change(function() {
 		BJS.updateSelect($("#LocalCiudadId"), "/ciudades/getByCanton/" + $("#LocalCantonId option:selected").val(), function() {
-			$("#LocalCiudadId option:eq(1)").attr('selected',true);
+			$("#LocalCiudadId option:eq(1)").attr('selected', true);
 			BJS.updateSelect($("#LocalSectorId"), "/sectores/getByCiudad/" + $("#LocalCiudadId option:selected").val(), function() {
-				
+
 				BJS.updateSelect($("#LocalParroquiaId"), "/parroquias/getBySector/" + $("#LocalSectorId option:selected").val(), function() {
 				});
 			});
@@ -250,12 +267,12 @@ $(function() {
 	api.onBeforeSeek(function(event, i) {
 		if(api.getIndex() < i) {
 			var page = root.find(".page").eq(api.getIndex()), inputs = page.find(".tovalidate .required :input").removeClass("error"), empty = inputs.filter(function() {
-				if($(this).val()){
+				if($(this).val()) {
 					return $(this).val().replace(/\s*/g, '') == '';
-				}else{
+				} else {
 					return true;
 				}
-				
+
 			});
 			$("#wizard").height(page.next().height());
 			emails = inputs.filter(':email');
@@ -353,17 +370,25 @@ $(function() {
 	}
 	$(".selectCedula").change(function() {
 		if(api.getIndex()) {
-			$input=$(this).parent().parent().find('input');
+			$input = $(this).parent().parent().find('input');
 			$input.focus();
-			switch($(this).val()){
-				case "0": // PASAPORTE
-				$input.setMask({ mask : '*', type : 'repeat' }).val('');
-				break;
-				case "1": // CEDULA
-				$input.setMask({ mask : '9999', type : 'repeat' }).val();
-				break;
+			switch($(this).val()) {
+				case "0":
+					// PASAPORTE
+					$input.setMask({
+						mask : '*',
+						type : 'repeat'
+					}).val('');
+					break;
+				case "1":
+					// CEDULA
+					$input.setMask({
+						mask : '9999',
+						type : 'repeat'
+					}).val();
+					break;
 			}
-			
+
 		}
 	});
 	$("input.cedulaUnica").blur(function() {
@@ -414,5 +439,4 @@ $(function() {
 			}
 		});
 	});
-	
 });

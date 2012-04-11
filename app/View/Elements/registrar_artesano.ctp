@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <div class="modal2" id="modal_registro_artesano" style="display: none;" >
 <div class="artesanos form">
 	<?php echo $this -> Form -> create('Artesano');?>

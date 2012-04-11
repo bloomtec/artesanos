@@ -15,6 +15,7 @@
 		echo $this -> Form -> input('con_calificacion_minima', array('label' => 'Calificación mínima para los cursos','type'=>'text','class'=>'valor'));
 		echo $this -> Form -> input('con_calificacion_maxima', array('label' => 'Calificación máxima para los cursos','type'=>'text','class'=>'valor'));
 		echo $this -> Form -> input('con_calificacion_para_aprobar_curso', array('label' => 'Calificación minima para parobar los cursos','type'=>'text','class'=>'valor'));
+		echo $this -> Form -> input('con_iva', array('label' => 'I.V.A.','type'=>'text','class'=>'valor'));
 		?>
 	</fieldset>
 	<?php echo $this -> Html -> link(__('Cancelar'), array('action' => 'index'), array('class' => 'cancelar'));?>

@@ -61,6 +61,7 @@ class ConfiguracionesController extends AppController {
 			$this -> request -> data['Configuracion']['con_calificacion_minima'] = $this -> formatearValor($this -> request -> data['Configuracion']['con_calificacion_minima']);
 			$this -> request -> data['Configuracion']['con_calificacion_maxima'] = $this -> formatearValor($this -> request -> data['Configuracion']['con_calificacion_maxima']);
 			$this -> request -> data['Configuracion']['con_calificacion_para_aprobar_curso'] = $this -> formatearValor($this -> request -> data['Configuracion']['con_calificacion_para_aprobar_curso']);
+			$this -> request -> data['Configuracion']['con_iva'] = $this -> formatearValor($this -> request -> data['Configuracion']['con_iva']);
 			if ($this -> Configuracion -> save($this -> request -> data)) {
 				$this -> Session -> setFlash(__('Se ha guardado la configuración'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
@@ -74,7 +75,7 @@ class ConfiguracionesController extends AppController {
 			$this -> request -> data['Configuracion']['con_calificacion_minima'] = 100 * $this -> request -> data['Configuracion']['con_calificacion_minima'];
 			$this -> request -> data['Configuracion']['con_calificacion_maxima'] =100 * $this -> request -> data['Configuracion']['con_calificacion_maxima'];
 			$this -> request -> data['Configuracion']['con_calificacion_para_aprobar_curso'] = 100 * $this -> request -> data['Configuracion']['con_calificacion_para_aprobar_curso'];
-			
+			$this -> request -> data['Configuracion']['con_iva'] = 100 * $this -> request -> data['Configuracion']['con_iva'];
 		}
 	}
 
