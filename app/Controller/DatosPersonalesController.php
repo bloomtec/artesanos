@@ -16,6 +16,32 @@ class DatosPersonalesController extends AppController {
 		$this -> DatosPersonal -> recursive = 0;
 		$conditions = $this -> Session -> read('conditions');
 		$this -> Session -> delete('conditions');
+		// FUNCIONALIDAD PARA PROVINCIAS Y PARA RAMAS
+		$calificacionesId=array();
+		$calificacionesRama=array();
+		$calificacionesLocales=array();
+		$calificacionesTalleres=array();
+		debug($conditions);
+		if(isset($conditions['Calificacion.rama_id'])){
+			$calificacionesRama=$this -> DatosPersonal -> Calificacion -> find('list',array('fields'=>array('id','id'),'conditions'=>array('Calificacion.rama_id'=>$conditions['Calificacion.rama_id'])));
+			debug($calificacionesRama);
+			unset($conditions['Calificacion.rama_id']);
+		}
+		if(isset($conditions['Provincia.provincia_id'])){
+			$calificacionesLocales=$this -> DatosPersonal -> Calificacion -> Local -> find('list',array('fields'=>array('calificacion_id','calificacion_id'),'conditions'=>array('Local.provincia_id'=>$conditions['Provincia.provincia_id'])));
+			$calificacionesTalleres=$this -> DatosPersonal -> Calificacion -> Taller -> find('list',array('fields'=>array('calificacion_id','calificacion_id'),'conditions'=>array('Taller.provincia_id'=>$conditions['Provincia.provincia_id'])));
+			unset($conditions['Provincia.provincia_id']);
+		}
+		$calificacionesId=array_merge($calificacionesRama,$calificacionesLocales,$calificacionesTalleres);
+		//debug($calificacionesRama);
+		//debug($calificacionesLocales);
+		//debug($calificacionesTalleres);
+		//debug($calificacionesId);
+		if($calificacionesId){
+			$conditions['DatosPersonal.calificacion_id']=$calificacionesId;
+		}
+		//___________________________________________
+		
 		$this -> paginate = array('conditions' => $conditions, 'order' => array('DatosPersonal.dat_nombres' => 'ASC'));
 		$csv_export_data = $this -> DatosPersonal -> find('all', array('conditions' => $conditions, 'order' => array('DatosPersonal.dat_nombres' => 'ASC')));
 		$artesanos = $this -> paginate();
