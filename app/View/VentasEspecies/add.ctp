@@ -18,6 +18,9 @@
 	<div class="form-venta">
 		<br />
 		<h1 class='nombre'></h1>
+		Nota: Solo se muestran las especies disponibles en inventario
+		<br style="clear:both;" />
+		<br style="clear:both;" />
 		<table id="ventasEspeciesValoradas">
 			<tr>
 				<th>Tipo Especie valorda</th>
@@ -56,6 +59,7 @@
 				endforeach;
 			?>
 		</table>
+		
 	<?php echo $this->Form->input('artesano_id',array('class'=>'artesanoSelect','label'=>false,'type'=>'hidden'));	 ?>
 	<?php echo $this->Html->link(__('Cancelar'),array('action'=>'index'),array('class'=>'cancelar'));?>
 	<?php echo $this->Form->end(__('Guardar'));?>
