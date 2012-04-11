@@ -151,7 +151,10 @@ class PagesController extends AppController {
 			$email = new CakeEmail();
 			$email -> emailFormat('html');
 			$email -> from(array('no-reply@jnda.gob.ec' => 'Vitrina Virtual'));
-			$email -> to('ricardopandales@gmail.com');
+			$this -> loadModel('Configuracion');
+			$correos = $this -> Configuracion -> read(null, 1);
+			$correos = $correos['Configuracion']['con_correo_vitrina'];
+			$email -> to($correos);
 			$email -> subject('Solicitud Vitrina Virtual');
 			if(!empty($attachments)){
 				$email->attachments($attachments);
