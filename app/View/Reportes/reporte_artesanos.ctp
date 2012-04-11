@@ -3,11 +3,14 @@
 	<h2><?php echo __('Reporte Artesanos'); ?></h2>
 	<fieldset>
 		<?php
+			echo $this -> Form -> input('rama_id',array('empty'=>'Seleccione...'));
+			echo $this -> Form -> input('provincia_id',array('empty'=>'Seleccione...'));
 			echo $this -> Form -> input('apellido_paterno');
 			echo $this -> Form -> input('apellido_materno');
 			echo $this -> Form -> input('nombres');
 			echo $this -> Form -> input('cedula', array('label' => 'Cédula De Ciudadanía'));
 			// echo $this -> Form -> input('fecha_de_nacimiento', array('label' => 'Fecha De Nacimiento (AAAA-MM-DD)'));
+			
 			echo $this -> Form -> input('nacionalidad', array('options' => $nacionalidades, 'empty' => 'Seleccione...'));
 			echo $this -> Form -> input('tipo_de_sangre', array('options' => $tipos_de_sangre, 'empty' => 'Seleccione...'));
 			echo $this -> Form -> input('sexo', array('options' => $sexos, 'empty' => 'Seleccione...'));
