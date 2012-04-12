@@ -10,10 +10,15 @@
 	echo $this -> Form -> input('ruc',array('required'=>true,'class'=>'number'));
 	echo $this -> Form -> input('razon_social',array('required'=>true));
 	echo $this -> Form -> input('rama', array('required'=>true,'options' => $ramas, 'label' => 'Rama Artesanal a la que pertenece'));
-	echo $this -> Form -> input('productos', array('options' => $productos, 'label' => 'Productos de elaboración', 'multiple' => 'checkbox'));
-	echo $this -> Form -> input('imagen_1', array('type' => 'file'));
-	echo $this -> Form -> input('imagen_2', array('type' => 'file'));
-	echo $this -> Form -> input('imagen_3', array('type' => 'file'));
+	echo "<div class='productos'>";
+	echo "<h2'>Productos de elaboración</h2>";
+	for($i=0; $i<5 ; $i++){
+		echo $this -> Form -> input("Producto.$i.nombre", array('label' => 'nombre'));
+		echo $this -> Form -> input("Producto.$i.imagen_1", array('type' => 'file'));
+		echo $this -> Form -> input("Producto.$i.imagen_2", array('type' => 'file'));
+		echo $this -> Form -> input("Producto.$i.imagen_3", array('type' => 'file'));
+	}
+	echo "</div>";
 	echo $this -> Form -> input('provincia', array('required'=>true,'options' => $provincias, 'label' => 'Provincia', 'empty' => 'seleccione...'));
 	echo $this -> Form -> input('canton', array('required'=>true,'options' => array(), 'label' => 'Cantón', 'empty' => 'seleccione...'));
 	echo $this -> Form -> input('ciudad', array('required'=>true,'options' => array(), 'label' => 'Ciudad', 'empty' => 'seleccione...'));

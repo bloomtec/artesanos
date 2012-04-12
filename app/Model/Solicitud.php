@@ -139,6 +139,13 @@ class Solicitud extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
+		),
+		'CentrosArtesanal' => array(
+			'className' => 'CentrosArtesanal',
+			'foreignKey' => 'centros_artesanal_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
 		)
 	);
 
