@@ -20,7 +20,7 @@
 							<a href="/ingresosDeInventarios/reporteIngresosInventarios">Ingresos</a>
 						</li>
 						<li>
-							<a href="/EgresosDeInventarios/reporteEgresosInventarios">Egresos</a>
+							<a href="/ItemsPersonas/reporteAsignaciones">Asignaciones</a>
 						</li>
 					</ul>
 				</li>

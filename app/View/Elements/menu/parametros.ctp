@@ -14,6 +14,14 @@ $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('contr
 			<a href="#">Mantenimientos</a>
 			<ul>
 				<li>
+					<a href="/centros_artesanales">Centros Artesanales</a>
+					<ul>
+						<li>
+							<a href="/centros_artesanales/add">Agregar</a>
+						</li>
+					</ul>
+				</li>
+				<li>
 					<a href="/items"> Activos y Suministros </a>
 					<ul>
 						<li>
