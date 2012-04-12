@@ -19,16 +19,6 @@ class Solicitud extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'juntas_provincial_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				'message' => 'Seleccione junta provincial',
-				'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
 		'sol_numero_de_memorandum' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
