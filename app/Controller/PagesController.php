@@ -99,14 +99,14 @@ class PagesController extends AppController {
 			$ciudades = $this -> Artesano -> Calificacion -> Taller -> Ciudad -> find('list');
 			$parroquias = $this -> Artesano -> Calificacion -> Taller -> Parroquia -> find('list');
 			$ramas = $this -> Artesano -> Calificacion -> Rama -> find('list');
-			$attachments=array();
+			$attachments = array();
 			foreach ($this -> request -> data['Page'] as $key => $value) {
 				switch ($key) {
 					case 'provincia' :
 						$mensaje .= "Provincia: " . $provincias[$value] . " <br />";
 						break;
 					case 'canton' :
-						$mensaje .= "Cant贸n: " . $cantones[$value] . " <br />";
+						$mensaje .= "Cantón: " . $cantones[$value] . " <br />";
 						break;
 					case 'ciudad' :
 						$mensaje .= "Ciudad: " . $ciudades[$value] . " <br />";
@@ -117,51 +117,59 @@ class PagesController extends AppController {
 					case 'rama' :
 						$mensaje .= "Rama: " . $ramas[$value] . " <br />";
 						break;
-					case 'productos' :
-						$mensaje .= "Productos: <br /> <ul>";
-						if(!empty($value)){
-							foreach ($value as $producto) {
-								$mensaje .= "<li>" . $producto . "</li>";
-							}
-						}
-						$mensaje .= "</ul>";
-						break;
+
 					case 'imagen_1' :
-						if(!$value['error']) {
+						if (!$value['error']) {
 							$attachments['1 - ' . $value['name']] = $value['tmp_name'];
 						}
 						break;
 					case 'imagen_2' :
-						if(!$value['error']) {
+						if (!$value['error']) {
 							$attachments['2 - ' . $value['name']] = $value['tmp_name'];
 						}
 						break;
 					case 'imagen_3' :
-						if(!$value['error']) {
+						if (!$value['error']) {
 							$attachments['3 - ' . $value['name']] = $value['tmp_name'];
 						}
 						break;
 					default :
-						//debug(Inflector::humanize($key));
+					//debug(Inflector::humanize($key));
 						$mensaje .= Inflector::humanize($key) . ": " . $value . " <br />";
 						break;
 				}
 
 			}
-			
-			
+			$mensaje .= "Productos: <br /> <ul>";
+			foreach ($this -> request -> data['Producto'] as $key => $value) {
+				if($value['nombre']){
+					$mensaje .= "<li>" . $value['nombre'] . "</li>";
+						if (!$value ['imagen_1']['error']) {
+							$attachments[$value['nombre']."_".$value ['imagen_1']['name']]
+							 = $value ['imagen_1']['tmp_name'];
+						}
+						if (!$value ['imagen_2']['error']) {
+							$attachments[$value['nombre']."_".$value ['imagen_2']['name']] = $value ['imagen_2']['tmp_name'];
+						}
+						if (!$value ['imagen_3']['error']) {
+							$attachments[$value['nombre']."_".$value ['imagen_3']['name']] = $value ['imagen_3']['tmp_name'];
+						}
+				}
+			}
+			$mensaje .= "</ul>";
+			echo $mensaje;
 			$this -> loadModel('Configuracion');
 			$correos = $this -> Configuracion -> read(null, 1);
 			$correos = $correos['Configuracion']['con_correo_vitrina'];
 			$correos = explode(',', $correos);
-			
-			foreach($correos as $key => $correo) {
+
+			foreach ($correos as $key => $correo) {
 				$email = new CakeEmail();
 				$email -> emailFormat('html');
 				$email -> from(array('no-reply@jnda.gob.ec' => 'Vitrina Virtual'));
 				$email -> subject('Solicitud Vitrina Virtual');
-				if(!empty($attachments)){
-					$email->attachments($attachments);
+				if (!empty($attachments)) {
+					$email -> attachments($attachments);
 				}
 				$email -> to(trim($correo));
 				$email -> send($mensaje);
@@ -181,7 +189,7 @@ class PagesController extends AppController {
 		$provincias = $this -> Artesano -> Calificacion -> Taller -> Provincia -> find('list');
 		$this -> set(compact('ramas', 'productos', 'provincias'));
 	}
-	
+
 	private function uploadIngresoEspecieFile($tmp_name = null, $filename = null) {
 		$this -> cleanupIngresoEspecieFiles();
 		if ($tmp_name && $filename) {
