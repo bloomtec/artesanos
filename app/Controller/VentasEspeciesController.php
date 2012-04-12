@@ -42,7 +42,83 @@ class VentasEspeciesController extends AppController {
 	 */
 	public function add() {
 		if ($this -> request -> is('post')) {
-
+			$factura = array('Factura' => $this -> request -> data['Factura']);
+			$infoVentaEspeciesValoradas = $this -> request -> data['EspeciesValorada'];
+			$ventasEspecie = array('VentasEspecie' => $this -> request -> data['VentasEspecie']);
+			unset($ventasEspecie['VentasEspecie']['what_is']);
+			unset($ventasEspecie['VentasEspecie']['juntas_provincial_id']);
+			unset($ventasEspecie['VentasEspecie']['cedula_artesanos']);
+			unset($this -> request -> data['Factura']);
+			unset($this -> request -> data['EspeciesValorada']);
+			unset($this -> request -> data['VentasEspecie']);
+			//debug($ventasEspecie);
+			//debug($factura);
+			//debug($infoVentaEspeciesValoradas);
+			// Generar la factura
+			$this -> VentasEspecie -> Factura -> create();
+			if($this -> VentasEspecie -> Factura -> save($factura)) {
+				// Generación de la venta asociada a la factura
+				$facturaId = $this -> VentasEspecie -> Factura -> id;
+				
+				// Calcular la cantidad y el valor total de la venta
+				$totalCantidad = 0;
+				$totalValor = 0;
+				foreach($infoVentaEspeciesValoradas as $key => $infoVenta) {
+					// Si hay cantidad de especie crear
+					if($infoVenta['cantidad'] > 0) {
+						$totalCantidad += $infoVenta['cantidad'];
+						// Obtener el valor unitario de la especie en cuestión
+						$tipoEspecie = $this -> VentasEspecie -> EspeciesValorada -> TiposEspeciesValorada -> find(
+							'first',
+							array(
+								'conditions' => array(
+									'TiposEspeciesValorada.id' => $infoVenta['tipos_especies_valorada_id']
+								),
+								'recursive' => -1
+							)
+						);
+						$totalValor += $infoVenta['cantidad'] * $tipoEspecie['TiposEspeciesValorada']['tip_valor_unitario'];
+					}
+				}
+				
+				$ventasEspecie['VentasEspecie']['ven_cantidad'] = $totalCantidad;
+				$ventasEspecie['VentasEspecie']['ven_valor'] = $totalValor;
+				$ventasEspecie['VentasEspecie']['factura_id'] = $facturaId;
+				
+				// Crear la venta
+				$this -> VentasEspecie -> create();
+				if($this -> VentasEspecie -> save($ventasEspecie)) {
+					$ventasEspecieId = $this -> VentasEspecie -> id;
+					// Recorrer los tipos de especie para asignar las especies valoradas a la venta
+					foreach($infoVentaEspeciesValoradas as $key => $infoVenta) {
+						// Si hay cantidad de especie crear
+						if($infoVenta['cantidad'] > 0) {
+							for ($tmp = $infoVenta['cantidad']; $tmp > 0; $tmp -= 1) {
+								$especieValorada = $this -> VentasEspecie -> EspeciesValorada -> find(
+									'first',
+									array(
+										'conditions' => array(
+											'EspeciesValorada.tipos_especies_valorada_id' => $infoVenta['tipos_especies_valorada_id'],
+											'EspeciesValorada.ventas_especie_id' => null
+										),
+										'recursive' => -1
+									)
+								);
+								$especieValorada['EspeciesValorada']['ventas_especie_id'] = $ventasEspecieId;
+								$this -> VentasEspecie -> EspeciesValorada -> save($especieValorada);
+							}
+						} // endif;
+					} // endforeach;
+				}
+				
+				$this -> Session -> setFlash('Se generó la venta', 'crud/success');
+				$this -> redirect(array('action' => 'index'));
+			} else {
+				$this -> Session -> setFlash('Se generó la venta', 'crud/error');
+			}
+			
+			
+			/* CODIGO ANTERIOR
 			if ((!$this -> request -> data['VentasEspecie']['juntas_provincial_id'] && $this -> request -> data['VentasEspecie']['artesano_id']) || ($this -> request -> data['VentasEspecie']['juntas_provincial_id'] && !$this -> request -> data['VentasEspecie']['artesano_id'])) {
 
 				$this -> VentasEspecie -> create();
@@ -83,9 +159,10 @@ class VentasEspeciesController extends AppController {
 			} else {
 				$this -> Session -> setFlash('La venta de especies es para un individuo o una junta provincial', 'crud/error');
 			}
+			*/
 		}
 		$juntasProvinciales = $this -> VentasEspecie -> JuntasProvincial -> find('list');
-		$tiposEspeciesValorada = $this -> VentasEspecie -> EspeciesValorada -> TiposEspeciesValorada -> find('all',array('conditions'=>array('TiposEspeciesValorada.total_especies_para_vender >'=>0)));
+		$tiposEspeciesValorada = $this -> VentasEspecie -> EspeciesValorada -> TiposEspeciesValorada -> find('all',array('conditions'=>array('TiposEspeciesValorada.total_especies_para_vender >'=>0), 'recursive' => -1));
 		$this -> set(compact('juntasProvinciales', 'tiposEspeciesValorada'));
 
 		//Para el modal agregar artesano
@@ -97,16 +174,71 @@ class VentasEspeciesController extends AppController {
 		$sexos = $this -> Artesano -> getValores(5);
 		$tipos_de_discapacidad = $this -> Artesano -> getValores(6);
 		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos', 'tipos_de_discapacidad'));
-
+		$this -> set('fecha', date('Y-m-d', strtotime('now')));
 	}
 
 	public function addToOthers() {
-		
 		if($this -> request -> data){
-			debug($this -> request -> data);
+			$factura = array('Factura' => $this -> request -> data['Factura']);
+			$infoVentaEspeciesValoradas = $this -> request -> data['EspeciesValorada'];
+			unset($this -> request -> data['Factura']);
+			unset($this -> request -> data['EspeciesValorada']);
+			// Generar la factura
+			$this -> VentasEspecie -> Factura -> create();
+			if($this -> VentasEspecie -> Factura -> save($factura)) {
+				// Generación de ventas asociadas a la factura
+				$facturaId = $this -> VentasEspecie -> Factura -> id;
+				foreach($infoVentaEspeciesValoradas as $key => $infoVenta) {
+					// Si hay artesanos definidos recorrerlos para crear la venta
+					if(isset($infoVenta['Artesanos']) && !empty($infoVenta['Artesanos']) && $infoVenta['cantidad'] > 0) {
+						// Obtener el valor unitario de la especie en cuestión
+						$tipoEspecie = $this -> VentasEspecie -> EspeciesValorada -> TiposEspeciesValorada -> find(
+							'first',
+							array(
+								'conditions' => array(
+									'TiposEspeciesValorada.id' => $infoVenta['tipos_especies_valorada_id']
+								),
+								'recursive' => -1
+							)
+						);
+						foreach($infoVenta['Artesanos'] as $key => $artesanoId) {
+							// Arreglo que representa el objeto VentasEspecie
+							$ventaEspecie = array(
+								'VentasEspecie' => array(
+									'factura_id' => $facturaId,
+									'artesano_id' => $artesanoId,
+									'ven_cantidad' => 1,
+									'ven_valor' => $tipoEspecie['TiposEspeciesValorada']['tip_valor_unitario']
+								)
+							);
+							$this -> VentasEspecie -> create();
+							if($this -> VentasEspecie -> save($ventaEspecie)) {
+								$ventasEspecieId = $this -> VentasEspecie -> id;
+								$especieValorada = $this -> VentasEspecie -> EspeciesValorada -> find(
+									'first',
+									array(
+										'conditions' => array(
+											'EspeciesValorada.tipos_especies_valorada_id' => $infoVenta['tipos_especies_valorada_id'],
+											'EspeciesValorada.ventas_especie_id' => null
+										),
+										'recursive' => -1
+									)
+								);
+								$especieValorada['EspeciesValorada']['ventas_especie_id'] = $ventasEspecieId;
+								$this -> VentasEspecie -> EspeciesValorada -> save($especieValorada);
+							}
+						} // endforeach;
+					} // endif;
+				} // endforeach;
+				$this -> Session -> setFlash('Se generó la venta', 'crud/success');
+				$this -> redirect(array('action' => 'index'));
+			} else {
+				$this -> Session -> setFlash('Se generó la venta', 'crud/error');
+			}
 		}
-		$tiposEspeciesValorada = $this -> VentasEspecie -> EspeciesValorada -> TiposEspeciesValorada -> find('all',array('conditions'=>array('TiposEspeciesValorada.total_especies_para_vender >'=>0)));
+		$tiposEspeciesValorada = $this -> VentasEspecie -> EspeciesValorada -> TiposEspeciesValorada -> find('all',array('conditions'=>array('TiposEspeciesValorada.total_especies_para_vender >'=>0, 'recursive' => -1)));
 		//debug($tiposEspeciesValorada);
+		$this -> set('fecha', date('Y-m-d', strtotime('now')));
 		$this -> set(compact('tiposEspeciesValorada'));
 	}
 

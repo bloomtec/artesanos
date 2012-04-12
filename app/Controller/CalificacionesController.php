@@ -405,6 +405,7 @@ class CalificacionesController extends AppController {
 		$this -> layout = 'especie_valorada';
 		//$this -> layout ="pdf3";
 		$inspeccion = $this -> Calificacion -> read(null, $id);
+		//debug($inspeccion);
 		$this -> set(compact('inspeccion'));
 	}
 
