@@ -143,7 +143,7 @@ class PagesController extends AppController {
 			$mensaje .= "Productos: <br /> <ul>";
 			foreach ($this -> request -> data['Producto'] as $key => $value) {
 				if($value['nombre']){
-					$mensaje .= "<li>" . $value['nombre'] . "</li>";
+					$mensaje .= "<li> nombre: " . $value['nombre'] . ", Precio referencial: ".$value['precio_referencial'] .", Tiempo de entrega: ".$value['tiempo_de_entrega'] ."</li>";
 						if (!$value ['imagen_1']['error']) {
 							$attachments[$value['nombre']."_".$value ['imagen_1']['name']]
 							 = $value ['imagen_1']['tmp_name'];
@@ -185,9 +185,8 @@ class PagesController extends AppController {
 		//$grados_de_estudio = $this -> Artesano -> getValores(4);
 		//$sexos = $this -> Artesano -> getValores(5);
 		$ramas = $this -> Artesano -> Calificacion -> Rama -> find('list');
-		$productos = $this -> Artesano -> getValores(18);
 		$provincias = $this -> Artesano -> Calificacion -> Taller -> Provincia -> find('list');
-		$this -> set(compact('ramas', 'productos', 'provincias'));
+		$this -> set(compact('ramas', 'provincias'));
 	}
 
 	private function uploadIngresoEspecieFile($tmp_name = null, $filename = null) {

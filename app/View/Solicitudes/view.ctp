@@ -13,7 +13,7 @@
 		<label><?php echo __('Numero De Memorandum'); ?></label>
 		<h3>
 			<?php echo h($solicitud['Solicitud']['sol_numero_de_memorandum']); ?>
-			&nbsp;
+			&nbsp; commit co
 		</h3>
 		<label><?php echo __('Nombre De La Capacitacion'); ?></label>
 		<h3>
