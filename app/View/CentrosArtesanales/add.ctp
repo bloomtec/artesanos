@@ -3,7 +3,7 @@
 	<fieldset>
 		<h2><?php echo __('Agregar Centro Artesanal');?></h2>
 		<?php
-		echo $this -> Form -> input('cen_ruc', array('label' => 'Ruc'));
+		echo $this -> Form -> input('cen_ruc', array('label' => 'Ruc','class'=>'number'));
 		echo $this -> Form -> input('cen_nombre', array('label' => 'Nombre'));
 		echo $this -> Form -> input('provincia_id', array('empty' => 'Seleccione...'));
 		echo $this -> Form -> input('canton_id');
@@ -36,6 +36,11 @@
 			BJS.updateSelect($("#CentrosArtesanalParroquiaId"), "/parroquias/getByCiudad/" + $("#CentrosArtesanalCiudadId option:selected").val());
 		});
 		actualizarGeoTaller();
+		$('form').submit(function(e){
+			if(!checkRucEcuador($('#CentrosArtesanalCenRuc').val())){
+				e.preventDefault();
+			}
+		});
 	});
 
 </script>

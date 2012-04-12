@@ -26,7 +26,7 @@ class CentrosArtesanalesController extends AppController {
 	public function view($id = null) {
 		$this -> CentrosArtesanal -> id = $id;
 		if (!$this -> CentrosArtesanal -> exists()) {
-			throw new NotFoundException(__('Invalid centros artesanal'));
+			throw new NotFoundException(__('No se encontró el centro artesanal'));
 		}
 		$this -> set('centrosArtesanal', $this -> CentrosArtesanal -> read(null, $id));
 	}
@@ -40,10 +40,10 @@ class CentrosArtesanalesController extends AppController {
 		if ($this -> request -> is('post')) {
 			$this -> CentrosArtesanal -> create();
 			if ($this -> CentrosArtesanal -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The centros artesanal has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('El centro artesanal ha sido creado'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The centros artesanal could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo guardar el centro artesanal. Por favor, intenta de nuevo.'), 'crud/error');
 			}
 		}
 		$provincias = $this -> CentrosArtesanal -> Provincia -> find('list');
@@ -63,14 +63,14 @@ class CentrosArtesanalesController extends AppController {
 	public function edit($id = null) {
 		$this -> CentrosArtesanal -> id = $id;
 		if (!$this -> CentrosArtesanal -> exists()) {
-			throw new NotFoundException(__('Invalid centros artesanal'));
+			throw new NotFoundException(__('No se encontró el centro artesanal'));
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			if ($this -> CentrosArtesanal -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The centros artesanal has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('El centro artesanal ha sido creado'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The centros artesanal could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo guardar el centro artesanal. Por favor, intenta de nuevo.'), 'crud/error');
 			}
 		} else {
 			$this -> request -> data = $this -> CentrosArtesanal -> read(null, $id);
@@ -94,13 +94,13 @@ class CentrosArtesanalesController extends AppController {
 		}
 		$this -> CentrosArtesanal -> id = $id;
 		if (!$this -> CentrosArtesanal -> exists()) {
-			throw new NotFoundException(__('Invalid centros artesanal'));
+			throw new NotFoundException(__('No se encontró el centro artesanal'));
 		}
 		if ($this -> CentrosArtesanal -> delete()) {
-			$this -> Session -> setFlash(__('Centros artesanal deleted'), 'crud/success');
+			$this -> Session -> setFlash(__('Centros artesanal borrado'), 'crud/success');
 			$this -> redirect(array('action' => 'index'));
 		}
-		$this -> Session -> setFlash(__('Centros artesanal was not deleted'), 'crud/error');
+		$this -> Session -> setFlash(__('No se pudo borrar el centro artesanal'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
 	}
 
