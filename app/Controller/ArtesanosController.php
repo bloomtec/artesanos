@@ -46,6 +46,7 @@ class ArtesanosController extends AppController {
 	public function getDatosPersonales($documento = null) {
 		$this -> autoRender = false;
 		if ($documento) {
+			$this -> Artesano -> recursive = -1;
 			$artesano = $this -> Artesano -> findByArtCedula($documento);
 			if (!empty($artesano)) {
 				/*$calificacion = $artesano['Calificacion'][count($artesano['Calificacion']) - 1];
