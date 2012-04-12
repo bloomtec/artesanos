@@ -10,10 +10,29 @@ echo $this -> Form -> input('Factura.ciudad_id', array('label' => 'Ciudad'));
 echo $this -> Form -> input('Factura.fac_direccion', array('label' => 'Dirección'));
 echo $this -> Form -> input('Factura.fac_telefono', array('label' => 'Teléfono'));
 echo $this -> Form -> input('Factura.fac_ruc_doc', array('label' => 'R.U.C./C.I.'));
-echo $this -> Form -> input('Factura.fac_fecha_emision', array('label' => 'Fecha De Emisión'));
+echo $this -> Form -> input('Factura.fac_fecha_emision', array('label' => 'Fecha De Emisión','type'=>'text','class'=>'date'));
 ?>
 <script type="text/javascript">
 	$(function(){
+		var actualizarGeoTaller = function() {
+			BJS.updateSelect($("#FacturaCantonId"), "/cantones/getByProvincia/" + $("#FacturaProvinciaId option:selected").val(), function() {
+				BJS.updateSelect($("#FacturaCiudadId"), "/ciudades/getByCanton/" + $("#FacturaCantonId option:selected").val(), function() {
+					BJS.updateSelect($("#FacturaParroquiaId"), "/parroquias/getByCiudad/" + $("#FacturaCiudadId option:selected").val());
+				});
+			});
+		}
+		$('#FacturaProvinciaId').change(function() {
+			actualizarGeoTaller();
+		});
+		$('#FacturaCantonId').change(function() {
+			BJS.updateSelect($("#FacturaCiudadId"), "/ciudades/getByCanton/" + $("#FacturaCantonId option:selected").val(), function() {
+				BJS.updateSelect($("#FacturaParroquiaId"), "/parroquias/getByCiudad/" + $("#FacturaCiudadId option:selected").val());
+			});
+		});
+		/*$('#FacturaCiudadId').change(function() {
+			BJS.updateSelect($("#FacturaParroquia"), "/parroquias/getByCiudad/" +$("#FacturaCiudad option:selected").val());
+
+		});*/
 		
 	});
 </script>

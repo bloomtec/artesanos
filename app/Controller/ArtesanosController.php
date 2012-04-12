@@ -1447,7 +1447,8 @@ class ArtesanosController extends AppController {
 		$grados_de_estudio = $this -> Artesano -> getValores(4);
 		$sexos = $this -> Artesano -> getValores(5);
 		$tipos_de_discapacidad = $this -> Artesano -> getValores(6);
-		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos', 'tipos_de_discapacidad'));
+		$provincias = $this -> Artesano -> Provincia -> find('list');
+		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos', 'tipos_de_discapacidad','provincias'));
 	}
 
 	//Función para registrar el nuevo alumno

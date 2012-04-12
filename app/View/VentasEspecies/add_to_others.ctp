@@ -16,6 +16,7 @@
 </style>
 <div class="ventasEspecies form">
 	<?php echo $this -> Form -> create('VentasEspecie');?>
+	<?php echo $this -> element('factura'); ?>
 	<div class='especie'>
 		<table id="ventasEspeciesValoradas" >
 			<tr>
