@@ -1,4 +1,5 @@
 <?php if(!isset($ingresos)) : ?>
+	
 <div class="reportes form">
 	<?php echo $this -> Form -> create('VentasEspecie');?>
 	<h2><?php echo __('Reporte ventas de especies'); ?></h2>
@@ -19,6 +20,8 @@
 <table>
 	<tr>
 		<th><?php echo $this -> Paginator -> sort('created', 'Fecha'); ?></th>
+		<th>Numero de factura</th>
+		<th>Cliente</th>
 		<th><?php echo $this -> Paginator -> sort('ven_cantidad', 'Cantidad'); ?></th>
 		<th><?php echo $this -> Paginator -> sort('ven_valor', 'Valor'); ?></th>
 		<th class="actions"><?php echo __('Acciones'); ?></th>
@@ -26,6 +29,9 @@
 	<?php foreach($ingresos as $key => $ingreso) : ?>
 	<tr>
 		<td><?php echo $ingreso['VentasEspecie']['created']; ?> </td>
+		<td><?php echo $ingreso['Factura']['fac_numero']; ?> </td>
+		<td><?php echo $ingreso['Factura']['fac_cliente']; ?></td>
+		
 		<td><?php echo $ingreso['VentasEspecie']['ven_cantidad']; ?></td>
 		<td><?php echo $ingreso['VentasEspecie']['ven_valor']; ?></td>
 		<td class="actions">
