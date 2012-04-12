@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <table width="360" height="221" border="0" cellpadding="0" cellspacing="0">
   <tr>
   	<td width="360"><div style="text-align: center;"><b>CALIFICACIÓN TALLER ARTESANAL <br >Nro. <?php echo $inspeccion['Calificacion']['id']; ?></b></div></td>
