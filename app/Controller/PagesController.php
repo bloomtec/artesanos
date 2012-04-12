@@ -157,7 +157,7 @@ class PagesController extends AppController {
 				}
 			}
 			$mensaje .= "</ul>";
-			echo $mensaje;
+		
 			$this -> loadModel('Configuracion');
 			$correos = $this -> Configuracion -> read(null, 1);
 			$correos = $correos['Configuracion']['con_correo_vitrina'];
