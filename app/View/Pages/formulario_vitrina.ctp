@@ -27,13 +27,7 @@
 </div>
 <script type="text/javascript">
 	$(function() {
-		$("input[type='checkbox']").click(function(e) {
-			//alert(BJS.objectSize($("input[type='checkbox'] :checked")));
-			if($("input:checked").length > 5) {
-				e.preventDefault();
-				alert('Sólo puede selecionar 5 productos');
-			}
-		});
+		
 		var actualizarGeoTaller = function() {
 			BJS.updateSelect($("#PageCanton"), "/cantones/getByProvincia/" + $("#PageProvincia option:selected").val(), function() {
 				BJS.updateSelect($("#PageCiudad"), "/ciudades/getByCanton/" + $("#PageCanton option:selected").val(), function() {
