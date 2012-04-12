@@ -1,30 +1,3 @@
-<?php if(!$reporte) : ?>
-<div class="reporte asignaciones form">
-	<?php echo $this -> Form -> create('ItemsPersona'); ?>
-	<fieldset>
-		<?php
-			echo $this -> Form -> input('item_id', array('empty' => 'Seleccione...'));
-			echo $this -> Form -> input('departamento_id', array('empty' => 'Seleccione...'));
-			echo $this -> Form -> input('persona_id', array('empty' => 'Seleccione...'));
-			echo $this -> Form -> input('fecha_inicio', array('value' => $fechaActual, 'class' => 'date'));
-			echo $this -> Form -> input('fecha_fin', array('value' => $fechaActual, 'class' => 'date'));
-		?>
-	</fieldset>
-	<?php echo $this -> Form -> end('Generar Reporte'); ?>
-	<script type="text/javascript">
-		$(function() {
-			var actualizarPersonas = function() {
-				BJS.updateSelect($('#ItemsPersonaPersonaId'), '/personas/getPersonasByDepartment/' + $('#ItemsPersonaDepartamentoId').val());
-			}
-			actualizarPersonas();
-			$('#ItemsPersonaDepartamentoId').change(function() {
-				BJS.updateSelect($('#ItemsPersonaPersonaId'), '/personas/getPersonasByDepartment/' + $('#ItemsPersonaDepartamentoId').val());
-			});
-		});
-	</script>
-</div>
-<?php endif; ?>
-<?php if($reporte) : ?>
 <div class="reporte asignaciones resultado">
 	<table id="ReporteAsignaciones">
 		<tr>
@@ -57,10 +30,4 @@
 		echo $this->Paginator->last('>> ', array(), null, array('class' => 'next disabled'));
 		?>
 	</div>
-	<div class="actions">
-		<a href="/items_personas/reporteAsignaciones" class="button">Volver</a>
-		&nbsp;
-		<a class='button' href="/items_personas/descargarReporte">Descargar pdf</a>
-	</div>
 </div>
-<?php endif; ?>
