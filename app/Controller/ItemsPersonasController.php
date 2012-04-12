@@ -18,7 +18,7 @@ class ItemsPersonasController extends AppController {
 			$this -> set('reporte', true);			
 		} elseif($this -> request -> is('post')) {
 			$this -> request -> data['ItemsPersona']['fecha_inicio'] = $this -> request -> data['ItemsPersona']['fecha_inicio'] . ' 00:00:00';
-			$this -> request -> data['ItemsPersona']['fecha_fin'] = $fechaFin = $this -> request -> data['ItemsPersona']['fecha_fin'] . ' 11:59:59';
+			$this -> request -> data['ItemsPersona']['fecha_fin'] = $fechaFin = $this -> request -> data['ItemsPersona']['fecha_fin'] . ' 23:59:59';
 			
 			$conditions = array();
 			

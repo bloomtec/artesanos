@@ -2,6 +2,7 @@
 <div class="reporte asignaciones form">
 	<?php echo $this -> Form -> create('ItemsPersona'); ?>
 	<fieldset>
+		<h2><?php echo __('Reporte Asignación De Activos Fijos'); ?></h2>
 		<?php
 			echo $this -> Form -> input('item_id', array('empty' => 'Seleccione...'));
 			echo $this -> Form -> input('departamento_id', array('empty' => 'Seleccione...'));
