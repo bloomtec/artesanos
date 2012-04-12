@@ -27,7 +27,7 @@ class TitulosController extends AppController {
 	public function view($id = null) {
 		$this->Titulo->id = $id;
 		if (!$this->Titulo->exists()) {
-			throw new NotFoundException(__('Invalid titulo'));
+			throw new NotFoundException(__('Título no encontrado'));
 		}
 		$this->set('titulo', $this->Titulo->read(null, $id));
 	}
@@ -41,10 +41,10 @@ class TitulosController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Titulo->create();
 			if ($this->Titulo->save($this->request->data)) {
-				$this->Session->setFlash(__('The titulo has been saved'),'crud/success');
+				$this->Session->setFlash(__('El título ha sido guardado'),'crud/success');
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The titulo could not be saved. Please, try again.'),'crud/error');
+				$this->Session->setFlash(__('No se pudo guardar el título. Por favor, intente de nuevo.'),'crud/error');
 			}
 		}
 		$ramas = $this->Titulo->Rama->find('list');
@@ -60,14 +60,14 @@ class TitulosController extends AppController {
 	public function edit($id = null) {
 		$this->Titulo->id = $id;
 		if (!$this->Titulo->exists()) {
-			throw new NotFoundException(__('Invalid titulo'));
+			throw new NotFoundException(__('Título no encontrado'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Titulo->save($this->request->data)) {
-				$this->Session->setFlash(__('The titulo has been saved'),'crud/success');
+				$this->Session->setFlash(__('El título ha sido guardado'),'crud/success');
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The titulo could not be saved. Please, try again.'),'crud/error');
+				$this->Session->setFlash(__('No se pudo guardar el título. Por favor, intente de nuevo.'),'crud/error');
 			}
 		} else {
 			$this->request->data = $this->Titulo->read(null, $id);
@@ -88,13 +88,13 @@ class TitulosController extends AppController {
 		}
 		$this->Titulo->id = $id;
 		if (!$this->Titulo->exists()) {
-			throw new NotFoundException(__('Invalid titulo'));
+			throw new NotFoundException(__('Título no encontrado'));
 		}
 		if ($this->Titulo->delete()) {
-			$this->Session->setFlash(__('Titulo deleted'),'crud/success');
+			$this->Session->setFlash(__('Título borrado'),'crud/success');
 			$this->redirect(array('action'=>'index'));
 		}
-		$this->Session->setFlash(__('Titulo was not deleted'),'crud/error');
+		$this->Session->setFlash(__('No se pudo borrar el título'),'crud/error');
 		$this->redirect(array('action' => 'index'));
 	}
 }

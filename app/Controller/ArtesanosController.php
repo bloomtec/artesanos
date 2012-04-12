@@ -1382,12 +1382,63 @@ class ArtesanosController extends AppController {
 
 	public function agregarArtesano() {
 		if ($this -> request -> is('post')) {
-			$this -> Artesano -> create();
-			if ($this -> Artesano -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('Se registro el nuevo artesano'), 'crud/success');
-				$this -> redirect(array('action' => 'index'));
+			if(isset($this -> request -> data['Artesano']['archivo'])) {
+				if(!$this -> request -> data['Artesano']['archivo']['error']) {
+					App::uses('File', 'Utility');
+					$pathToFile = $this -> request -> data['Artesano']['archivo']['tmp_name'];
+					$file = new File($pathToFile, false, 0644);
+					$data = null;
+					if ($file -> exists() && $file -> readable()) {
+						$data = $file -> read();
+					}
+					$file -> close();
+					$registroCreado = false;
+					if ($data) {
+						$data = explode(chr(10), $data);
+						$tmpData = array();
+						foreach($data as $key => $value) {
+							if(!empty($value)) $tmpData[] = $value;
+						}
+						$data = $tmpData;
+						$delimiter = ',';
+						$headers = explode($delimiter, $data[0]);
+						unset($data[0]);
+						foreach($data as $key => $value) {
+							$datosArtesano = explode($delimiter, $value);
+							$artesano = array('Artesano' => array());
+							for($i = 0; $i < count($headers); $i+=1) {
+								$artesano['Artesano'][$headers[$i]] = $datosArtesano[$i];
+							}
+							$tmpArtesano = $this -> Artesano -> find('first', array('conditions' => array('Artesano.art_cedula' => $artesano['Artesano']['art_cedula'])));
+							if(empty($tmpArtesano)) {
+								$this -> Artesano -> create();
+								if(!$this -> Artesano -> save($artesano)) {
+									$documento = $artesano['Artesano']['art_cedula'];
+									$this -> Session -> setFlash("Ocurrió un error al tratar de guardar la información del artesano con documento $documento.", 'crud/error');
+									$this -> redirect(array('action' => 'index'));
+								} else {
+									$registroCreado = true;
+								}
+							}
+						}
+					}
+					if($registroCreado) {
+						$this -> Session -> setFlash("Se registraron los artesanos.", 'crud/success');
+					} else {
+						$this -> Session -> setFlash("No se creó un nuevo registro.", 'crud/error');
+					}					
+					$this -> redirect(array('action' => 'index'));		
+				} else {
+					$this -> Session -> setFlash(__('No seleccionó archivo alguno. Por favor, intente de nuevo.'), 'crud/error');
+				}
 			} else {
-				$this -> Session -> setFlash(__('No se pudo registrar el artesano. Por favor, intente de nuevo.'), 'crud/error');
+				$this -> Artesano -> create();
+				if ($this -> Artesano -> save($this -> request -> data)) {
+					$this -> Session -> setFlash(__('Se registro el nuevo artesano'), 'crud/success');
+					$this -> redirect(array('action' => 'index'));
+				} else {
+					$this -> Session -> setFlash(__('No se pudo registrar el artesano. Por favor, intente de nuevo.'), 'crud/error');
+				}
 			}
 		}
 		$nacionalidades = $this -> Artesano -> getValores(1);
@@ -1396,8 +1447,8 @@ class ArtesanosController extends AppController {
 		$grados_de_estudio = $this -> Artesano -> getValores(4);
 		$sexos = $this -> Artesano -> getValores(5);
 		$tipos_de_discapacidad = $this -> Artesano -> getValores(6);
-		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos', 'tipos_de_discapacidad'));
-
+		$provincias = $this -> Artesano -> Provincia -> find('list');
+		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos', 'tipos_de_discapacidad','provincias'));
 	}
 
 	//Función para registrar el nuevo alumno

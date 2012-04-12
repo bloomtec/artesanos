@@ -54,6 +54,14 @@ $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('contr
 					</ul>
 				</li>
 				<li>
+					<a href="/titulos"> Titulos</a>
+					<ul>
+						<li>
+							<a href="/titulos/add"> Agregar</a>
+						</li>
+					</ul>
+				</li>
+				<li>
 					<a href="/alumnos"> Alumnos</a>
 					<ul>
 						<li>

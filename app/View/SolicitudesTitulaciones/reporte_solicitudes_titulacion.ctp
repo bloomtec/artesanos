@@ -16,7 +16,7 @@
 	<?php echo $this -> Form -> submit('Buscar');?>
 	<?php echo $this -> Form -> end();?>
 </div>
-<?php } else {  /*debug($reporteIngresos);*/?>
+<?php } else {  //debug($reporteSolicitudesTitulacion);?>
 <br />
 <br />
 <h2><?php echo __('Reporte solicitudes titulación');?></h2>

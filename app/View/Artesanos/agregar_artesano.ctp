@@ -18,6 +18,11 @@
 		</div>
 		<div class="fila-datos" row="2">
 			<?php
+			echo $this -> Form -> input('provincia_id', array('style' => 'width:100px;', 'label' => 'Provincia:', 'type' => 'select', 'options'=>$provincias, 'empty' => 'Seleccione...', 'col' => '1'));
+			echo $this -> Form -> input('canton_id', array('style' => 'width:100px;', 'label' => 'Canton: ', 'type' => 'select', 'empty' => 'Seleccione...', 'col' => '2'));
+			echo $this -> Form -> input('ciudad_id', array('style' => 'width:100px;', 'label' => 'Ciudad: ', 'type' => 'select', 'empty' => 'Seleccione...', 'col' => '3'));
+			?>
+			<?php
 			echo $this -> Form -> input('art_tipo_de_sangre', array('style' => 'width:100px;', 'label' => 'Tipo de sangre:', 'type' => 'select', 'options' => $tipos_de_sangre, 'empty' => 'Seleccione...', 'col' => '1'));
 			echo $this -> Form -> input('art_estado_civil', array('style' => 'width:100px;', 'label' => 'Estado civil:', 'type' => 'select', 'options' => $estados_civiles, 'empty' => 'Seleccione...', 'col' => '2'));
 			echo $this -> Form -> input('art_grado_estudio', array('style' => 'width:100px;', 'label' => 'Grado de estudio:', 'type' => 'select', 'options' => $grados_de_estudio, 'empty' => 'Seleccione...', 'col' => '3'));
@@ -34,6 +39,16 @@
 	</fieldset>
 	<?php echo $this -> Html -> link(__('Cancelar'), array('action' => 'index'), array('class' => 'cancelar'));?>
 	<?php echo $this -> Form -> end(__('Guardar'));?>
+	<?php echo $this -> Form -> create('Artesano', array('type' => 'file'));?>
+	<fieldset>
+		<h2><?php echo __('Subir multiples artesanos por Archivo');?></h2>
+		<div class="fila-archivo">
+			<?php echo $this -> Form -> input('archivo', array('label' => 'Archivo (formato CSV)', 'type' => 'file')); ?>
+			<a href="/files/subida_artesanos.csv" class="button">Documento Formato</a>
+			<div style="clear:both"></div>
+		</div>
+	</fieldset>
+	<?php echo $this -> Form -> end(__('Subir Archivo'));?>
 </div>
 <script type="text/javascript">
 	$(function() {
@@ -62,6 +77,27 @@
 				$('.porcentaje input').val("");
 			}
 		});
+		var actualizarGeoTaller = function() {
+			BJS.updateSelect($("#ArtesanoCantonId"), "/cantones/getByProvincia/" + $("#ArtesanoProvinciaId option:selected").val(), function() {
+				BJS.updateSelect($("#ArtesanoCiudadId"), "/ciudades/getByCanton/" + $("#ArtesanoCantonId option:selected").val(), function() {
+					BJS.updateSelect($("#ArtesanoParroquiaId"), "/parroquias/getByCiudad/" + $("#ArtesanoCiudadId option:selected").val());
+				});
+			});
+		}
+		$('#ArtesanoProvinciaId').change(function() {
+			actualizarGeoTaller();
+		});
+		$('#ArtesanoCantonId').change(function() {
+			BJS.updateSelect($("#ArtesanoCiudadId"), "/ciudades/getByCanton/" + $("#ArtesanoCantonId option:selected").val(), function() {
+				BJS.updateSelect($("#ArtesanoParroquiaId"), "/parroquias/getByCiudad/" + $("#ArtesanoCiudadId option:selected").val());
+			});
+		});
+		/*$('#ArtesanoCiudadId').change(function() {
+			BJS.updateSelect($("#ArtesanoParroquia"), "/parroquias/getByCiudad/" +$("#ArtesanoCiudad option:selected").val());
+
+		});*/
+		
+
 	});
 
 </script>

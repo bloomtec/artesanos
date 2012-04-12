@@ -5,7 +5,7 @@ var inventarios={};
 
 inventarios.actualizarTabla = function(){
 	var subtotal = 0;
-	var iva = 0;
+	var iva = $('#ItemValorIVA').val() / 100;
 	var total = 0;
 	var rows=$('table.inventario').find('tr');
 	var length=rows.length -1;
@@ -22,11 +22,11 @@ inventarios.actualizarTabla = function(){
 		}
 		if(i == length){
 			$('input.subtotal').val(BJS.formatComma(BJS.formatNumber(subtotal)));
-			iva=subtotal * 0.12;
+			iva= iva * subtotal;
 			iva= (new Number(iva)).toFixed(2);
 			total= parseFloat(iva) + parseFloat(subtotal);
 			total = (new Number(total)).toFixed(2);
-			console.log(total);
+			//console.log(total);
 			$('input.iva').val(BJS.formatComma(iva));
 			$('input.total').val(BJS.formatComma(total));
 			

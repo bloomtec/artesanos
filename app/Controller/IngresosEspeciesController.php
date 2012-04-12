@@ -170,11 +170,11 @@ class IngresosEspeciesController extends AppController {
 		if($this -> request -> is('post')) {
 			$conditions = array();
 			if(!empty($this -> request -> data['IngresosEspecie']['fecha_inicio']) && !empty($this -> request -> data['IngresosEspecie']['fecha_fin'])) {
-				$conditions = array('IngresosEspecie.ing_fecha BETWEEN ? AND ?' => array($this -> request -> data['IngresosEspecie']['fecha_inicio'], $this -> request -> data['IngresosEspecie']['fecha_fin']));
+				$conditions = array('IngresosEspecie.ing_fecha BETWEEN ? AND ?' => array($this -> request -> data['IngresosEspecie']['fecha_inicio'], $this -> request -> data['IngresosEspecie']['fecha_fin']." 23:59:59"));
 			} elseif(!empty($this -> request -> data['IngresosEspecie']['fecha_inicio'])) {
 				$conditions = array('IngresosEspecie.ing_fecha >=' => $this -> request -> data['IngresosEspecie']['fecha_inicio']);
 			} elseif(!empty($this -> request -> data['IngresosEspecie']['fecha_fin'])) {
-				$conditions = array('IngresosEspecie.ing_fecha <=' => $this -> request -> data['IngresosEspecie']['fecha_fin']);
+				$conditions = array('IngresosEspecie.ing_fecha <=' => $this -> request -> data['IngresosEspecie']['fecha_fin']." 23:59:59");
 			}
 			$ingresos = $this -> IngresosEspecie -> find('list', array('fields' => array('IngresosEspecie.id'), 'conditions' => $conditions));
 			$this -> paginate = array(

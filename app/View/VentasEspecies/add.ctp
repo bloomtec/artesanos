@@ -16,11 +16,17 @@
 	</div>
 	</fieldset>
 	<div class="form-venta">
+		<div id="DatosFactura"><?php echo $this -> element('factura'); ?></div>
+		<div style="clear: both;"></div>
 		<br />
+		<h3>Especies</h3>
 		<h1 class='nombre'></h1>
+		Nota: Solo se muestran las especies disponibles en inventario
+		<br style="clear:both;" />
+		<br style="clear:both;" />
 		<table id="ventasEspeciesValoradas">
 			<tr>
-				<th>Tipo Especie valorda</th>
+				<th>Tipo Especie valorada</th>
 				<th>Cantidad</th>
 			</tr>
 			<?php $i=0; 
@@ -28,7 +34,7 @@
 			?>
 				<tr>
 					<td>
-						<p>
+						<p style='text-align: left;'>
 							<?php echo $tiposEspecie['TiposEspeciesValorada']['tip_nombre']?>
 							<?php echo $this->Form->hidden('EspeciesValorada.'.$i.'.tipos_especies_valorada_id',array('value'=>$tiposEspecie['TiposEspeciesValorada']['id'])); ?>
 						</p>
@@ -56,6 +62,7 @@
 				endforeach;
 			?>
 		</table>
+		
 	<?php echo $this->Form->input('artesano_id',array('class'=>'artesanoSelect','label'=>false,'type'=>'hidden'));	 ?>
 	<?php echo $this->Html->link(__('Cancelar'),array('action'=>'index'),array('class'=>'cancelar'));?>
 	<?php echo $this->Form->end(__('Guardar'));?>

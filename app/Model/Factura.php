@@ -1,19 +1,20 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * VentasEspecie Model
+ * Factura Model
  *
- * @property JuntasProvincial $JuntasProvincial
- * @property Artesano $Artesano
- * @property EspeciesValorada $EspeciesValorada
+ * @property Provincia $Provincia
+ * @property Canton $Canton
+ * @property Ciudad $Ciudad
+ * @property VentasEspecie $VentasEspecie
  */
-class VentasEspecie extends AppModel {
+class Factura extends AppModel {
 /**
  * Display field
  *
  * @var string
  */
-	public $displayField = 'id';
+	public $displayField = 'fac_numero';
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
@@ -23,23 +24,23 @@ class VentasEspecie extends AppModel {
  * @var array
  */
 	public $belongsTo = array(
-		'JuntasProvincial' => array(
-			'className' => 'JuntasProvincial',
-			'foreignKey' => 'juntas_provincial_id',
+		'Provincia' => array(
+			'className' => 'Provincia',
+			'foreignKey' => 'provincia_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
 		),
-		'Artesano' => array(
-			'className' => 'Artesano',
-			'foreignKey' => 'artesano_id',
+		'Canton' => array(
+			'className' => 'Canton',
+			'foreignKey' => 'canton_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
 		),
-		'Factura' => array(
-			'className' => 'Factura',
-			'foreignKey' => 'factura_id',
+		'Ciudad' => array(
+			'className' => 'Ciudad',
+			'foreignKey' => 'ciudad_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
@@ -52,9 +53,9 @@ class VentasEspecie extends AppModel {
  * @var array
  */
 	public $hasMany = array(
-		'EspeciesValorada' => array(
-			'className' => 'EspeciesValorada',
-			'foreignKey' => 'ventas_especie_id',
+		'VentasEspecie' => array(
+			'className' => 'VentasEspecie',
+			'foreignKey' => 'factura_id',
 			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',

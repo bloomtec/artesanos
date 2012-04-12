@@ -14,8 +14,11 @@ class ReportesController extends AppController {
 			/**
 			 * ----------------------------------------------------------------------------------------------
 			 */
-			if(!empty($this -> request -> data['Reporte']['apellido_paterno'])) {
-				$conditions['DatosPersonal.dat_apellido_paterno LIKE'] = '%' . $this -> request -> data['Reporte']['apellido_paterno'] . '%';
+			if(!empty($this -> request -> data['Reporte']['rama_id'])) {
+				$conditions['Calificacion.rama_id'] = $this -> request -> data['Reporte']['rama_id'];
+			}
+			if(!empty($this -> request -> data['Reporte']['provincia_id'])) {
+				$conditions['Provincia.provincia_id'] =$this -> request -> data['Reporte']['provincia_id'];
 			}
 			if(!empty($this -> request -> data['Reporte']['apellido_materno'])) {
 				$conditions['DatosPersonal.dat_apellido_materno LIKE'] = '%' . $this -> request -> data['Reporte']['apellido_materno'] . '%';
@@ -71,13 +74,18 @@ class ReportesController extends AppController {
 			*/
 			$this -> redirect(array('controller' => 'datos_personales', 'action' => 'reporteArtesanos'));
 		}
+		$this -> loadModel('Rama');
+		$ramas = $this -> Rama -> find('list'); 
+		$this -> loadModel('Provincia');
+		$provincias = $this -> Provincia -> find('list');
 		$tipos_de_discapacidad = $this -> Reporte -> getValores(6);
 		$nacionalidades = $this -> Reporte -> getValores(1);
 		$tipos_de_sangre = $this -> Reporte -> getValores(2);
 		$sexos = $this -> Reporte -> getValores(5);
 		$estados_civiles = $this -> Reporte -> getValores(3);
 		$grados_de_estudio = $this -> Reporte -> getValores(4);
-		$this -> set(compact('tipos_de_discapacidad', 'nacionalidades', 'tipos_de_sangre', 'sexos', 'estados_civiles', 'grados_de_estudio'));
+		
+		$this -> set(compact('ramas','provincias','tipos_de_discapacidad', 'nacionalidades', 'tipos_de_sangre', 'sexos', 'estados_civiles', 'grados_de_estudio'));
 	}
 	
 	public function reporteCalificacionesOperador() {

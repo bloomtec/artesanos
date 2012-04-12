@@ -40,6 +40,35 @@ class Artesano extends AppModel {
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 /**
+ * belongsTo associations
+ *
+ * @var array
+ */
+	public $belongsTo = array(
+		'Provincia' => array(
+			'className' => 'Provincia',
+			'foreignKey' => 'provincia_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'Canton' => array(
+			'className' => 'Canton',
+			'foreignKey' => 'canton_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'Ciudad' => array(
+			'className' => 'Ciudad',
+			'foreignKey' => 'ciudad_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		)
+	);
+
+/**
  * hasMany associations
  *
  * @var array

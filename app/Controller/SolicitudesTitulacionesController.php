@@ -277,7 +277,7 @@ class SolicitudesTitulacionesController extends AppController {
 	public function reporte() {
 		if ($this -> request -> is('post')) {
 			if (!empty($this -> request -> data['VentasEspecie']['fecha_inicio']) && !empty($this -> request -> data['VentasEspecie']['fecha_fin'])) {
-				$conditions = array('VentasEspecie.created BETWEEN ? AND ?' => array($this -> request -> data['VentasEspecie']['fecha_inicio'], $this -> request -> data['VentasEspecie']['fecha_fin']));
+				$conditions = array('VentasEspecie.created BETWEEN ? AND ?' => array($this -> request -> data['VentasEspecie']['fecha_inicio'], $this -> request -> data['VentasEspecie']['fecha_fin']." 23:59:59"));
 				$this -> paginate = array('conditions' => $conditions);
 				$this -> Session -> delete('conditions');
 				$this -> Session -> write('conditions', $conditions);
@@ -289,7 +289,7 @@ class SolicitudesTitulacionesController extends AppController {
 				$this -> Session -> write('conditions', $conditions);
 				$this -> set('ingresos', $this -> paginate());
 			} elseif (!empty($this -> request -> data['VentasEspecie']['fecha_fin'])) {
-				$conditions = array('VentasEspecie.created <=' => $this -> request -> data['VentasEspecie']['fecha_fin']);
+				$conditions = array('VentasEspecie.created <=' => $this -> request -> data['VentasEspecie']['fecha_fin']." 23:59:59");
 				$this -> paginate = array('conditions' => $conditions);
 				$this -> Session -> delete('conditions');
 				$this -> Session -> write('conditions', $conditions);

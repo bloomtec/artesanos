@@ -106,7 +106,7 @@ class PagesController extends AppController {
 						$mensaje .= "Provincia: " . $provincias[$value] . " <br />";
 						break;
 					case 'canton' :
-						$mensaje .= "Cantón: " . $cantones[$value] . " <br />";
+						$mensaje .= "Cant贸n: " . $cantones[$value] . " <br />";
 						break;
 					case 'ciudad' :
 						$mensaje .= "Ciudad: " . $ciudades[$value] . " <br />";
@@ -127,30 +127,46 @@ class PagesController extends AppController {
 						$mensaje .= "</ul>";
 						break;
 					case 'imagen_1' :
-						$attachments['imagen1.jpg' ]=IMAGES.'header_cal_normal.jpg';
+						if(!$value['error']) {
+							$attachments['1 - ' . $value['name']] = $value['tmp_name'];
+						}
 						break;
 					case 'imagen_2' :
-						$attachments['imagen2.jpg' ]=IMAGES.'header_cal_normal.jpg';
+						if(!$value['error']) {
+							$attachments['2 - ' . $value['name']] = $value['tmp_name'];
+						}
 						break;
 					case 'imagen_3' :
-						$attachments['imagen3.jpg' ]=IMAGES.'header_cal_normal.jpg';
+						if(!$value['error']) {
+							$attachments['3 - ' . $value['name']] = $value['tmp_name'];
+						}
 						break;
 					default :
-					//debug(Inflector::humanize($key));
+						//debug(Inflector::humanize($key));
 						$mensaje .= Inflector::humanize($key) . ": " . $value . " <br />";
 						break;
 				}
 
 			}
-			$email = new CakeEmail();
-			$email -> emailFormat('html');
-			$email -> from(array('no-reply@jnda.gob.ec' => 'Vitrina Virtual'));
-			$email -> to('ricardopandales@gmail.com');
-			$email -> subject('Solicitud Vitrina Virtual');
-			if(!empty($attachments)){
-				$email->attachments($attachments);
+			
+			
+			$this -> loadModel('Configuracion');
+			$correos = $this -> Configuracion -> read(null, 1);
+			$correos = $correos['Configuracion']['con_correo_vitrina'];
+			$correos = explode(',', $correos);
+			
+			foreach($correos as $key => $correo) {
+				$email = new CakeEmail();
+				$email -> emailFormat('html');
+				$email -> from(array('no-reply@jnda.gob.ec' => 'Vitrina Virtual'));
+				$email -> subject('Solicitud Vitrina Virtual');
+				if(!empty($attachments)){
+					$email->attachments($attachments);
+				}
+				$email -> to(trim($correo));
+				$email -> send($mensaje);
+				$email -> reset();
 			}
-			$email -> send($mensaje);
 
 			// ENVIAR MENSAJE
 			$this -> set('se_envio', true);
