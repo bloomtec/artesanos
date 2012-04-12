@@ -10,7 +10,7 @@ echo $this -> Form -> input('Factura.ciudad_id', array('label' => 'Ciudad'));
 echo $this -> Form -> input('Factura.fac_direccion', array('label' => 'Dirección'));
 echo $this -> Form -> input('Factura.fac_telefono', array('label' => 'Teléfono'));
 echo $this -> Form -> input('Factura.fac_ruc_doc', array('label' => 'R.U.C./C.I.'));
-if($fecha) {
+if(isset($fecha) && $fecha) {
 	echo $this -> Form -> hidden('Factura.fac_fecha_emision', array('label' => 'Fecha De Emisión','type'=>'text','class'=>'date', 'value' => $fecha));
 	echo $this -> Form -> input('Factura.fac_fecha_emision', array('label' => 'Fecha De Emisión','type'=>'text','class'=>'date', 'value' => $fecha, 'disabled' => 'disabled'));
 } else {
