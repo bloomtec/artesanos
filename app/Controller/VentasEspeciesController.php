@@ -303,26 +303,34 @@ class VentasEspeciesController extends AppController {
 				$this -> paginate = array('conditions' => $conditions);
 				$this -> Session -> delete('conditions');
 				$this -> Session -> write('conditions', $conditions);
-				$this -> set('ingresos', $this -> paginate());
+				$ingresos = $this -> paginate();
+				//debug($ingresos);
+				$this -> set('ingresos', $ingresos);
 			} elseif (!empty($this -> request -> data['VentasEspecie']['fecha_inicio'])) {
 				$conditions = array('VentasEspecie.created >=' => $this -> request -> data['VentasEspecie']['fecha_inicio']);
 				$this -> paginate = array('conditions' => $conditions);
 				$this -> Session -> delete('conditions');
 				$this -> Session -> write('conditions', $conditions);
-				$this -> set('ingresos', $this -> paginate());
+				$ingresos = $this -> paginate();
+				//debug($ingresos);
+				$this -> set('ingresos', $ingresos);
 			} elseif (!empty($this -> request -> data['VentasEspecie']['fecha_fin'])) {
 				$conditions = array('VentasEspecie.created <=' => $this -> request -> data['VentasEspecie']['fecha_fin']." 23:59:59");
 				$this -> paginate = array('conditions' => $conditions);
 				$this -> Session -> delete('conditions');
 				$this -> Session -> write('conditions', $conditions);
-				$this -> set('ingresos', $this -> paginate());
+				$ingresos = $this -> paginate();
+				//debug($ingresos);
+				$this -> set('ingresos', $ingresos);
 			} else {
 				$this -> set('ingresos', $this -> paginate());
 			}
 		}
 		if (isset($this -> params['named']['sort'])) {
 			$this -> paginate = array('conditions' => $this -> Session -> read('conditions'));
-			$this -> set('ingresos', $this -> paginate());
+			$ingresos = $this -> paginate();
+			//debug($ingresos);
+			$this -> set('ingresos', $ingresos);
 		}
 		$this -> set('fechaActual', date('Y-m-d', strtotime('now')));
 	}

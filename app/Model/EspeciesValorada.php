@@ -8,17 +8,29 @@ App::uses('AppModel', 'Model');
  * @property IngresosEspecie $IngresosEspecie
  */
 class EspeciesValorada extends AppModel {
-/**
- * Display field
- *
- * @var string
- */
+	
+	/**
+	 * Virtual fields
+	 *
+	 * @var array
+	 */
+	public $virtualFields = array(
+		'valor_unitario' => 'SELECT tip_valor_unitario FROM tipos_especies_valoradas WHERE id = EspeciesValorada.tipos_especies_valorada_id',
+		'nombre_especie' => 'SELECT tip_nombre FROM tipos_especies_valoradas WHERE id = EspeciesValorada.tipos_especies_valorada_id'
+	);
+	
+	/**
+	 * Display field
+	 *
+	 * @var string
+	 */
 	public $displayField = 'esp_serie';
-/**
- * Validation rules
- *
- * @var array
- */
+	
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'tipos_especies_valorada_id' => array(
 			'numeric' => array(
