@@ -4,15 +4,26 @@
 </div>
 <?php }else{?>
 <div class='form'>
+	<h1>Formulario para ofrecer sus productos</h1>
 	<?php
 	echo $this -> Form -> create('Page', array('type' => 'file'));
 	echo $this -> Form -> input('nombre_del_artesano', array('required' => true));
 	echo $this -> Form -> input('ruc', array('required' => true, 'class' => 'number'));
 	echo $this -> Form -> input('razon_social', array('required' => true));
 	echo $this -> Form -> input('rama', array('required' => true, 'options' => $ramas, 'label' => 'Rama Artesanal a la que pertenece'));
-	echo "<div class='productos'>";
-	echo "<h2'>Productos de elaboración</h2>";
+
+	
+	echo $this -> Form -> input('provincia', array('required' => true, 'options' => $provincias, 'label' => 'Provincia', 'empty' => 'seleccione...'));
+	echo $this -> Form -> input('canton', array('required' => true, 'options' => array(), 'label' => 'Cantón', 'empty' => 'seleccione...'));
+	echo $this -> Form -> input('ciudad', array('required' => true, 'options' => array(), 'label' => 'Ciudad', 'empty' => 'seleccione...'));
+	echo $this -> Form -> input('parroquia', array('required' => true, 'options' => array(), 'label' => 'Parroquia', 'empty' => 'seleccione...'));
+	echo $this -> Form -> input('direccion', array('required' => true, 'label' => 'Dirección'));
+	echo $this -> Form -> input('telefono', array('required' => true, 'label' => 'Teléfono', 'class' => 'telefono'));
+	echo $this -> Form -> input('celular', array('required' => true, 'label' => 'Celular', 'class' => 'celular'));
+	echo $this -> Form -> input('email', array('required' => true, 'label' => 'Email', 'type' => 'email'));
 	?>
+		<div class='productos'>
+	<h2>Productos de elaboración</h2>
 	<table  id="productos" show="1" till="10">
 		<thead>
 			<tr>
@@ -42,18 +53,10 @@
 	?>
 	</table>
 	<a class="add-row button" href="#" rel="#productos">Agregar Otro</a>
-	<?php
-	echo "</div>";
-	echo $this -> Form -> input('provincia', array('required' => true, 'options' => $provincias, 'label' => 'Provincia', 'empty' => 'seleccione...'));
-	echo $this -> Form -> input('canton', array('required' => true, 'options' => array(), 'label' => 'Cantón', 'empty' => 'seleccione...'));
-	echo $this -> Form -> input('ciudad', array('required' => true, 'options' => array(), 'label' => 'Ciudad', 'empty' => 'seleccione...'));
-	echo $this -> Form -> input('parroquia', array('required' => true, 'options' => array(), 'label' => 'Parroquia', 'empty' => 'seleccione...'));
-	echo $this -> Form -> input('direccion', array('required' => true, 'label' => 'Dirección'));
-	echo $this -> Form -> input('telefono', array('required' => true, 'label' => 'Teléfono', 'class' => 'telefono'));
-	echo $this -> Form -> input('celular', array('required' => true, 'label' => 'Celular', 'class' => 'celular'));
-	echo $this -> Form -> input('email', array('required' => true, 'label' => 'Email', 'type' => 'email'));
+	</div>
+	<?php 
 	echo $this -> Form -> end('Enviar');
-?>
+	?>
 </div>
 <script type="text/javascript">
 	$(function() {
