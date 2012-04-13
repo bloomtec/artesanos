@@ -336,7 +336,7 @@ class VentasEspeciesController extends AppController {
 	}
 
 	public function imprimirReporte() {
-		$this -> layout = 'pdf2';
+		$this -> layout = 'pdf4';
 		$nombre_archivo = "ReporteVentasEspecies";
 		$tamano = 5;
 		$this -> paginate = array('conditions' => $this -> Session -> read('conditions'));
