@@ -17,7 +17,7 @@
 		</h3>
 		<label><?php echo __('Descripcion'); ?></label>
 		<h3>
-			<?php echo h($curso['Curso']['cur_descripcion']); ?>
+			<?php echo h($curso['Curso']['cur_contenido']); ?>
 			&nbsp;
 		</h3>
 		<label><?php echo __('Fecha De Inicio'); ?></label>

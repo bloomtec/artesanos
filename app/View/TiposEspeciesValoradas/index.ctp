@@ -22,7 +22,7 @@
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $tiposEspeciesValorada['TiposEspeciesValorada']['id']),array('class'=>'view','title'=>'Ver')); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $tiposEspeciesValorada['TiposEspeciesValorada']['id']),array('class'=>'edit','title'=>'Modificar')); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $tiposEspeciesValorada['TiposEspeciesValorada']['id']), array('class'=>'delete','title'=>'Borrar'), __('Esta seguro que quiere eliminar el registro?', $tiposEspeciesValorada['TiposEspeciesValorada']['id'])); ?>
+			<?php if($tiposEspeciesValorada['TiposEspeciesValorada']['tip_valor_unitario'] > 50) echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $tiposEspeciesValorada['TiposEspeciesValorada']['id']), array('class'=>'delete','title'=>'Borrar'), __('Esta seguro que quiere eliminar el registro?', $tiposEspeciesValorada['TiposEspeciesValorada']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

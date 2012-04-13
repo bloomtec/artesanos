@@ -108,7 +108,7 @@ class TiposEspeciesValoradasController extends AppController {
 	 */
 	public function delete($id = null) {
 		if($id <= 50){
-			$this -> Session -> setFlash(__('No es permito eliminar este Tipo de especie valorada'), 'crud/success');
+			$this -> Session -> setFlash(__('No es permito eliminar este Tipo de especie valorada'), 'crud/error');
 			$this -> redirect(array('action' => 'index'));
 		}
 		if (!$this -> request -> is('post')) {

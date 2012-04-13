@@ -40,7 +40,7 @@ class Curso extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'cur_descripcion' => array(
+		'cur_contenido' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
 				'message' => 'Ingrese una descripción',

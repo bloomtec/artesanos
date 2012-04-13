@@ -9,7 +9,7 @@
 		echo $this -> Form -> input('solicitud_id');
 		echo $this -> Form -> input('instructor_id',array('empty'=>'Seleccione...'));
 		echo $this -> Form -> input('cur_nombre', array('label' => 'Nombre'));
-		echo $this -> Form -> input('cur_descripcion', array('label' => 'Descripcion'));
+		echo $this -> Form -> input('cur_contenido', array('label' => 'Descripcion'));
 		echo $this -> Form -> input('cur_fecha_de_inicio', array('label' => 'Fecha De Inicio', 'type' => 'text', 'class' => 'date'));
 		echo $this -> Form -> input('cur_fecha_de_fin', array('label' => 'Fecha De Fin', 'type' => 'text', 'class' => 'date'));
 		echo $this -> Form -> input('cur_costo', array('label' => 'Costo', 'class' => 'valor', 'type' => 'text'));
