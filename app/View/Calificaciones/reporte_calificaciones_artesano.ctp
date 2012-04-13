@@ -42,7 +42,7 @@
 			<?php
 				if ($calificacion['Calificacion']['cal_estado'] == "Aprobada" && $this -> requestAction('/usuarios/verificarAcceso/', array('ruta' => array('controllers', 'Calificaciones', 'imprimir')))) {
 					echo $this -> Html -> link('Especie Valorada', array("action" => "imprimir", $calificacion['Calificacion']['id']), array( 'class' => 'informe', 'title' => 'Especie Valorada'));
-					echo $this -> Html -> link('Carnet', array("action" => "imprimir", $calificacion['Calificacion']['id']), array( 'class' => 'carnet', 'title' => 'Carnet de Artesano'));
+					echo $this -> Html -> link('Carnet', array("action" => "carnet", $calificacion['Calificacion']['id']), array( 'class' => 'carnet', 'title' => 'Carnet de Artesano'));
 				}
 				if ($this -> requestAction('/usuarios/verificarAcceso/', array('ruta' => array('controllers', 'Calificaciones', 'view')))) {
 					echo $this -> Html -> link('Ver', array("action" => "view", $calificacion['Calificacion']['id']), array('class' => 'pdf', 'title' => 'Descargar'));
