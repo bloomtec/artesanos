@@ -1,4 +1,4 @@
-<?php debug($alumno); ?>
+<?php //debug($alumno); ?>
 <table border="0" width="700">
 	<tr>
 		<td rowspan="2" width="100"><b>imagen1</b></td>

@@ -2,8 +2,8 @@
 header("Content-type: application/pdf");
 
 App::import('Vendor','especie'); 
-$pagelayout = array(325, 204);
-$pdf = new ESPECIE(PDF_PAGE_ORIENTATION, PDF_UNIT, $pagelayout, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+$pagelayout = array(86, 54);
+$pdf = new ESPECIE(PDF_PAGE_ORIENTATION, "mm", $pagelayout, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
 //$pdf = new ESPECIE(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
@@ -33,7 +33,8 @@ $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
 //set margins
-$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+//$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+$pdf->SetMargins(25, 2, 20, true);
 $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 
@@ -49,7 +50,7 @@ $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO); //3217020347
 // ---------------------------------------------------------
 
 // set font
-$pdf->SetFont('helvetica', '', 12);
+$pdf->SetFont('helvetica', '', 1);
 
 // add a page
 $pdf->AddPage();
