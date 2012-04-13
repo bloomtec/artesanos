@@ -1039,6 +1039,11 @@ form .input label {
     padding: 8px 0 0;
     width: 155px;
 }
+.configuraciones form .input.textarea label{
+	float:none;
+	width: auto;
+	height: auto;
+}
 input{
 	text-transform:uppercase;
 }

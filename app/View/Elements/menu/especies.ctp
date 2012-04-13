@@ -9,10 +9,10 @@
 		
 		<ul>
 			<li>
-				<a href="/ventas_especies/add">a artesano</a>
+				<a href="/ventas_especies/add">Artesano</a>
 			</li>
 			<li>
-				<a href="/ventas_especies/addToOthers">a otros</a>
+				<a href="/ventas_especies/addToOthers">Otros</a>
 			</li>
 		</ul>
 		</li>

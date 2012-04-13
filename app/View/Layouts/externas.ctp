@@ -29,6 +29,11 @@ $cakeDescription = __d('cake_dev', 'Junta Nacional de defensa del artesano');
 			echo $this -> Html -> css('tabs-no-images');
 			echo $this -> Html -> css('forms-vitrina');
 			echo $this -> Html -> css('basic');
+			
+			echo $this -> Html -> css(' http://www.jnda.gob.ec/templates/ypainc-jnda/css/template.css');
+			echo $this -> Html -> css('http://www.jnda.gob.ec/templates/ypainc-jnda/css/joomla.css');
+			echo $this -> Html -> css('http://www.jnda.gob.ec/templates/ypainc-jnda/css/layout.css');
+			
 			echo $this -> Html -> script('jquery');
 			echo $this -> Html -> script('jquery.tools.min');
 			echo $this -> Html -> script('bjs');

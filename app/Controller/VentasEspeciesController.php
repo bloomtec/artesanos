@@ -233,7 +233,7 @@ class VentasEspeciesController extends AppController {
 				$this -> Session -> setFlash('Se generó la venta', 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash('Se generó la venta', 'crud/error');
+				$this -> Session -> setFlash('No se pudo completar la venta', 'crud/error');
 			}
 		}
 		$tiposEspeciesValorada = $this -> VentasEspecie -> EspeciesValorada -> TiposEspeciesValorada -> find('all',array('conditions'=>array('TiposEspeciesValorada.total_especies_para_vender >'=>0), 'recursive' => -1));
@@ -294,7 +294,12 @@ class VentasEspeciesController extends AppController {
 	public function reporte() {
 		if ($this -> request -> is('post')) {
 			if (!empty($this -> request -> data['VentasEspecie']['fecha_inicio']) && !empty($this -> request -> data['VentasEspecie']['fecha_fin'])) {
-				$conditions = array('VentasEspecie.created BETWEEN ? AND ?' => array($this -> request -> data['VentasEspecie']['fecha_inicio'], $this -> request -> data['VentasEspecie']['fecha_fin']." 23:59:59"));
+				$conditions = array(
+					'VentasEspecie.created BETWEEN ? AND ?' => array(
+						$this -> request -> data['VentasEspecie']['fecha_inicio']." 00:00:00",
+						$this -> request -> data['VentasEspecie']['fecha_fin']." 23:59:59"
+					)
+				);
 				$this -> paginate = array('conditions' => $conditions);
 				$this -> Session -> delete('conditions');
 				$this -> Session -> write('conditions', $conditions);
@@ -319,6 +324,7 @@ class VentasEspeciesController extends AppController {
 			$this -> paginate = array('conditions' => $this -> Session -> read('conditions'));
 			$this -> set('ingresos', $this -> paginate());
 		}
+		$this -> set('fechaActual', date('Y-m-d', strtotime('now')));
 	}
 
 	public function imprimirReporte() {

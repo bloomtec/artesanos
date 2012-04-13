@@ -22,7 +22,7 @@
 		<th><?php echo $this->Paginator->sort('solicitud_id','Solicitud');?></th>
 		<th><?php echo $this->Paginator->sort('instructor_id','Instructor');?></th>
 		<th><?php echo $this->Paginator->sort('cur_nombre','Nombre');?></th>
-		<th><?php echo $this->Paginator->sort('cur_descripcion','Descripción');?></th>
+		<th><?php echo $this->Paginator->sort('cur_contenido','Contenido');?></th>
 		<th><?php echo $this->Paginator->sort('cur_fecha_de_inicio','Fecha De Inicio');?></th>
 		<th><?php echo $this->Paginator->sort('cur_fecha_de_fin','Fecha De Fin');?></th>
 		<th><?php echo $this->Paginator->sort('cur_costo','Costo');?></th>
@@ -44,7 +44,7 @@
 			} else { echo $curso['Instructor']['ins_nombres']; } ?>
 		</td>
 		<td><?php echo h($curso['Curso']['cur_nombre']); ?>&nbsp;</td>
-		<td><?php echo h($curso['Curso']['cur_descripcion']); ?>&nbsp;</td>
+		<td><?php echo h($curso['Curso']['cur_contenido']); ?>&nbsp;</td>
 		<td><?php echo h($curso['Curso']['cur_fecha_de_inicio']); ?>&nbsp;</td>
 		<td><?php echo h($curso['Curso']['cur_fecha_de_fin']); ?>&nbsp;</td>
 		<td><?php echo h($curso['Curso']['cur_costo']); ?>&nbsp;</td>

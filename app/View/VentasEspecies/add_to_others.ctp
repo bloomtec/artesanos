@@ -2,9 +2,9 @@
 	.form form, table {
 		width: 100%;
 	}
-	table tr td{
+	table tr td {
 		vertical-align: top;
-			padding: 20px 0;
+		padding: 20px 0;
 	}
 	table tr td td {
 		height: auto;
@@ -16,7 +16,7 @@
 </style>
 <div class="ventasEspecies form">
 	<?php echo $this -> Form -> create('VentasEspecie');?>
-	<?php echo $this -> element('factura'); ?>
+	<?php echo $this -> element('factura');?>
 	<div class='especie'>
 		<table id="ventasEspeciesValoradas" >
 			<tr>
@@ -25,8 +25,8 @@
 				<th style='width:50%;'>Artesanos</th>
 			</tr>
 			<?php
-			$i=0;
-			foreach($tiposEspeciesValorada as $tiposEspecie):
+$i=0;
+foreach($tiposEspeciesValorada as $tiposEspecie):
 			?>
 			<tr>
 				<td>
@@ -52,10 +52,11 @@
 				?></td>
 				<td>
 				<table>
-					<?php  for($k=1; $k<50; $k++): ?>
+					<?php  for($k=1; $k<50; $k++):
+					?>
 					<tr row='<?php echo $i;?>'  style='display:none;'>
-						<td row="<?php echo $k;?>"><?php echo $this -> Form -> input('EspeciesValorada.' . $i . '.Artesanos.' . $k, array('disabled' => true,'class' => 'cedula', 'placeHolder' => 'cedula', 'fila' => $i, 'row' => $k, 'label' => false, 'div' => false, 'style' => 'display:none;'));?>
-						<?php echo $this -> Form -> hidden('EspeciesValorada.' . $i . '.Artesanos.' . $k, array('disabled' => true,'class' => 'cedula', 'placeHolder' => 'cedula', 'fila' => $i, 'row' => $k, 'label' => false, 'div' => false));?></td>
+						<td row="<?php echo $k;?>"><?php echo $this -> Form -> input('EspeciesValorada.' . $i . '.Artesanos.' . $k, array('disabled' => true, 'class' => 'cedula', 'placeHolder' => 'cedula', 'fila' => $i, 'row' => $k, 'label' => false, 'div' => false, 'style' => 'display:none;'));?>
+						<?php echo $this -> Form -> hidden('EspeciesValorada.' . $i . '.Artesanos.' . $k, array('disabled' => true, 'class' => 'cedula', 'placeHolder' => 'cedula', 'fila' => $i, 'row' => $k, 'label' => false, 'div' => false));?></td>
 						<td row="<?php echo $k;?>"></td>
 					</tr>
 					<?php endfor;?>
@@ -79,7 +80,7 @@
 			$.each($inputs, function(i, val) {
 				row = parseInt($(val).attr('row'));
 				if(row > cantidad) {
-					$(val).val('').hide().attr('disabled',true).parent().parent().hide();
+					$(val).val('').hide().attr('disabled', true).parent().parent().hide();
 				} else {
 					$(val).show().removeAttr('disabled').parent().show().parent().show();
 				}
@@ -101,9 +102,56 @@
 				});
 			}
 		});
-	});
-	$('#VentasEspecieAddToOthersForm').submit(function(e){
-		//e.preventDefault();
+		switch($('#VentasEspecieUsuIsCedula').val()) {
+			case "0":
+				// PASAPORTE
+				$('#FacturaFacRucDoc').setMask({
+					mask : '*',
+					type : 'repeat'
+				}).val();
+				break;
+			case "1":
+				// CEDULA
+				$('#FacturaFacRucDoc').setMask({
+					mask : '9999',
+					type : 'repeat'
+				}).val();
+				break;
+		}
+		$('#VentasEspecieUsuIsCedula').change(function(){
+			switch($('#VentasEspecieUsuIsCedula').val()) {
+			case "0":
+				// PASAPORTE
+				$('#FacturaFacRucDoc').setMask({
+					mask : '*',
+					type : 'repeat'
+				}).val();
+				break;
+			case "1":
+				// CEDULA
+				$('#FacturaFacRucDoc').setMask({
+					mask : '9999',
+					type : 'repeat'
+				}).val();
+				break;
+			}
+		});
+		$('#VentasEspecieAddToOthersForm').submit(function(e) {
+			switch($('#VentasEspecieUsuIsCedula').val()) {
+			case "0":
+				// PASAPORTE
+				
+				break;
+			case "1":
+				// CEDULA
+				if(checkRucCiEcuador($("#FacturaFacRucDoc").val())) {
+
+				} else {
+					e.preventDefault();
+				}
+				break;
+			}
+		});
 	});
 
 </script>

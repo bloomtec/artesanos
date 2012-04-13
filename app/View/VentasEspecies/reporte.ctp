@@ -5,8 +5,8 @@
 	<h2><?php echo __('Reporte ventas de especies'); ?></h2>
 	<fieldset>
 		<?php
-		echo $this -> Form -> input('fecha_inicio', array('type' => 'text', 'label' => 'Fecha Inicio', 'class' => 'date'));
-		echo $this -> Form -> input('fecha_fin', array('type' => 'text', 'label' => 'Fecha Fin', 'class' => 'date'));
+		echo $this -> Form -> input('fecha_inicio', array('value' => $fechaActual, 'type' => 'text', 'label' => 'Fecha Inicio', 'class' => 'date'));
+		echo $this -> Form -> input('fecha_fin', array('value' => $fechaActual, 'type' => 'text', 'label' => 'Fecha Fin', 'class' => 'date'));
 		?>
 	</fieldset>
 	<?php echo $this -> Form -> submit('Buscar');?> 

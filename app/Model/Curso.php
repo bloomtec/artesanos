@@ -40,7 +40,7 @@ class Curso extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'cur_descripcion' => array(
+		'cur_contenido' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
 				'message' => 'Ingrese una descripción',
@@ -80,6 +80,87 @@ class Curso extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
+		'cur_horario_inicio' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Este campo es requerido',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'cur_direccion' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Este campo es requerido',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'provincia_id' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Este campo es requerido',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'canton_id' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Este campo es requerido',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'ciudad_id' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Este campo es requerido',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'parroquia_id' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Este campo es requerido',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		
+		'cur_horario_fin' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Este campo es requerido',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'cur_numero_horas' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Este campo es requerido',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -103,7 +184,35 @@ class Curso extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
-		)
+		),
+		'Provincia' => array(
+			'className' => 'Provincia',
+			'foreignKey' => 'provincia_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'Canton' => array(
+			'className' => 'Canton',
+			'foreignKey' => 'canton_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'Ciudad' => array(
+			'className' => 'Ciudad',
+			'foreignKey' => 'ciudad_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'Parroquia' => array(
+			'className' => 'Parroquia',
+			'foreignKey' => 'parroquia_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
 	);
 	
 	public $hasMany = array(
