@@ -184,9 +184,9 @@ class SolicitudesController extends AppController {
 		//$solicitud['Solicitud']['sol_estado']=2;//estado 2 aprobada
 		$solicitud['Solicitud']['sol_estado'] 	= $this->data["Solicitud"]["sol_estado"];
 		$solicitud['Solicitud']['sol_comentario'] 	= $this->data["Solicitud"]["sol_comentario"];
-		debug($solicitud);
+		
 		if($this-> Solicitud -> save($solicitud)){
-			debug($this->data);
+			
 			$curso['Curso']=array(
 				"solicitud_id"=>$solicitud['Solicitud']['id'],
 				"cur_nombre"=>$solicitud['Solicitud']['sol_nombre_de_la_capacitacion'],
@@ -199,10 +199,10 @@ class SolicitudesController extends AppController {
 					$this -> Session -> setFlash(__('Se ha aprobado la solicitud.'), 'crud/success');
 					$this -> redirect(array('controller'=>'cursos','action' => 'edit',$this -> Solicitud -> Curso -> id));
 			}else{
-				debug("HOLA");
+				
 			}	
 		}else{
-			debug($this->Solicitud->validationErrors);
+			
 		}
 	}
 	
