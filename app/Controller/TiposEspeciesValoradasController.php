@@ -53,11 +53,12 @@ class TiposEspeciesValoradasController extends AppController {
 		$this -> set('tiposEspeciesValorada', $this -> TiposEspeciesValorada -> read(null, $id));
 	}
 
-	/**
-	 * add method
+
+	 /**
+	  *add method
 	 *
 	 * @return void
-	 *
+	 */
 	public function add() {
 		if ($this -> request -> is('post')) {
 			$this -> TiposEspeciesValorada -> create();
@@ -69,7 +70,7 @@ class TiposEspeciesValoradasController extends AppController {
 				$this -> Session -> setFlash(__('La especie valorada no se pudo guardar. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
-	}*/
+	}
 
 	/**
 	 * edit method
@@ -104,8 +105,12 @@ class TiposEspeciesValoradasController extends AppController {
 	 *
 	 * @param string $id
 	 * @return void
-	 *
+	 */
 	public function delete($id = null) {
+		if($id <= 50){
+			$this -> Session -> setFlash(__('No es permito eliminar este Tipo de especie valorada'), 'crud/error');
+			$this -> redirect(array('action' => 'index'));
+		}
 		if (!$this -> request -> is('post')) {
 			throw new MethodNotAllowedException();
 		}
@@ -119,6 +124,6 @@ class TiposEspeciesValoradasController extends AppController {
 		}
 		$this -> Session -> setFlash(__('No se pudo borrar la especie valorada'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
-	}*/
+	}
 
 }

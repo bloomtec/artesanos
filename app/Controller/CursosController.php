@@ -208,7 +208,7 @@ class CursosController extends AppController {
 	}
 
 	public function certificado($alumnoCursoId) {
-		$this->layout="";
+		//$this->layout="certificado";
 		$this -> Curso -> CursosAlumno -> bindModel(array('belongsTo' => array('Alumno')));
 		$alumno = $this -> Curso -> CursosAlumno -> read(null, $alumnoCursoId);
 		$this -> set(compact('alumno'));
