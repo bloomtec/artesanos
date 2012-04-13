@@ -5,7 +5,7 @@
 	<?php
 		echo $this->Form->input('id');
 		echo $this -> Form -> input('juntas_provincial_id', array('label' => 'Junta Provincial', 'empty' => 'Seleccione...'));
-		echo $this -> Form -> input('sol_numero_de_memorandum', array('label' => 'Numero De Memorandum','type'=>'text','class'=>'number'));
+		echo $this -> Form -> input('sol_numero_de_memorandum', array('label' => 'Numero De Memorandum','type'=>'text'));
 		echo $this -> Form -> input('sol_nombre_de_la_capacitacion', array('label' => 'Nombre De La Capacitacion', 'type' => 'text'));
 		echo $this -> Form -> input('sol_duracion', array('label' => 'Duracion En Días', 'type' => 'text','class'=>'number'));
 		echo $this -> Form -> input('sol_fecha_inicio_de_la_capacitacion', array('label' => 'Fecha Inicio De La Capacitacion','type'=>'text','class'=>'date'));
