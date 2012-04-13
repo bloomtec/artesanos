@@ -2,6 +2,7 @@
 /config/dump.sql
 #/app/tmp/cache/*
 #!/app/tmp/cache/empty
+/app/Vendor/tcpdf/cache/*
 /app/tmp/cache/models/*
 /app/tmp/cache/persistent/*
 /app/tmp/cache/views/*

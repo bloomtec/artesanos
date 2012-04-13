@@ -102,7 +102,7 @@
 				 				if($llaveRango < count($especie['rangos']) - 1) {
 				 					echo $rango.';&nbsp;';
 				 				} else {
-				 					echo $rango	;
+				 					echo $rango;
 				 				}
 			?>
 			<?php
