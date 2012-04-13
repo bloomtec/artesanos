@@ -11,6 +11,7 @@ class DATABASE_CONFIG {
 		'database' => 'jndagobe_artesanos',
 		'encoding' => 'utf8'
 	);
+
 /*
 	public  $default = array(
 		'datasource' => 'Database/Mysql',
@@ -22,8 +23,8 @@ class DATABASE_CONFIG {
 		'password' => '',
 		'database' => 'jndagobe_artesanos',
 		'encoding' => 'utf8'
-	);
-	  */
+	); */
+	 
  	
 }
 
