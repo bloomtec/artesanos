@@ -8,6 +8,14 @@ App::uses('AppModel', 'Model');
  * @property EspeciesValorada $EspeciesValorada
  */
 class VentasEspecie extends AppModel {
+	
+	/**
+	 * Virtual fields
+	 *
+	 * @var array
+	 */
+	public $virtualFields = array();
+	
 /**
  * Display field
  *
