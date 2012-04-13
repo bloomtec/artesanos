@@ -26,7 +26,7 @@ Reglamento de calificaciones y Ramas de Trabajos Vigentes <br>
   </tr>
   <tr>
   	<td style="text-align: center;">
-	  	<span>Conceder el CERTIFICADO DE CALIFICACIÓN ARTESANAL AUTONOMO, con derecho a los beneficios comtemplados en el inciso final del Art. 2, Arts. 16, 17, 18 y 19 de la Ley de Defensa del Artesano, en concordancia con el Art. 302 del Código del Trabajo, Art. 367 de la Ley Orgánica del Régimen Municipal; Arts. 19 y 56, numeral 19 de la Ley de Régimen Tributario interno y Art. 171 de su reglamento a:</span>
+	  	<span>Conceder el CERTIFICADO DE CALIFICACIÓN ARTESANAL, con derecho a los beneficios comtemplados en el inciso final del Art. 2, Arts. 16, 17, 18 y 19 de la Ley de Defensa del Artesano, en concordancia con el Art. 302 del Código del Trabajo, Art. 367 de la Ley Orgánica del Régimen Municipal; Arts. 19 y 56, numeral 19 de la Ley de Régimen Tributario interno y Art. 171 de su reglamento a:</span>
     </td>
   </tr>
 </table>

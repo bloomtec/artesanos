@@ -1469,5 +1469,8 @@ class ArtesanosController extends AppController {
 			echo json_encode($msj);
 		}
 	}
-
+	
+	function carnet(){
+		$this->layout="carnet";
+	}
 }
