@@ -147,8 +147,8 @@ class CursosController extends AppController {
 		$estados_civiles = $this -> Alumno -> getValores(3);
 		$grados_de_estudio = $this -> Alumno -> getValores(4);
 		$sexos = $this -> Alumno -> getValores(5);
-				
-		$this -> set(compact('solicitudes', 'instructores', 'losAlumnos', 'nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos'));
+		$provincias = $this -> Curso -> Provincia -> find('list');		
+		$this -> set(compact('provincias','solicitudes', 'instructores', 'losAlumnos', 'nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos'));
 	}
 
 	public function quitar($id = null) {
@@ -208,10 +208,40 @@ class CursosController extends AppController {
 	}
 
 	public function certificado($alumnoCursoId) {
-		//$this->layout="certificado";
+		$this->layout="certificado";
 		$this -> Curso -> CursosAlumno -> bindModel(array('belongsTo' => array('Alumno')));
 		$alumno = $this -> Curso -> CursosAlumno -> read(null, $alumnoCursoId);
-		$this -> set(compact('alumno'));
+		$this->Curso->recursive=0;
+		$curso = $this->Curso->find("all", array("conditions"=>array("Curso.id"=>$alumnoCursoId)));
+		//debug($alumno);
+		//debug($curso); return;
+		//$fecha = $alumno["CursosAlumno"]['cur_fecha_de_emision'];
+		
+		$fecha = date("F j, Y, g:i a", strtotime($alumno["CursosAlumno"]['cur_fecha_de_emision']) ); 
+		$fecha = explode(" ", str_replace(",","",$fecha));
+		$meses= array("January"=>"Enero",
+					  "February"=>"Febrero",
+					  "March"=>"Marzo",
+					  "April"=>"Abril",
+					  "May"=>"Mayo",
+					  "June"=>"Junio",
+					  "July"=>"Julio",
+					  "August"=>"Agosto",
+				      "September"=>"Septiembre",
+					  "October"=>"Octubre",
+					  "November"=>"Noviembre",
+					  "December"=>"Diciembre");
+		
+		foreach($meses as $key => $value){
+			if((string)$key==(string)$fecha[0]){
+				$fecha[0]=$value;
+				break;
+			}
+		}
+		
+		//debug($fecha);
+		$fecha2 = "el ".$fecha[1]." "."de ".$fecha[0]." del ";
+		$this -> set(compact('alumno','curso','fecha','fecha2'));
 	}
 
 	/**
