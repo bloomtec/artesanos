@@ -1,119 +1,21 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * Solicitud Model
+ * CentrosArtesanal Model
  *
- * @property JuntasProvincial $JuntasProvincial
- * @property Curso $Curso
+ * @property Provincia $Provincia
+ * @property Canton $Canton
+ * @property Ciudad $Ciudad
+ * @property Parroquia $Parroquia
+ * @property Solicitud $Solicitud
  */
-class Solicitud extends AppModel {
+class CentrosArtesanal extends AppModel {
 /**
  * Display field
  *
  * @var string
  */
-	public $displayField = 'sol_numero_de_memorandum';
-/**
- * Validation rules
- *
- * @var array
- */
-	public $validate = array(
-		'sol_numero_de_memorandum' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				'message' => 'Ingrese un número de memorandum',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-			'isUnique' => array(
-				'rule' => array('isUnique'),
-				'message' => 'Este valor ya ha sido asignado a otra solicitud',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'sol_nombre_de_la_capacitacion' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				'message' => 'Ingrese un nombre',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'sol_fecha_inicio_de_la_capacitacion' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				'message' => 'Ingrese la fecha de inicio',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'sol_fecha_de_fin_de_la_capacitacion' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				'message' => 'Ingrese la fecha de finalización',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'sol_costos' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				'message' => 'Ingrese los costos',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'sol_duracion' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				'message' => 'Ingrese la duración',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-			'numeric' => array(
-				'rule' => array('numeric'),
-				'message' => 'La duración debe ser un valor numérico',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'sol_numero_de_participantes' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				'message' => 'Ingrese la cantidad de participantes',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-			'numeric' => array(
-				'rule' => array('numeric'),
-				'message' => 'Participantes es un valor númerico',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-	);
+	public $displayField = 'cen_nombre';
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
@@ -122,17 +24,103 @@ class Solicitud extends AppModel {
  *
  * @var array
  */
+	public $validate = array(
+		'cen_ruc' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'cen_nombre' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'provincia_id' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'canton_id' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'ciudad_id' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'parroquia_id' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'direccion' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+	);
 	public $belongsTo = array(
-		'JuntasProvincial' => array(
-			'className' => 'JuntasProvincial',
-			'foreignKey' => 'juntas_provincial_id',
+		'Provincia' => array(
+			'className' => 'Provincia',
+			'foreignKey' => 'provincia_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
 		),
-		'CentrosArtesanal' => array(
-			'className' => 'CentrosArtesanal',
-			'foreignKey' => 'centros_artesanal_id',
+		'Canton' => array(
+			'className' => 'Canton',
+			'foreignKey' => 'canton_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'Ciudad' => array(
+			'className' => 'Ciudad',
+			'foreignKey' => 'ciudad_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'Parroquia' => array(
+			'className' => 'Parroquia',
+			'foreignKey' => 'parroquia_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
@@ -145,9 +133,9 @@ class Solicitud extends AppModel {
  * @var array
  */
 	public $hasMany = array(
-		'Curso' => array(
-			'className' => 'Curso',
-			'foreignKey' => 'solicitud_id',
+		'Solicitud' => array(
+			'className' => 'Solicitud',
+			'foreignKey' => 'centros_artesanal_id',
 			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',

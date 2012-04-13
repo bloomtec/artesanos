@@ -7,7 +7,7 @@
 	</div>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-		<th><?php echo $this->Paginator->sort('juntas_provincial_id','Junta Provincial');?></th>
+		<th><?php echo $this->Paginator->sort('centros_artesanal_id','Centro Artesanal');?></th>
 		<th><?php echo $this->Paginator->sort('sol_fecha_solicitud','Fecha De Solicitud');?></th>
 		<th><?php echo $this->Paginator->sort('sol_numero_de_memorandum','Número De Memorandum');?></th>
 		<th><?php echo $this->Paginator->sort('sol_nombre_de_la_capacitacion','Nombre De La Capacitación');?></th>
@@ -21,7 +21,7 @@
 	<?php $i = 0; foreach ($solicitudes as $solicitud): ?>
 	<tr>
 		<td>
-			<?php echo $this->Html->link($solicitud['JuntasProvincial']['jun_nombre'], array('controller' => 'juntas_provinciales', 'action' => 'view', $solicitud['JuntasProvincial']['id'])); ?>
+			<?php echo $this->Html->link($solicitud['CentrosArtesanal']['cen_nombre'], array('controller' => 'juntas_provinciales', 'action' => 'view', $solicitud['JuntasProvincial']['id'])); ?>
 		</td>
 		<td><?php echo h($solicitud['Solicitud']['sol_fecha_solicitud']); ?>&nbsp;</td>
 		<td><?php echo h($solicitud['Solicitud']['sol_numero_de_memorandum']); ?>&nbsp;</td>

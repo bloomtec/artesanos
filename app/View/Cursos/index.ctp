@@ -40,8 +40,8 @@
 		</td>
 		<td>
 			<?php if($pdf=="") { 
-			 echo $this->Html->link($curso['Instructor']['id'], array('controller' => 'instructores', 'action' => 'view', $curso['Instructor']['id']));
-			} else { echo $curso['Instructor']['id']; } ?>
+			 echo $this->Html->link($curso['Instructor']['ins_nombres'], array('controller' => 'instructores', 'action' => 'view', $curso['Instructor']['id']));
+			} else { echo $curso['Instructor']['ins_nombres']; } ?>
 		</td>
 		<td><?php echo h($curso['Curso']['cur_nombre']); ?>&nbsp;</td>
 		<td><?php echo h($curso['Curso']['cur_descripcion']); ?>&nbsp;</td>

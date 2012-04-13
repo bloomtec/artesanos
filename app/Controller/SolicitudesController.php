@@ -107,8 +107,9 @@ class SolicitudesController extends AppController {
 				$this -> Session -> setFlash(__('No se pudo guardar la solicitud. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
-		$juntasProvinciales = $this -> Solicitud -> JuntasProvincial -> find('list');
-		$this -> set(compact('juntasProvinciales'));
+		//$juntasProvinciales = $this -> Solicitud -> JuntasProvincial -> find('list');
+		$centrosArtesanales = $this -> Solicitud -> CentrosArtesanal -> find('list');
+		$this -> set(compact('juntasProvinciales','centrosArtesanales'));
 	}
 
 	/**
@@ -170,7 +171,7 @@ class SolicitudesController extends AppController {
 		$this -> redirect(array('action' => 'index'));
 	}
 	
-	public function aprobar($id = null){
+	public function aprobar(){
 		//$this -> Solicitud -> id = $id;
 		$id = $this->data["Solicitud"]["id"];
 		$this -> Solicitud -> id = $id;
@@ -178,11 +179,14 @@ class SolicitudesController extends AppController {
 		if (!$this -> Solicitud -> exists()) {
 			throw new NotFoundException(__('Solicitud no valida'));
 		}
+		$this -> Solicitud -> recursive = -1;
 		$solicitud = $this -> Solicitud -> read(null,$id);
 		//$solicitud['Solicitud']['sol_estado']=2;//estado 2 aprobada
 		$solicitud['Solicitud']['sol_estado'] 	= $this->data["Solicitud"]["sol_estado"];
-		$solicitud['Solicitud']['comentarios'] 	= $this->data["Solicitud"]["sol_comentario"];
-		if($this->Solicitud->save($solicitud)){
+		$solicitud['Solicitud']['sol_comentario'] 	= $this->data["Solicitud"]["sol_comentario"];
+		debug($solicitud);
+		if($this-> Solicitud -> save($solicitud)){
+			debug($this->data);
 			$curso['Curso']=array(
 				"solicitud_id"=>$solicitud['Solicitud']['id'],
 				"cur_nombre"=>$solicitud['Solicitud']['sol_nombre_de_la_capacitacion'],
@@ -191,13 +195,14 @@ class SolicitudesController extends AppController {
 				"cur_costo"=>$solicitud['Solicitud']['sol_costos'],
 				"cur_activo"=>true
 			);
-	
 			if($this -> Solicitud -> Curso -> save($curso)){
 					$this -> Session -> setFlash(__('Se ha aprobado la solicitud.'), 'crud/success');
 					$this -> redirect(array('controller'=>'cursos','action' => 'edit',$this -> Solicitud -> Curso -> id));
 			}else{
-				
+				debug("HOLA");
 			}	
+		}else{
+			debug($this->Solicitud->validationErrors);
 		}
 	}
 	

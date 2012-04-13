@@ -73,7 +73,7 @@ for($i=0;$i < count($reporteEgresos);$i++) {
 	?>
 	</div>
 <a class='button' href="/egresosDeInventarios/reporteEgresosInventarios">Volver</a>
-&nbsp; 
+&nbsp;
 <a class='button' href="/egresosDeInventarios/impReporte">Descargar pdf</a>
 &nbsp;
 <a class='button' href="/egresosDeInventarios/export_csv">Exportar a CSV</a>

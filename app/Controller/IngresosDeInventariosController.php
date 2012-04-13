@@ -33,8 +33,8 @@ class IngresosDeInventariosController extends AppController {
 				$idPersona = $this -> data['Reporte']['persona'];
 				$nomDepartamento = $this -> data['Reporte']['departamento'];
 				$idProducto = $this -> data['Reporte']['producto'];
-				$fecha1 = $this -> data['Reporte']['fecha1'];
-				$fecha2 = $this -> data['Reporte']['fecha2'];
+				$fecha1 = $this -> data['Reporte']['fecha1'] . ' 00:00:00';
+				$fecha2 = $this -> data['Reporte']['fecha2'] . ' 23:59:59';
 
 				$conditions[] = array('IngresosDeInventario.ing_is_activo_fijo' => 1);
 
@@ -101,7 +101,8 @@ class IngresosDeInventariosController extends AppController {
 			//$lstProductos = $this -> Item -> find('list', array('fields' => array('id', 'ite_nombre'), 'conditions' => array('Item.id' => $idsItems, 'ite_is_activo_fijo' => 1)));
 			$lstProductos = $this -> Item -> find('list', array('conditions' => array('ite_is_activo_fijo' => 1)));
 			$lstDepartamentos = $this -> IngresosDeInventario -> getValores(14);
-			$this -> set(compact('lstProveedores', 'lstPersonas', 'lstDepartamentos', 'lstProductos', 'reporte', 'titulo'));
+			$fechaActual = date('Y-m-d', strtotime('now'));
+			$this -> set(compact('fechaActual', 'lstProveedores', 'lstPersonas', 'lstDepartamentos', 'lstProductos', 'reporte', 'titulo'));
 		}
 	}
 

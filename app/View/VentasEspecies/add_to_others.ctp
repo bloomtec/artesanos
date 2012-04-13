@@ -24,8 +24,9 @@
 				<th style='width:10%;'>Cantidad</th>
 				<th style='width:50%;'>Artesanos</th>
 			</tr>
-			<?php $i=0;
-foreach($tiposEspeciesValorada as $tiposEspecie):
+			<?php
+			$i=0;
+			foreach($tiposEspeciesValorada as $tiposEspecie):
 			?>
 			<tr>
 				<td>
