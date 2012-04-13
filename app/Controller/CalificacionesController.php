@@ -408,5 +408,11 @@ class CalificacionesController extends AppController {
 		//debug($inspeccion);
 		$this -> set(compact('inspeccion'));
 	}
+	
+	function carnet($idCalificacion=null){
+		$this->loadModel("Artesano");
+		//$artesanoId = $this->Calificacion("list", array('fields'=>array('Calificacion')))
+		
+	}
 
 }
