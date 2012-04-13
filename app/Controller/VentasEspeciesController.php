@@ -361,5 +361,9 @@ class VentasEspeciesController extends AppController {
 		$titulo = "csvVentasEspecies_" . date("Y-m-d H:i:s", time()) . ".csv";
 		echo $csv -> render($titulo);
 	}
-
+	
+	public function factura() {
+		$this->layout="certificado";
+	}
+	
 }
