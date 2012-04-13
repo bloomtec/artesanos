@@ -147,8 +147,8 @@ class CursosController extends AppController {
 		$estados_civiles = $this -> Alumno -> getValores(3);
 		$grados_de_estudio = $this -> Alumno -> getValores(4);
 		$sexos = $this -> Alumno -> getValores(5);
-				
-		$this -> set(compact('solicitudes', 'instructores', 'losAlumnos', 'nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos'));
+		$provincias = $this -> Curso -> Provincia -> find('list');		
+		$this -> set(compact('provincias','solicitudes', 'instructores', 'losAlumnos', 'nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos'));
 	}
 
 	public function quitar($id = null) {

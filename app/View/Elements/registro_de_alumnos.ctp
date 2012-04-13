@@ -6,7 +6,7 @@
 <div class="buscador-alumnos">
 	<?php //debug($alumnos);?>
 	<?php //debug($this -> data);?>
-	<table  id="registroAlumnos" show="10" till="200">
+	<table  id="registroAlumnos" show="12" till="200">
 		<tr>
 			<th>Documento de identidad</th>
 			<th>Nombre completo</th>

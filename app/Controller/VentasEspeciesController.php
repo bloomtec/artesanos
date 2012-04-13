@@ -233,7 +233,7 @@ class VentasEspeciesController extends AppController {
 				$this -> Session -> setFlash('Se generó la venta', 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash('Se generó la venta', 'crud/error');
+				$this -> Session -> setFlash('No se pudo completar la venta', 'crud/error');
 			}
 		}
 		$tiposEspeciesValorada = $this -> VentasEspecie -> EspeciesValorada -> TiposEspeciesValorada -> find('all',array('conditions'=>array('TiposEspeciesValorada.total_especies_para_vender >'=>0), 'recursive' => -1));
