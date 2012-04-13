@@ -158,7 +158,7 @@
 			<?php echo $this->Html->link(__('Ver'), array('action' => 'view', $ingreso['VentasEspecie']['id']),array('class'=>'view','title'=>'Ver')); ?>
 		</td>-->
 	</tr>
-	<?php debug($ingreso); endforeach; ?>
+	<?php endforeach; ?>
 </table>
 <style>
 	table#TablaReporteVenta th { vertical-align: middle; }
