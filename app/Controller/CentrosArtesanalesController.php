@@ -103,5 +103,15 @@ class CentrosArtesanalesController extends AppController {
 		$this -> Session -> setFlash(__('No se pudo borrar el centro artesanal'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
 	}
+	
+	/**
+	 * reporte method
+	 *
+	 * @return void
+	 */
+	
+	public function reporte(){
+		
+	}
 
 }

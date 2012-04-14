@@ -60,9 +60,26 @@
 			<?php echo h($configuracion['Configuracion']['con_iva']); ?>
 			&nbsp;
 		</h3>
-		<label><?php echo __('Modified'); ?></label>
+		<h1> Certificaciones </h1>
+		
+		<label><?php echo __('Presidente De La junta'); ?></label>
 		<h3>
-			<?php echo h($configuracion['Configuracion']['modified']); ?>
+			<?php echo h($configuracion['Configuracion']['con_presidente_de_la_junta']); ?>
+			&nbsp;
+		</h3>
+		<label><?php echo __('Secretario General'); ?></label>
+		<h3>
+			<?php echo h($configuracion['Configuracion']['con_secretario_general']); ?>
+			&nbsp;
+		</h3>
+		<label><?php echo __('Director Nacional Tecnico'); ?></label>
+		<h3>
+			<?php echo h($configuracion['Configuracion']['con_director_nacional_tecnico']); ?>
+			&nbsp;
+		</h3>
+		<label><?php echo __('Tecnico en Capacitación y Calificación'); ?></label>
+		<h3>
+			<?php echo h($configuracion['Configuracion']['con_tecnico_en_capacitacion_y_calificacion']); ?>
 			&nbsp;
 		</h3>
 	
