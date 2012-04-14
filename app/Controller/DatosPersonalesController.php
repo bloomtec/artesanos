@@ -17,46 +17,46 @@ class DatosPersonalesController extends AppController {
 		$conditions = $this -> Session -> read('conditions');
 		$this -> Session -> delete('conditions');
 		// FUNCIONALIDAD PARA PROVINCIAS Y PARA RAMAS
-		$calificacionesId=array();
-		$calificacionesRama=null;
-		$calificacionesLocales=null;
-		$calificacionesTalleres=null;
-		$calificacionesPorProvincia=null;
-		
-		
-		if(isset($conditions['Calificacion.rama_id'])){
-			$calificacionesRama=$this -> DatosPersonal -> Calificacion -> find('list',array('fields'=>array('id','id'),'conditions'=>array('Calificacion.rama_id'=>$conditions['Calificacion.rama_id'],'Calificacion.cal_estado'=>1)));
-			//debug($calificacionesRama);
-			unset($conditions['Calificacion.rama_id']);
-			$calificacionesId=$calificacionesRama;
-		}
-		if(isset($conditions['Provincia.provincia_id'])){
-		//	debug($conditions['Provincia.provincia_id']);
-			$calificacionesLocales=$this -> DatosPersonal -> Calificacion -> Local -> find('list',array('fields'=>array('calificacion_id','calificacion_id'),'conditions'=>array('Local.provincia_id'=>$conditions['Provincia.provincia_id'])));
-			$calificacionesTalleres=$this -> DatosPersonal -> Calificacion -> Taller -> find('list',array('fields'=>array('calificacion_id','calificacion_id'),'conditions'=>array('Taller.provincia_id'=>$conditions['Provincia.provincia_id'])));
-			$calificacionesPorProvincia=array_merge($calificacionesLocales,$calificacionesTalleres);
-			//debug($calificacionesLocales);
-			//debug($calificacionesTalleres);
-			unset($conditions['Provincia.provincia_id']);
-			if(!empty($calificacionesId)){
-				$calificacionesId=array_intersect($calificacionesId, $calificacionesPorProvincia);
-			}else{
-				$calificacionesId=$calificacionesPorProvincia;
-			}
-			
-		}
-		//$calificacionesId=array_merge($calificacionesRama,$calificacionesLocales,$calificacionesTalleres);
-		
-		//$calificacionesId=array_intersect($calificacionesRama, $calificacionesPorProvincia);
-		
-		if(!empty($calificacionesId)){
-			$conditions['DatosPersonal.calificacion_id']=$calificacionesId;
-		}else{
-			$conditions['DatosPersonal.calificacion_id']=-1;
-		}
+		$calificacionesId = array();
+		$calificacionesRama = null;
+		$calificacionesLocales = null;
+		$calificacionesTalleres = null;
+		$calificacionesPorProvincia = null;
 
+		if (isset($conditions['Calificacion.rama_id']) || isset($conditions['Provincia.provincia_id'])) {
+			if (isset($conditions['Calificacion.rama_id'])) {
+				$calificacionesRama = $this -> DatosPersonal -> Calificacion -> find('list', array('fields' => array('id', 'id'), 'conditions' => array('Calificacion.rama_id' => $conditions['Calificacion.rama_id'], 'Calificacion.cal_estado' => 1)));
+				//debug($calificacionesRama);
+				unset($conditions['Calificacion.rama_id']);
+				$calificacionesId = $calificacionesRama;
+			}
+			if (isset($conditions['Provincia.provincia_id'])) {
+				//	debug($conditions['Provincia.provincia_id']);
+				$calificacionesLocales = $this -> DatosPersonal -> Calificacion -> Local -> find('list', array('fields' => array('calificacion_id', 'calificacion_id'), 'conditions' => array('Local.provincia_id' => $conditions['Provincia.provincia_id'])));
+				$calificacionesTalleres = $this -> DatosPersonal -> Calificacion -> Taller -> find('list', array('fields' => array('calificacion_id', 'calificacion_id'), 'conditions' => array('Taller.provincia_id' => $conditions['Provincia.provincia_id'])));
+				$calificacionesPorProvincia = array_merge($calificacionesLocales, $calificacionesTalleres);
+				//debug($calificacionesLocales);
+				//debug($calificacionesTalleres);
+
+				if (!empty($calificacionesId)) {
+					$calificacionesId = array_intersect($calificacionesId, $calificacionesPorProvincia);
+				} else {
+					$calificacionesId = $calificacionesPorProvincia;
+				}
+				unset($conditions['Provincia.provincia_id']);
+			}
+			//$calificacionesId=array_merge($calificacionesRama,$calificacionesLocales,$calificacionesTalleres);
+
+			//$calificacionesId=array_intersect($calificacionesRama, $calificacionesPorProvincia);
+
+			if (!empty($calificacionesId)) {
+				$conditions['DatosPersonal.calificacion_id'] = $calificacionesId;
+			} else {
+				$conditions['DatosPersonal.calificacion_id'] = -1;
+			}
+		}
 		//___________________________________________
-		
+
 		$this -> paginate = array('conditions' => $conditions, 'order' => array('DatosPersonal.dat_nombres' => 'ASC'));
 		$csv_export_data = $this -> DatosPersonal -> find('all', array('conditions' => $conditions, 'order' => array('DatosPersonal.dat_nombres' => 'ASC')));
 		$artesanos = $this -> paginate();
@@ -71,10 +71,10 @@ class DatosPersonalesController extends AppController {
 		$this -> Session -> write('CSV.filename', 'Reporte_Artesanos');
 		$this -> set('artesanos', $artesanos);
 	}
-	
+
 	public function getNombreArtesano($cal_id) {
 		$datos = $this -> DatosPersonal -> find('first', array('conditions' => array('DatosPersonal.calificacion_id' => $cal_id), 'order' => array('DatosPersonal.created' => 'DESC')));
-		if(!empty($datos)) {
+		if (!empty($datos)) {
 			return $datos['DatosPersonal']['dat_nombres'] . ' ' . $datos['DatosPersonal']['dat_apellido_paterno'] . ' ' . $datos['DatosPersonal']['dat_apellido_materno'];
 		} else {
 			return '<b>:: eliminado ::</b>';

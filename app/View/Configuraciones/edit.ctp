@@ -17,6 +17,11 @@
 		echo $this -> Form -> input('con_correos_solicitudes', array('label' => 'Correos Solicitudes (Ingrese los correos deseados separados por coma (,))'));
 		echo $this -> Form -> input('con_correo_vitrina', array('label' => 'Correos Vitrina (Ingrese los correos deseados separados por coma (,))'));
 		
+		echo $this -> Form -> input('con_presidente_de_la_junta', array('label' => 'Presidente De La junta'));
+		echo $this -> Form -> input('con_secretario_general', array('label' => 'Secretario General'));
+		echo $this -> Form -> input('con_director_nacional_tecnico', array('label' => 'Director Nacional Tecnico'));
+		echo $this -> Form -> input('con_tecnico_en_capacitacion_y_calificacion', array('label' => 'Tecnico en Capacitación y Calificación'));
+		
 		?>
 	</fieldset>
 	<?php echo $this -> Html -> link(__('Cancelar'), array('action' => 'index'), array('class' => 'cancelar'));?>

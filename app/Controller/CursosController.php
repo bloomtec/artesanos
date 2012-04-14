@@ -265,5 +265,7 @@ class CursosController extends AppController {
 		$this -> Session -> setFlash(__('No se pudo borrar el curso'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
 	}
-
+	function reporte(){
+		
+	}
 }

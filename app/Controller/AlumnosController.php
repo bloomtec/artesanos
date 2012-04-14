@@ -137,4 +137,18 @@ class AlumnosController extends AppController {
 			echo json_encode($msj);
 		}
    }
+	
+	public function reporte(){
+		
+	}
+	
+	/**
+	 * reporte de notas method
+	 *
+	 * @param string $alumnoId
+	 * @return void
+	 */
+	public function reporteNotas($alumnoId = null){
+		
+	}
 }
