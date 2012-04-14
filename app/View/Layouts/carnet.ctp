@@ -3,7 +3,7 @@ header("Content-type: application/pdf");
 
 App::import('Vendor','especie'); 
 $pagelayout = array(86, 54);
-$pdf = new ESPECIE(PDF_PAGE_ORIENTATION, "mm", $pagelayout, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+$pdf = new ESPECIE(PDF_PAGE_ORIENTATION, "cm", "A4", PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
 //$pdf = new ESPECIE(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 

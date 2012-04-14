@@ -410,10 +410,13 @@ class CalificacionesController extends AppController {
 	}
 	
 	function carnet($idCalificacion=null){
+		$this -> layout = 'carnet';	
 		$this->loadModel("Artesano");
-		$idArtesano = $this->Calificacion("list", array('fields'=>array('artesano_id'),'conditions'=>array("Calificacion.id"=>$idCalificacion)));
+		$this->Calificacion->recursive=0;
+		$idArtesano = $this->Calificacion->find("list", array('fields'=>array('artesano_id'),'conditions'=>array("Calificacion.id"=>$idCalificacion)));
 		$artesano = $this->Artesano->find("all", array('conditions'=>array("Artesano.id"=>$idArtesano)));
-		debug($artesano); return;
+		$this -> set(compact('artesano'));
+		//debug($artesano); return;
 	}
 
 }

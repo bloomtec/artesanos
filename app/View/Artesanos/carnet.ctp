@@ -39,7 +39,7 @@
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
-			<td>Nombre</td>
+			<td><?php print($artesano[0]["Artesano"]["art_nombres"]); ?></td>
 		
 		</tr>
 	
@@ -50,7 +50,7 @@
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
-			<td>Apellido</td>
+			<td><?php print($artesano[0]["Artesano"]["art_apellido_paterno"] ); ?></td>
 		
 		</tr>
 		<tr>
@@ -58,7 +58,6 @@
 			<td>&nbsp;</td>
 			
 		</tr>
-		<tr>
 		<tr>
 			<td style="text-align: right;"><b>C.i:</b></td>
 			<td>&nbsp;</td>
