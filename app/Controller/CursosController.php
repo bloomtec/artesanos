@@ -266,6 +266,93 @@ class CursosController extends AppController {
 		$this -> redirect(array('action' => 'index'));
 	}
 	function reporte(){
+		$this->loadModel("JuntasProvincial",true);
+		$this->loadModel("CentrosArtesanal",true);
+		$reporte = false;
+		$pagina = "";
+
+		if (isset($this -> params['named']['page'])) {
+			$pagina = $this -> params['named']['page'];
+		} else if (isset($this -> params["named"]["sort"])) {
+			$pagina = true;
+		} else {
+			$pagina = false;
+		}
+
+		if ($this -> request -> is('post') or $pagina != false) {
+			$this -> Recursive = 0;
+			$conditions = array();
+			if ($pagina == false) {
+
+				$provincia = $this -> data["Reporte"]["provincia"];
+				$ciudad = $this -> data["Reporte"]["ciudad"];
+				$fechaCreacion = $this -> data["Reporte"]["fecha_creacion"];
+				$estado = $this -> data["Reporte"]["estado"];
+				$fecha1 = $this -> data["Reporte"]["fecha1"];
+				$fecha2 = $this -> data["Reporte"]["fecha2"];
+
+				if (!empty($provincia)) {
+					$idsJuntasProvinciales = $this->JuntasProvincial->find("list", array("conditions"=>array("JuntasProvincial.provincia_id"=>$provincia)));
+					$idsSolicitudes = $this->Curso->Solicitud->find("list", array("conditions"=>array("Solicitud.juntas_provincial_id"=>$idsJuntasProvinciales)));
+					$conditions[] = array('Curso.solicitud_id' => $idsSolicitudes);
+				}
+				
+				if (!empty($ciudad)) {
+					$idsCentrosArtesanales = $this->CentroArtesanal->find("list", array("conditions"=>array("CentroArtesanal.ciudad_id"=>$ciudad)));
+					$idsSolicitudes = $this->Curso->Solicitud->find("list", array("conditions"=>array("Solicitud.centros_artesanal_id"=>$idsCentrosArtesanales)));
+					$conditions[] = array('Curso.solicitud_id' => $idsSolicitudes);
+				}
+				
+
+				if (!empty($fechaCreacion)) {
+					$conditions[] = array('CentrosArtesanal.created' => $fechaCreacion);
+				}
+
+				if (!empty($estado)) {
+					$conditions[] = array('CentrosArtesanal.cur_activo' => $estado);
+				}
+				
+				
+				if ($fecha1 != null && $fecha2 != null) {
+
+					if ($fecha1 > $fecha2) {
+						$this -> Session -> setFlash(__('La fecha inicial debe ser menor a la fecha final', true));
+						return;
+					}
+
+					list($ano, $mes, $dia) = explode("-", $fecha1);
+					$fecha1 = $ano . "-" . $mes . "-" . ($dia);
+
+					list($ano, $mes, $dia) = explode("-", $fecha2);
+
+					if ($dia == 31) {
+						$fecha2 = $ano . "-" . $mes . "-" . ($dia);
+					} else {
+						$fecha2 = $ano . "-" . $mes . "-" . ($dia + 1);
+					}
+
+					$conditions[] = array('Curso.created between ? and ?' => array($fecha1, $fecha2));
+
+				} else if ($fecha1 != null) {
+					$conditions[] = array('Curso.created >=' => $fecha1);
+				} else if ($fecha2 != null) {
+					$conditions[] = array('Curso.created <=' => $fecha2);
+				}
+			}
+
+			$reporteCursos = $this -> paginate = array('Curso' => array('limit' => 20, 'conditions' => $conditions));
+			$reporteCursos = $this -> paginate('Curso');
+			$cabecerasCsv = array("RUC", "Nombre", "Provincia", "Canton", "Ciudad", "Parroquia", "Dirección", "Fecha creación");
+			$this -> Session -> write('reporte', $reporteCursos);
+			$this -> Session -> write('archivo', "reporteCursos");
+			$this -> Session -> write('cabeceras', $cabecerasCsv);
+			$reporte = true;
+			$this -> set(compact('reporteCursos', 'reporte'));
+		} else {
+			$idsProvincias = $this -> CentrosArtesanal -> find("list", array("fields" => array("provincia_id")));
+			$provincias = $this -> CentrosArtesanal -> Provincia -> find("list", array("conditions" => array("Provincia.id" => $idsProvincias)));
+			$this -> set(compact('provincias', 'reporte'));
+		}
 		
 	}
 }

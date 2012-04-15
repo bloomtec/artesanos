@@ -3,8 +3,12 @@ header("Content-type: application/pdf");
 
 App::import('Vendor','especie'); 
 $pagelayout = array(160, 130);
-$pdf = new ESPECIE(PDF_PAGE_ORIENTATION, "mm", $pagelayout, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-$pdf->setPageOrientation('L');
+//$pdf = new TCPDF("L", PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+$pdf = new ESPECIE("L", "mm", $pagelayout, true, 'UTF-8', false);
+//$pdf->setPageOrientation('L');
+
+//$resolution= array(160, 130);
+//$pdf->AddPage('P', $resolution);
 
 // set document information
 $pdf->SetCreator(PDF_CREATOR);

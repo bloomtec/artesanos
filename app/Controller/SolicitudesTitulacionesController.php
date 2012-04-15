@@ -346,6 +346,7 @@ class SolicitudesTitulacionesController extends AppController {
 	}
 
 	function reporteSolicitudesTitulacion() {
+		$this->SolicitudesTitulacion->recursive=0;
 		$this -> loadModel("Rama", true);
 		$this -> loadModel("Titulo", true);
 		$this -> loadModel("Artesano", true);
@@ -363,7 +364,7 @@ class SolicitudesTitulacionesController extends AppController {
 
 		if ($this -> request -> is('post') or $pagina != false) {
 			$conditions = array();
-
+	
 			if ($pagina == false) {
 				$rama = $this -> data["Reporte"]["rama"];
 				$titulo = $this -> data["Reporte"]["titulo"];
@@ -412,10 +413,11 @@ class SolicitudesTitulacionesController extends AppController {
 				}
 			}
 
-			//debug($conditions);
-
+		
+			
 			$this -> paginate = array('SolicitudesTitulacion' => array('limit' => 20, 'conditions' => $conditions));
 			$reporteSolicitudesTitulacion = $this -> paginate('SolicitudesTitulacion');
+			
 			//debug($reporteSolicitudesTitulacion); return;
 			$this -> Session -> write('reporte', $reporteSolicitudesTitulacion);
 			$this -> Session -> write('archivo', "ReporteSolicitudesTitulacion");
@@ -434,7 +436,7 @@ class SolicitudesTitulacionesController extends AppController {
 
 	//Reporte solicitudes titulaciones
 	function impReporte() {
-		$this -> layout = 'pdf2';
+		$this -> layout = 'pdf';
 		$reporteSolicitudesTitulacion = $this -> Session -> read('reporte');
 		$nombre_archivo = $this -> Session -> read('archivo');
 		//Tamaño de la fuente
@@ -545,7 +547,7 @@ class SolicitudesTitulacionesController extends AppController {
 		$this -> loadModel("Artesano", true);
 		$this -> loadModel("Rama", true);
 		$this -> loadModel("Provincia", true);
-
+		$this->$Titulacion->recursive=0;
 		$reporte = false;
 
 		$pagina = "";

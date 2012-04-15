@@ -28,9 +28,9 @@ class EgresosDeInventariosController extends AppController {
 
 		if ($this -> request -> is('post') or $pagina != false) {
 			$this -> Recursive = 0;
-			$conditions = array();
+		    $condiciones = array();
 			if ($pagina==false) {
-				$condiciones = array();
+				
 				$idPersona = $this -> data['Reporte']['persona'];
 				$nomDepartamento = $this -> data['Reporte']['departamento'];
 				$idProducto = $this -> data['Reporte']['producto'];

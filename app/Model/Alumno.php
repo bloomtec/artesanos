@@ -12,6 +12,12 @@ class Alumno extends AppModel {
 	 * @var string
 	 */
 	public $displayField = 'alu_documento_de_identificacion';
+	
+	public $virtualFields = array(
+		'nombre_completo' =>	'concat(alu_nombres," ",alu_apellido_paterno," ",alu_apellido_materno)'
+	);
+	
+	
 	/**
 	 * Validation rules
 	 *

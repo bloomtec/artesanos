@@ -1,5 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
+App::import('Helper', 'csv');
 /**
  * Alumnos Controller
  *
@@ -119,36 +120,261 @@ class AlumnosController extends AppController {
 		echo json_encode($this -> Alumno -> find('first', array('conditions' => array('Alumno.alu_documento_de_identificacion' => $document))));
 		exit(0);
 	}
-	
+
 	//Función para registrar el nuevo alumno
 	public function modalRegNuevoAlumno() {
-        $this->autoRender = false;
-        $this->layout = 'ajax';
-        $msj="";
+		$this -> autoRender = false;
+		$this -> layout = 'ajax';
+		$msj = "";
 		if ($this -> request -> is('post')) {;
 			$this -> Alumno -> create();
 			if ($this -> Alumno -> save($this -> request -> data)) {
-				$msj["msj"]='Se ha registrado el alumno';
-				$msj["res"]=true;
+				$msj["msj"] = 'Se ha registrado el alumno';
+				$msj["res"] = true;
 			} else {
-				$msj='No se pudo registrar el alumno. Por favor, intente de nuevo.';
-				$msj["res"]=false;
+				$msj = 'No se pudo registrar el alumno. Por favor, intente de nuevo.';
+				$msj["res"] = false;
 			}
 			echo json_encode($msj);
 		}
-   }
-	
-	public function reporte(){
-		
 	}
-	
+
+	/**
+	 * reporte method
+	 * @return void
+	 */
+	//Reporte alumnos provincias fecha de creacion
+	public function reporte() {
+		$reporte = false;
+		$pagina = "";
+
+		if (isset($this -> params['named']['page'])) {
+			$pagina = $this -> params['named']['page'];
+		} else if (isset($this -> params["named"]["sort"])) {
+			$pagina = true;
+		} else {
+			$pagina = false;
+		}
+
+		if ($this -> request -> is('post') or $pagina != false) {
+			$this -> Recursive = 0;
+			$conditions = array();
+			if ($pagina == false) {
+
+				$provincia = $this -> data["Reporte"]["provincia"];
+				$fechaCreacion = $this -> data["Reporte"]["fecha_creacion"];
+				$fecha1 = $this -> data["Reporte"]["fecha1"];
+				$fecha2 = $this -> data["Reporte"]["fecha2"];
+
+				if (!empty($provincia)) {
+					$conditions[] = array('CentrosArtesanal.provincia_id' => $provincia);
+				}
+
+				if (!empty($fechaCreacion)) {
+					$conditions[] = array('CentrosArtesanal.created' => $fechaCreacion);
+				}
+
+				if ($fecha1 != null && $fecha2 != null) {
+
+					if ($fecha1 > $fecha2) {
+						$this -> Session -> setFlash(__('La fecha inicial debe ser menor a la fecha final', true));
+						return;
+					}
+
+					list($ano, $mes, $dia) = explode("-", $fecha1);
+					$fecha1 = $ano . "-" . $mes . "-" . ($dia);
+
+					list($ano, $mes, $dia) = explode("-", $fecha2);
+
+					if ($dia == 31) {
+						$fecha2 = $ano . "-" . $mes . "-" . ($dia);
+					} else {
+						$fecha2 = $ano . "-" . $mes . "-" . ($dia + 1);
+					}
+
+					$conditions[] = array('CentrosArtesanal.created between ? and ?' => array($fecha1, $fecha2));
+
+				} else if ($fecha1 != null) {
+					$conditions[] = array('CentrosArtesanal.created >=' => $fecha1);
+				} else if ($fecha2 != null) {
+					$conditions[] = array('CentrosArtesanal.created <=' => $fecha2);
+				}
+			}
+
+			$reporteCentrosArtesanales = $this -> paginate = array('CentrosArtesanal' => array('limit' => 20, 'conditions' => $conditions));
+			$reporteCentrosArtesanales = $this -> paginate('CentrosArtesanal');
+			$cabecerasCsv = array("RUC", "Nombre", "Provincia", "Canton", "Ciudad", "Parroquia", "Dirección", "Fecha creación");
+			$this -> Session -> write('reporte', $reporteCentrosArtesanales);
+			$this -> Session -> write('archivo', "reporteCentrosArtesanales");
+			$this -> Session -> write('cabeceras', $cabecerasCsv);
+			$reporte = true;
+			$this -> set(compact('reporteCentrosArtesanales', 'reporte'));
+		} else {
+			$idsProvincias = $this -> CentrosArtesanal -> find("list", array("fields" => array("provincia_id")));
+			$provincias = $this -> CentrosArtesanal -> Provincia -> find("list", array("conditions" => array("Provincia.id" => $idsProvincias)));
+			$this -> set(compact('provincias', 'reporte'));
+		}
+
+	}
+
+	/**
+	 * impReporte method
+	 *
+	 * @return void
+	 */
+
+	//Reporte alumnos provincias
+	public function impReporte() {
+		$this -> layout = 'pdf2';
+		$reporteCentrosArtesanales = $this -> Session -> read('reporte');
+		$nombre_archivo = $this -> Session -> read('archivo');
+		//Tamaño de la fuente
+		$tamano = 5;
+		$this -> set(compact('reporteCentrosArtesanales', 'nombre_archivo', 'tamano'));
+	}
+
+	/**
+	 * impReporte method
+	 *
+	 * @return void
+	 */
+
+	//Reporte alumnos provincias
+	public function impReporte2() {
+		$this -> layout = 'pdf2';
+		$reporteNotasAlumnos = $this -> Session -> read('reporte');
+		$nombre_archivo = $this -> Session -> read('archivo');
+		//Tamaño de la fuente
+		$tamano = 5;
+		$this -> set(compact('reporteNotasAlumnos', 'nombre_archivo', 'tamano'));
+	}
+
+	/**
+	 * export_csv method
+	 *
+	 * @return void
+	 */
+	public function export_csv() {
+		$this -> layout = "";
+		$this -> render(false);
+
+		$csv = new csvHelper();
+		$reporteCentrosArtesanales = $this -> Session -> read('reporte');
+		$cabeceras = $this -> Session -> read('cabeceras');
+		$csv -> addRow($cabeceras);
+
+		for ($i = 0; $i < count($reporteCentrosArtesanales); $i++) {
+			$filas = array($reporteCentrosArtesanales[$i]["CentrosArtesanal"]["cen_ruc"], $reporteCentrosArtesanales[$i]["CentrosArtesanal"]["cen_nombre"], $reporteCentrosArtesanales[$i]["Provincia"]["pro_nombre"], $reporteCentrosArtesanales[$i]["Canton"]["can_nombre"], $reporteCentrosArtesanales[$i]["Ciudad"]["ciu_nombre"], $reporteCentrosArtesanales[$i]["Parroquia"]["par_nombre"], $reporteCentrosArtesanales[$i]["CentrosArtesanal"]["direccion"], $reporteCentrosArtesanales[$i]["CentrosArtesanal"]["created"]);
+			$csv -> addRow($filas);
+
+		}
+		$titulo = $this -> Session -> read('archivo');
+		$titulo = "csv_" . $titulo . "_" . date("Y-m-d H:i:s", time()) . ".csv";
+		echo $csv -> render($titulo);
+	}
+
+	/**
+	 * export_csv2 method
+	 *
+	 * @return void
+	 */
+	public function export_csv2() {
+		$this -> layout = "";
+		$this -> render(false);
+
+		$csv = new csvHelper();
+		$reporteNotasAlumnos = $this -> Session -> read('reporte');
+		$cabeceras = $this -> Session -> read('cabeceras');
+		$csv -> addRow($cabeceras);
+
+		for ($i = 0; $i < count($reporteNotasAlumnos); $i++) {
+			$cursoNota = "";
+			for ($j = 0; $j < count($reporteNotasAlumnos[$i]["Curso"]); $j++) {
+				$cursoNota = $reporteNotasAlumnos[$i]["Curso"][$j]["cur_nombre"] . ', nota:' . $reporteNotasAlumnos[$i]["Curso"][$j]["CursosAlumno"]["cur_nota_final"];
+			}
+			$filas = array($reporteNotasAlumnos[$i]["Alumno"]["alu_documento_de_identificacion"], $reporteNotasAlumnos[$i]["Alumno"]["alu_nacionalidad"], $reporteNotasAlumnos[$i]["Alumno"]["alu_nombres"], $reporteNotasAlumnos[$i]["Alumno"]["alu_apellido_paterno"] . ' ' . $reporteNotasAlumnos[$i]["Alumno"]["alu_apellido_materno"], $reporteNotasAlumnos[$i]["Alumno"]["alu_sexo"], $reporteNotasAlumnos[$i]["Alumno"]["alu_fecha_de_nacimiento"], $reporteNotasAlumnos[$i]["Alumno"]["alu_tipo_de_sangre"], $reporteNotasAlumnos[$i]["Alumno"]["alu_estado_civil"], $reporteNotasAlumnos[$i]["Alumno"]["alu_grado_de_estudio"], $cursoNota, $reporteNotasAlumnos[$i]["Alumno"]["created"]);
+			$csv -> addRow($filas);
+		}
+		
+		$titulo = $this -> Session -> read('archivo');
+		$titulo = "csv_" . $titulo . "_" . date("Y-m-d H:i:s", time()) . ".csv";
+		echo $csv -> render($titulo);
+	}
+
 	/**
 	 * reporte de notas method
 	 *
 	 * @param string $alumnoId
 	 * @return void
 	 */
-	public function reporteNotas($alumnoId = null){
-		
+	public function reporteNotas($alumnoId = null) {
+		$reporte = false;
+		$pagina = "";
+
+		if (isset($this -> params['named']['page'])) {
+			$pagina = $this -> params['named']['page'];
+		} else if (isset($this -> params["named"]["sort"])) {
+			$pagina = true;
+		} else {
+			$pagina = false;
+		}
+
+		if ($this -> request -> is('post') or $pagina != false) {
+			$this -> Recursive = 0;
+			$conditions = array();
+			if ($pagina == false) {
+
+				$alumno = $this -> data["Reporte"]["alumno"];
+				$fecha1 = $this -> data["Reporte"]["fecha1"];
+				$fecha2 = $this -> data["Reporte"]["fecha2"];
+
+				if (!empty($alumno)) {
+					$conditions[] = array('Alumno.id' => $alumno);
+				}
+
+				if ($fecha1 != null && $fecha2 != null) {
+
+					if ($fecha1 > $fecha2) {
+						$this -> Session -> setFlash(__('La fecha inicial debe ser menor a la fecha final', true));
+						return;
+					}
+
+					list($ano, $mes, $dia) = explode("-", $fecha1);
+					$fecha1 = $ano . "-" . $mes . "-" . ($dia);
+
+					list($ano, $mes, $dia) = explode("-", $fecha2);
+
+					if ($dia == 31) {
+						$fecha2 = $ano . "-" . $mes . "-" . ($dia);
+					} else {
+						$fecha2 = $ano . "-" . $mes . "-" . ($dia + 1);
+					}
+
+					$conditions[] = array('Alumno.created between ? and ?' => array($fecha1, $fecha2));
+
+				} else if ($fecha1 != null) {
+					$conditions[] = array('Alumno.created >=' => $fecha1);
+				} else if ($fecha2 != null) {
+					$conditions[] = array('Alumno.created <=' => $fecha2);
+				}
+			}
+
+			$reporteNotasAlumnos = $this -> paginate = array('Alumno' => array('limit' => 20, 'conditions' => $conditions));
+			$reporteNotasAlumnos = $this -> paginate('Alumno');
+			$cabecerasCsv = array("Doc. identificación", "Nacionalidad", "Nombres", "Apellidos", "Sexo", "Fec. nacimiento", "Tip. sangre", "Estado civil", "Grado estudio", "Cursos - nota", "Fecha creación");
+			$this -> Session -> write('reporte', $reporteNotasAlumnos);
+			$this -> Session -> write('archivo', "reporteNotasAlumnos");
+			$this -> Session -> write('cabeceras', $cabecerasCsv);
+			$reporte = true;
+
+			//debug($reporteNotasAlumnos);
+			$this -> set(compact('reporteNotasAlumnos', 'reporte'));
+		} else {
+			$idsNotasAlumnos = $this -> Alumno -> CursosAlumno -> find("list", array("fields" => array("alumno_id")));
+			$alumnos = $this -> Alumno -> find("list", array("fields" => array("id", "nombre_completo"), "conditions" => array("Alumno.id" => $idsNotasAlumnos)));
+			//debug($alumnos);
+			$this -> set(compact('alumnos', 'reporte'));
+		}
 	}
+
 }
