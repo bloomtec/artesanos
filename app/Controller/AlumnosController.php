@@ -145,6 +145,11 @@ class AlumnosController extends AppController {
 	 */
 	//Reporte alumnos provincias fecha de creacion
 	public function reporte() {
+		$this -> loadModel("CentrosArtesanal", true);
+		$this -> loadModel("Solicitud", true);
+		$this -> loadModel("CursosAlumno", true);
+		$this -> loadModel("Curso", true);
+		$this -> loadModel("Provincia", true);
 		$reporte = false;
 		$pagina = "";
 
@@ -166,12 +171,19 @@ class AlumnosController extends AppController {
 				$fecha1 = $this -> data["Reporte"]["fecha1"];
 				$fecha2 = $this -> data["Reporte"]["fecha2"];
 
+				$idsAlumnos = $this -> CursosAlumno -> find("list", array("fields" => array("alumno_id")));
+				$conditions[] = array('Alumno.id' => $idsAlumnos);
+
 				if (!empty($provincia)) {
-					$conditions[] = array('CentrosArtesanal.provincia_id' => $provincia);
+					$idsCentrosArtesanales = $this -> CentrosArtesanal -> find("list", array("fields" => array("id"), "conditions" => array("CentrosArtesanal.provincia_id" => $provincia)));
+					$idsSolicitudes = $this -> Solicitud -> find("list", array("fields" => array("id"), "conditions" => array("Solicitud.centros_artesanal_id" => $idsCentrosArtesanales)));
+					$idsCursos = $this -> Curso -> find("list", array("fields" => array("id"), "conditions" => array("Curso.solicitud_id" => $idsSolicitudes)));
+					$idsAlumnos = $this -> CursosAlumno -> find("list", array("fields" => array("alumno_id"), "conditions" => array("CursosAlumno.curso_id" => $idsCursos)));
+					$conditions[] = array('Alumno.id' => $idsAlumnos);
 				}
 
 				if (!empty($fechaCreacion)) {
-					$conditions[] = array('CentrosArtesanal.created' => $fechaCreacion);
+					$conditions[] = array('Alumno.created' => $fechaCreacion);
 				}
 
 				if ($fecha1 != null && $fecha2 != null) {
@@ -192,26 +204,29 @@ class AlumnosController extends AppController {
 						$fecha2 = $ano . "-" . $mes . "-" . ($dia + 1);
 					}
 
-					$conditions[] = array('CentrosArtesanal.created between ? and ?' => array($fecha1, $fecha2));
+					$conditions[] = array('Alumno.created between ? and ?' => array($fecha1, $fecha2));
 
 				} else if ($fecha1 != null) {
-					$conditions[] = array('CentrosArtesanal.created >=' => $fecha1);
+					$conditions[] = array('Alumno.created >=' => $fecha1);
 				} else if ($fecha2 != null) {
-					$conditions[] = array('CentrosArtesanal.created <=' => $fecha2);
+					$conditions[] = array('Alumno.created <=' => $fecha2);
 				}
 			}
 
-			$reporteCentrosArtesanales = $this -> paginate = array('CentrosArtesanal' => array('limit' => 20, 'conditions' => $conditions));
-			$reporteCentrosArtesanales = $this -> paginate('CentrosArtesanal');
-			$cabecerasCsv = array("RUC", "Nombre", "Provincia", "Canton", "Ciudad", "Parroquia", "Dirección", "Fecha creación");
-			$this -> Session -> write('reporte', $reporteCentrosArtesanales);
-			$this -> Session -> write('archivo', "reporteCentrosArtesanales");
+			$reporteAlumnos = $this -> paginate = array('Alumno' => array('limit' => 20, 'conditions' => $conditions));
+			$reporteAlumnos = $this -> paginate('Alumno');
+			$cabecerasCsv = array("Doc. identificación", "Nacionalidad", "Nombres", "Apellidos", "Sexo", "Fec. nacimiento", "Tip. sangre", "Estado civil", "Grado estudio", "Cursos - nota", "Fecha creación");
+			$this -> Session -> write('reporte', $reporteAlumnos);
+			$this -> Session -> write('archivo', "reporteAlumnos");
 			$this -> Session -> write('cabeceras', $cabecerasCsv);
 			$reporte = true;
-			$this -> set(compact('reporteCentrosArtesanales', 'reporte'));
+			$this -> set(compact('reporteAlumnos', 'reporte'));
 		} else {
-			$idsProvincias = $this -> CentrosArtesanal -> find("list", array("fields" => array("provincia_id")));
-			$provincias = $this -> CentrosArtesanal -> Provincia -> find("list", array("conditions" => array("Provincia.id" => $idsProvincias)));
+			$idsCursosAlumnos = $this -> CursosAlumno -> find("list", array("fields" => array("curso_id")));
+			$idsSolicitudesCursos = $this -> Curso -> find("list", array("fields" => array("solicitud_id"), "conditions" => array("Curso.id" => $idsCursosAlumnos)));
+			$idsCentrosArtesanales = $this -> Solicitud -> find("list", array("fields" => array("centros_artesanal_id"), "conditions" => array("Solicitud.id" => $idsSolicitudesCursos)));
+			$idsProvincias = $this -> CentrosArtesanal -> find("list", array("fields" => array("provincia_id"), "conditions" => array("CentrosArtesanal.id" => $idsCentrosArtesanales)));
+			$provincias = $this -> Provincia -> find("list", array("conditions" => array("Provincia.id" => $idsProvincias)));
 			$this -> set(compact('provincias', 'reporte'));
 		}
 
@@ -226,11 +241,11 @@ class AlumnosController extends AppController {
 	//Reporte alumnos provincias
 	public function impReporte() {
 		$this -> layout = 'pdf2';
-		$reporteCentrosArtesanales = $this -> Session -> read('reporte');
+		$reporteAlumnos = $this -> Session -> read('reporte');
 		$nombre_archivo = $this -> Session -> read('archivo');
 		//Tamaño de la fuente
 		$tamano = 5;
-		$this -> set(compact('reporteCentrosArtesanales', 'nombre_archivo', 'tamano'));
+		$this -> set(compact('reporteAlumnos', 'nombre_archivo', 'tamano'));
 	}
 
 	/**
@@ -259,15 +274,15 @@ class AlumnosController extends AppController {
 		$this -> render(false);
 
 		$csv = new csvHelper();
-		$reporteCentrosArtesanales = $this -> Session -> read('reporte');
+		$reporteAlumnos = $this -> Session -> read('reporte');
 		$cabeceras = $this -> Session -> read('cabeceras');
 		$csv -> addRow($cabeceras);
 
-		for ($i = 0; $i < count($reporteCentrosArtesanales); $i++) {
-			$filas = array($reporteCentrosArtesanales[$i]["CentrosArtesanal"]["cen_ruc"], $reporteCentrosArtesanales[$i]["CentrosArtesanal"]["cen_nombre"], $reporteCentrosArtesanales[$i]["Provincia"]["pro_nombre"], $reporteCentrosArtesanales[$i]["Canton"]["can_nombre"], $reporteCentrosArtesanales[$i]["Ciudad"]["ciu_nombre"], $reporteCentrosArtesanales[$i]["Parroquia"]["par_nombre"], $reporteCentrosArtesanales[$i]["CentrosArtesanal"]["direccion"], $reporteCentrosArtesanales[$i]["CentrosArtesanal"]["created"]);
+		for ($i = 0; $i < count($reporteAlumnos); $i++) {
+			$filas = array($reporteAlumnos[$i]["Alumno"]["alu_documento_de_identificacion"], $reporteAlumnos[$i]["Alumno"]["alu_nacionalidad"], $reporteAlumnos[$i]["Alumno"]["alu_nombres"], $reporteAlumnos[$i]["Alumno"]["alu_apellido_paterno"] . ' ' . $reporteAlumnos[$i]["Alumno"]["alu_apellido_materno"], $reporteAlumnos[$i]["Alumno"]["alu_sexo"], $reporteAlumnos[$i]["Alumno"]["alu_fecha_de_nacimiento"], $reporteAlumnos[$i]["Alumno"]["alu_tipo_de_sangre"], $reporteAlumnos[$i]["Alumno"]["alu_estado_civil"], $reporteAlumnos[$i]["Alumno"]["alu_grado_de_estudio"], $reporteAlumnos[$i]["Alumno"]["created"]);
 			$csv -> addRow($filas);
-
 		}
+
 		$titulo = $this -> Session -> read('archivo');
 		$titulo = "csv_" . $titulo . "_" . date("Y-m-d H:i:s", time()) . ".csv";
 		echo $csv -> render($titulo);
@@ -295,7 +310,7 @@ class AlumnosController extends AppController {
 			$filas = array($reporteNotasAlumnos[$i]["Alumno"]["alu_documento_de_identificacion"], $reporteNotasAlumnos[$i]["Alumno"]["alu_nacionalidad"], $reporteNotasAlumnos[$i]["Alumno"]["alu_nombres"], $reporteNotasAlumnos[$i]["Alumno"]["alu_apellido_paterno"] . ' ' . $reporteNotasAlumnos[$i]["Alumno"]["alu_apellido_materno"], $reporteNotasAlumnos[$i]["Alumno"]["alu_sexo"], $reporteNotasAlumnos[$i]["Alumno"]["alu_fecha_de_nacimiento"], $reporteNotasAlumnos[$i]["Alumno"]["alu_tipo_de_sangre"], $reporteNotasAlumnos[$i]["Alumno"]["alu_estado_civil"], $reporteNotasAlumnos[$i]["Alumno"]["alu_grado_de_estudio"], $cursoNota, $reporteNotasAlumnos[$i]["Alumno"]["created"]);
 			$csv -> addRow($filas);
 		}
-		
+
 		$titulo = $this -> Session -> read('archivo');
 		$titulo = "csv_" . $titulo . "_" . date("Y-m-d H:i:s", time()) . ".csv";
 		echo $csv -> render($titulo);

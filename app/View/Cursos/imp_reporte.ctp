@@ -2,7 +2,7 @@
 <table>
 	<tr>
 		<th>Solicitud</th>
-		<th>Nombre></th>
+		<th>Nombre</th>
 		<th>Contenido</th>
 		<th>Fecha inicio></th>
 		<th>Fecha fin</th>

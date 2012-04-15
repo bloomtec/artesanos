@@ -1,5 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
+App::import('Helper', 'csv');
 /**
  * Cursos Controller
  *
@@ -342,14 +343,11 @@ class CursosController extends AppController {
 
 			$reporteCursos = $this -> paginate = array('Curso' => array('limit' => 20, 'conditions' => $conditions));
 			$reporteCursos = $this -> paginate('Curso');
-			$cabecerasCsv = array("RUC", "Nombre", "Provincia", "Canton", "Ciudad", "Parroquia", "Dirección", "Fecha creación");
+			$cabecerasCsv = array("Solicitud", "Nombre", "Contenido", "Fecha Inicio", "Fecha Fin", "Jornada", "Num. horas", "Hora Inicio","Hora Fin","Provincia","Num. Alumnos","Fecha Creación");
 			$this -> Session -> write('reporte', $reporteCursos);
 			$this -> Session -> write('archivo', "reporteCursos");
 			$this -> Session -> write('cabeceras', $cabecerasCsv);
 			$reporte = true;
-			//echo $num_alumnos;
-			
-			//debug($reporteCursos);
 			//Agregar numero de alumnos
 			$numAlumnos=array();
 			if(count($reporteCursos)>0) {
@@ -369,7 +367,12 @@ class CursosController extends AppController {
 		
 	}
 	
-	//Reporte alumnos provincias
+	
+	/**
+	 * impReporte method
+	 *
+	 * @return void
+	 */
 	public function impReporte() {
 		$this -> layout = 'pdf2';
 		$reporteCursos = $this -> Session -> read('reporte');
@@ -390,15 +393,31 @@ class CursosController extends AppController {
 		$this -> render(false);
 
 		$csv = new csvHelper();
-		$reporteCentrosArtesanales = $this -> Session -> read('reporte');
+		$reporteCursos = $this -> Session -> read('reporte');
 		$cabeceras = $this -> Session -> read('cabeceras');
+		$numAlumnos = $this -> Session -> read('numAlumnos');
 		$csv -> addRow($cabeceras);
 
-		for ($i = 0; $i < count($reporteCentrosArtesanales); $i++) {
-			$filas = array($reporteCentrosArtesanales[$i]["CentrosArtesanal"]["cen_ruc"], $reporteCentrosArtesanales[$i]["CentrosArtesanal"]["cen_nombre"], $reporteCentrosArtesanales[$i]["Provincia"]["pro_nombre"], $reporteCentrosArtesanales[$i]["Canton"]["can_nombre"], $reporteCentrosArtesanales[$i]["Ciudad"]["ciu_nombre"], $reporteCentrosArtesanales[$i]["Parroquia"]["par_nombre"], $reporteCentrosArtesanales[$i]["CentrosArtesanal"]["direccion"], $reporteCentrosArtesanales[$i]["CentrosArtesanal"]["created"]);
-			$csv -> addRow($filas);
+		
+		for($i=0;$i < count($reporteCursos);$i++) {
+	
+		$filas = array($reporteCursos[$i]["Solicitud"]["id"],
+						$reporteCursos[$i]["Curso"]["cur_nombre"],
+						$reporteCursos[$i]["Curso"]["cur_contenido"],
+						$reporteCursos[$i]["Curso"]["cur_fecha_de_inicio"],
+						$reporteCursos[$i]["Curso"]["cur_fecha_de_fin"],
+						$reporteCursos[$i]["Curso"]["cur_jornada"],
+						$reporteCursos[$i]["Curso"]["cur_numero_horas"],
+						$reporteCursos[$i]["Curso"]["cur_horario_inicio"],
+						$reporteCursos[$i]["Curso"]["cur_horario_fin"],
+						$reporteCursos[$i]["Provincia"]["pro_nombre"],
+						$numAlumnos[$i],
+						$reporteCursos[$i]["Curso"]["created"]);
 
+			$csv -> addRow($filas);
 		}
+	
+	
 		$titulo = $this -> Session -> read('archivo');
 		$titulo = "csv_" . $titulo . "_" . date("Y-m-d H:i:s", time()) . ".csv";
 		echo $csv -> render($titulo);

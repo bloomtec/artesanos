@@ -1,9 +1,9 @@
 <?php
 header("Content-type: application/pdf");
-
 //App::import('Vendor', 'bloompdf'); //Error aqui
-App::import('Vendor','especie'); 
-$pdf = new ESPECIE(PDF_PAGE_ORIENTATION, PDF_UNIT, "LETTER", PDF_PAGE_FORMAT, true, 'UTF-8', false);
+//App::import('Vendor','especie'); 
+App::import('Vendor','pdf'); 
+$pdf = new PDF(PDF_PAGE_ORIENTATION, PDF_UNIT, "LETTER", PDF_PAGE_FORMAT, true, 'UTF-8', false);
 $pdf->setPageOrientation('L');
 
 // set document information
