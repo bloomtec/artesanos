@@ -38,7 +38,8 @@ namespace :deploy do
     run "cp /home/embalao/jnda.bloomweb.co/current/. /home/embalao/jnda.bloomweb.co/ -R"
     run "chmod 777 /home/embalao/jnda.bloomweb.co/app/tmp/ -R"
     run "chmod 777 /home/embalao/jnda.bloomweb.co/app/webroot/img/uploads/ -R"
-    run "chmod 777 /home/embalao/jnda.bloomweb.co/app/webroot/files/uploads/ -R"
+    run "chmod 777 /home/embalao/jnda.bloomweb.co/app/Config/database.php"
+    run "cp /home/embalao/jnda.bloomweb.co/app/Config/database.srv /home/embalao/jnda.bloomweb.co/app/Config/database.php"
   end
   
 end
