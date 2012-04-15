@@ -547,7 +547,8 @@ class SolicitudesTitulacionesController extends AppController {
 		$this -> loadModel("Artesano", true);
 		$this -> loadModel("Rama", true);
 		$this -> loadModel("Provincia", true);
-		$this->$Titulacion->recursive=0;
+		
+		
 		$reporte = false;
 
 		$pagina = "";

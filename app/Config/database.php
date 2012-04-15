@@ -1,6 +1,6 @@
 <?php
 class DATABASE_CONFIG {
-/*
+
 	public  $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
@@ -10,7 +10,7 @@ class DATABASE_CONFIG {
 		'password' => '20qtxNm6E4',
 		'database' => 'jndagobe_artesanos',
 		'encoding' => 'utf8'
-	); */
+	); /*
 
 	public  $default = array(
 		'datasource' => 'Database/Mysql',
@@ -22,7 +22,7 @@ class DATABASE_CONFIG {
 		'password' => '',
 		'database' => 'jndagobe_artesanos',
 		'encoding' => 'utf8'
-	);
+	);*/
 	 
  	
 }

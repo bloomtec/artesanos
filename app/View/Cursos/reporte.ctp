@@ -3,16 +3,16 @@
 <?php if($reporte==false) {
 ?>
 <div class="reportes form">
-	<?php echo $this -> Form -> create('Reporte', array("Action"=>"reporteNotas"));?>
+	<?php echo $this -> Form -> create('Reporte', array("Action"=>"reporte"));?>
 	<h2>
-		<?php echo __('Reporte notas alumnos'); ?>
+		<?php echo __('Reporte cursos'); ?>
 	</h2>
 	<fieldset>
 		<?php
-		echo $this -> Form -> input('provincias', array('type' => 'select', 'label' => 'Provincias', 'empty' => 'Seleccione...', 'options' => ''));
-		echo $this -> Form -> input('ciudades', array('type' => 'select', 'label' => 'Ciudades', 'empty' => 'Seleccione...', 'options' => ''));
-		echo $this -> Form -> input('fecha_creacion', array('value' => '', 'type' => 'text', 'label' => 'Fecha final', 'class' => 'date'));
-		echo $this -> Form -> input('estado', array('type' => 'select', 'label' => 'Alumnos', 'empty' => 'Seleccione...', 'options' => array(1=>"Activo",2=>"No activo")));
+		echo $this -> Form -> input('provincia', array('type' => 'select', 'label' => 'Provincias', 'empty' => 'Seleccione...', 'options' => ''));
+		echo $this -> Form -> input('ciudad', array('type' => 'select', 'label' => 'Ciudades', 'empty' => 'Seleccione...', 'options' => ''));
+		echo $this -> Form -> input('estado', array('type' => 'select', 'label' => 'Estado', 'empty' => 'Seleccione...', 'options' => array(1=>"Activo",2=>"No activo")));
+		echo $this -> Form -> input('fecha_creacion', array('value' => '', 'type' => 'text', 'label' => 'Fecha creación', 'class' => 'date'));
 		echo $this -> Form -> input('fecha1', array('value' => '', 'type' => 'text', 'label' => 'Fecha inicial', 'class' => 'date'));
 		echo $this -> Form -> input('fecha2', array('value' => '', 'type' => 'text', 'label' => 'Fecha final', 'class' => 'date'));
 		?>
@@ -23,46 +23,39 @@
 <?php } else {  /*debug($reporteIngresos);*/?>
 <br />
 <br />
-<h2><?php echo __('Reporte notas alumnos');?></h2>
+<h2><?php echo __('Reporte cursos');?></h2>
 <table>
 	<tr>
-		<th><?php echo $this -> Paginator -> sort('alu_documento_de_identificaicion', 'Doc. identificación');?></th>
-		<th><?php echo $this -> Paginator -> sort('alu_nacionalidad', 'Nacionalidad');?></th>
-		<th><?php echo $this -> Paginator -> sort('alu_nombres', 'Nombres');?></th>
-		<th><?php echo $this -> Paginator -> sort('alu_apellido_paterno', 'Apellidos');?></th>
-		<th><?php echo $this -> Paginator -> sort('alu_sexo', 'Sexo');?></th>
-		<th><?php echo $this -> Paginator -> sort('alu_fecha_de_nacimiento', 'Fec. nacimiento');?></th>
-		<th><?php echo $this -> Paginator -> sort('[alu_tipo_de_sangre', 'Tip. sangre');?></th>
-		<th><?php echo $this -> Paginator -> sort('alu_estado_civil', 'Estado civil');?></th>
-		<th><?php echo $this -> Paginator -> sort('alu_grado_de_estudio', 'Grado estudio');?></th>
-		<th>Cursos - Nota</th>
+		<th><?php echo $this -> Paginator -> sort('Solicitud.id', 'Solicitud');?></th>
+		<th><?php echo $this -> Paginator -> sort('cur_nombre', 'Nombre');?></th>
+		<th><?php echo $this -> Paginator -> sort('cur_contenido', 'Contenido');?></th>
+		<th><?php echo $this -> Paginator -> sort('alu_sexo', 'Fecha inicio');?></th>
+		<th><?php echo $this -> Paginator -> sort('alu_fecha_de_nacimiento', 'Fecha fin');?></th>
+		<th><?php echo $this -> Paginator -> sort('[alu_tipo_de_sangre', 'Jornada');?></th>
+		<th><?php echo $this -> Paginator -> sort('', 'Num. horas');?></th>
+		<th><?php echo $this -> Paginator -> sort('alu_grado_de_estudio', 'Hora inicio');?></th>
+		<th><?php echo $this -> Paginator -> sort('alu_grado_de_estudio', 'Hora fin');?></th>
+		<th><?php echo $this -> Paginator -> sort('Provincia.pro_nombre', 'Provincia');?></th>
+		<th>Num. Alumnos</th>
 		<th><?php echo $this -> Paginator -> sort('created', 'Fecha creación');?></th>
 	</tr>
 	<?php
 //debug($reporteIngresos);
-for($i=0;$i < count($reporteNotasAlumnos);$i++) {
+for($i=0;$i < count($reporteCursos);$i++) {
 	?>
 	<tr>
-		<td><?php echo $reporteNotasAlumnos[$i]["Alumno"]["alu_documento_de_identificacion"]; ?></td>
-		<td><?php echo $reporteNotasAlumnos[$i]["Alumno"]["alu_nacionalidad"]; ?></td>
-		<td><?php echo $reporteNotasAlumnos[$i]["Alumno"]["alu_nombres"]; ?></td>
-		<td><?php echo $reporteNotasAlumnos[$i]["Alumno"]["alu_apellido_paterno"].' '.$reporteNotasAlumnos[$i]["Alumno"]["alu_apellido_materno"]; ?></td>
-		<td><?php echo $reporteNotasAlumnos[$i]["Alumno"]["alu_sexo"]; ?></td>
-		<td><?php echo $reporteNotasAlumnos[$i]["Alumno"]["alu_fecha_de_nacimiento"]; ?></td>
-		<td><?php echo $reporteNotasAlumnos[$i]["Alumno"]["alu_tipo_de_sangre"]; ?></td>
-		<td><?php echo $reporteNotasAlumnos[$i]["Alumno"]["alu_estado_civil"]; ?></td>
-		<td><?php echo $reporteNotasAlumnos[$i]["Alumno"]["alu_grado_de_estudio"]; ?></td>
-		<td>
-		<?php
-			for($j=0;$j < count($reporteNotasAlumnos[$i]["Curso"]);$j++) {
-				
-				echo $reporteNotasAlumnos[$i]["Curso"][$j]["cur_nombre"].', nota:'.$reporteNotasAlumnos[$i]["Curso"][$j]["CursosAlumno"]["cur_nota_final"];
-				echo "<br>";
-			}
-		?>
-			
-	  </td>
-		<td><?php echo $reporteNotasAlumnos[$i]["Alumno"]["created"]; ?></td>
+		<td><?php echo $reporteCursos[$i]["Solicitud"]["id"]; ?></td>
+		<td><?php echo $reporteCursos[$i]["Curso"]["cur_nombre"]; ?></td>
+		<td><?php echo $reporteCursos[$i]["Curso"]["cur_contenido"]; ?></td>
+		<td><?php echo $reporteCursos[$i]["Curso"]["cur_fecha_de_inicio"]; ?></td>
+		<td><?php echo $reporteCursos[$i]["Curso"]["cur_fecha_de_fin"]; ?></td>
+		<td><?php echo $reporteCursos[$i]["Curso"]["cur_jornada"]; ?></td>
+		<td><?php echo $reporteCursos[$i]["Curso"]["cur_numero_horas"]; ?></td>
+		<td><?php echo $reporteCursos[$i]["Curso"]["cur_horario_inicio"]; ?></td>
+		<td><?php echo $reporteCursos[$i]["Curso"]["cur_horario_fin"]; ?></td>
+		<td><?php echo $reporteCursos[$i]["Provincia"]["pro_nombre"]; ?></td>
+		<td><?php echo $numAlumnos[$i]; ?></td>
+		<td><?php echo $reporteCursos[$i]["Curso"]["created"]; ?></td>
 	</tr>
 	<?php
 
@@ -79,9 +72,9 @@ for($i=0;$i < count($reporteNotasAlumnos);$i++) {
 	echo $this -> Paginator -> last('>> ', array(), null, array('class' => 'next disabled'));
 	?>
 </div>
-<a class='button' href="/alumnos/reporteNotas">Volver</a>
-&nbsp; <a class='button' href="/alumnos/impReporte2">Descargar pdf</a>
-&nbsp; <a class='button' href="/alumnos/export_csv2">Exportar a CSV</a>
+<a class='button' href="/cursos/reporte">Volver</a>
+&nbsp; <a class='button' href="/cursos/impReporte">Descargar pdf</a>
+&nbsp; <a class='button' href="/cursos/export_csv">Exportar a CSV</a>
 <?php }?>
 
 
