@@ -6,6 +6,8 @@ App::uses('AppModel', 'Model');
  * @property EspeciesValorada $EspeciesValorada
  */
 class IngresosEspecie extends AppModel {
+	
+	public $actsAs = array('Auditable');
 /**
  * Display field
  *

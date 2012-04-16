@@ -12,6 +12,8 @@ App::uses('AppModel', 'Model');
  */
 class Local extends AppModel {
 	
+	public $actsAs = array('Auditable');
+	
 	/**
 	 * Validation rules
 	 *

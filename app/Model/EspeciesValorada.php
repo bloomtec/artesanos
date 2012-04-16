@@ -9,6 +9,8 @@ App::uses('AppModel', 'Model');
  */
 class EspeciesValorada extends AppModel {
 	
+	public $actsAs = array('Auditable');
+	
 	/**
 	 * Virtual fields
 	 *

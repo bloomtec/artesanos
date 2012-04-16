@@ -16,6 +16,7 @@ App::uses('AppModel', 'Model');
  */
 class Taller extends AppModel {
 	
+	public $actsAs = array('Auditable');
 	/**
 	 * Validation rules
 	 *

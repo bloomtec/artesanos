@@ -7,6 +7,8 @@ App::uses('AppModel', 'Model');
  */
 class Artesano extends AppModel {
 	
+	public $actsAs = array('Auditable');
+	
 	public $currentUsrId = -1;
 	
 	public $virtualFields = array(

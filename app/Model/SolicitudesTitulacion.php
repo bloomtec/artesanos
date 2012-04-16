@@ -10,6 +10,8 @@ App::uses('AppModel', 'Model');
  * @property Titulacion $Titulacion
  */
 class SolicitudesTitulacion extends AppModel {
+	
+	public $actsAs = array('Auditable');
 /**
  * Validation rules
  *

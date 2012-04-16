@@ -9,6 +9,8 @@ App::uses('AppModel', 'Model');
  */
 class Persona extends AppModel {
 	
+	public $actsAs = array('Auditable');
+	
 	public $virtualFields = array(
 		'datos_completos' => 'CONCAT(Persona.per_documento_de_identidad, " - ", Persona.per_nombres, " ", Persona.per_apellidos)'
 	);

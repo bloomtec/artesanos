@@ -7,6 +7,8 @@ App::uses('AppModel', 'Model');
  * @property Item $Item
  */
 class EgresosDeInventario extends AppModel {
+	
+	public $actsAs = array('Auditable');
 /**
  * Validation rules
  *

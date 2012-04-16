@@ -8,6 +8,8 @@ App::uses('AppModel', 'Model');
  * @property Persona $Persona
  */
 class Item extends AppModel {
+	
+	public $actsAs = array('Auditable');
 /**
  * Use table
  *

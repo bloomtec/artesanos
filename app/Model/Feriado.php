@@ -5,6 +5,8 @@ App::uses('AppModel', 'Model');
  *
  */
 class Feriado extends AppModel {
+	
+	public $actsAs = array('Auditable');
 /**
  * Display field
  *

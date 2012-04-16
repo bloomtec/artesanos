@@ -9,6 +9,8 @@ App::uses('AppModel', 'Model');
  * @property VentasEspecie $VentasEspecie
  */
 class Factura extends AppModel {
+	
+	public $actsAs = array('Auditable');
 /**
  * Display field
  *

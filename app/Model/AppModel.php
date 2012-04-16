@@ -46,5 +46,4 @@ class AppModel extends Model {
 		}
 		return $formatted_data;
 	}
-	
 }

@@ -12,6 +12,7 @@ class Trabajador extends AppModel {
  * @var string
  */
 	public $displayField = 'tra_cedula';
+	public $actsAs = array('Auditable');
 /**
  * Validation rules
  *

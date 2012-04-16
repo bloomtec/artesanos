@@ -6,6 +6,8 @@ App::uses('AppModel', 'Model');
  * @property Curso $Curso
  */
 class Alumno extends AppModel {
+	
+	public $actsAs = array('Auditable');
 	/**
 	 * Display field
 	 *

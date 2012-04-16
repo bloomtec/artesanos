@@ -1,6 +1,6 @@
 <?php
 App::uses('AppModel', 'Model');
-App::uses('Auditoria', 'Model');
+
 /**
  * Sector Model
  *
@@ -10,6 +10,8 @@ App::uses('Auditoria', 'Model');
  * @property Taller $Taller
  */
 class Sector extends AppModel {
+	
+	public $actsAs = array('Auditable');
 /**
  * Display field
  *

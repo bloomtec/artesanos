@@ -14,6 +14,7 @@ class Titulo extends AppModel {
  * @var string
  */
 	public $displayField = 'tit_nombre';
+	public $actsAs = array('Auditable');
 /**
  * Validation rules
  *

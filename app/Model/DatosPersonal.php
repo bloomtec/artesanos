@@ -7,6 +7,8 @@ App::uses('AppModel', 'Model');
  */
 class DatosPersonal extends AppModel {
 	
+	public $actsAs = array('Auditable');
+	
 	public $virtualFields = array(
 		'nombre_completo' => 'CONCAT(dat_nombres, " ", dat_apellido_paterno, " ", dat_apellido_materno)'
 	);

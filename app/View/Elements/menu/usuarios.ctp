@@ -16,6 +16,10 @@
 		<li>
 			<a href="/usuarios/modificarContrasena">Cambiar Contraseña</a>
 		</li>
+		
+		<li>
+			<a href="/auditorias">Auditorias</a>
+		</li>
 	</ul>
 </li>
 
