@@ -12,10 +12,12 @@
 		<?php endif;?>
 		<li>
 			<a href="/usuarios/modificarContrasena">Cambiar Contraseña</a>
-		</li>		
+		</li>
+		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Auditorias', 'index')))) : ?>
 		<li>
 			<a href="/auditorias">Auditorias</a>
 		</li>
+		<?php endif; ?>
 	</ul>
 </li>
 
