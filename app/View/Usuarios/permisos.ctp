@@ -38,6 +38,32 @@
 				<td class="accion"></td>
 			</tr>
 		</table>
+		<table class="permisos">
+			<tr class="modulo">
+				<th class="nombre">ACTIVOS FIJOS</th>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.ActivosFijos.indexActivosFijos', array('label' => 'Listar', 'type' => 'checkbox'));?></td>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.ActivosFijos.agregarActivoFijo', array('label' => 'Agregar', 'type' => 'checkbox'));?></td>
+				<td class="accion"></td>
+				<td class="accion"></td>			
+			</tr>
+			<tr>
+				<th class="nombre"></th>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.ActivosFijos.asignarActivoFijo', array('label' => 'Asignar', 'type' => 'checkbox'));?></td>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.ActivosFijos.desasignarActivoFijo', array('label' => 'Desasignar', 'type' => 'checkbox'));?></td>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.ActivosFijos.traspasoActivoFijo', array('label' => 'Traspaso', 'type' => 'checkbox'));?></td>
+				<td class="accion"></td>
+			</tr>
+		</table>
+		<table class="permisos">
+			<tr class="modulo">
+				<th class="nombre">SUMINISTROS</th>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.Suministros.indexSuministros', array('label' => 'Listar', 'type' => 'checkbox'));?></td>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.Suministros.agregarSuministro', array('label' => 'Agregar', 'type' => 'checkbox'));?></td>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.Suministros.deleteSuministro', array('label' => 'Egresar', 'type' => 'checkbox'));?></td>
+				<td class="accion"></td>			
+			</tr>
+		</table>
+		<!-- SECCIÓN DE PARÁMETROS Y MANTENIMIENTOS -->
 		<h3>PARAMETROS</h3>
 		<table class="permisos">
 			<caption>MANTENIMIENTOS</caption>
@@ -123,9 +149,9 @@
 			<caption>CAMPOS PARAMETRIZABLES</caption>
 			<tr class="modulo">
 				<th class="nombre">INFORMATIVOS</th>
-				<td class="accion"><?php echo $this -> Form -> input('Permisos.Informativos.ParametrosInformativos.index', array('label' => 'Listar', 'type' => 'checkbox'));?></td>
-				<td class="accion"><?php echo $this -> Form -> input('Permisos.Informativos.ParametrosInformativos.view', array('label' => 'Ver', 'type' => 'checkbox'));?></td>
-				<td class="accion"><?php echo $this -> Form -> input('Permisos.Informativos.ParametrosInformativos.modificar', array('label' => 'Modificar', 'type' => 'checkbox'));?></td>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.Informativos.index', array('label' => 'Listar', 'type' => 'checkbox'));?></td>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.Informativos.view', array('label' => 'Ver', 'type' => 'checkbox'));?></td>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.Informativos.modificar', array('label' => 'Modificar', 'type' => 'checkbox'));?></td>
 				<td class="accion"></td>
 			</tr>
 		</table>

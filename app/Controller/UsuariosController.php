@@ -277,19 +277,14 @@ class UsuariosController extends AppController {
 				$aro_id = $this -> Usuario -> query("SELECT `id` FROM `aros` WHERE `model`='Usuario' AND `foreign_key`=$id");
 				$aro_id = $aro_id[0]['aros']['id'];
 				$this -> Usuario -> query("DELETE FROM `aros_acos` WHERE `aro_id`=$aro_id");
-				foreach($this -> request -> data['Permisos'] as $modulo => $acceso) {
-					if($acceso) {
-						$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/$modulo");
-					} else {
-						$this -> Acl -> deny($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/$modulo");
-					}
-				}
 				$this -> setPermisosUsuarios($usuario, $this -> request -> data['Permisos']['Usuarios']);
 				$this -> setPermisosArtesanos($usuario, $this -> request -> data['Permisos']['Artesanos']);
 				$this -> setPermisosMantenimientos($usuario, $this -> request -> data['Permisos']['Mantenimientos']);
 				$this -> setPermisosParametrosInformativos($usuario, $this -> request -> data['Permisos']['Informativos']);
 				$this -> setPermisosReportes($usuario, $this -> request -> data['Permisos']['Reportes']);
 				$this -> setPermisosCalificaciones($usuario, $this -> request -> data['Permisos']['Calificaciones']);
+				$this -> setPermisosActivosFijos($usuario, $this -> request -> data['Permisos']['ActivosFijos']);
+				$this -> setPermisosSuministros($usuario, $this -> request -> data['Permisos']['Suministros']);
 				if($usuario['Usuario']['rol_id'] == 3) {
 					$this -> setPermisosInspectores($usuario, true);
 				} else {
@@ -308,12 +303,56 @@ class UsuariosController extends AppController {
 			$usuario['Permisos']['Informativos'] = $this -> getPermisosParametrosInformativos($usuario);
 			$usuario['Permisos']['Reportes'] = $this -> getPermisosReportes($usuario);
 			$usuario['Permisos']['Calificaciones'] = $this -> getPermisosCalificaciones($usuario);
+			$usuario['Permisos']['ActivosFijos'] = $this -> getPermisosActivosFijos($usuario);
+			$usuario['Permisos']['Suministros'] = $this -> getPermisosSuministros($usuario);
 			$this -> request -> data = $usuario;
 		}
 	}
 	
+	private function setPermisosSuministros($usuario = null, $permisos = null) {
+		foreach($permisos as $accion => $permitida) {
+			if($permitida) {
+				$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/Items/$accion");
+			}
+		}
+	}
+	
+	private function getPermisosSuministros($usuario = null) {
+		$permisos = array(
+			'indexSuministros' => true,
+			'agregarSuministro' => true,
+			'deleteSuministro' => true
+		);
+		foreach($permisos as $accion => $permitida) {
+			if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/Items/$accion")) $permisos[$accion] = false;
+		}
+		return $permisos;
+	}
+	
+	private function setPermisosActivosFijos($usuario = null, $permisos = null) {
+		foreach($permisos as $accion => $permitida) {
+			if($permitida) {
+				$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/Items/$accion");
+			}
+		}
+	}
+	
+	private function getPermisosActivosFijos($usuario = null) {
+		$permisos = array(
+			'indexActivosFijos' => true,
+			'agregarActivoFijo' => true,
+			'asignarActivoFijo' => true,
+			'desasignarActivoFijo' => true,
+			'traspasoActivoFijo' => true
+		);
+		foreach($permisos as $accion => $permitida) {
+			if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/Items/$accion")) $permisos[$accion] = false;
+		}
+		return $permisos;
+	}
+	
 	private function setPermisosMantenimientos($usuario = null, $permisos = null) {
-		foreach($permisos as $modulo => $permisos) {
+		foreach($permisos as $modulo => $permiso) {
 			if($permisos[$modulo]['index']) {
 				$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/$modulo/index");
 			}
