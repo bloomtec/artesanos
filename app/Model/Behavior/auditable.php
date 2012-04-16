@@ -26,12 +26,11 @@ class AuditableBehavior extends ModelBehavior {
         return true;
     }
 	public function afterSave($created){
-		if(isset($this -> oldData[$this -> Model -> id])){
+		if(isset($this -> oldData[$this -> Model -> id]) && isset($_SESSION)){
 			//EDICION
 			App::import("Model", "Auditoria"); 
 			$this -> Auditoria = new Auditoria;
 			$this -> Auditoria -> create();
-			
 			$auditoria['Auditoria'] = array(
 				'usuario_id' => $_SESSION['Auth']['User']['id'],
 				'aud_nombre_modelo' => $this -> Model -> alias,
@@ -47,22 +46,24 @@ class AuditableBehavior extends ModelBehavior {
 			unset($this -> oldData[$this -> Model -> id]);
 		}else{
 			//CREACION
-			App::import("Model", "Auditoria"); 
-			$this -> Auditoria = new Auditoria;
-			$this -> Auditoria -> create();
-			
-			$auditoria['Auditoria'] = array(
-				'usuario_id' => $_SESSION['Auth']['User']['id'],
-				'aud_nombre_modelo' => $this -> Model -> alias,
-				'aud_llave_foranea' => $this -> Model -> id,
-				'aud_datos_previos' => 'No existen datos previos',
-				'aud_datos_nuevos' =>  $this -> parseData($this -> Model -> data),
-				'aud_add' => true,
-				'aud_edit' => false,
-				'aud_delete' => false
-			);
-			
-			$this -> Auditoria -> save($auditoria);
+			if(isset($_SESSION)){
+				App::import("Model", "Auditoria"); 
+				$this -> Auditoria = new Auditoria;
+				$this -> Auditoria -> create();
+				
+				$auditoria['Auditoria'] = array(
+					'usuario_id' => $_SESSION['Auth']['User']['id'],
+					'aud_nombre_modelo' => $this -> Model -> alias,
+					'aud_llave_foranea' => $this -> Model -> id,
+					'aud_datos_previos' => 'No existen datos previos',
+					'aud_datos_nuevos' =>  $this -> parseData($this -> Model -> data),
+					'aud_add' => true,
+					'aud_edit' => false,
+					'aud_delete' => false
+				);
+				
+				$this -> Auditoria -> save($auditoria);
+			}
 		}
 		return true;
 	}
@@ -77,20 +78,22 @@ class AuditableBehavior extends ModelBehavior {
 		return true;
 	}
 	function afterDelete(){
-		App::import("Model", "Auditoria"); 
-		$this -> Auditoria = new Auditoria;
-		$this -> Auditoria -> create();
-		$auditoria['Auditoria'] = array(
-			'usuario_id' => $_SESSION['Auth']['User']['id'],
-			'aud_nombre_modelo' => $this -> Model -> alias,
-			'aud_llave_foranea' => $this -> Model -> id,
-			'aud_datos_previos' => $this -> parseData($this -> oldData[$this -> Model -> id]),
-			'aud_datos_nuevos' => 'No existen datos nuevos',
-			'aud_add' => false,
-			'aud_edit' => false,
-			'aud_delete' => true
-		);
+		if(isset($_SESSION)){
+			App::import("Model", "Auditoria"); 
+			$this -> Auditoria = new Auditoria;
+			$this -> Auditoria -> create();
+			$auditoria['Auditoria'] = array(
+				'usuario_id' => $_SESSION['Auth']['User']['id'],
+				'aud_nombre_modelo' => $this -> Model -> alias,
+				'aud_llave_foranea' => $this -> Model -> id,
+				'aud_datos_previos' => $this -> parseData($this -> oldData[$this -> Model -> id]),
+				'aud_datos_nuevos' => 'No existen datos nuevos',
+				'aud_add' => false,
+				'aud_edit' => false,
+				'aud_delete' => true
+			);
 		$this -> Auditoria -> save($auditoria);
+		}
 		unset($this -> oldData[$this -> Model -> id]);
 		return true;
 	}

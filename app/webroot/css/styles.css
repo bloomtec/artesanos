@@ -1759,7 +1759,7 @@ body p {
 .audit  .audit-entity label{
 	display:block;
 	float:left;
-	width:150px;
+	width:180px;
 	font-weight: bold;	
 }
 .audit  .audit-entity span{
