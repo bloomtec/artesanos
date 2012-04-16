@@ -13,7 +13,7 @@
 			</table>
 			<table border="0" width="350">
 				<tr>
-					<td width="100" rowspan="4">LOGO</td>
+					<td width="100" rowspan="4"><img src="img/logo_header.jpg" width="150px"/></td>
 					<td style="text-align: center;" width="160">MATRIZ: Av. 10 de Agosto N39 - 134 y Jose Pereria</td>
 					<td width="110">&nbsp;</td>
 					<td width="160" ></td>
@@ -39,7 +39,7 @@
 				<tr>
 					<td width="10" rowspan="4">&nbsp;</td>
 					<td width="32" >Cliente: </td>
-					<td  width="210px"><div style="text-align: left; border-bottom: 1px solid black;">&nbsp;</div></td>
+					<td  width="210px"><div style="text-align: left; border-bottom: 1px solid black;"><?php print($ventaEspecie[0]["Factura"]["fac_cliente"]); ?></div></td>
 					<td width="50" >&nbsp;</td>
 					<td >&nbsp;</td>
 					
@@ -47,19 +47,19 @@
 				<tr>
 	
 					<td >Dirección: </td>
-					<td ><div style="text-align: left; border-bottom: 1px solid black;">&nbsp;</div></td>
+					<td ><div style="text-align: left; border-bottom: 1px solid black;"><?php print($ventaEspecie[0]["Factura"]["fac_direccion"]); ?></div></td>
 					<td >&nbsp;</td>
-					<td >Fecha Emisión:</td>
+					<td >Fecha Emisión:<?php echo $ventaEspecie[0]["Factura"]["fac_fecha_emision"]; ?></td>
 				</tr>
 				<tr>
 					<td >Telefono: </td>
-					<td ><div style="text-align: left; border-bottom: 1px solid black;">&nbsp;</div></td>
+					<td ><div style="text-align: left; border-bottom: 1px solid black;"><?php print($ventaEspecie[0]["Factura"]["fac_telefono"]); ?></div></td>
 					<td >&nbsp;</td>
-					<td ><div style="font-size: 32px;"><b>FACTURA</b></div></td>
+					<td ><div style="font-size: 32px;"><b>FACTURA:</b><?php echo $ventaEspecie[0]["Factura"]["fac_numero"]; ?></div></td>
 				</tr>
 				<tr>
 					<td >RUC C/CI: </td>
-					<td ><div style="text-align: left;  border-bottom: 1px solid black;">&nbsp;</div></td>
+					<td ><div style="text-align: left;  border-bottom: 1px solid black;"><?php print($ventaEspecie[0]["Factura"]["fac_ruc_doc"]); ?></div></td>
 					<td >&nbsp;</td>
 					<td >&nbsp;</td>
 					
@@ -75,13 +75,13 @@
 				</tr>
 				<tr>
 	
-					<td height="200px">&nbsp;</td>
+					<td height="200px" style="font-size: 26px; text-align: center;"><?php print($ventaEspecie[0]["VentasEspecie"]["ven_cantidad"]); ?></td>
 					<td >&nbsp;</td>
 					<td >&nbsp;</td>
-					<td >&nbsp;</td>
+					<td style="font-size: 26px; text-align: center;"><?php print($ventaEspecie[0]["VentasEspecie"]["ven_valor"]); ?></td>
 				</tr>
 				<tr>
-					<td >SON:</td>
+					<td >&nbsp;</td>
 					<td >&nbsp;</td>
 					<td >&nbsp;</td>
 					<td >&nbsp;</td>
