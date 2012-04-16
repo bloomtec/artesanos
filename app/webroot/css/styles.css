@@ -1747,3 +1747,23 @@ body p {
 .encabezado {
 	font-size: xx-large;
 }
+
+/*AUDITORIAS*/
+.audit{
+	
+}
+.audit-entity:hover{
+	color:#26469E;
+}
+
+.audit  .audit-entity label{
+	display:block;
+	float:left;
+	width:150px;
+	font-weight: bold;	
+}
+.audit  .audit-entity span{
+	display:block;
+	float:left;
+	width:150px;
+}
