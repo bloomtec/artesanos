@@ -37,6 +37,8 @@
 <script type="text/javascript">
 	$(function(){
 		var menuFirstLevel=$('#main-menu > ul > li');
-		menuFirstLevel.last().addClass('last').prev().addClass('last');
+		if(menuFirstLevel.length >= 5){
+			menuFirstLevel.last().addClass('last').prev().addClass('last');
+		}
 	});
 </script>
