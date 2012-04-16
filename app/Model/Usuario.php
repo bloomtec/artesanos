@@ -11,7 +11,7 @@ class Usuario extends AppModel {
 	
 	public $currentUsrId = -1;
 	
-	public $actsAs = array('Acl' => array('type' => 'requester'));
+	public $actsAs = array('Acl' => array('type' => 'requester'),'Auditable');
 	
 /**
  * Display field
@@ -407,5 +407,6 @@ class Usuario extends AppModel {
 		
 		return $new_data;
 	}*/
+	
 
 }

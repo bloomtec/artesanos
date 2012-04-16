@@ -155,7 +155,7 @@ class UsuariosController extends AppController {
 				}
 				//$this -> setInfoPermisos($this -> Usuario -> id, $this -> request -> data['Permisos']);
 				$this -> Session -> setFlash(__('Se guardó el usuario'), 'crud/success');
-				$this -> redirect(array('action' => 'index'));
+			//	$this -> redirect(array('action' => 'index'));
 			} else {
 				$this -> Session -> setFlash(__('No se pudo guardar el usuario. Por favor, intente de nuevo.'), 'crud/error');
 			}
@@ -199,7 +199,7 @@ class UsuariosController extends AppController {
 					$this -> setPermisosInspectores($usuario, false);
 				}
 				$this -> Session -> setFlash(__('Se guardó el usuario'), 'crud/success');
-				$this -> redirect(array('action' => 'index'));
+				//$this -> redirect(array('action' => 'index'));
 			} else {
 				$this -> Session -> setFlash(__('No se pudo guardar el usuario. Por favor, intente de nuevo.'), 'crud/error');
 			}

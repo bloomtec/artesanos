@@ -11,6 +11,7 @@ App::uses('AppModel', 'Model');
 class Rama extends AppModel {
 	
 	public $displayField = 'ram_nombre';
+	public $actsAs = array('Auditable');
 	
 /**
  * Validation rules
