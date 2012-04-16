@@ -231,6 +231,7 @@
 	&nbsp;
 	<a class='button' href="/ventas_especies/imprimirReporte">Descargar pdf</a>
 	&nbsp;
-	<a class='button' href="/ventas_especies/export_csv">Exportar a CSV</a>
+	<!--<a class='button' href="/ventas_especies/export_csv">Exportar a CSV</a>
+	&nbsp;-->
 </div>
 <?php endif; ?>

@@ -1471,7 +1471,23 @@ class ArtesanosController extends AppController {
 		}
 	}
 	
-	function carnet(){
-		$this->layout="carnet";
+	function carnet($idArtesano=null){
+		$this -> layout = 'carnet';	
+		$this->loadModel("Calificacion", true);
+		$this->Calificacion->recursive=0;
+		$artesano = $this->Calificacion->find("all", array('conditions'=>array("Calificacion.artesano_id"=>$idArtesano)));
+		$this->loadModel("Provincia");
+		$provincia = $this->Provincia->find("list", array("fields"=>array("pro_nombre"),"conditions"=>array("Provincia.id"=>$artesano[0]["Artesano"]["provincia_id"])));
+		if(empty($provincia)){
+			$provincia[1]=null;
+		}
+		$this->loadModel("Ciudad");
+		$ciudad = $this->Ciudad->find("list", array("fields"=>array("ciu_nombre"),"conditions"=>array("Ciudad.id"=>$artesano[0]["Artesano"]["ciudad_id"])));
+		if(empty($ciudad)){
+			$ciudad[1]=null;
+		}
+		$presidente = $this -> requestAction('/configuraciones/getValorConfiguracion/' . "con_presidente_de_la_junta");
+		//debug($ciudad);
+		$this -> set(compact('artesano','ciudad','provincia','presidente'));
 	}
 }

@@ -277,11 +277,18 @@ class UsuariosController extends AppController {
 				$aro_id = $this -> Usuario -> query("SELECT `id` FROM `aros` WHERE `model`='Usuario' AND `foreign_key`=$id");
 				$aro_id = $aro_id[0]['aros']['id'];
 				$this -> Usuario -> query("DELETE FROM `aros_acos` WHERE `aro_id`=$aro_id");
-				$this -> setPermisosUsuarios($usuario, $this -> request -> data['Permisos']['Usuarios']);
+				foreach($this -> request -> data['Permisos'] as $modulo => $acceso) {
+					if($acceso) {
+						$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/$modulo");
+					} else {
+						$this -> Acl -> deny($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/$modulo");
+					}
+				}
+				/*$this -> setPermisosUsuarios($usuario, $this -> request -> data['Permisos']['Usuarios']);
 				$this -> setPermisosArtesanos($usuario, $this -> request -> data['Permisos']['Artesanos']);
 				$this -> setPermisosParametros($usuario, $this -> request -> data['Permisos']['Parametros']);
 				$this -> setPermisosReportes($usuario, $this -> request -> data['Permisos']['Reportes']);
-				$this -> setPermisosCalificaciones($usuario, $this -> request -> data['Permisos']['Calificaciones']);
+				$this -> setPermisosCalificaciones($usuario, $this -> request -> data['Permisos']['Calificaciones']);*/
 				if($usuario['Usuario']['rol_id'] == 3) {
 					$this -> setPermisosInspectores($usuario, true);
 				} else {
@@ -294,11 +301,11 @@ class UsuariosController extends AppController {
 			}
 		} else {
 			$usuario = $this -> Usuario -> read(null, $id);
-			$usuario['Permisos']['Usuarios'] = $this -> getPermisosUsuarios($usuario);
+			/*$usuario['Permisos']['Usuarios'] = $this -> getPermisosUsuarios($usuario);
 			$usuario['Permisos']['Artesanos'] = $this -> getPermisosArtesanos($usuario);
 			$usuario['Permisos']['Parametros'] = $this -> getPermisosParametros($usuario);
 			$usuario['Permisos']['Reportes'] = $this -> getPermisosReportes($usuario);
-			$usuario['Permisos']['Calificaciones'] = $this -> getPermisosCalificaciones($usuario);
+			$usuario['Permisos']['Calificaciones'] = $this -> getPermisosCalificaciones($usuario);*/
 			$this -> request -> data = $usuario;
 		}
 	}

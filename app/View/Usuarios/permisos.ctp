@@ -9,6 +9,12 @@
 		<table class="permisos">
 			<tr class="modulo">
 				<th class="nombre">USUARIOS</th>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.Usuarios', array('label' => false, 'type' => 'checkbox'));?></td>
+			</tr>
+		</table>
+		<!--<table class="permisos">
+			<tr class="modulo">
+				<th class="nombre">USUARIOS</th>
 				<td class="accion"><?php echo $this -> Form -> input('Permisos.Usuarios.index', array('label' => 'Listar', 'type' => 'checkbox'));?></td>
 				<td class="accion"><?php echo $this -> Form -> input('Permisos.Usuarios.view', array('label' => 'Ver', 'type' => 'checkbox'));?></td>
 				<td class="accion"><?php echo $this -> Form -> input('Permisos.Usuarios.add', array('label' => 'Agregar', 'type' => 'checkbox'));?></td>
@@ -106,7 +112,7 @@
 				<td class="accion"></td>
 				<td class="accion"></td>
 			</tr>
-		</table>
+		</table>-->
 	</fieldset>
 	<?php echo $this -> Html -> link(__('Cancelar'), array('action' => 'index'), array('class' => 'cancelar button'));?>
 	<?php echo $this -> Form -> end(__('Guardar'));?>

@@ -2,8 +2,8 @@
 header("Content-type: application/pdf");
 
 App::import('Vendor','especie'); 
-$pagelayout = array(86, 54);
-$pdf = new ESPECIE(PDF_PAGE_ORIENTATION, "cm", "A4", PDF_PAGE_FORMAT, true, 'UTF-8', false);
+$pagelayout = array(85, 103);
+$pdf = new ESPECIE(PDF_PAGE_ORIENTATION, "mm", $pagelayout, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
 //$pdf = new ESPECIE(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
@@ -34,7 +34,7 @@ $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
 //set margins
 //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetMargins(25, 2, 20, true);
+$pdf->SetMargins(5, 2, 20, true);
 $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 

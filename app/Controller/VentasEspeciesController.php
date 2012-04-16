@@ -376,8 +376,12 @@ class VentasEspeciesController extends AppController {
 		echo $csv -> render($titulo);
 	}
 	
-	public function factura() {
+	public function factura($idVenta = null) {
 		$this->layout="certificado";
+		$this->VentasEspecie->recursive=0;
+		$ventaEspecie = $this->VentasEspecie->find("all", array("conditions"=>array("VentasEspecie.id"=>$idVenta)));
+		$this -> set(compact('ventaEspecie'));
+		//debug($ventaEspecie);
 	}
 	
 }

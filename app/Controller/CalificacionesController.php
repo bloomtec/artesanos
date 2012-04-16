@@ -410,13 +410,22 @@ class CalificacionesController extends AppController {
 	}
 	
 	function carnet($idCalificacion=null){
-		$this -> layout = 'carnet';	
-		$this->loadModel("Artesano");
+	    $this -> layout = 'carnet';	
 		$this->Calificacion->recursive=0;
-		$idArtesano = $this->Calificacion->find("list", array('fields'=>array('artesano_id'),'conditions'=>array("Calificacion.id"=>$idCalificacion)));
-		$artesano = $this->Artesano->find("all", array('conditions'=>array("Artesano.id"=>$idArtesano)));
-		$this -> set(compact('artesano'));
-		//debug($artesano); return;
+		$artesano = $this->Calificacion->find("all", array('conditions'=>array("Calificacion.id"=>$idCalificacion)));
+		$this->loadModel("Provincia");
+		$provincia = $this->Provincia->find("list", array("fields"=>array("pro_nombre"),"conditions"=>array("Provincia.id"=>$artesano[0]["Artesano"]["provincia_id"])));
+		if(empty($provincia)){
+			$provincia[1]=null;
+		}
+		$this->loadModel("Ciudad");
+		$ciudad = $this->Ciudad->find("list", array("fields"=>array("ciu_nombre"),"conditions"=>array("Ciudad.id"=>$artesano[0]["Artesano"]["ciudad_id"])));
+		if(empty($ciudad)){
+			$ciudad[1]=null;
+		}
+		$presidente = $this -> requestAction('/configuraciones/getValorConfiguracion/' . "con_presidente_de_la_junta");
+		$this -> set(compact('artesano','ciudad','provincia','presidente'));
+		//debug($presidente); return;
 	}
 
 }

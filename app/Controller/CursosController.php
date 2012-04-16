@@ -141,15 +141,15 @@ class CursosController extends AppController {
 		$instructores = $this -> Curso -> Instructor -> find('list');
 		$this -> Curso -> CursosAlumno -> bindModel(array('belongsTo' => array('Alumno')));
 		$losAlumnos = $this -> Curso -> CursosAlumno -> find('all', array('conditions' => array('curso_id' => $id)));
-		
-		$this->loadModel("Alumno");
+
+		$this -> loadModel("Alumno");
 		$nacionalidades = $this -> Alumno -> getValores(1);
 		$tipos_de_sangre = $this -> Alumno -> getValores(2);
 		$estados_civiles = $this -> Alumno -> getValores(3);
 		$grados_de_estudio = $this -> Alumno -> getValores(4);
 		$sexos = $this -> Alumno -> getValores(5);
-		$provincias = $this -> Curso -> Provincia -> find('list');		
-		$this -> set(compact('provincias','solicitudes', 'instructores', 'losAlumnos', 'nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos'));
+		$provincias = $this -> Curso -> Provincia -> find('list');
+		$this -> set(compact('provincias', 'solicitudes', 'instructores', 'losAlumnos', 'nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos'));
 	}
 
 	public function quitar($id = null) {
@@ -182,67 +182,60 @@ class CursosController extends AppController {
 		if (!$this -> Curso -> exists()) {
 			throw new NotFoundException(__('Invalid curso'));
 		}
-		$calificacionMinima=($this -> requestAction('/configuraciones/getValorConfiguracion/con_calificacion_minima'));
-		$calificacionMaxima=($this -> requestAction('/configuraciones/getValorConfiguracion/con_calificacion_maxima'));
-		$necesarioParaAprobar=($this -> requestAction('/configuraciones/getValorConfiguracion/con_calificacion_para_aprobar_curso'));
+		$calificacionMinima = ($this -> requestAction('/configuraciones/getValorConfiguracion/con_calificacion_minima'));
+		$calificacionMaxima = ($this -> requestAction('/configuraciones/getValorConfiguracion/con_calificacion_maxima'));
+		$necesarioParaAprobar = ($this -> requestAction('/configuraciones/getValorConfiguracion/con_calificacion_para_aprobar_curso'));
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			foreach ($this -> request -> data['CursosAlumno'] as $cursosAlumno) {
 				$this -> Curso -> CursosAlumno -> id = $cursosAlumno['id'];
 				$this -> Curso -> CursosAlumno -> saveField('cur_nota_final', $this -> formatearValor($cursosAlumno['cur_nota_final']));
 				$this -> Curso -> CursosAlumno -> saveField('cur_asistencias', $cursosAlumno['cur_asistencias']);
-				if ((float) $this -> formatearValor($cursosAlumno['cur_nota_final']) >= $necesarioParaAprobar) {					
+				if ((float)$this -> formatearValor($cursosAlumno['cur_nota_final']) >= $necesarioParaAprobar) {
 					$this -> Curso -> CursosAlumno -> saveField('cur_aprobo', true);
 				} else {
-					$this -> Curso -> CursosAlumno -> saveField('cur_aprobo', false);	
+					$this -> Curso -> CursosAlumno -> saveField('cur_aprobo', false);
 				}
 			}
-			$this -> Curso -> saveField('cur_activo',!$this -> request -> data['Curso']['cur_activo']);
+			$this -> Curso -> saveField('cur_activo', !$this -> request -> data['Curso']['cur_activo']);
 			$this -> Session -> setFlash(__('Se han actualizado las notas del curso.'), 'crud/success');
-			$this -> redirect(array('action'=>'verAlumnos',$id));
+			$this -> redirect(array('action' => 'verAlumnos', $id));
 
-		} 
-			$curso = $this -> Curso -> read(null, $id);
-			$this -> Curso -> CursosAlumno -> bindModel(array('belongsTo' => array('Alumno')));
-			$alumnos = $this -> Curso -> CursosAlumno -> find('all', array('conditions' => array('CursosAlumno.curso_id' => $id)));
-			$this -> set(compact('curso', 'alumnos','calificacionMinima','calificacionMaxima'));
-		
+		}
+		$curso = $this -> Curso -> read(null, $id);
+		$this -> Curso -> CursosAlumno -> bindModel(array('belongsTo' => array('Alumno')));
+		$alumnos = $this -> Curso -> CursosAlumno -> find('all', array('conditions' => array('CursosAlumno.curso_id' => $id)));
+		$this -> set(compact('curso', 'alumnos', 'calificacionMinima', 'calificacionMaxima'));
+
 	}
 
 	public function certificado($alumnoCursoId) {
-		$this->layout="certificado";
+		$this -> layout = "certificado";
 		$this -> Curso -> CursosAlumno -> bindModel(array('belongsTo' => array('Alumno')));
 		$alumno = $this -> Curso -> CursosAlumno -> read(null, $alumnoCursoId);
-		$this->Curso->recursive=0;
-		$curso = $this->Curso->find("all", array("conditions"=>array("Curso.id"=>$alumnoCursoId)));
-		//debug($alumno);
-		//debug($curso); return;
-		//$fecha = $alumno["CursosAlumno"]['cur_fecha_de_emision'];
-		
-		$fecha = date("F j, Y, g:i a", strtotime($alumno["CursosAlumno"]['cur_fecha_de_emision']) ); 
-		$fecha = explode(" ", str_replace(",","",$fecha));
-		$meses= array("January"=>"Enero",
-					  "February"=>"Febrero",
-					  "March"=>"Marzo",
-					  "April"=>"Abril",
-					  "May"=>"Mayo",
-					  "June"=>"Junio",
-					  "July"=>"Julio",
-					  "August"=>"Agosto",
-				      "September"=>"Septiembre",
-					  "October"=>"Octubre",
-					  "November"=>"Noviembre",
-					  "December"=>"Diciembre");
-		
-		foreach($meses as $key => $value){
-			if((string)$key==(string)$fecha[0]){
-				$fecha[0]=$value;
+		$this -> Curso -> recursive = 0;
+		$curso = $this -> Curso -> find("all", array("conditions" => array("Curso.id" => $alumnoCursoId)));
+
+		if (empty($alumno["CursosAlumno"]['cur_fecha_de_emision'])) {
+			$fecha = date("F j, Y, g:i a", time());
+		} else {
+			$fecha = date("F j, Y, g:i a", strtotime($alumno["CursosAlumno"]['cur_fecha_de_emision']));
+		}
+
+		$fecha = explode(" ", str_replace(",", "", $fecha));
+		$meses = array("January" => "Enero", "February" => "Febrero", "March" => "Marzo", "April" => "Abril", "May" => "Mayo", "June" => "Junio", "July" => "Julio", "August" => "Agosto", "September" => "Septiembre", "October" => "Octubre", "November" => "Noviembre", "December" => "Diciembre");
+
+		foreach ($meses as $key => $value) {
+			if ((string)$key == (string)$fecha[0]) {
+				$fecha[0] = $value;
 				break;
 			}
 		}
-		
-		//debug($fecha);
-		$fecha2 = "el ".$fecha[1]." "."de ".$fecha[0]." del ";
-		$this -> set(compact('alumno','curso','fecha','fecha2'));
+
+		$fecha2 = "el " . $fecha[1] . " " . "de " . $fecha[0] . " del ";
+		$presidente = $this -> requestAction('/configuraciones/getValorConfiguracion/' . "con_presidente_de_la_junta");
+		$tecnico = $this -> requestAction('/configuraciones/getValorConfiguracion/' . "con_tecnico_en_capacitacion_y_calificacion");
+
+		$this -> set(compact('alumno', 'curso', 'fecha', 'fecha2', 'presidente', 'tecnico'));
 	}
 
 	/**
@@ -266,12 +259,13 @@ class CursosController extends AppController {
 		$this -> Session -> setFlash(__('No se pudo borrar el curso'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
 	}
-	function reporte(){
-		$this->loadModel("JuntasProvincial",true);
-		$this->loadModel("CentrosArtesanal",true);
+
+	function reporte() {
+		$this -> loadModel("JuntasProvincial", true);
+		$this -> loadModel("CentrosArtesanal", true);
 		$reporte = false;
 		$pagina = "";
-		$this->Curso->recursive=0;
+		$this -> Curso -> recursive = 0;
 		if (isset($this -> params['named']['page'])) {
 			$pagina = $this -> params['named']['page'];
 		} else if (isset($this -> params["named"]["sort"])) {
@@ -293,17 +287,16 @@ class CursosController extends AppController {
 				$fecha2 = $this -> data["Reporte"]["fecha2"];
 
 				if (!empty($provincia)) {
-					$idsJuntasProvinciales = $this->JuntasProvincial->find("list", array("conditions"=>array("JuntasProvincial.provincia_id"=>$provincia)));
-					$idsSolicitudes = $this->Curso->Solicitud->find("list", array("conditions"=>array("Solicitud.juntas_provincial_id"=>$idsJuntasProvinciales)));
+					$idsJuntasProvinciales = $this -> JuntasProvincial -> find("list", array("conditions" => array("JuntasProvincial.provincia_id" => $provincia)));
+					$idsSolicitudes = $this -> Curso -> Solicitud -> find("list", array("conditions" => array("Solicitud.juntas_provincial_id" => $idsJuntasProvinciales)));
 					$conditions[] = array('Curso.solicitud_id' => $idsSolicitudes);
 				}
-				
+
 				if (!empty($ciudad)) {
-					$idsCentrosArtesanales = $this->CentroArtesanal->find("list", array("conditions"=>array("CentroArtesanal.ciudad_id"=>$ciudad)));
-					$idsSolicitudes = $this->Curso->Solicitud->find("list", array("conditions"=>array("Solicitud.centros_artesanal_id"=>$idsCentrosArtesanales)));
+					$idsCentrosArtesanales = $this -> CentroArtesanal -> find("list", array("conditions" => array("CentroArtesanal.ciudad_id" => $ciudad)));
+					$idsSolicitudes = $this -> Curso -> Solicitud -> find("list", array("conditions" => array("Solicitud.centros_artesanal_id" => $idsCentrosArtesanales)));
 					$conditions[] = array('Curso.solicitud_id' => $idsSolicitudes);
 				}
-				
 
 				if (!empty($fechaCreacion)) {
 					$conditions[] = array('CentrosArtesanal.created' => $fechaCreacion);
@@ -312,8 +305,7 @@ class CursosController extends AppController {
 				if (!empty($estado)) {
 					$conditions[] = array('CentrosArtesanal.cur_activo' => $estado);
 				}
-				
-				
+
 				if ($fecha1 != null && $fecha2 != null) {
 
 					if ($fecha1 > $fecha2) {
@@ -343,31 +335,30 @@ class CursosController extends AppController {
 
 			$reporteCursos = $this -> paginate = array('Curso' => array('limit' => 20, 'conditions' => $conditions));
 			$reporteCursos = $this -> paginate('Curso');
-			$cabecerasCsv = array("Solicitud", "Nombre", "Contenido", "Fecha Inicio", "Fecha Fin", "Jornada", "Num. horas", "Hora Inicio","Hora Fin","Provincia","Num. Alumnos","Fecha Creación");
+			$cabecerasCsv = array("Solicitud", "Nombre", "Contenido", "Fecha Inicio", "Fecha Fin", "Jornada", "Num. horas", "Hora Inicio", "Hora Fin", "Provincia", "Num. Alumnos", "Fecha Creación");
 			$this -> Session -> write('reporte', $reporteCursos);
 			$this -> Session -> write('archivo', "reporteCursos");
 			$this -> Session -> write('cabeceras', $cabecerasCsv);
 			$reporte = true;
 			//Agregar numero de alumnos
-			$numAlumnos=array();
-			if(count($reporteCursos)>0) {
-				for($i=0;$i<count($reporteCursos); $i++){
+			$numAlumnos = array();
+			if (count($reporteCursos) > 0) {
+				for ($i = 0; $i < count($reporteCursos); $i++) {
 					$idCurso = $reporteCursos[$i]["Curso"]["id"];
-					$numAlumnos[] =$this->Curso->CursosAlumno->find("count", array("contidions"=>array("CursosAlumno.curso_id"=>$idCurso)));
+					$numAlumnos[] = $this -> Curso -> CursosAlumno -> find("count", array("contidions" => array("CursosAlumno.curso_id" => $idCurso)));
 				}
 			}
-			
+
 			$this -> Session -> write('numAlumnos', $numAlumnos);
-			$this -> set(compact('reporteCursos', 'reporte','numAlumnos'));
+			$this -> set(compact('reporteCursos', 'reporte', 'numAlumnos'));
 		} else {
 			$idsProvincias = $this -> CentrosArtesanal -> find("list", array("fields" => array("provincia_id")));
 			$provincias = $this -> CentrosArtesanal -> Provincia -> find("list", array("conditions" => array("Provincia.id" => $idsProvincias)));
 			$this -> set(compact('provincias', 'reporte'));
 		}
-		
+
 	}
-	
-	
+
 	/**
 	 * impReporte method
 	 *
@@ -380,9 +371,9 @@ class CursosController extends AppController {
 		//Tamaño de la fuente
 		$tamano = 5;
 		$numAlumnos = $this -> Session -> read('numAlumnos');
-		$this -> set(compact('reporteCursos', 'nombre_archivo', 'tamano','numAlumnos'));
+		$this -> set(compact('reporteCursos', 'nombre_archivo', 'tamano', 'numAlumnos'));
 	}
-	
+
 	/**
 	 * export_csv method
 	 *
@@ -398,29 +389,16 @@ class CursosController extends AppController {
 		$numAlumnos = $this -> Session -> read('numAlumnos');
 		$csv -> addRow($cabeceras);
 
-		
-		for($i=0;$i < count($reporteCursos);$i++) {
-	
-		$filas = array($reporteCursos[$i]["Solicitud"]["id"],
-						$reporteCursos[$i]["Curso"]["cur_nombre"],
-						$reporteCursos[$i]["Curso"]["cur_contenido"],
-						$reporteCursos[$i]["Curso"]["cur_fecha_de_inicio"],
-						$reporteCursos[$i]["Curso"]["cur_fecha_de_fin"],
-						$reporteCursos[$i]["Curso"]["cur_jornada"],
-						$reporteCursos[$i]["Curso"]["cur_numero_horas"],
-						$reporteCursos[$i]["Curso"]["cur_horario_inicio"],
-						$reporteCursos[$i]["Curso"]["cur_horario_fin"],
-						$reporteCursos[$i]["Provincia"]["pro_nombre"],
-						$numAlumnos[$i],
-						$reporteCursos[$i]["Curso"]["created"]);
+		for ($i = 0; $i < count($reporteCursos); $i++) {
+
+			$filas = array($reporteCursos[$i]["Solicitud"]["id"], $reporteCursos[$i]["Curso"]["cur_nombre"], $reporteCursos[$i]["Curso"]["cur_contenido"], $reporteCursos[$i]["Curso"]["cur_fecha_de_inicio"], $reporteCursos[$i]["Curso"]["cur_fecha_de_fin"], $reporteCursos[$i]["Curso"]["cur_jornada"], $reporteCursos[$i]["Curso"]["cur_numero_horas"], $reporteCursos[$i]["Curso"]["cur_horario_inicio"], $reporteCursos[$i]["Curso"]["cur_horario_fin"], $reporteCursos[$i]["Provincia"]["pro_nombre"], $numAlumnos[$i], $reporteCursos[$i]["Curso"]["created"]);
 
 			$csv -> addRow($filas);
 		}
-	
-	
+
 		$titulo = $this -> Session -> read('archivo');
 		$titulo = "csv_" . $titulo . "_" . date("Y-m-d H:i:s", time()) . ".csv";
 		echo $csv -> render($titulo);
 	}
-	
+
 }
