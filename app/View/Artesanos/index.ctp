@@ -31,7 +31,7 @@ foreach ($artesanos as $artesano):
 			if (isset($artesano['Calificacion']) && $artesano['Calificacion']['cal_estado'] == 1 && $this -> requestAction('/usuarios/verificarAcceso/', array('ruta' => array('controllers', 'Calificaciones', 'imprimir')))) {
 				echo $this -> Html -> link('Especie Valorada', array('controller' => 'calificaciones', "action" => "imprimir", $artesano['Calificacion']['id']), array('class' => 'informe', 'title' => 'Especie Valorada'));
 				
-				echo $this -> Html -> link('Carnet', array('controller' => 'calificaciones', "action" => "imprimir", $artesano['Calificacion']['id']), array('class' => 'carnet', 'title' => 'Carnet de Artesano'));
+				echo $this -> Html -> link('Carnet', array('controller' => 'artesanos', "action" => "carnet", $artesano['Calificacion']['id']), array('class' => 'carnet', 'title' => 'Carnet de Artesano'));
 			}
 			?>
 			<?php
