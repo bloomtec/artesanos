@@ -164,15 +164,15 @@ class AlumnosController extends AppController {
 		if ($this -> request -> is('post') or $pagina != false) {
 			$this -> Recursive = 0;
 			$conditions = array();
+			
+			$idsAlumnos = $this -> CursosAlumno -> find("list", array("fields" => array("alumno_id")));
+			$conditions[] = array('Alumno.id' => $idsAlumnos);
+			
 			if ($pagina == false) {
-
 				$provincia = $this -> data["Reporte"]["provincia"];
 				$fechaCreacion = $this -> data["Reporte"]["fecha_creacion"];
 				$fecha1 = $this -> data["Reporte"]["fecha1"];
 				$fecha2 = $this -> data["Reporte"]["fecha2"];
-
-				$idsAlumnos = $this -> CursosAlumno -> find("list", array("fields" => array("alumno_id")));
-				$conditions[] = array('Alumno.id' => $idsAlumnos);
 
 				if (!empty($provincia)) {
 					$idsCentrosArtesanales = $this -> CentrosArtesanal -> find("list", array("fields" => array("id"), "conditions" => array("CentrosArtesanal.provincia_id" => $provincia)));
@@ -322,7 +322,7 @@ class AlumnosController extends AppController {
 	 * @param string $alumnoId
 	 * @return void
 	 */
-	public function reporteNotas($alumnoId = null) {
+	public function reporteNotas($alumnoId = null) { //Pueden haber 100 alumnos, Solo se mostraran los que esten en un curso
 		$reporte = false;
 		$pagina = "";
 
@@ -337,12 +337,19 @@ class AlumnosController extends AppController {
 		if ($this -> request -> is('post') or $pagina != false) {
 			$this -> Recursive = 0;
 			$conditions = array();
+			
+			$this->loadModel("CursosAlumno");
+			$idsAlumnos = $this -> CursosAlumno -> find("list", array("fields" => array("alumno_id")));
+			$conditions[] = array('Alumno.id' => $idsAlumnos);
+				
+				
 			if ($pagina == false) {
 
 				$alumno = $this -> data["Reporte"]["alumno"];
 				$fecha1 = $this -> data["Reporte"]["fecha1"];
 				$fecha2 = $this -> data["Reporte"]["fecha2"];
-
+				
+				
 				if (!empty($alumno)) {
 					$conditions[] = array('Alumno.id' => $alumno);
 				}
