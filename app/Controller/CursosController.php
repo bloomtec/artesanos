@@ -1,5 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
+App::import('Helper', 'csv');
 /**
  * Cursos Controller
  *
@@ -270,7 +271,7 @@ class CursosController extends AppController {
 		$this->loadModel("CentrosArtesanal",true);
 		$reporte = false;
 		$pagina = "";
-
+		$this->Curso->recursive=0;
 		if (isset($this -> params['named']['page'])) {
 			$pagina = $this -> params['named']['page'];
 		} else if (isset($this -> params["named"]["sort"])) {
@@ -342,12 +343,22 @@ class CursosController extends AppController {
 
 			$reporteCursos = $this -> paginate = array('Curso' => array('limit' => 20, 'conditions' => $conditions));
 			$reporteCursos = $this -> paginate('Curso');
-			$cabecerasCsv = array("RUC", "Nombre", "Provincia", "Canton", "Ciudad", "Parroquia", "Dirección", "Fecha creación");
+			$cabecerasCsv = array("Solicitud", "Nombre", "Contenido", "Fecha Inicio", "Fecha Fin", "Jornada", "Num. horas", "Hora Inicio","Hora Fin","Provincia","Num. Alumnos","Fecha Creación");
 			$this -> Session -> write('reporte', $reporteCursos);
 			$this -> Session -> write('archivo', "reporteCursos");
 			$this -> Session -> write('cabeceras', $cabecerasCsv);
 			$reporte = true;
-			$this -> set(compact('reporteCursos', 'reporte'));
+			//Agregar numero de alumnos
+			$numAlumnos=array();
+			if(count($reporteCursos)>0) {
+				for($i=0;$i<count($reporteCursos); $i++){
+					$idCurso = $reporteCursos[$i]["Curso"]["id"];
+					$numAlumnos[] =$this->Curso->CursosAlumno->find("count", array("contidions"=>array("CursosAlumno.curso_id"=>$idCurso)));
+				}
+			}
+			
+			$this -> Session -> write('numAlumnos', $numAlumnos);
+			$this -> set(compact('reporteCursos', 'reporte','numAlumnos'));
 		} else {
 			$idsProvincias = $this -> CentrosArtesanal -> find("list", array("fields" => array("provincia_id")));
 			$provincias = $this -> CentrosArtesanal -> Provincia -> find("list", array("conditions" => array("Provincia.id" => $idsProvincias)));
@@ -355,4 +366,61 @@ class CursosController extends AppController {
 		}
 		
 	}
+	
+	
+	/**
+	 * impReporte method
+	 *
+	 * @return void
+	 */
+	public function impReporte() {
+		$this -> layout = 'pdf2';
+		$reporteCursos = $this -> Session -> read('reporte');
+		$nombre_archivo = $this -> Session -> read('archivo');
+		//Tamaño de la fuente
+		$tamano = 5;
+		$numAlumnos = $this -> Session -> read('numAlumnos');
+		$this -> set(compact('reporteCursos', 'nombre_archivo', 'tamano','numAlumnos'));
+	}
+	
+	/**
+	 * export_csv method
+	 *
+	 * @return void
+	 */
+	public function export_csv() {
+		$this -> layout = "";
+		$this -> render(false);
+
+		$csv = new csvHelper();
+		$reporteCursos = $this -> Session -> read('reporte');
+		$cabeceras = $this -> Session -> read('cabeceras');
+		$numAlumnos = $this -> Session -> read('numAlumnos');
+		$csv -> addRow($cabeceras);
+
+		
+		for($i=0;$i < count($reporteCursos);$i++) {
+	
+		$filas = array($reporteCursos[$i]["Solicitud"]["id"],
+						$reporteCursos[$i]["Curso"]["cur_nombre"],
+						$reporteCursos[$i]["Curso"]["cur_contenido"],
+						$reporteCursos[$i]["Curso"]["cur_fecha_de_inicio"],
+						$reporteCursos[$i]["Curso"]["cur_fecha_de_fin"],
+						$reporteCursos[$i]["Curso"]["cur_jornada"],
+						$reporteCursos[$i]["Curso"]["cur_numero_horas"],
+						$reporteCursos[$i]["Curso"]["cur_horario_inicio"],
+						$reporteCursos[$i]["Curso"]["cur_horario_fin"],
+						$reporteCursos[$i]["Provincia"]["pro_nombre"],
+						$numAlumnos[$i],
+						$reporteCursos[$i]["Curso"]["created"]);
+
+			$csv -> addRow($filas);
+		}
+	
+	
+		$titulo = $this -> Session -> read('archivo');
+		$titulo = "csv_" . $titulo . "_" . date("Y-m-d H:i:s", time()) . ".csv";
+		echo $csv -> render($titulo);
+	}
+	
 }

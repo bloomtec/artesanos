@@ -14,6 +14,8 @@ class Curso extends AppModel {
  * @var string
  */
 	public $displayField = 'cur_nombre';
+	
+	
 /**
  * Validation rules
  *
