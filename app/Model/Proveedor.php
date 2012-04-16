@@ -12,6 +12,8 @@ class Proveedor extends AppModel {
  * @var string
  */
 	public $displayField = 'pro_rut';
+	
+	public $actsAs = array('Auditable');
 
 	public $virtualFields = array(
 			'datos_completos' => 'CONCAT(Proveedor.pro_rut, " - ", Proveedor.pro_nombre_razon_social)'

@@ -7,6 +7,8 @@ App::uses('AppModel', 'Model');
  */
 class Instructor extends AppModel {
 	
+	public $actsAs = array('Auditable');
+	
 	public $displayField = 'nombre_completo';
 /**
  * Validation rules

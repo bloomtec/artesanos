@@ -7,6 +7,8 @@ App::uses('Auditoria', 'Model');
  */
 class Configuracion extends AppModel {
 	
+	public $actsAs = array('Auditable');
+	
 	public $currentUsrId = -1;
 /**
  * Validation rules

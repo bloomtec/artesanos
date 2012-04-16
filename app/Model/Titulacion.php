@@ -14,6 +14,7 @@ class Titulacion extends AppModel {
  * @var string
  */
 	public $displayField = 'titulo_id';
+	public $actsAs = array('Auditable');
 /**
  * Validation rules
  *

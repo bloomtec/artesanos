@@ -6,6 +6,8 @@ App::uses('AppModel', 'Model');
  * @property Rama $Rama
  */
 class GruposDeRama extends AppModel {
+	
+	public $actsAs = array('Auditable');
 		
 	public $displayField = 'gru_nombre';
 	 

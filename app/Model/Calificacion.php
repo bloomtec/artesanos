@@ -12,6 +12,8 @@ App::uses('AppModel', 'Model');
  * @property TiposDe $TiposDe
  */
 class Calificacion extends AppModel {
+	
+	public $actsAs = array('Auditable');
 /**
  * Validation rules
  *

@@ -6,6 +6,8 @@ App::uses('AppModel', 'Model');
  * @property Taller $Taller
  */
 class EquiposDeTrabajo extends AppModel {
+	
+	public $actsAs = array('Auditable');
 /**
  * Validation rules
  *

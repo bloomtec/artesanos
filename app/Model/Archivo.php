@@ -5,6 +5,8 @@ App::uses('AppModel', 'Model');
  *
  */
 class Archivo extends AppModel {
+	
+	public $actsAs = array('Auditable');
 /**
  * Display field
  *

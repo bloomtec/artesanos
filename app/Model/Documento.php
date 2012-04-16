@@ -6,6 +6,8 @@ App::uses('AppModel', 'Model');
  * @property Calificacion $Calificacion
  */
 class Documento extends AppModel {
+	
+	public $actsAs = array('Auditable');
 /**
  * Display field
  *

@@ -10,6 +10,8 @@ App::uses('AppModel', 'Model');
  * @property Solicitud $Solicitud
  */
 class CentrosArtesanal extends AppModel {
+	
+	public $actsAs = array('Auditable');
 /**
  * Display field
  *

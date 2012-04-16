@@ -15,6 +15,7 @@ class VentasEspecie extends AppModel {
 	 * @var array
 	 */
 	public $virtualFields = array();
+	public $actsAs = array('Auditable');
 	
 /**
  * Display field
