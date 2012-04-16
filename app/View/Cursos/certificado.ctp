@@ -1,23 +1,24 @@
 <table border="0" width="700">
 	<tr>
-		<td rowspan="2" width="100"><b>imagen1</b></td>
-		<td width="700" style="text-align: center; font-size:80px;"><b>JUNTA NACIONAL DE DEFENSA DEL ARTESANO</b></td>
+		<td rowspan="2" width="140"><br><img src="img/logo_header.jpg" width="150px"/></td>
+		<td width="660" style="text-align: center; font-size:75px;"><b>JUNTA NACIONAL DE DEFENSA DEL ARTESANO</b></td>
 	</tr>
 	<tr>
-		<td width="700" style="text-align: center; font-size:40px;">PLAN NACIONAL DE CAPACITACIÓN, DIRIGIDO A TODOS LOS ARTESANOS DEL PAÍS<br />
+		<td width="660" style="text-align: center; font-size:35px;">PLAN NACIONAL DE CAPACITACIÓN, DIRIGIDO A TODOS LOS ARTESANOS DEL PAÍS<br />
                  CUMPLIDOS CON TODOS LOS REQUISITOS ESTIPULADOS POR LA J.N.D.A CONFIERE EL PRESENTE:
 		</td>
 	</tr>
 </table>
 <br>
+<br>
+<br>
 <table border="0" width="700">
 	<tr>
-		<td rowspan="2" width="100"><b>imagen2</b></td>
-		<td rowspan="2" width="700" style="text-align: center; font-size:160px;"><b>CERTIFICADO</b></td>
+		<td rowspan="2" width="100"><b>&nbsp;</b></td>
+		<td rowspan="2" width="700" style="text-align: center; font-size:125px;"><b>CERTIFICADO</b></td>
 	</tr>
 </table>
-<br>
-<br>
+
 <br>
 <br>
 <table border="0"  cellspacing="0" cellpadding="0">
@@ -82,8 +83,8 @@
 <br>
 <table border="0"  cellspacing="0" cellpadding="0">
 	<tr>
-		<td  width="228" style="text-align: center; font-size:38px;"><b>Lic. Luis Quishpi Vélez</b><br>PRESIDENTE DE LA JUNTA J.N.D.A</td>
-		<td  width="342" style="text-align: center; font-size:38px;"><b>Ángel Ortiz</b><br />TÉCNICO EN CAPACITACIÓN Y CALIFICACIÓN</td>
+		<td  width="228" style="text-align: center; font-size:38px;"><b><?php print($presidente); ?></b><br>PRESIDENTE DE LA JUNTA J.N.D.A</td>
+		<td  width="342" style="text-align: center; font-size:38px;"><b><?php print($tecnico); ?></b><br />TÉCNICO EN CAPACITACIÓN Y CALIFICACIÓN</td>
 		<td  width="228" style="text-align: center; font-size:38px;"><b><?php echo  ucfirst(strtolower($curso[0]["Instructor"]["ins_nombres"])).' '.ucfirst(strtolower($curso[0]["Instructor"]["ins_apellido_paterno"])).' '.ucfirst(strtolower($curso[0]["Instructor"]["ins_apellido_materno"])); ?></b><br />INSTRUCTOR J.N.D.A</td>	
 	</tr>
 </table>
