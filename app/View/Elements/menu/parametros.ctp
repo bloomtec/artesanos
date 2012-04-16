@@ -9,7 +9,6 @@
 		|| $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'TiposEspeciesValoradas', 'index')))
 		|| $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'CentrosArtesanales', 'index')))
 		|| $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Items', 'index')))
-		|| $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'TiposEspeciesValoradas', 'index')))
 		|| $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'JuntasProvinciales', 'index')))
 		|| $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Personas', 'index')))
 		|| $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Proveedores', 'index')))
@@ -28,7 +27,6 @@
 				|| $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'TiposEspeciesValoradas', 'index')))
 				|| $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'CentrosArtesanales', 'index')))
 				|| $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Items', 'index')))
-				|| $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'TiposEspeciesValoradas', 'index')))
 				|| $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'JuntasProvinciales', 'index')))
 				|| $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Personas', 'index')))
 				|| $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Proveedores', 'index')))
@@ -96,18 +94,6 @@
 						<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Items', 'add')))) : ?>
 						<li>
 							<a href="/items/add">Agregar</a>
-						</li>
-						<?php endif;?>
-					</ul>
-				</li>
-				<?php endif;?>
-				<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'TiposEspeciesValoradas', 'index')))) : ?>
-				<li>
-					<a href="/tipos_especies_valoradas">Tipos  de Especie Valoradas</a>
-					<ul>
-						<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'TiposEspeciesValoradas', 'add')))) : ?>
-						<li>
-							<a href="/tipos_especies_valoradas/add">Agregar</a>
 						</li>
 						<?php endif;?>
 					</ul>

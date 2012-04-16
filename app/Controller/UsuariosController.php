@@ -284,11 +284,12 @@ class UsuariosController extends AppController {
 						$this -> Acl -> deny($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/$modulo");
 					}
 				}
-				/*$this -> setPermisosUsuarios($usuario, $this -> request -> data['Permisos']['Usuarios']);
+				$this -> setPermisosUsuarios($usuario, $this -> request -> data['Permisos']['Usuarios']);
 				$this -> setPermisosArtesanos($usuario, $this -> request -> data['Permisos']['Artesanos']);
-				$this -> setPermisosParametros($usuario, $this -> request -> data['Permisos']['Parametros']);
+				$this -> setPermisosMantenimientos($usuario, $this -> request -> data['Permisos']['Mantenimientos']);
+				$this -> setPermisosParametrosInformativos($usuario, $this -> request -> data['Permisos']['Informativos']);
 				$this -> setPermisosReportes($usuario, $this -> request -> data['Permisos']['Reportes']);
-				$this -> setPermisosCalificaciones($usuario, $this -> request -> data['Permisos']['Calificaciones']);*/
+				$this -> setPermisosCalificaciones($usuario, $this -> request -> data['Permisos']['Calificaciones']);
 				if($usuario['Usuario']['rol_id'] == 3) {
 					$this -> setPermisosInspectores($usuario, true);
 				} else {
@@ -301,21 +302,70 @@ class UsuariosController extends AppController {
 			}
 		} else {
 			$usuario = $this -> Usuario -> read(null, $id);
-			/*$usuario['Permisos']['Usuarios'] = $this -> getPermisosUsuarios($usuario);
+			$usuario['Permisos']['Usuarios'] = $this -> getPermisosUsuarios($usuario);
 			$usuario['Permisos']['Artesanos'] = $this -> getPermisosArtesanos($usuario);
-			$usuario['Permisos']['Parametros'] = $this -> getPermisosParametros($usuario);
+			$usuario['Permisos']['Mantenimientos'] = $this -> getPermisosMantenimientos($usuario);
+			$usuario['Permisos']['Informativos'] = $this -> getPermisosParametrosInformativos($usuario);
 			$usuario['Permisos']['Reportes'] = $this -> getPermisosReportes($usuario);
-			$usuario['Permisos']['Calificaciones'] = $this -> getPermisosCalificaciones($usuario);*/
+			$usuario['Permisos']['Calificaciones'] = $this -> getPermisosCalificaciones($usuario);
 			$this -> request -> data = $usuario;
 		}
 	}
 	
-	private function setPermisosInventarios() {
-		
+	private function setPermisosMantenimientos($usuario = null, $permisos = null) {
+		foreach($permisos as $modulo => $permisos) {
+			if($permisos[$modulo]['index']) {
+				$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/$modulo/index");
+			}
+			if($permisos[$modulo]['add']) {
+				$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/$modulo/add");
+			}
+		}
 	}
 	
-	private function getPermisosInventarios() {
+	private function getPermisosMantenimientos($usuario = null) {
+		$permisos = array(
+			'GruposDeRamas' => array(
+				'index' => true, 'add' => true
+			),
+			'Ramas' => array(
+				'index' => true, 'add' => true
+			),
+			'TiposEspeciesValoradas' => array(
+				'index' => true, 'add' => true
+			),
+			'CentrosArtesanales' => array(
+				'index' => true, 'add' => true
+			),
+			'Items' => array(
+				'index' => true, 'add' => true
+			),
+			'JuntasProvinciales' => array(
+				'index' => true, 'add' => true
+			),
+			'Personas' => array(
+				'index' => true, 'add' => true
+			),
+			'Proveedores' => array(
+				'index' => true, 'add' => true
+			),
+			'Titulos' => array(
+				'index' => true, 'add' => true
+			),
+			'Alumnos' => array(
+				'index' => true, 'add' => true
+			),
+			'Instructores' => array(
+				'index' => true, 'add' => true
+			),
+		);
 		
+		foreach($permisos as $modulo => $permisos) {
+			if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/$modulo/index")) $permisos[$modulo]['index'] = false;
+			if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/$modulo/add")) $permisos[$modulo]['add'] = false;
+		}
+		
+		return $permisos;
 	}
 	
 	private function setPermisosUsuarios($usuario = null, $permisos = null) {
@@ -339,13 +389,15 @@ class UsuariosController extends AppController {
 	private function setPermisosArtesanos($usuario = null, $permisos = null) {
 		if($permisos['index']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/index');
 		if($permisos['add']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/add');
+		if($permisos['agregarArtesano']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/agregarArtesano');
 	}
 	
 	private function getPermisosArtesanos($usuario = null) {
-		$permisos = array('index' => false, 'add' => false);
+		$permisos = array('index' => false, 'add' => false, 'agregarArtesano' => false);
 		
 		if($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/index')) $permisos['index'] = true;
 		if($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/add')) $permisos['add'] = true;
+		if($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/agregarArtesano')) $permisos['agregarArtesano'] = true;
 		
 		return $permisos;
 	}
@@ -366,109 +418,34 @@ class UsuariosController extends AppController {
 		return $permisos;
 	}
 	
-	private function setPermisosParametros($usuario = null, $permisos = null) {
-		if($permisos['edit']) {
-			// Parametros informativos
+	private function setPermisosParametrosInformativos($usuario = null, $permisos = null) {
+		if($permisos['index']) {
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/ParametrosInformativos/index');
+		}
+		if($permisos['view']) {
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/ParametrosInformativos/view');
-			
+		}
+		if($permisos['modificar']) {
 			// Valores
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/view');
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/add');
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/edit');
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/delete');
-			
-			// Geográficos
-			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Geograficos/index');
-			
-			// Provincias
-			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Provincias/view');
-			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Provincias/add');
-			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Provincias/edit');
-			
-			// Cantones
-			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Cantones/view');
-			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Cantones/add');
-			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Cantones/edit');
-			
-			// Ciudades
-			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Ciudades/view');
-			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Ciudades/add');
-			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Ciudades/edit');
-			
-			// Sectores
-			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Sectores/view');
-			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Sectores/add');
-			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Sectores/edit');
-			
-			// Parroquias
-			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Parroquias/view');
-			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Parroquias/add');
-			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Parroquias/edit');
-			
-			// Configuraciones
-			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Configuraciones/index');
-			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Configuraciones/edit');
-			
-			// Feriados
-			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Feriados/index');
-			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Feriados/add');
-			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Feriados/edit');
-			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Feriados/delete');
 		}
-
 	}
 	
-	private function getPermisosParametros($usuario = null) {
-		$permisos = array('edit' => true);
+	private function getPermisosParametrosInformativos($usuario = null) {
+		$permisos = array('index' => true, 'view' => true, 'modificar' => true);
 		
 		// Parametros informativos
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/ParametrosInformativos/index')) $permisos['edit'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/ParametrosInformativos/view')) $permisos['edit'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/ParametrosInformativos/index')) $permisos['index'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/ParametrosInformativos/view')) $permisos['view'] = false;
 		
 		// Valores
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/view')) $permisos['edit'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/add')) $permisos['edit'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/edit')) $permisos['edit'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/delete')) $permisos['edit'] = false;
-		
-		// Geográficos
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Geograficos/index')) $permisos['edit'] = false;
-			
-		// Provincias
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Provincias/view')) $permisos['edit'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Provincias/add')) $permisos['edit'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Provincias/edit')) $permisos['edit'] = false;
-		
-		// Cantones
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Cantones/view')) $permisos['edit'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Cantones/add')) $permisos['edit'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Cantones/edit')) $permisos['edit'] = false;
-		
-		// Ciudades
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Ciudades/view')) $permisos['edit'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Ciudades/add')) $permisos['edit'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Ciudades/edit')) $permisos['edit'] = false;	
-			
-		// Sectores
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Sectores/view')) $permisos['edit'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Sectores/add')) $permisos['edit'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Sectores/edit')) $permisos['edit'] = false;
-		
-		// Parroquias
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Parroquias/view')) $permisos['edit'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Parroquias/add')) $permisos['edit'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Parroquias/edit')) $permisos['edit'] = false;
-		
-		// Configuraciones
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Configuraciones/index')) $permisos['edit'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Configuraciones/edit')) $permisos['edit'] = false;
-		
-		// Feriados
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Feriados/index')) $permisos['edit'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Feriados/add')) $permisos['edit'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Feriados/edit')) $permisos['edit'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Feriados/delete')) $permisos['edit'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/view')) $permisos['modificar'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/add')) $permisos['modificar'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/edit')) $permisos['modificar'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/delete')) $permisos['modificar'] = false;
 		
 		return $permisos;
 	}
