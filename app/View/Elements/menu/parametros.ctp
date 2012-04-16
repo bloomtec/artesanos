@@ -13,6 +13,33 @@ $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('contr
 		<li>
 			<a href="#">Mantenimientos</a>
 			<ul>
+				<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'GruposDeRamas', 'index')))) : ?>
+				<li>
+					<a href="/grupos_de_ramas">Grupos de ramas</a>
+					<ul>
+						<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'GruposDeRamas', 'add')))) :
+						?>
+						<li>
+							<a href="/grupos_de_ramas/add">Agregar</a>
+						</li>
+						<?php endif;?>
+					</ul>
+				</li>
+				<?php endif;?>
+				<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Ramas', 'index')))) :
+				?>
+				<li>
+					<a href="/ramas">Ramas</a>
+					<ul>
+						<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Ramas', 'add')))) :
+						?>
+						<li>
+							<a href="/ramas/add">Agregar</a>
+						</li>
+						<?php endif;?>
+					</ul>
+				</li>
+				<?php endif;?>
 				<li>
 					<a href="/tipos_especies_valoradas">Tipos de especies valoradas</a>
 					<ul>
@@ -167,42 +194,6 @@ $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('contr
 		?>
 		<li>
 			<a href="/configuraciones">Configuraciones</a>
-		</li>
-		<?php endif;?>
-		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'GruposDeRamas', 'index'))) || $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Ramas', 'index')))) :
-		?>
-		<li>
-			<a href="/ramas">Ramas</a>
-			<ul>
-				<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'GruposDeRamas', 'index')))) :
-				?>
-				<li>
-					<a href="/grupos_de_ramas">Grupos de ramas</a>
-					<ul>
-						<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'GruposDeRamas', 'add')))) :
-						?>
-						<li>
-							<a href="/grupos_de_ramas/add">Agregar</a>
-						</li>
-						<?php endif;?>
-					</ul>
-				</li>
-				<?php endif;?>
-				<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Ramas', 'index')))) :
-				?>
-				<li>
-					<a href="/ramas">Ramas</a>
-					<ul>
-						<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Ramas', 'add')))) :
-						?>
-						<li>
-							<a href="/ramas/add">Agregar</a>
-						</li>
-						<?php endif;?>
-					</ul>
-				</li>
-				<?php endif;?>
-			</ul>
 		</li>
 		<?php endif;?>
 		<li>

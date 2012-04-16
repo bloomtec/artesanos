@@ -9,7 +9,8 @@
 		<?php
 			endif;
 		?>
-		<?php 
+		<?php
+			
 			echo $this -> element('menu/usuarios');
 		?>
 		<?php 

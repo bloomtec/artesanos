@@ -7,7 +7,7 @@
 	?>
 	<ul>
 		<li>
-			<a href="/artesanos/agregarArtesano">Agregar</a>
+			<a href="/artesanos/agregarArtesano">Registrar</a>
 		</li>
 		<li>
 			<a href="/artesanos/add">Calificar</a>
