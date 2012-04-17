@@ -285,6 +285,9 @@ class UsuariosController extends AppController {
 				$this -> setPermisosCalificaciones($usuario, $this -> request -> data['Permisos']['Calificaciones']);
 				$this -> setPermisosActivosFijos($usuario, $this -> request -> data['Permisos']['ActivosFijos']);
 				$this -> setPermisosSuministros($usuario, $this -> request -> data['Permisos']['Suministros']);
+				$this -> setPermisosTitulaciones($usuario, $this -> request -> data['Permisos']['SolicitudesTitulaciones']);
+				$permisos = array('Cursos' => $this -> request -> data['Permisos']['Cursos'], 'Solicitudes' => $this -> request -> data['Permisos']['Solicitudes']);
+				$this -> setPermisosCapacitaciones($usuario, $permisos);
 				if($usuario['Usuario']['rol_id'] == 3) {
 					$this -> setPermisosInspectores($usuario, true);
 				} else {
@@ -305,8 +308,55 @@ class UsuariosController extends AppController {
 			$usuario['Permisos']['Calificaciones'] = $this -> getPermisosCalificaciones($usuario);
 			$usuario['Permisos']['ActivosFijos'] = $this -> getPermisosActivosFijos($usuario);
 			$usuario['Permisos']['Suministros'] = $this -> getPermisosSuministros($usuario);
+			$usuario['Permisos']['SolicitudesTitulaciones'] = $this -> getPermisosTitulaciones($usuario);
+			$capacitaciones = $this -> getPermisosCapacitaciones($usuario);
+			$usuario['Permisos'] = array_merge($usuario['Permisos'], $capacitaciones);
 			$this -> request -> data = $usuario;
 		}
+	}
+	
+	private function setPermisosTitulaciones($usuario = null, $permisos = null) {
+		foreach($permisos as $accion => $acceso) {
+			if($acceso) {
+				$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/SolicitudesTitulaciones/$accion");
+			}
+		}
+	}
+	
+	private function getPermisosTitulaciones($usuario = null) {
+		$permisos = array('index' => true, 'view' => true, 'add' => true, 'refrendar' => true);		
+		foreach($permisos as $accion => $acceso) {
+			if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/SolicitudesTitulaciones/$accion")) $permisos[$accion] = false;
+		}
+		return $permisos;
+	}
+	
+	private function setPermisosCapacitaciones($usuario = null, $permisos = null) {
+		foreach($permisos as $modulo => $acciones) {
+			foreach($acciones as $accion => $acceso) {
+				if($acceso) {
+					$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/$modulo/$accion");
+				}
+			}
+		}
+	}
+	
+	private function getPermisosCapacitaciones($usuario = null) {
+		$permisos = array(
+			'Solicitudes' => array(
+				'index' => true, 'view' => true, 'add' => true, 'revision' => true
+			),
+			'Cursos' => array(
+				'index' => true, 'view' => true, 'edit' => true, 'verAlumnos' => true, 'ingresarCalificaciones' => true
+			)
+		);
+		
+		foreach($permisos as $modulo => $acciones) {
+			foreach($acciones as $accion => $acceso) {
+				if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/$modulo/$accion")) $permisos[$modulo][$accion] = false;
+			}
+		}
+		return $permisos;
 	}
 	
 	private function setPermisosSuministros($usuario = null, $permisos = null) {
