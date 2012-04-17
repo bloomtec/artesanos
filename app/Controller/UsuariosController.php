@@ -286,8 +286,16 @@ class UsuariosController extends AppController {
 				$this -> setPermisosActivosFijos($usuario, $this -> request -> data['Permisos']['ActivosFijos']);
 				$this -> setPermisosSuministros($usuario, $this -> request -> data['Permisos']['Suministros']);
 				$this -> setPermisosTitulaciones($usuario, $this -> request -> data['Permisos']['SolicitudesTitulaciones']);
-				$permisos = array('Cursos' => $this -> request -> data['Permisos']['Cursos'], 'Solicitudes' => $this -> request -> data['Permisos']['Solicitudes']);
+				$permisos = array(
+					'Cursos' => $this -> request -> data['Permisos']['Cursos'],
+					'Solicitudes' => $this -> request -> data['Permisos']['Solicitudes']
+				);
 				$this -> setPermisosCapacitaciones($usuario, $permisos);
+				$permisos = array(
+					'IngresosEspecies' => $this -> request -> data['Permisos']['IngresosEspecies'],
+					'VentasEspecies' => $this -> request -> data['Permisos']['VentasEspecies']
+				);
+				$this -> setPermisosEspecies($usuario, $permisos);
 				if($usuario['Usuario']['rol_id'] == 3) {
 					$this -> setPermisosInspectores($usuario, true);
 				} else {
@@ -311,6 +319,8 @@ class UsuariosController extends AppController {
 			$usuario['Permisos']['SolicitudesTitulaciones'] = $this -> getPermisosTitulaciones($usuario);
 			$capacitaciones = $this -> getPermisosCapacitaciones($usuario);
 			$usuario['Permisos'] = array_merge($usuario['Permisos'], $capacitaciones);
+			$especies = $this -> getPermisosEspecies($usuario);
+			$usuario['Permisos'] = array_merge($usuario['Permisos'], $especies);
 			$this -> request -> data = $usuario;
 		}
 	}
@@ -348,6 +358,34 @@ class UsuariosController extends AppController {
 			),
 			'Cursos' => array(
 				'index' => true, 'view' => true, 'edit' => true, 'verAlumnos' => true, 'ingresarCalificaciones' => true
+			)
+		);
+		
+		foreach($permisos as $modulo => $acciones) {
+			foreach($acciones as $accion => $acceso) {
+				if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/$modulo/$accion")) $permisos[$modulo][$accion] = false;
+			}
+		}
+		return $permisos;
+	}
+	
+	private function setPermisosEspecies($usuario = null, $permisos = null) {
+		foreach($permisos as $modulo => $acciones) {
+			foreach($acciones as $accion => $acceso) {
+				if($acceso) {
+					$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/$modulo/$accion");
+				}
+			}
+		}
+	}
+	
+	private function getPermisosEspecies($usuario = null) {
+		$permisos = array(
+			'IngresosEspecies' => array(
+				'index' => true, 'add' => true, 'view' => true
+			),
+			'VentasEspecies' => array(
+				'add' => true, 'addToOthers' => true
 			)
 		);
 		
@@ -556,10 +594,91 @@ class UsuariosController extends AppController {
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Reportes/reporteInspecciones');
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/reporteInspecciones');
 		}
+		if($permisos['activos_fijos']) {
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/reporteIngresosInventarios');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/impReporte');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/export_csv');
+		}
+		if($permisos['suministros']) {
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/reporteIngresosSuministros');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/impReporte');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/export_csv');
+		}
+		if($permisos['capacitaciones']) {
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/CentrosArtesanales/reporte');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/CentrosArtesanales/impReporte');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/CentrosArtesanales/export_csv');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Alumnos/reporte');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Alumnos/impReporte');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Alumnos/export_csv');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Alumnos/reporteNotas');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Alumnos/impReporte2');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Alumnos/export_csv2');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Cursos/reporte');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Cursos/impReporte');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Cursos/export_csv');
+		}
+		if($permisos['titulaciones']) {
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/reporteSolicitudesTitulacion');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/impReporte');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/export_csv2');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/reporteTitulaciones');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/impReporte2');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/export_csv3');
+		}
+		if($permisos['especies']) {
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosEspecies/reporte');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosEspecies/imprimirReporte');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosEspecies/export_csv');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/VentasEspecies/reporte');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/VentasEspecies/imprimirReporte');
+		}
 	}
 	
 	private function getPermisosReportes($usuario = null) {
-		$permisos = array('artesanos' => true, 'calificaciones_operador' => true, 'calificaciones_artesano' => true, 'inspecciones' => true);
+		$permisos = array(
+			'artesanos' => true, 'calificaciones_operador' => true, 'calificaciones_artesano' => true, 'inspecciones' => true,
+			'activos_fijos' => true, 'suministros' => true, 'capacitaciones' => true, 'titulaciones' => true, 'especies' => true
+		);
+		
+		// especies
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosEspecies/reporte')) $permisos['especies'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosEspecies/imprimirReporte')) $permisos['especies'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosEspecies/export_csv')) $permisos['especies'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/VentasEspecies/reporte')) $permisos['especies'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/VentasEspecies/imprimirReporte')) $permisos['especies'] = false;
+		
+		// titulaciones
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/reporteSolicitudesTitulacion')) $permisos['titulaciones'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/impReporte')) $permisos['titulaciones'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/export_csv2')) $permisos['titulaciones'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/reporteTitulaciones')) $permisos['titulaciones'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/impReporte2')) $permisos['titulaciones'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/export_csv3')) $permisos['titulaciones'] = false;
+				
+		// capacitaciones
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/CentrosArtesanales/reporte')) $permisos['capacitaciones'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/CentrosArtesanales/impReporte')) $permisos['capacitaciones'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/CentrosArtesanales/export_csv')) $permisos['capacitaciones'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Alumnos/reporte')) $permisos['capacitaciones'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Alumnos/impReporte')) $permisos['capacitaciones'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Alumnos/export_csv')) $permisos['capacitaciones'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Alumnos/reporteNotas')) $permisos['capacitaciones'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Alumnos/impReporte2')) $permisos['capacitaciones'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Alumnos/export_csv2')) $permisos['capacitaciones'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Cursos/reporte')) $permisos['capacitaciones'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Cursos/impReporte')) $permisos['capacitaciones'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Cursos/export_csv')) $permisos['capacitaciones'] = false;
+		
+		// suministros
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/reporteIngresosSuministros')) $permisos['suministros'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/impReporte')) $permisos['suministros'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/export_csv')) $permisos['suministros'] = false;
+		
+		// activos_fijos
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/reporteIngresosInventarios')) $permisos['activos_fijos'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/impReporte')) $permisos['activos_fijos'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/export_csv')) $permisos['activos_fijos'] = false;
 		
 		// artesanos
 		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Reportes/reporteArtesanos')) $permisos['artesanos'] = false;

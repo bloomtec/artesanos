@@ -83,7 +83,7 @@
 				<td class="accion"><?php echo $this -> Form -> input('Permisos.Cursos.verAlumnos', array('label' => 'Ver Alumnos', 'type' => 'checkbox'));?></td>
 				<td class="accion"><?php echo $this -> Form -> input('Permisos.Cursos.ingresarCalificaciones', array('label' => 'Ingresar Calificaciones', 'type' => 'checkbox'));?></td>
 				<td class="accion"></td>
-				<td class="accion"></td>			
+				<td class="accion"></td>
 			</tr>			
 		</table>
 		<table class="permisos">
@@ -99,9 +99,16 @@
 			<tr class="modulo">
 				<th class="nombre">ESPECIES VALORADAS</th>
 				<td class="accion"><?php echo $this -> Form -> input('Permisos.IngresosEspecies.index', array('label' => 'Listar Ingresos', 'type' => 'checkbox'));?></td>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.IngresosEspecies.view', array('label' => 'Ver Ingresos', 'type' => 'checkbox'));?></td>
 				<td class="accion"><?php echo $this -> Form -> input('Permisos.IngresosEspecies.add', array('label' => 'Realizar Ingreso', 'type' => 'checkbox'));?></td>
+				<td class="accion"></td>
+			</tr>
+			<tr>
+				<th class="nombre"></th>
 				<td class="accion"><?php echo $this -> Form -> input('Permisos.VentasEspecies.add', array('label' => 'Vender A Un Artesano', 'type' => 'checkbox'));?></td>
 				<td class="accion"><?php echo $this -> Form -> input('Permisos.VentasEspecies.addToOthers', array('label' => 'Vender A Otros', 'type' => 'checkbox'));?></td>
+				<td class="accion"></td>
+				<td class="accion"></td>
 			</tr>			
 		</table>
 		<!-- SECCIÓN DE PARÁMETROS Y MANTENIMIENTOS -->
@@ -205,10 +212,15 @@
 				<td class="accion"><?php echo $this -> Form -> input('Permisos.Reportes.inspecciones', array('label' => 'Inspecciones', 'type' => 'checkbox'));?></td>
 			</tr>
 			<tr class="modulo">
-				<td class="accion"><?php echo $this -> Form -> input('Permisos.Reportes.artesanos', array('label' => 'Activos Fijos', 'type' => 'checkbox'));?></td>
-				<td class="accion"><?php echo $this -> Form -> input('Permisos.Reportes.calificaciones_operador', array('label' => 'Suministros', 'type' => 'checkbox'));?></td>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.Reportes.activos_fijos', array('label' => 'Activos Fijos', 'type' => 'checkbox'));?></td>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.Reportes.suministros', array('label' => 'Suministros', 'type' => 'checkbox'));?></td>
 				<td class="accion"></td>
 				<td class="accion"></td>
+			</tr>
+			<tr>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.Reportes.capacitaciones', array('label' => 'Capacitaciones', 'type' => 'checkbox'));?></td>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.Reportes.titulaciones', array('label' => 'Titulaciones', 'type' => 'checkbox'));?></td>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.Reportes.especies', array('label' => 'Especies Valoradas', 'type' => 'checkbox'));?></td>
 			</tr>
 		</table>
 	</fieldset>
