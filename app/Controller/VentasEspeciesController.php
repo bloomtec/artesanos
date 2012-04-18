@@ -377,11 +377,11 @@ class VentasEspeciesController extends AppController {
 	}
 	
 	public function factura($idVenta = null) {
-		$this->layout="certificado";
+		//$this->layout="certificado";
 		$this->VentasEspecie->recursive=0;
 		$ventaEspecie = $this->VentasEspecie->find("all", array("conditions"=>array("VentasEspecie.id"=>$idVenta)));
-		$this -> set(compact('ventaEspecie'));
-		//debug($ventaEspecie);
+		//$this -> set(compact('ventaEspecie'));
+		debug($ventaEspecie);
 	}
 	
 }
