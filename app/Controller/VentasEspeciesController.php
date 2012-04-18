@@ -385,9 +385,11 @@ class VentasEspeciesController extends AppController {
 	}
     
    public function ventas() {
-      $idFacturas = $this->VentasEspecie->find("list", array("fields"=>array("factura_id")));
-      $ventasEspecies = $this->VentasEspecie->Factura->find("all", array("conditions"=>array("Factura.id"=>$idFacturas))); 
+      $idsFacturas = $this->VentasEspecie->find("list", array("fields"=>array("factura_id"),"conditions"=>array("factura_id <>"=>null)));
+      $ventasEspecies = $this->VentasEspecie->Factura->find("all"); 
       $this -> paginate = array('order' => array("Factura.id"=>'desc'));
+      $conditions['Factura.id'] = $idsFacturas;
+      $this -> paginate = array('conditions'=>$conditions);
       $ventasEspecies = $this->paginate();
       $this->set(compact("ventasEspecies"));
    }
