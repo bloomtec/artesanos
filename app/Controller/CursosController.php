@@ -209,13 +209,16 @@ class CursosController extends AppController {
 	}
 
 	public function certificado($alumnoCursoId) {
-		$this -> layout = "certificado";
+		//$this -> layout = "certificado";
 		$this -> Curso -> CursosAlumno -> bindModel(array('belongsTo' => array('Alumno')));
 		$alumno = $this -> Curso -> CursosAlumno -> read(null, $alumnoCursoId);
 		$this -> Curso -> recursive = 0;
 		$curso = $this -> Curso -> find("all", array("conditions" => array("Curso.id" => $alumnoCursoId)));
+        
+        print_r($curso); return;
 
 		if (empty($alumno["CursosAlumno"]['cur_fecha_de_emision'])) {
+		    
 			$fecha = date("F j, Y, g:i a", time());
 		} else {
 			$fecha = date("F j, Y, g:i a", strtotime($alumno["CursosAlumno"]['cur_fecha_de_emision']));

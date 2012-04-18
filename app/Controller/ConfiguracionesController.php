@@ -39,6 +39,7 @@ class ConfiguracionesController extends AppController {
 	public function index() {
 		$this -> Configuracion -> recursive = 0;
 		$this -> set('configuracion', $this -> Configuracion -> read(null, 1));
+		
 	}
 
 	/**
