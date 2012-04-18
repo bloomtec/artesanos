@@ -110,7 +110,7 @@
 			<td rowspan="2" style="text-align: right; font-size: 8px;" colspan="2" width="25.4px"><b>Emitido:</b></td>
 			<td width="25" style="text-align: left; font-size: 8px;"><?php print($artesano[0]["Calificacion"]["cal_fecha_expedicion"]); ?></td>
 			<td rowspan="2" style="text-align: left; font-size: 8px;" colspan="2" width="8px"><b>Prov.</b></td>
-			<td width="17.5" style="text-align: left; font-size: 8px;" ><?php print($provincia[1]); ?></td>
+			<td width="17.5" style="text-align: left; font-size: 8px;" ><?php print($provincia); ?></td>
 		</tr>
 		
 	</table>
@@ -121,7 +121,7 @@
 			<td rowspan="2" style="text-align: right; font-size: 8px;" colspan="2" width="25.4px"><b>Expira:</b></td>
 			<td width="25" style="text-align: left; font-size: 8px;"><?php print($artesano[0]["Calificacion"]["cal_fecha_expiracion"]); ?></td>
 			<td rowspan="2" style="text-align: left; font-size: 8px;" colspan="2" width="8px"><b>Ciud.</b></td>
-			<td width="17.5" style="text-align: left; font-size: 8px;" ><?php print($ciudad[1]); ?></td>
+			<td width="17.5" style="text-align: left; font-size: 8px;" ><?php print($ciudad); ?></td>
 		</tr>
 		
 	</table>
