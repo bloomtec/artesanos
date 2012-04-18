@@ -217,7 +217,6 @@ class CursosController extends AppController {
       
 
 		if (empty($alumno["CursosAlumno"]['cur_fecha_de_emision'])) {
-		    
 			$fecha = date("F j, Y, g:i a", time());
 		} else {
 			$fecha = date("F j, Y, g:i a", strtotime($alumno["CursosAlumno"]['cur_fecha_de_emision']));
