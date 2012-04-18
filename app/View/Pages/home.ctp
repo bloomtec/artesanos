@@ -46,54 +46,9 @@ $this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('contr
 		</div>
 	</div>
 	<?php endif?>
-<!--
-	<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Auditorias', 'index')))) :
-	?>
-	<div class="home_description">
-		<h2 class="auditorias"> Auditorias </h2>
-		<p>
-			Registros de actividades por usuario en el sistema
-		</p>
-		<div class="acciones_home">
-			<a  href="/auditorias"> Ver Auditorias</a>
-		</div>
-	</div>
-	<?php endif?>
--->
-	<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Reportes', 'reporteArtesanos'))) ||
-$this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Reportes', 'reporteCalificacionesOperador'))) ||
-$this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Reportes', 'reporteCalificacionesArtesano'))) ||
-$this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Reportes', 'reporteInspecciones')))
-):
-	?>
-	<!--
-	<div class="home_description">
-		<h2 class="reportes"> REPORTES </h2>
-		<p>
-			Reporte de datos del sistema
-			<br />
-		</p>
-		<div class="acciones_home">
-			<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Reportes', 'reporteArtesanos')))) :
-			?>
-			<a href="/reportes/reporteArtesanos">Artesanos</a>
-			<?php endif;?>
-			<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Reportes', 'reporteCalificacionesOperador')))) :
-			?>
-			<a href="/reportes/reporteCalificacionesOperador">Calificaciones Operador</a>
-			<?php endif;?>
-			<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Reportes', 'reporteCalificacionesArtesano')))) :
-			?>
-			<a href="/reportes/reporteCalificacionesArtesano">Calificaciones Artesano</a>
-			<?php endif;?>
-			<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Reportes', 'reporteInspecciones')))) :
-			?>
-			<a href="/reportes/reporteInspecciones">Inspecciones</a>
-			<?php endif;?>
-		</div>
-		<?php endif;?>
-	</div>
-	-->
+
+
+	
 	<?php if($this -> Session -> read('Auth.User.rol_id')==3) :
 	?>
 	<div class="home_description" >

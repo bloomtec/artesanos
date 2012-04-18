@@ -111,10 +111,10 @@ class VentasEspeciesController extends AppController {
 					} // endforeach;
 				}
 				
-				$this -> Session -> setFlash('Se generó la venta', 'crud/success');
+				$this -> Session -> setFlash('La venta fue registrada satisfactoriamente', 'crud/success');
 				//$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash('Se generó la venta', 'crud/error');
+				$this -> Session -> setFlash('No se registró la venta. Por favor, intente de nuevo', 'crud/error');
 			}
 			
 			

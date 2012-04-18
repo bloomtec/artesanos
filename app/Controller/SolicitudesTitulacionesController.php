@@ -510,12 +510,12 @@ class SolicitudesTitulacionesController extends AppController {
 		//debug($res); return;
 
 		if (!isset($res['VentasEspecie'])) {//Si existe la venta
-			$this -> Session -> setFlash(__('No se puede refrendar la especie valorada, primero se debe comprar una', true));
+			$this -> Session -> setFlash(__('No se puede refrendar el título. El artesano debe comprar la especie valorda requerida', true));
 			$this -> redirect(array('action' => 'index'));
 		}
 
 		if ($res["EspeciesValorada"]["se_uso"] == 1) {
-			$this -> Session -> setFlash(__('No se puede refrendar la especie valorada, ya esta en uso', true));
+			$this -> Session -> setFlash(__('No se puede refrendar el título. El artesano debe comprar la especie valorda requerida', true));
 			$this -> redirect(array('action' => 'index'));
 
 		} else {
@@ -524,7 +524,7 @@ class SolicitudesTitulacionesController extends AppController {
 			$this -> loadModel("Titulacion", true);
 			$data["Titulacion"]["titulo_id"] = $idTitulo;
 			$data["Titulacion"]["solicitudes_titulacion_id"] = $idSolicitudTitulacion;
-			$data["Titulacion"]["juntas_provincial_id"] = $res["VentasEspecie"]["juntas_provincial_id"];
+			//$data["Titulacion"]["juntas_provincial_id"] = $res["VentasEspecie"]["juntas_provincial_id"];
 			//$data["Titulacion"]["especies_valoradas_id"] = $res["EspeciesValorada"]["id"];
 			$this -> Titulacion -> create();
 			if ($this -> Titulacion -> save($data)) {
@@ -532,8 +532,9 @@ class SolicitudesTitulacionesController extends AppController {
 				$this -> EspeciesValorada -> id = $res["EspeciesValorada"]["id"];
 				$data["EspeciesValorada"]["se_uso"] = 1;
 				$this -> EspeciesValorada -> save($data);
-				$this -> Session -> setFlash(__('Se puede refrendar', true));
+				$this -> Session -> setFlash(__('El título se ha refrendado satisfactoriamente', true));
 			} else {
+				debug($this->Titulacion->validationErrors);
 				$this -> Session -> setFlash(__('Error al intentar refrendar', true));
 			}
 			$this -> redirect(array('action' => 'index'));

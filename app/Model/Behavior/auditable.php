@@ -99,6 +99,7 @@ class AuditableBehavior extends ModelBehavior {
 	}
 	private function parseData($data){
 		$newData="";
+		if($data && is_array($data)){
 		foreach($data as $alias => $rows){
 			$newData.='<div class="audit">';
 			foreach($rows as $row => $value){
@@ -112,6 +113,7 @@ class AuditableBehavior extends ModelBehavior {
 				$newData.="</div>";
 			}
 			$newData.='</div>';
+		}	
 		}
 		return $newData;
 	}
