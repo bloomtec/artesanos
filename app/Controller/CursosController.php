@@ -208,17 +208,22 @@ class CursosController extends AppController {
 
 	}
 
-	public function certificado($alumnoCursoId) {
+	public function certificado($alumnoCursoId = null) {
 		$this -> layout = "certificado";
-		$this -> Curso -> CursosAlumno -> bindModel(array('belongsTo' => array('Alumno')));
+		$this -> Curso -> CursosAlumno -> bindModel(array('belongsTo' => array('Alumno','Curso')));
 		$alumno = $this -> Curso -> CursosAlumno -> read(null, $alumnoCursoId);
-		$this -> Curso -> recursive = 0;
-		$curso = $this -> Curso -> find("all", array("conditions" => array("Curso.id" => $alumnoCursoId)));
-      
-
+		
 		if (empty($alumno["CursosAlumno"]['cur_fecha_de_emision'])) {
-			$fecha = date("F j, Y, g:i a", time());
-		} else {
+		    $fecha = date("F j, Y, g:i a", time());
+		    $this->CursosAlumno->id = $alumno["CursosAlumno"]["id"];
+            $data["CursosAlumno"]['cur_fecha_de_emision'] = $fecha;
+            $this->CursosAlumno->save($data);
+            $this->CursosAlumnos->recursive=-1;
+            $fecha = $this->CursosAlumnos->find("list", array("fields"=>array("cur_fecha_de_emision"), "conditions"=>array("CursosAlumno.id"=>$alumno["CursosAlumno"]["id"])));
+		    foreach($fecha as $fecha) {
+               $fecha = $fecha; 
+            }
+        } else {
 			$fecha = date("F j, Y, g:i a", strtotime($alumno["CursosAlumno"]['cur_fecha_de_emision']));
 		}
 
@@ -231,12 +236,18 @@ class CursosController extends AppController {
 				break;
 			}
 		}
-
+        $this->loadModel("Instructor");  
+        $this->Instructor->recursive=-1;  
+        $instructor = $this->Instructor->find("list", array("conditions"=>array("Instructor.id"=>$alumno["Curso"]["instructor_id"])));
+        foreach($instructor as $instructor) {
+           $instructor = $instructor; 
+        }
+       
 		$fecha2 = "el " . $fecha[1] . " " . "de " . $fecha[0] . " del ";
 		$presidente = $this -> requestAction('/configuraciones/getValorConfiguracion/' . "con_presidente_de_la_junta");
 		$tecnico = $this -> requestAction('/configuraciones/getValorConfiguracion/' . "con_tecnico_en_capacitacion_y_calificacion");
 
-		$this -> set(compact('alumno', 'curso', 'fecha', 'fecha2', 'presidente', 'tecnico'));
+		$this -> set(compact('alumno', 'fecha', 'fecha2', 'presidente', 'tecnico','instructor'));
 	}
 
 	/**

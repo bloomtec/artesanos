@@ -31,7 +31,7 @@
 <table border="0"  cellspacing="0" cellpadding="0">
 	<tr>
 		<td  width="168" style="text-align: left; font-size:38px;"><b>quien asistió al curso de:</b></td>
-		<td width="632" ><div style="text-align: left; font-size:38px; border-bottom: 1px solid black;"><?php echo $curso[0]["Curso"]["cur_nombre"]; ?></div></td>
+		<td width="632" ><div style="text-align: left; font-size:38px; border-bottom: 1px solid black;"><?php echo $alumno["Curso"]["cur_nombre"]; ?></div></td>
 	</tr>
 	
 </table>
@@ -43,7 +43,7 @@
 <br>
 <table border="0"  cellspacing="0" cellpadding="0">
 	<tr>
-		<td width="800" ><div style="text-align: left; font-size:38px; border-bottom: 1px solid black;"><?php print($curso[0]["Curso"]["cur_contenido"]); ?></div></td>
+		<td width="800" ><div style="text-align: left; font-size:38px; border-bottom: 1px solid black;"><?php print($alumno["Curso"]["cur_contenido"]); ?></div></td>
 	</tr>
 	<tr>
 		<td width="800" ><div style="text-align: left; font-size:38px; border-bottom: 1px solid black;">&nbsp;</div></td>
@@ -56,7 +56,7 @@
 		<td width="30" ><div style="text-align: center; font-size:38px;"></div></td>
 		<td width="180" ><div style="text-align: left; font-size:38px; border-bottom: 1px solid black; text-align: center;"><?php print($fecha2.' '.$fecha[2]); ?></div></td>
 		<td width="150" ><div style="text-align: center; font-size:38px;"><b>Con una duracion de:</b></div></td>
-		<td width="60" ><div style="text-align: left; font-size:38px; border-bottom: 1px solid black; text-align: center;"><?php echo print($curso[0]["Curso"]["cur_numero_horas"]); ?></div></td>
+		<td width="60" ><div style="text-align: left; font-size:38px; border-bottom: 1px solid black; text-align: center;"><?php echo print($alumno["Curso"]["cur_numero_horas"]); ?></div></td>
 		<td width="100" ><div style="text-align: left; font-size:38px;"><b>Horas.</b></div></td>
 	</tr>
 </table>
@@ -64,7 +64,7 @@
 <table border="1"  cellspacing="0" cellpadding="0">
 	<tr>
 		<td  width="140" style="text-align: left; font-size:38px;"><b>Con una duracion de:</b></td>
-		<td width="180" ><div style="text-align: left; font-size:38px; border-bottom: 1px solid black;"><?php echo $curso[0]["Curso"]["cur_numero_horas"]; ?></div></td>
+		<td width="180" ><div style="text-align: left; font-size:38px; border-bottom: 1px solid black;"><?php echo $alumno["Curso"]["cur_numero_horas"]; ?></div></td>
 		<td width="200" ><div style="text-align: left; font-size:38px;"><b>Horas.</b></div></td>
 	</tr>
 </table> -->
@@ -85,7 +85,7 @@
 	<tr>
 		<td  width="228" style="text-align: center; font-size:38px;"><b><?php print($presidente); ?></b><br>PRESIDENTE DE LA JUNTA J.N.D.A</td>
 		<td  width="342" style="text-align: center; font-size:38px;"><b><?php print($tecnico); ?></b><br />TÉCNICO EN CAPACITACIÓN Y CALIFICACIÓN</td>
-		<td  width="228" style="text-align: center; font-size:38px;"><b><?php echo  ucfirst(strtolower($curso[0]["Instructor"]["ins_nombres"])).' '.ucfirst(strtolower($curso[0]["Instructor"]["ins_apellido_paterno"])).' '.ucfirst(strtolower($curso[0]["Instructor"]["ins_apellido_materno"])); ?></b><br />INSTRUCTOR J.N.D.A</td>	
+		<td  width="228" style="text-align: center; font-size:38px;"><b><?php echo  $instructor; ?></b><br />INSTRUCTOR J.N.D.A</td>	
 	</tr>
 </table>
 
@@ -99,7 +99,7 @@
 <table border="0"  cellspacing="0" cellpadding="0">
 	<tr>
 		<td  width="400" style="text-align: center; font-size:38px;">DIRECTOR/A TÉCNICO/A DE LA J.N.D.A</td>
-		<td  width="400" style="text-align: center; font-size:38px;"><?php echo strtoupper($curso[0]["Instructor"]["ins_nombres"].' '.$curso[0]["Instructor"]["ins_apellido_paterno"].' '.$curso[0]["Instructor"]["ins_apellido_materno"]); ?></td>
+		<td  width="400" style="text-align: center; font-size:38px;"><?php echo strtoupper($alumno["Instructor"]["ins_nombres"].' '.$alumno["Instructor"]["ins_apellido_paterno"].' '.$alumno["Instructor"]["ins_apellido_materno"]); ?></td>
 	</tr>
 </table> -->
 <br>
