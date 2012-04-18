@@ -4,7 +4,7 @@
 		<h2><?php echo __('Revisión Solicitud Titulación');?></h2>
 		<?php
 		echo $this -> Form -> input('id');
-		echo $this -> Form -> input('tipos_especies_valorada_id', array('label' => 'Tipo Especie Valorada', 'empty' => 'Seleccione...'));
+		echo $this -> Form -> input('tipos_especies_valorada_id', array('label' => 'Tipo Especie Valorada', 'empty' => 'Seleccione...', 'value' => Configure::read('titulacion')));
 		echo $this -> Form -> input('estados_solicitudes_titulacion_id', array('label' => 'Estado De La Solicitud'));
 		echo $this -> Form -> input('sol_mensaje', array('label' => 'Obervación'));
 		?>
