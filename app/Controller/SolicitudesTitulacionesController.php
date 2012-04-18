@@ -510,12 +510,12 @@ class SolicitudesTitulacionesController extends AppController {
 		//debug($res); return;
 
 		if (!isset($res['VentasEspecie'])) {//Si existe la venta
-			$this -> Session -> setFlash(__('No se puede refrendar el titulo. El artesano debe comprar la especie valorda requerida', true));
+			$this -> Session -> setFlash(__('No se puede refrendar el título. El artesano debe comprar la especie valorda requerida', true));
 			$this -> redirect(array('action' => 'index'));
 		}
 
 		if ($res["EspeciesValorada"]["se_uso"] == 1) {
-			$this -> Session -> setFlash(__('No se puede refrendar el titulo. El artesano debe comprar la especie valorda requerida', true));
+			$this -> Session -> setFlash(__('No se puede refrendar el título. El artesano debe comprar la especie valorda requerida', true));
 			$this -> redirect(array('action' => 'index'));
 
 		} else {
@@ -532,8 +532,9 @@ class SolicitudesTitulacionesController extends AppController {
 				$this -> EspeciesValorada -> id = $res["EspeciesValorada"]["id"];
 				$data["EspeciesValorada"]["se_uso"] = 1;
 				$this -> EspeciesValorada -> save($data);
-				$this -> Session -> setFlash(__('Se puede refrendar', true));
+				$this -> Session -> setFlash(__('El título se ha refrendado satisfactoriamente', true));
 			} else {
+				debug($this->Titulacion->validationErrors);
 				$this -> Session -> setFlash(__('Error al intentar refrendar', true));
 			}
 			$this -> redirect(array('action' => 'index'));
