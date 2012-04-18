@@ -53,8 +53,8 @@
 	<tr>
 		<td  width="125" style="text-align: left; font-size:38px;"><b>Dado y firmado en:</b></td>
 		<td width="50" ><div style="text-align: center; font-size:38px; border-bottom: 1px solid black;">QUITO</div></td>
-		<td width="30" ><div style="text-align: center; font-size:38px;"></div></td>
-		<td width="180" ><div style="text-align: left; font-size:38px; border-bottom: 1px solid black; text-align: center;"><?php print($fecha2.' '.$fecha[2]); ?></div></td>
+		<td width="30" ><div style="text-align: center; font-size:38px;">el</div></td>
+		<td width="178" ><div style="text-align: left; font-size:38px; border-bottom: 1px solid black; text-align: center;"><?php print($fecha2.' '.$fecha[2]); ?></div></td>
 		<td width="150" ><div style="text-align: center; font-size:38px;"><b>Con una duracion de:</b></div></td>
 		<td width="60" ><div style="text-align: left; font-size:38px; border-bottom: 1px solid black; text-align: center;"><?php echo print($alumno["Curso"]["cur_numero_horas"]); ?></div></td>
 		<td width="100" ><div style="text-align: left; font-size:38px;"><b>Horas.</b></div></td>

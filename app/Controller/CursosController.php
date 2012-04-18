@@ -215,14 +215,15 @@ class CursosController extends AppController {
 		
 		if (empty($alumno["CursosAlumno"]['cur_fecha_de_emision'])) {
 		    $fecha = date("F j, Y, g:i a", time());
+            $this->loadModel("CursosAlumno", true);  
 		    $this->CursosAlumno->id = $alumno["CursosAlumno"]["id"];
             $data["CursosAlumno"]['cur_fecha_de_emision'] = $fecha;
             $this->CursosAlumno->save($data);
-            $this->CursosAlumnos->recursive=-1;
+            $this->CursosAlumno->recursive=-1;
             $fecha = $this->CursosAlumno->find("list", array("fields"=>array("cur_fecha_de_emision"), "conditions"=>array("CursosAlumno.id"=>$alumno["CursosAlumno"]["id"])));
 		    foreach($fecha as $fecha) {
                $fecha = $fecha; 
-            }
+            } 
         } else {
 			$fecha = date("F j, Y, g:i a", strtotime($alumno["CursosAlumno"]['cur_fecha_de_emision']));
 		}
@@ -243,7 +244,7 @@ class CursosController extends AppController {
            $instructor = $instructor; 
         }
        
-		$fecha2 = "el " . $fecha[1] . " " . "de " . $fecha[0] . " del ";
+		$fecha2 = $fecha[1] . " " . "de " . $fecha[0] . " del ";
 		$presidente = $this -> requestAction('/configuraciones/getValorConfiguracion/' . "con_presidente_de_la_junta");
 		$tecnico = $this -> requestAction('/configuraciones/getValorConfiguracion/' . "con_tecnico_en_capacitacion_y_calificacion");
 
