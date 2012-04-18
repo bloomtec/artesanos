@@ -543,6 +543,9 @@ class ArtesanosController extends AppController {
 			} elseif($calificacion['Calificacion']['tipos_de_calificacion_id'] == 2) {
 				$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $artesano['Artesano']['id'] . '/' . Configure::read('cal_autonomo'));
 			}
+			if(!$especieValorada) {
+				$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $artesano['Artesano']['id'] . '/' . Configure::read('recal'));
+			}
 			$especieValorada['EspeciesValorada']['se_uso'] = 1;
 			$this -> loadModel('EspeciesValorada');
 			$this -> EspeciesValorada -> save($especieValorada);
@@ -1137,8 +1140,7 @@ class ArtesanosController extends AppController {
 							} else {
 								$resultado_validacion['Calificar'] = 0;
 								$resultado_validacion['Mensaje'] = 'El artesano no tiene el titulo correspondiente para ser calificado como artesano normal';
-							}
-							
+							}							
 						} else {// Error
 							$resultado_validacion['Mensaje'] = 'Tipo de calificación erronea';
 						}
