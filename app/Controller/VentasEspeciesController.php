@@ -376,17 +376,19 @@ class VentasEspeciesController extends AppController {
 		echo $csv -> render($titulo);
 	}
 	
-	public function factura($idVenta = null) {
+	public function factura($idFactura = null) {
 		$this->layout="factura";
-		$this->VentasEspecie->recursive=0;
-		$ventaEspecie = $this->VentasEspecie->find("all", array("conditions"=>array("VentasEspecie.id"=>$idVenta)));
-		$this -> set(compact('ventaEspecie'));
-		//debug($ventaEspecie);
+		$this->VentasEspecie->recursive=0; 
+		$ventaEspecie = $this->VentasEspecie->Factura->find("all", array("conditions"=>array("Factura.id"=>$idVenta)));
+		//$this -> set(compact('ventaEspecie'));
+		debug($ventaEspecie);
 	}
     
    public function ventas() {
-      $ventasEspecies = $this->VentasEspecie->find("all"); 
-      $this->paginate();
+      $idFacturas = $this->VentasEspecie->find("list", array("fields"=>array("factura_id")));
+      $ventasEspecies = $this->VentasEspecie->Factura->find("all", array("conditions"=>array("Factura.id"=>$idFacturas))); 
+      $this -> paginate = array('order' => array("Factura.id"=>'desc'));
+      $ventasEspecies = $this->paginate();
       $this->set(compact("ventasEspecies"));
    }
 	
