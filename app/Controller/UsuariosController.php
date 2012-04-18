@@ -297,9 +297,7 @@ class UsuariosController extends AppController {
 				);
 				$this -> setPermisosEspecies($usuario, $permisos);
 				if($usuario['Usuario']['rol_id'] == 3) {
-					$this -> setPermisosInspectores($usuario, true);
-				} else {
-					$this -> setPermisosInspectores($usuario, false);
+					$this -> setPermisosInspectores($usuario);
 				}
 				$this -> Session -> setFlash(__('Se asigaron los permisos al usuario'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
@@ -699,17 +697,9 @@ class UsuariosController extends AppController {
 		return $permisos;
 	}
 	
-	private function setPermisosInspectores($usuario = null, $asignar = null) {
-		if($asignar) {
-			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/inspecciones');
-			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/modificarCalificacion');
-		} else {
-			$this -> Acl -> deny($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/inspecciones');
-		}
-	}
-	
-	private function getPermisosInspectores($usuario = null) {
-		// TODO : Se requiere este método?
+	private function setPermisosInspectores($usuario = null) {
+		$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/inspecciones');
+		$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/modificarCalificacion');
 	}
 	
 	private function setPermisosInventarioActivosFijos($usuario = null, $asignar = null) {

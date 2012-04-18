@@ -25,8 +25,7 @@
 	Configure::write('cal_normal', 9); // Solicitud de calificación e identificación profesional artesanal
 	Configure::write('cal_autonomo', 10); // Solicitud de calificación e identificación profesional artesanal autónomo
 	Configure::write('edi_cal_autonomo', 1); // Actualización de datos y/o duplicado de calificación, autónomo y carne profesional artesanal
-	Configure::write('edi_cal_normal', 1); // Actualización de datos y/o duplicado de calificación, autónomo y carne profesional artesanal
-	Configure::write('edi_recal', 2); // Solicitud cambio de dirección de la recalificación artesanal
+	Configure::write('edi_cal_normal', 2); // Solicitud cambio de dirección de la recalificación artesanal
 	Configure::write('recal', 3); // Solicitud de recalificación e identificación profesional artesanal
 	Configure::write('igualaciones', array(
 		11 => 11, // 1 - 12 meses
