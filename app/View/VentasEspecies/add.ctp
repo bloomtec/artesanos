@@ -1,4 +1,10 @@
-<div class="ventasEspecies form">
+<style>
+	.ventaAArtesano .Cliente, .ventaAArtesano .RUC{
+	/*OCULTA EL CAMPO CLIENTE*/
+	display:none;
+	}
+</style>
+<div class="ventasEspecies form ventaAArtesano">
 <?php echo $this->Form->create('VentasEspecie');?>
 	<fieldset>
 		<h2><?php echo __('Ventas De Especies Valoradas'); ?></h2>

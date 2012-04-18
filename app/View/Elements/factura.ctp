@@ -3,15 +3,15 @@
 $provincias = $this -> requestAction('/provincias/getProvincias');
 echo $this -> Form -> input('Factura.fac_numero', array('label' => 'No. De Factura'));
 echo $this -> Form -> input('Factura.fac_comprobante_deposito', array('label' => 'No. De Comprobante De Deposito'));
-echo $this -> Form -> input('Factura.fac_cliente', array('label' => 'Cliente'));
+echo $this -> Form -> input('Factura.fac_cliente', array('label' => 'Cliente','div'=>'input text Cliente'));
 echo $this -> Form -> input('Factura.provincia_id', array('label' => 'Provincia', 'options' => $provincias, 'empty' => 'Seleccione...'));
 echo $this -> Form -> input('Factura.canton_id', array('label' => 'Canton'));
 echo $this -> Form -> input('Factura.ciudad_id', array('label' => 'Ciudad'));
 echo $this -> Form -> input('Factura.fac_direccion', array('label' => 'Dirección'));
 echo $this -> Form -> input('Factura.fac_telefono', array('label' => 'Teléfono'));
-echo $this -> Form -> input('usu_is_cedula', array('label' => false, 'div'=>'input select usu-cedula', 'type' => 'select','options'=>array('1'=>'R.U.C./C.I.: ','0'=>'Pasaporte: ')));	
+echo $this -> Form -> input('usu_is_cedula', array('label' => false, 'div'=>'input select usu-cedula RUC', 'type' => 'select','options'=>array('1'=>'R.U.C./C.I.: ','0'=>'Pasaporte: ')));	
 		
-echo $this -> Form -> input('Factura.fac_ruc_doc', array('label' => false,"style"=>"margin-top:5px","class"=>""));
+echo $this -> Form -> input('Factura.fac_ruc_doc', array('label' => false,"style"=>"margin-top:5px","class"=>"", 'div'=>'input text RUC'));
 if(isset($fecha) && $fecha) {
 	echo $this -> Form -> hidden('Factura.fac_fecha_emision', array('label' => 'Fecha De Emisión','type'=>'text','class'=>'date', 'value' => $fecha));
 	echo $this -> Form -> input('Factura.fac_fecha_emision', array('label' => 'Fecha De Emisión','type'=>'text','class'=>'date', 'value' => $fecha, 'disabled' => 'disabled'));

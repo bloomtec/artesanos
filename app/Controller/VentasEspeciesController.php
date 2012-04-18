@@ -112,7 +112,7 @@ class VentasEspeciesController extends AppController {
 				}
 				
 				$this -> Session -> setFlash('Se generó la venta', 'crud/success');
-				$this -> redirect(array('action' => 'index'));
+				//$this -> redirect(array('action' => 'index'));
 			} else {
 				$this -> Session -> setFlash('Se generó la venta', 'crud/error');
 			}
@@ -231,7 +231,7 @@ class VentasEspeciesController extends AppController {
 					} // endif;
 				} // endforeach;
 				$this -> Session -> setFlash('Se generó la venta', 'crud/success');
-				$this -> redirect(array('action' => 'index'));
+				//$this -> redirect(array('action' => 'index'));
 			} else {
 				$this -> Session -> setFlash('No se pudo completar la venta', 'crud/error');
 			}
