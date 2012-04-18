@@ -524,7 +524,7 @@ class SolicitudesTitulacionesController extends AppController {
 			$this -> loadModel("Titulacion", true);
 			$data["Titulacion"]["titulo_id"] = $idTitulo;
 			$data["Titulacion"]["solicitudes_titulacion_id"] = $idSolicitudTitulacion;
-			$data["Titulacion"]["juntas_provincial_id"] = $res["VentasEspecie"]["juntas_provincial_id"];
+			//$data["Titulacion"]["juntas_provincial_id"] = $res["VentasEspecie"]["juntas_provincial_id"];
 			//$data["Titulacion"]["especies_valoradas_id"] = $res["EspeciesValorada"]["id"];
 			$this -> Titulacion -> create();
 			if ($this -> Titulacion -> save($data)) {
