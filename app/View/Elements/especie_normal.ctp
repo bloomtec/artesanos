@@ -66,7 +66,7 @@ Reglamento de calificaciones y Ramas de Trabajos Vigentes <br>
   	</tr>
   	<tr>
 	  	<td colspan="2" ><b>RAZÓN SOCIAL:</b></td>
-	    <td  colspan="3">&nbsp;</td>
+	    <td  colspan="3"><?php $inspeccion['Taller'][0]['tal_razon_social_o_nombre_comercial']; ?></td>
 	    <td >&nbsp;</td>
 	    <td ><b>PRESIDENTE</b></td>
   	</tr>
