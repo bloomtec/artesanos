@@ -534,7 +534,7 @@ class SolicitudesTitulacionesController extends AppController {
 				$this -> EspeciesValorada -> save($data);
 				$this -> Session -> setFlash(__('El título se ha refrendado satisfactoriamente', true));
 			} else {
-				debug($this->Titulacion->validationErrors);
+				//debug($this->Titulacion->validationErrors);
 				$this -> Session -> setFlash(__('Error al intentar refrendar', true));
 			}
 			$this -> redirect(array('action' => 'index'));
