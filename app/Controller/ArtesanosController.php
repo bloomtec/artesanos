@@ -852,7 +852,15 @@ class ArtesanosController extends AppController {
 	function modificarCalificacion($calificacionId = null){
 		$calificacion = null;
 		if($calificacionId && $calificacion = $this -> Artesano -> Calificacion -> read(null, $calificacionId)) {
-			$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $calificacion['Calificacion']['artesano_id'] . '/1');
+			$tipo_especie = null;
+			if($calificacion['Calificacion']['tipos_de_calificacion_id'] == 1) {
+				// normal
+				$tipo_especie = Configure::read('edi_cal_normal');
+			} else {
+				// autonomo
+				$tipo_especie = Configure::read('edi_cal_autonomo');
+			}
+			$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $calificacion['Calificacion']['artesano_id'] . '/' . $tipo_especie);
 			$detener = false;
 			if(!($calificacion['Calificacion']['cal_estado'] >= 1) || !(!($calificacion['Calificacion']['cal_estado'] == 0) && !(!$especieValorada || $especieValorada['EspeciesValorada']['se_uso']))) {
 				if($calificacion['Calificacion']['cal_estado'] < 0) {
@@ -860,13 +868,13 @@ class ArtesanosController extends AppController {
 					$detener = true;
 				} elseif(!(!($calificacion['Calificacion']['cal_estado'] == 0) && !(!$especieValorada || $especieValorada['EspeciesValorada']['se_uso']))) {
 					if(!$calificacion['Calificacion']['cal_estado'] == 0) {
-						$this -> Session -> setFlash('La calificación ya no esta pendiente para calificar, verifique que se tiene la especie valorada para modificar datos.');
+						$this -> Session -> setFlash('La calificación ya no esta pendiente para calificar, verifique que se tiene la especie valorada correspondiente para modificar datos.');
 						$detener = true;
 					} elseif(!$especieValorada || !$especieValorada['EspeciesValorada']['se_uso']) {
-						if($this -> Auth -> user('rol_id') != 3) {
+						/*if($this -> Auth -> user('rol_id') != 3) {
 							$this -> Session -> setFlash('Solamente el inspector puede modificar datos en este punto (la calificación está pendiente de inspección)');
 							$detener = true;
-						}
+						}*/
 					} else {
 						$this -> Session -> setFlash('=/');
 						$detener = true;
