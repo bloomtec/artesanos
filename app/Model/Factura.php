@@ -32,14 +32,7 @@ class Factura extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-			'numeric' => array(
-				'rule' => array('numeric'),
-				'message' => 'Este es un campo numérico',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
+			
 			'isUnique' => array(
 				'rule' => array('isUnique'),
 				'message' => 'Ya existe una factura con el número ingresado',
