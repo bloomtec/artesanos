@@ -522,11 +522,11 @@ class SolicitudesTitulacionesController extends AppController {
 			//Hacer la modificación del campo se_uso y agregar el titulo			
 			$data = array();
 			$this -> loadModel("Titulacion", true);
+			$this->Titulacion->create();
 			$data["Titulacion"]["titulo_id"] = $idTitulo;
 			$data["Titulacion"]["solicitudes_titulacion_id"] = $idSolicitudTitulacion;
 			$data["Titulacion"]["juntas_provincial_id"] = $res["VentasEspecie"]["juntas_provincial_id"];
 			//$data["Titulacion"]["especies_valoradas_id"] = $res["EspeciesValorada"]["id"];
-			$this -> Titulacion -> create();
 			if ($this -> Titulacion -> save($data)) {
 				$this -> loadModel("EspeciesValorada", true);
 				$this -> EspeciesValorada -> id = $res["EspeciesValorada"]["id"];
