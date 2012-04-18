@@ -129,12 +129,12 @@ class ArtesanosController extends AppController {
 	 */
 	private function guardarCalificacion($data = null) {
 		if ($data) {
-			$this -> request -> data = $data;
-
 			// Guardar la calificacion
-			$calificacion = array();
-			$calificacion['Calificacion'] = $this -> request -> data['Calificacion'];
-
+			$calificacion = $this -> Artesano -> Calificacion -> read(null, $data['Calificacion']['id']);
+			foreach($data['Calificacion'] as $key => $value) {
+				$calificacion['Calificacion'][$key] = $value;
+			}
+			
 			/**
 			 * Revisar campos del balance
 			 */
@@ -183,8 +183,22 @@ class ArtesanosController extends AppController {
 			/**
 			 * Fin revision campos del balance
 			 */
+			$this -> request -> data = $data;
+			$this -> request -> data['Calificacion'] = $calificacion['Calificacion'];
 			$this -> Artesano -> Calificacion -> create();
 			if ($this -> Artesano -> Calificacion -> save($calificacion)) {
+				// Si hay especie valorada entonces ponerla como usada
+				$especieValorada = null;
+				if($calificacion['Calificacion']['tipos_de_calificacion_id'] == 1) {
+					$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $calificacion['Calificacion']['artesano_id'] . '/' . Configure::read('edi_cal_normal'));
+				} elseif($calificacion['Calificacion']['tipos_de_calificacion_id'] == 2) {
+					$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $calificacion['Calificacion']['artesano_id'] . '/' . Configure::read('edi_cal_autonomo'));
+				}
+				if($especieValorada) {
+					$especieValorada['EspeciesValorada']['se_uso'] = 1;
+					$this -> loadModel('EspeciesValorada');
+					$this -> EspeciesValorada -> save($especieValorada);
+				}
 				// Guardar los datos personales
 				$datos_personales = array();
 				$datos_personales['DatosPersonal'] = $this -> request -> data['DatosPersonal'];
@@ -311,10 +325,12 @@ class ArtesanosController extends AppController {
 			} else {
 				$this -> Session -> setFlash(__('Ha ocurrido un error al registrar la calificación del artesano. Por favor, intente de nuevo.'), 'crud/error');
 			}
-			// Asignar inspector a la calificacion
-			$this -> asignarInspector($calificacion['Calificacion']['id']);
+			// Asignar inspector a la calificacion (si quien modifica no es el inspector!)
+			if($this -> Auth -> user('rol_id') != 3) {
+				$this -> asignarInspector($calificacion['Calificacion']['id']);
+			}
+			// redirigir
 			$this -> redirect(array('controller' => 'calificaciones', 'action' => 'resumen', $calificacion['Calificacion']['id']));
-
 		} else {
 			// TODO : Por definir
 		}
