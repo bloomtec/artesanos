@@ -496,7 +496,7 @@ class SolicitudesTitulacionesController extends AppController {
 
 	function refrendar($idSolicitudTitulacion) {
 		//$this -> layout = "";
-		$this -> render(false);
+		//$this -> render(false);
 		$this -> SolicitudesTitulacion -> recursive = -1;
 		$solicitudTitulacion = $this -> SolicitudesTitulacion -> find("all", array("conditions" => array("SolicitudesTitulacion.id" => $idSolicitudTitulacion)));
 
@@ -524,7 +524,7 @@ class SolicitudesTitulacionesController extends AppController {
 			$this -> loadModel("Titulacion", true);
 			$data["Titulacion"]["titulo_id"] = $idTitulo;
 			$data["Titulacion"]["solicitudes_titulacion_id"] = $idSolicitudTitulacion;
-			//$data["Titulacion"]["juntas_provincial_id"] = $res["VentasEspecie"]["juntas_provincial_id"];
+			$data["Titulacion"]["juntas_provincial_id"] = $res["VentasEspecie"]["juntas_provincial_id"];
 			//$data["Titulacion"]["especies_valoradas_id"] = $res["EspeciesValorada"]["id"];
 			$this -> Titulacion -> create();
 			if ($this -> Titulacion -> save($data)) {
@@ -532,7 +532,15 @@ class SolicitudesTitulacionesController extends AppController {
 				$this -> EspeciesValorada -> id = $res["EspeciesValorada"]["id"];
 				$data["EspeciesValorada"]["se_uso"] = 1;
 				$this -> EspeciesValorada -> save($data);
-				$this -> Session -> setFlash(__('El título se ha refrendado satisfactoriamente', true));
+                
+                //Cambio del estado de la solicitud para indicar que ya se refrendo
+                $data=array();
+                $this->SolicitudesTitulacion->id = $idSolicitudTitulacion;
+                $data["SolicitudesTitulacion"]["estados_solicitudes_titulacion_id"]=4;
+                $this->SolicitudesTitulacion->save($data);
+                
+                $this -> Session -> setFlash(__('El título se ha refrendado satisfactoriamente'), 'crud/success');
+ 
 			} else {
 				//debug($this->Titulacion->validationErrors);
 				$this -> Session -> setFlash(__('Error al intentar refrendar', true));

@@ -138,8 +138,6 @@ class CantonesController extends AppController {
 		}
 		
 		$cantones = $this -> paginate();
-		
-		//debug($cantones);
 		$this -> set(compact('cantones'));
 	}
 }
