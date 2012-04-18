@@ -219,7 +219,7 @@ class CursosController extends AppController {
             $data["CursosAlumno"]['cur_fecha_de_emision'] = $fecha;
             $this->CursosAlumno->save($data);
             $this->CursosAlumnos->recursive=-1;
-            $fecha = $this->CursosAlumnos->find("list", array("fields"=>array("cur_fecha_de_emision"), "conditions"=>array("CursosAlumno.id"=>$alumno["CursosAlumno"]["id"])));
+            $fecha = $this->CursosAlumno->find("list", array("fields"=>array("cur_fecha_de_emision"), "conditions"=>array("CursosAlumno.id"=>$alumno["CursosAlumno"]["id"])));
 		    foreach($fecha as $fecha) {
                $fecha = $fecha; 
             }
