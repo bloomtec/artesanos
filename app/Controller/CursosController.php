@@ -213,21 +213,19 @@ class CursosController extends AppController {
 		$this -> Curso -> CursosAlumno -> bindModel(array('belongsTo' => array('Alumno','Curso')));
 		$alumno = $this -> Curso -> CursosAlumno -> read(null, $alumnoCursoId);
 		
-		if (empty($alumno["CursosAlumno"]['cur_fecha_de_emision'])) {
-		    $fecha = date("F j, Y, g:i a", time());
-            $this->loadModel("CursosAlumno", true);  
-		    $this->CursosAlumno->id = $alumno["CursosAlumno"]["id"];
+		if ($alumno["CursosAlumno"]['cur_fecha_de_emision']==null or $alumno["CursosAlumno"]['cur_fecha_de_emision']=="0000-00-00 00:00:00")  {
+            $fecha = date('Y-m-d h:i:s', time());
+            $this->Curso->query("UPDATE cursos_alumnos SET cur_fecha_de_emision ='".$fecha."' WHERE id='".$alumno["CursosAlumno"]["id"]."'");
+            //Toco hacer el update de cur_fecha_de_emision con SQL porque este no funcionaba
+            /*$this->loadModel("CursosAlumno", true);
+		    $this -> CursosAlumno ->id = $alumno["CursosAlumno"]["id"];
             $data["CursosAlumno"]['cur_fecha_de_emision'] = $fecha;
-            $this->CursosAlumno->save($data);
-            $this->CursosAlumno->recursive=-1;
-            $fecha = $this->CursosAlumno->find("list", array("fields"=>array("cur_fecha_de_emision"), "conditions"=>array("CursosAlumno.id"=>$alumno["CursosAlumno"]["id"])));
-		    foreach($fecha as $fecha) {
-               $fecha = $fecha; 
-            } 
+            $this->CursosAlumno->save($data);*/
+            $fecha = date("F j, Y, g:i a",  strtotime($fecha));
         } else {
 			$fecha = date("F j, Y, g:i a", strtotime($alumno["CursosAlumno"]['cur_fecha_de_emision']));
 		}
-
+       
 		$fecha = explode(" ", str_replace(",", "", $fecha));
 		$meses = array("January" => "Enero", "February" => "Febrero", "March" => "Marzo", "April" => "Abril", "May" => "Mayo", "June" => "Junio", "July" => "Julio", "August" => "Agosto", "September" => "Septiembre", "October" => "Octubre", "November" => "Noviembre", "December" => "Diciembre");
 

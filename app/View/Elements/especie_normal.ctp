@@ -62,7 +62,7 @@ Reglamento de calificaciones y Ramas de Trabajos Vigentes <br>
 	    <td  colspan="3"><?php echo $inspeccion["Rama"]["ram_nombre"]; ?></td>
 	    
 	    <td width="10">&nbsp;</td>
-	    <td width="110"><b>Lic. Luis Quishpi Vélez</b></td>
+	    <td width="110"><b><?php print($presidente); ?></b></td>
   	</tr>
   	<tr>
 	  	<td colspan="2" ><b>RAZÓN SOCIAL:</b></td>
@@ -108,7 +108,7 @@ Reglamento de calificaciones y Ramas de Trabajos Vigentes <br>
 	  	<td colspan="2" ><b>FECHA DE TITULACIÓN:</b></td>
 	    <td  colspan="3">&nbsp;</td>
 	    <td >&nbsp;</td>
-	    <td ><b>Dr. Oswaldo Toledo Romo</b></td>
+	    <td ><b><?php print($secretario); ?></b></td>
   	</tr>
   	<tr>
 	  	<td colspan="2" ><b>FECHA DE EXPEDICIÓN:</b></td>
@@ -144,7 +144,7 @@ Reglamento de calificaciones y Ramas de Trabajos Vigentes <br>
 	  	<td colspan="2" >&nbsp;</td>
 	    <td  colspan="3">&nbsp;</td>
 	    <td >&nbsp;</td>
-	    <td ><b>Sr. Lenin Barba Galarza</b></td>
+	    <td ><b><?php print($directorNacTec); ?></b></td>
   	</tr>
   	<tr>
 	  	<td colspan="2" >&nbsp;</td>

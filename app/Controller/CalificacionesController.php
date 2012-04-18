@@ -402,30 +402,54 @@ class CalificacionesController extends AppController {
 	}
 
 	public function imprimir($id = null) {
-		//$this -> layout = 'especie_valorada';
+		$this -> layout = 'especie_valorada';
 		//$this -> layout ="pdf3";
 		$inspeccion = $this -> Calificacion -> read(null, $id);
-		debug($inspeccion);
-		//$this -> set(compact('inspeccion'));
+        
+        $presidente = $this -> requestAction('/configuraciones/getValorConfiguracion/' . "con_presidente_de_la_junta");
+        $secretario = $this -> requestAction('/configuraciones/getValorConfiguracion/' . "con_secretario_general");
+        $directorNacTec = $this -> requestAction('/configuraciones/getValorConfiguracion/' . "con_director_nacional_tecnico");
+       
+		$this -> set(compact('inspeccion','presidente','secretario','directorNacTec'));
 	}
 	
 	function carnet($idCalificacion=null){
-	    $this -> layout = 'carnet';	
-		$this->Calificacion->recursive=0;
-		$artesano = $this->Calificacion->find("all", array('conditions'=>array("Calificacion.id"=>$idCalificacion)));
-		$this->loadModel("Provincia");
-		$provincia = $this->Provincia->find("list", array("fields"=>array("pro_nombre"),"conditions"=>array("Provincia.id"=>$artesano[0]["Artesano"]["provincia_id"])));
-		if(empty($provincia)){
-			$provincia[1]=null;
-		}
-		$this->loadModel("Ciudad");
-		$ciudad = $this->Ciudad->find("list", array("fields"=>array("ciu_nombre"),"conditions"=>array("Ciudad.id"=>$artesano[0]["Artesano"]["ciudad_id"])));
-		if(empty($ciudad)){
-			$ciudad[1]=null;
-		}
-		$presidente = $this -> requestAction('/configuraciones/getValorConfiguracion/' . "con_presidente_de_la_junta");
-		$this -> set(compact('artesano','ciudad','provincia','presidente'));
-		//debug($presidente); return;
+	   		
+	    $this -> layout = 'carnet'; 
+        $this->Calificacion->recursive=0;
+        $artesano = $this->Calificacion->find("all", array('conditions'=>array("Calificacion.id"=>$idCalificacion)));
+        
+
+        if (isset($artesano[0]["Artesano"]["provincia_id"])) {
+            $this -> loadModel("Provincia", true);
+            $provincia = $this -> Provincia -> find("list", array("fields" => array("pro_nombre"), "conditions" => array("Provincia.id" => $artesano[0]["Artesano"]["provincia_id"])));
+            if (empty($provincia)) {
+                $provincia = null;
+            } else {
+                foreach ($provincia as $provincia) {
+                    $provincia = $provincia;
+                }
+            }
+        } else {
+            $provincia = null;
+        }
+
+        if (isset($artesano[0]["Artesano"]["ciudad_id"])) {
+            $this -> loadModel("Ciudad", true);
+            $ciudad = $this -> Ciudad -> find("list", array("fields" => array("ciu_nombre"), "conditions" => array("Ciudad.id" => $artesano[0]["Artesano"]["ciudad_id"])));
+            if (empty($ciudad)) {
+                $ciudad = null;
+            } else {
+                foreach ($ciudad as $ciudad) {
+                    $ciudad = $ciudad;
+                }
+            }
+        } else {
+            $ciudad = null;
+        }
+
+        $presidente = $this -> requestAction('/configuraciones/getValorConfiguracion/' . "con_presidente_de_la_junta");
+        $this -> set(compact('artesano', 'ciudad', 'provincia', 'presidente'));
 	}
 
 }
