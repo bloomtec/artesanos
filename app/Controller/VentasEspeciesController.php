@@ -385,8 +385,9 @@ class VentasEspeciesController extends AppController {
 	}
     
    public function ventas() {
-      $ventaEspecies = $this->VentasEspecie->find("all"); 
-      debug($ventasEspecies);
+      $ventasEspecies = $this->VentasEspecie->find("all"); 
+      $this->paginate();
+      $this->set(compact("ventasEspecies"));
    }
 	
 }
