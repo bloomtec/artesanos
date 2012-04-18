@@ -7,7 +7,6 @@
 	</div>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-		<th><?php echo $this->Paginator->sort('juntas_provincial_id','Junta Provincial');?></th>
 		<th><?php echo $this->Paginator->sort('artesano_id','Artesano');?></th>
 		<th><?php echo $this->Paginator->sort('ven_cantidad','Cantidad');?></th>
 		<th><?php echo $this->Paginator->sort('ven_valor','Valor');?></th>
@@ -17,9 +16,6 @@
 	$i = 0;
 	foreach ($ventasEspecies as $ventasEspecie): ?>
 	<tr>
-		<td>
-			<?php echo $this->Html->link($ventasEspecie['JuntasProvincial']['jun_nombre'], array('controller' => 'juntas_provinciales', 'action' => 'view', $ventasEspecie['JuntasProvincial']['id'])); ?>
-		</td>
 		<td>
 			<?php echo $this->Html->link($ventasEspecie['Artesano']['nombre_completo'], array('controller' => 'artesanos', 'action' => 'view', $ventasEspecie['Artesano']['id'])); ?>
 		</td>
@@ -50,9 +46,4 @@
 		echo $this->Paginator->last('>> ', array(), null, array('class' => 'next disabled'));
 	?>
 	</div>
-</div>
-<div class="actions">
-	<ul>
-		<li><?php echo $this->Html->link(__('Agregar Ventas Especie'), array('action' => 'add')); ?></li>
-	</ul>
 </div>
