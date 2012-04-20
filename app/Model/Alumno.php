@@ -152,5 +152,13 @@ class Alumno extends AppModel {
 			'insertQuery' => ''
 		)
 	);
-
+	public $belongsTo = array(
+		'CentrosArtesanal' => array(
+			'className' => 'CentrosArtesanal',
+			'foreignKey' => 'centros_artesanal_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		)
+	);
 }

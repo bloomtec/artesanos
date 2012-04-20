@@ -125,13 +125,6 @@ class Solicitud extends AppModel {
  * @var array
  */
 	public $belongsTo = array(
-		'JuntasProvincial' => array(
-			'className' => 'JuntasProvincial',
-			'foreignKey' => 'juntas_provincial_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
 		'CentrosArtesanal' => array(
 			'className' => 'CentrosArtesanal',
 			'foreignKey' => 'centros_artesanal_id',
