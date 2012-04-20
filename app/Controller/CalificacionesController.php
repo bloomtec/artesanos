@@ -9,7 +9,170 @@ class CalificacionesController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('resumen', 'inspecciones', 'verInspeccion');
+		$this -> Auth -> allow('resumen', 'inspecciones', 'verInspeccion', 'reporteGraficoArtesanos');
+	}
+	
+	public function reporteGraficoArtesanos() {
+		if($this -> request -> is('post') || $this -> request -> is('put')) {
+				
+			// Obtener las calificaciones con estado aprobado
+			$calificaciones = $this -> Calificacion -> find(
+				'list',
+				array(
+					'fields' => array('Calificacion.id'),
+					'conditions' => array('Calificacion.cal_estado' => 1),
+					'recursive' => -1
+				)
+			);
+			
+			// Filtrar para dejar aquellas que esten dentro del tiempo válido concebido
+			foreach($calificaciones as $key => $calificacionId) {
+				if(!$this -> validarEstadoCalificacion($calificacionId)) {
+					unset($calificaciones[$key]);
+				}
+			}
+			$this -> Calificacion -> Behaviors -> attach('Containable');
+			$this -> Calificacion -> contain(
+				'Artesano',
+				'Rama',
+				'TiposDeCalificacion',
+				'Local',
+				'Taller',
+				'Taller.ProductosElaborado',
+				'Taller.MateriasPrima',
+				'Taller.Trabajador',
+				'Taller.EquiposDeTrabajo'
+			);
+			
+			// Acomodar las condiciones de busqueda acorde el filtro que se envió
+			$conditions = array();
+			$conditions['Calificacion.id'] = $calificaciones;
+			
+			if($this -> request -> data['Reporte']['rama_id']) $conditions['Calificacion.rama_id'] = $this -> request -> data['Reporte']['rama_id'];
+			if($this -> request -> data['Reporte']['genero']) $conditions['Artesano.art_sexo'] = $this -> request -> data['Reporte']['genero'];
+			if($this -> request -> data['Reporte']['provincia']) $conditions['Artesano.provincia_id'] = $this -> request -> data['Reporte']['provincia'];
+			if($this -> request -> data['Reporte']['canton']) $conditions['Artesano.canton_id'] = $this -> request -> data['Reporte']['canton'];
+			if($this -> request -> data['Reporte']['ciudad']) $conditions['Artesano.ciudad_id'] = $this -> request -> data['Reporte']['ciudad'];
+			if($this -> request -> data['Reporte']['fecha_inicial']) {
+				//$this -> request -> data['Reporte']['fecha_inicial'] = $this -> request -> data['Reporte']['fecha_inicial'] . ' 00:00:00';
+				$conditions['Calificacion.cal_fecha_expedicion >='] = $this -> request -> data['Reporte']['fecha_inicial'];
+			}
+			if($this -> request -> data['Reporte']['fecha_final']) {
+				//$this -> request -> data['Reporte']['fecha_final'] = $this -> request -> data['Reporte']['fecha_final'] . ' 23:59:99';
+				$conditions['Calificacion.cal_fecha_expedicion <='] = $this -> request -> data['Reporte']['fecha_final'];
+			}
+			if($this -> request -> data['Reporte']['fecha_inicial'] && $this -> request -> data['Reporte']['fecha_final']) {
+				if(isset($conditions['Calificacion.cal_fecha_expedicion <='])) unset($conditions['Calificacion.cal_fecha_expedicion <=']);
+				if(isset($conditions['Calificacion.cal_fecha_expedicion >='])) unset($conditions['Calificacion.cal_fecha_expedicion >=']);
+				$conditions['Calificacion.cal_fecha_expedicion BETWEEN ? AND ?'] = array(
+					$this -> request -> data['Reporte']['fecha_inicial'],
+					$this -> request -> data['Reporte']['fecha_final']
+				);
+			}
+			
+			
+			// Obtener las calificaciones acorde el filtro resultante
+			$calificaciones = $this -> Calificacion -> find('all', array('conditions' => $conditions));
+			$datos = $this -> obtenerDatosCalificaciones($calificaciones);
+		}
+		$provincias = array('' => 'Seleccione...');
+		$provincias_tmp = $this -> Calificacion -> Taller -> Provincia -> find('list');
+		foreach ($provincias_tmp as $key => $value) {
+			$provincias[$key] = $value;
+		}
+		$this -> set('provincias', $provincias);
+		$this -> set('generos', $this -> Calificacion -> getValores(5));
+		$this -> set('fechaActual', date('Y-m-d', strtotime('now')));
+		$this -> set('ramas', $this -> Calificacion -> Rama -> find('list'));
+	}
+	
+	private function obtenerDatosCalificaciones($calificaciones = null) {
+		$datos = array(
+			'Ramas' => array()
+		);
+		
+		foreach($calificaciones as $calificacion_key => $calificacion_data) {
+			// Verificar que la rama este en el arreglo de datos y si no esta crearla
+			if(!isset($datos['Ramas'][$calificacion_data['Rama']['ram_nombre']])) {
+				$datos['Ramas'][$calificacion_data['Rama']['ram_nombre']] = array(
+					'MateriasPrimas' => array(),
+					'Artesanos' => 0,
+					'TotalIngresos' => 0.0,
+					'PromedioIngresos' => 0.0,
+					'TotalInversion' => 0.0,
+					'Trabajadores' => array(
+						'TotalOperarios' => 0,
+						'PromedioOperarios' => 0.0,
+						'TotalAprendices' => 0,
+						'PromedioAprendices' => 0.0
+					)
+				);
+			}
+			
+			// Sumar la cantidad de calificados en la rama
+			$datos['Ramas'][$calificacion_data['Rama']['ram_nombre']]['Artesanos'] += 1;
+			
+			// Sumar el total de ingresos en la rama
+			$datos['Ramas'][$calificacion_data['Rama']['ram_nombre']]['TotalIngresos'] += $calificacion_data['Calificacion']['cal_total_ingresos'];
+			
+			// Sacar el promedio de ingresos
+			$datos['Ramas'][$calificacion_data['Rama']['ram_nombre']]['PromedioIngresos'] = $datos['Ramas'][$calificacion_data['Rama']['ram_nombre']]['TotalIngresos'] / $datos['Ramas'][$calificacion_data['Rama']['ram_nombre']]['Artesanos'];
+			
+			// Sumar la inversión en la rama
+			$datos['Ramas'][$calificacion_data['Rama']['ram_nombre']]['TotalInversion'] += $calificacion_data['Calificacion']['cal_maquinas_y_herramientas'] + $calificacion_data['Calificacion']['cal_productos_elaborados'];
+			
+			// Recorrer las materias primas de la calificacion y crear datos acorde sea necesario
+			foreach($calificacion_data['Taller'][0]['MateriasPrima'] as $materiaPrima_key => $materiaPrima_data) {
+				if(!isset($datos['Ramas'][$calificacion_data['Rama']['ram_nombre']]['MateriasPrimas'][$materiaPrima_data['mat_tipo_de_materia_prima']])) {
+					$datos['Ramas'][$calificacion_data['Rama']['ram_nombre']]['MateriasPrimas'][$materiaPrima_data['mat_tipo_de_materia_prima']] = 0;
+				}
+				$datos['Ramas'][$calificacion_data['Rama']['ram_nombre']]['MateriasPrimas'][$materiaPrima_data['mat_tipo_de_materia_prima']] += $materiaPrima_data['mat_cantidad'];
+			}
+			
+			// Recorrer los trabajadores de la calificacion y crear datos acorde sea necesario
+			foreach($calificacion_data['Taller'][0]['Trabajador'] as $trabajador_key => $trabajador_data) {
+				if($trabajador_data['TalleresTrabajador']['tipos_de_trabajador_id'] == 1) {
+					$datos['Ramas'][$calificacion_data['Rama']['ram_nombre']]['Trabajadores']['TotalOperarios'] += 1;
+				} elseif($trabajador_data['TalleresTrabajador']['tipos_de_trabajador_id'] == 2) {
+					$datos['Ramas'][$calificacion_data['Rama']['ram_nombre']]['Trabajadores']['TotalAprendices'] += 1;
+				}
+			}
+			
+			// Sacar los promedios de trabajadores y aprendices para la rama
+			$datos['Ramas'][$calificacion_data['Rama']['ram_nombre']]['Trabajadores']['PromedioOperarios'] = $datos['Ramas'][$calificacion_data['Rama']['ram_nombre']]['Trabajadores']['TotalOperarios'] / $datos['Ramas'][$calificacion_data['Rama']['ram_nombre']]['Artesanos'];
+			$datos['Ramas'][$calificacion_data['Rama']['ram_nombre']]['Trabajadores']['PromedioAprendices'] = $datos['Ramas'][$calificacion_data['Rama']['ram_nombre']]['Trabajadores']['TotalAprendices'] / $datos['Ramas'][$calificacion_data['Rama']['ram_nombre']]['Artesanos'];
+		}
+		
+		debug($datos);
+		
+		return $datos;
+	}
+	
+	private function validarEstadoCalificacion($calificacionId = null) {
+		$this -> Calificacion -> recursive = -1;
+		$calificacion = $this -> Calificacion -> read(null, $calificacionId);
+		
+		$fecha_expiracion = $calificacion['Calificacion']['cal_fecha_expiracion'];
+		if($fecha_expiracion == '3000-00-00') {
+			return true;
+		} else {
+			// Fecha de expiración más treinta días habiles
+			for ($i = 30; $i > 0; $i -= 1) {
+				do {
+					$dias_sumados = 1;
+					$fecha_expiracion = strtotime("+$dias_sumados day", strtotime($fecha_expiracion));
+					$fecha_expiracion = date('Y-m-d', $fecha_expiracion);
+				} while(!$this -> requestAction('/feriados/esFechaValida/'.$fecha_expiracion));
+			}
+	
+			$fecha_expiracion = new DateTime($fecha_expiracion);
+			$fecha_actual = new DateTime('now');
+			if ($fecha_actual <= $fecha_expiracion) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 	}
 
 	/**

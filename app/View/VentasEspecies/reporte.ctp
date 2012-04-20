@@ -13,7 +13,7 @@
 	<?php echo $this -> Form -> end();?>
 </div>
 <?php endif; ?>
-<?php if(isset($ingresos)) : ?>
+<?php if(isset($ingresos)) : debug($ingresos); ?>
 <br />
 <br />
 <h2><?php echo __('Reporte ventas de especies');?></h2>
@@ -163,8 +163,17 @@
 		</td>
 		<td>
 			<?php
-				echo $ingreso['VentasEspecie']['ven_valor'];
+				//echo $ingreso['VentasEspecie']['ven_valor'];
 			?>
+			<br />
+			<?php
+				for($j = 0; $j < count($valores); $j += 1) :
+			?>
+			<nobr><?php echo $valores[$j] * $cantidades[$j]; ?></nobr><br />
+			<?php	
+				endfor;
+			?>
+			<br />
 		</td>
 		<td><?php echo $ingreso['Factura']['fac_cliente']; ?></td>
 		<td><?php echo $ingreso['Factura']['fac_ruc_doc']; ?></td>
