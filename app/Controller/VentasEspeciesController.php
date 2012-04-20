@@ -376,17 +376,57 @@ class VentasEspeciesController extends AppController {
 		echo $csv -> render($titulo);
 	}
 	
-	public function factura($idVenta = null) {
+	public function factura($idFactura = null) {
 		$this->layout="factura";
-		$this->VentasEspecie->recursive=0;
-		$ventaEspecie = $this->VentasEspecie->find("all", array("conditions"=>array("VentasEspecie.id"=>$idVenta)));
-		$this -> set(compact('ventaEspecie'));
-		//debug($ventaEspecie);
+		$this->VentasEspecie->recursive=0; 
+		$ventaEspecie = $this->VentasEspecie->Factura->find("all", array("conditions"=>array("Factura.id"=>$idVenta)));
+		//$this -> set(compact('ventaEspecie'));
+		debug($ventaEspecie);
 	}
     
    public function ventas() {
-      $ventaEspecies = $this->VentasEspecie->find("all"); 
-      debug($ventasEspecies);
+      $this->Recursive=0;
+        $conditions = array();
+        if (isset($this -> params['named']['query']) && !empty($this -> params['named']['query'])) {
+            //$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
+            $query = $this -> params['named']['query'];
+                    
+            $idsFacturas = $this -> Parroquia -> find(
+            'list',
+                array(
+                    'conditions' => array(
+                        'OR' => array(
+                            'Factura.fac_numero LIKE' => "%$query%",
+                            'Factura.fac_comprobante_deposito LIKE' => "%$query%",
+                            'Factura.fac_cliente LIKE' => "%$query%",
+                        )
+                    ),
+                    'fields' => array(
+                        'Factura.id'
+                    )
+                )
+            );
+           
+            
+            $conditions['OR']['Factura.id'] = $idsFacturas;
+            
+            if(!empty($conditions)) {
+                    $this -> paginate = array('conditions' => $conditions);
+                }
+            
+            $ventasEspecies = $this -> paginate();
+            $this -> set(compact('ventasEspecies'));
+        }else {
+           
+          $idsFacturas = $this->VentasEspecie->find("list", array("fields"=>array("factura_id")));
+          $ventasEspecies = $this->VentasEspecie->Factura->find("all", array("conditions"=>$idsFacturas)); 
+          $this -> paginate = array('order' => array("Factura.id"=>'desc'),"conditions"=>array("VentasEspecie.factura_id <>"=>null));
+          $ventasEspecies = $this->paginate();
+          //$conditions['Factura.id'] = $idsFacturas;
+          //$this -> paginate = array('conditions'=>$conditions);
+          //$this -> paginate = array('order' => array("Factura.id"=>'desc'));
+          $this->set(compact("ventasEspecies"));
+      }
    }
 	
 }

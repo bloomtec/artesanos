@@ -958,6 +958,10 @@ span .pdf{
 	background-image: url(/img/calificar.png);
 	background-size: 32px;
 }
+.actions .factura {
+	background-image: url(/img/printer.png);
+	background-size: 32px;
+}
 /** Paging **/
 .paging {
 	background: #fff;
