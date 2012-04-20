@@ -126,6 +126,13 @@ class CentrosArtesanal extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
+		),
+		'Rama' => array(
+			'className' => 'Rama',
+			'foreignKey' => 'rama_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
 		)
 	);
 

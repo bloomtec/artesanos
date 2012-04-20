@@ -8,7 +8,13 @@ App::import('Helper', 'csv');
  * @property CentrosArtesanal $CentrosArtesanal
  */
 class CentrosArtesanalesController extends AppController {
-
+	
+	private function formatearValor($valor = null) {
+		$valor = str_replace('.', '', $valor);
+		$valor = str_replace(',', '.', $valor);
+		return $valor;
+	}
+	
 	/**
 	 * index method
 	 *
@@ -41,6 +47,7 @@ class CentrosArtesanalesController extends AppController {
 	public function add() {
 		if ($this -> request -> is('post')) {
 			$this -> CentrosArtesanal -> create();
+			$this -> request -> data['CentrosArtesanal']['cen_costo_mensual_local'] = $this -> formatearValor($this -> request -> data['CentrosArtesanal']['cen_costo_mensual_local']);
 			if ($this -> CentrosArtesanal -> save($this -> request -> data)) {
 				$this -> Session -> setFlash(__('El centro artesanal ha sido creado'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
@@ -49,11 +56,14 @@ class CentrosArtesanalesController extends AppController {
 			}
 		}
 		$provincias = $this -> CentrosArtesanal -> Provincia -> find('list');
-		//$cantones = $this -> CentrosArtesanal -> Canton -> find('list');
-		//$ciudades = $this -> CentrosArtesanal -> Ciudad -> find('list');
-		//$parroquias = $this -> CentrosArtesanal -> Parroquia -> find('list');
-		//$this -> set(compact('provincias', 'cantones', 'ciudades', 'parroquias'));
-		$this -> set(compact('provincias'));
+		$ramas = $this -> CentrosArtesanal -> Rama -> find('list');
+		$sostenimientos = $this -> CentrosArtesanal -> getValores(19);
+		$tipos = $this -> CentrosArtesanal -> getValores(20);
+		$modalidades = $this -> CentrosArtesanal -> getValores(21);
+		$lenguajes = $this -> CentrosArtesanal -> getValores(22);
+		$condiciones = $this -> CentrosArtesanal -> getValores(23);
+		$estados = $this -> CentrosArtesanal -> getValores(24);
+		$this -> set(compact('provincias', 'ramas', 'sostenimientos', 'tipos', 'modalidades', 'lenguajes', 'condiciones', 'estados'));
 	}
 
 	/**
@@ -68,6 +78,7 @@ class CentrosArtesanalesController extends AppController {
 			throw new NotFoundException(__('No se encontró el centro artesanal'));
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
+			$this -> request -> data['CentrosArtesanal']['cen_costo_mensual_local'] = $this -> formatearValor($this -> request -> data['CentrosArtesanal']['cen_costo_mensual_local']);
 			if ($this -> CentrosArtesanal -> save($this -> request -> data)) {
 				$this -> Session -> setFlash(__('El centro artesanal ha sido creado'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
@@ -78,10 +89,14 @@ class CentrosArtesanalesController extends AppController {
 			$this -> request -> data = $this -> CentrosArtesanal -> read(null, $id);
 		}
 		$provincias = $this -> CentrosArtesanal -> Provincia -> find('list');
-		$cantones = $this -> CentrosArtesanal -> Canton -> find('list');
-		$ciudades = $this -> CentrosArtesanal -> Ciudad -> find('list');
-		$parroquias = $this -> CentrosArtesanal -> Parroquia -> find('list');
-		$this -> set(compact('provincias', 'cantones', 'ciudades', 'parroquias'));
+		$ramas = $this -> CentrosArtesanal -> Rama -> find('list');
+		$sostenimientos = $this -> CentrosArtesanal -> getValores(19);
+		$tipos = $this -> CentrosArtesanal -> getValores(20);
+		$modalidades = $this -> CentrosArtesanal -> getValores(21);
+		$lenguajes = $this -> CentrosArtesanal -> getValores(22);
+		$condiciones = $this -> CentrosArtesanal -> getValores(23);
+		$estados = $this -> CentrosArtesanal -> getValores(24);
+		$this -> set(compact('provincias', 'ramas', 'sostenimientos', 'tipos', 'modalidades', 'lenguajes', 'condiciones', 'estados'));
 	}
 
 	/**
