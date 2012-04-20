@@ -13,7 +13,7 @@
 	<?php echo $this -> Form -> end();?>
 </div>
 <?php endif; ?>
-<?php if(isset($ingresos)) : debug($ingresos); ?>
+<?php if(isset($ingresos)) : //debug($ingresos); ?>
 <br />
 <br />
 <h2><?php echo __('Reporte ventas de especies');?></h2>
