@@ -1,114 +1,117 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * Solicitud Model
+ * Profesor Model
  *
- * @property JuntasProvincial $JuntasProvincial
- * @property Curso $Curso
+ * @property CentrosArtesanal $CentrosArtesanal
  */
-class Solicitud extends AppModel {
-	
-	public $actsAs = array('Auditable');
+class Profesor extends AppModel {
 /**
  * Display field
  *
  * @var string
  */
-	public $displayField = 'sol_numero_de_memorandum';
+	public $displayField = 'pro_nombres';
 /**
  * Validation rules
  *
  * @var array
  */
 	public $validate = array(
-		'sol_numero_de_memorandum' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				'message' => 'Ingrese un número de memorandum',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-			'isUnique' => array(
-				'rule' => array('isUnique'),
-				'message' => 'Este valor ya ha sido asignado a otra solicitud',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'sol_nombre_de_la_capacitacion' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				'message' => 'Ingrese un nombre',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'sol_fecha_inicio_de_la_capacitacion' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				'message' => 'Ingrese la fecha de inicio',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'sol_fecha_de_fin_de_la_capacitacion' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				'message' => 'Ingrese la fecha de finalización',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'sol_costos' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				'message' => 'Ingrese los costos',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'sol_duracion' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				'message' => 'Ingrese la duración',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
+		'centros_artesanal_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
-				'message' => 'La duración debe ser un valor numérico',
+				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'sol_numero_de_participantes' => array(
+		'pro_nombres' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				'message' => 'Ingrese la cantidad de participantes',
+				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-			'numeric' => array(
-				'rule' => array('numeric'),
-				'message' => 'Participantes es un valor númerico',
+		),
+		'pro_documento_de_identificacion' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'pro_direccion' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'pro_telefono' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'pro_fecha_de_nacimiento' => array(
+			'date' => array(
+				'rule' => array('date'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'pro_tipo_de_sangre' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'pro_sexo' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'pro_nacionalidad' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'pro_correo_electronico' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -133,26 +136,4 @@ class Solicitud extends AppModel {
 			'order' => ''
 		)
 	);
-
-/**
- * hasMany associations
- *
- * @var array
- */
-	public $hasMany = array(
-		'Curso' => array(
-			'className' => 'Curso',
-			'foreignKey' => 'solicitud_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		)
-	);
-
 }

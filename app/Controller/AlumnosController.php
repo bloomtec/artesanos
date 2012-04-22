@@ -47,6 +47,9 @@ class AlumnosController extends AppController {
 	 */
 	public function add() {
 		if ($this -> request -> is('post')) {
+			if(!isset($this -> request -> data['Alumno']['centros_artesanal_id'])){
+				$this -> request -> data['Alumno']['centros_artesanal_id']=null;
+			}
 			$this -> Alumno -> create();
 			if ($this -> Alumno -> save($this -> request -> data)) {
 				$this -> Session -> setFlash(__('Se ha registrado el alumno'), 'crud/success');
@@ -55,12 +58,14 @@ class AlumnosController extends AppController {
 				$this -> Session -> setFlash(__('No se pudo registrar el alumno. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
+		
+		$centrosArtesanales = $this -> Alumno -> CentrosArtesanal -> find('list');
 		$nacionalidades = $this -> Alumno -> getValores(1);
 		$tipos_de_sangre = $this -> Alumno -> getValores(2);
 		$estados_civiles = $this -> Alumno -> getValores(3);
 		$grados_de_estudio = $this -> Alumno -> getValores(4);
 		$sexos = $this -> Alumno -> getValores(5);
-		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos'));
+		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos','centrosArtesanales'));
 	}
 
 	/**
@@ -75,6 +80,9 @@ class AlumnosController extends AppController {
 			throw new NotFoundException(__('Alumno no válido'));
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
+			if(!isset($this -> request -> data['Alumno']['centros_artesanal_id'])){
+				$this -> request -> data['Alumno']['centros_artesanal_id']=null;
+			}
 			if ($this -> Alumno -> save($this -> request -> data)) {
 				$this -> Session -> setFlash(__('Se ha registrado el alumno'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
@@ -84,12 +92,13 @@ class AlumnosController extends AppController {
 		} else {
 			$this -> request -> data = $this -> Alumno -> read(null, $id);
 		}
+		$centrosArtesanales = $this -> Alumno -> CentrosArtesanal -> find('list');
 		$nacionalidades = $this -> Alumno -> getValores(1);
 		$tipos_de_sangre = $this -> Alumno -> getValores(2);
 		$estados_civiles = $this -> Alumno -> getValores(3);
 		$grados_de_estudio = $this -> Alumno -> getValores(4);
 		$sexos = $this -> Alumno -> getValores(5);
-		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos'));
+		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos','centrosArtesanales'));
 	}
 
 	/**

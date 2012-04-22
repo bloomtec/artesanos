@@ -596,11 +596,39 @@ $(function() {
 				break;
 		}
 	});
+	
 	$("#AlumnoAddForm , #AlumnoEditForm").submit(function(e) {
 		if($("#AlumnoAluIsCedula option:selected").val() == "1") {
 			if(!checkCedulaEcuador($("#AlumnoAluDocumentoDeIdentificacion").val())) {
 				e.preventDefault();
 				$("#AlumnoAluDocumentoDeIdentidad").focus();
+			}
+		}
+	});
+	//CREAR Y MODIFICAR PROFESOR
+	$("#ProfesorProIsCedula").change(function() {
+		switch($(this).val()) {
+			case "0":
+				// PASAPORTE
+				$('#ProfesorProDocumentoDeIdentificacion').setMask({
+					mask : '*',
+					type : 'repeat'
+				}).val('');
+				break;
+			case "1":
+				// CEDULA
+				$('#ProfesorProDocumentoDeIdentificacion').setMask({
+					mask : '9999',
+					type : 'repeat'
+				}).val();
+				break;
+		}
+	});
+	$("#ProfesorAddForm , #ProfesorEditForm").submit(function(e) {
+		if($("#ProfesorProIsCedula option:selected").val() == "1") {
+			if(!checkCedulaEcuador($("#ProfesorProDocumentoDeIdentificacion").val())) {
+				e.preventDefault();
+				$("#ProfesorProDocumentoDeIdentificacion").focus();
 			}
 		}
 	});

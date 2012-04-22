@@ -7,12 +7,10 @@
 	</div>
 	<table cellpadding="0" cellspacing="0">
 		<tr>
-			<th><?php echo $this -> Paginator -> sort('alu_nacionalidad', 'Nacionalidad');?></th>
+			<th>Centro de Formación</th>
 			<th><?php echo $this -> Paginator -> sort('alu_is_cedula', 'Es Cédula');?></th>
 			<th><?php echo $this -> Paginator -> sort('alu_documento_de_identificacion', 'Documento De Identificación');?></th>
-			<th><?php echo $this -> Paginator -> sort('alu_apellido_paterno', 'Apellido Paterno');?></th>
-			<th><?php echo $this -> Paginator -> sort('alu_apellido_materno', 'Apellido Materno');?></th>
-			<th><?php echo $this -> Paginator -> sort('alu_nombres', 'Nombres');?></th>
+			<th><?php echo $this -> Paginator -> sort('alu_nombres', 'Nombres y Apellidos');?></th>
 			<th><?php echo $this -> Paginator -> sort('alu_fecha_de_nacimiento', 'Fecha De Nacimiento');?></th>
 			<th><?php echo $this -> Paginator -> sort('alu_tipo_de_sangre', 'Tipo De Sangre');?></th>
 			<th><?php echo $this -> Paginator -> sort('alu_estado_civil', 'Estado Civil');?></th>
@@ -25,21 +23,23 @@ $i = 0;
 foreach ($alumnos as $alumno):
 		?>
 		<tr>
-			<td><?php echo h($alumno['Alumno']['alu_nacionalidad']);?>&nbsp;</td>
-			<td>
-				<?php
-					if($alumno['Alumno']['alu_is_cedula']) {
-						echo '<input type="checkbox" checked="checked" disabled="disabled" />';
-					} else {
-						echo '<input type="checkbox" disabled="disabled" />';
-					}
-				?>
-				&nbsp;
-			</td>
+			<td><?php
+			if ($alumno['Alumno']['centros_artesanal_id']) {
+				echo $alumno['CentrosArtesanal']['cen_nombre'];
+			} else {
+				echo "Ninguno";
+			}
+			?></td>
+			<td><?php
+			if ($alumno['Alumno']['alu_is_cedula']) {
+				echo '<input type="checkbox" checked="checked" disabled="disabled" />';
+			} else {
+				echo '<input type="checkbox" disabled="disabled" />';
+			}
+			?>
+			&nbsp;</td>
 			<td><?php echo h($alumno['Alumno']['alu_documento_de_identificacion']);?>&nbsp;</td>
-			<td><?php echo h($alumno['Alumno']['alu_apellido_paterno']);?>&nbsp;</td>
-			<td><?php echo h($alumno['Alumno']['alu_apellido_materno']);?>&nbsp;</td>
-			<td><?php echo h($alumno['Alumno']['alu_nombres']);?>&nbsp;</td>
+			<td><?php echo h($alumno['Alumno']['alu_nombres'] . " " . $alumno['Alumno']['alu_apellido_paterno'] . " " . $alumno['Alumno']['alu_apellido_materno']);?>&nbsp;</td>
 			<td><?php echo h($alumno['Alumno']['alu_fecha_de_nacimiento']);?>&nbsp;</td>
 			<td><?php echo h($alumno['Alumno']['alu_tipo_de_sangre']);?>&nbsp;</td>
 			<td><?php echo h($alumno['Alumno']['alu_estado_civil']);?>&nbsp;</td>

@@ -171,6 +171,18 @@
 					</ul>					
 				</li>
 				<?php endif;?>
+				<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Profesores', 'index')))) : ?>
+				<li>					
+					<a href="/profesores"> Profesores</a>
+					<ul>
+						<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Profesores', 'add')))) : ?>
+						<li>
+							<a href="/profesores/add"> Agregar</a>
+						</li>
+						<?php endif;?>
+					</ul>					
+				</li>
+				<?php endif;?>
 			</ul>
 		</li>
 		<?php endif;?>
