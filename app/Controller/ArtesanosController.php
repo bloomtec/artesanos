@@ -1491,7 +1491,7 @@ class ArtesanosController extends AppController {
 
 	//Función para registrar el nuevo alumno
 	public function modalRegNuevoArtesano() {
-		print_r($this->data);
+		//print_r($this->data);
 		$this -> autoRender = false;
 		$this -> layout = 'ajax';
 		$msj = "";

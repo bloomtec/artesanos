@@ -12,9 +12,11 @@ class CalificacionesController extends AppController {
 		$this -> Auth -> allow('resumen', 'inspecciones', 'verInspeccion', 'reporteGraficoArtesanos');
 	}
 	
-	public function reporteGraficoArtesanos() {
+	public function reporteGraficoArtesanos($json = 0) {
+		
+		$reporte=false;
 		if($this -> request -> is('post') || $this -> request -> is('put')) {
-				
+					
 			// Obtener las calificaciones con estado aprobado
 			$calificaciones = $this -> Calificacion -> find(
 				'list',
@@ -72,18 +74,52 @@ class CalificacionesController extends AppController {
 			
 			
 			// Obtener las calificaciones acorde el filtro resultante
+		
 			$calificaciones = $this -> Calificacion -> find('all', array('conditions' => $conditions));
 			$datos = $this -> obtenerDatosCalificaciones($calificaciones);
+			//debug($datos);
+			
+			//REPORTE 1
+			$data_json 	= array();
+			$reporte1	=	array();
+			foreach($datos as $key => $valor) {
+				foreach($valor as $key => $value){
+					//$key: Rama
+					//$value["Artesanos"]: Numero de artesanos
+					$reporte1[]=array($key, $value["Artesanos"]);
+				}
+			}
+			
+			//debug($reporte1);
+			//$data_json = $reporte1;
+			//echo json_encode($reporte1);
+			//$this->render(null, 'ajax');
+			
+			//$this -> redirect(array("action"=>"index"));
+			
+			
+			if($json==1){
+				$this -> autoRender = false;
+				$this -> layout = 'ajax';
+				echo json_encode($reporte1);
+			}
+			$reporte=true;
+			$this->set(compact('reporte'));
+			
+		} else {
+			
+			$provincias = array('' => 'Seleccione...');
+			$provincias_tmp = $this -> Calificacion -> Taller -> Provincia -> find('list');
+			foreach ($provincias_tmp as $key => $value) {
+				$provincias[$key] = $value;
+			}
+			
+			$this->set(compact('reporte'));
+			$this -> set('provincias', $provincias);
+			$this -> set('generos', $this -> Calificacion -> getValores(5));
+			$this -> set('fechaActual', date('Y-m-d', strtotime('now')));
+			$this -> set('ramas', $this -> Calificacion -> Rama -> find('list'));
 		}
-		$provincias = array('' => 'Seleccione...');
-		$provincias_tmp = $this -> Calificacion -> Taller -> Provincia -> find('list');
-		foreach ($provincias_tmp as $key => $value) {
-			$provincias[$key] = $value;
-		}
-		$this -> set('provincias', $provincias);
-		$this -> set('generos', $this -> Calificacion -> getValores(5));
-		$this -> set('fechaActual', date('Y-m-d', strtotime('now')));
-		$this -> set('ramas', $this -> Calificacion -> Rama -> find('list'));
 	}
 	
 	private function obtenerDatosCalificaciones($calificaciones = null) {
@@ -143,7 +179,7 @@ class CalificacionesController extends AppController {
 			$datos['Ramas'][$calificacion_data['Rama']['ram_nombre']]['Trabajadores']['PromedioAprendices'] = $datos['Ramas'][$calificacion_data['Rama']['ram_nombre']]['Trabajadores']['TotalAprendices'] / $datos['Ramas'][$calificacion_data['Rama']['ram_nombre']]['Artesanos'];
 		}
 		
-		debug($datos);
+		//debug($datos);
 		
 		return $datos;
 	}

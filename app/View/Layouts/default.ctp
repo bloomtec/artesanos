@@ -24,8 +24,8 @@ $cakeDescription = __d('cake_dev', 'Junta Nacional de defensa del artesano');
 		<?php echo $this -> Html -> charset();?>
 		<title><?php echo $title_for_layout;?></title>
 		<?php
-			echo $this -> Html -> meta('icon');
 			
+			echo $this -> Html -> meta('icon');
 			echo $this -> Html -> css('tabs-no-images');
 			echo $this -> Html -> css('styles');
 			echo $this -> Html -> css('basic');
@@ -39,7 +39,10 @@ $cakeDescription = __d('cake_dev', 'Junta Nacional de defensa del artesano');
 			echo $this -> Html -> script('jquery.simplemodal');
 			echo $this -> Html -> script('modal');
 			echo $this -> Html -> script('jquery.validate.min');
-			
+		
+			echo $this -> Html -> script('https://www.google.com/jsapi');
+			//echo $this -> Html -> script('jquery.gchart');
+			//echo $this -> Html -> script('graficos');
 			//echo $this -> Html -> script('jquery.maskedinput-1.2.2');
 			
 			/*
