@@ -6,7 +6,11 @@
 		<?php
 		echo $this -> Form -> input('id');
 		//echo $this -> Form -> input('solicitud_id');
-		echo $this -> Form -> input('instructor_id', array('empty' => 'Seleccione...'));
+		if($curso['Solicitud']['juntas_provincial_id']){// es capacitacion y tiene instructur
+			echo $this -> Form -> input('instructor_id', array('empty' => 'Seleccione...'));
+		}else{
+			echo $this -> Form -> input('profesor_id', array('empty' => 'Seleccione...'));	
+		}
 		echo $this -> Form -> input('cur_nombre', array('label' => 'Nombre'));
 		echo $this -> Form -> input('cur_contenido', array('label' => 'Contenido'));
 		echo $this -> Form -> input('cur_fecha_de_inicio', array('label' => 'Fecha De Inicio', 'type' => 'text', 'class' => 'date'));

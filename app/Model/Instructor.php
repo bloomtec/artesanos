@@ -49,6 +49,10 @@ class Instructor extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
+			'isUnique'=>array(
+				'rule'    => 'isUnique',
+        		'message' => 'Este documento de identidad ya se encuentra registrado.'
+			),
 		),
 		'ins_apellido_paterno' => array(
 			'notempty' => array(

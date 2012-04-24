@@ -83,7 +83,7 @@ class CursosController extends AppController {
 	 *
 	 * @return void
 	 */
-	public function add() {
+	/*public function add() {
 		if ($this -> request -> is('post')) {
 			$this -> request -> data['Curso']['cur_costo'] = $this -> formatearValor($this -> request -> data['Curso']['cur_costo']);
 			$this -> Curso -> create();
@@ -111,7 +111,7 @@ class CursosController extends AppController {
 		$instructores = $this -> Curso -> Instructor -> find('list');
 		$alumnos = $this -> Curso -> Alumno -> find('list');
 		$this -> set(compact('solicitudes', 'instructores', 'alumnos'));
-	}
+	}*/
 
 	/**
 	 * edit method
@@ -121,6 +121,7 @@ class CursosController extends AppController {
 	 */
 	public function edit($id = null) {
 		$this -> Curso -> id = $id;
+		$curso = $this -> Curso -> read(null,$id);
 		if (!$this -> Curso -> exists()) {
 			throw new NotFoundException(__('Invalid curso'));
 		}
@@ -137,8 +138,14 @@ class CursosController extends AppController {
 			$this -> request -> data['Curso']['cur_costo'] = 100 * $this -> request -> data['Curso']['cur_costo'];
 			//$this -> Session -> setFlash(__('No se pudo actualizar el curso. Por favor, intente de nuevo.'), 'crud/error');
 		}
-		$solicitudes = $this -> Curso -> Solicitud -> find('list');
-		$instructores = $this -> Curso -> Instructor -> find('list');
+		//$solicitudes = $this -> Curso -> Solicitud -> find('list');
+		//debug($curso);
+		if(isset($curso['Solicitud']['juntas_provincial_id']) && !empty($curso['Solicitud']['juntas_provincial_id'])){
+			$instructores = $this -> Curso -> Instructor -> find('list');
+		}
+		if(isset($curso['Solicitud']['centros_artesanal_id']) && !empty($curso['Solicitud']['centros_artesanal_id'])){
+			 $profesores = $this ->  Curso -> Profesor -> find('list',array('conditions'=>array('centros_artesanal_id'=>$curso['Solicitud']['centros_artesanal_id'])));
+		}
 		$this -> Curso -> CursosAlumno -> bindModel(array('belongsTo' => array('Alumno')));
 		$losAlumnos = $this -> Curso -> CursosAlumno -> find('all', array('conditions' => array('curso_id' => $id)));
 
@@ -149,7 +156,7 @@ class CursosController extends AppController {
 		$grados_de_estudio = $this -> Alumno -> getValores(4);
 		$sexos = $this -> Alumno -> getValores(5);
 		$provincias = $this -> Curso -> Provincia -> find('list');
-		$this -> set(compact('provincias', 'solicitudes', 'instructores', 'losAlumnos', 'nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos'));
+		$this -> set(compact('curso','provincias', 'solicitudes', 'instructores','profesores','losAlumnos', 'nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos'));
 	}
 
 	public function quitar($id = null) {

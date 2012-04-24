@@ -107,7 +107,7 @@ class SolicitudesController extends AppController {
 				$this -> Session -> setFlash(__('No se pudo guardar la solicitud. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
-		//$juntasProvinciales = $this -> Solicitud -> JuntasProvincial -> find('list');
+		$juntasProvinciales = $this -> Solicitud -> JuntasProvincial -> find('list');
 		$centrosArtesanales = $this -> Solicitud -> CentrosArtesanal -> find('list');
 		$this -> set(compact('juntasProvinciales','centrosArtesanales'));
 	}
@@ -146,7 +146,8 @@ class SolicitudesController extends AppController {
 			$this -> request -> data['Solicitud']['sol_costos'] = 100 * $this -> request -> data['Solicitud']['sol_costos'] ;
 		}
 		$juntasProvinciales = $this -> Solicitud -> JuntasProvincial -> find('list');
-		$this -> set(compact('juntasProvinciales'));
+		$centrosArtesanales = $this -> Solicitud -> CentrosArtesanal -> find('list');
+		$this -> set(compact('juntasProvinciales','centrosArtesanales'));
 	}
 
 	/**
