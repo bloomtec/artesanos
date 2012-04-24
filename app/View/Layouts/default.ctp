@@ -25,6 +25,7 @@ $cakeDescription = __d('cake_dev', 'Junta Nacional de defensa del artesano');
 		<title><?php echo $title_for_layout;?></title>
 		<?php
 			
+			echo $this -> Html -> script('https://www.google.com/jsapi');
 			echo $this -> Html -> meta('icon');
 			echo $this -> Html -> css('tabs-no-images');
 			echo $this -> Html -> css('styles');
@@ -39,8 +40,14 @@ $cakeDescription = __d('cake_dev', 'Junta Nacional de defensa del artesano');
 			echo $this -> Html -> script('jquery.simplemodal');
 			echo $this -> Html -> script('modal');
 			echo $this -> Html -> script('jquery.validate.min');
+			echo $this -> Html -> script('jquery.jqplot.min');
+			echo $this -> Html -> css('jquery.jqplot.min');
 		
-			echo $this -> Html -> script('https://www.google.com/jsapi');
+			  echo $this -> Html -> script('plugins/jqplot.barRenderer.min.js');
+			  echo $this -> Html -> script('plugins/jqplot.pieRenderer.min.js');
+			  echo $this -> Html -> script('plugins/jqplot.categoryAxisRenderer.min.js');
+			  echo $this -> Html -> script('plugins/jqplot.pointLabels.min.js');
+			echo $this -> Html -> script('jquery');
 			//echo $this -> Html -> script('jquery.gchart');
 			//echo $this -> Html -> script('graficos');
 			//echo $this -> Html -> script('jquery.maskedinput-1.2.2');

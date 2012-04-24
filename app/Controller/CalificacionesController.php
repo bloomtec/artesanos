@@ -12,11 +12,12 @@ class CalificacionesController extends AppController {
 		$this -> Auth -> allow('resumen', 'inspecciones', 'verInspeccion', 'reporteGraficoArtesanos');
 	}
 	
-	public function reporteGraficoArtesanos($json = 0) {
+	public function reporteGraficoArtesanos() {
 		
-		$reporte=false;
 		if($this -> request -> is('post') || $this -> request -> is('put')) {
-					
+			$this -> autoRender = false;
+			$this -> layout = 'default2';
+				
 			// Obtener las calificaciones con estado aprobado
 			$calificaciones = $this -> Calificacion -> find(
 				'list',
@@ -79,35 +80,36 @@ class CalificacionesController extends AppController {
 			$datos = $this -> obtenerDatosCalificaciones($calificaciones);
 			//debug($datos);
 			
-			//REPORTE 1
-			$data_json 	= array();
-			$reporte1	=	array();
+			//FORMATO JSON PARA GRAFICAR REPORTES
+			$data_json 			= array();
+			$ramas				= array();
+			$artesanos			= array();
+			$nivelInsersion 	= array();
+			$promedioIngresos 	= array();
+			$promediOperarios	= array();
+			$promedioAprendices	= array();
+			
 			foreach($datos as $key => $valor) {
 				foreach($valor as $key => $value){
-					//$key: Rama
-					//$value["Artesanos"]: Numero de artesanos
-					$reporte1[]=array($key, $value["Artesanos"]);
+					array_push($ramas, $key);
+					array_push($artesanos, $value["Artesanos"]);
+					array_push($nivelInsersion, $value["TotalInversion"]);
+					array_push($promedioIngresos, $value["PromedioIngresos"]);
+					array_push($promediOperarios, $value["Trabajadores"]["PromedioOperarios"]);
+					array_push($promedioAprendices, $value["Trabajadores"]["PromedioAprendices"]);
 				}
 			}
 			
-			//debug($reporte1);
-			//$data_json = $reporte1;
-			//echo json_encode($reporte1);
-			//$this->render(null, 'ajax');
-			
-			//$this -> redirect(array("action"=>"index"));
-			
-			
-			if($json==1){
-				$this -> autoRender = false;
-				$this -> layout = 'ajax';
-				echo json_encode($reporte1);
-			}
-			$reporte=true;
-			$this->set(compact('reporte'));
+			$data_json["ramas"] 				= $ramas;
+			$data_json["artesanos"] 			= $artesanos;
+			$data_json["TotalInversion"] 		= $nivelInsersion;
+			$data_json["PromedioIngresos"] 		= $promedioIngresos;
+			$data_json["PromedioOperarios"] 	= $promediOperarios;
+			$data_json["PromedioAprendices"] 	= $promedioAprendices;
+	
+			echo json_encode($data_json);
 			
 		} else {
-			
 			$provincias = array('' => 'Seleccione...');
 			$provincias_tmp = $this -> Calificacion -> Taller -> Provincia -> find('list');
 			foreach ($provincias_tmp as $key => $value) {
@@ -120,8 +122,11 @@ class CalificacionesController extends AppController {
 			$this -> set('fechaActual', date('Y-m-d', strtotime('now')));
 			$this -> set('ramas', $this -> Calificacion -> Rama -> find('list'));
 		}
+		
 	}
 	
+	
+
 	private function obtenerDatosCalificaciones($calificaciones = null) {
 		$datos = array(
 			'Ramas' => array()

@@ -799,6 +799,29 @@ $(function() {
 	});
 	
 	
+   //$('#chart_div').hide();
    
+     
+      /*
+	$("#CalificacionReporteGraficoArtesanosForm").submit(function(e) {
+		//alert("Entro aqui");
+		//alert($("#ReporteFechaInicial").val();
+		$.post("/calificaciones/reporteGraficoArtesanos", $('#CalificacionReporteGraficoArtesanosForm :input').serialize(), resultado, "json");
+		//$("#formReporte").hide();
+		e.preventDefault();
+		
+		function resultado(data){ //VALORES DEL REPORTE
+		
+		  alert("Entro aqui "+data.length);
+		  
+
+		  
+		}
+		
+		
+		
+	}); */
       
+      
+     
 });
