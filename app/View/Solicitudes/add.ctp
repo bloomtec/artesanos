@@ -3,8 +3,9 @@
 	<fieldset>
 		<h2><?php echo __('Agregar Solicitud');?></h2>
 		<?php
-		//echo $this -> Form -> input('juntas_provincial_id', array('label' => 'Junta Provincial', 'empty' => 'Seleccione...'));
-		echo $this -> Form -> input('centros_artesanal_id', array('label' => 'Centro Artesanal', 'empty' => 'Seleccione...'));
+		echo $this -> Form -> input('tipo',array('id'=>'tipo','options'=>array('curso'=>'CURSO','capacitacion'=>'CAPACITACIÓN')));
+		echo $this -> Form -> input('juntas_provincial_id', array('class'=>'tipo capacitacion','label' => 'Junta Provincial', 'empty' => 'Seleccione...'));
+		echo $this -> Form -> input('centros_artesanal_id', array('class'=>'tipo curso','label' => 'Centro Artesanal', 'empty' => 'Seleccione...'));
 		
 		// echo $this->Form->input('sol_fecha_solicitud',array('label'=>'Fecha Solicitud'));
 		echo $this -> Form -> input('sol_numero_de_memorandum', array('label' => 'Numero De Memorandum','type'=>'text'));
@@ -22,6 +23,22 @@
 </div>
 <script>
 	$(function(){
+		checkTipo();
+		$('#tipo').change(function(){
+			checkTipo();
+		});
+		function checkTipo(){
+			switch($('#tipo').val()){
+				case "curso":
+					$('select.tipo').attr('disabled',true).parent().hide();
+					$('select.tipo.curso').removeAttr('disabled').parent().show();
+				break;
+				case 'capacitacion':
+				$('select.tipo').attr('disabled',true).parent().hide();
+				$('select.tipo.capacitacion').removeAttr('disabled').parent().show();
+				break;
+			}
+		}
 		var today= new Date();
 		var today=today.getFullYear()+"-"+(today.getMonth() + 1)+"-"+today.getDate();
 		$('form').submit(function(e){

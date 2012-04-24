@@ -22,7 +22,6 @@
 		<th><?php echo $this->Paginator->sort('solicitud_id','Solicitud');?></th>
 		<th><?php echo $this->Paginator->sort('instructor_id','Instructor');?></th>
 		<th><?php echo $this->Paginator->sort('cur_nombre','Nombre');?></th>
-		<th><?php echo $this->Paginator->sort('cur_contenido','Contenido');?></th>
 		<th><?php echo $this->Paginator->sort('cur_fecha_de_inicio','Fecha De Inicio');?></th>
 		<th><?php echo $this->Paginator->sort('cur_fecha_de_fin','Fecha De Fin');?></th>
 		<th><?php echo $this->Paginator->sort('cur_costo','Costo');?></th>
@@ -39,12 +38,23 @@
 			} else { echo $curso['Solicitud']['id']; } ?>
 		</td>
 		<td>
-			<?php if($pdf=="") { 
-			 echo $this->Html->link($curso['Instructor']['ins_nombres'], array('controller' => 'instructores', 'action' => 'view', $curso['Instructor']['id']));
-			} else { echo $curso['Instructor']['ins_nombres']; } ?>
+			<?php if($pdf=="") {
+	
+					if($curso['Curso']['instructor_id']){
+						echo "Instructor: ".$this->Html->link($curso['Instructor']['ins_nombres'], array('controller' => 'instructores', 'action' => 'view', $curso['Instructor']['id']));
+					} elseif($curso['Curso']['profesor_id']){
+						echo "Profesor: ".$this->Html->link($curso['Profesor']['pro_nombres'], array('controller' => 'instructores', 'action' => 'view', $curso['Profesor']['id']));
+					}
+				} else {
+					if(!empty($curso['Instructor'])){
+						echo "Instructor: ".$curso['Instructor']['ins_nombres']; 
+					} elseif(!empty($curso['Profesor'])){
+						echo "Profesor: ".$curso['Profesor']['pro_nombres'];
+					}
+				} 
+			?>
 		</td>
 		<td><?php echo h($curso['Curso']['cur_nombre']); ?>&nbsp;</td>
-		<td><?php echo h($curso['Curso']['cur_contenido']); ?>&nbsp;</td>
 		<td><?php echo h($curso['Curso']['cur_fecha_de_inicio']); ?>&nbsp;</td>
 		<td><?php echo h($curso['Curso']['cur_fecha_de_fin']); ?>&nbsp;</td>
 		<td><?php echo h($curso['Curso']['cur_costo']); ?>&nbsp;</td>

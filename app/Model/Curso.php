@@ -189,6 +189,13 @@ class Curso extends AppModel {
 			'fields' => '',
 			'order' => ''
 		),
+		'Profesor' => array(
+			'className' => 'Profesor',
+			'foreignKey' => 'profesor_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
 		'Provincia' => array(
 			'className' => 'Provincia',
 			'foreignKey' => 'provincia_id',

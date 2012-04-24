@@ -131,7 +131,14 @@ class Solicitud extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
-		)
+		),
+		'JuntasProvincial' => array(
+			'className' => 'JuntasProvincial',
+			'foreignKey' => 'juntas_provincial_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
 	);
 
 /**
