@@ -41,6 +41,12 @@
 					<a href="/reportes/reporteCalificacionesArtesano">Calificaciones Artesano</a>
 				</li>
 				<?php endif;?>
+				<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Calificaciones', 'reporteGraficoArtesanos')))) :
+				?>
+				<li>
+					<a href="/calificaciones/reporteGraficoArtesanos">Estadistico</a>
+				</li>
+				<?php endif;?>
 				<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Reportes', 'reporteInspecciones')))) :
 				?>
 				<li>

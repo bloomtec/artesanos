@@ -579,6 +579,7 @@ class UsuariosController extends AppController {
 		if($permisos['artesanos']) {
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Reportes/reporteArtesanos');
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/DatosPersonales/reporteArtesanos');
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/reporteGraficoArtesanos');
 		}
 		if($permisos['calificaciones_operador']) {
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Reportes/reporteCalificacionesOperador');
@@ -681,6 +682,7 @@ class UsuariosController extends AppController {
 		// artesanos
 		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Reportes/reporteArtesanos')) $permisos['artesanos'] = false;
 		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/DatosPersonales/reporteArtesanos')) $permisos['artesanos'] = false;
+		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/reporteGraficoArtesanos')) $permisos['artesanos'] = false;
 		
 		// calificaciones_operador
 		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Reportes/reporteCalificacionesOperador')) $permisos['calificaciones_operador'] = false;

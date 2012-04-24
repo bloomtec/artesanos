@@ -9,7 +9,7 @@ class CalificacionesController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('resumen', 'inspecciones', 'verInspeccion', 'reporteGraficoArtesanos');
+		$this -> Auth -> allow('resumen', 'inspecciones', 'verInspeccion');
 	}
 	
 	public function reporteGraficoArtesanos() {
