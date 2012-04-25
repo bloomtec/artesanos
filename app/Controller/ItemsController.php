@@ -380,6 +380,9 @@ class ItemsController extends AppController {
 		}
 		// $cantones = $this -> Canton -> find('list');
 		// $ciudades = $this -> Ciudad -> find('list');
+		$this -> loadModel('Configuracion');
+		$config = $this -> Configuracion -> read(null, 1);
+		$this -> set('iva', $config['Configuracion']['con_iva']);
 		$this -> set(compact('items', 'tiposDeItems', 'departamentos', 'personas', 'proveedores', 'provincias'));
 	}
 

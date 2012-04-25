@@ -123,10 +123,10 @@ class AlumnosController extends AppController {
 		$this -> redirect(array('action' => 'index'));
 	}
 
-	public function get($document) {
+	public function get($document,$centroArtesanal) {
 		$this -> autorender = false;
 		$this -> Alumno -> recursive = 0;
-		echo json_encode($this -> Alumno -> find('first', array('conditions' => array('Alumno.alu_documento_de_identificacion' => $document))));
+		echo json_encode($this -> Alumno -> find('first', array('conditions' => array('Alumno.alu_documento_de_identificacion' => $document,'Alumno.centros_artesanal_id'=>$centroArtesanal))));
 		exit(0);
 	}
 

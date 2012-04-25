@@ -58,7 +58,7 @@
 		$(".inputDocumento").blur(function() {
 			var $that = $(this);
 			if($that.val()) {
-				BJS.JSON("/alumnos/get/" + $that.val(), {}, function(data) {
+				BJS.JSON("/alumnos/get/"+ $that.val()+"/<?php echo $curso['Solicitud']['centros_artesanal_id']?>", {}, function(data) {
 					if(data) {
 						$("input.id[rel='" + $that.attr('rel') + "'][class='id']").val(data.Alumno.id);
 						$("input.documento[rel='" + $that.attr('rel') + "']").val(data.Alumno.alu_documento_de_identificacion);

@@ -10,7 +10,6 @@
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 		<?php if($pdf!="") { ?> 
-		<th>Solicitud</th>
 		<th>Instructor</th>
 		<th>Nombre</th>
 		<th>Descripción</th>
@@ -19,7 +18,7 @@
 		<th>Costo</th>
 		<th>Estado</th>
 		<?php }else { ?>
-		<th><?php echo $this->Paginator->sort('solicitud_id','Solicitud');?></th>
+
 		<th><?php echo $this->Paginator->sort('instructor_id','Instructor');?></th>
 		<th><?php echo $this->Paginator->sort('cur_nombre','Nombre');?></th>
 		<th><?php echo $this->Paginator->sort('cur_fecha_de_inicio','Fecha De Inicio');?></th>
@@ -32,11 +31,7 @@
 	</tr>
 	<?php $i = 0; foreach ($cursos as $curso): ?>
 	<tr>
-		<td>
-			<?php if($pdf=="") { 
-			 echo $this->Html->link($curso['Solicitud']['id'], array('controller' => 'solicitudes', 'action' => 'view', $curso['Solicitud']['id']));
-			} else { echo $curso['Solicitud']['id']; } ?>
-		</td>
+		
 		<td>
 			<?php if($pdf=="") {
 	

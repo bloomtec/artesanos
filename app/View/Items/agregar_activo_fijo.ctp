@@ -1,3 +1,6 @@
+<script>
+	var iva = parseFloat(<?php echo $iva/100;?>);
+</script>
 <?php echo $this -> Html -> script('inventarios'); ?>
 <div class="items form">
 	<?php echo $this -> Form -> create('Item', array('type' => 'file'));?>
@@ -25,7 +28,7 @@
 				<td><?php echo $this -> Form -> input("ActivosFijos.$i.ing_cantidad", array('label' => false, 'div' => false, 'class' => 'number cantidad')); ?></td>
 				<td><?php echo $this -> Form -> input("ActivosFijos.$i.ing_detalle", array('type' => 'textarea', 'label' => false, 'div' => false)); ?></td>
 				<td><?php echo $this -> Form -> input("ActivosFijos.$i.ing_precio_unitario", array('label' => false, 'div' => false, 'class' => 'valor valorUnitario')); ?></td>
-				<td><?php echo $this -> Form -> input("ActivosFijos.$i.ing_precio_total", array('label' => false, 'div' => false, 'class' => 'valor valorTotal')); ?></td>
+				<td><?php echo $this -> Form -> input("ActivosFijos.$i.ing_precio_total", array('label' => false, 'div' => false, 'class' => 'valor valorTotal','style'=>'width:5em;')); ?></td>
 			</tr>
 			<?php endfor; ?>
 		</table>

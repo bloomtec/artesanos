@@ -2,10 +2,10 @@ var cantidad=0;
 var valorUnitario=0;
 var valorTotal= 0;
 var inventarios={};
+var elIva=0;
 
 inventarios.actualizarTabla = function(){
 	var subtotal = 0;
-	var iva = $('#ItemValorIVA').val() / 100;
 	var total = 0;
 	var rows=$('table.inventario').find('tr');
 	var length=rows.length -1;
@@ -18,18 +18,17 @@ inventarios.actualizarTabla = function(){
 			valorUnitario=parseFloat(valorUnitario?valorUnitario.replace(/[.]/g,'').replace(',','.'):0);
 			valorTotal=cantidad*valorUnitario;
 			subtotal+=valorTotal;
-			$(val).find('input.valorTotal').val(BJS.formatComma(BJS.formatNumber(valorTotal)));
+			$(val).find('input.valorTotal').val(BJS.formatComma(BJS.formatNumber((new Number(valorTotal)).toFixed(2)))); 
 		}
 		if(i == length){
-			$('input.subtotal').val(BJS.formatComma(BJS.formatNumber(subtotal)));
-			iva= iva * subtotal;
-			iva= (new Number(iva)).toFixed(2);
-			total= parseFloat(iva) + parseFloat(subtotal);
+			$('input.subtotal').val(BJS.formatComma(BJS.formatNumber((new Number(subtotal)).toFixed(2))));
+			elIva= iva * subtotal;
+			elIva= (new Number(elIva)).toFixed(2);
+			total= parseFloat(elIva) + parseFloat(subtotal);
 			total = (new Number(total)).toFixed(2);
 			//console.log(total);
-			$('input.iva').val(BJS.formatComma(iva));
-			$('input.total').val(BJS.formatComma(total));
-			
+			$('input.iva').val(BJS.formatComma(BJS.formatNumber((new Number(elIva)).toFixed(2))));
+			$('input.total').val(BJS.formatComma(BJS.formatNumber((new Number(total)).toFixed(2)))); 
 		}
 		
 	});
