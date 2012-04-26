@@ -97,34 +97,33 @@ class UsuariosController extends AppController {
 	
 	private function validacionesInspector(){
 		if($this->data['Usuario']['rol_id']==3){
-				$newValidation = array(
-					'usu_inspecciones_por_dia' => array(
-		        		'rule'    => array('minLength', 1),
-		        		'message' => 'A los inspectores se les debe asignar al menos una inspección por día'
-		   	 		),
-		   	 		'provincia_id' => array(
-						'rule' => array('notempty'),
-						'message' => 'Este campo es requerido',
+			$newValidation = array(
+				'usu_inspecciones_por_dia' => array(
+	        		'rule'    => array('minLength', 1),
+	        		'message' => 'A los inspectores se les debe asignar al menos una inspección por día'
+	   	 		),
+	   	 		'provincia_id' => array(
+					'rule' => array('notempty'),
+					'message' => 'Este campo es requerido',
+				),
+				'canton_id' => array(
+					'rule' => array('notempty'),
+					'message' => 'Este campo es requerido',
+				),
+				'ciudad_id' => array(
+					'notempty' => array(
+					'rule' => array('notempty'),
+					'message' => 'Este campo es requerido',
 					),
-					'canton_id' => array(
-						'rule' => array('notempty'),
-						'message' => 'Este campo es requerido',
+				),
+				'sector_id' => array(
+					'notempty' => array(
+					'rule' => array('notempty'),
+					'message' => 'Este campo es requerido',
 					),
-					'ciudad_id' => array(
-						'notempty' => array(
-						'rule' => array('notempty'),
-						'message' => 'Este campo es requerido',
-						),
-					),
-					'sector_id' => array(
-						'notempty' => array(
-						'rule' => array('notempty'),
-						'message' => 'Este campo es requerido',
-						),
-					),
-		   	 		
-				);
-				$this-> Usuario -> validate = array_merge($this-> Usuario -> validate,$newValidation);
+				),
+			);
+			$this-> Usuario -> validate = array_merge($this -> Usuario -> validate, $newValidation);
 		}
 	}
 
@@ -149,13 +148,10 @@ class UsuariosController extends AppController {
 				$aro_id = $aro_id[0]['aros']['id'];
 				$this -> Usuario -> query("DELETE FROM `aros_acos` WHERE `aro_id`=$aro_id");
 				if($usuario['Usuario']['rol_id'] == 3) {
-					$this -> setPermisosInspectores($usuario, true);
-				} else {
-					$this -> setPermisosInspectores($usuario, false);
+					$this -> setPermisosInspectores($usuario);
 				}
-				//$this -> setInfoPermisos($this -> Usuario -> id, $this -> request -> data['Permisos']);
 				$this -> Session -> setFlash(__('Se guardó el usuario'), 'crud/success');
-			//	$this -> redirect(array('action' => 'index'));
+				$this -> redirect(array('action' => 'index'));
 			} else {
 				$this -> Session -> setFlash(__('No se pudo guardar el usuario. Por favor, intente de nuevo.'), 'crud/error');
 			}
