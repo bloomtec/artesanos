@@ -201,7 +201,7 @@ class CentrosArtesanalesController extends AppController {
 	}
 
 	public function impReporte() {
-		$this -> layout = 'pdf2';
+		$this -> layout = 'bpdf';
 		$reporteCentrosArtesanales = $this -> Session -> read('reporte');
 		$nombre_archivo = $this -> Session -> read('archivo');
 		//Tamaño de la fuente
