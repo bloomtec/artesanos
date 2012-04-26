@@ -8,10 +8,18 @@
 	</h2>
 	<fieldset>
 		<?php
-		echo $this -> Form -> input('provincia', array('type' => 'select', 'label' => 'Provincias', 'empty' => 'Seleccione...', 'options' => $provincias));
-		echo $this -> Form -> input('fecha_creacion', array('value' => '', 'type' => 'text', 'label' => 'Fecha creación', 'class' => 'date'));
-		echo $this -> Form -> input('fecha1', array('value' => '', 'type' => 'text', 'label' => 'Fecha inicial', 'class' => 'date'));
-		echo $this -> Form -> input('fecha2', array('value' => '', 'type' => 'text', 'label' => 'Fecha final', 'class' => 'date'));
+		echo $this -> Form -> input('provincia_id', array('type' => 'select', 'label' => 'Provincia'));
+		echo $this -> Form -> input('canton_id', array('type' => 'select', 'label' => 'Canton', 'empty' => 'Seleccione...', 'options' => ''));
+		echo $this -> Form -> input('ciudad_id', array('type' => 'select', 'label' => 'Ciudad', 'empty' => 'Seleccione...', 'options' => ''));
+		echo $this -> Form -> input('parroquia_id', array('type' => 'select', 'label' => 'Parroquia', 'empty' => 'Seleccione...', 'options' => ''));
+		echo $this -> Form -> input('rama_id', array('type' => 'select', 'label' => 'Rama', 'empty' => 'Seleccione...'));
+		echo $this -> Form -> input('cen_tipo', array('type' => 'select', 'options' => $tipos, 'label' => 'Tipo', 'empty' => 'Seleccione...'));
+		echo $this -> Form -> input('cen_sostenimiento', array('type' => 'select', 'options' => $sostenimientos, 'label' => 'Sostenimiento', 'empty' => 'Seleccione...'));
+		echo $this -> Form -> input('cen_modalidad', array('type' => 'select', 'options' => $modalidades, 'label' => 'Modalidad', 'empty' => 'Seleccione...'));
+		echo $this -> Form -> input('cen_lenguaje', array('type' => 'select', 'options' => $lenguajes, 'label' => 'Lenguaje', 'empty' => 'Seleccione...'));
+		echo $this -> Form -> input('fecha_creacion', array('value' => '', 'type' => 'text', 'label' => 'Fecha De Creación', 'class' => 'date'));
+		echo $this -> Form -> input('fecha1', array('value' => '', 'type' => 'text', 'label' => 'Fecha Inicio Periodo', 'class' => 'date'));
+		echo $this -> Form -> input('fecha2', array('value' => '', 'type' => 'text', 'label' => 'Fecha Final Periodo', 'class' => 'date'));
 		?>
 	</fieldset>
 	<?php echo $this -> Form -> submit('Buscar');?>
@@ -65,3 +73,27 @@ for($i=0;$i < count($reporteCentrosArtesanales);$i++) {
 &nbsp; <a class='button' href="/centrosArtesanales/impReporte">Descargar pdf</a>
 &nbsp; <a class='button' href="/centrosArtesanales/export_csv">Exportar a CSV</a>
 <?php }?>
+
+<script type="text/javascript">
+	$(function() {
+		var actualizarCiudades = function() {
+			BJS.updateSelect($("#ReporteCantonId"), "/cantones/getByProvincia/" + $("#ReporteProvinciaId option:selected").val(), function() {
+				BJS.updateSelect($("#ReporteCiudadId"), "/ciudades/getByCanton/" + $("#ReporteCantonId option:selected").val(), function() {
+					BJS.updateSelect($("#ReporteParroquiaId"), "/parroquias/getByCiudad/" + $("#ReporteCiudadId option:selected").val());
+				});
+			});
+		}
+		$('#ReporteProvinciaId').change(function() {
+			actualizarCiudades();
+		});
+		$('#ReporteCantonId').change(function() {
+			BJS.updateSelect($("#ReporteCiudadId"), "/ciudades/getByCanton/" + $("#ReporteCantonId option:selected").val(), function() {
+				BJS.updateSelect($("#ReporteParroquiaId"), "/parroquias/getByCiudad/" + $("#ReporteCiudadId option:selected").val());
+			});
+		});
+		$('#ReporteCiudadId').change(function() {
+			BJS.updateSelect($("#ReporteParroquiaId"), "/parroquias/getByCiudad/" + $("#ReporteCiudadId option:selected").val());
+		});
+		actualizarCiudades();
+	});
+</script>
