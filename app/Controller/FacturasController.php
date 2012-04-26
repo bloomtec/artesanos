@@ -26,7 +26,7 @@ class FacturasController extends AppController {
 	public function view($id = null) {
 		$this -> Factura -> id = $id;
 		if (!$this -> Factura -> exists()) {
-			throw new NotFoundException(__('Invalid factura'));
+			throw new NotFoundException(__('Factura no válida'));
 		}
 		$this -> set('factura', $this -> Factura -> read(null, $id));
 	}
@@ -40,10 +40,10 @@ class FacturasController extends AppController {
 		if ($this -> request -> is('post')) {
 			$this -> Factura -> create();
 			if ($this -> Factura -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The factura has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se registró la factura'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The factura could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo registrar la factura. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
 		$provincias = $this -> Factura -> Provincia -> find('list');
@@ -61,14 +61,14 @@ class FacturasController extends AppController {
 	public function edit($id = null) {
 		$this -> Factura -> id = $id;
 		if (!$this -> Factura -> exists()) {
-			throw new NotFoundException(__('Invalid factura'));
+			throw new NotFoundException(__('Factura no válida'));
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			if ($this -> Factura -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The factura has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se registró la factura'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The factura could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo registrar la factura. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		} else {
 			$this -> request -> data = $this -> Factura -> read(null, $id);
@@ -91,13 +91,13 @@ class FacturasController extends AppController {
 		}
 		$this -> Factura -> id = $id;
 		if (!$this -> Factura -> exists()) {
-			throw new NotFoundException(__('Invalid factura'));
+			throw new NotFoundException(__('Factura no válida'));
 		}
 		if ($this -> Factura -> delete()) {
-			$this -> Session -> setFlash(__('Factura deleted'), 'crud/success');
+			$this -> Session -> setFlash(__('Se eliminó la factura'), 'crud/success');
 			$this -> redirect(array('action' => 'index'));
 		}
-		$this -> Session -> setFlash(__('Factura was not deleted'), 'crud/error');
+		$this -> Session -> setFlash(__('No se eliminó la factura'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
 	}
 

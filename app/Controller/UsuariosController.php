@@ -75,7 +75,10 @@ class UsuariosController extends AppController {
 	 * @return void
 	 */
 	public function index() {
-		$this -> Usuario -> recursive = 0;
+		$this -> Usuario -> Behaviors -> attach('Containable');
+		$this -> Usuario -> contain(
+			'Rol'
+		);
 		$this -> set('usuarios', $this -> paginate());
 	}
 
@@ -133,7 +136,6 @@ class UsuariosController extends AppController {
 	 * @return void
 	 */
 	public function add() {
-		
 		$this -> Usuario -> currentUsrId = $this -> Auth -> user('id');
 		if ($this -> request -> is('post')) {
 			$this -> validacionesInspector();
@@ -174,6 +176,10 @@ class UsuariosController extends AppController {
 	 * @return void
 	 */
 	public function edit($id = null) {
+		$this -> Usuario -> Behaviors -> attach('Containable');
+		$this -> Usuario -> contain(
+			'Rol'
+		);
 		$this -> Usuario -> currentUsrId = $this -> Auth -> user('id');
 		$this -> Usuario -> id = $id;
 		if (!$this -> Usuario -> exists()) {
@@ -219,6 +225,10 @@ class UsuariosController extends AppController {
 	 * @return void
 	 */
 	public function modificarContrasena() {
+		$this -> Usuario -> Behaviors -> attach('Containable');
+		$this -> Usuario -> contain(
+			'Rol'
+		);
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			if(true) {
 				if ($this -> Usuario -> save($this -> request -> data)) {
@@ -259,7 +269,10 @@ class UsuariosController extends AppController {
 	 * Sección manejo ACL
 	 */
 	public function permisos($id = null) {
-		$this -> Usuario -> recursive = -1;
+		$this -> Usuario -> Behaviors -> attach('Containable');
+		$this -> Usuario -> contain(
+			'Rol'
+		);
 		$this -> Usuario -> currentUsrId = $this -> Auth -> user('id');
 		$this -> Usuario -> id = $id;
 		if (!$this -> Usuario -> exists()) {

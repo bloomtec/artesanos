@@ -27,7 +27,7 @@ class ProfesoresController extends AppController {
 	public function view($id = null) {
 		$this->Profesor->id = $id;
 		if (!$this->Profesor->exists()) {
-			throw new NotFoundException(__('Invalid profesor'));
+			throw new NotFoundException(__('Profesor no válido'));
 		}
 		$this->set('profesor', $this->Profesor->read(null, $id));
 	}

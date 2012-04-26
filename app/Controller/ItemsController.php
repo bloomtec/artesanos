@@ -39,7 +39,7 @@ class ItemsController extends AppController {
 		$this -> Item -> recursive = -1;
 		$this -> Item -> id = $id;
 		if (!$this -> Item -> exists()) {
-			throw new NotFoundException(__('Invalid item'));
+			throw new NotFoundException(__('Ítem no válido'));
 		}
 		$this -> set('item', $this -> Item -> read(null, $id));
 	}
@@ -73,10 +73,10 @@ class ItemsController extends AppController {
 			$this -> request -> data['Item']['ite_is_activo_fijo'] = false;
 			$this -> Item -> create();
 			if ($this -> Item -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The item has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se registró el ítem'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The item could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo registrar el ítem. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
 		$tiposDeItems = $this -> Item -> getValores(15);
@@ -173,14 +173,14 @@ class ItemsController extends AppController {
 	public function editSuministro($id = null) {
 		$this -> Item -> id = $id;
 		if (!$this -> Item -> exists()) {
-			throw new NotFoundException(__('Invalid item'));
+			throw new NotFoundException(__('Ítem no válido'));
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			if ($this -> Item -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The item has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se registró el ítem'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The item could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo registrar el ítem. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		} else {
 			$this -> request -> data = $this -> Item -> read(null, $id);
@@ -202,13 +202,13 @@ class ItemsController extends AppController {
 		}
 		$this -> Item -> id = $id;
 		if (!$this -> Item -> exists()) {
-			throw new NotFoundException(__('Invalid item'));
+			throw new NotFoundException(__('Ítem no válido'));
 		}
 		if ($this -> Item -> delete()) {
-			$this -> Session -> setFlash(__('Item deleted'), 'crud/success');
+			$this -> Session -> setFlash(__('Se eliminó el ítem'), 'crud/success');
 			$this -> redirect(array('action' => 'index'));
 		}
-		$this -> Session -> setFlash(__('Item was not deleted'), 'crud/error');
+		$this -> Session -> setFlash(__('No se eliminó el ítem'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
 	}
 */
@@ -270,7 +270,7 @@ class ItemsController extends AppController {
 	public function viewActivoFijo($id = null) {
 		$this -> Item -> id = $id;
 		if (!$this -> Item -> exists()) {
-			throw new NotFoundException(__('Invalid item'));
+			throw new NotFoundException(__('Ítem no válido'));
 		}
 		$this -> set('item', $this -> Item -> read(null, $id));
 	}
@@ -638,14 +638,14 @@ class ItemsController extends AppController {
 	public function editActivoFijo($id = null) {
 		$this -> Item -> id = $id;
 		if (!$this -> Item -> exists()) {
-			throw new NotFoundException(__('Invalid item'));
+			throw new NotFoundException(__('Ítem no válido'));
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			if ($this -> Item -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The item has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se registró el ítem'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The item could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo registrar el ítem. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		} else {
 			$this -> request -> data = $this -> Item -> read(null, $id);
@@ -666,13 +666,13 @@ class ItemsController extends AppController {
 		}
 		$this -> Item -> id = $id;
 		if (!$this -> Item -> exists()) {
-			throw new NotFoundException(__('Invalid item'));
+			throw new NotFoundException(__('Ítem no válido'));
 		}
 		if ($this -> Item -> delete()) {
-			$this -> Session -> setFlash(__('Item deleted'), 'crud/success');
+			$this -> Session -> setFlash(__('Se eliminó el ítem'), 'crud/success');
 			$this -> redirect(array('action' => 'index'));
 		}
-		$this -> Session -> setFlash(__('Item was not deleted'), 'crud/error');
+		$this -> Session -> setFlash(__('No se eliminó el ítem'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
 	}
 
@@ -696,7 +696,7 @@ class ItemsController extends AppController {
 		$this -> Item -> recursive = 0;
 		$this -> Item -> id = $id;
 		if (!$this -> Item -> exists()) {
-			throw new NotFoundException(__('Invalid item'));
+			throw new NotFoundException(__('Ítem no válido'));
 		}
 		$this -> set('item', $this -> Item -> read(null, $id));
 	}
@@ -725,10 +725,10 @@ class ItemsController extends AppController {
 			}
 			$this -> Item -> create();
 			if ($this -> Item -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The item has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se registró el ítem'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The item could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo registrar el ítem. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
 		$tiposDeItems = $this -> Item -> getValores(15);
@@ -744,14 +744,14 @@ class ItemsController extends AppController {
 	public function edit($id = null) {
 		$this -> Item -> id = $id;
 		if (!$this -> Item -> exists()) {
-			throw new NotFoundException(__('Invalid item'));
+			throw new NotFoundException(__('Ítem no válido'));
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			if ($this -> Item -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The item has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se registró el ítem'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The item could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo registrar el ítem. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		} else {
 			$this -> request -> data = $this -> Item -> read(null, $id);
@@ -772,13 +772,13 @@ class ItemsController extends AppController {
 		}
 		$this -> Item -> id = $id;
 		if (!$this -> Item -> exists()) {
-			throw new NotFoundException(__('Invalid item'));
+			throw new NotFoundException(__('Ítem no válido'));
 		}
 		if ($this -> Item -> delete()) {
-			$this -> Session -> setFlash(__('Item deleted'), 'crud/success');
+			$this -> Session -> setFlash(__('Se eliminó el ítem'), 'crud/success');
 			$this -> redirect(array('action' => 'index'));
 		}
-		$this -> Session -> setFlash(__('Item was not deleted'), 'crud/error');
+		$this -> Session -> setFlash(__('No se eliminó el ítem'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
 	}
 	

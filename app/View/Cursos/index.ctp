@@ -2,10 +2,9 @@
 	<h2><?php echo __('Cursos');?></h2>
 	<div class="search">
 		<?php if($pdf=="") { ?> 
-		<label>BUSCAR:</label>
 		<input type="text" />
 		<?php } ?>
-		<input type="button" class="submit search-generic" value="Search" />
+		<input type="button" class="submit search-generic" value="Buscar" />
 	</div>
 	<table cellpadding="0" cellspacing="0">
 	<tr>

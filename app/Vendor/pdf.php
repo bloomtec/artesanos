@@ -25,7 +25,7 @@ class PDF  extends TCPDF
     function Header() 
     { 
 
-      	/*$year = date('m/d/Y H:i:s'); 
+      	$year = date('m/d/Y H:i:s'); 
 		 $image_file = IMAGES.'logo_header.png';
 		                        //X   Y    W    H
         $this->Image($image_file, 10, 10, 50,'', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
@@ -33,7 +33,7 @@ class PDF  extends TCPDF
         //$this->SetFillColor(255, 255, 255,true); 
         $this->SetTextColor(0 , 0, 0); 
 		$this->SetFont($this->xheaderfont,'',$this->xheaderfontsize); 
-        $this->Cell(0,17, "",'B',1,'R'); */
+        $this->Cell(0,17, "",'B',1,'R');
 
         //$this->Cell(90,26,$this->xheadertext);
     } 

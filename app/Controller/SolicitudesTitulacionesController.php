@@ -14,6 +14,13 @@ class SolicitudesTitulacionesController extends AppController {
      *
      * @return void
      */
+     /*
+    public function beforeFilter() {
+		parent::beforeFilter();
+		$this -> Auth -> allow('*');
+	}*/
+	
+	
     public function index() {
         $this -> SolicitudesTitulacion -> recursive = 0;
         $conditions = array();
@@ -50,7 +57,7 @@ class SolicitudesTitulacionesController extends AppController {
     public function view($id = null) {
         $this -> SolicitudesTitulacion -> id = $id;
         if (!$this -> SolicitudesTitulacion -> exists()) {
-            throw new NotFoundException(__('Invalid solicitudes titulacion'));
+            throw new NotFoundException(__('Solicitud de titulación no válida'));
         }
         $this -> loadModel('Archivo');
         $archivos = $this -> Archivo -> find('all', array('conditions' => array('Archivo.model' => 'SolicitudesTitulacion', 'Archivo.foreign_key' => $id)));
@@ -151,7 +158,7 @@ class SolicitudesTitulacionesController extends AppController {
      public function edit($id = null) {
      $this -> SolicitudesTitulacion -> id = $id;
      if (!$this -> SolicitudesTitulacion -> exists()) {
-     throw new NotFoundException(__('Invalid solicitudes titulacion'));
+     throw new NotFoundException(__('Solicitud de titulación no válida'));
      }
      if ($this -> request -> is('post') || $this -> request -> is('put')) {
      if ($this -> SolicitudesTitulacion -> save($this -> request -> data)) {
@@ -182,7 +189,7 @@ class SolicitudesTitulacionesController extends AppController {
         }
         $this -> SolicitudesTitulacion -> id = $id;
         if (!$this -> SolicitudesTitulacion -> exists()) {
-            throw new NotFoundException(__('Invalid solicitudes titulacion'));
+            throw new NotFoundException(__('Solicitud de titulación no válida'));
         }
         if ($this -> SolicitudesTitulacion -> delete()) {
             $this -> Session -> setFlash(__('La solicitud fue borrada'), 'crud/success');
@@ -386,7 +393,7 @@ class SolicitudesTitulacionesController extends AppController {
 
     //Reporte solicitudes titulaciones
     function impReporte() {
-        $this -> layout = 'pdf';
+        $this -> layout = 'pdf2';
         $reporteSolicitudesTitulacion = $this -> Session -> read('reporte');
         $nombre_archivo = $this -> Session -> read('archivo');
         //Tamaño de la fuente
