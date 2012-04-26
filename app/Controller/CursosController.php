@@ -314,47 +314,32 @@ class CursosController extends AppController {
 				if (!empty($provincia)) {
 					$idsJuntasProvinciales = $this -> JuntasProvincial -> find("list", array("conditions" => array("JuntasProvincial.provincia_id" => $provincia)));
 					$idsSolicitudes = $this -> Curso -> Solicitud -> find("list", array("conditions" => array("Solicitud.juntas_provincial_id" => $idsJuntasProvinciales)));
-					$conditions[] = array('Curso.solicitud_id' => $idsSolicitudes);
+					$conditions['Curso.solicitud_id'] = $idsSolicitudes;
 				}
 
 				if (!empty($ciudad)) {
 					$idsCentrosArtesanales = $this -> CentrosArtesanal -> find("list", array("conditions" => array("CentrosArtesanal.ciudad_id" => $ciudad)));
 					$idsSolicitudes = $this -> Curso -> Solicitud -> find("list", array("conditions" => array("Solicitud.centros_artesanal_id" => $idsCentrosArtesanales)));
-					$conditions[] = array('Curso.solicitud_id' => $idsSolicitudes);
+					$conditions['Curso.solicitud_id'] = $idsSolicitudes;
 				}
 
 				if (!empty($fechaCreacion)) {
-					$conditions[] = array('Curso.created BETWEEN ? AND ?' => array($fechaCreacion . ' 00:00:00', $fechaCreacion . ' 23:59:59'));
+					$conditions['Curso.created BETWEEN ? AND ?'] = array($fechaCreacion . ' 00:00:00', $fechaCreacion . ' 23:59:59');
 				}
 
 				if (!empty($estado)) {
-					$conditions[] = array('Curso.cur_activo' => $estado);
+					$conditions['Curso.cur_activo'] = $estado;
 				}
 
-				if ($fecha1 != null && $fecha2 != null) {
-
-					if ($fecha1 > $fecha2) {
-						$this -> Session -> setFlash(__('La fecha inicial debe ser menor a la fecha final', true));
-						return;
-					}
-
-					list($ano, $mes, $dia) = explode("-", $fecha1);
-					$fecha1 = $ano . "-" . $mes . "-" . ($dia);
-
-					list($ano, $mes, $dia) = explode("-", $fecha2);
-
-					if ($dia == 31) {
-						$fecha2 = $ano . "-" . $mes . "-" . ($dia);
-					} else {
-						$fecha2 = $ano . "-" . $mes . "-" . ($dia + 1);
-					}
-
-					$conditions[] = array('Curso.created between ? and ?' => array($fecha1, $fecha2));
-
-				} else if ($fecha1 != null) {
-					$conditions[] = array('Curso.cur_fecha_de_inicio =' => $fecha1);
-				} else if ($fecha2 != null) {
-					$conditions[] = array('Curso.cur_fecha_de_fin <=' => $fecha2);
+				if ($fecha1 != null) {
+					$conditions['Curso.cur_fecha_de_inicio'] = $fecha1;
+				}
+				if ($fecha2 != null) {
+					$conditions['Curso.cur_fecha_de_fin'] = $fecha2;
+				}
+				if (($fecha1 != null) && ($fecha2 != null) && ($fecha1 > $fecha2)) {
+					$this -> Session -> setFlash(__('La fecha inicial debe ser menor a la fecha final', true));
+					return;
 				}
 			}
 

@@ -158,30 +158,41 @@ class CentrosArtesanalesController extends AppController {
 				$fechaCreacion = $this -> data["Reporte"]["fecha_creacion"];
 				$fecha1 = $this -> data["Reporte"]["fecha1"];
 				$fecha2 = $this -> data["Reporte"]["fecha2"];
+				$rama = $this -> data['Reporte']['rama_id'];
+				$modalidad = $this -> data['Reporte']['cen_modalidad'];
+				$lenguaje = $this -> data['Reporte']['cen_lenguaje'];
+				$tipo = $this -> data['Reporte']['cen_tipo'];
+				$sostenimiento = $this -> data['Reporte']['cen_sostenimiento'];
+				if(!empty($rama)) {
+					$conditions['CentrosArtesanal.rama_id'] = $rama;
+				}
+				if(!empty($modalidad)) {
+					$conditions['CentrosArtesanal.cen_modalidad'] = $modalidad;
+				}
+				if(!empty($lenguaje)) {
+					$conditions['CentrosArtesanal.cen_lenguaje'] = $lenguaje;
+				}
+				if(!empty($tipo)) {
+					$conditions['CentrosArtesanal.cen_tipo'] = $tipo;
+				}
+				if(!empty($sostenimiento)) {
+					$conditions['CentrosArtesanal.cen_sostenimiento'] = $sostenimiento;
+				}
 				if (!empty($provincia)) {
-					$conditions[] = array('CentrosArtesanal.provincia_id' => $provincia);
+					$conditions['CentrosArtesanal.provincia_id'] = $provincia;
 				}
 				if (!empty($fechaCreacion)) {
-					$conditions[] = array('CentrosArtesanal.created BETWEEN ? AND ?' => array($fechaCreacion . ' 00:00:00', $fechaCreacion . ' 23:59:59'));
+					$conditions['CentrosArtesanal.created BETWEEN ? AND ?'] = array($fechaCreacion . ' 00:00:00', $fechaCreacion . ' 23:59:59');
 				}
-				if ($fecha1 != null && $fecha2 != null) {
-					if ($fecha1 > $fecha2) {
-						$this -> Session -> setFlash(__('La fecha inicial debe ser menor a la fecha final', true));
-						return;
-					}
-					list($ano, $mes, $dia) = explode("-", $fecha1);
-					$fecha1 = $ano . "-" . $mes . "-" . ($dia);
-					list($ano, $mes, $dia) = explode("-", $fecha2);
-					if ($dia == 31) {
-						$fecha2 = $ano . "-" . $mes . "-" . ($dia);
-					} else {
-						$fecha2 = $ano . "-" . $mes . "-" . ($dia + 1);
-					}
-					$conditions[] = array('CentrosArtesanal.created between ? and ?' => array($fecha1, $fecha2));
-				} else if ($fecha1 != null) {
-					$conditions[] = array('CentrosArtesanal.created >=' => $fecha1);
-				} else if ($fecha2 != null) {
-					$conditions[] = array('CentrosArtesanal.created <=' => $fecha2);
+				if ($fecha1 != null) {
+					$conditions['CentrosArtesanal.cen_fecha_periodo_inicial'] = $fecha1;
+				}
+				if ($fecha2 != null) {
+					$conditions['CentrosArtesanal.cen_fecha_periodo_final'] = $fecha2;
+				}
+				if (($fecha1 != null) && ($fecha2 != null) && ($fecha1 > $fecha2)) {
+					$this -> Session -> setFlash(__('La fecha inicial debe ser menor a la fecha final', true));
+					return;
 				}
 			}
 			$reporteCentrosArtesanales = $this -> paginate = array('CentrosArtesanal' => array('limit' => 20, 'conditions' => $conditions));
