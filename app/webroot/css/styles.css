@@ -406,7 +406,7 @@ p {
     position: absolute;
     top: 39px
 }
-#main-menu ul li:hover ul {
+#main-menu ul li:hover > ul {
 	display: block;
 	z-index: 10;
 	 position: absolute;
@@ -961,6 +961,7 @@ span .pdf{
 .actions .certificado, .actions .carnet {
 	background-image: url(/img/calificar.png);
 	background-size: 32px;
+	margin-top: -5px;
 }
 .actions .factura {
 	background-image: url(/img/printer.png);
