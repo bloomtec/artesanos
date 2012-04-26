@@ -1538,7 +1538,16 @@ class ArtesanosController extends AppController {
 			$ciudad = null;
 		}
 		
+		
+		$this->loadModel("SolicitudesTitulacion");
+		$idSolicitudArtesano = $this->SolicitudesTitulacion->find("list", array("fields"=>array("artesano_id"),"conditions"=>array("SolicitudesTitulacion.artesano_id"=>$artesano[0]["Artesano"]["id"])));
+		$this->loadModel("Titulacion");
+		$idTituloEnTitulacion = $this->Titulacion->find("list",array("fields"=>array("titulo_id"), array("conditions"=>array("Titulacion.solicitudes_titulaciones_id"=>$idSolicitudArtesano))));
+		$this->loadModel("Titulo");
+		$titulos = $this->Titulo->find("all", array("conditions"=>array("Titulo.id"=>$idTituloEnTitulacion)));
+		//debug($titulos);
+		$profesion = $titulos[0]['Rama']['ram_nombre'];
 		$presidente = $this -> requestAction('/configuraciones/getValorConfiguracion/' . "con_presidente_de_la_junta");
-		$this -> set(compact('artesano','ciudad','provincia','presidente'));
+		$this -> set(compact('artesano','ciudad','provincia','presidente','profesion'));
 	}
 }

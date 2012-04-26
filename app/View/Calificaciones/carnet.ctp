@@ -41,7 +41,7 @@
         </tr>
         <tr>
             
-            <td style="text-align: right; font-size: 8px;"><b>N.C:</b></td>
+            <td style="text-align: right; font-size: 8px;">&nbsp;</td>
             <td style="font-size: 8px;">&nbsp;</td>
         </tr>
         
@@ -87,7 +87,7 @@
         </tr>
         <tr>
             <td style="text-align: right; font-size: 8px; "><b>Profesión:</b></td>
-            <td style="font-size: 8px;">&nbsp;</td>
+            <td style="font-size: 8px;"><?php print($profesion); ?></td>
             <td style="font-size: 8px;">&nbsp;</td>
             
         </tr>
