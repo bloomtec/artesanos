@@ -47,6 +47,15 @@
 	<a href="#" id="regAlumno" class="button">Registrar nuevo alumno</a>
 	<a class="add-row button" href="#" rel="#registroAlumnos">Agregar Otro</a>
 </div>
+<?php 
+	if($curso['Solicitud']['centros_artesanal_id']){
+		$elTipo="centro";
+		$id=$curso['Solicitud']['centros_artesanal_id'];
+	}else{
+		$elTipo="junta";
+		$id=$curso['Solicitud']['juntas_provincial_id'];
+	}
+?>
 <div class="alumnos-container"></div>
 <script type="text/javascript">
 	$(function() {
@@ -58,7 +67,7 @@
 		$(".inputDocumento").blur(function() {
 			var $that = $(this);
 			if($that.val()) {
-				BJS.JSON("/alumnos/get/"+ $that.val()+"/<?php echo $curso['Solicitud']['centros_artesanal_id']?>", {}, function(data) {
+				BJS.JSON("/alumnos/get/"+ $that.val()+"/<?php echo $elTipo; ?>/<?php echo $id?>", {}, function(data) {
 					if(data) {
 						$("input.id[rel='" + $that.attr('rel') + "'][class='id']").val(data.Alumno.id);
 						$("input.documento[rel='" + $that.attr('rel') + "']").val(data.Alumno.alu_documento_de_identificacion);
@@ -66,7 +75,16 @@
 						$("span[rel='" + $that.attr('rel') + "']").text(data.Alumno.alu_nombres + " " + data.Alumno.alu_apellido_paterno + " " + data.Alumno.alu_apellido_materno);
 					} else {
 						$that.focus();
-						alert('El alumno no se encuentra registrado');
+						$("input.id[rel='" + $that.attr('rel') + "'][class='id']").val("");
+						$("input.documento[rel='" + $that.attr('rel') + "']").val("");
+						$("input.label[rel='" + $that.attr('rel') + "']").val("");
+						$("span[rel='" + $that.attr('rel') + "']").text("");
+						<?php if($elTipo=="centro"):?>
+						alert('El alumno no se encuentra registrado en ningun centro o unidad artesnal');
+						<?php endif;?>
+						<?php if($elTipo=="junta"):?>
+						alert('El alumno no se encuentra registrado en ninguna Junta provincial');
+						<?php endif;?>
 					}
 				});
 			}
