@@ -123,10 +123,19 @@ class AlumnosController extends AppController {
 		$this -> redirect(array('action' => 'index'));
 	}
 
-	public function get($document,$centroArtesanal) {
+	public function get($document,$tipo,$id) {
 		$this -> autorender = false;
 		$this -> Alumno -> recursive = 0;
-		echo json_encode($this -> Alumno -> find('first', array('conditions' => array('Alumno.alu_documento_de_identificacion' => $document,'Alumno.centros_artesanal_id'=>$centroArtesanal))));
+		switch ($tipo) {
+			case 'centro':
+				echo json_encode($this -> Alumno -> find('first', array('conditions' => array('Alumno.alu_documento_de_identificacion' => $document,'Alumno.centros_artesanal_id'=>$id))));
+		
+				break;
+			
+			case 'junta':
+				echo json_encode($this -> Alumno -> find('first', array('conditions' => array('Alumno.alu_documento_de_identificacion' => $document,'Alumno.centros_artesanal_id'=>null))));
+				break;
+		}
 		exit(0);
 	}
 

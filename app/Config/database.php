@@ -10,8 +10,13 @@ class DATABASE_CONFIG {
 		'database' => 'jndagobe_artesanos',
 		'encoding' => 'utf8'
 	);
+<<<<<<< HEAD
 /*
 	public  $default = array(
+=======
+
+	/*public  $default = array(
+>>>>>>> f9a2049989411af406395e3bc81e7d526a979c73
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
 		'host' => 'localhost',

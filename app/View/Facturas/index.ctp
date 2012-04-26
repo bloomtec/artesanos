@@ -1,23 +1,22 @@
 <div class="facturas index">
 	<h2><?php echo __('Facturas');?></h2>
 	<div class="search">
-		<label>BUSCAR:</label>
 		<input type="text" />
-		<input type="button" class="submit search-generic" value="Search" />
+		<input type="button" class="submit search-generic" value="Buscar" />
 	</div>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-									<th><?php echo $this->Paginator->sort('fac_numero','Numero');?></th>
-							<th><?php echo $this->Paginator->sort('fac_comprobante_deposito','Comprobante Deposito');?></th>
-							<th><?php echo $this->Paginator->sort('fac_cliente','Cliente');?></th>
-							<th><?php echo $this->Paginator->sort('provincia_id','Incia Id');?></th>
-							<th><?php echo $this->Paginator->sort('canton_id','On Id');?></th>
-							<th><?php echo $this->Paginator->sort('ciudad_id','Ad Id');?></th>
-							<th><?php echo $this->Paginator->sort('fac_direccion','Direccion');?></th>
-							<th><?php echo $this->Paginator->sort('fac_telefono','Telefono');?></th>
-							<th><?php echo $this->Paginator->sort('fac_ruc_doc','Ruc Doc');?></th>
-							<th><?php echo $this->Paginator->sort('fac_fecha_emision','Fecha Emision');?></th>
-											<th class="actions"><?php echo __('Acciones');?></th>
+		<th><?php echo $this->Paginator->sort('fac_numero','Numero');?></th>
+		<th><?php echo $this->Paginator->sort('fac_comprobante_deposito','Comprobante Deposito');?></th>
+		<th><?php echo $this->Paginator->sort('fac_cliente','Cliente');?></th>
+		<th><?php echo $this->Paginator->sort('provincia_id','Incia Id');?></th>
+		<th><?php echo $this->Paginator->sort('canton_id','On Id');?></th>
+		<th><?php echo $this->Paginator->sort('ciudad_id','Ad Id');?></th>
+		<th><?php echo $this->Paginator->sort('fac_direccion','Direccion');?></th>
+		<th><?php echo $this->Paginator->sort('fac_telefono','Telefono');?></th>
+		<th><?php echo $this->Paginator->sort('fac_ruc_doc','Ruc Doc');?></th>
+		<th><?php echo $this->Paginator->sort('fac_fecha_emision','Fecha Emision');?></th>
+		<th class="actions"><?php echo __('Acciones');?></th>
 	</tr>
 	<?php
 	$i = 0;

@@ -33,7 +33,7 @@
 		<h2><?php echo __('Registro de alumnos');?></h2>
 		<?php
 		//debug($losAlumnos);
-		if($curso['Solicitud']['centros_artesanal_id']) echo $this -> element('registro_de_alumnos', array('alumnos' => $losAlumnos,'curso'=>$curso));
+		 echo $this -> element('registro_de_alumnos', array('alumnos' => $losAlumnos,'curso'=>$curso));
 		//echo $this -> Form -> input('Alumno', array('label' => 'Alumnos'));
 		?>
 	</fieldset>
