@@ -653,6 +653,7 @@ class CalificacionesController extends AppController {
             $ciudad = null;
         }
 		
+		
 		//debug($artesano);
 		$this->loadModel("SolicitudesTitulacion");
 		$idSolicitudArtesano = $this->SolicitudesTitulacion->find("list", array("fields"=>array("artesano_id"),"conditions"=>array("SolicitudesTitulacion.artesano_id"=>$artesano[0]["Artesano"]["id"])));
