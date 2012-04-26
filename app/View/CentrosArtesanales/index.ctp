@@ -63,6 +63,6 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $this->Html->link(__('Agregar Centro Artesanal'), array('action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(__('Agregar Centros Artesanales'), array('action' => 'add')); ?></li>
 	</ul>
 </div>
