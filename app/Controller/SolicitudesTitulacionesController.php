@@ -14,6 +14,13 @@ class SolicitudesTitulacionesController extends AppController {
      *
      * @return void
      */
+     /*
+    public function beforeFilter() {
+		parent::beforeFilter();
+		$this -> Auth -> allow('*');
+	}*/
+	
+	
     public function index() {
         $this -> SolicitudesTitulacion -> recursive = 0;
         $conditions = array();
@@ -386,7 +393,7 @@ class SolicitudesTitulacionesController extends AppController {
 
     //Reporte solicitudes titulaciones
     function impReporte() {
-        $this -> layout = 'pdf';
+        $this -> layout = 'pdf2';
         $reporteSolicitudesTitulacion = $this -> Session -> read('reporte');
         $nombre_archivo = $this -> Session -> read('archivo');
         //Tamaño de la fuente
