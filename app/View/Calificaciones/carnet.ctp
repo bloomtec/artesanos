@@ -154,10 +154,10 @@
     <table border="0">
         <tr>
             <td style="text-align: center; right; font-size: 8px;" colspan="2"><b>"El Portador tiene derecho a los beneficios
-                contemplados en el inciso final del Art. 2, Arts. 16,17,18,19 de la Ley de Defensa del Artesano, en corcondancia con el Art. 367 de la Ley Orgánica de Regímen Municipal;<br>
-                Art. 19 y 56, numeral 19 de la Ley de Régimen
-                Tributario Interno y Art. 154 de su Reglamento"<br>
-            </b></td>
+                contemplados en el inciso final del Art. 2, Arts. 16,17,18,19 de la Ley de Defensa del Artesano, en corcondancia con el Art. 302 del Código de trabajo,<br/>Art. 367 de la Ley Orgánica de Regímen Municipal;<br/>
+                Art. 19 y 56, numeral 19 de la Ley de Régimen<br/>
+                Tributario Interno y Art. 154 de su Reglamento"</b><br/>
+            </td>
         </tr>
     </table>
     <br>
