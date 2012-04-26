@@ -2,6 +2,10 @@
 	<?php echo $this -> Form -> create('Usuario');?>
 	<fieldset>
 		<h2><?php echo __('Asignar Permisos Usuario');?></h2>
+		<p style="text-align: left;">
+			Los permisos correspondientes a la inspección de la calificación son asignados automaticamente
+			a los usuarios con rol de inspector
+		</p>
 		<br />
 		<br />
 		<h3>MODULOS</h3>
@@ -20,13 +24,8 @@
 				<th class="nombre">ARTESANOS</th>
 				<td class="accion"><?php echo $this -> Form -> input('Permisos.Artesanos.index', array('label' => 'Listar', 'type' => 'checkbox'));?></td>
 				<td class="accion"><?php echo $this -> Form -> input('Permisos.Artesanos.agregarArtesano', array('label' => 'Registrar', 'type' => 'checkbox'));?></td>
-				<td class="accion"><?php echo $this -> Form -> input('Permisos.Artesanos.add', array('label' => 'Calificar', 'type' => 'checkbox'));?></td>
-				<td class="info">
-					<p style="text-align: left;">
-						Los permisos correspondientes a la inspección de la calificación son asignados automaticamente
-						a los usuarios con rol de inspector
-					</p>
-				</td>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.Artesanos.add', array('title' => 'Actualmente habilitado de manera global', 'label' => 'Calificar', 'type' => 'checkbox', 'checked' => 'checked', 'disabled' => 'disabled'));?></td>
+				<td class="accion"></td>
 			</tr>
 		</table>
 		<table class="permisos">
