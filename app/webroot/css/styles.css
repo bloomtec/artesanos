@@ -238,8 +238,11 @@ p {
 	height: 650px;
 	width: 1000px;
 	margin: 0 auto;
-	overflow:auto;
+	
 
+}
+#deafault #contaner{
+	overflow:hidden;
 }
 #print #container {
 	height:auto;
@@ -395,7 +398,7 @@ p {
 #main-menu ul li:hover a {
 	color: black;
 }
-	#main-menu ul ul {
+#main-menu ul ul {
 	display: none;
     left: 0;
     margin-top: 0;
@@ -406,6 +409,7 @@ p {
 #main-menu ul li:hover ul {
 	display: block;
 	z-index: 10;
+	 position: absolute;
 }
 #main-menu ul .closed ul {
 	display: none;
@@ -1073,6 +1077,9 @@ form .input input {
 	background: linear-gradient(top, #ffffff 51%,#d9dadd 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#d9dadd',GradientType=0 ); /* IE6-9 */
 	
+}
+form .file input{
+	height: auto;
 }
 form .input input:focus{
 	/** css3 gradient **/
@@ -1763,7 +1770,7 @@ body p {
 .audit  .audit-entity label{
 	display:block;
 	float:left;
-	width:180px;
+	width:322px;
 	font-weight: bold;	
 }
 .audit  .audit-entity span{
