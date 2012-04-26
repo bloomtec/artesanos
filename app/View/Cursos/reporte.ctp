@@ -9,12 +9,13 @@
 	</h2>
 	<fieldset>
 		<?php
-		echo $this -> Form -> input('provincia', array('type' => 'select', 'label' => 'Provincias', 'empty' => 'Seleccione...', 'options' => ''));
-		echo $this -> Form -> input('ciudad', array('type' => 'select', 'label' => 'Ciudades', 'empty' => 'Seleccione...', 'options' => ''));
+		echo $this -> Form -> input('provincia_id', array('type' => 'select', 'label' => 'Provincia'));
+		echo $this -> Form -> input('canton_id', array('type' => 'select', 'label' => 'Canton', 'empty' => 'Seleccione...', 'options' => ''));
+		echo $this -> Form -> input('ciudad_id', array('type' => 'select', 'label' => 'Ciudad', 'empty' => 'Seleccione...', 'options' => ''));
 		echo $this -> Form -> input('estado', array('type' => 'select', 'label' => 'Estado', 'empty' => 'Seleccione...', 'options' => array(1=>"Activo",2=>"No activo")));
 		echo $this -> Form -> input('fecha_creacion', array('value' => '', 'type' => 'text', 'label' => 'Fecha creación', 'class' => 'date'));
-		echo $this -> Form -> input('fecha1', array('value' => '', 'type' => 'text', 'label' => 'Fecha inicial', 'class' => 'date'));
-		echo $this -> Form -> input('fecha2', array('value' => '', 'type' => 'text', 'label' => 'Fecha final', 'class' => 'date'));
+		echo $this -> Form -> input('fecha1', array('value' => '', 'type' => 'text', 'label' => 'Fecha De Inicio', 'class' => 'date'));
+		echo $this -> Form -> input('fecha2', array('value' => '', 'type' => 'text', 'label' => 'Fecha De Fin', 'class' => 'date'));
 		?>
 	</fieldset>
 	<?php echo $this -> Form -> submit('Buscar');?>
@@ -76,5 +77,23 @@ for($i=0;$i < count($reporteCursos);$i++) {
 &nbsp; <a class='button' href="/cursos/impReporte">Descargar pdf</a>
 &nbsp; <a class='button' href="/cursos/export_csv">Exportar a CSV</a>
 <?php }?>
-
-
+<script type="text/javascript">
+	$(function() {
+		var actualizarCiudades = function() {
+			BJS.updateSelect($("#ReporteCantonId"), "/cantones/getByProvincia/" + $("#ReporteProvinciaId option:selected").val(), function() {
+				BJS.updateSelect($("#ReporteCiudadId"), "/ciudades/getByCanton/" + $("#ReporteCantonId option:selected").val(), function() {
+					BJS.updateSelect($("#ReporteParroquiaId"), "/parroquias/getByCiudad/" + $("#ReporteCiudadId option:selected").val());
+				});
+			});
+		}
+		$('#ReporteProvinciaId').change(function() {
+			actualizarCiudades();
+		});
+		$('#ReporteCantonId').change(function() {
+			BJS.updateSelect($("#ReporteCiudadId"), "/ciudades/getByCanton/" + $("#ReporteCantonId option:selected").val(), function() {
+				BJS.updateSelect($("#ReporteParroquiaId"), "/parroquias/getByCiudad/" + $("#ReporteCiudadId option:selected").val());
+			});
+		});
+		actualizarCiudades();
+	});
+</script>
