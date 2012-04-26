@@ -47,7 +47,7 @@ $cakeDescription = __d('cake_dev', 'Junta Nacional de defensa del artesano');
 			  echo $this -> Html -> script('plugins/jqplot.pieRenderer.min.js');
 			  echo $this -> Html -> script('plugins/jqplot.categoryAxisRenderer.min.js');
 			  echo $this -> Html -> script('plugins/jqplot.pointLabels.min.js');
-			echo $this -> Html -> script('jquery');
+			//echo $this -> Html -> script('jquery');
 			//echo $this -> Html -> script('jquery.gchart');
 			//echo $this -> Html -> script('graficos');
 			//echo $this -> Html -> script('jquery.maskedinput-1.2.2');
