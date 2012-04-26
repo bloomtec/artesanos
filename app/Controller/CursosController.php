@@ -40,7 +40,7 @@ class CursosController extends AppController {
 	public function view($id = null) {
 		$this -> Curso -> id = $id;
 		if (!$this -> Curso -> exists()) {
-			throw new NotFoundException(__('Invalid curso'));
+			throw new NotFoundException(__('Curso no válido'));
 		}
 		$this -> set('curso', $this -> Curso -> read(null, $id));
 	}
@@ -123,7 +123,7 @@ class CursosController extends AppController {
 		$this -> Curso -> id = $id;
 		$curso = $this -> Curso -> read(null,$id);
 		if (!$this -> Curso -> exists()) {
-			throw new NotFoundException(__('Invalid curso'));
+			throw new NotFoundException(__('Curso no válido'));
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			$this -> request -> data['Curso']['cur_costo'] = $this -> formatearValor($this -> request -> data['Curso']['cur_costo']);
@@ -162,7 +162,7 @@ class CursosController extends AppController {
 	public function quitar($id = null) {
 		$this -> Curso -> CursosAlumno -> id = $id;
 		if (!$this -> Curso -> CursosAlumno -> exists()) {
-			throw new NotFoundException(__('Invalid curso'));
+			throw new NotFoundException(__('Curso no válido'));
 		}
 		if ($this -> Curso -> CursosAlumno -> delete()) {
 			$this -> Session -> setFlash(__('Alumno borrado del curso'), 'crud/success');
@@ -175,7 +175,7 @@ class CursosController extends AppController {
 	public function verAlumnos($id = null) {
 		$this -> Curso -> id = $id;
 		if (!$this -> Curso -> exists()) {
-			throw new NotFoundException(__('Invalid curso'));
+			throw new NotFoundException(__('Curso no válido'));
 		}
 		$this -> Curso -> recursive = -1;
 		$curso = $this -> Curso -> read(null, $id);
@@ -187,7 +187,7 @@ class CursosController extends AppController {
 	public function ingresarCalificaciones($id = null) {
 		$this -> Curso -> id = $id;
 		if (!$this -> Curso -> exists()) {
-			throw new NotFoundException(__('Invalid curso'));
+			throw new NotFoundException(__('Curso no válido'));
 		}
 		$calificacionMinima = ($this -> requestAction('/configuraciones/getValorConfiguracion/con_calificacion_minima'));
 		$calificacionMaxima = ($this -> requestAction('/configuraciones/getValorConfiguracion/con_calificacion_maxima'));
@@ -268,7 +268,7 @@ class CursosController extends AppController {
 		}
 		$this -> Curso -> id = $id;
 		if (!$this -> Curso -> exists()) {
-			throw new NotFoundException(__('Invalid curso'));
+			throw new NotFoundException(__('Curso no válido'));
 		}
 		if ($this -> Curso -> delete()) {
 			$this -> Session -> setFlash(__('Curso borrado'), 'crud/success');

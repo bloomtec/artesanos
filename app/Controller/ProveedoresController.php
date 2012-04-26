@@ -39,7 +39,7 @@ class ProveedoresController extends AppController {
 	public function view($id = null) {
 		$this -> Proveedor -> id = $id;
 		if (!$this -> Proveedor -> exists()) {
-			throw new NotFoundException(__('Invalid proveedor'));
+			throw new NotFoundException(__('Proveedor no válido'));
 		}
 		$this -> set('proveedor', $this -> Proveedor -> read(null, $id));
 	}
@@ -53,10 +53,10 @@ class ProveedoresController extends AppController {
 		if ($this -> request -> is('post')) {
 			$this -> Proveedor -> create();
 			if ($this -> Proveedor -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The proveedor has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se guardó el proveedor'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The proveedor could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo guardar el proveedor. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		}
 	}
@@ -70,14 +70,14 @@ class ProveedoresController extends AppController {
 	public function edit($id = null) {
 		$this -> Proveedor -> id = $id;
 		if (!$this -> Proveedor -> exists()) {
-			throw new NotFoundException(__('Invalid proveedor'));
+			throw new NotFoundException(__('Proveedor no válido'));
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			if ($this -> Proveedor -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('The proveedor has been saved'), 'crud/success');
+				$this -> Session -> setFlash(__('Se guardó el proveedor'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
 			} else {
-				$this -> Session -> setFlash(__('The proveedor could not be saved. Please, try again.'), 'crud/error');
+				$this -> Session -> setFlash(__('No se pudo guardar el proveedor. Por favor, intente de nuevo.'), 'crud/error');
 			}
 		} else {
 			$this -> request -> data = $this -> Proveedor -> read(null, $id);
@@ -96,13 +96,13 @@ class ProveedoresController extends AppController {
 		}
 		$this -> Proveedor -> id = $id;
 		if (!$this -> Proveedor -> exists()) {
-			throw new NotFoundException(__('Invalid proveedor'));
+			throw new NotFoundException(__('Proveedor no válido'));
 		}
 		if ($this -> Proveedor -> delete()) {
-			$this -> Session -> setFlash(__('Proveedor deleted'), 'crud/success');
+			$this -> Session -> setFlash(__('Se eliminó el proveedor'), 'crud/success');
 			$this -> redirect(array('action' => 'index'));
 		}
-		$this -> Session -> setFlash(__('Proveedor was not deleted'), 'crud/error');
+		$this -> Session -> setFlash(__('No se eliminó el proveedor'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
 	}
 
