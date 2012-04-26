@@ -1,5 +1,5 @@
 <div class="configuraciones view">
-<h2><?php  echo __('Configuracion');?></h2>
+<h2><?php  echo __('Configuracion');?></h2> <br />
 		<label><?php echo __('Capital Máximo de inversión'); ?></label>
 		<h3>
 			<?php echo h($configuracion['Configuracion']['con_capital_maximo_de_inversion']); ?>
@@ -60,7 +60,8 @@
 			<?php echo h($configuracion['Configuracion']['con_iva']); ?>
 			&nbsp;
 		</h3>
-		<h1> Certificaciones </h1>
+		
+		
 		
 		<label><?php echo __('Presidente de la Junta'); ?></label>
 		<h3>
