@@ -1,41 +1,40 @@
 <div class="calificaciones index">
 	<h2><?php echo __('Calificaciones');?></h2>
 	<div class="search">
-		<label>BUSCAR:</label>
 		<input type="text" />
-		<input type="button" class="submit search-generic" value="Search" />
+		<input type="button" class="submit search-generic" value="Buscar" />
 	</div>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-							<th><?php echo $this->Paginator->sort('rama_id');?></th>
-							<th><?php echo $this->Paginator->sort('artesano_id');?></th>
-							<th><?php echo $this->Paginator->sort('tipos_de_calificacion_id');?></th>
-							<th><?php echo $this->Paginator->sort('cal_estado');?></th>
-							<th><?php echo $this->Paginator->sort('cal_inspector_local');?></th>
-							<th><?php echo $this->Paginator->sort('cal_fecha_inspeccion_local');?></th>
-							<th><?php echo $this->Paginator->sort('cal_inspector_taller');?></th>
-							<th><?php echo $this->Paginator->sort('cal_fecha_inspeccion_taller');?></th>
-							<th><?php echo $this->Paginator->sort('cal_fecha_expiracion');?></th>
-							<th><?php echo $this->Paginator->sort('cal_domicilio_propio');?></th>
-							<th><?php echo $this->Paginator->sort('cal_domicilio_valor');?></th>
-							<th><?php echo $this->Paginator->sort('cal_taller_propio');?></th>
-							<th><?php echo $this->Paginator->sort('cal_taller_valor');?></th>
-							<th><?php echo $this->Paginator->sort('cal_agua');?></th>
-							<th><?php echo $this->Paginator->sort('cal_luz');?></th>
-							<th><?php echo $this->Paginator->sort('cal_telefono');?></th>
-							<th><?php echo $this->Paginator->sort('cal_servicios_basicos');?></th>
-							<th><?php echo $this->Paginator->sort('cal_compra_de_materia_prima_mensual');?></th>
-							<th><?php echo $this->Paginator->sort('cal_salario_operarios');?></th>
-							<th><?php echo $this->Paginator->sort('cal_salario_aprendices');?></th>
-							<th><?php echo $this->Paginator->sort('cal_otros_salarios');?></th>
-							<th><?php echo $this->Paginator->sort('cal_maquinas_y_herramientas');?></th>
-							<th><?php echo $this->Paginator->sort('cal_materia_prima');?></th>
-							<th><?php echo $this->Paginator->sort('cal_productos_elaborados');?></th>
-							<th><?php echo $this->Paginator->sort('cal_ingresos_por_ventas');?></th>
-							<th><?php echo $this->Paginator->sort('cal_otros_ingresos');?></th>
-							<th><?php echo $this->Paginator->sort('created');?></th>
-							<th><?php echo $this->Paginator->sort('modified');?></th>
-					<th class="actions"><?php echo __('Actions');?></th>
+		<th><?php echo $this->Paginator->sort('rama_id');?></th>
+		<th><?php echo $this->Paginator->sort('artesano_id');?></th>
+		<th><?php echo $this->Paginator->sort('tipos_de_calificacion_id');?></th>
+		<th><?php echo $this->Paginator->sort('cal_estado');?></th>
+		<th><?php echo $this->Paginator->sort('cal_inspector_local');?></th>
+		<th><?php echo $this->Paginator->sort('cal_fecha_inspeccion_local');?></th>
+		<th><?php echo $this->Paginator->sort('cal_inspector_taller');?></th>
+		<th><?php echo $this->Paginator->sort('cal_fecha_inspeccion_taller');?></th>
+		<th><?php echo $this->Paginator->sort('cal_fecha_expiracion');?></th>
+		<th><?php echo $this->Paginator->sort('cal_domicilio_propio');?></th>
+		<th><?php echo $this->Paginator->sort('cal_domicilio_valor');?></th>
+		<th><?php echo $this->Paginator->sort('cal_taller_propio');?></th>
+		<th><?php echo $this->Paginator->sort('cal_taller_valor');?></th>
+		<th><?php echo $this->Paginator->sort('cal_agua');?></th>
+		<th><?php echo $this->Paginator->sort('cal_luz');?></th>
+		<th><?php echo $this->Paginator->sort('cal_telefono');?></th>
+		<th><?php echo $this->Paginator->sort('cal_servicios_basicos');?></th>
+		<th><?php echo $this->Paginator->sort('cal_compra_de_materia_prima_mensual');?></th>
+		<th><?php echo $this->Paginator->sort('cal_salario_operarios');?></th>
+		<th><?php echo $this->Paginator->sort('cal_salario_aprendices');?></th>
+		<th><?php echo $this->Paginator->sort('cal_otros_salarios');?></th>
+		<th><?php echo $this->Paginator->sort('cal_maquinas_y_herramientas');?></th>
+		<th><?php echo $this->Paginator->sort('cal_materia_prima');?></th>
+		<th><?php echo $this->Paginator->sort('cal_productos_elaborados');?></th>
+		<th><?php echo $this->Paginator->sort('cal_ingresos_por_ventas');?></th>
+		<th><?php echo $this->Paginator->sort('cal_otros_ingresos');?></th>
+		<th><?php echo $this->Paginator->sort('created');?></th>
+		<th><?php echo $this->Paginator->sort('modified');?></th>
+		<th class="actions"><?php echo __('Actions');?></th>
 	</tr>
 	<?php
 	$i = 0;
