@@ -129,6 +129,17 @@ class CentrosArtesanalesController extends AppController {
 
 	public function reporte() {
 		$reporte = false;
+		$provincias = array(0 => 'Seleccione...');
+		$provincias_tmp = $this -> CentrosArtesanal -> Provincia -> find('list');
+		foreach ($provincias_tmp as $key => $value) {
+			$provincias[$key] = $value;
+		}
+		$ramas = $this -> CentrosArtesanal -> Rama -> find('list');
+		$sostenimientos = $this -> CentrosArtesanal -> getValores(19);
+		$tipos = $this -> CentrosArtesanal -> getValores(20);
+		$modalidades = $this -> CentrosArtesanal -> getValores(21);
+		$lenguajes = $this -> CentrosArtesanal -> getValores(22);
+		$this -> set(compact('ramas', 'modalidades', 'lenguajes', 'tipos', 'sostenimientos', 'provincias', 'reporte'));
 		$pagina = "";
 
 		if (isset($this -> params['named']['page'])) {
@@ -143,47 +154,36 @@ class CentrosArtesanalesController extends AppController {
 			$this -> Recursive = 0;
 			$conditions = array();
 			if ($pagina == false) {
-
-				$provincia = $this -> data["Reporte"]["provincia"];
+				$provincia = $this -> data["Reporte"]["provincia_id"];
 				$fechaCreacion = $this -> data["Reporte"]["fecha_creacion"];
-				$fecha1 = $this -> data["Reporte"]["fecha_creacion"];
-				$fecha2 = $this -> data["Reporte"]["fecha_creacion"];
-
+				$fecha1 = $this -> data["Reporte"]["fecha1"];
+				$fecha2 = $this -> data["Reporte"]["fecha2"];
 				if (!empty($provincia)) {
 					$conditions[] = array('CentrosArtesanal.provincia_id' => $provincia);
 				}
-
 				if (!empty($fechaCreacion)) {
-					$conditions[] = array('CentrosArtesanal.created' => $fechaCreacion);
+					$conditions[] = array('CentrosArtesanal.created BETWEEN ? AND ?' => array($fechaCreacion . ' 00:00:00', $fechaCreacion . ' 23:59:59'));
 				}
-
 				if ($fecha1 != null && $fecha2 != null) {
-
 					if ($fecha1 > $fecha2) {
 						$this -> Session -> setFlash(__('La fecha inicial debe ser menor a la fecha final', true));
 						return;
 					}
-
 					list($ano, $mes, $dia) = explode("-", $fecha1);
 					$fecha1 = $ano . "-" . $mes . "-" . ($dia);
-
 					list($ano, $mes, $dia) = explode("-", $fecha2);
-
 					if ($dia == 31) {
 						$fecha2 = $ano . "-" . $mes . "-" . ($dia);
 					} else {
 						$fecha2 = $ano . "-" . $mes . "-" . ($dia + 1);
 					}
-
 					$conditions[] = array('CentrosArtesanal.created between ? and ?' => array($fecha1, $fecha2));
-
 				} else if ($fecha1 != null) {
 					$conditions[] = array('CentrosArtesanal.created >=' => $fecha1);
 				} else if ($fecha2 != null) {
 					$conditions[] = array('CentrosArtesanal.created <=' => $fecha2);
 				}
 			}
-
 			$reporteCentrosArtesanales = $this -> paginate = array('CentrosArtesanal' => array('limit' => 20, 'conditions' => $conditions));
 			$reporteCentrosArtesanales = $this -> paginate('CentrosArtesanal');
 			$cabecerasCsv = array("RUC", "Nombre", "Provincia", "Canton", "Ciudad", "Parroquia", "Dirección", "Fecha creación");
@@ -192,12 +192,7 @@ class CentrosArtesanalesController extends AppController {
 			$this -> Session -> write('cabeceras', $cabecerasCsv);
 			$reporte = true;
 			$this -> set(compact('reporteCentrosArtesanales', 'reporte'));
-		} else {
-			$idsProvincias = $this -> CentrosArtesanal -> find("list", array("fields" => array("provincia_id")));
-			$provincias = $this -> CentrosArtesanal -> Provincia -> find("list", array("conditions" => array("Provincia.id" => $idsProvincias)));
-			$this -> set(compact('provincias', 'reporte'));
 		}
-
 	}
 
 	public function impReporte() {

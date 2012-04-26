@@ -282,6 +282,12 @@ class CursosController extends AppController {
 		$this -> loadModel("JuntasProvincial", true);
 		$this -> loadModel("CentrosArtesanal", true);
 		$reporte = false;
+		$provincias = array(0 => 'Seleccione...');
+		$provincias_tmp = $this -> Curso -> Provincia -> find('list');
+		foreach ($provincias_tmp as $key => $value) {
+			$provincias[$key] = $value;
+		}
+		$this -> set(compact('provincias', 'reporte'));
 		$pagina = "";
 		$this -> Curso -> recursive = 0;
 		if (isset($this -> params['named']['page'])) {
@@ -370,13 +376,6 @@ class CursosController extends AppController {
 
 			$this -> Session -> write('numAlumnos', $numAlumnos);
 			$this -> set(compact('reporteCursos', 'reporte', 'numAlumnos'));
-		} else {
-			$provincias = array(0 => 'Seleccione...');
-			$provincias_tmp = $this -> Curso -> Provincia -> find('list');
-			foreach ($provincias_tmp as $key => $value) {
-				$provincias[$key] = $value;
-			}
-			$this -> set(compact('provincias', 'reporte'));
 		}
 
 	}
