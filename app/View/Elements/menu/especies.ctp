@@ -38,6 +38,11 @@
 					<a href="/ventas_especies/addToOthers">Otros</a>
 				</li>
 				<?php endif; ?>
+				<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'VentasEspecies', 'addToOthers')))) : ?>
+				<li>
+					<a href="/ventas_especies/ventas">Facturas</a>
+				</li>
+				<?php endif; ?>
 			</ul>
 		</li>
 		<?php endif; ?>
