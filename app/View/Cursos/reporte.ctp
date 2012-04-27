@@ -14,8 +14,8 @@
 		echo $this -> Form -> input('ciudad_id', array('type' => 'select', 'label' => 'Ciudad', 'empty' => 'Seleccione...', 'options' => ''));
 		echo $this -> Form -> input('estado', array('type' => 'select', 'label' => 'Estado', 'empty' => 'Seleccione...', 'options' => array(1=>"Activo",2=>"No activo")));
 		echo $this -> Form -> input('fecha_creacion', array('value' => '', 'type' => 'text', 'label' => 'Fecha creación', 'class' => 'date'));
-		echo $this -> Form -> input('fecha1', array('value' => '', 'type' => 'text', 'label' => 'Fecha De Inicio', 'class' => 'date'));
-		echo $this -> Form -> input('fecha2', array('value' => '', 'type' => 'text', 'label' => 'Fecha De Fin', 'class' => 'date'));
+	    echo $this -> Form -> input('fecha1', array('value' => '', 'type' => 'text', 'label' => 'Fecha Inicio Periodo', 'class' => 'date', 'value'=>$fechaActual));
+		echo $this -> Form -> input('fecha2', array('value' => '', 'type' => 'text', 'label' => 'Fecha Final Periodo', 'class' => 'date', 'value'=>$fechaActual));
 		?>
 	</fieldset>
 	<?php echo $this -> Form -> submit('Buscar');?>

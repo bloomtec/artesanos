@@ -12,8 +12,8 @@ if($reporte==false) {?>
 		//echo $this -> Form -> input('junta_provincial', array('type' => 'select', 'label' => 'Juntas provinciales', 'empty' => 'Seleccione...', 'options' => $juntasProvinciales));
 		echo $this -> Form -> input('provincia', array('type' => 'select', 'label' => 'Provincia', 'empty' => 'Seleccione...', 'options' => $provincias));
 		echo $this -> Form -> input('rama', array('type' => 'select', 'label' => 'Rama', 'empty' => 'Seleccione...', 'options' => $ramas));
-		echo $this -> Form -> input('fecha1', array('type' => 'text', 'label' => 'Fecha inicial', 'class' => 'date'));
-		echo $this -> Form -> input('fecha2', array('type' => 'text', 'label' => 'Fecha final', 'class' => 'date'));
+		echo $this -> Form -> input('fecha1', array('type' => 'text', 'label' => 'Fecha inicial', 'class' => 'date','value'=>$fechaActual));
+		echo $this -> Form -> input('fecha2', array('type' => 'text', 'label' => 'Fecha final', 'class' => 'date', 'value'=>$fechaActual));
 		?>
 	</fieldset>
 	<?php echo $this -> Form -> submit('Buscar');?>

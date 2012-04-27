@@ -9,6 +9,7 @@ App::import('Helper', 'csv');
  */
 class CentrosArtesanalesController extends AppController {
 	
+		
 	private function formatearValor($valor = null) {
 		$valor = str_replace('.', '', $valor);
 		$valor = str_replace(',', '.', $valor);
@@ -202,8 +203,11 @@ class CentrosArtesanalesController extends AppController {
 			$this -> Session -> write('archivo', "reporteCentrosArtesanales");
 			$this -> Session -> write('cabeceras', $cabecerasCsv);
 			$reporte = true;
+			
 			$this -> set(compact('reporteCentrosArtesanales', 'reporte'));
 		}
+
+		$this -> set('fechaActual', date('Y-m-d', strtotime('now')));
 	}
 
 	public function impReporte() {

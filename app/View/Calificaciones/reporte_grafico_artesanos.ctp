@@ -1,13 +1,3 @@
-<!-- <input type="button" value="probando" id="btnPruebaModal" /> -->
-
-		<!--
-<div class="modal" id="modal_graficos" style="display: none;" >
-	
-	<?php echo $this->element("graficos"); ?>
-	<div id="chart_div" style="width: 900px; height: 500px;"></div>
-</div>
--->
-
 <div class="reportes form" id="datos">
 	<h2>GENERAR GRAFICOS</h2>
 		<?php echo $this -> Form -> create('Calificacion'); ?>
@@ -20,7 +10,7 @@
 			<?php echo $this -> Form -> input('Reporte.canton', array('type' => 'select')); ?>
 			<?php echo $this -> Form -> input('Reporte.ciudad', array('type' => 'select')); ?>
 		</fieldset>
-		<?php echo $this -> Form -> End('Enviar', array("id"=>"btnEnviar")); ?>
+		<?php echo $this -> Form -> End('Generar', array("id"=>"btnEnviar")); ?>
 		
 	<script type="text/javascript">
 		$(function() {
@@ -57,6 +47,9 @@ $(document).ready(function(){
 					e.preventDefault();
 					return false;
 				}
+				
+				$("#botonesExportar").show();
+	
 				$("#titulo").show();
 				$("#chart1").show();
 				$("#chart2").show();
@@ -271,26 +264,6 @@ $(document).ready(function(){
 		        	}
 	        	);
 	        	
-          
-          
-         
-    
-           /* $("#dynamicTable").append("<table>");
-            $("#dynamicTable").append("<tr>");
-            $("#dynamicTable").append("<th>Ramas</th>");
-            $("#dynamicTable").append("<th>Numero de artesanos</th>");
-            $("#dynamicTable").append("</tr>");
-          
-            
-         
-
-            $("#dynamicTable").append("<tr>");
-            $("#dynamicTable").append("<td>what</td>");
-            $("#dynamicTable").append("<td>now</td>");
-            $("#dynamicTable").append("</tr>");
-
-         
-            $("#dynamicTable").append("</table>"); */
           $("#datos").hide();
 		}
 			
@@ -300,10 +273,17 @@ $(document).ready(function(){
 	 
 </script>
 <div id="dynamicTable"></div>
-<h2 id="titulo">GRAFICOS<br /></h2>
+<h2 id="titulo" style="margin-bottom: 15px;">GRAFICOS</h2><br>
 
 <div id="chart1" style="margin-top:20px; margin-left:20px; width:300px; height:300px; display: none; "></div>
 <div id="chart2" style="margin-top:30px; margin-left:20px; width:300px; height:300px;display: none;"></div>
 <div id="chart3" style="margin-top:30px; margin-left:20px; width:300px; height:300px;display: none;"></div>
 <div id="chart4" style="margin-top:30px; margin-left:20px; width:300px; height:300px;display: none;"></div>
+
+<div id="botonesExportar" style="margin-top: 28px; display: none;">
+	<?php echo $this -> Html -> link(__('Exportar Grafico 1 a CSV'), array('action' => 'export_csv', 1), array("id"=>"btnExportar1", 'class' => 'button'));?>
+	<?php echo $this -> Html -> link(__('Exportar Grafico 2 a CSV'), array('action' => 'export_csv', 2), array("id"=>"btnExportar2", 'class' => 'button'));?>
+	<?php echo $this -> Html -> link(__('Exportar Grafico 3 a CSV'), array('action' => 'export_csv', 3), array("id"=>"btnExportar3", 'class' => 'button'));?>
+	<?php echo $this -> Html -> link(__('Exportar Grafico 4 a CSV'), array('action' => 'export_csv', 4), array("id"=>"btnExportar4", 'class' => 'button'));?>
+</div>
 

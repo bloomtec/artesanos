@@ -18,8 +18,8 @@
 		echo $this -> Form -> input('cen_modalidad', array('type' => 'select', 'options' => $modalidades, 'label' => 'Modalidad', 'empty' => 'Seleccione...'));
 		echo $this -> Form -> input('cen_lenguaje', array('type' => 'select', 'options' => $lenguajes, 'label' => 'Lenguaje', 'empty' => 'Seleccione...'));
 		echo $this -> Form -> input('fecha_creacion', array('value' => '', 'type' => 'text', 'label' => 'Fecha De Creación', 'class' => 'date'));
-		echo $this -> Form -> input('fecha1', array('value' => '', 'type' => 'text', 'label' => 'Fecha Inicio Periodo', 'class' => 'date'));
-		echo $this -> Form -> input('fecha2', array('value' => '', 'type' => 'text', 'label' => 'Fecha Final Periodo', 'class' => 'date'));
+		echo $this -> Form -> input('fecha1', array('value' => '', 'type' => 'text', 'label' => 'Fecha Inicio Periodo', 'class' => 'date', 'value'=>$fechaActual));
+		echo $this -> Form -> input('fecha2', array('value' => '', 'type' => 'text', 'label' => 'Fecha Final Periodo', 'class' => 'date', 'value'=>$fechaActual));
 		?>
 	</fieldset>
 	<?php echo $this -> Form -> submit('Buscar');?>

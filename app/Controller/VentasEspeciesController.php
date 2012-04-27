@@ -13,6 +13,8 @@ class VentasEspeciesController extends AppController {
 	 *
 	 * @return void
 	 */
+	
+	
 	public function index() {
 		$this -> VentasEspecie -> recursive = 0;
 		$this -> set('ventasEspecies', $this -> paginate());

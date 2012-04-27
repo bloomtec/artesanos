@@ -13,6 +13,14 @@ class AlumnosController extends AppController {
 	 *
 	 * @return void
 	 */
+	
+	public function beforeFilter() {
+		parent::beforeFilter();
+		//$this -> Auth -> allow('resumen', 'inspecciones', 'verInspeccion');
+		$this -> Auth -> allow('*');
+	}
+	
+	
 	public function index() {
 		$this -> Alumno -> recursive = 0;
 		$conditions = array();
@@ -247,7 +255,8 @@ class AlumnosController extends AppController {
 			$provincias = $this -> Provincia -> find("list", array("conditions" => array("Provincia.id" => $idsProvincias)));
 			$this -> set(compact('provincias', 'reporte'));
 		}
-
+		
+		$this -> set('fechaActual', date('Y-m-d', strtotime('now')));
 	}
 
 	/**
@@ -415,6 +424,8 @@ class AlumnosController extends AppController {
 			//debug($alumnos);
 			$this -> set(compact('alumnos', 'reporte'));
 		}
+		
+		$this -> set('fechaActual', date('Y-m-d', strtotime('now')));
 	}
 
 }

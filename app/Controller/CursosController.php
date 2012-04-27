@@ -362,7 +362,8 @@ class CursosController extends AppController {
 			$this -> Session -> write('numAlumnos', $numAlumnos);
 			$this -> set(compact('reporteCursos', 'reporte', 'numAlumnos'));
 		}
-
+		
+		$this -> set('fechaActual', date('Y-m-d', strtotime('now')));
 	}
 
 	/**

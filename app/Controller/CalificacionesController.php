@@ -1,5 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
+App::import('Helper', 'csv');
+
 /**
  * Calificaciones Controller
  *
@@ -9,15 +11,15 @@ class CalificacionesController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('resumen', 'inspecciones', 'verInspeccion');
-		//$this -> Auth -> allow('*');
+		//$this -> Auth -> allow('resumen', 'inspecciones', 'verInspeccion');
+		$this -> Auth -> allow('*');
 	}
 	
 	public function reporteGraficoArtesanos() {
 		
 		if($this -> request -> is('post') || $this -> request -> is('put')) {
 			$this -> autoRender = false;
-			$this -> layout = 'default2';
+			$this -> layout = '';
 				
 			// Obtener las calificaciones con estado aprobado
 			$calificaciones = $this -> Calificacion -> find(
@@ -107,9 +109,18 @@ class CalificacionesController extends AppController {
 			$data_json["PromedioIngresos"] 		= $promedioIngresos;
 			$data_json["PromedioOperarios"] 	= $promediOperarios;
 			$data_json["PromedioAprendices"] 	= $promedioAprendices;
-	
 			echo json_encode($data_json);
 			
+			//CSV
+			$cabecerasCsv = array();
+			$cabecerasCsv["grafico1"] = array("Ramas","Numero de calificados");
+			$cabecerasCsv["grafico2"] = array("Ramas","Nivel de inversión");
+			$cabecerasCsv["grafico3"] = array("Ramas","Promedio de ingresos");
+			$cabecerasCsv["grafico4"] = array("Ramas","Promedio numero de operaciones","Promedio numero de aprendices");
+			$this -> Session -> write('cabecerasCsv', $cabecerasCsv);
+			$this -> Session -> write('filas', $data_json);
+			
+
 		} else {
 			$provincias = array('' => 'Seleccione...');
 			$provincias_tmp = $this -> Calificacion -> Taller -> Provincia -> find('list');
@@ -117,7 +128,6 @@ class CalificacionesController extends AppController {
 				$provincias[$key] = $value;
 			}
 			
-			$this->set(compact('reporte'));
 			$this -> set('provincias', $provincias);
 			$this -> set('generos', $this -> Calificacion -> getValores(5));
 			$this -> set('fechaActual', date('Y-m-d', strtotime('now')));
@@ -126,6 +136,56 @@ class CalificacionesController extends AppController {
 		
 	}
 	
+	function export_csv($grafico = null) {
+		$this -> layout = "";
+		$this -> render(false);
+		$csv = new csvHelper();
+		
+		$cabeceras = $this -> Session -> read('cabecerasCsv');
+		$filas = $this -> Session -> read('filas');
+			
+		if($grafico==1){
+			$csv -> addRow($cabeceras["grafico1"]);
+			$fila = array();
+			for($i=0; $i<count($filas["artesanos"]); $i++){
+				$fila = array($filas["ramas"][$i], $filas["artesanos"][$i]);
+				$csv -> addRow($fila);
+			}
+			$titulo = "csv_Grafico_Numero_De_Calificados_" . date("Y-m-d H:i:s", time()) . ".csv";
+		}
+		
+		if($grafico==2){
+			$csv -> addRow($cabeceras["grafico2"]);
+			$fila = array();
+			for($i=0; $i<count($filas["artesanos"]); $i++){
+				$fila = array($filas["ramas"][$i], $filas["TotalInversion"][$i]);
+				$csv -> addRow($fila);
+			}
+			$titulo = "csv_Grafico_Nivel_De_Inversión_" . date("Y-m-d H:i:s", time()) . ".csv";
+		}
+		
+		if($grafico==3){
+			$csv -> addRow($cabeceras["grafico3"]);
+			$fila = array();
+			for($i=0; $i<count($filas["artesanos"]); $i++){
+				$fila = array($filas["ramas"][$i], $filas["PromedioIngresos"][$i]);
+				$csv -> addRow($fila);
+			}
+			$titulo = "csv_Grafico_Promedio_De_Ingresos_" . date("Y-m-d H:i:s", time()) . ".csv";
+		}
+		
+		if($grafico==4){
+			$csv -> addRow($cabeceras["grafico4"]);
+			$fila = array();
+			for($i=0; $i<count($filas["artesanos"]); $i++){
+				$fila = array($filas["ramas"][$i], $filas["PromedioOperarios"][$i], $filas["PromedioAprendices"][$i]);
+				$csv -> addRow($fila);
+			}
+			$titulo = "csv_Grafico_Promedio_Operaciones_Promedio_Aprendices_" . date("Y-m-d H:i:s", time()) . ".csv";
+		}
+		
+		echo $csv -> render($titulo);
+	}
 	
 
 	private function obtenerDatosCalificaciones($calificaciones = null) {
@@ -619,7 +679,6 @@ class CalificacionesController extends AppController {
 	}
 	
 	function carnet($idCalificacion=null){
-	   		
 	    $this -> layout = 'carnet'; 
         $this->Calificacion->recursive=0;
         $artesano = $this->Calificacion->find("all", array('conditions'=>array("Calificacion.id"=>$idCalificacion)));
@@ -653,16 +712,18 @@ class CalificacionesController extends AppController {
             $ciudad = null;
         }
 		
+		//El carnet solo se expide a los artesanos calificados
+		$idRama = $this->Calificacion->find("list", array("fields"=>array("rama_id"),"conditions"=>array("Calificacion.artesano_id"=>$artesano[0]["Artesano"]["id"])));
+		$profesion = $this->Calificacion->Rama->find("list", array("fields"=>array("ram_nombre"), "conditions"=>array("Rama.id"=>$idRama)));
 		
-		//debug($artesano);
-		$this->loadModel("SolicitudesTitulacion");
-		$idSolicitudArtesano = $this->SolicitudesTitulacion->find("list", array("fields"=>array("artesano_id"),"conditions"=>array("SolicitudesTitulacion.artesano_id"=>$artesano[0]["Artesano"]["id"])));
-		$this->loadModel("Titulacion");
-		$idTituloEnTitulacion = $this->Titulacion->find("list",array("fields"=>array("titulo_id"), array("conditions"=>array("Titulacion.solicitudes_titulaciones_id"=>$idSolicitudArtesano))));
-		$this->loadModel("Titulo");
-		$titulos = $this->Titulo->find("all", array("conditions"=>array("Titulo.id"=>$idTituloEnTitulacion)));
-		//debug($titulos);
-		$profesion = $titulos[0]['Rama']['ram_nombre'];
+		if( !empty($profesion)){
+			foreach($profesion as $pro) {
+				$profesion = $pro;
+			}
+		} else {
+			$profesion = null;
+		}
+		
         $presidente = $this -> requestAction('/configuraciones/getValorConfiguracion/' . "con_presidente_de_la_junta");
         $this -> set(compact('artesano', 'ciudad', 'provincia', 'presidente','profesion'));
 	}

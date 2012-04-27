@@ -9,8 +9,8 @@
 		echo $this -> Form -> input('artesano', array('type' => 'select', 'label' => 'Artesanos', 'empty' => 'Seleccione...', 'options' => $artesanos));
 		echo $this -> Form -> input('rama', array('type' => 'select', 'label' => 'Ramas', 'empty' => 'Seleccione...', 'options' => $ramas));
 		echo $this -> Form -> input('titulo', array('type' => 'select', 'label' => 'Titulos', 'empty' => 'Seleccione...', 'options' => $titulos));
-		echo $this -> Form -> input('fecha1', array('type' => 'text', 'label' => 'Fecha inicial', 'class' => 'date'));
-		echo $this -> Form -> input('fecha2', array('type' => 'text', 'label' => 'Fecha final', 'class' => 'date'));
+		echo $this -> Form -> input('fecha1', array('type' => 'text', 'label' => 'Fecha inicial', 'class' => 'date','value'=>$fechaActual));
+		echo $this -> Form -> input('fecha2', array('type' => 'text', 'label' => 'Fecha final', 'class' => 'date', 'value'=>$fechaActual));
 		?>
 	</fieldset>
 	<?php echo $this -> Form -> submit('Buscar');?>

@@ -382,6 +382,7 @@ class SolicitudesTitulacionesController extends AppController {
         $artesanos = $this -> Artesano -> find("list", array("conditions" => array("Artesano.id" => $idArtesanosSolitudesTitulacion)));
         $ramas = $this -> Rama -> find("list");
         $titulos = $this -> Titulo -> find("list");
+		$this -> set('fechaActual', date('Y-m-d', strtotime('now')));
         $this -> set(compact('ramas', "titulos", "reporte", "artesanos"));
     }
 
@@ -640,6 +641,7 @@ class SolicitudesTitulacionesController extends AppController {
         $idArtesanosSolitudesTitulacion = $this -> SolicitudesTitulacion -> find("list", array("fields" => "artesano_id"));
         $artesanos = $this -> Artesano -> find("list", array("conditions" => array("Artesano.id" => $idArtesanosSolitudesTitulacion)));
         $ramas = $this -> Titulo -> Rama -> find("list");
+		$this -> set('fechaActual', date('Y-m-d', strtotime('now')));
         $this -> set(compact('provincias', "titulos", "reporte", 'ramas', 'especiesValoradas', 'artesanos'));
     }
 

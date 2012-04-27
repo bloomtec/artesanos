@@ -50,11 +50,6 @@
 					<a href="/reportes/reporteInspecciones">Inspecciones</a>
 				</li>
 				<?php endif;?>
-				<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Reportes', 'reporteInspecciones')))) : ?>
-				<li>
-					<a href="/calificaciones/reporteGraficoArtesanos">Reporte Grafico</a>
-				</li>
-				<?php endif;?>
 			</ul>
 		</li>
 		<?php } ?>

@@ -8,7 +8,7 @@ App::import('Helper', 'csv');
  * @property IngresosDeInventario $IngresosDeInventario
  */
 class IngresosDeInventariosController extends AppController {
-
+	
 	public function reporteIngresosInventarios() {
 		$this -> loadModel('Item', true);
 		$this -> loadModel('IngresosDeInventariosItem', true);
@@ -104,6 +104,9 @@ class IngresosDeInventariosController extends AppController {
 			$fechaActual = date('Y-m-d', strtotime('now'));
 			$this -> set(compact('fechaActual', 'lstProveedores', 'lstPersonas', 'lstDepartamentos', 'lstProductos', 'reporte', 'titulo'));
 		}
+		
+		$this -> set('fechaActual', date('Y-m-d', strtotime('now')));
+		
 	}
 
 	public function reporteIngresosSuministros() {
@@ -200,6 +203,8 @@ class IngresosDeInventariosController extends AppController {
 			$lstDepartamentos = $this -> IngresosDeInventario -> getValores(14);
 			$this -> set(compact('lstProveedores', 'lstPersonas', 'lstDepartamentos', 'lstProductos', 'reporte', 'titulo'));
 		}
+
+		$this -> set('fechaActual', date('Y-m-d', strtotime('now')));
 	}
 
 	function impReporte() {
