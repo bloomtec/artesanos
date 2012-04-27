@@ -13,12 +13,7 @@ class VentasEspeciesController extends AppController {
 	 *
 	 * @return void
 	 */
-	//Esto no va aqui
-	public function beforeFilter() {
-		parent::beforeFilter();
-		//$this -> Auth -> allow('resumen', 'inspecciones', 'verInspeccion');
-		$this -> Auth -> allow('*');
-	}
+	
 	
 	
 	public function index() {
