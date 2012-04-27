@@ -8,18 +8,7 @@ App::import('Helper', 'csv');
  */
 class VentasEspeciesController extends AppController {
 
-	/**
-	 * index method
-	 *
-	 * @return void
-	 */
 	
-	
-	public function index() {
-		$this -> VentasEspecie -> recursive = 0;
-		$this -> set('ventasEspecies', $this -> paginate());
-	}
-
 	/**
 	 * view method
 	 *
