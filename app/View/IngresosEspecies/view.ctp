@@ -48,6 +48,6 @@
 <div class="actions">
 	<ul>
 		<li><?php echo $this->Html->link(__('Volver Ingresos Especies'), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('Modificar Ingresos Especie'), array('action' => 'edit', $ingresosEspecie['IngresosEspecie']['id'])); ?> </li>
+		<li><?php //echo $this->Html->link(__('Modificar Ingresos Especie'), array('action' => 'edit', $ingresosEspecie['IngresosEspecie']['id'])); ?> </li>
 	</ul>
 </div>

@@ -44,6 +44,6 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $this->Html->link(__('Agregar Ingresos Especie'), array('action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(__('Agregar Ingreso De Especies'), array('action' => 'add')); ?></li>
 	</ul>
 </div>
