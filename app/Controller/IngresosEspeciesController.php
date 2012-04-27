@@ -63,7 +63,7 @@ class IngresosEspeciesController extends AppController {
 		}
 		$this -> paginate = array(
 			'EspeciesValorada' => array(
-				'limit' => 10,
+				'limit' => 20,
 				'conditions' => array(
 					'EspeciesValorada.ingresos_especie_id' => $id
 				)
