@@ -15,7 +15,6 @@ class VentasEspeciesController extends AppController {
 	 */
 	
 	
-	
 	public function index() {
 		$this -> VentasEspecie -> recursive = 0;
 		$this -> set('ventasEspecies', $this -> paginate());
@@ -383,9 +382,16 @@ class VentasEspeciesController extends AppController {
 		$this->layout="factura";
 		$this->loadModel("Factura");
 		$ventaEspecie = $this->Factura->find("all", array("conditions"=>array("Factura.id"=>$idFactura)));
-		$idVenta = $ventaEspecie[0]["VentasEspecie"][0]["id"];
+		//debug($ventaEspecie);
+		if(isset($ventaEspecie[0]["VentasEspecie"][0]["id"])){
+			$idVenta = $ventaEspecie[0]["VentasEspecie"][0]["id"];
+		}else {
+			$idVenta= 0;
+		}
+		
 		$this->loadModel("EspeciesValorada");
 		$this->EspeciesValorada->recursive=-1;
+		
 		$especiesValoradas = $this->EspeciesValorada->find("all", array("conditions"=>array("EspeciesValorada.ventas_especie_id"=>$idVenta)));
 		$iva = $this -> requestAction('/configuraciones/getValorConfiguracion/' . "con_iva");
 		$this -> set(compact('ventaEspecie','especiesValoradas','iva'));
@@ -437,5 +443,6 @@ class VentasEspeciesController extends AppController {
           $this->set(compact("ventasEspecies"));
       }
    }
+	
 	
 }
