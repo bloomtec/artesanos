@@ -14,12 +14,6 @@ class AlumnosController extends AppController {
 	 * @return void
 	 */
 	
-	public function beforeFilter() {
-		parent::beforeFilter();
-		//$this -> Auth -> allow('resumen', 'inspecciones', 'verInspeccion');
-		$this -> Auth -> allow('*');
-	}
-	
 	
 	public function index() {
 		$this -> Alumno -> recursive = 0;
@@ -196,7 +190,7 @@ class AlumnosController extends AppController {
 			
 			if ($pagina == false) {
 				$provincia = $this -> data["Reporte"]["provincia"];
-				$fechaCreacion = $this -> data["Reporte"]["fecha_creacion"];
+				//$fechaCreacion = $this -> data["Reporte"]["fecha_creacion"];
 				$fecha1 = $this -> data["Reporte"]["fecha1"];
 				$fecha2 = $this -> data["Reporte"]["fecha2"];
 
@@ -208,9 +202,9 @@ class AlumnosController extends AppController {
 					$conditions[] = array('Alumno.id' => $idsAlumnos);
 				}
 
-				if (!empty($fechaCreacion)) {
+			/*	if (!empty($fechaCreacion)) {
 					$conditions[] = array('Alumno.created' => $fechaCreacion);
-				}
+				} */
 
 				if ($fecha1 != null && $fecha2 != null) {
 

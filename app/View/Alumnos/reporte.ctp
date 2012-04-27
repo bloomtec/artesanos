@@ -10,7 +10,7 @@ en el momento la tabla alumno no tiene provincia, entonces hay que agregarsela -
 	<fieldset>
 		<?php
 		echo $this -> Form -> input('provincia', array('type' => 'select', 'label' => 'Provincias', 'empty' => 'Seleccione...', 'options' => $provincias));
-		echo $this -> Form -> input('fecha_creacion', array('value' => '', 'type' => 'text', 'label' => 'Fecha ingreso', 'class' => 'date', 'value'=>$fechaActual));
+		//echo $this -> Form -> input('fecha_creacion', array('value' => '', 'type' => 'text', 'label' => 'Fecha ingreso', 'class' => 'date', 'value'=>$fechaActual));
 		echo $this -> Form -> input('fecha1', array('value' => '', 'type' => 'text', 'label' => 'Fecha Inicio Periodo', 'class' => 'date', 'value'=>$fechaActual));
 		echo $this -> Form -> input('fecha2', array('value' => '', 'type' => 'text', 'label' => 'Fecha Final Periodo', 'class' => 'date', 'value'=>$fechaActual));
 		?>
