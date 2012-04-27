@@ -7,9 +7,10 @@ App::import('Helper', 'csv');
  *
  * @property IngresosDeInventario $IngresosDeInventario
  */
-class EgresosDeInventariosController extends AppController {
+class EgresosDeInventariosController extends AppController {	
 	
-	public function reporteEgresosInventarios() {
+	   
+		public function reporteEgresosInventarios() {
 
 		$this -> loadModel('Item', true);
 		$this -> loadModel('EgresosDeInventariosItem', true);

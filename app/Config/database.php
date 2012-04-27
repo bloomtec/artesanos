@@ -1,6 +1,6 @@
 <?php
 class DATABASE_CONFIG {
-	public  $default = array(
+		public  $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
 		'host' => 'localhost',
@@ -10,8 +10,8 @@ class DATABASE_CONFIG {
 		'database' => 'jndagobe_artesanos',
 		'encoding' => 'utf8'
 	);
-	/*	
-
+	
+/*
   public  $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,

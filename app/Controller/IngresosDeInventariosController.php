@@ -9,6 +9,8 @@ App::import('Helper', 'csv');
  */
 class IngresosDeInventariosController extends AppController {
 	
+ 	
+	
 	public function reporteIngresosInventarios() {
 		$this -> loadModel('Item', true);
 		$this -> loadModel('IngresosDeInventariosItem', true);

@@ -8,6 +8,8 @@ App::import('Helper', 'csv');
  */
 class IngresosEspeciesController extends AppController {
 	
+
+	
 	private function uploadIngresoEspecieFile($tmp_name = null, $filename = null) {
 		$this -> cleanupIngresoEspecieFiles();
 		if ($tmp_name && $filename) {

@@ -13,6 +13,12 @@ class VentasEspeciesController extends AppController {
 	 *
 	 * @return void
 	 */
+	//Esto no va aqui
+	public function beforeFilter() {
+		parent::beforeFilter();
+		//$this -> Auth -> allow('resumen', 'inspecciones', 'verInspeccion');
+		$this -> Auth -> allow('*');
+	}
 	
 	
 	public function index() {
@@ -380,10 +386,15 @@ class VentasEspeciesController extends AppController {
 	
 	public function factura($idFactura = null) {
 		$this->layout="factura";
-		$this->VentasEspecie->recursive=0; 
-		$ventaEspecie = $this->VentasEspecie->Factura->find("all", array("conditions"=>array("Factura.id"=>$idVenta)));
-		//$this -> set(compact('ventaEspecie'));
-		debug($ventaEspecie);
+		$this->loadModel("Factura");
+		$ventaEspecie = $this->Factura->find("all", array("conditions"=>array("Factura.id"=>$idFactura)));
+		$idVenta = $ventaEspecie[0]["VentasEspecie"][0]["id"];
+		$this->loadModel("EspeciesValorada");
+		$this->EspeciesValorada->recursive=-1;
+		$especiesValoradas = $this->EspeciesValorada->find("all", array("conditions"=>array("EspeciesValorada.ventas_especie_id"=>$idVenta)));
+		$iva = $this -> requestAction('/configuraciones/getValorConfiguracion/' . "con_iva");
+		$this -> set(compact('ventaEspecie','especiesValoradas','iva'));
+		//debug($especieValorada);
 	}
     
    public function ventas() {
@@ -392,8 +403,9 @@ class VentasEspeciesController extends AppController {
         if (isset($this -> params['named']['query']) && !empty($this -> params['named']['query'])) {
             //$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
             $query = $this -> params['named']['query'];
-                    
-            $idsFacturas = $this -> Parroquia -> find(
+            
+			$this->loadModel("Factura");      
+            $idsFacturas = $this ->Factura -> find(
             'list',
                 array(
                     'conditions' => array(

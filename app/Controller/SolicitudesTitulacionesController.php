@@ -14,6 +14,7 @@ class SolicitudesTitulacionesController extends AppController {
      *
      * @return void
      */
+
 	
     public function index() {
         $this -> SolicitudesTitulacion -> recursive = 0;

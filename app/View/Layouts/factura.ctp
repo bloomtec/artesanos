@@ -4,7 +4,7 @@ header("Content-type: application/pdf");
 App::import('Vendor','especie'); 
 //$pagelayout = array(160, 130);
 //$pdf = new TCPDF("L", PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-$pdf = new ESPECIE("L", "mm", "A5", true, 'UTF-8', false);
+$pdf = new ESPECIE("P", "mm", "A5", true, 'UTF-8', false);
 //$pdf->setPageOrientation('L');
 
 //$resolution= array(160, 130);
@@ -30,7 +30,7 @@ $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
 //set margins
 //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetMargins(25, 20, 20, true);
+$pdf->SetMargins(5, 5, 5, true);
 $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 
@@ -51,12 +51,6 @@ $pdf->SetFont('helvetica', '', 5);
 // add a page
 $pdf->AddPage();
 
-// set some text to print
-$txt = <<<EOD
-TCPDF Example 003
-
-Custom page header and footer are defined by extending the TCPDF class and overriding the Header() and Footer() methods.
-EOD;
 
 // print a block of text using Write()
 //$pdf->Write($h=0, $txt, $link='', $fill=0, $align='C', $ln=true, $stretch=0, $firstline=false, $firstblock=false, $maxh=0);
