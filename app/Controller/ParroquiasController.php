@@ -112,8 +112,10 @@ class ParroquiasController extends AppController {
 	public function index() {
 		$this->Recursive=0;
 		$conditions = array();
+		
 		if (isset($this -> params['named']['query']) && !empty($this -> params['named']['query'])) {
 			//$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
+			//debug($this->params);
 			$query = $this -> params['named']['query'];
 					
 			$idsParroquias = $this -> Parroquia -> find(
