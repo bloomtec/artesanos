@@ -5,14 +5,16 @@
 	<a href="#">ARTESANOS</a>
 <?php } ?>
 	<ul>
-		<?php if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Artesanos', 'agregarArtesano')))) : ?>
+		<?php // if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Artesanos', 'agregarArtesano')))) : ?>
 		<li>
 			<a href="/artesanos/agregarArtesano">Registrar</a>
 		</li>
-		<?php endif;?>
+		<?php // endif;?>
+		<?php // if($this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Artesanos', 'add')))) : ?>
 		<li>
 			<a href="/artesanos/add">Calificar</a>
 		</li>
+		<?php // endif;?>
 		<?php
 			if(
 				$this -> requestAction('/usuarios/verificarAcceso/' , array('ruta'=>array('controllers', 'Reportes', 'reporteArtesanos'))) ||

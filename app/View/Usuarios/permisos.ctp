@@ -23,7 +23,7 @@
 			<tr class="modulo">
 				<th class="nombre">ARTESANOS</th>
 				<td class="accion"><?php echo $this -> Form -> input('Permisos.Artesanos.index', array('label' => 'Listar', 'type' => 'checkbox'));?></td>
-				<td class="accion"><?php echo $this -> Form -> input('Permisos.Artesanos.agregarArtesano', array('label' => 'Registrar', 'type' => 'checkbox'));?></td>
+				<td class="accion"><?php echo $this -> Form -> input('Permisos.Artesanos.agregarArtesano', array('title' => 'Actualmente habilitado de manera global', 'label' => 'Registrar', 'type' => 'checkbox', 'checked' => 'checked', 'disabled' => 'disabled'));?></td>
 				<td class="accion"><?php echo $this -> Form -> input('Permisos.Artesanos.add', array('title' => 'Actualmente habilitado de manera global', 'label' => 'Calificar', 'type' => 'checkbox', 'checked' => 'checked', 'disabled' => 'disabled'));?></td>
 				<td class="accion"></td>
 			</tr>

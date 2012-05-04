@@ -9,7 +9,7 @@ class ArtesanosController extends AppController {
 	
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('add', 'datosCalificacion', 'verificarCedula', 'getID', 'validarCalificacion', 'setMultaPagada', 'getDatosPersonales');
+		$this -> Auth -> allow('add', 'agregarArtesano', 'datosCalificacion', 'verificarCedula', 'getID', 'validarCalificacion', 'setMultaPagada', 'getDatosPersonales');
 		
 	}
 
