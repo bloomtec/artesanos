@@ -18,7 +18,7 @@ $num =  new num_letras();
 						<td>&nbsp;</td>
 					</tr>
 					<tr>
-						<td colspan="2"><div style="font-size: 32px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php if(isset($ventaEspecie[0]["Factura"]["fac_direccion"])){ print($ventaEspecie[0]["Factura"]["fac_direccion"]); } ?></div></td>
+						<td colspan="2"><div style="font-size: 32px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php if(isset($ventaEspecie[0]["Factura"]["fac_direccion"])){ print($ventaEspecie[0]["Factura"]["fac_direccion"]); } ?></div></td>
 						<td>&nbsp;</td>
 					</tr>
 					<tr >
@@ -26,7 +26,7 @@ $num =  new num_letras();
 						<td>&nbsp;</td>
 					</tr>
 					<tr>
-						<td colspan="2"><div style="font-size: 32px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php if(isset($ventaEspecie[0]["Factura"]["fac_telefono"])){ print($ventaEspecie[0]["Factura"]["fac_telefono"]); } ?></div></td>
+						<td colspan="2"><div style="font-size: 32px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php if(isset($ventaEspecie[0]["Factura"]["fac_telefono"])){ print($ventaEspecie[0]["Factura"]["fac_telefono"]); } ?></div></td>
 						<td>&nbsp;</td>
 					</tr>
 					<tr >
@@ -34,7 +34,7 @@ $num =  new num_letras();
 						<td>&nbsp;</td>
 					</tr>
 					<tr>
-						<td colspan="2"><div style="font-size: 32px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php if(isset($ventaEspecie[0]["Factura"]["fac_ruc_doc"])) { print($ventaEspecie[0]["Factura"]["fac_ruc_doc"]); } ?></div></td>
+						<td colspan="2"><div style="font-size: 32px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php if(isset($ventaEspecie[0]["Factura"]["fac_ruc_doc"])) { print($ventaEspecie[0]["Factura"]["fac_ruc_doc"]); } ?></div></td>
 						<td>&nbsp;</td>
 					</tr>
 				</table>
