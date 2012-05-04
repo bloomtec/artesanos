@@ -8,6 +8,11 @@ App::import('Helper', 'csv');
  */
 class VentasEspeciesController extends AppController {
 	
+	/*
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this -> Auth -> allow('*');
+	} */
 	
 	
 	

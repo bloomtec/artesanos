@@ -177,7 +177,7 @@ $num =  new num_letras();
                     	}
 				//Para que no se descuadren las medidas
 					$hasta = 19 - $contador;
-					for($j=0; $j<=$hasta; $j++) {
+					for($j=0; $j<$hasta; $j++) {
 						echo "<br>&nbsp;&nbsp;&nbsp;&nbsp;";
 					}
                  ?>
@@ -258,6 +258,7 @@ $num =  new num_letras();
 			<td></td>
 		</tr>
 	</table>	
+	<br>
 	<br>
 	<br>
 	<br>
