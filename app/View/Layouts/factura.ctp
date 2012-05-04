@@ -2,10 +2,16 @@
 header("Content-type: application/pdf");
 
 App::import('Vendor','especie'); 
-//$pagelayout = array(160, 130);
-//$pdf = new TCPDF("L", PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-$pdf = new ESPECIE("P", "mm", "A5", true, 'UTF-8', false);
+$pdf = new ESPECIE("P", PDF_UNIT, "A4", true, 'UTF-8', false);
+//$pagelayout = array(22, 16);
+//$pdf = new ESPECIE("p", "cm", $pagelayout, true, 'UTF-8', false);
+
+//$resolution= array(100, 100);
+//$pdf->AddPage('P', $resolution);
 //$pdf->setPageOrientation('L');
+
+
+
 
 //$resolution= array(160, 130);
 //$pdf->AddPage('P', $resolution);
@@ -30,7 +36,7 @@ $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
 //set margins
 //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetMargins(5, 5, 5, true);
+$pdf->SetMargins(1, 37, 0.5, true);
 $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 
@@ -46,7 +52,7 @@ $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO); //3217020347
 // ---------------------------------------------------------
 
 // set font
-$pdf->SetFont('helvetica', '', 5);
+$pdf->SetFont('helvetica', '', 1);
 
 // add a page
 $pdf->AddPage();

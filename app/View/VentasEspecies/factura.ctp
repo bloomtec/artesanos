@@ -1,179 +1,418 @@
 <?php App::import('Vendor','num2letras'); 
 $num =  new num_letras();
 ?>
-<table border="0" width="603">
-    <tr>
-        <td height="462px">
-            
-            <table border="0">
-                <tr>
-                    <td rowspan="2" style="font-size: 40px; margin-top: 8px;" width="310px" ><b>Junta Nacional de Defensa del Artesano</b></td>
-                    <td width="100">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td style="font-size: 24px;" ><b>RUC: 1760005460001</b></td>
-                </tr>
-            </table>
-            <table border="0" width="350">
-                <tr>
-                    <td width="100" rowspan="4"><img src="img/logo_header.jpg" width="150px"/></td>
-                    <td style="text-align: center;" width="100">MATRIZ: Av. 10 de Agosto N39 - 134 y Jose Pereria</td>
-                    <td width="110">&nbsp;</td>
-                    <td width="160" ></td>
-                    
-                </tr>
-                <tr>
-                    <td style="text-align: center;">Telf.: 2559 842 / 2234 277 / 223 4821 /</td>
-                    <td>&nbsp;</td>
-                    <td style="font-size: 24px;"><b>Autorización SRI: 1110150500</b></td>
-                </tr>
-                <tr>
-                    <td style="text-align: center;">2221 277 / 2221 276</td>
-                    <td>&nbsp;</td>
-                    <td><i>FECHA DE AUTORIZACIÓN:</i><?php if(isset($ventaEspecie[0]["Factura"]["created"])) { $fecha = explode(" ",$ventaEspecie[0]["Factura"]["created"]); echo " ".$fecha[0]; } ?></td>
-                </tr>
-                <tr>
-                    <td style="text-align: center;">Email: juntaart@uio.satnet.net</td>
-                    <td>&nbsp;</td>
-                    <td><i>VALIDO HASTA:</i><?php if(isset($ventaEspecie[0]["Factura"]["created"])) { echo " ".date('Y-m-d', $ventaEspecie[0]["Factura"]["created"]+strtotime('+12 month')); } ?></td>
-                </tr>
-            </table>
-            <table border="0" width="450">
-                <tr>
-                    <td width="10" rowspan="4">&nbsp;</td>
-                    <td width="32" >Cliente: </td>
-                    <td  width="210px"><div style="text-align: left; border-bottom: 1px solid black;"><?php if(isset($ventaEspecie[0]["Factura"]["fac_cliente"])){ print($ventaEspecie[0]["Factura"]["fac_cliente"]); } ?></div></td>
-                    <td width="58" >&nbsp;</td>
-                    <td >&nbsp;</td>
-                    
-                </tr>
-                <tr>
-    
-                    <td >Dirección: </td>
-                    <td ><div style="text-align: left; border-bottom: 1px solid black;"><?php if(isset($ventaEspecie[0]["Factura"]["fac_direccion"])){ print($ventaEspecie[0]["Factura"]["fac_direccion"]); } ?></div></td>
-                    <td >&nbsp;</td>
-                    <td >Fecha Emisión:&nbsp;<?php if(isset($ventaEspecie[0]["Factura"]["fac_fecha_emision"])){ print($ventaEspecie[0]["Factura"]["fac_fecha_emision"]); } ?></td>
-                </tr>
-                <tr>
-                    <td >Telefono: </td>
-                    <td ><div style="text-align: left; border-bottom: 1px solid black;"><?php if(isset($ventaEspecie[0]["Factura"]["fac_telefono"])){ print($ventaEspecie[0]["Factura"]["fac_telefono"]); } ?></div></td>
-                    <td >&nbsp;</td>
-                    <td ><div style="font-size: 18px;"><b>FACTURA:</b>&nbsp;<?php if(isset($ventaEspecie[0]["Factura"]["fac_numero"])) { print($ventaEspecie[0]["Factura"]["fac_numero"]); } ?></div></td>
-                </tr>
-                <tr>
-                    <td >RUC C/CI: </td>
-                    <td ><div style="text-align: left;  border-bottom: 1px solid black;"><?php if(isset($ventaEspecie[0]["Factura"]["fac_ruc_doc"])) { print($ventaEspecie[0]["Factura"]["fac_ruc_doc"]); } ?></div></td>
-                    <td >&nbsp;</td>
-                    <td >&nbsp;</td>
-                    
-                </tr>
-            </table>
-            <br>
-            <table border="1">
-                <tr>
-                    <td width="60px" ><div style="font-size: 26px; text-align: center;"><b>CANTIDAD</b></div></td>
-                    <td width="255px" ><div style="font-size: 26px; text-align: center;"><b>DESCRIPCIÓN</b></div></td>
-                    <td width="80px" ><div style="font-size: 26px; text-align: center;"><b>V. UNITARIO</b></div></td>
-                    <td width="90px" ><div style="font-size: 26px; text-align: center;"><b>VALOR TOTAL</b></div></td>
-                </tr>
-                <tr>
-    
-                    <td height="380px" style="font-size: 14px; text-align: center;">
-						<?php	
-						if(isset($ventaEspecie[0]["VentasEspecie"])) {
-						    for($i=0; $i<count($ventaEspecie[0]["VentasEspecie"]); $i++) {
-								  print($ventaEspecie[$i]["VentasEspecie"][$i]["ven_cantidad"]); 
-							}
-						}
-						?>
-                    	
-                    	</td>
-                    <td style="text-align: justify; font-size: 14px;"> 
-                    	<ul>
-                    	<?php for($i=0; $i<count($especiesValoradas); $i++) {
-                    	if(isset($especiesValoradas)){
-                    			echo "<li>".$especiesValoradas[$i]["EspeciesValorada"]["nombre_especie"]."</li>";
-							}
-                    	}
-                    	?>
-                    	</ul>
-                    </td>
-                    <td style="text-align: center; font-size: 14px;" ><?php for($i=0; $i<count($especiesValoradas); $i++) {
-                    		echo $especiesValoradas[$i]["EspeciesValorada"]["valor_unitario"]."<br>";
-                    	}
-                    	?></td>
-                    <td style="font-size: 14px; text-align: center;">
-                    	
-                    	<?php 
-                    	$SubTotal = 0;
-                    	if(isset($ventaEspecie[0]["VentasEspecie"])){
-							for($i=0; $i<count($ventaEspecie[0]["VentasEspecie"]); $i++) {
-								print($ventaEspecie[$i]["VentasEspecie"][$i]["ven_valor"]); 
-								$SubTotal = $SubTotal + $ventaEspecie[$i]["VentasEspecie"][$i]["ven_valor"];
-							}
-						}
-					   $ivaImp = ($SubTotal * $iva)/100;
-					   $totalImp = $SubTotal - $ivaImp;
-					   
-                    	?></td>
-                </tr>
+	<table>
+		<tr>
+			<td width="416px">
+				<table border="0" >
+					<tr >
+						<td colspan="2" height="5px;"></td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td colspan="2"><div style="font-size: 32px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php if(isset($ventaEspecie[0]["Factura"]["fac_cliente"])){ print($ventaEspecie[0]["Factura"]["fac_cliente"]); } ?></div></td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr >
+						<td colspan="2" height="3px;"></td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td colspan="2"><div style="font-size: 32px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php if(isset($ventaEspecie[0]["Factura"]["fac_direccion"])){ print($ventaEspecie[0]["Factura"]["fac_direccion"]); } ?></div></td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr >
+						<td colspan="2" height="5px;"></td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td colspan="2"><div style="font-size: 32px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php if(isset($ventaEspecie[0]["Factura"]["fac_telefono"])){ print($ventaEspecie[0]["Factura"]["fac_telefono"]); } ?></div></td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr >
+						<td colspan="2" height="6px;"></td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td colspan="2"><div style="font-size: 32px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php if(isset($ventaEspecie[0]["Factura"]["fac_ruc_doc"])) { print($ventaEspecie[0]["Factura"]["fac_ruc_doc"]); } ?></div></td>
+						<td>&nbsp;</td>
+					</tr>
+				</table>
+				
+			</td>
+			<td>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>		
+				<table border="0">
+					<tr>
+						<td colspan="2"><div style="font-size: 28px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php if(isset($ventaEspecie[0]["Factura"]["fac_fecha_emision"])){ print($ventaEspecie[0]["Factura"]["fac_fecha_emision"]); } ?></div></td>
+						<td>&nbsp;</td>
+					</tr>
+				</table>
+					
+			</td>
+		</tr>
+	</table>
 
-            </table>
-            <table border="1">
-            	<tr>
-                    <td width="60" height="12px;" style="font-size: 20px; margin-top:60px;  text-align: center; padding: 20px;">SON:</td>
-                    <td width="255" height="12px;" style="font-size: 20px; margin-top:60px;  text-align: left; padding: 14px;"><?php echo " ".$num->num2letras($totalImp)." dolares"; ?></td>
-                    <td width="80" height="12px;" style="font-size: 20px; margin-top:60px;  text-align: center; padding: 20px;">SUB TOTAL</td>
-                    <td width="90" height="12px;" style="font-size: 20px; margin-top:60px;  text-align: center; padding: 20px;"><?php echo $SubTotal; ?></td>
-                </tr>
-               
-                <tr>
-                    <td >&nbsp;</td>
-                    <td >&nbsp;</td>
-                    <td style="font-size: 20px; margin-top:60px;  text-align: center; padding: 20px;">I.V.A 0%</td>
-              		<td style="font-size: 20px; margin-top:60px;  text-align: center; padding: 20px;"><?php echo $iva1 = ($SubTotal * $iva)/100; ?></td>
-                   
-                </tr>
-                <tr>
-                    <td >&nbsp;</td>
-                    <td >&nbsp;</td>
-                    <td style="font-size: 20px; margin-top:60px;  text-align: center; padding: 20px;">I.V.A 0%</td>
-            		<td style="font-size: 20px; margin-top:60px;  text-align: center; padding: 20px;"><?php echo $iva2 = ($SubTotal * $iva)/100; ?></td>
-                </tr>
-                <tr>
-                    <td >&nbsp;</td>
-                    <td >&nbsp;</td>
-                    <td style="font-size: 20px; margin-top:60px;  text-align: center; padding: 20px;">TOTAL $</td>
-      				<td style="font-size: 20px; margin-top:60px;  text-align: center; padding: 20px;"><?php echo $total = $SubTotal - $iva1; ?></td>
-                   
-                </tr>
-            </table>
-         	<br>
-         	<br>
-         	<br>
-         	   <table border="0">
-                <tr>
-                    <td width="80px">&nbsp;</td>
-                    <td width="130px">&nbsp;</td>
-                    <td  width="25">&nbsp;</td>
-                    <td >&nbsp;</td>
-                </tr>
-                <tr>
-                    <td >&nbsp;</td>
-                    <td ><div style="text-align: left; border-bottom: 1px solid black;"></div><br>Recibí conforme</td>
-                    <td >&nbsp;</td>
-                     <td ><div style="text-align: left; border-bottom: 1px solid black;"></div><br>Firma autorizada</td>
-                </tr>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	
+	<table border="0">
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td width="85px"><div style="font-size: 28px;">
+				<?php 
+				$tiposEspecie = array();
+				$tiposEspecie2 = array();
+				for($i=0; $i<count($especiesValoradas); $i++) {
+					if(isset($especiesValoradas)) {
+                    	if(!in_array($especiesValoradas[$i]["EspeciesValorada"]["tipos_especies_valorada_id"], $tiposEspecie)){
+						       $tiposEspecie[] = $especiesValoradas[$i]["EspeciesValorada"]["tipos_especies_valorada_id"];
+							} 
+							    $tiposEspecie2[] = $especiesValoradas[$i]["EspeciesValorada"]["tipos_especies_valorada_id"];
+                    	}
+				}
+				
+				$cantidades = array();
+				foreach($tiposEspecie as $value1) {
+					$cantidad = 0;
+					foreach($tiposEspecie2 as $value2) {
+							if($value1 == $value2) {
+								$cantidad++;
+							}
+					}
+					
+					$cantidades[] = $cantidad;
+					echo "<br>&nbsp;&nbsp;&nbsp;&nbsp;".$cantidad;
+				}
+                 ?>
+				<!-- &nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333 
+				-->
+				</div></td>
+			<td width="400px"><div style="font-size: 26px;">
+				<!-- &nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333 -->
+				
+			    
+				<?php 
+				$tiposEspecie = array();
+				$contador = 0;
+				for($i=0; $i<count($especiesValoradas); $i++) {
+                    	if(isset($especiesValoradas) && !in_array($especiesValoradas[$i]["EspeciesValorada"]["tipos_especies_valorada_id"], $tiposEspecie)){
+                    			echo "<br>&nbsp;&nbsp;&nbsp;&nbsp;".$especiesValoradas[$i]["EspeciesValorada"]["nombre_especie"];
+								$tiposEspecie[] = $especiesValoradas[$i]["EspeciesValorada"]["tipos_especies_valorada_id"];
+								$contador++;
+							} 
+                    	}
+				//Para que no se descuadren las medidas
+					$hasta = 19 - $contador;
+					for($j=0; $j<=$hasta; $j++) {
+						echo "<br>&nbsp;&nbsp;&nbsp;&nbsp;";
+					}
+                 ?>
+                 
                 
-                <tr>
-                    <td >&nbsp;</td>
-                    <td >&nbsp;</td>
-                    <td >&nbsp;</td>
-                     <td >&nbsp;</td>
-                </tr>
-                
-            </table>
-        </td>
-    </tr>
-    
-</table>
+				</div></td>
+			<td width="100px"><div style="font-size: 28px;"><!-- &nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333 -->
+				<?php 
+				$tiposEspecie = array();
+				$valores = array();
+				for($i=0; $i<count($especiesValoradas); $i++) {
+					if(isset($especiesValoradas)) {
+                    	if(!in_array($especiesValoradas[$i]["EspeciesValorada"]["tipos_especies_valorada_id"], $tiposEspecie)){
+						       $tiposEspecie[] = $especiesValoradas[$i]["EspeciesValorada"]["tipos_especies_valorada_id"];
+							   $valores[] = $especiesValoradas[$i]["EspeciesValorada"]["valor_unitario"];
+							} 
+							    
+                    	}
+				}
+				
+				foreach($valores as $valor) {
+					echo "<br>&nbsp;&nbsp;&nbsp;&nbsp;".$valor;
+				}
+                 ?>
+				</div></td>
+			<td width="110px"><div style="font-size: 28px;"><!-- &nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333
+				<br>&nbsp;&nbsp;&nbsp;&nbsp;33333333 -->
+				<?php
+				 $totales = array();
+					for($i=0; $i< count($cantidades); $i++) {
+						$res = 0;
+						$res = $valores[$i] * $cantidades[$i];
+						$totales[] = $res;
+						echo "<br>&nbsp;&nbsp;&nbsp;&nbsp;".$res;
+					}
+				?>
+				</div></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>	
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<div style="">
+	<table border="0" width="620px">
+		<tr>
+			<td width="500px">
+				<table border="0">
+					<tr >
+						<td height="4px">&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr >
+						<?php 
+						$subTotal = 0;
+						$subTotal = array_sum($totales);
+						$iva1 = ($subTotal * $iva)/100; 
+						$total = 0; 
+						$total = $subTotal - $iva1; 
+						?>
+						<td width="45px">&nbsp;</td>
+						<td colspan="2" width="100%"><div style="font-size: 28px;"><?php echo " ".$num->num2letras($total)." dolares"; ?></div></td>
+						
+					</tr>
+					<tr >
+						<td height="28px">&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td height="8px">&nbsp;</td>
+						<td><div style="font-size: 28px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- 1Firma1--></div></td>
+						<td><div style="font-size: 28px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- 1Firma2--></div></td>
+					</tr>
+				</table>
+			</td>
+			<td width="200px">
+				<table border="0" width="100%">
+				
+					<tr>
+							<td height="10px" width="97px">&nbsp;</td>
+							<td width="142px" colspan="2"><div style="font-size: 28px;"><?php $subTotal = 0; echo $subTotal = array_sum($totales); ?></div></td>
+							
+					</tr>
+					<tr >
+						<td height="7px">&nbsp;</td>
+						<td width="142px">&nbsp;</td>
+						
+					</tr>
+						<tr>
+							<td height="10px" width="97px">&nbsp;</td>
+							<td width="142px" colspan="2"><div style="font-size: 28px;"><?php echo $iva1 = ($subTotal * $iva)/100; ?></div></td>
+							
+						</tr>
+					<tr >
+						<td height="7px">&nbsp;</td>
+						<td width="142px">&nbsp;</td>
+						
+					</tr>
+						<tr>
+							<td height="10px" width="97px">&nbsp;</td>
+							<td width="142px" colspan="2"><div style="font-size: 28px;"><?php echo $iva2 = ($subTotal * $iva)/100; ?></div></td>
+							
+						</tr>
+					<tr >
+						<td height="7px">&nbsp;</td>
+						<td width="142px">&nbsp;</td>
+						
+					</tr>
+						<tr>
+							<td height="10px" width="97px">&nbsp;</td>
+							<td width="142px" colspan="2"><div style="font-size: 28px;"><?php $total = 0; echo $total = $subTotal - $iva1; ?></div></td>
+							
+						</tr>
+						
+						
+				</table>
+			</td>
+		</tr>
+	</table>
+	</div>
+	<!--
+		<table border="1" width="320px">
+		<tr>
+			<td>
+				<table border="1" width="400px" >
+					<tr >
+						<td height="2px;"></td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td width="40px">&nbsp;</td>
+						<td colspan="2" width="400px" style="font-size: 28px;">&nbsp;&nbsp;&nbsp;&nbsp;8Son:</td>
+						
+					</tr>
+					<tr >
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td width="285px" style="font-size: 28px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Firma:</td>
+						<td width="185px" style="font-size: 28px;">Firma2:</td>
+					</tr>
+				</table>
+			</td>
+			<td>&nbsp;</td>
+		</tr>
+	</table>
+	
+	<table border="1" width="860px">
+		<tr>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="42px">&nbsp;</td>
+			<td width="455px"><div style="font-size: 35px; height:20px;">2Son:</div> </td>
+			<td width="30px">&nbsp;</td>
+			<td width="60px">&nbsp;</td>
+			<td width="80px" height="25px;">&nbsp;</td>
+		</tr>
+		
+		<tr>
+			<td >&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+	</table>
+	-->

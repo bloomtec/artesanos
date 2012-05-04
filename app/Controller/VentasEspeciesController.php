@@ -7,7 +7,9 @@ App::import('Helper', 'csv');
  * @property VentasEspecie $VentasEspecie
  */
 class VentasEspeciesController extends AppController {
-
+	
+	
+	
 	
 	/**
 	 * view method
@@ -383,6 +385,9 @@ class VentasEspeciesController extends AppController {
 		
 		$especiesValoradas = $this->EspeciesValorada->find("all", array("conditions"=>array("EspeciesValorada.ventas_especie_id"=>$idVenta)));
 		$iva = $this -> requestAction('/configuraciones/getValorConfiguracion/' . "con_iva");
+		
+		//debug($ventaEspecie);
+	    //debug($especiesValoradas);
 		$this -> set(compact('ventaEspecie','especiesValoradas','iva'));
 		//debug($especieValorada);
 	}

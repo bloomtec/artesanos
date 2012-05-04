@@ -23,7 +23,7 @@ class DATABASE_CONFIG {
 		'password' => '',
 		'database' => 'jndagobe_artesanos',
 		'encoding' => 'utf8'
-	); */
-	
+	);
+	 */
 }
 ?>
