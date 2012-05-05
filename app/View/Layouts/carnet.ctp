@@ -2,8 +2,9 @@
 header("Content-type: application/pdf");
 
 App::import('Vendor','especie'); 
-$pagelayout = array(85, 103);
-$pdf = new ESPECIE(PDF_PAGE_ORIENTATION, "mm", $pagelayout, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+///$pagelayout = array(85, 103);
+//$pdf = new ESPECIE(PDF_PAGE_ORIENTATION, "mm", $pagelayout, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+$pdf = new ESPECIE(PDF_PAGE_ORIENTATION, PDF_UNIT, "a5", true, 'UTF-8', false);
 
 //$pdf = new ESPECIE(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
@@ -34,12 +35,12 @@ $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
 //set margins
 //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetMargins(5, 2, 20, true);
+$pdf->SetMargins(10, 1, 20, true);
 $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+//$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 
 //set auto page breaks
-$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+//$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
 
 //set image scale factor
 $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO); //3217020347

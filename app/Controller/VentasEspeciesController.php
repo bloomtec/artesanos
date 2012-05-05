@@ -7,15 +7,7 @@ App::import('Helper', 'csv');
  * @property VentasEspecie $VentasEspecie
  */
 class VentasEspeciesController extends AppController {
-	
-	/*
-	public function beforeFilter() {
-		parent::beforeFilter();
-		$this -> Auth -> allow('*');
-	} */
-	
-	
-	
+
 	/**
 	 * view method
 	 *

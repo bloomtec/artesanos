@@ -712,18 +712,22 @@ class CalificacionesController extends AppController {
             $ciudad = null;
         }
 		
+		if(isset($artesano[0]["Artesano"]["id"])) {
 		//El carnet solo se expide a los artesanos calificados
-		$idRama = $this->Calificacion->find("list", array("fields"=>array("rama_id"),"conditions"=>array("Calificacion.artesano_id"=>$artesano[0]["Artesano"]["id"])));
-		$profesion = $this->Calificacion->Rama->find("list", array("fields"=>array("ram_nombre"), "conditions"=>array("Rama.id"=>$idRama)));
-		
-		if( !empty($profesion)){
-			foreach($profesion as $pro) {
-				$profesion = $pro;
+			$idRama = $this->Calificacion->find("list", array("fields"=>array("rama_id"),"conditions"=>array("Calificacion.artesano_id"=>$artesano[0]["Artesano"]["id"])));
+			
+			$profesion = $this->Calificacion->Rama->find("list", array("fields"=>array("ram_nombre"), "conditions"=>array("Rama.id"=>$idRama)));
+			
+			if( !empty($profesion)){
+				foreach($profesion as $pro) {
+					$profesion = $pro;
+				}
+			} else {
+				$profesion = null;
 			}
 		} else {
 			$profesion = null;
 		}
-		
         $presidente = $this -> requestAction('/configuraciones/getValorConfiguracion/' . "con_presidente_de_la_junta");
         $this -> set(compact('artesano', 'ciudad', 'provincia', 'presidente','profesion'));
 	}
