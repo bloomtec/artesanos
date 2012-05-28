@@ -6,15 +6,21 @@ App::uses('AppController', 'Controller');
  * @property TiposEspeciesValorada $TiposEspeciesValorada
  */
 class TiposEspeciesValoradasController extends AppController {
-
-	private function formatearValor($valor = null) {
+	
+	/**
+	 * Formatear un valor númerico
+	 * 
+	 * @param string $valor El valor a formatear
+	 * @return El valor formateado
+	 */
+	private function formatearValor($valor) {
 		$valor = str_replace('.', '', $valor);
 		$valor = str_replace(',', '.', $valor);
 		return $valor;
 	}
 
 	/**
-	 * index method
+	 * Listado de tipos de especies valoradas
 	 *
 	 * @return void
 	 */
@@ -24,13 +30,9 @@ class TiposEspeciesValoradasController extends AppController {
 
 		$conditions = array();
 		if (isset($this -> params['named']['query']) && !empty($this -> params['named']['query'])) {
-			//$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
 			$query = $this -> params['named']['query'];
-
 			$idsEspecies = $this -> TiposEspeciesValorada -> find('list', array('conditions' => array('OR' => array('TiposEspeciesValorada.tip_nombre LIKE' => "%$query%", 'TiposEspeciesValorada.tip_codigo LIKE' => "%$query%", 'TiposEspeciesValorada.tip_valor_unitario' => "%$query%")), 'fields' => array('TiposEspeciesValorada.id')));
-
 			$conditions['OR']['TiposEspeciesValorada.id'] = $idsEspecies;
-			//$conditions['OR']['Solicitud.juntas_provincial_id'] = $idsJuntas;
 		}
 		if (!empty($conditions)) {
 			$this -> paginate = array('conditions' => $conditions);
@@ -40,12 +42,12 @@ class TiposEspeciesValoradasController extends AppController {
 	}
 
 	/**
-	 * view method
+	 * Ver un tipo de especie valorada
 	 *
-	 * @param string $id
+	 * @param int $id ID del tipo de especie valorada que se va a ver
 	 * @return void
 	 */
-	public function view($id = null) {
+	public function view($id) {
 		$this -> TiposEspeciesValorada -> id = $id;
 		if (!$this -> TiposEspeciesValorada -> exists()) {
 			throw new NotFoundException(__('Especie valorada no valida'));
@@ -53,9 +55,8 @@ class TiposEspeciesValoradasController extends AppController {
 		$this -> set('tiposEspeciesValorada', $this -> TiposEspeciesValorada -> read(null, $id));
 	}
 
-
-	 /**
-	  *add method
+	/**
+	 * Agregar un tipo de especie valorada
 	 *
 	 * @return void
 	 */
@@ -73,12 +74,12 @@ class TiposEspeciesValoradasController extends AppController {
 	}
 
 	/**
-	 * edit method
+	 * Modificar un tipo de especie valorada
 	 *
-	 * @param string $id
+	 * @param int $id ID del tipo de especie valorada que se va a modificar
 	 * @return void
 	 */
-	public function edit($id = null) {
+	public function edit($id) {
 		$this -> TiposEspeciesValorada -> id = $id;
 		if (!$this -> TiposEspeciesValorada -> exists()) {
 			throw new NotFoundException(__('Especie valorada no valida'));
@@ -94,20 +95,20 @@ class TiposEspeciesValoradasController extends AppController {
 			}
 		} else {
 			$tipoEspecie = $this -> TiposEspeciesValorada -> read(null, $id);
-			$tipoEspecie['TiposEspeciesValorada']['tip_valor_unitario'] = $tipoEspecie['TiposEspeciesValorada']['tip_valor_unitario'] * 100; 
+			$tipoEspecie['TiposEspeciesValorada']['tip_valor_unitario'] = $tipoEspecie['TiposEspeciesValorada']['tip_valor_unitario'] * 100;
 			$this -> request -> data = $tipoEspecie;
 		}
 
 	}
 
 	/**
-	 * delete method
+	 * Eliminar un tipo de especia valorada
 	 *
-	 * @param string $id
+	 * @param int $id ID del tipo de especie valorada que se va a eliminar
 	 * @return void
 	 */
-	public function delete($id = null) {
-		if($id <= 50){
+	public function delete($id) {
+		if ($id <= 50) {
 			$this -> Session -> setFlash(__('No se permite eliminar este tipo de especie valorada'), 'crud/error');
 			$this -> redirect(array('action' => 'index'));
 		}

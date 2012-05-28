@@ -7,12 +7,23 @@ App::uses('AppController', 'Controller');
  */
 class TitulacionesController extends AppController {
 	
+	/**
+	 * Definir características que se requieren globalmente por esta clase.
+	 * 
+	 * @return void
+	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this -> Auth -> allow('verificarTituloRamaArtesano');
 	}
 	
-	public function verificarTituloRamaArtesano($artesano_id = null, $rama_id = null) {
+	/**
+	 * Verificar si un artesano tiene un titulo en una rama
+	 * 
+	 * @param int $artesano_id ID del artesano que será validado
+	 * @param int $rama_id ID de la rama que será validada
+	 */
+	public function verificarTituloRamaArtesano($artesano_id, $rama_id) {
 		if($artesano_id && $rama_id) {
 			$titulos = $this -> Titulacion -> Titulo -> find(
 				'list',
@@ -22,7 +33,8 @@ class TitulacionesController extends AppController {
 					),
 					'conditions' => array(
 						'Titulo.rama_id' => $rama_id
-					)
+					),
+					'recursive' => -1
 				)
 			);
 			$solicitudesTitulaciones = $this -> Titulacion -> SolicitudesTitulacion -> find(
@@ -33,7 +45,8 @@ class TitulacionesController extends AppController {
 					),
 					'conditions' => array(
 						'SolicitudesTitulacion.artesano_id' => $artesano_id
-					)
+					),
+					'recursive' => -1
 				)
 			);
 			$titulaciones = $this -> Titulacion -> find(

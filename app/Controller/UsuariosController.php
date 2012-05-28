@@ -7,11 +7,22 @@ App::uses('AppController', 'Controller');
  */
 class UsuariosController extends AppController {
 
+	/**
+	 * Definir características que se requieren globalmente por esta clase.
+	 *
+	 * @return void
+	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this -> Auth -> allow('inicializarAcl', 'logout', 'verificarAcceso', 'getNombre', 'getNombresYApellidos', 'modificarContrasena');
+		$this -> Auth -> allow('logout', 'verificarAcceso', 'getNombre', 'getNombresYApellidos', 'modificarContrasena');
+		//$this -> Auth -> allow('inicializarAcl');
 	}
 
+	/**
+	 * Verificar si un usuario tiene permiso de acceso a una zona especifica
+	 *
+	 * @return true o false acorde si tiene o no acceso a la zona.
+	 */
 	public function verificarAcceso() {
 		// Armar la ruta
 		$ruta = '';
@@ -23,20 +34,32 @@ class UsuariosController extends AppController {
 		}
 		return $this -> Acl -> check($this -> Session -> read('Auth.User.usu_nombre_de_usuario'), $ruta);
 	}
-	
+
+	/**
+	 * Obtener el nombre de un usuario.
+	 *
+	 * @param int $id ID del usuarion que se quiere obtener el nombre.
+	 * @return Nombre del usuario cuyo ID fue pasado por parámetro.
+	 */
 	public function getNombre($id) {
 		$usuario = $this -> Usuario -> read('usu_nombre_de_usuario', $id);
-		if(empty($usuario)) {
+		if (empty($usuario)) {
 			return '<b>:: eliminado ::</b>';
 		} else {
 			return $usuario['Usuario']['usu_nombre_de_usuario'];
 		}
 	}
-	
-	public function getNombresYApellidos($id = null) {
-		if($id) {
+
+	/**
+	 * Obtener el nombre de un usuario.
+	 *
+	 * @param int $id ID del usuarion que se quiere obtener el nombre completo.
+	 * @return Nombre completo del usuario cuyo ID fue pasado por parámetro.
+	 */
+	public function getNombresYApellidos($id) {
+		if ($id) {
 			$usuario = $this -> Usuario -> read('usu_nombres_y_apellidos', $id);
-			if(empty($usuario)) {
+			if (empty($usuario)) {
 				return '<b>:: eliminado ::</b>';
 			} else {
 				return $usuario['Usuario']['usu_nombres_y_apellidos'];
@@ -45,7 +68,7 @@ class UsuariosController extends AppController {
 	}
 
 	/**
-	 * login method
+	 * Inicio de sesión
 	 *
 	 * @return void
 	 */
@@ -61,7 +84,7 @@ class UsuariosController extends AppController {
 	}
 
 	/**
-	 * logout method
+	 * Cierre de sesión
 	 *
 	 * @return void
 	 */
@@ -70,68 +93,44 @@ class UsuariosController extends AppController {
 	}
 
 	/**
-	 * index method
+	 * Listado de usuarios
 	 *
 	 * @return void
 	 */
 	public function index() {
 		$this -> Usuario -> Behaviors -> attach('Containable');
-		$this -> Usuario -> contain(
-			'Rol'
-		);
+		$this -> Usuario -> contain('Rol');
 		$this -> set('usuarios', $this -> paginate());
 	}
 
 	/**
-	 * view method
+	 * Ver información de un usuario
 	 *
-	 * @param string $id
+	 * @param int $id ID del usuario que se quiere ver su información
 	 * @return void
 	 */
-	public function view($id = null) {
+	public function view($id) {
 		$this -> Usuario -> id = $id;
 		if (!$this -> Usuario -> exists()) {
 			throw new NotFoundException(__('Usuario no válido'));
 		}
 		$this -> set('usuario', $this -> Usuario -> read(null, $id));
-		// $permisos['Permisos'] = $this -> getValoresPermisos($id);
-		// $this -> set(compact('permisos'));
 	}
-	
-	private function validacionesInspector(){
-		if($this->data['Usuario']['rol_id']==3){
-			$newValidation = array(
-				'usu_inspecciones_por_dia' => array(
-	        		'rule'    => array('minLength', 1),
-	        		'message' => 'A los inspectores se les debe asignar al menos una inspección por día'
-	   	 		),
-	   	 		'provincia_id' => array(
-					'rule' => array('notempty'),
-					'message' => 'Este campo es requerido',
-				),
-				'canton_id' => array(
-					'rule' => array('notempty'),
-					'message' => 'Este campo es requerido',
-				),
-				'ciudad_id' => array(
-					'notempty' => array(
-					'rule' => array('notempty'),
-					'message' => 'Este campo es requerido',
-					),
-				),
-				'sector_id' => array(
-					'notempty' => array(
-					'rule' => array('notempty'),
-					'message' => 'Este campo es requerido',
-					),
-				),
-			);
-			$this-> Usuario -> validate = array_merge($this -> Usuario -> validate, $newValidation);
+
+	/**
+	 * Validaciones a la hora de crear un inspector
+	 *
+	 * @return void
+	 */
+	private function validacionesInspector() {
+		if ($this -> data['Usuario']['rol_id'] == 3) {
+			$newValidation = array('usu_inspecciones_por_dia' => array('rule' => array('minLength', 1), 'message' => 'A los inspectores se les debe asignar al menos una inspección por día'), 'provincia_id' => array('rule' => array('notempty'), 'message' => 'Este campo es requerido', ), 'canton_id' => array('rule' => array('notempty'), 'message' => 'Este campo es requerido', ), 'ciudad_id' => array('notempty' => array('rule' => array('notempty'), 'message' => 'Este campo es requerido', ), ), 'sector_id' => array('notempty' => array('rule' => array('notempty'), 'message' => 'Este campo es requerido', ), ), );
+			$this -> Usuario -> validate = array_merge($this -> Usuario -> validate, $newValidation);
 		}
 	}
 
 	/**
-	 * add method
+	 * Agregar usuario
 	 *
 	 * @return void
 	 */
@@ -149,7 +148,7 @@ class UsuariosController extends AppController {
 				$aro_id = $this -> Usuario -> query("SELECT `id` FROM `aros` WHERE `model`='Usuario' AND `foreign_key`=$user_id");
 				$aro_id = $aro_id[0]['aros']['id'];
 				$this -> Usuario -> query("DELETE FROM `aros_acos` WHERE `aro_id`=$aro_id");
-				if($usuario['Usuario']['rol_id'] == 3) {
+				if ($usuario['Usuario']['rol_id'] == 3) {
 					$this -> setPermisosInspectores($usuario);
 				}
 				$this -> Session -> setFlash(__('Se guardó el usuario'), 'crud/success');
@@ -166,20 +165,18 @@ class UsuariosController extends AppController {
 		$cantones = $this -> Canton -> find('list');
 		$ciudades = $this -> Usuario -> Ciudad -> find('list');
 		$sectores = $this -> Usuario -> Sector -> find('list');
-		$this -> set(compact('roles', 'usu_unidades', 'cantones','provincias','ciudades', 'sectores'));
+		$this -> set(compact('roles', 'usu_unidades', 'cantones', 'provincias', 'ciudades', 'sectores'));
 	}
 
 	/**
-	 * edit method
+	 * Modificar usuario
 	 *
-	 * @param string $id
+	 * @param int $id ID del usuario que se va a modificar
 	 * @return void
 	 */
-	public function edit($id = null) {
+	public function edit($id) {
 		$this -> Usuario -> Behaviors -> attach('Containable');
-		$this -> Usuario -> contain(
-			'Rol'
-		);
+		$this -> Usuario -> contain('Rol');
 		$this -> Usuario -> currentUsrId = $this -> Auth -> user('id');
 		$this -> Usuario -> id = $id;
 		if (!$this -> Usuario -> exists()) {
@@ -195,7 +192,7 @@ class UsuariosController extends AppController {
 				$aro_id = $this -> Usuario -> query("SELECT `id` FROM `aros` WHERE `model`='Usuario' AND `foreign_key`=$id");
 				$aro_id = $aro_id[0]['aros']['id'];
 				$this -> Usuario -> query("DELETE FROM `aros_acos` WHERE `aro_id`=$aro_id");
-				if($usuario['Usuario']['rol_id'] == 3) {
+				if ($usuario['Usuario']['rol_id'] == 3) {
 					$this -> setPermisosInspectores($usuario, true);
 				} else {
 					$this -> setPermisosInspectores($usuario, false);
@@ -216,21 +213,19 @@ class UsuariosController extends AppController {
 		$cantones = $this -> Canton -> find('list');
 		$ciudades = $this -> Usuario -> Ciudad -> find('list');
 		$sectores = $this -> Usuario -> Sector -> find('list');
-		$this -> set(compact('roles', 'permisos', 'usu_unidades', 'cantones', 'provincias','ciudades', 'sectores'));
+		$this -> set(compact('roles', 'permisos', 'usu_unidades', 'cantones', 'provincias', 'ciudades', 'sectores'));
 	}
+
 	/**
-	 * modificar contraseña method
+	 * Modificar contraseña
 	 *
-	 * @param string $id
 	 * @return void
 	 */
 	public function modificarContrasena() {
 		$this -> Usuario -> Behaviors -> attach('Containable');
-		$this -> Usuario -> contain(
-			'Rol'
-		);
+		$this -> Usuario -> contain('Rol');
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
-			if(true) {
+			if (true) {
 				if ($this -> Usuario -> save($this -> request -> data)) {
 					// tratando de arreglar lo del alias en la tabla aros
 					$id = $user_id = $this -> request -> data['Usuario']['id'];
@@ -240,7 +235,7 @@ class UsuariosController extends AppController {
 					$aro_id = $this -> Usuario -> query("SELECT `id` FROM `aros` WHERE `model`='Usuario' AND `foreign_key`=$id");
 					$aro_id = $aro_id[0]['aros']['id'];
 					$this -> Usuario -> query("DELETE FROM `aros_acos` WHERE `aro_id`=$aro_id");
-					if($usuario['Usuario']['rol_id'] == 3) {
+					if ($usuario['Usuario']['rol_id'] == 3) {
 						$this -> setPermisosInspectores($usuario, true);
 					} else {
 						$this -> setPermisosInspectores($usuario, false);
@@ -249,8 +244,8 @@ class UsuariosController extends AppController {
 					//$this -> redirect(array('action' => 'index'));
 				} else {
 					$this -> Session -> setFlash(__('No se pudo modificar la contraseña. Por favor, intente de nuevo.'), 'crud/error');
-					if($this -> request -> data['Usuario']['usu_contrasena']!= $this -> request -> data['Usuario']['usu_contrasena_confirmar']){
-						$this -> Session -> setFlash(__('Las contraseñas no coinciden. Por favor intente de nuevo'), 'crud/error');	
+					if ($this -> request -> data['Usuario']['usu_contrasena'] != $this -> request -> data['Usuario']['usu_contrasena_confirmar']) {
+						$this -> Session -> setFlash(__('Las contraseñas no coinciden. Por favor intente de nuevo'), 'crud/error');
 					}
 					//$this -> request -> data = $this -> Usuario -> read(null, $id);
 				}
@@ -258,7 +253,7 @@ class UsuariosController extends AppController {
 				$this -> redirect($this -> referer());
 			}
 		}
-		$id = $this -> Usuario -> id =  $this -> Auth -> user('id');;
+		$id = $this -> Usuario -> id = $this -> Auth -> user('id'); ;
 		if (!$this -> Usuario -> exists()) {
 			throw new NotFoundException(__('Usuario no válido'));
 		}
@@ -266,13 +261,14 @@ class UsuariosController extends AppController {
 	}
 
 	/**
-	 * Sección manejo ACL
+	 * Asignar permisos (Seccion de manejo ACL)
+	 *
+	 * @param int $id ID del usuario al que se le asignarán permisos
+	 * @return void
 	 */
-	public function permisos($id = null) {
+	public function permisos($id) {
 		$this -> Usuario -> Behaviors -> attach('Containable');
-		$this -> Usuario -> contain(
-			'Rol'
-		);
+		$this -> Usuario -> contain('Rol');
 		$this -> Usuario -> currentUsrId = $this -> Auth -> user('id');
 		$this -> Usuario -> id = $id;
 		if (!$this -> Usuario -> exists()) {
@@ -281,7 +277,7 @@ class UsuariosController extends AppController {
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			//debug($this -> request -> data);
 			$usuario = $this -> Usuario -> find('first', array('conditions' => array('Usuario.id' => $id)));
-			if($usuario['Usuario']['rol_id'] == 2 || $usuario['Usuario']['rol_id'] == 3) {
+			if ($usuario['Usuario']['rol_id'] == 2 || $usuario['Usuario']['rol_id'] == 3) {
 				// Se es operador. Asignar acorde los permisos asignados.
 				$aro_id = $this -> Usuario -> query("SELECT `id` FROM `aros` WHERE `model`='Usuario' AND `foreign_key`=$id");
 				$aro_id = $aro_id[0]['aros']['id'];
@@ -295,22 +291,16 @@ class UsuariosController extends AppController {
 				$this -> setPermisosActivosFijos($usuario, $this -> request -> data['Permisos']['ActivosFijos']);
 				$this -> setPermisosSuministros($usuario, $this -> request -> data['Permisos']['Suministros']);
 				$this -> setPermisosTitulaciones($usuario, $this -> request -> data['Permisos']['SolicitudesTitulaciones']);
-				$permisos = array(
-					'Cursos' => $this -> request -> data['Permisos']['Cursos'],
-					'Solicitudes' => $this -> request -> data['Permisos']['Solicitudes']
-				);
+				$permisos = array('Cursos' => $this -> request -> data['Permisos']['Cursos'], 'Solicitudes' => $this -> request -> data['Permisos']['Solicitudes']);
 				$this -> setPermisosCapacitaciones($usuario, $permisos);
-				$permisos = array(
-					'IngresosEspecies' => $this -> request -> data['Permisos']['IngresosEspecies'],
-					'VentasEspecies' => $this -> request -> data['Permisos']['VentasEspecies']
-				);
+				$permisos = array('IngresosEspecies' => $this -> request -> data['Permisos']['IngresosEspecies'], 'VentasEspecies' => $this -> request -> data['Permisos']['VentasEspecies']);
 				$this -> setPermisosEspecies($usuario, $permisos);
-				if($usuario['Usuario']['rol_id'] == 3) {
+				if ($usuario['Usuario']['rol_id'] == 3) {
 					$this -> setPermisosInspectores($usuario);
 				}
 				$this -> Session -> setFlash(__('Se asigaron los permisos al usuario'), 'crud/success');
 				$this -> redirect(array('action' => 'index'));
-			} elseif($usuario['Usuario']['rol_id'] == 1) {
+			} elseif ($usuario['Usuario']['rol_id'] == 1) {
 				// Caso en que se es administrador. No se requiere hacer algo por lo que se tiene acceso a todo.
 			}
 		} else {
@@ -331,235 +321,318 @@ class UsuariosController extends AppController {
 			$this -> request -> data = $usuario;
 		}
 	}
-	
-	private function setPermisosTitulaciones($usuario = null, $permisos = null) {
-		foreach($permisos as $accion => $acceso) {
-			if($acceso) {
+
+	/**
+	 * Asignar permisos de una clase especifica
+	 *
+	 * @param array $usuario Arreglo con la información del usuario al que se le está modificando acceso
+	 * @param array $permisos Arreglo con las zonas especificas de la clase en cuestión
+	 */
+	private function setPermisosTitulaciones($usuario, $permisos) {
+		foreach ($permisos as $accion => $acceso) {
+			if ($acceso) {
 				$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/SolicitudesTitulaciones/$accion");
 			}
 		}
 	}
-	
-	private function getPermisosTitulaciones($usuario = null) {
-		$permisos = array('index' => true, 'view' => true, 'add' => true, 'refrendar' => true);		
-		foreach($permisos as $accion => $acceso) {
-			if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/SolicitudesTitulaciones/$accion")) $permisos[$accion] = false;
+
+	/**
+	 * Obtener permisos de una clase especifica
+	 *
+	 * @param array $usuario Arreglo con la información del usuario al que se le está modificando acceso
+	 * @return Arreglo con información de acceso de la clase correspondiente
+	 */
+	private function getPermisosTitulaciones($usuario) {
+		$permisos = array('index' => true, 'view' => true, 'add' => true, 'refrendar' => true);
+		foreach ($permisos as $accion => $acceso) {
+			if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/SolicitudesTitulaciones/$accion"))
+				$permisos[$accion] = false;
 		}
 		return $permisos;
 	}
-	
-	private function setPermisosCapacitaciones($usuario = null, $permisos = null) {
-		foreach($permisos as $modulo => $acciones) {
-			foreach($acciones as $accion => $acceso) {
-				if($acceso) {
+
+	/**
+	 * Asignar permisos de una clase especifica
+	 *
+	 * @param array $usuario Arreglo con la información del usuario al que se le está modificando acceso
+	 * @param array $permisos Arreglo con las zonas especificas de la clase en cuestión
+	 */
+	private function setPermisosCapacitaciones($usuario, $permisos) {
+		foreach ($permisos as $modulo => $acciones) {
+			foreach ($acciones as $accion => $acceso) {
+				if ($acceso) {
 					$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/$modulo/$accion");
 				}
 			}
 		}
 	}
-	
-	private function getPermisosCapacitaciones($usuario = null) {
-		$permisos = array(
-			'Solicitudes' => array(
-				'index' => true, 'view' => true, 'add' => true, 'revision' => true
-			),
-			'Cursos' => array(
-				'index' => true, 'view' => true, 'edit' => true, 'verAlumnos' => true, 'ingresarCalificaciones' => true
-			)
-		);
-		
-		foreach($permisos as $modulo => $acciones) {
-			foreach($acciones as $accion => $acceso) {
-				if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/$modulo/$accion")) $permisos[$modulo][$accion] = false;
+
+	/**
+	 * Obtener permisos de una clase especifica
+	 *
+	 * @param array $usuario Arreglo con la información del usuario al que se le está modificando acceso
+	 * @return Arreglo con información de acceso de la clase correspondiente
+	 */
+	private function getPermisosCapacitaciones($usuario) {
+		$permisos = array('Solicitudes' => array('index' => true, 'view' => true, 'add' => true, 'revision' => true), 'Cursos' => array('index' => true, 'view' => true, 'edit' => true, 'verAlumnos' => true, 'ingresarCalificaciones' => true));
+
+		foreach ($permisos as $modulo => $acciones) {
+			foreach ($acciones as $accion => $acceso) {
+				if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/$modulo/$accion"))
+					$permisos[$modulo][$accion] = false;
 			}
 		}
 		return $permisos;
 	}
-	
-	private function setPermisosEspecies($usuario = null, $permisos = null) {
-		foreach($permisos as $modulo => $acciones) {
-			foreach($acciones as $accion => $acceso) {
-				if($acceso) {
+
+	/**
+	 * Asignar permisos de una clase especifica
+	 *
+	 * @param array $usuario Arreglo con la información del usuario al que se le está modificando acceso
+	 * @param array $permisos Arreglo con las zonas especificas de la clase en cuestión
+	 */
+	private function setPermisosEspecies($usuario, $permisos) {
+		foreach ($permisos as $modulo => $acciones) {
+			foreach ($acciones as $accion => $acceso) {
+				if ($acceso) {
 					$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/$modulo/$accion");
 				}
 			}
 		}
 	}
-	
-	private function getPermisosEspecies($usuario = null) {
-		$permisos = array(
-			'IngresosEspecies' => array(
-				'index' => true, 'add' => true, 'view' => true
-			),
-			'VentasEspecies' => array(
-				'add' => true, 'addToOthers' => true
-			)
-		);
-		
-		foreach($permisos as $modulo => $acciones) {
-			foreach($acciones as $accion => $acceso) {
-				if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/$modulo/$accion")) $permisos[$modulo][$accion] = false;
+
+	/**
+	 * Obtener permisos de una clase especifica
+	 *
+	 * @param array $usuario Arreglo con la información del usuario al que se le está modificando acceso
+	 * @return Arreglo con información de acceso de la clase correspondiente
+	 */
+	private function getPermisosEspecies($usuario) {
+		$permisos = array('IngresosEspecies' => array('index' => true, 'add' => true, 'view' => true), 'VentasEspecies' => array('add' => true, 'addToOthers' => true));
+
+		foreach ($permisos as $modulo => $acciones) {
+			foreach ($acciones as $accion => $acceso) {
+				if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/$modulo/$accion"))
+					$permisos[$modulo][$accion] = false;
 			}
 		}
 		return $permisos;
 	}
-	
-	private function setPermisosSuministros($usuario = null, $permisos = null) {
-		foreach($permisos as $accion => $permitida) {
-			if($permitida) {
+
+	/**
+	 * Asignar permisos de una clase especifica
+	 *
+	 * @param array $usuario Arreglo con la información del usuario al que se le está modificando acceso
+	 * @param array $permisos Arreglo con las zonas especificas de la clase en cuestión
+	 */
+	private function setPermisosSuministros($usuario, $permisos) {
+		foreach ($permisos as $accion => $permitida) {
+			if ($permitida) {
 				$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/Items/$accion");
 			}
 		}
 	}
-	
-	private function getPermisosSuministros($usuario = null) {
-		$permisos = array(
-			'indexSuministros' => true,
-			'agregarSuministro' => true,
-			'deleteSuministro' => true
-		);
-		foreach($permisos as $accion => $permitida) {
-			if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/Items/$accion")) $permisos[$accion] = false;
+
+	/**
+	 * Obtener permisos de una clase especifica
+	 *
+	 * @param array $usuario Arreglo con la información del usuario al que se le está modificando acceso
+	 * @return Arreglo con información de acceso de la clase correspondiente
+	 */
+	private function getPermisosSuministros($usuario) {
+		$permisos = array('indexSuministros' => true, 'agregarSuministro' => true, 'deleteSuministro' => true);
+		foreach ($permisos as $accion => $permitida) {
+			if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/Items/$accion"))
+				$permisos[$accion] = false;
 		}
 		return $permisos;
 	}
-	
-	private function setPermisosActivosFijos($usuario = null, $permisos = null) {
-		foreach($permisos as $accion => $permitida) {
-			if($permitida) {
+
+	/**
+	 * Asignar permisos de una clase especifica
+	 *
+	 * @param array $usuario Arreglo con la información del usuario al que se le está modificando acceso
+	 * @param array $permisos Arreglo con las zonas especificas de la clase en cuestión
+	 */
+	private function setPermisosActivosFijos($usuario, $permisos) {
+		foreach ($permisos as $accion => $permitida) {
+			if ($permitida) {
 				$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/Items/$accion");
 			}
 		}
 	}
-	
-	private function getPermisosActivosFijos($usuario = null) {
-		$permisos = array(
-			'indexActivosFijos' => true,
-			'agregarActivoFijo' => true,
-			'asignarActivoFijo' => true,
-			'desasignarActivoFijo' => true,
-			'traspasoActivoFijo' => true
-		);
-		foreach($permisos as $accion => $permitida) {
-			if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/Items/$accion")) $permisos[$accion] = false;
+
+	/**
+	 * Obtener permisos de una clase especifica
+	 *
+	 * @param array $usuario Arreglo con la información del usuario al que se le está modificando acceso
+	 * @return Arreglo con información de acceso de la clase correspondiente
+	 */
+	private function getPermisosActivosFijos($usuario) {
+		$permisos = array('indexActivosFijos' => true, 'agregarActivoFijo' => true, 'asignarActivoFijo' => true, 'desasignarActivoFijo' => true, 'traspasoActivoFijo' => true);
+		foreach ($permisos as $accion => $permitida) {
+			if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/Items/$accion"))
+				$permisos[$accion] = false;
 		}
 		return $permisos;
 	}
-	
-	private function setPermisosMantenimientos($usuario = null, $permisos = null) {
-		foreach($permisos as $modulo => $permiso) {
-			if($permisos[$modulo]['index']) {
+
+	/**
+	 * Asignar permisos de una clase especifica
+	 *
+	 * @param array $usuario Arreglo con la información del usuario al que se le está modificando acceso
+	 * @param array $permisos Arreglo con las zonas especificas de la clase en cuestión
+	 */
+	private function setPermisosMantenimientos($usuario, $permisos) {
+		foreach ($permisos as $modulo => $permiso) {
+			if ($permisos[$modulo]['index']) {
 				$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/$modulo/index");
 			}
-			if($permisos[$modulo]['add']) {
+			if ($permisos[$modulo]['add']) {
 				$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/$modulo/add");
 			}
 		}
 	}
-	
-	private function getPermisosMantenimientos($usuario = null) {
-		$permisos = array(
-			'GruposDeRamas' => array(
-				'index' => true, 'add' => true
-			),
-			'Ramas' => array(
-				'index' => true, 'add' => true
-			),
-			'TiposEspeciesValoradas' => array(
-				'index' => true, 'add' => true
-			),
-			'CentrosArtesanales' => array(
-				'index' => true, 'add' => true
-			),
-			'Items' => array(
-				'index' => true, 'add' => true
-			),
-			'JuntasProvinciales' => array(
-				'index' => true, 'add' => true
-			),
-			'Personas' => array(
-				'index' => true, 'add' => true
-			),
-			'Proveedores' => array(
-				'index' => true, 'add' => true
-			),
-			'Titulos' => array(
-				'index' => true, 'add' => true
-			),
-			'Alumnos' => array(
-				'index' => true, 'add' => true
-			),
-			'Instructores' => array(
-				'index' => true, 'add' => true
-			),
-		);
-		
-		foreach($permisos as $modulo => $permisos) {
-			if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/$modulo/index")) $permisos[$modulo]['index'] = false;
-			if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/$modulo/add")) $permisos[$modulo]['add'] = false;
+
+	/**
+	 * Obtener permisos de una clase especifica
+	 *
+	 * @param array $usuario Arreglo con la información del usuario al que se le está modificando acceso
+	 * @return Arreglo con información de acceso de la clase correspondiente
+	 */
+	private function getPermisosMantenimientos($usuario) {
+		$permisos = array('GruposDeRamas' => array('index' => true, 'add' => true), 'Ramas' => array('index' => true, 'add' => true), 'TiposEspeciesValoradas' => array('index' => true, 'add' => true), 'CentrosArtesanales' => array('index' => true, 'add' => true), 'Items' => array('index' => true, 'add' => true), 'JuntasProvinciales' => array('index' => true, 'add' => true), 'Personas' => array('index' => true, 'add' => true), 'Proveedores' => array('index' => true, 'add' => true), 'Titulos' => array('index' => true, 'add' => true), 'Alumnos' => array('index' => true, 'add' => true), 'Instructores' => array('index' => true, 'add' => true), );
+
+		foreach ($permisos as $modulo => $permisos) {
+			if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/$modulo/index"))
+				$permisos[$modulo]['index'] = false;
+			if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], "controllers/$modulo/add"))
+				$permisos[$modulo]['add'] = false;
 		}
-		
-		return $permisos;
-	}
-	
-	private function setPermisosUsuarios($usuario = null, $permisos = null) {
-		if($permisos['index']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Usuarios/index');
-		if($permisos['view']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Usuarios/view');
-		if($permisos['add']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Usuarios/add');
-		if($permisos['edit']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Usuarios/edit');
-	}
-	
-	private function getPermisosUsuarios($usuario = null) {
-		$permisos = array('index' => false, 'view' => false, 'add' => false, 'edit' => false);
-		
-		if($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Usuarios/index')) $permisos['index'] = true;
-		if($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Usuarios/view')) $permisos['view'] = true;
-		if($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Usuarios/add')) $permisos['add'] = true;
-		if($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Usuarios/edit')) $permisos['edit'] = true;
-		
-		return $permisos;
-	}
-	
-	private function setPermisosArtesanos($usuario = null, $permisos = null) {
-		if($permisos['index']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/index');
-		if($permisos['add']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/add');
-		if($permisos['agregarArtesano']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/agregarArtesano');
-	}
-	
-	private function getPermisosArtesanos($usuario = null) {
-		$permisos = array('index' => false, 'add' => false, 'agregarArtesano' => false);
-		
-		if($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/index')) $permisos['index'] = true;
-		if($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/add')) $permisos['add'] = true;
-		if($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/agregarArtesano')) $permisos['agregarArtesano'] = true;
-		
+
 		return $permisos;
 	}
 
-	private function setPermisosCalificaciones($usuario = null, $permisos = null) {
-		if($permisos['view']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/view');
-		if($permisos['imprimir']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/imprimir');
-		if($permisos['modificarCalificacion']) $this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/modificarCalificacion');
+	/**
+	 * Asignar permisos de una clase especifica
+	 *
+	 * @param array $usuario Arreglo con la información del usuario al que se le está modificando acceso
+	 * @param array $permisos Arreglo con las zonas especificas de la clase en cuestión
+	 */
+	private function setPermisosUsuarios($usuario, $permisos) {
+		if ($permisos['index'])
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Usuarios/index');
+		if ($permisos['view'])
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Usuarios/view');
+		if ($permisos['add'])
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Usuarios/add');
+		if ($permisos['edit'])
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Usuarios/edit');
 	}
-	
-	private function getPermisosCalificaciones($usuario = null) {
-		$permisos = array('view' => false, 'imprimir' => false, 'modificarCalificacion' => false);
-		
-		if($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/view')) $permisos['view'] = true;
-		if($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/imprimir')) $permisos['imprimir'] = true;
-		if($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/modificarCalificacion')) $permisos['modificarCalificacion'] = true;
-		
+
+	/**
+	 * Obtener permisos de una clase especifica
+	 *
+	 * @param array $usuario Arreglo con la información del usuario al que se le está modificando acceso
+	 * @return Arreglo con información de acceso de la clase correspondiente
+	 */
+	private function getPermisosUsuarios($usuario) {
+		$permisos = array('index' => false, 'view' => false, 'add' => false, 'edit' => false);
+
+		if ($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Usuarios/index'))
+			$permisos['index'] = true;
+		if ($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Usuarios/view'))
+			$permisos['view'] = true;
+		if ($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Usuarios/add'))
+			$permisos['add'] = true;
+		if ($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Usuarios/edit'))
+			$permisos['edit'] = true;
+
 		return $permisos;
 	}
-	
-	private function setPermisosParametrosInformativos($usuario = null, $permisos = null) {
-		if($permisos['index']) {
+
+	/**
+	 * Asignar permisos de una clase especifica
+	 *
+	 * @param array $usuario Arreglo con la información del usuario al que se le está modificando acceso
+	 * @param array $permisos Arreglo con las zonas especificas de la clase en cuestión
+	 */
+	private function setPermisosArtesanos($usuario, $permisos) {
+		if ($permisos['index'])
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/index');
+		if ($permisos['add'])
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/add');
+		if ($permisos['agregarArtesano'])
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/agregarArtesano');
+	}
+
+	/**
+	 * Obtener permisos de una clase especifica
+	 *
+	 * @param array $usuario Arreglo con la información del usuario al que se le está modificando acceso
+	 * @return Arreglo con información de acceso de la clase correspondiente
+	 */
+	private function getPermisosArtesanos($usuario) {
+		$permisos = array('index' => false, 'add' => false, 'agregarArtesano' => false);
+
+		if ($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/index'))
+			$permisos['index'] = true;
+		if ($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/add'))
+			$permisos['add'] = true;
+		if ($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/agregarArtesano'))
+			$permisos['agregarArtesano'] = true;
+
+		return $permisos;
+	}
+
+	/**
+	 * Asignar permisos de una clase especifica
+	 *
+	 * @param array $usuario Arreglo con la información del usuario al que se le está modificando acceso
+	 * @param array $permisos Arreglo con las zonas especificas de la clase en cuestión
+	 */
+	private function setPermisosCalificaciones($usuario, $permisos) {
+		if ($permisos['view'])
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/view');
+		if ($permisos['imprimir'])
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/imprimir');
+		if ($permisos['modificarCalificacion'])
+			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/modificarCalificacion');
+	}
+
+	/**
+	 * Obtener permisos de una clase especifica
+	 *
+	 * @param array $usuario Arreglo con la información del usuario al que se le está modificando acceso
+	 * @return Arreglo con información de acceso de la clase correspondiente
+	 */
+	private function getPermisosCalificaciones($usuario) {
+		$permisos = array('view' => false, 'imprimir' => false, 'modificarCalificacion' => false);
+
+		if ($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/view'))
+			$permisos['view'] = true;
+		if ($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/imprimir'))
+			$permisos['imprimir'] = true;
+		if ($this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/modificarCalificacion'))
+			$permisos['modificarCalificacion'] = true;
+
+		return $permisos;
+	}
+
+	/**
+	 * Asignar permisos de una clase especifica
+	 *
+	 * @param array $usuario Arreglo con la información del usuario al que se le está modificando acceso
+	 * @param array $permisos Arreglo con las zonas especificas de la clase en cuestión
+	 */
+	private function setPermisosParametrosInformativos($usuario, $permisos) {
+		if ($permisos['index']) {
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/ParametrosInformativos/index');
 		}
-		if($permisos['view']) {
+		if ($permisos['view']) {
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/ParametrosInformativos/view');
 		}
-		if($permisos['modificar']) {
+		if ($permisos['modificar']) {
 			// Valores
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/view');
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/add');
@@ -567,52 +640,70 @@ class UsuariosController extends AppController {
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/delete');
 		}
 	}
-	
-	private function getPermisosParametrosInformativos($usuario = null) {
+
+	/**
+	 * Obtener permisos de una clase especifica
+	 *
+	 * @param array $usuario Arreglo con la información del usuario al que se le está modificando acceso
+	 * @return Arreglo con información de acceso de la clase correspondiente
+	 */
+	private function getPermisosParametrosInformativos($usuario) {
 		$permisos = array('index' => true, 'view' => true, 'modificar' => true);
-		
+
 		// Parametros informativos
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/ParametrosInformativos/index')) $permisos['index'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/ParametrosInformativos/view')) $permisos['view'] = false;
-		
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/ParametrosInformativos/index'))
+			$permisos['index'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/ParametrosInformativos/view'))
+			$permisos['view'] = false;
+
 		// Valores
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/view')) $permisos['modificar'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/add')) $permisos['modificar'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/edit')) $permisos['modificar'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/delete')) $permisos['modificar'] = false;
-		
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/view'))
+			$permisos['modificar'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/add'))
+			$permisos['modificar'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/edit'))
+			$permisos['modificar'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Valores/delete'))
+			$permisos['modificar'] = false;
+
 		return $permisos;
 	}
-	
-	private function setPermisosReportes($usuario = null, $permisos = null) {
-		if($permisos['artesanos']) {
+
+	/**
+	 * Asignar permisos de una clase especifica
+	 *
+	 * @param array $usuario Arreglo con la información del usuario al que se le está modificando acceso
+	 * @param array $permisos Arreglo con las zonas especificas de la clase en cuestión
+	 */
+	private function setPermisosReportes($usuario, $permisos) {
+		if ($permisos['artesanos']) {
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Reportes/reporteArtesanos');
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/DatosPersonales/reporteArtesanos');
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/reporteGraficoArtesanos');
 		}
-		if($permisos['calificaciones_operador']) {
+		if ($permisos['calificaciones_operador']) {
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Reportes/reporteCalificacionesOperador');
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/reporteCalificacionesOperador');
 		}
-		if($permisos['calificaciones_artesano']) {
+		if ($permisos['calificaciones_artesano']) {
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Reportes/reporteCalificacionesArtesano');
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/reporteCalificacionesArtesano');
 		}
-		if($permisos['inspecciones']) {
+		if ($permisos['inspecciones']) {
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Reportes/reporteInspecciones');
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/reporteInspecciones');
 		}
-		if($permisos['activos_fijos']) {
+		if ($permisos['activos_fijos']) {
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/reporteIngresosInventarios');
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/impReporte');
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/export_csv');
 		}
-		if($permisos['suministros']) {
+		if ($permisos['suministros']) {
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/reporteIngresosSuministros');
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/impReporte');
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/export_csv');
 		}
-		if($permisos['capacitaciones']) {
+		if ($permisos['capacitaciones']) {
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/CentrosArtesanales/reporte');
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/CentrosArtesanales/impReporte');
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/CentrosArtesanales/export_csv');
@@ -626,7 +717,7 @@ class UsuariosController extends AppController {
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Cursos/impReporte');
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Cursos/export_csv');
 		}
-		if($permisos['titulaciones']) {
+		if ($permisos['titulaciones']) {
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/reporteSolicitudesTitulacion');
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/impReporte');
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/export_csv2');
@@ -634,7 +725,7 @@ class UsuariosController extends AppController {
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/impReporte2');
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/export_csv3');
 		}
-		if($permisos['especies']) {
+		if ($permisos['especies']) {
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosEspecies/reporte');
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosEspecies/imprimirReporte');
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosEspecies/export_csv');
@@ -642,91 +733,150 @@ class UsuariosController extends AppController {
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/VentasEspecies/imprimirReporte');
 		}
 	}
-	
-	private function getPermisosReportes($usuario = null) {
-		$permisos = array(
-			'artesanos' => true, 'calificaciones_operador' => true, 'calificaciones_artesano' => true, 'inspecciones' => true,
-			'activos_fijos' => true, 'suministros' => true, 'capacitaciones' => true, 'titulaciones' => true, 'especies' => true
-		);
-		
+
+	/**
+	 * Obtener permisos de una clase especifica
+	 *
+	 * @param array $usuario Arreglo con la información del usuario al que se le está modificando acceso
+	 * @return Arreglo con información de acceso de la clase correspondiente
+	 */
+	private function getPermisosReportes($usuario) {
+		$permisos = array('artesanos' => true, 'calificaciones_operador' => true, 'calificaciones_artesano' => true, 'inspecciones' => true, 'activos_fijos' => true, 'suministros' => true, 'capacitaciones' => true, 'titulaciones' => true, 'especies' => true);
+
 		// especies
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosEspecies/reporte')) $permisos['especies'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosEspecies/imprimirReporte')) $permisos['especies'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosEspecies/export_csv')) $permisos['especies'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/VentasEspecies/reporte')) $permisos['especies'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/VentasEspecies/imprimirReporte')) $permisos['especies'] = false;
-		
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosEspecies/reporte'))
+			$permisos['especies'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosEspecies/imprimirReporte'))
+			$permisos['especies'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosEspecies/export_csv'))
+			$permisos['especies'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/VentasEspecies/reporte'))
+			$permisos['especies'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/VentasEspecies/imprimirReporte'))
+			$permisos['especies'] = false;
+
 		// titulaciones
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/reporteSolicitudesTitulacion')) $permisos['titulaciones'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/impReporte')) $permisos['titulaciones'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/export_csv2')) $permisos['titulaciones'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/reporteTitulaciones')) $permisos['titulaciones'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/impReporte2')) $permisos['titulaciones'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/export_csv3')) $permisos['titulaciones'] = false;
-				
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/reporteSolicitudesTitulacion'))
+			$permisos['titulaciones'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/impReporte'))
+			$permisos['titulaciones'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/export_csv2'))
+			$permisos['titulaciones'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/reporteTitulaciones'))
+			$permisos['titulaciones'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/impReporte2'))
+			$permisos['titulaciones'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/SolicitudesTitulaciones/export_csv3'))
+			$permisos['titulaciones'] = false;
+
 		// capacitaciones
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/CentrosArtesanales/reporte')) $permisos['capacitaciones'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/CentrosArtesanales/impReporte')) $permisos['capacitaciones'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/CentrosArtesanales/export_csv')) $permisos['capacitaciones'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Alumnos/reporte')) $permisos['capacitaciones'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Alumnos/impReporte')) $permisos['capacitaciones'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Alumnos/export_csv')) $permisos['capacitaciones'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Alumnos/reporteNotas')) $permisos['capacitaciones'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Alumnos/impReporte2')) $permisos['capacitaciones'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Alumnos/export_csv2')) $permisos['capacitaciones'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Cursos/reporte')) $permisos['capacitaciones'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Cursos/impReporte')) $permisos['capacitaciones'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Cursos/export_csv')) $permisos['capacitaciones'] = false;
-		
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/CentrosArtesanales/reporte'))
+			$permisos['capacitaciones'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/CentrosArtesanales/impReporte'))
+			$permisos['capacitaciones'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/CentrosArtesanales/export_csv'))
+			$permisos['capacitaciones'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Alumnos/reporte'))
+			$permisos['capacitaciones'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Alumnos/impReporte'))
+			$permisos['capacitaciones'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Alumnos/export_csv'))
+			$permisos['capacitaciones'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Alumnos/reporteNotas'))
+			$permisos['capacitaciones'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Alumnos/impReporte2'))
+			$permisos['capacitaciones'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Alumnos/export_csv2'))
+			$permisos['capacitaciones'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Cursos/reporte'))
+			$permisos['capacitaciones'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Cursos/impReporte'))
+			$permisos['capacitaciones'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Cursos/export_csv'))
+			$permisos['capacitaciones'] = false;
+
 		// suministros
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/reporteIngresosSuministros')) $permisos['suministros'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/impReporte')) $permisos['suministros'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/export_csv')) $permisos['suministros'] = false;
-		
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/reporteIngresosSuministros'))
+			$permisos['suministros'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/impReporte'))
+			$permisos['suministros'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/export_csv'))
+			$permisos['suministros'] = false;
+
 		// activos_fijos
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/reporteIngresosInventarios')) $permisos['activos_fijos'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/impReporte')) $permisos['activos_fijos'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/export_csv')) $permisos['activos_fijos'] = false;
-		
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/reporteIngresosInventarios'))
+			$permisos['activos_fijos'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/impReporte'))
+			$permisos['activos_fijos'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/IngresosDeInventarios/export_csv'))
+			$permisos['activos_fijos'] = false;
+
 		// artesanos
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Reportes/reporteArtesanos')) $permisos['artesanos'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/DatosPersonales/reporteArtesanos')) $permisos['artesanos'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/reporteGraficoArtesanos')) $permisos['artesanos'] = false;
-		
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Reportes/reporteArtesanos'))
+			$permisos['artesanos'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/DatosPersonales/reporteArtesanos'))
+			$permisos['artesanos'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/reporteGraficoArtesanos'))
+			$permisos['artesanos'] = false;
+
 		// calificaciones_operador
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Reportes/reporteCalificacionesOperador')) $permisos['calificaciones_operador'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/reporteCalificacionesOperador')) $permisos['calificaciones_operador'] = false;
-		
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Reportes/reporteCalificacionesOperador'))
+			$permisos['calificaciones_operador'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/reporteCalificacionesOperador'))
+			$permisos['calificaciones_operador'] = false;
+
 		// calificaciones_artesano
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Reportes/reporteCalificacionesArtesano')) $permisos['calificaciones_artesano'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/reporteCalificacionesArtesano')) $permisos['calificaciones_artesano'] = false;
-		
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Reportes/reporteCalificacionesArtesano'))
+			$permisos['calificaciones_artesano'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/reporteCalificacionesArtesano'))
+			$permisos['calificaciones_artesano'] = false;
+
 		// inspecciones
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Reportes/reporteInspecciones')) $permisos['inspecciones'] = false;
-		if(!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/reporteInspecciones')) $permisos['inspecciones'] = false;
-		
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Reportes/reporteInspecciones'))
+			$permisos['inspecciones'] = false;
+		if (!$this -> Acl -> check($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/reporteInspecciones'))
+			$permisos['inspecciones'] = false;
+
 		return $permisos;
 	}
-	
-	private function setPermisosInspectores($usuario = null) {
+
+	/**
+	 * Asignar permisos de una clase especifica
+	 *
+	 * @param array $usuario Arreglo con la información del usuario al que se le está modificando acceso
+	 * @param array $permisos Arreglo con las zonas especificas de la clase en cuestión
+	 */
+	private function setPermisosInspectores($usuario) {
 		$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/inspecciones');
 		$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Artesanos/modificarCalificacion');
 	}
-	
-	private function setPermisosInventarioActivosFijos($usuario = null, $asignar = null) {
-		if($asignar) {
+
+	/**
+	 * Asignar permisos de una clase especifica
+	 *
+	 * @param array $usuario Arreglo con la información del usuario al que se le está modificando acceso
+	 * @param bool $asignar Permitir o no el acceso
+	 */
+	private function setPermisosInventarioActivosFijos($usuario, $asignar) {
+		if ($asignar) {
 			$this -> Acl -> allow($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/inspecciones');
 		} else {
 			$this -> Acl -> deny($usuario['Usuario']['usu_nombre_de_usuario'], 'controllers/Calificaciones/inspecciones');
 		}
 	}
-	
-	private function getPermisosInventarioActivosFijos($usuario = null) {
+
+	/**
+	 * Obtener permisos de una clase especifica
+	 *
+	 * @param array $usuario Arreglo con la información del usuario al que se le está modificando acceso
+	 * @return Arreglo con información de acceso de la clase correspondiente
+	 */
+	private function getPermisosInventarioActivosFijos($usuario) {
 		// TODO : Se requiere este método?
 	}
-	
+
 	/**
-	 * initAcl method
+	 * Inicializar las tablas correspondientes a permisos
 	 *
 	 * @return void
 	 */
@@ -738,15 +888,15 @@ class UsuariosController extends AppController {
 		 */
 
 		// Limpiar ARO's vs ACO's
-			$this -> Usuario -> query('TRUNCATE TABLE aros_acos;');
+		$this -> Usuario -> query('TRUNCATE TABLE aros_acos;');
 		// Limpiar ARO's
-			$this -> Usuario -> query('TRUNCATE TABLE aros;');
+		$this -> Usuario -> query('TRUNCATE TABLE aros;');
 		// Limpiar ACO's
-			$this -> Usuario -> query('TRUNCATE TABLE acos;');
+		$this -> Usuario -> query('TRUNCATE TABLE acos;');
 		// Limpiar Auditorias
-			$this -> Usuario -> query('TRUNCATE TABLE auditorias;');
+		$this -> Usuario -> query('TRUNCATE TABLE auditorias;');
 		// Limpiar Usuarios
-			$this -> Usuario -> query('TRUNCATE TABLE usuarios;');
+		$this -> Usuario -> query('TRUNCATE TABLE usuarios;');
 
 		exec('/var/www/artesanos/app/Console/cake -app /var/www/artesanos/app/ AclExtras.AclExtras aco_sync');
 
@@ -756,23 +906,7 @@ class UsuariosController extends AppController {
 		$aro = &$this -> Acl -> Aro;
 
 		// Here's all of our group info in an array we can iterate through
-		$roles = array(
-			0 => array(
-				'foreign_key' => 1,
-				'model' => 'Rol',
-				'alias' => 'Administrador'
-			),
-			1 => array(
-				'foreign_key' => 2,
-				'model' => 'Rol',
-				'alias' => 'Operador'
-			),
-			2 => array(
-				'foreign_key' => 3,
-				'model' => 'Rol',
-				'alias' => 'Inspector'
-			)
-		);
+		$roles = array(0 => array('foreign_key' => 1, 'model' => 'Rol', 'alias' => 'Administrador'), 1 => array('foreign_key' => 2, 'model' => 'Rol', 'alias' => 'Operador'), 2 => array('foreign_key' => 3, 'model' => 'Rol', 'alias' => 'Inspector'));
 
 		// Iterate and create ARO groups
 		foreach ($roles as $data) {
@@ -797,19 +931,19 @@ class UsuariosController extends AppController {
 		$usuario['Usuario']['usu_activo'] = true;
 		$usuario['Usuario']['rol_id'] = 1;
 		$this -> Usuario -> save($usuario);
-		
+
 		// tratando de arreglar lo del alias en la tabla aros
 		$id_usuario = $this -> Usuario -> id;
 		$alias_usuario = $usuario['Usuario']['usu_nombre_de_usuario'];
 		$this -> Usuario -> query("UPDATE `aros` SET `alias`='$alias_usuario' WHERE `model`='Usuario' AND `foreign_key`=$id_usuario");
-		
+
 		// Se permite acceso total a los administradores
 		$this -> Acl -> allow('Administrador', 'controllers');
 
 		// Se le niega totalmente el acceso a los operadores e inspectores de manera inicial
 		$this -> Acl -> deny('Operador', 'controllers');
 		$this -> Acl -> deny('Inspector', 'controllers');
-		
+
 		/**
 		 * Finished
 		 */

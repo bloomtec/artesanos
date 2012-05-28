@@ -87,4 +87,4 @@ Inflector::rules('plural', array('irregular' => array('ventasEspecies' => 'Venta
  * CakePlugin::load('DebugKit'); //Loads a single plugin named DebugKit
  *
  */
-CakePlugin::load('AclExtras');
+CakePlugin::loadAll();

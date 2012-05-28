@@ -6,8 +6,8 @@ class DATABASE_CONFIG {
 		'persistent' => false,
 		'host' => 'localhost',
 		//'host' => 'mysql.bloomweb.co',
-		'login' => 'jndagobe',
-		'password' => '20qtxNm6E4',
+		'login' => 'bloomweb',
+		'password' => 'rr40r900343',
 		'database' => 'jndagobe_artesanos',
 		'encoding' => 'utf8'
 	);

@@ -6,22 +6,41 @@ App::uses('AppController', 'Controller');
  * @property Canton $Canton
  */
 class CantonesController extends AppController {
-
+	
+	/**
+	 * Definir características que se requieren globalmente por esta clase.
+	 * 
+	 * @return void
+	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this -> Auth -> allow('getNombre', 'getCantones', 'getByProvincia');
 	}
-
-	public function getByProvincia($provId=null) {
+	
+	/**
+	 * Obtener los cantones acorde una provincia.
+	 *
+	 * @param int $provId ID de la provincia de la cual se quiere tener un listado de cantones.
+	 * @return Arreglo codificado en JSON con la información de los cantones correspondientes.
+	 */
+	public function getByProvincia($provId) {
 		$this -> layout = "ajax";
-		//$cantones_con_inspectores = $this -> Canton -> Usuario -> find('list', array('fields' => array('Usuario.canton_id'), 'conditions' => array('Usuario.rol_id' => 3)));
-		//$cantones = $this -> Canton -> find('list', array('order' => array('Canton.can_nombre' => 'ASC'), 'conditions' => array('Canton.id' => $cantones_con_inspectores, 'Canton.provincia_id' => $provId)));
-		$cantones = $this -> Canton -> find('list', array('order' => array('Canton.can_nombre' => 'ASC'), 'conditions' => array('Canton.provincia_id' => $provId)));
-		echo json_encode($cantones);
+		if($provId) {
+			$cantones = $this -> Canton -> find('list', array('order' => array('Canton.can_nombre' => 'ASC'), 'conditions' => array('Canton.provincia_id' => $provId)));
+			echo json_encode($cantones);
+		} else {
+			echo json_encode(array());
+		}
 		exit(0);
 	}
-
-	public function getCantones($provincia_id = null) {
+	
+	/**
+	 * Obtener los cantones acorde una provincia.
+	 *
+	 * @param int $provincia_id ID de la provincia de la cual se quiere tener un listado de cantones.
+	 * @return array Arreglo con la información de los cantones correspondientes.
+	 */
+	public function getCantones($provincia_id) {
 		$this -> Canton ->recursive=-1;
 		if ($provincia_id) {
 			return $this -> Canton -> find('list', array('order' => array('Canton.can_nombre' => 'ASC'), 'conditions' => array('Canton.provincia_id' => $provincia_id)));
@@ -29,19 +48,29 @@ class CantonesController extends AppController {
 			return $this -> Canton -> find('list', array('order' => array('Canton.can_nombre' => 'ASC')));
 		}
 	}
-
+	
+	/**
+	 * Obtener el nombre de un cantón.
+	 *
+	 * @param int $id ID del cantón que se quiere obtener el nombre.
+	 * @return Nombre del cantón cuyo ID fue pasado por parámetro.
+	 */
 	public function getNombre($id) {
-		$canton = $this -> Canton -> read('can_nombre', $id);
-		return $canton['Canton']['can_nombre'];
+		if($id) {
+			$canton = $this -> Canton -> read('can_nombre', $id);
+			return $canton['Canton']['can_nombre'];
+		} else {
+			return null;
+		}
 	}
 
 	/**
-	 * view method
+	 * Ver la información correspondiente a un cantón
 	 *
-	 * @param string $id
+	 * @param int $id ID del cantón que se quiere ver la información
 	 * @return void
 	 */
-	public function view($id = null) {
+	public function view($id) {
 		$this -> Canton -> id = $id;
 		if (!$this -> Canton -> exists()) {
 			throw new NotFoundException(__('Cantón no válido'));
@@ -50,7 +79,7 @@ class CantonesController extends AppController {
 	}
 
 	/**
-	 * add method
+	 * Agregar un cantón
 	 *
 	 * @return void
 	 */
@@ -70,12 +99,12 @@ class CantonesController extends AppController {
 	}
 
 	/**
-	 * edit method
+	 * Modificar un cantón
 	 *
-	 * @param string $id
+	 * @param int $id ID del cantón que se quiere modificar la información
 	 * @return void
 	 */
-	public function edit($id = null) {
+	public function edit($id) {
 		$this -> Canton -> currentUsrId = $this -> Auth -> user('id');
 		$this -> Canton -> id = $id;
 		if (!$this -> Canton -> exists()) {
@@ -94,12 +123,16 @@ class CantonesController extends AppController {
 		$provincias = $this -> Canton -> Provincia -> find('list');
 		$this -> set(compact('provincias'));
 	}
-
+	
+	/**
+	 * Indice de cantones
+	 *
+	 * @return void
+	 */
 	public function index() {
 		$this->Recursive=0;
 		$conditions = array();
 		if (isset($this -> params['named']['query']) && !empty($this -> params['named']['query'])) {
-			//$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
 			$query = $this -> params['named']['query'];
 			
 			$idsCapacitacion = $this -> Canton -> find(
