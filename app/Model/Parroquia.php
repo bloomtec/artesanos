@@ -9,15 +9,21 @@ App::uses('AppModel', 'Model');
  * @property Taller $Taller
  */
 class Parroquia extends AppModel {
-	
+	/**
+	 * Comportamientos
+	 * @var array
+	 */
 	public $actsAs = array('Auditable');
-	
+	/**
+	 * Campo para mostrar
+	 * @var string
+	 */
 	public $displayField = 'par_nombre';
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'sector_id' => array(
 			'numeric' => array(
@@ -43,11 +49,11 @@ class Parroquia extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * belongsTo associations
- *
- * @var array
- */
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
 	public $belongsTo = array(
 		'Sector' => array(
 			'className' => 'Sector',
@@ -58,11 +64,11 @@ class Parroquia extends AppModel {
 		)
 	);
 
-/**
- * hasMany associations
- *
- * @var array
- */
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
 	public $hasMany = array(
 		'Local' => array(
 			'className' => 'Local',

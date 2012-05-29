@@ -10,20 +10,22 @@ App::uses('AppModel', 'Model');
  */
 class Provincia extends AppModel {
 	
-	public $actsAs = array('Auditable');
-	
-	
-/**
- * Display field
- *
- * @var string
- */
+	/**
+	 * Comportamientos
+	 * @var array
+	 */
+	public $actsAs = array('Auditable');	
+	/**
+	 * Display field
+	 *
+	 * @var string
+	 */
 	public $displayField = 'pro_nombre';
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'pro_nombre' => array(
 			'notempty' => array(
@@ -39,11 +41,11 @@ class Provincia extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * hasMany associations
- *
- * @var array
- */
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
 	public $hasMany = array(
 		'Canton' => array(
 			'className' => 'Canton',

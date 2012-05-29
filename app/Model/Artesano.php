@@ -6,22 +6,37 @@ App::uses('AppModel', 'Model');
  * @property Calificacion $Calificacion
  */
 class Artesano extends AppModel {
-	
+	/**
+	 * Comportamientos
+	 * @var array
+	 */
 	public $actsAs = array('Auditable');
 	
+	/**
+	 * ID del usuario actual
+	 * @var int
+	 */
 	public $currentUsrId = -1;
 	
+	/**
+	 * Campos virtuales
+	 * @var array
+	 */
 	public $virtualFields = array(
 		'nombre_completo' =>	'concat(art_nombres," ",art_apellido_paterno," ",art_apellido_materno)'
 	);
 	
+	/**
+	 * Campo para mostrar
+	 * @var string
+	 */
 	public $displayField = 'art_cedula';
 	
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'art_cedula' => array(
 			'notempty' => array(
@@ -41,11 +56,11 @@ class Artesano extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * belongsTo associations
- *
- * @var array
- */
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
 	public $belongsTo = array(
 		'Provincia' => array(
 			'className' => 'Provincia',
@@ -70,11 +85,11 @@ class Artesano extends AppModel {
 		)
 	);
 
-/**
- * hasMany associations
- *
- * @var array
- */
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
 	public $hasMany = array(
 		'Calificacion' => array(
 			'className' => 'Calificacion',

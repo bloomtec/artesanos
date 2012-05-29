@@ -8,18 +8,22 @@ App::uses('AppModel', 'Model');
  */
 class Solicitud extends AppModel {
 	
+	/**
+	 * Comportamientos
+	 * @var array
+	 */
 	public $actsAs = array('Auditable');
-/**
- * Display field
- *
- * @var string
- */
+	/**
+	 * Display field
+	 *
+	 * @var string
+	 */
 	public $displayField = 'sol_numero_de_memorandum';
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'sol_numero_de_memorandum' => array(
 			'notempty' => array(
@@ -119,11 +123,11 @@ class Solicitud extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * belongsTo associations
- *
- * @var array
- */
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
 	public $belongsTo = array(
 		'CentrosArtesanal' => array(
 			'className' => 'CentrosArtesanal',
@@ -141,11 +145,11 @@ class Solicitud extends AppModel {
 		),
 	);
 
-/**
- * hasMany associations
- *
- * @var array
- */
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
 	public $hasMany = array(
 		'Curso' => array(
 			'className' => 'Curso',

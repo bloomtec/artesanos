@@ -6,15 +6,21 @@ App::uses('AppModel', 'Model');
  * @property Solicitud $Solicitud
  */
 class JuntasProvincial extends AppModel {
-	
+	/**
+	 * Comportamientos
+	 * @var array
+	 */
 	public $actsAs = array('Auditable');
-/**
- * Display field
- *
- * @var string
- */
+	/**
+	 * Display field
+	 *
+	 * @var string
+	 */
 	public $displayField = 'jun_nombre';
-	
+	/**
+	 * Validaciones
+	 * @var array
+	 */
 	public $validate = array(
 		'provincia_id' => array(
 			'numeric' => array(
@@ -39,12 +45,12 @@ class JuntasProvincial extends AppModel {
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
-
-/**
- * hasMany associations
- *
- * @var array
- */
+	
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
 	public $hasMany = array(
 		'Solicitud' => array(
 			'className' => 'Solicitud',
@@ -74,6 +80,10 @@ class JuntasProvincial extends AppModel {
 		)
 	);
 	
+	/**
+	 * Asociaciones de pertenencia
+	 * @var array
+	 */
 	public $belongsTo = array(
 		'Provincia' => array(
 			'className' => 'Provincia',

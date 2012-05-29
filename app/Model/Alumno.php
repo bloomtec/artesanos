@@ -6,7 +6,10 @@ App::uses('AppModel', 'Model');
  * @property Curso $Curso
  */
 class Alumno extends AppModel {
-	
+	/**
+	 * Comportamientos
+	 * @var array
+	 */
 	public $actsAs = array('Auditable');
 	/**
 	 * Display field
@@ -14,7 +17,10 @@ class Alumno extends AppModel {
 	 * @var string
 	 */
 	public $displayField = 'alu_documento_de_identificacion';
-	
+	/**
+	 * Campos virtuales
+	 * @var array
+	 */
 	public $virtualFields = array(
 		'nombre_completo' =>	'concat(alu_nombres," ",alu_apellido_paterno," ",alu_apellido_materno)'
 	);
@@ -156,6 +162,9 @@ class Alumno extends AppModel {
 			'insertQuery' => ''
 		)
 	);
+	/**
+	 * Asociaciones de pertenencia
+	 */
 	public $belongsTo = array(
 		'CentrosArtesanal' => array(
 			'className' => 'CentrosArtesanal',

@@ -6,34 +6,53 @@ App::uses('AppController', 'Controller');
  * @property Sector $Sector
  */
 class SectoresController extends AppController {
-
+	
+	/**
+	 * Definir características que se requieren globalmente por esta clase.
+	 * 
+	 * @return void
+	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this -> Auth -> allow('getNombre', 'getSectores', 'getByCiudad');
 	}
-
-	public function beforeRender() {
-		//$this -> layout = "parametros";
-	}
-
-	public function getByCiudad($ciuId = null) {
+	
+	/**
+	 * Obtener los sectores acorde una ciudad.
+	 *
+	 * @param int $ciuId ID de la ciudad de la cual se quiere tener un listado de sectores.
+	 * 
+	 * @return Arreglo codificado en JSON con la información de los sectores correspondientes.
+	 */
+	public function getByCiudad($ciuId) {
 		$this -> layout = "ajax";
-		//$sectores_con_inspectores = $this -> Sector -> Usuario -> find('list', array('fields' => array('Usuario.sector_id'), 'conditions' => array('Usuario.rol_id' => 3)));
-		//$sectores = $this -> Sector -> find('list', array('order' => array('Sector.sec_nombre' => 'ASC'), 'conditions' => array('Sector.id' => $sectores_con_inspectores, 'Sector.ciudad_id' => $ciuId)));
 		$sectores = $this -> Sector -> find('list', array('order' => array('Sector.sec_nombre' => 'ASC'), 'conditions' => array('Sector.ciudad_id' => $ciuId)));
 		echo json_encode($sectores);
 		exit(0);
 	}
-
+	
+	/**
+	 * Obtener los sectores acorde una ciudad.
+	 *
+	 * @param int $ciuId ID de la ciudad de la cual se quiere tener un listado de sectores.
+	 * @return Arreglo con la información de los sectores correspondientes.
+	 */
 	public function getSectores($ciudad_id = null) {
-		$this -> Sector ->recursive=-1;
+		$this -> Sector -> recursive = -1;
 		if ($ciudad_id) {
 			return $this -> Sector -> find('list', array('order' => array('Sector.sec_nombre' => 'ASC'), 'conditions' => array('Sector.ciudad_id' => $ciudad_id)));
 		} else {
 			return $this -> Sector -> find('list', array('order' => array('Sector.sec_nombre' => 'ASC')));
 		}
 	}
-
+	
+	/**
+	 * Obtener el nombre de un sector.
+	 *
+	 * @param int $id ID del sector que se quiere obtener el nombre.
+	 * 
+	 * @return Nombre del sector cuyo ID fue pasado por parámetro.
+	 */
 	public function getNombre($id) {
 		$sector = $this -> Sector -> read('sec_nombre', $id);
 		if (empty($sector)) {
@@ -44,13 +63,14 @@ class SectoresController extends AppController {
 	}
 
 	/**
-	 * view method
+	 * Ver sector
 	 *
-	 * @param string $id
+	 * @param int $id ID del sector que se quiere ver
+	 * 
 	 * @return void
 	 */
-	public function view($id = null) {
-		
+	public function view($id) {
+
 		$this -> Sector -> id = $id;
 		if (!$this -> Sector -> exists()) {
 			throw new NotFoundException(__('Sector no válido'));
@@ -59,7 +79,7 @@ class SectoresController extends AppController {
 	}
 
 	/**
-	 * add method
+	 * Agregar sector
 	 *
 	 * @return void
 	 */
@@ -81,12 +101,13 @@ class SectoresController extends AppController {
 	}
 
 	/**
-	 * edit method
+	 * Modificar sector
 	 *
-	 * @param string $id
+	 * @param int $id ID del sector que se quiere modificar
+	 * 
 	 * @return void
 	 */
-	public function edit($id = null) {
+	public function edit($id) {
 		$this -> Sector -> currentUsrId = $this -> Auth -> user('id');
 		$this -> Sector -> id = $id;
 		if (!$this -> Sector -> exists()) {
@@ -108,47 +129,26 @@ class SectoresController extends AppController {
 		$this -> set(compact('ciudades', 'cantones', 'provincias'));
 	}
 	
+	/**
+	 * Listar sectores
+	 * 
+	 * @return void
+	 */
 	public function index() {
-		$this->Recursive=0;
+		$this -> Recursive = 0;
 		$conditions = array();
 		if (isset($this -> params['named']['query']) && !empty($this -> params['named']['query'])) {
 			//$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
 			$query = $this -> params['named']['query'];
-			
-			$idsSectores = $this -> Sector -> find(
-				'list',
-				array(
-					'conditions' => array(
-						'OR' => array(
-							'Sector.sec_nombre LIKE' => "%$query%",
-						)
-					),
-					'fields' => array(
-						'Sector.id'
-					)
-				)
-			);
-			
-			
-			$idsCiudades = $this -> Sector -> Ciudad -> find(
-				'list',
-				array(
-					'conditions' => array(
-						'OR' => array(
-							'Ciudad.ciu_nombre LIKE' => "%$query%",
-						)
-					),
-					'fields' => array(
-						'Ciudad.id'
-					)
-				)
-			);
-			
-			
+
+			$idsSectores = $this -> Sector -> find('list', array('conditions' => array('OR' => array('Sector.sec_nombre LIKE' => "%$query%", )), 'fields' => array('Sector.id')));
+
+			$idsCiudades = $this -> Sector -> Ciudad -> find('list', array('conditions' => array('OR' => array('Ciudad.ciu_nombre LIKE' => "%$query%", )), 'fields' => array('Ciudad.id')));
+
 			$conditions['OR']['Sector.id'] = $idsSectores;
 			$conditions['OR']['Sector.ciudad_id'] = $idsCiudades;
 		}
-		if(!empty($conditions)) {
+		if (!empty($conditions)) {
 			$this -> paginate = array('conditions' => $conditions);
 		}
 		$sectores = $this -> paginate();

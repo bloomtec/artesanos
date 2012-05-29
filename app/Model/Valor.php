@@ -11,11 +11,11 @@ class Valor extends AppModel {
 	
 	public $displayField = 'val_nombre';
 	
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'parametros_informativo_id' => array(
 			'numeric' => array(
@@ -41,11 +41,11 @@ class Valor extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * belongsTo associations
- *
- * @var array
- */
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
 	public $belongsTo = array(
 		'ParametrosInformativo' => array(
 			'className' => 'ParametrosInformativo',
@@ -56,13 +56,21 @@ class Valor extends AppModel {
 		)
 	);
 	
+	/**
+	 * Procedimientos antes de guardar
+	 * @return true o false indicando si se puede o no guardar
+	 */
 	public function beforeSave($model) {
 	    if(isset($this -> data['Valor']['id'])) {
 			$this -> data['OldData'] = $this -> find('first', array('conditions' => array('Valor.id' => $this -> data['Valor']['id'])));
 		}
 	    return true;
 	}
-	
+
+	/**
+	 * Procedimientos despues de guardar
+	 * @param bool $created Indica si es creación o actualización
+	 */
 	public function afterSave($created) {
 		$data = $this -> parseData($this -> data);
 		$AudModel = new Auditoria();
@@ -102,11 +110,17 @@ class Valor extends AppModel {
 		}
 	}
 
+	/**
+	 * Procedimiento antes de eliminar
+	 */
 	public function beforeDelete($model = null, $cascade = null) {
 		$this -> data['OldData'] = $this -> read(null, $this -> id);
 		return true;
 	}
 	
+	/**
+	 * Procedimiento luego de eliminar
+	 */
 	public function afterDelete($model = null) {
 		$data = $this -> parseDeleted($this -> data);
 		$AudModel = new Auditoria();
@@ -126,6 +140,9 @@ class Valor extends AppModel {
 		$AudModel -> save($auditoria);
 	}
 	
+	/**
+	 * Formatear la información
+	 */
 	private function parseDeleted($data) {
 		$new_data = array();
 		$new_data['Antes'] = '';
@@ -143,6 +160,9 @@ class Valor extends AppModel {
 		return $new_data;
 	}
 
+	/**
+	 * Formatear la información
+	 */
 	private function parseData($data) {
 		$new_data = array();
 		$new_data['Antes'] = '';

@@ -8,16 +8,20 @@ App::import('Helper', 'csv');
  * @property CentrosArtesanal $CentrosArtesanal
  */
 class CentrosArtesanalesController extends AppController {
-	
-		
+
+	/**
+	 * Formatear un valor numérico
+	 * @param string $valor Valor a formatear
+	 * @return Valor formateado
+	 */
 	private function formatearValor($valor = null) {
 		$valor = str_replace('.', '', $valor);
 		$valor = str_replace(',', '.', $valor);
 		return $valor;
 	}
-	
+
 	/**
-	 * index method
+	 * Listado de centros artesanales
 	 *
 	 * @return void
 	 */
@@ -27,9 +31,9 @@ class CentrosArtesanalesController extends AppController {
 	}
 
 	/**
-	 * view method
+	 * Ver centro artesanal
 	 *
-	 * @param string $id
+	 * @param int $id ID del centro artesanal
 	 * @return void
 	 */
 	public function view($id = null) {
@@ -41,7 +45,7 @@ class CentrosArtesanalesController extends AppController {
 	}
 
 	/**
-	 * add method
+	 * Agregar centro artesanal
 	 *
 	 * @return void
 	 */
@@ -68,9 +72,9 @@ class CentrosArtesanalesController extends AppController {
 	}
 
 	/**
-	 * edit method
+	 * Modificar centro artesanal
 	 *
-	 * @param string $id
+	 * @param int $id ID del centro artesanal
 	 * @return void
 	 */
 	public function edit($id = null) {
@@ -101,12 +105,12 @@ class CentrosArtesanalesController extends AppController {
 	}
 
 	/**
-	 * delete method
+	 * Eliminar centro artesanal
 	 *
-	 * @param string $id
+	 * @param int $id ID del centro artesanal
 	 * @return void
 	 */
-	public function delete($id = null) {
+	public function delete($id) {
 		if (!$this -> request -> is('post')) {
 			throw new MethodNotAllowedException();
 		}
@@ -123,11 +127,10 @@ class CentrosArtesanalesController extends AppController {
 	}
 
 	/**
-	 * reporte method
+	 * Reporte de centros artesanales
 	 *
 	 * @return void
 	 */
-
 	public function reporte() {
 		$reporte = false;
 		$provincias = array(0 => 'Seleccione...');
@@ -164,19 +167,19 @@ class CentrosArtesanalesController extends AppController {
 				$lenguaje = $this -> data['Reporte']['cen_lenguaje'];
 				$tipo = $this -> data['Reporte']['cen_tipo'];
 				$sostenimiento = $this -> data['Reporte']['cen_sostenimiento'];
-				if(!empty($rama)) {
+				if (!empty($rama)) {
 					$conditions['CentrosArtesanal.rama_id'] = $rama;
 				}
-				if(!empty($modalidad)) {
+				if (!empty($modalidad)) {
 					$conditions['CentrosArtesanal.cen_modalidad'] = $modalidad;
 				}
-				if(!empty($lenguaje)) {
+				if (!empty($lenguaje)) {
 					$conditions['CentrosArtesanal.cen_lenguaje'] = $lenguaje;
 				}
-				if(!empty($tipo)) {
+				if (!empty($tipo)) {
 					$conditions['CentrosArtesanal.cen_tipo'] = $tipo;
 				}
-				if(!empty($sostenimiento)) {
+				if (!empty($sostenimiento)) {
 					$conditions['CentrosArtesanal.cen_sostenimiento'] = $sostenimiento;
 				}
 				if (!empty($provincia)) {
@@ -203,13 +206,17 @@ class CentrosArtesanalesController extends AppController {
 			$this -> Session -> write('archivo', "reporteCentrosArtesanales");
 			$this -> Session -> write('cabeceras', $cabecerasCsv);
 			$reporte = true;
-			
+
 			$this -> set(compact('reporteCentrosArtesanales', 'reporte'));
 		}
 
 		$this -> set('fechaActual', date('Y-m-d', strtotime('now')));
 	}
 
+	/**
+	 * Imprimir reporte
+	 * @return void
+	 */
 	public function impReporte() {
 		$this -> layout = 'bpdf';
 		$reporteCentrosArtesanales = $this -> Session -> read('reporte');
@@ -219,6 +226,9 @@ class CentrosArtesanalesController extends AppController {
 		$this -> set(compact('reporteCentrosArtesanales', 'nombre_archivo', 'tamano'));
 	}
 
+	/**
+	 * Exportar a CSV
+	 */
 	public function export_csv() {
 		$this -> layout = "";
 		$this -> render(false);
@@ -233,8 +243,8 @@ class CentrosArtesanalesController extends AppController {
 			$csv -> addRow($filas);
 
 		}
-		$titulo =  $this -> Session -> read('archivo');
-		$titulo = "csv_".$titulo."_" . date("Y-m-d H:i:s", time()) . ".csv";
+		$titulo = $this -> Session -> read('archivo');
+		$titulo = "csv_" . $titulo . "_" . date("Y-m-d H:i:s", time()) . ".csv";
 		echo $csv -> render($titulo);
 	}
 

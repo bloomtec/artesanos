@@ -8,18 +8,23 @@ App::uses('AppModel', 'Model');
  * @property JuntasProvincial $JuntasProvincial
  */
 class Titulacion extends AppModel {
-/**
- * Display field
- *
- * @var string
- */
+	/**
+	 * Display field
+	 *
+	 * @var string
+	 */
 	public $displayField = 'titulo_id';
+	
+	/**
+	 * Comportamientos
+	 * @var array
+	 */
 	public $actsAs = array('Auditable');
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'titulo_id' => array(
 			'numeric' => array(
@@ -45,11 +50,11 @@ class Titulacion extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * belongsTo associations
- *
- * @var array
- */
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
 	public $belongsTo = array(
 		'Titulo' => array(
 			'className' => 'Titulo',

@@ -8,13 +8,10 @@ App::uses('AppController', 'Controller');
 class ProveedoresController extends AppController {
 
 	/**
-	 * index method
+	 * Listado de proveedores
 	 *
 	 * @return void
 	 */
-
-	//var $uses = array('Proveedor','IngresosDeInventario');
-
 	public function index() {
 		$this -> Proveedor -> recursive = 0;
 		$conditions = array();
@@ -31,12 +28,12 @@ class ProveedoresController extends AppController {
 	}
 
 	/**
-	 * view method
+	 * Ver proveedor
 	 *
-	 * @param string $id
+	 * @param int $id ID del proveedor
 	 * @return void
 	 */
-	public function view($id = null) {
+	public function view($id) {
 		$this -> Proveedor -> id = $id;
 		if (!$this -> Proveedor -> exists()) {
 			throw new NotFoundException(__('Proveedor no válido'));
@@ -45,7 +42,7 @@ class ProveedoresController extends AppController {
 	}
 
 	/**
-	 * add method
+	 * Agregar proveedor
 	 *
 	 * @return void
 	 */
@@ -62,9 +59,9 @@ class ProveedoresController extends AppController {
 	}
 
 	/**
-	 * edit method
+	 * Modificar proveedor
 	 *
-	 * @param string $id
+	 * @param int $id ID del proveedor
 	 * @return void
 	 */
 	public function edit($id = null) {
@@ -85,12 +82,12 @@ class ProveedoresController extends AppController {
 	}
 
 	/**
-	 * delete method
+	 * Eliminar proveedor
 	 *
-	 * @param string $id
+	 * @param int $id ID del proveedor
 	 * @return void
 	 */
-	public function delete($id = null) {
+	public function delete($id) {
 		if (!$this -> request -> is('post')) {
 			throw new MethodNotAllowedException();
 		}

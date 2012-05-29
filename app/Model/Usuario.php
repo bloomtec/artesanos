@@ -13,18 +13,18 @@ class Usuario extends AppModel {
 	
 	public $actsAs = array('Acl' => array('type' => 'requester'),'Auditable');
 	
-/**
- * Display field
- *
- * @var string
- */
+	/**
+	 * Display field
+	 *
+	 * @var string
+	 */
 	public $displayField = 'usu_nombre_de_usuario';
-	
-/**
- * Validation rules
- *
- * @var array
- */
+		
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'rol_id' => array(
 			'numeric' => array(
@@ -102,6 +102,9 @@ class Usuario extends AppModel {
 		),
 	);
 	
+	/**
+	 * Validación de confirmación de contraseña
+	 */
 	public function confirmarContraseña() {
 		if(
 			(isset($this -> data['Usuario']['usu_contrasena']) && isset($this -> data['Usuario']['usu_contrasena_confirmar'])) &&
@@ -118,11 +121,11 @@ class Usuario extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * belongsTo associations
- *
- * @var array
- */
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
 	public $belongsTo = array(
 		'Rol' => array(
 			'className' => 'Rol',
@@ -161,11 +164,11 @@ class Usuario extends AppModel {
 		)
 	);
 
-/**
- * hasMany associations
- *
- * @var array
- */
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
 	public $hasMany = array(
 		'Auditoria' => array(
 			'className' => 'Auditoria',
@@ -208,6 +211,9 @@ class Usuario extends AppModel {
 		)
 	);
 	
+	/**
+	 * Obtener las unidades (Parametro informativo con ID 13)
+	 */
 	public function getUnidades() {
 		$fetched_data = $this -> query(
 			"SELECT `id`,`val_nombre`
@@ -221,6 +227,9 @@ class Usuario extends AppModel {
 		return $formatted_data;
 	}
 	
+	/**
+	 * Procedimiento antes de guardar
+	 */
 	public function beforeSave($model) {
 		
 	    if (isset($this->data['Usuario']['usu_contrasena'])) {
@@ -236,6 +245,9 @@ class Usuario extends AppModel {
 	    return true;
 	}
 	
+	/**
+	 * Método requerido por comportamiento de ACL
+	 */
 	function parentNode() {
 	    if (!$this->id && empty($this->data)) {
 	        return null;
@@ -249,164 +261,6 @@ class Usuario extends AppModel {
 	    } else {
 	        return array('Rol' => array('id' => $data['Usuario']['rol_id']));
 	    }
-	}
-	
-	/*public function afterSave($created) {
-		$data = $this -> parseData($this -> data);
-		$auditoria = array();
-		// Corregir añadir el primer usuario
-		if($this -> currentUsrId == -1) {
-			$this -> currentUsrId = 1;
-		}
-		if($created) {
-			// Se ha creado un usuario
-			$this -> Auditoria -> create();
-			$auditoria['Auditoria'] = array(
-				'usuario_id' => $this -> currentUsrId,
-				'aud_nombre_modelo' => 'Usuario',
-				'aud_llave_foranea' => $this -> id,
-				'aud_datos_previos' => $data['Antes'],
-				'aud_datos_nuevos' => $data['Despues'],
-				'aud_add' => true,
-				'aud_edit' => false,
-				'aud_delete' => false
-			);
-			$this -> Auditoria -> save($auditoria);
-		} else {
-			// Se ha modificado un usuario
-			$this -> Auditoria -> create();
-			$auditoria['Auditoria'] = array(
-				'usuario_id' => $this -> currentUsrId,
-				'aud_nombre_modelo' => 'Usuario',
-				'aud_llave_foranea' => $this -> id,
-				'aud_datos_previos' => $data['Antes'],
-				'aud_datos_nuevos' => $data['Despues'],
-				'aud_add' => false,
-				'aud_edit' => true,
-				'aud_delete' => false
-			);
-			$this -> Auditoria -> save($auditoria);
-		}
-	}
-
-	private function parseData($data) {
-		$new_data = array();
-		$new_data['Antes'] = '';
-		$new_data['Despues'] = '';
-		
-		// Revisar si hay información vieja para registrarla
-		if(isset($data['OldData'])) {
-			$new_data['Antes'] .= '<table class="audit-table">';
-			$new_data['Antes'] .= '<caption>Datos Del Usuario</caption>';
-			$new_data['Antes'] .= '<tr><td class="audit-value">Nombre De Usuario</td><td class="audit-data">'. $data['OldData']['Usuario']['usu_nombre_de_usuario'] . '</td></tr>';
-			if($data['OldData']['Usuario']['rol_id'] == 2) {
-				$new_data['Antes'] .= '<tr><td class="audit-value">Rol</td><td class="audit-data">Operador</td></tr>';
-			} else {
-				$new_data['Antes'] .= '<tr><td class="audit-value">Rol</td><td class="audit-data">Administrador</td></tr>';
-			}
-			$new_data['Antes'] .= '<tr><td class="audit-value">Unidad</td><td class="audit-data">' . $data['OldData']['Usuario']['usu_unidad'] . '</td></tr>';
-			$new_data['Antes'] .= '<tr><td class="audit-value">Cédula</td><td class="audit-data">' . $data['OldData']['Usuario']['usu_numero_identificacion'] . '</td></tr>';
-			$new_data['Antes'] .= '<tr><td class="audit-value">Nombres Y Apellidos</td><td class="audit-data">' . $data['OldData']['Usuario']['usu_nombres_y_apellidos'] . '</td></tr>';
-			$new_data['Antes'] .= '<caption>Permisos Del Usuario</caption>';
-			/*foreach($data['OldData']['Permisos'] as $modelo => $acciones) {
-				foreach($acciones as $accion => $valor) {
-					$permiso = null;
-					if($valor) {
-						$permiso = 'si';
-					} else {
-						$permiso = 'no';
-					}
-					$new_data['Antes'] .= '<tr><td class="audit-value">' . $modelo . '::' . $accion . '</td><td class="audit-data">' . $permiso . '</td></tr>';
-				}
-			}
-			$new_data['Antes'] .= '</table>';
-		}
-		
-		// Registrar la información nueva
-		$class = null;
-		$new_data['Despues'] .= '<table class="audit-table">';
-		$new_data['Despues'] .= '<caption>Datos Del Usuario</caption>';
-		if(isset($data['OldData']['Usuario']['usu_nombre_de_usuario'])) {
-			if($data['OldData']['Usuario']['usu_nombre_de_usuario'] != $data['Usuario']['usu_nombre_de_usuario']) {
-				$class = 'diferente';
-			} else {
-				$class = 'igual';
-			}
-		} else {
-			$class = 'igual';
-		}
-		$new_data['Despues'] .= '<tr class="' . $class . '"><td class="audit-value">Nombre De Usuario</td><td class="audit-data">'. $data['Usuario']['usu_nombre_de_usuario'] . '</td></tr>';
-		if(isset($data['OldData']['Usuario']['rol_id'])) {
-			if($data['OldData']['Usuario']['rol_id'] != $data['Usuario']['rol_id']) {
-				$class = 'diferente';
-			} else {
-				$class = 'igual';
-			}
-		} else {
-			$class = 'igual';
-		}
-		if($data['Usuario']['rol_id'] == 2) {
-			$new_data['Despues'] .= '<tr class="' . $class . '"><td class="audit-value">Rol</td><td class="audit-data">Operador</td></tr>';
-		} else {
-			$new_data['Despues'] .= '<tr class="' . $class . '"><td class="audit-value">Rol</td><td class="audit-data">Administrador</td></tr>';
-		}
-		if(isset($data['OldData']['Usuario']['usu_unidad'])) {
-			if($data['OldData']['Usuario']['usu_unidad'] != $data['Usuario']['usu_unidad']) {
-				$class = 'diferente';
-			} else {
-				$class = 'igual';
-			}
-		} else {
-			$class = 'igual';
-		}
-		$new_data['Despues'] .= '<tr class="' . $class . '"><td class="audit-value">Unidad</td><td class="audit-data">' . $data['Usuario']['usu_unidad'] . '</td></tr>';
-		if(isset($data['OldData']['Usuario']['usu_numero_identificacion'])) {
-			if($data['OldData']['Usuario']['usu_numero_identificacion'] != $data['Usuario']['usu_numero_identificacion']) {
-				$class = 'diferente';
-			} else {
-				$class = 'igual';
-			}
-		} else {
-			$class = 'igual';
-		}
-		$new_data['Despues'] .= '<tr class="' . $class . '"><td class="audit-value">Cédula</td><td class="audit-data">' . $data['Usuario']['usu_numero_identificacion'] . '</td></tr>';
-		if(isset($data['OldData']['Usuario']['usu_nombres_y_apellidos'])) {
-			if($data['OldData']['Usuario']['usu_nombres_y_apellidos'] != $data['Usuario']['usu_nombres_y_apellidos']) {
-				$class = 'diferente';
-			} else {
-				$class = 'igual';
-			}
-		} else {
-			$class = 'igual';
-		}
-		$new_data['Despues'] .= '<tr class="' . $class . '"><td class="audit-value">Nombres Y Apellidos</td><td class="audit-data">' . $data['Usuario']['usu_nombres_y_apellidos'] . '</td></tr>';
-		$new_data['Despues'] .= '<caption>Permisos Del Usuario</caption>';
-		if(isset($data['Permisos'])) {
-			foreach($data['Permisos'] as $modelo => $acciones) {
-				foreach($acciones as $accion => $valor) {
-					$permiso = null;
-					if($valor) {
-						$permiso = 'si';
-					} else {
-						$permiso = 'no';
-					}
-					if(isset($data['OldData']['Permisos'][$modelo][$accion])) {
-						if($data['OldData']['Permisos'][$modelo][$accion] != $data['Permisos'][$modelo][$accion]) {
-							$class = 'diferente';
-						} else {
-							$class = 'igual';
-						}
-					} else {
-						$class = 'igual';
-					}
-					$new_data['Despues'] .= '<tr class="' . $class . '"><td class="audit-value">' . $modelo . '::' . $accion . '</td><td class="audit-data">' . $permiso . '</td></tr>';
-				}
-			}
-		}
-		$new_data['Despues'] .= '</table>';
-		
-		return $new_data;
-	}*/
-	
+	}	
 
 }

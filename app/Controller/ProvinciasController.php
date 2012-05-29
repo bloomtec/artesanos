@@ -7,29 +7,44 @@ App::uses('AppController', 'Controller');
  */
 class ProvinciasController extends AppController {
 	
+	/**
+	 * Definir características que se requieren globalmente por esta clase.
+	 * 
+	 * @return void
+	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this -> Auth -> allow('getNombre', 'getProvincias');
 	}
-
+	
+	/**
+	 * Obtener las provincias.
+	 *
+	 * @return Arreglo con las provincias registradas.
+	 */
 	public function getProvincias() {
-		//return $this -> Provincia -> find('all', array('order' => array('Provincia.pro_nombre' => 'ASC')));
-		$this -> Provincia ->recursive=-1;
+		$this -> Provincia -> recursive = -1;
 		return $this -> Provincia -> find('list', array('order' => array('Provincia.pro_nombre' => 'ASC')));
 	}
 	
+	/**
+	 * Obtener el nombre de una provincia.
+	 *
+	 * @param int $id ID de la provincia de la cual se quiere tener su nombre.
+	 * @return El nombre de la provincia.
+	 */
 	public function getNombre($id) {
 		$provincia = $this -> Provincia -> read('pro_nombre', $id);
 		return $provincia['Provincia']['pro_nombre'];
 	}
 
 	/**
-	 * view method
+	 * Ver provincia
 	 *
-	 * @param string $id
+	 * @param int $id ID de la provincia que se quiere ver
 	 * @return void
 	 */
-	public function view($id = null) {
+	public function view($id) {
 		$this -> Provincia -> id = $id;
 		if (!$this -> Provincia -> exists()) {
 			throw new NotFoundException(__('Provincia no válida'));
@@ -38,7 +53,7 @@ class ProvinciasController extends AppController {
 	}
 
 	/**
-	 * add method
+	 * Agregar provincia
 	 *
 	 * @return void
 	 */
@@ -56,12 +71,12 @@ class ProvinciasController extends AppController {
 	}
 
 	/**
-	 * edit method
+	 * Modificar provincia
 	 *
-	 * @param string $id
+	 * @param int $id ID de la provincia a modificar
 	 * @return void
 	 */
-	public function edit($id = null) {
+	public function edit($id) {
 		$this -> Provincia -> currentUsrId = $this -> Auth -> user('id');
 		$this -> Provincia -> id = $id;
 		if (!$this -> Provincia -> exists()) {
@@ -69,13 +84,6 @@ class ProvinciasController extends AppController {
 		}
 		if ($this -> request -> is('post') || $this -> request -> is('put')) {
 			if ($this -> Provincia -> save($this -> request -> data)) {
-				/*foreach($this->data['Canton'] as $canton){
-					if(!empty($canton['can_nombre'])){
-						$canton['provincia_id']=$this->data['Provincia']['id'];
-						$this -> Provincia -> Canton -> save($canton);
-						$this -> Provincia -> Canton -> id = 0;
-					}
-				}*/
 				$this -> Session -> setFlash(__('Se ha guardado la provincia'), 'crud/success');
 				$this -> redirect(array('controller' => 'geograficos', 'action' => 'index'));
 			} else {
@@ -85,31 +93,24 @@ class ProvinciasController extends AppController {
 			$this -> request -> data = $this -> Provincia -> read(null, $id);
 		}
 	}
-
+	
+	/**
+	 * Listado de provincias
+	 * 
+	 * @return void
+	 */
 	public function index() {
-		$this->Recursive=0;
+		$this -> Recursive = 0;
 		$conditions = array();
 		if (isset($this -> params['named']['query']) && !empty($this -> params['named']['query'])) {
 			//$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
 			$query = $this -> params['named']['query'];
-			
-			$idsProvincias = $this -> Provincia -> find(
-				'list',
-				array(
-					'conditions' => array(
-						'OR' => array(
-							'Provincia.pro_nombre LIKE' => "%$query%",
-						)
-					),
-					'fields' => array(
-						'Provincia.id'
-					)
-				)
-			);
-			
+
+			$idsProvincias = $this -> Provincia -> find('list', array('conditions' => array('OR' => array('Provincia.pro_nombre LIKE' => "%$query%", )), 'fields' => array('Provincia.id')));
+
 			$conditions['OR']['Provincia.id'] = $idsProvincias;
 		}
-		if(!empty($conditions)) {
+		if (!empty($conditions)) {
 			$this -> paginate = array('conditions' => $conditions);
 		}
 		$provincias = $this -> paginate();

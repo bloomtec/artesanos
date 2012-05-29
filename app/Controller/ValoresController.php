@@ -7,6 +7,12 @@ App::uses('AppController', 'Controller');
  */
 class ValoresController extends AppController {
 	
+	/**
+	 * Obtener el nombre de un valor.
+	 *
+	 * @param int $id ID del valor que se quiere obtener el nombre.
+	 * @return Nombre del valor cuyo ID fue pasado por parámetro.
+	 */
 	public function getNombre($id) {
 		$valor = $this -> Valor -> read('val_nombre', $id);
 		if(empty($valor)) {
@@ -17,12 +23,12 @@ class ValoresController extends AppController {
 	}
 
 	/**
-	 * view method
+	 * Ver el valor
 	 *
-	 * @param string $id
+	 * @param int $id ID del valor que se quiere ver
 	 * @return void
 	 */
-	public function view($id = null) {
+	public function view($id) {
 		$this -> Valor -> id = $id;
 		if (!$this -> Valor -> exists()) {
 			throw new NotFoundException(__('Valor no válido'));
@@ -32,11 +38,12 @@ class ValoresController extends AppController {
 	}
 
 	/**
-	 * add method
+	 * Agregar un valor
 	 *
+	 * @param int $parametro_id ID del paramatro informativo al que pertenece este valor
 	 * @return void
 	 */
-	public function add($parametro_id = null) {
+	public function add($parametro_id) {
 		$this -> Valor -> currentUsrId = $this -> Auth -> user('id');
 		if ($this -> request -> is('post')) {
 			$this -> Valor -> create();
@@ -57,12 +64,12 @@ class ValoresController extends AppController {
 	}
 
 	/**
-	 * edit method
+	 * Modificar valor
 	 *
-	 * @param string $id
+	 * @param int $id ID del valor a modificar
 	 * @return void
 	 */
-	public function edit($id = null) {
+	public function edit($id) {
 		$this -> Valor -> currentUsrId = $this -> Auth -> user('id');
 		$this -> Valor -> id = $id;
 		if (!$this -> Valor -> exists()) {
@@ -85,12 +92,12 @@ class ValoresController extends AppController {
 	}
 
 	/**
-	 * delete method
+	 * Eliminar el valor
 	 *
-	 * @param string $id
+	 * @param int $id ID del valor a eliminar
 	 * @return void
 	 */
-	public function delete($id = null) {
+	public function delete($id) {
 		$this -> Valor -> currentUsrId = $this -> Auth -> user('id');
 		$this -> autoRender = false;
 		if (!$this -> request -> is('post')) {

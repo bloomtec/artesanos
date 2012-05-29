@@ -9,17 +9,14 @@ App::import('Helper', 'csv');
 class AlumnosController extends AppController {
 
 	/**
-	 * index method
+	 * Listado de alumnos
 	 *
 	 * @return void
-	 */
-	
-	
+	 */	
 	public function index() {
 		$this -> Alumno -> recursive = 0;
 		$conditions = array();
 		if (isset($this -> params['named']['query']) && !empty($this -> params['named']['query'])) {
-			//$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
 			$query = $this -> params['named']['query'];
 			$alumnos = $this -> Alumno -> find('list', array('conditions' => array('OR' => array('Alumno.alu_nombres LIKE' => "%$query%", 'Alumno.alu_apellido_paterno LIKE' => "%$query%", 'Alumno.alu_apellido_materno LIKE' => "%$query%", 'Alumno.alu_nacionalidad LIKE' => "%$query%", 'Alumno.alu_documento_de_identificacion LIKE' => "%$query%", 'Alumno.alu_fecha_de_nacimiento LIKE' => "%$query%")), 'fields' => array('Alumno.id')));
 			$conditions['Alumno.id'] = $alumnos;
@@ -29,12 +26,12 @@ class AlumnosController extends AppController {
 	}
 
 	/**
-	 * view method
+	 * Ver alumno
 	 *
-	 * @param string $id
+	 * @param int $id ID del alumno que se va a ver
 	 * @return void
 	 */
-	public function view($id = null) {
+	public function view($id) {
 		$this -> Alumno -> id = $id;
 		if (!$this -> Alumno -> exists()) {
 			throw new NotFoundException(__('Alumno no válido'));
@@ -43,7 +40,7 @@ class AlumnosController extends AppController {
 	}
 
 	/**
-	 * add method
+	 * Agregar un alumno
 	 *
 	 * @return void
 	 */
@@ -71,12 +68,12 @@ class AlumnosController extends AppController {
 	}
 
 	/**
-	 * edit method
+	 * Modificar un alumno
 	 *
-	 * @param string $id
+	 * @param int $id ID del alumno que se va a modificar
 	 * @return void
 	 */
-	public function edit($id = null) {
+	public function edit($id) {
 		$this -> Alumno -> id = $id;
 		if (!$this -> Alumno -> exists()) {
 			throw new NotFoundException(__('Alumno no válido'));
@@ -104,12 +101,12 @@ class AlumnosController extends AppController {
 	}
 
 	/**
-	 * delete method
+	 * Eliminar un alumno
 	 *
-	 * @param string $id
+	 * @param int $id ID del alumno que se va a eliminar
 	 * @return void
 	 */
-	public function delete($id = null) {
+	public function delete($id) {
 		if (!$this -> request -> is('post')) {
 			throw new MethodNotAllowedException();
 		}
@@ -124,8 +121,17 @@ class AlumnosController extends AppController {
 		$this -> Session -> setFlash(__('No se elminó el alumno'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
 	}
-
-	public function get($document,$tipo,$id) {
+	
+	/**
+	 * Obtener un alumno acorde los parametros especificados
+	 * 
+	 * @param string $document Documento del alumno
+	 * @param string $tipo junta ó centro
+	 * @param string $id ID del centro artesanal si es el caso
+	 * 
+	 * @return Arreglo JSON con la información del estudiante
+	 */
+	public function get($document, $tipo, $id) {
 		$this -> autorender = false;
 		$this -> Alumno -> recursive = 0;
 		switch ($tipo) {
@@ -140,8 +146,12 @@ class AlumnosController extends AppController {
 		}
 		exit(0);
 	}
-
-	//Función para registrar el nuevo alumno
+	
+	/**
+	 * Función para registrar el nuevo alumno
+	 * 
+	 * @return void
+	 */
 	public function modalRegNuevoAlumno() {
 		$this -> autoRender = false;
 		$this -> layout = 'ajax';
@@ -160,10 +170,10 @@ class AlumnosController extends AppController {
 	}
 
 	/**
-	 * reporte method
+	 * Reporte alumnos provincias fecha de creacion
+	 * 
 	 * @return void
 	 */
-	//Reporte alumnos provincias fecha de creacion
 	public function reporte() {
 		$this -> loadModel("CentrosArtesanal", true);
 		$this -> loadModel("Solicitud", true);
@@ -254,12 +264,10 @@ class AlumnosController extends AppController {
 	}
 
 	/**
-	 * impReporte method
+	 * Reporte alumnos provincias
 	 *
 	 * @return void
 	 */
-
-	//Reporte alumnos provincias
 	public function impReporte() {
 		$this -> layout = 'pdf2';
 		$reporteAlumnos = $this -> Session -> read('reporte');
@@ -270,12 +278,10 @@ class AlumnosController extends AppController {
 	}
 
 	/**
-	 * impReporte method
+	 * Reporte alumnos provincias
 	 *
 	 * @return void
 	 */
-
-	//Reporte alumnos provincias
 	public function impReporte2() {
 		$this -> layout = 'pdf2';
 		$reporteNotasAlumnos = $this -> Session -> read('reporte');
@@ -310,7 +316,7 @@ class AlumnosController extends AppController {
 	}
 
 	/**
-	 * export_csv2 method
+	 * export_csv2
 	 *
 	 * @return void
 	 */
@@ -338,12 +344,13 @@ class AlumnosController extends AppController {
 	}
 
 	/**
-	 * reporte de notas method
+	 * reporte de notas
 	 *
-	 * @param string $alumnoId
+	 * @param int $alumnoId ID del alumno a generar el reporte
+	 * 
 	 * @return void
 	 */
-	public function reporteNotas($alumnoId = null) { //Pueden haber 100 alumnos, Solo se mostraran los que esten en un curso
+	public function reporteNotas($alumnoId) { //Pueden haber 100 alumnos, Solo se mostraran los que esten en un curso
 		$reporte = false;
 		$pagina = "";
 

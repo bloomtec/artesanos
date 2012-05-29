@@ -7,13 +7,18 @@ App::uses('AppController', 'Controller');
  */
 class PersonasController extends AppController {
 	
+	/**
+	 * Definir características que se requieren globalmente por esta clase.
+	 * 
+	 * @return void
+	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this -> Auth -> allow('getPersonasByDepartment');
 	}
 
 	/**
-	 * index method
+	 * Listar personas
 	 *
 	 * @return void
 	 */
@@ -23,29 +28,22 @@ class PersonasController extends AppController {
 		if (isset($this -> params['named']['query']) && !empty($this -> params['named']['query'])) {
 			//$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
 			$query = $this -> params['named']['query'];
-			$conditions = array(
-						'OR' => array(
-							'Persona.per_nombres LIKE' => "%$query%",
-							'Persona.per_apellidos LIKE' => "%$query%",
-							'Persona.per_departamento LIKE' => "%$query%",
-							'Persona.per_documento_de_identidad	 LIKE' => "%$query%",
-							)
-					);
+			$conditions = array('OR' => array('Persona.per_nombres LIKE' => "%$query%", 'Persona.per_apellidos LIKE' => "%$query%", 'Persona.per_departamento LIKE' => "%$query%", 'Persona.per_documento_de_identidad	 LIKE' => "%$query%", ));
 
 		}
-		if(!empty($conditions)) {
+		if (!empty($conditions)) {
 			$this -> paginate = array('conditions' => $conditions);
 		}
 		$this -> set('personas', $this -> paginate());
 	}
 
 	/**
-	 * view method
+	 * Ver persona
 	 *
-	 * @param string $id
+	 * @param int $id ID de la persona
 	 * @return void
 	 */
-	public function view($id = null) {
+	public function view($id) {
 		$this -> Persona -> id = $id;
 		if (!$this -> Persona -> exists()) {
 			throw new NotFoundException(__('Persona no encontrada'));
@@ -54,7 +52,7 @@ class PersonasController extends AppController {
 	}
 
 	/**
-	 * add method
+	 * Agregar persona
 	 *
 	 * @return void
 	 */
@@ -73,9 +71,9 @@ class PersonasController extends AppController {
 	}
 
 	/**
-	 * edit method
+	 * Modificar persona
 	 *
-	 * @param string $id
+	 * @param int $id ID de la persona
 	 * @return void
 	 */
 	public function edit($id = null) {
@@ -98,9 +96,9 @@ class PersonasController extends AppController {
 	}
 
 	/**
-	 * delete method
+	 * Eliminar persona
 	 *
-	 * @param string $id
+	 * @param int $id ID de la persona
 	 * @return void
 	 */
 	public function delete($id = null) {
@@ -118,10 +116,11 @@ class PersonasController extends AppController {
 		$this -> Session -> setFlash(__('No se pudo borrar la persona'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
 	}
-	
+
 	public function getPersonasByDepartment($dep_name = null) {
 		$this -> layout = 'ajax';
 		echo json_encode($this -> Persona -> find('list', array('conditions' => array('Persona.per_departamento' => $dep_name))));
 		exit(0);
 	}
+
 }

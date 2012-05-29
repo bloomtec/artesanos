@@ -6,18 +6,23 @@ App::uses('AppModel', 'Model');
  * @property Taller $Taller
  */
 class Trabajador extends AppModel {
-/**
- * Display field
- *
- * @var string
- */
+	/**
+	 * Display field
+	 *
+	 * @var string
+	 */
 	public $displayField = 'tra_cedula';
+	
+	/**
+	 * Comportamiento
+	 * @var array
+	 */
 	public $actsAs = array('Auditable');
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'tra_cedula' => array(
 			'notempty' => array(
@@ -33,11 +38,11 @@ class Trabajador extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * hasAndBelongsToMany associations
- *
- * @var array
- */
+	/**
+	 * hasAndBelongsToMany associations
+	 *
+	 * @var array
+	 */
 	public $hasAndBelongsToMany = array(
 		'Taller' => array(
 			'className' => 'Taller',

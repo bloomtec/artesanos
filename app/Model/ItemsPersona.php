@@ -7,11 +7,11 @@ App::uses('AppModel', 'Model');
  * @property Persona $Persona
  */
 class ItemsPersona extends AppModel {
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'item_id' => array(
 			'numeric' => array(
@@ -47,11 +47,11 @@ class ItemsPersona extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * belongsTo associations
- *
- * @var array
- */
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
 	public $belongsTo = array(
 		'Item' => array(
 			'className' => 'Item',

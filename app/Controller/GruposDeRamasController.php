@@ -7,18 +7,24 @@ App::uses('AppController', 'Controller');
  */
 class GruposDeRamasController extends AppController {
 	
+	/**
+	 * Definir características que se requieren globalmente por esta clase.
+	 * 
+	 * @return void
+	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this -> Auth -> allow('getNombre');
 	}
 	
-	public function beforeRender() {
-		//$this -> layout = 'parametros';
-	}
-	
+	/**
+	 * Obtener el nombre del grupo de ramas
+	 * @param int $id ID del grupo de ramas
+	 * @return El nombre del grupo de ramas
+	 */
 	public function getNombre($id) {
 		$grupo = $this -> GruposDeRama -> read('gru_nombre', $id);
-		if(empty($grupo)) {
+		if (empty($grupo)) {
 			return '<b>:: eliminado ::</b>';
 		} else {
 			return $grupo['GruposDeRama']['gru_nombre'];
@@ -26,7 +32,7 @@ class GruposDeRamasController extends AppController {
 	}
 
 	/**
-	 * index method
+	 * Listado de grupos de ramas
 	 *
 	 * @return void
 	 */
@@ -36,31 +42,22 @@ class GruposDeRamasController extends AppController {
 	}
 
 	/**
-	 * view method
+	 * Ver un grupo de ramas
 	 *
-	 * @param string $id
+	 * @param int $id ID del grupo de ramas
 	 * @return void
 	 */
-	public function view($id = null) {
+	public function view($id) {
 		$this -> GruposDeRama -> id = $id;
 		if (!$this -> GruposDeRama -> exists()) {
 			throw new NotFoundException(__('Grupo de ramas no válido'));
 		}
 		$this -> set('gruposDeRama', $this -> GruposDeRama -> read(null, $id));
-		$this -> set(
-			'ramas',
-			$this -> GruposDeRama -> Rama -> find(
-				'all',
-				array(
-					'order' => array('Rama.ram_nombre' => 'ASC'),
-					'conditions' => array('Rama.grupos_de_rama_id' => $id)
-				)
-			)
-		);
+		$this -> set('ramas', $this -> GruposDeRama -> Rama -> find('all', array('order' => array('Rama.ram_nombre' => 'ASC'), 'conditions' => array('Rama.grupos_de_rama_id' => $id))));
 	}
 
 	/**
-	 * add method
+	 * Agregar grupo de ramas
 	 *
 	 * @return void
 	 */
@@ -77,9 +74,9 @@ class GruposDeRamasController extends AppController {
 	}
 
 	/**
-	 * edit method
+	 * Modificar grupo de ramas
 	 *
-	 * @param string $id
+	 * @param int $id ID del grupo de ramas
 	 * @return void
 	 */
 	public function edit($id = null) {
@@ -100,12 +97,12 @@ class GruposDeRamasController extends AppController {
 	}
 
 	/**
-	 * delete method
+	 * Eliminar grupo de ramas
 	 *
-	 * @param string $id
+	 * @param int $id ID del grupo de ramas
 	 * @return void
 	 */
-	public function delete($id = null) {
+	public function delete($id) {
 		if (!$this -> request -> is('post')) {
 			throw new MethodNotAllowedException();
 		}

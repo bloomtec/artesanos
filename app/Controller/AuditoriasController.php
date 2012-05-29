@@ -7,29 +7,28 @@ App::uses('AppController', 'Controller');
  */
 class AuditoriasController extends AppController {
 
-
-/**
- * index method
- *
- * @return void
- */
+	/**
+	 * Listado de auditorías
+	 *
+	 * @return void
+	 */
 	public function index() {
-		$this->Auditoria->recursive = 0;
-		$this->set('auditorias', $this->paginate());
+		$this -> Auditoria -> recursive = 0;
+		$this -> set('auditorias', $this -> paginate());
 	}
 
-/**
- * view method
- *
- * @param string $id
- * @return void
- */
-	public function view($id = null) {
-		$this->Auditoria->id = $id;
-		if (!$this->Auditoria->exists()) {
+	/**
+	 * Ver una auditoría
+	 *
+	 * @param int $id ID de la auditoría
+	 * @return void
+	 */
+	public function view($id) {
+		$this -> Auditoria -> id = $id;
+		if (!$this -> Auditoria -> exists()) {
 			throw new NotFoundException(__('Invalid auditoria'));
 		}
-		$this->set('auditoria', $this->Auditoria->read(null, $id));
+		$this -> set('auditoria', $this -> Auditoria -> read(null, $id));
 	}
-	
+
 }

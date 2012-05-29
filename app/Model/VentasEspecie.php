@@ -15,22 +15,28 @@ class VentasEspecie extends AppModel {
 	 * @var array
 	 */
 	public $virtualFields = array();
-	public $actsAs = array('Auditable');
 	
-/**
- * Display field
- *
- * @var string
- */
+	/**
+	 * Behavior
+	 * 
+	 * @var array
+	 */
+	public $actsAs = array('Auditable');
+		
+	/**
+	 * Display field
+	 *
+	 * @var string
+	 */
 	public $displayField = 'id';
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * belongsTo associations
- *
- * @var array
- */
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
 	public $belongsTo = array(
 		'JuntasProvincial' => array(
 			'className' => 'JuntasProvincial',
@@ -55,11 +61,11 @@ class VentasEspecie extends AppModel {
 		)
 	);
 
-/**
- * hasMany associations
- *
- * @var array
- */
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
 	public $hasMany = array(
 		'EspeciesValorada' => array(
 			'className' => 'EspeciesValorada',

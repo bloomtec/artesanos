@@ -6,15 +6,22 @@ App::uses('Auditoria', 'Model');
  *
  */
 class Configuracion extends AppModel {
-	
+	/**
+	 * Comportamientos
+	 * @var array
+	 */
 	public $actsAs = array('Auditable');
 	
+	/**
+	 * ID del usuario actual
+	 * @var int
+	 */
 	public $currentUsrId = -1;
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'con_anos_renovacion_artesanos_autonomos' => array(
 			'numeric' => array(
@@ -58,6 +65,9 @@ class Configuracion extends AppModel {
 		),
 	);
 	
+	/**
+	 * Procedimiento antes de guardar
+	 */
 	public function beforeSave($model) {
 	    if(isset($this -> data['Configuracion']['id'])) {
 			$this -> data['OldData'] = $this -> find('first', array('conditions' => array('Configuracion.id' => $this -> data['Configuracion']['id'])));
@@ -65,6 +75,9 @@ class Configuracion extends AppModel {
 	    return true;
 	}
 	
+	/**
+	 * Procedimiento despues de guardar
+	 */
 	public function afterSave($created) {
 		$data = $this -> parseData($this -> data);
 		$AudModel = new Auditoria();
@@ -104,6 +117,9 @@ class Configuracion extends AppModel {
 		}
 	}
 
+	/**
+	 * Formatear información
+	 */
 	private function parseData($data) {
 		$new_data = array();
 		$new_data['Antes'] = '';

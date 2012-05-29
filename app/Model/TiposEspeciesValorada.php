@@ -7,14 +7,22 @@ App::uses('AppModel', 'Model');
  */
 class TiposEspeciesValorada extends AppModel {
 	
+	/**
+	 * Comportamientos
+	 * @var array
+	 */
 	public $actsAs = array('Auditable');
-/**
- * Display field
- *
- * @var string
- */
+	/**
+	 * Display field
+	 *
+	 * @var string
+	 */
 	public $displayField = 'tip_nombre';
 	
+	/**
+	 * Campos virtuales
+	 * @var array
+	 */
 	public $virtualFields = array(
 		'total_especies_para_vender' => 'SELECT COUNT(*)
 							FROM especies_valoradas, tipos_especies_valoradas
@@ -28,11 +36,11 @@ class TiposEspeciesValorada extends AppModel {
 							AND especies_valoradas.ventas_especie_id IS NOT NULL'
 	);
 	
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'tip_nombre' => array(
 			'notempty' => array(
@@ -66,11 +74,11 @@ class TiposEspeciesValorada extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * hasMany associations
- *
- * @var array
- */
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
 	public $hasMany = array(
 		'EspeciesValorada' => array(
 			'className' => 'EspeciesValorada',

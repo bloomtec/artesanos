@@ -9,8 +9,10 @@ App::import('Helper', 'csv');
  */
 class IngresosDeInventariosController extends AppController {
 	
- 	
-	
+	/**
+	 * Reporte de ingresos de inventarios
+	 * @return void
+	 */
 	public function reporteIngresosInventarios() {
 		$this -> loadModel('Item', true);
 		$this -> loadModel('IngresosDeInventariosItem', true);
@@ -26,7 +28,7 @@ class IngresosDeInventariosController extends AppController {
 		} else {
 			$pagina = false;
 		}
-		
+
 		if ($this -> request -> is('post') or $pagina != false) {
 
 			$conditions = array();
@@ -85,7 +87,7 @@ class IngresosDeInventariosController extends AppController {
 				}
 
 			}
-			
+
 			//debug($conditions);
 			$this -> paginate = array('IngresosDeInventario' => array('limit' => 20, 'conditions' => $conditions));
 			$reporteIngresos = $this -> paginate('IngresosDeInventario');
@@ -106,11 +108,15 @@ class IngresosDeInventariosController extends AppController {
 			$fechaActual = date('Y-m-d', strtotime('now'));
 			$this -> set(compact('fechaActual', 'lstProveedores', 'lstPersonas', 'lstDepartamentos', 'lstProductos', 'reporte', 'titulo'));
 		}
-		
-		$this -> set('fechaActual', date('Y-m-d', strtotime('now')));
-		
-	}
 
+		$this -> set('fechaActual', date('Y-m-d', strtotime('now')));
+
+	}
+	
+	/**
+	 * Reporte de ingresos de suministros
+	 * @return void
+	 */
 	public function reporteIngresosSuministros() {
 		$this -> loadModel('Item', true);
 		$this -> loadModel('IngresosDeInventariosItem', true);
@@ -126,11 +132,11 @@ class IngresosDeInventariosController extends AppController {
 		} else {
 			$pagina = false;
 		}
-		
+
 		if ($this -> request -> is('post') or $pagina != false) {
 
 			$conditions = array();
-			if ($pagina==false) {
+			if ($pagina == false) {
 
 				$idProveedor = $this -> data['Reporte']['proveedor'];
 				$idPersona = $this -> data['Reporte']['persona'];
@@ -208,19 +214,25 @@ class IngresosDeInventariosController extends AppController {
 
 		$this -> set('fechaActual', date('Y-m-d', strtotime('now')));
 	}
-
+	
+	/**
+	 * Imprimir reporte
+	 * @return void
+	 */
 	function impReporte() {
 		$this -> layout = 'pdf2';
 		$reporteIngresos = $this -> Session -> read('reporte');
-		$nombre_archivo  = $this -> Session -> read('archivo');
+		$nombre_archivo = $this -> Session -> read('archivo');
 		//Tamaño de la fuente
 		$tamano = 5;
 		//$this -> Session -> delete('reporteIngresos');
 		$this -> set(compact('reporteIngresos', 'nombre_archivo', 'tamano'));
 	}
-
 	
-
+	/**
+	 * Exportar a CSV
+	 * @return void
+	 */
 	function export_csv() {
 
 		$this -> layout = "";
@@ -250,11 +262,9 @@ class IngresosDeInventariosController extends AppController {
 
 		}
 
-		$titulo =$reporteIngresos = $this -> Session -> read('archivo');
-		$titulo = "csv".$titulo."_" . date("Y-m-d H:i:s", time()) . ".csv";
+		$titulo = $reporteIngresos = $this -> Session -> read('archivo');
+		$titulo = "csv" . $titulo . "_" . date("Y-m-d H:i:s", time()) . ".csv";
 		echo $csv -> render($titulo);
 	}
-	
-	
 
 }

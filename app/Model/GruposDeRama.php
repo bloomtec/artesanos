@@ -6,16 +6,22 @@ App::uses('AppModel', 'Model');
  * @property Rama $Rama
  */
 class GruposDeRama extends AppModel {
-	
+	/**
+	 * Comportamientos
+	 * @var array
+	 */
 	public $actsAs = array('Auditable');
-		
+	/**
+	 * Campo para mostrar
+	 * @var string
+	 */
 	public $displayField = 'gru_nombre';
 	 
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'gru_nombre' => array(
 			'notempty' => array(
@@ -30,12 +36,12 @@ class GruposDeRama extends AppModel {
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
-
-/**
- * hasMany associations
- *
- * @var array
- */
+	
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
 	public $hasMany = array(
 		'Rama' => array(
 			'className' => 'Rama',

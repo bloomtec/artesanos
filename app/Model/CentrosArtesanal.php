@@ -10,22 +10,25 @@ App::uses('AppModel', 'Model');
  * @property Solicitud $Solicitud
  */
 class CentrosArtesanal extends AppModel {
-	
+	/**
+	 * Comportamientos
+	 * @var array
+	 */
 	public $actsAs = array('Auditable');
-/**
- * Display field
- *
- * @var string
- */
+	/**
+	 * Display field
+	 *
+	 * @var string
+	 */
 	public $displayField = 'cen_nombre';
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * belongsTo associations
- *
- * @var array
- */
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'cen_ruc' => array(
 			'numeric' => array(
@@ -98,6 +101,10 @@ class CentrosArtesanal extends AppModel {
 			),
 		),
 	);
+	
+	/**
+	 * Relaciones de pertenencia
+	 */
 	public $belongsTo = array(
 		'Provincia' => array(
 			'className' => 'Provincia',
@@ -136,11 +143,11 @@ class CentrosArtesanal extends AppModel {
 		)
 	);
 
-/**
- * hasMany associations
- *
- * @var array
- */
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
 	public $hasMany = array(
 		'Solicitud' => array(
 			'className' => 'Solicitud',

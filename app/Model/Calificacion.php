@@ -12,13 +12,16 @@ App::uses('AppModel', 'Model');
  * @property TiposDe $TiposDe
  */
 class Calificacion extends AppModel {
-	
+	/**
+	 * Comportamientos
+	 * @var array
+	 */
 	public $actsAs = array('Auditable');
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'rama_id' => array(
 			'numeric' => array(
@@ -54,11 +57,11 @@ class Calificacion extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * belongsTo associations
- *
- * @var array
- */
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
 	public $belongsTo = array(
 		'Rama' => array(
 			'className' => 'Rama',
@@ -97,11 +100,11 @@ class Calificacion extends AppModel {
 		)
 	);
 
-/**
- * hasMany associations
- *
- * @var array
- */
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
 	public $hasMany = array(
 		'DatosPersonal' => array(
 			'className' => 'DatosPersonal',

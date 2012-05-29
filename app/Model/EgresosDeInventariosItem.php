@@ -7,17 +7,17 @@ App::uses('AppModel', 'Model');
  * @property Item $Item
  */
 class EgresosDeInventariosItem extends AppModel {
-/**
- * Use table
- *
- * @var mixed False or table name
- */
+	/**
+	 * Use table
+	 *
+	 * @var mixed False or table name
+	 */
 	public $useTable = 'egresos_de_inventarios_items';
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'egresos_de_inventario_id' => array(
 			'numeric' => array(
@@ -53,11 +53,11 @@ class EgresosDeInventariosItem extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * belongsTo associations
- *
- * @var array
- */
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
 	public $belongsTo = array(
 		'EgresosDeInventario' => array(
 			'className' => 'EgresosDeInventario',

@@ -7,16 +7,22 @@ App::uses('Auditoria', 'Model');
  * @property Valor $Valor
  */
 class ParametrosInformativo extends AppModel {
-	
+	/**
+	 * Comportamientos
+	 * @var array
+	 */
 	public $actsAs = array('Auditable');
-	
+	/**
+	 * Campo para mostrar
+	 * @var string
+	 */
 	public $displayField = 'par_nombre';
 	
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'par_nombre' => array(
 			'notempty' => array(
@@ -31,12 +37,12 @@ class ParametrosInformativo extends AppModel {
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
-
-/**
- * hasMany associations
- *
- * @var array
- */
+	
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
 	public $hasMany = array(
 		'Valor' => array(
 			'className' => 'Valor',
@@ -53,6 +59,4 @@ class ParametrosInformativo extends AppModel {
 		)
 	);
 	
-	
-
 }

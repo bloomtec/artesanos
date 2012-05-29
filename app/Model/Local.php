@@ -11,7 +11,10 @@ App::uses('AppModel', 'Model');
  * @property Parroquia $Parroquia
  */
 class Local extends AppModel {
-	
+	/**
+	 * Comportamientos
+	 * @var array
+	 */
 	public $actsAs = array('Auditable');
 	
 	/**
@@ -163,11 +166,11 @@ class Local extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * belongsTo associations
- *
- * @var array
- */
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
 	public $belongsTo = array(
 		'Calificacion' => array(
 			'className' => 'Calificacion',

@@ -7,62 +7,60 @@ App::uses('AppController', 'Controller');
  */
 class ParametrosInformativosController extends AppController {
 	
+	/**
+	 * Definir características que se requieren globalmente por esta clase.
+	 * 
+	 * @return void
+	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this -> Auth -> allow('getValores', 'getNombre', 'getNombreItemParametro');
 	}
 	
-	public function beforeRender() {
-		//$this -> layout = "parametros";
-	}
-	
+	/**
+	 * Obtener el nombre del parámetro informativo
+	 * @param int $id ID del parámetro informativo
+	 * @return El nombre del parámetro informativo
+	 */
 	public function getNombre($id) {
 		$parametro = $this -> ParametrosInformativo -> read('par_nombre', $id);
 		return $parametro['ParametrosInformativo']['par_nombre'];
 	}
 
 	/**
-	 * index method
+	 * Listar parámetros informativos
 	 *
 	 * @return void
 	 */
 	public function index() {
 		$this -> ParametrosInformativo -> recursive = 0;
-		$this -> paginate = array(
-			'order' => array(
-				'ParametrosInformativo.par_nombre' => 'ASC'
-			)
-		);
+		$this -> paginate = array('order' => array('ParametrosInformativo.par_nombre' => 'ASC'));
 		$this -> set('parametrosInformativos', $this -> paginate());
 	}
 
 	/**
-	 * view method
+	 * Ver parámetro informativo
 	 *
-	 * @param string $id
+	 * @param int $id ID del parámetro informativo
 	 * @return void
 	 */
-	public function view($id = null) {
+	public function view($id) {
 		$this -> ParametrosInformativo -> id = $id;
 		if (!$this -> ParametrosInformativo -> exists()) {
 			throw new NotFoundException(__('Parámetro informativo no válido'));
 		}
 		$this -> set('parametrosInformativo', $this -> ParametrosInformativo -> read(null, $id));
-		$this -> set(
-			'valores',
-			$this -> ParametrosInformativo -> Valor -> find(
-				'all',
-				array(
-					'order' => array('Valor.val_nombre' => 'ASC'),
-					'conditions' => array('Valor.parametros_informativo_id' => $id)
-				)
-			)
-		);
+		$this -> set('valores', $this -> ParametrosInformativo -> Valor -> find('all', array('order' => array('Valor.val_nombre' => 'ASC'), 'conditions' => array('Valor.parametros_informativo_id' => $id))));
 	}
 	
-	public function getValores($id = null) {
+	/**
+	 * Obtener los valores relacionados al parametro informativo
+	 * @param int $id ID del parámetro informativo
+	 * @return Arreglo codificado en JSON con los valores del parámetro informativo
+	 */
+	public function getValores($id) {
 		$this -> layout = "ajax";
-		if($id) {
+		if ($id) {
 			echo json_encode($this -> ParametrosInformativo -> getValores($id));
 		} else {
 			echo 'error';
@@ -70,8 +68,14 @@ class ParametrosInformativosController extends AppController {
 		exit(0);
 	}
 	
+	/**
+	 * Obtener el valor de un ítem especifico de un parámetro informativo
+	 * @param int $id ID del parámetro informativo
+	 * @param int $item ID del ítem
+	 * @return Nombre del ítem correspondiente
+	 */
 	public function getNombreItemParametro($id = null, $item = null) {
-		if($id) {
+		if ($id) {
 			$valores = $this -> ParametrosInformativo -> getValores($item);
 			return $valores[$item];
 		} else {

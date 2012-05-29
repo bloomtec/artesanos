@@ -8,18 +8,23 @@ App::uses('AppModel', 'Model');
  * @property Titulacion $Titulacion
  */
 class Titulo extends AppModel {
-/**
- * Display field
- *
- * @var string
- */
+	/**
+	 * Display field
+	 *
+	 * @var string
+	 */
 	public $displayField = 'tit_nombre';
+	
+	/**
+	 * Comportamientos
+	 * @var array
+	 */
 	public $actsAs = array('Auditable');
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'rama_id' => array(
 			'numeric' => array(
@@ -35,11 +40,11 @@ class Titulo extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * belongsTo associations
- *
- * @var array
- */
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
 	public $belongsTo = array(
 		'Rama' => array(
 			'className' => 'Rama',
@@ -50,11 +55,11 @@ class Titulo extends AppModel {
 		)
 	);
 
-/**
- * hasMany associations
- *
- * @var array
- */
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
 	public $hasMany = array(
 		'SolicitudesTitulacion' => array(
 			'className' => 'SolicitudesTitulacion',

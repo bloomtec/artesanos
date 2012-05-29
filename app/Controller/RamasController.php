@@ -7,22 +7,29 @@ App::uses('AppController', 'Controller');
  */
 class RamasController extends AppController {
 	
+	/**
+	 * Definir características que se requieren globalmente por esta clase.
+	 * 
+	 * @return void
+	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this -> Auth -> allow('obtenerPorGrupo', 'getNombre', 'getByCode');
 	}
-
-	public function beforeRender() {
-		//$this -> layout = 'parametros';
-	}
 	
+	/**
+	 * Obtener el nombre de una rama.
+	 *
+	 * @param int $id ID de la rama que se quiere obtener el nombre.
+	 * @return Nombre de la cuya ID fue pasado por parámetro.
+	 */
 	public function getNombre($id) {
 		$rama = $this -> Rama -> read('ram_nombre', $id);
 		return $rama['Rama']['ram_nombre'];
 	}
 
 	/**
-	 * index method
+	 * Listado de ramas
 	 *
 	 * @return void
 	 */
@@ -32,12 +39,13 @@ class RamasController extends AppController {
 	}
 
 	/**
-	 * view method
+	 * Ver una rama
 	 *
-	 * @param string $id
+	 * @param int $id ID de la rama que se quiere ver
+	 * 
 	 * @return void
 	 */
-	public function view($id = null) {
+	public function view($id) {
 		$this -> Rama -> id = $id;
 		if (!$this -> Rama -> exists()) {
 			throw new NotFoundException(__('Rama no válida'));
@@ -47,7 +55,7 @@ class RamasController extends AppController {
 	}
 
 	/**
-	 * add method
+	 * Agregar una rama
 	 *
 	 * @return void
 	 */
@@ -67,12 +75,12 @@ class RamasController extends AppController {
 	}
 
 	/**
-	 * edit method
+	 * Modificar una rama
 	 *
-	 * @param string $id
+	 * @param int $id ID de la rama que se quiere modificar
 	 * @return void
 	 */
-	public function edit($id = null) {
+	public function edit($id) {
 		$this -> Rama -> id = $id;
 		if (!$this -> Rama -> exists()) {
 			throw new NotFoundException(__('Rama no válida'));
@@ -93,12 +101,13 @@ class RamasController extends AppController {
 	}
 
 	/**
-	 * delete method
+	 * Eliminar una rama
 	 *
-	 * @param string $id
+	 * @param int $id ID de la rama que se quiere eliminar
+	 * 
 	 * @return void
 	 */
-	public function delete($id = null) {
+	public function delete($id) {
 		if (!$this -> request -> is('post')) {
 			throw new MethodNotAllowedException();
 		}
@@ -113,13 +122,26 @@ class RamasController extends AppController {
 		$this -> Session -> setFlash(__('No se ha eliminado la rama'), 'crud/error');
 		$this -> redirect($this -> referer());
 	}
-
 	
-	function obtenerPorGrupo($grupoRamaId = null){
-		echo json_encode($this -> Rama -> find ('list',array('conditions'=>array('Rama.grupos_de_rama_id'=>$grupoRamaId))));
+	/**
+	 * Obtener las ramas de un grupo de ramas
+	 * 
+	 * @param int $grupoRamaId ID del grupo de ramas
+	 * 
+	 * @return Arreglo codificado en JSON con las ramas pertenecientes al grupo de ramas correspondiente
+	 */
+	function obtenerPorGrupo($grupoRamaId) {
+		echo json_encode($this -> Rama -> find('list', array('conditions' => array('Rama.grupos_de_rama_id' => $grupoRamaId))));
 		$this -> autoRender = false;
 	}
 	
+	/**
+	 * Obtener una rama por código
+	 * 
+	 * @param int $code Código de la rama
+	 * 
+	 * @return Arreglo codificado en JSON con la rama cuyo código corresponde
+	 */
 	function getByCode($code) {
 		$this -> Rama -> recursive = -1;
 		echo json_encode($this -> Rama -> find('first', array('conditions' => array('Rama.ram_codigo' => $code))));

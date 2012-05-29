@@ -8,26 +8,32 @@ App::uses('AppModel', 'Model');
  * @property Item $Item
  */
 class Persona extends AppModel {
-	
+	/**
+	 * Comportamientos
+	 * @var array
+	 */
 	public $actsAs = array('Auditable');
-	
+	/**
+	 * Campos virtuales
+	 * @var array
+	 */
 	public $virtualFields = array(
 		'datos_completos' => 'CONCAT(Persona.per_documento_de_identidad, " - ", Persona.per_nombres, " ", Persona.per_apellidos)'
 	);
 	
-/**
- * Display field
- *
- * @var string
- */
+	/**
+	 * Display field
+	 *
+	 * @var string
+	 */
 	//public $displayField = 'per_cedula_de_identidad';
 	public $displayField = 'datos_completos';
 	
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'per_nombres' => array(
 			'notempty' => array(
@@ -73,11 +79,11 @@ class Persona extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * hasMany associations
- *
- * @var array
- */
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
 	public $hasMany = array(
 		'EgresosDeInventario' => array(
 			'className' => 'EgresosDeInventario',
@@ -108,11 +114,11 @@ class Persona extends AppModel {
 	);
 
 
-/**
- * hasAndBelongsToMany associations
- *
- * @var array
- */
+	/**
+	 * hasAndBelongsToMany associations
+	 *
+	 * @var array
+	 */
 	public $hasAndBelongsToMany = array(
 		'Item' => array(
 			'className' => 'Item',

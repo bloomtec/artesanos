@@ -7,12 +7,23 @@ App::uses('AppController', 'Controller');
  */
 class FeriadosController extends AppController {
 	
+	/**
+	 * Definir características que se requieren globalmente por esta clase.
+	 * 
+	 * @return void
+	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this -> Auth -> allow('esFechaValida', 'anadirDiasValidosFecha');
 	}
 	
-	public function anadirDiasValidosFecha($fecha = null, $dias = null) {
+	/**
+	 * Agregar días válidos a una fecha especifica
+	 * @param date $fecha Fecha inicial
+	 * @param int $dias Dias que se le añadirán a $fecha
+	 * @return La fecha codificada en JSON con los días extras
+	 */
+	public function anadirDiasValidosFecha($fecha, $dias) {
 		if($fecha && $dias) {
 			// Fecha de expiración más treinta días habiles
 			for($i = $dias - 1; $i > 0; $i -= 1) {
@@ -29,7 +40,12 @@ class FeriadosController extends AppController {
 		exit(0);
 	}
 	
-	public function esFechaValida($fecha = null) {
+	/**
+	 * Verificar si una fecha es válida (no es feriado, sabado o domingo)
+	 * @param date $fecha La fecha a verificar
+	 * @return true o false acorde si $fecha es válido o no
+	 */
+	public function esFechaValida($fecha) {
 		if($fecha) {
 			if($this -> esDiaFeriado($fecha) || $this -> esSabado($fecha) || $this -> esDomingo($fecha)) {
 				return false;
@@ -41,7 +57,12 @@ class FeriadosController extends AppController {
 		}
 	}
 	
-	private function esDiaFeriado($fecha = null) {
+	/**
+	 * Verificar si una fecha es día feriado
+	 * @param date $fecha La fecha a verificar
+	 * @return true o false acorde si $fecha es feriado o no
+	 */
+	private function esDiaFeriado($fecha) {
 		if($fecha) {
 			$conditions = array('Feriado.fer_fecha' => $fecha);
 			if($this -> Feriado -> find('first', array('conditions' => $conditions))) {
@@ -54,6 +75,11 @@ class FeriadosController extends AppController {
 		}
 	}
 	
+	/**
+	 * Verificar si una fecha es sabado
+	 * @param date $fecha La fecha a verificar
+	 * @return true o false acorde si $fecha es sabado o no
+	 */
 	private function esSabado($fecha = null) {
 		if($fecha) {
 			if(date('N', strtotime(date($fecha))) == 6) {
@@ -66,6 +92,11 @@ class FeriadosController extends AppController {
 		}
 	}
 	
+	/**
+	 * Verificar si una fecha es domingo
+	 * @param date $fecha La fecha a verificar
+	 * @return true o false acorde si $fecha es domingo o no
+	 */
 	private function esDomingo($fecha = null) {
 		if($fecha) {
 			if(date('N', strtotime(date($fecha))) == 7) {
@@ -79,7 +110,7 @@ class FeriadosController extends AppController {
 	}
 
 	/**
-	 * index method
+	 * Listado de fechas feriadas
 	 *
 	 * @return void
 	 */
@@ -89,7 +120,7 @@ class FeriadosController extends AppController {
 	}
 
 	/**
-	 * add method
+	 * Agregar fecha feriada
 	 *
 	 * @return void
 	 */
@@ -106,12 +137,12 @@ class FeriadosController extends AppController {
 	}
 
 	/**
-	 * edit method
+	 * Modificar fecha feriada
 	 *
-	 * @param string $id
+	 * @param int $id ID de la fecha feriada
 	 * @return void
 	 */
-	public function edit($id = null) {
+	public function edit($id) {
 		$this -> Feriado -> id = $id;
 		if (!$this -> Feriado -> exists()) {
 			throw new NotFoundException(__('Fecha no válida'));
@@ -129,9 +160,9 @@ class FeriadosController extends AppController {
 	}
 
 	/**
-	 * delete method
+	 * Eliminar fecha feriada
 	 *
-	 * @param string $id
+	 * @param int $id ID de la fecha feriada
 	 * @return void
 	 */
 	public function delete($id = null) {

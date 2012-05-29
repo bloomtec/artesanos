@@ -6,9 +6,15 @@ App::uses('AppModel', 'Model');
  * @property Calificacion $Calificacion
  */
 class DatosPersonal extends AppModel {
-	
+	/**
+	 * Comportamientos
+	 * @var array
+	 */
 	public $actsAs = array('Auditable');
-	
+	/**
+	 * Campos virtuales
+	 * @var array
+	 */
 	public $virtualFields = array(
 		'nombre_completo' => 'CONCAT(dat_nombres, " ", dat_apellido_paterno, " ", dat_apellido_materno)'
 	);
@@ -123,11 +129,11 @@ class DatosPersonal extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * belongsTo associations
- *
- * @var array
- */
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
 	public $belongsTo = array(
 		'Calificacion' => array(
 			'className' => 'Calificacion',

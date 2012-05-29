@@ -8,9 +8,13 @@ App::import('Helper', 'csv');
  */
 class IngresosEspeciesController extends AppController {
 	
-
-	
-	private function uploadIngresoEspecieFile($tmp_name = null, $filename = null) {
+	/**
+	 * Guardar un upload al servidor
+	 * @param string $tmp_name Nombre temporal del archivo
+	 * @param string $filename Nombre del archivo
+	 * @return true o false acorde si se guarda o no el archivo
+	 */
+	private function uploadIngresoEspecieFile($tmp_name, $filename) {
 		$this -> cleanupIngresoEspecieFiles();
 		if ($tmp_name && $filename) {
 			$url = 'files/uploads/especiesValoradas/' . $filename;
@@ -18,6 +22,9 @@ class IngresosEspeciesController extends AppController {
 		}
 	}
 	
+	/**
+	 * Limpiar archivos que ya no esten en la BD
+	 */
 	private function cleanupIngresoEspecieFiles() {
 		$items = $this -> IngresosEspecie -> find('all');
 		$db_files = array();
@@ -28,12 +35,13 @@ class IngresosEspeciesController extends AppController {
 		$dir_path = APP . 'webroot/files/uploads/especiesValoradas';
 		if ($handle = opendir($dir_path)) {
 			while (false !== ($entry = readdir($handle))) {
-				if($entry != 'empty' && is_file($dir_path . DS . $entry)) $dir_files[] = 'files/uploads/especiesValoradas/' . $entry;
+				if ($entry != 'empty' && is_file($dir_path . DS . $entry))
+					$dir_files[] = 'files/uploads/especiesValoradas/' . $entry;
 			}
 			closedir($handle);
 		}
-		foreach($dir_files as $file) {
-			if(!in_array($file, $db_files)) {
+		foreach ($dir_files as $file) {
+			if (!in_array($file, $db_files)) {
 				$file = explode('/', $file);
 				$file = $file[count($file) - 1];
 				$tmp_file_path = $dir_path . DS . $file;
@@ -43,7 +51,7 @@ class IngresosEspeciesController extends AppController {
 	}
 
 	/**
-	 * index method
+	 * Listado de ingresos de especies
 	 *
 	 * @return void
 	 */
@@ -53,9 +61,9 @@ class IngresosEspeciesController extends AppController {
 	}
 
 	/**
-	 * view method
+	 * Ver un ingreso de especie
 	 *
-	 * @param string $id
+	 * @param int $id ID del ingreso de especie
 	 * @return void
 	 */
 	public function view($id = null) {
@@ -63,21 +71,14 @@ class IngresosEspeciesController extends AppController {
 		if (!$this -> IngresosEspecie -> exists()) {
 			throw new NotFoundException(__('Ingreso Especie no válido'));
 		}
-		$this -> paginate = array(
-			'EspeciesValorada' => array(
-				'limit' => 20,
-				'conditions' => array(
-					'EspeciesValorada.ingresos_especie_id' => $id
-				)
-			)
-		);
+		$this -> paginate = array('EspeciesValorada' => array('limit' => 20, 'conditions' => array('EspeciesValorada.ingresos_especie_id' => $id)));
 		$especiesValoradas = $this -> paginate('EspeciesValorada');
 		$this -> set('especiesValoradas', $especiesValoradas);
 		$this -> set('ingresosEspecie', $this -> IngresosEspecie -> read(null, $id));
 	}
 
 	/**
-	 * add method
+	 * Agregar ingreso de especies
 	 *
 	 * @return void
 	 */
@@ -89,16 +90,8 @@ class IngresosEspeciesController extends AppController {
 			$rango_inicio = null;
 			$rango_fin = null;
 			foreach ($this -> request -> data['EspeciesValorada'] as $key => $especieValorada) {
-				$tmp_especie_valorada = $this -> IngresosEspecie -> EspeciesValorada -> find(
-					'all',
-					array(
-						'conditions' => array(
-							'EspeciesValorada.esp_serie BETWEEN ? AND ?' => array($especieValorada['serie_inicial'], $especieValorada['serie_final']),
-							'EspeciesValorada.tipos_especies_valorada_id' => $especieValorada['tipos_especies_valorada_id']
-						)
-					)
-				);
-				if($tmp_especie_valorada) {
+				$tmp_especie_valorada = $this -> IngresosEspecie -> EspeciesValorada -> find('all', array('conditions' => array('EspeciesValorada.esp_serie BETWEEN ? AND ?' => array($especieValorada['serie_inicial'], $especieValorada['serie_final']), 'EspeciesValorada.tipos_especies_valorada_id' => $especieValorada['tipos_especies_valorada_id'])));
+				if ($tmp_especie_valorada) {
 					$seriados_validos = false;
 					$tipo_especie = $tmp_especie_valorada[0]['TiposEspeciesValorada']['tip_nombre'];
 					$rango_inicio = $tmp_especie_valorada[0]['EspeciesValorada']['esp_serie'];
@@ -106,7 +99,7 @@ class IngresosEspeciesController extends AppController {
 					break;
 				}
 			}
-			if($seriados_validos) {
+			if ($seriados_validos) {
 				if (!empty($this -> request -> data['IngresosEspecie']['ing_documento_soporte']['name']) && !$this -> request -> data['IngresosEspecie']['ing_documento_soporte']['error']) {
 					$now = new DateTime('now');
 					$filename = $now -> format('Y-m-d_H-i-s') . '_' . str_replace(' ', '_', $this -> request -> data['IngresosEspecie']['ing_documento_soporte']['name']);
@@ -116,40 +109,38 @@ class IngresosEspeciesController extends AppController {
 				}
 				$this -> IngresosEspecie -> create();
 				if ($this -> IngresosEspecie -> save($this -> request -> data)) {
-					
+
 					foreach ($this -> request -> data['EspeciesValorada'] as $key => $especieValorada) {
 						$especieValorada['ingresos_especie_id'] = $this -> IngresosEspecie -> id;
-						while($especieValorada['serie_inicial'] <= $especieValorada['serie_final']) {
+						while ($especieValorada['serie_inicial'] <= $especieValorada['serie_final']) {
 							$this -> IngresosEspecie -> EspeciesValorada -> create();
 							$especieValorada['esp_serie'] = $especieValorada['serie_inicial'];
 							$this -> IngresosEspecie -> EspeciesValorada -> save($especieValorada);
 							$especieValorada['serie_inicial'] += 1;
 						}
 					}
-					
+
 					$this -> Session -> setFlash(__('Se registró el ingreso de especies valoradas'), 'crud/success');
 					$this -> redirect(array('action' => 'index'));
 				} else {
 					$this -> Session -> setFlash(__('No se registró el ingreso de especies valoradas. Por favor, intente de nuevo.'), 'crud/error');
 				}
 			} else {
-				if($rango_inicio != $rango_fin) {
+				if ($rango_inicio != $rango_fin) {
 					$this -> Session -> setFlash(__("El ingreso de especies valoradas $tipo_especie contiene un rango con valores existentes. Conflicto de valor con valores existentes entre $rango_inicio y $rango_fin."), 'crud/error');
 				} else {
 					$this -> Session -> setFlash(__("El ingreso de especies valoradas $tipo_especie contiene un rango con valores existentes. Conflicto de valor con el valor existente $rango_inicio."), 'crud/error');
 				}
 			}
 		}
-		$tiposEspeciesValoradas = $this->IngresosEspecie->EspeciesValorada->TiposEspeciesValorada->find('all');
-		$this->set(compact('tiposEspeciesValoradas'));
+		$tiposEspeciesValoradas = $this -> IngresosEspecie -> EspeciesValorada -> TiposEspeciesValorada -> find('all');
+		$this -> set(compact('tiposEspeciesValoradas'));
 	}
 
-
-
 	/**
-	 * delete method
+	 * Eliminar ingreso de especies
 	 *
-	 * @param string $id
+	 * @param int $id ID de ingreso de especies
 	 * @return void
 	 */
 	public function delete($id = null) {
@@ -167,62 +158,53 @@ class IngresosEspeciesController extends AppController {
 		$this -> Session -> setFlash(__('No se eliminó el ingreso de especie'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
 	}
-
+	
+	/**
+	 * Reporte de ingreso de especies
+	 * @return void
+	 */
 	public function reporte() {
-		if($this -> request -> is('post')) {
+		if ($this -> request -> is('post')) {
 			$conditions = array();
-			if(!empty($this -> request -> data['IngresosEspecie']['fecha_inicio']) && !empty($this -> request -> data['IngresosEspecie']['fecha_fin'])) {
-				$conditions = array('IngresosEspecie.ing_fecha BETWEEN ? AND ?' => array($this -> request -> data['IngresosEspecie']['fecha_inicio'], $this -> request -> data['IngresosEspecie']['fecha_fin']." 23:59:59"));
-			} elseif(!empty($this -> request -> data['IngresosEspecie']['fecha_inicio'])) {
+			if (!empty($this -> request -> data['IngresosEspecie']['fecha_inicio']) && !empty($this -> request -> data['IngresosEspecie']['fecha_fin'])) {
+				$conditions = array('IngresosEspecie.ing_fecha BETWEEN ? AND ?' => array($this -> request -> data['IngresosEspecie']['fecha_inicio'], $this -> request -> data['IngresosEspecie']['fecha_fin'] . " 23:59:59"));
+			} elseif (!empty($this -> request -> data['IngresosEspecie']['fecha_inicio'])) {
 				$conditions = array('IngresosEspecie.ing_fecha >=' => $this -> request -> data['IngresosEspecie']['fecha_inicio']);
-			} elseif(!empty($this -> request -> data['IngresosEspecie']['fecha_fin'])) {
-				$conditions = array('IngresosEspecie.ing_fecha <=' => $this -> request -> data['IngresosEspecie']['fecha_fin']." 23:59:59");
+			} elseif (!empty($this -> request -> data['IngresosEspecie']['fecha_fin'])) {
+				$conditions = array('IngresosEspecie.ing_fecha <=' => $this -> request -> data['IngresosEspecie']['fecha_fin'] . " 23:59:59");
 			}
 			$ingresos = $this -> IngresosEspecie -> find('list', array('fields' => array('IngresosEspecie.id'), 'conditions' => $conditions));
-			$this -> paginate = array(
-				'EspeciesValorada' => array(
-					'limit' => 10,
-					'conditions' => array(
-						'EspeciesValorada.ingresos_especie_id' => $ingresos
-					)
-				)
-			);
+			$this -> paginate = array('EspeciesValorada' => array('limit' => 10, 'conditions' => array('EspeciesValorada.ingresos_especie_id' => $ingresos)));
 			$this -> Session -> delete('conditions');
 			$this -> Session -> write('conditions', $conditions);
 			$this -> Session -> write('especies', $this -> paginate('EspeciesValorada'));
 			$this -> set('especies', $this -> paginate('EspeciesValorada'));
 		}
-		if(isset($this -> params['named']['sort']) || isset($this -> params['named']['page'])) {
+		if (isset($this -> params['named']['sort']) || isset($this -> params['named']['page'])) {
 			$ingresos = $this -> IngresosEspecie -> find('list', array('fields' => array('IngresosEspecie.id'), 'conditions' => $this -> Session -> read('conditions')));
-			$this -> paginate = array(
-				'EspeciesValorada' => array(
-					'limit' => 10,
-					'conditions' => array(
-						'EspeciesValorada.ingresos_especie_id' => $ingresos
-					)
-				)
-			);
+			$this -> paginate = array('EspeciesValorada' => array('limit' => 10, 'conditions' => array('EspeciesValorada.ingresos_especie_id' => $ingresos)));
 			$this -> set('especies', $this -> paginate('EspeciesValorada'));
 		}
 	}
 	
+	/**
+	 * Imprimir reporte
+	 * @return void
+	 */
 	public function imprimirReporte() {
 		$this -> layout = 'pdf2';
 		$nombre_archivo = "ReporteIngresosEspecies";
 		$tamano = 5;
 		$ingresos = $this -> IngresosEspecie -> find('list', array('fields' => array('IngresosEspecie.id'), 'conditions' => $this -> Session -> read('conditions')));
-		$this -> paginate = array(
-			'EspeciesValorada' => array(
-				'limit' => 10,
-				'conditions' => array(
-					'EspeciesValorada.ingresos_especie_id' => $ingresos
-				)
-			)
-		);
+		$this -> paginate = array('EspeciesValorada' => array('limit' => 10, 'conditions' => array('EspeciesValorada.ingresos_especie_id' => $ingresos)));
 		$this -> set('especies', $this -> paginate('EspeciesValorada'));
 		$this -> set(compact('nombre_archivo', 'tamano'));
 	}
 	
+	/**
+	 * Exportar a CSV
+	 * @return void
+	 */
 	function export_csv() {
 
 		$this -> layout = "";

@@ -7,18 +7,22 @@ App::uses('AppModel', 'Model');
  */
 class Rol extends AppModel {
 	
+	/**
+	 * Comportamientos
+	 * @var array
+	 */
 	public $actsAs = array('Acl' => array('type' => 'requester'));
-/**
- * Display field
- *
- * @var string
- */
+	/**
+	 * Display field
+	 *
+	 * @var string
+	 */
 	public $displayField = 'rol_nombre';
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'rol_nombre' => array(
 			'notempty' => array(
@@ -34,11 +38,11 @@ class Rol extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * hasMany associations
- *
- * @var array
- */
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
 	public $hasMany = array(
 		'Usuario' => array(
 			'className' => 'Usuario',

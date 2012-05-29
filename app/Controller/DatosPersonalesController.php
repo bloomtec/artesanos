@@ -6,12 +6,20 @@ App::uses('AppController', 'Controller');
  * @property Configuracion $Configuracion
  */
 class DatosPersonalesController extends AppController {
-
+	
+	/**
+	 * Definir características que se requieren globalmente por esta clase.
+	 * 
+	 * @return void
+	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this -> Auth -> allow('reporteCalificacionesArtesano', 'getNombreArtesano');
 	}
-
+	
+	/**
+	 * Reporte de artesanos
+	 */
 	public function reporteArtesanos() {
 		$this -> DatosPersonal -> recursive = 0;
 		$conditions = $this -> Session -> read('conditions');
@@ -71,7 +79,12 @@ class DatosPersonalesController extends AppController {
 		$this -> Session -> write('CSV.filename', 'Reporte_Artesanos');
 		$this -> set('artesanos', $artesanos);
 	}
-
+	
+	/**
+	 * Obtener el nombre de un artesano según una calificación
+	 * @param int $cal_id ID de la calificación
+	 * @return Nombre del artesano
+	 */
 	public function getNombreArtesano($cal_id) {
 		$datos = $this -> DatosPersonal -> find('first', array('conditions' => array('DatosPersonal.calificacion_id' => $cal_id), 'order' => array('DatosPersonal.created' => 'DESC')));
 		if (!empty($datos)) {

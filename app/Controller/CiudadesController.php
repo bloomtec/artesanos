@@ -6,17 +6,23 @@ App::uses('AppController', 'Controller');
  * @property Ciudad $Ciudad
  */
 class CiudadesController extends AppController {
-
+	
+	/**
+	 * Definir características que se requieren globalmente por esta clase.
+	 * 
+	 * @return void
+	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this -> Auth -> allow('getNombre', 'getCiudades', 'getByCanton');
 	}
-
-	public function beforeRender() {
-		//$this -> layout = "parametros";
-	}
-
-	public function getByCanton($canId=null) {
+	
+	/**
+	 * Obtener ciudades acorde un cantón
+	 * @param int $canId ID del cantón
+	 * @return Arreglo codificado en JSON con las ciudades del cantón
+	 */
+	public function getByCanton($canId = null) {
 		$this -> layout = "ajax";
 		//$ciudades_con_inspectores = $this -> Ciudad -> Usuario -> find('list', array('fields' => array('Usuario.ciudad_id'), 'conditions' => array('Usuario.rol_id' => 3)));
 		//$ciudades = $this -> Ciudad -> find('list', array('order' => array('Ciudad.ciu_nombre' => 'ASC'), 'conditions' => array('Ciudad.id' => $ciudades_con_inspectores, 'Ciudad.canton_id' => $canId)));
@@ -24,9 +30,14 @@ class CiudadesController extends AppController {
 		echo json_encode($ciudades);
 		exit(0);
 	}
-
-	public function getCiudades($canton_id = null) {
-		$this -> Ciudad ->recursive=-1;
+	
+	/**
+	 * Obtener ciudades acorde un cantón
+	 * @param int $canton_id ID del cantón
+	 * @return Arreglo de ciudades del cantón
+	 */
+	public function getCiudades($canton_id) {
+		$this -> Ciudad -> recursive = -1;
 		if ($canton_id) {
 			return $this -> Ciudad -> find('all', array('order' => array('Ciudad.ciu_nombre' => 'ASC'), 'conditions' => array('Ciudad.canton_id' => $canton_id)));
 		} else {
@@ -34,18 +45,23 @@ class CiudadesController extends AppController {
 		}
 	}
 
+	/**
+	 * Obtener el nombre de una ciudad
+	 * @param int $id ID de la ciudad
+	 * @return Nombre de la ciudad
+	 */
 	public function getNombre($id) {
 		$ciudad = $this -> Ciudad -> read('ciu_nombre', $id);
 		return $ciudad['Ciudad']['ciu_nombre'];
 	}
 
 	/**
-	 * view method
+	 * Ver una ciudad
 	 *
-	 * @param string $id
+	 * @param int $id ID de la ciudad
 	 * @return void
 	 */
-	public function view($id = null) {
+	public function view($id) {
 		$this -> Ciudad -> id = $id;
 		if (!$this -> Ciudad -> exists()) {
 			throw new NotFoundException(__('Ciudad no válida'));
@@ -54,7 +70,7 @@ class CiudadesController extends AppController {
 	}
 
 	/**
-	 * add method
+	 * Agregar ciudad
 	 *
 	 * @return void
 	 */
@@ -75,9 +91,9 @@ class CiudadesController extends AppController {
 	}
 
 	/**
-	 * edit method
+	 * Modificar ciudad
 	 *
-	 * @param string $id
+	 * @param int $id ID de la ciudad
 	 * @return void
 	 */
 	public function edit($id = null) {
@@ -101,49 +117,29 @@ class CiudadesController extends AppController {
 		$this -> set(compact('cantones', 'provincias'));
 	}
 	
+	/**
+	 * Listado de ciudades
+	 * @return void
+	 */
 	public function index() {
-		$this->Recursive=0;
+		$this -> Recursive = 0;
 		$conditions = array();
 		if (isset($this -> params['named']['query']) && !empty($this -> params['named']['query'])) {
 			//$conditions = $this -> searchFilter($this -> params['named']['query'], array('art_cedula'));
 			$query = $this -> params['named']['query'];
-			
-			$idsCiudades = $this -> Ciudad -> find(
-				'list',
-				array(
-					'conditions' => array(
-						'OR' => array(
-							'Ciudad.ciu_nombre LIKE' => "%$query%",
-						)
-					),
-					'fields' => array(
-						'Ciudad.id'
-					)
-				)
-			);
-			
-			$idsCantones = $this -> Ciudad -> Canton -> find(
-				'list',
-				array(
-					'conditions' => array(
-						'OR' => array(
-							'Canton.can_nombre LIKE' => "%$query%",
-						)
-					),
-					'fields' => array(
-						'Canton.id'
-					)
-				)
-			);
-			
+
+			$idsCiudades = $this -> Ciudad -> find('list', array('conditions' => array('OR' => array('Ciudad.ciu_nombre LIKE' => "%$query%", )), 'fields' => array('Ciudad.id')));
+
+			$idsCantones = $this -> Ciudad -> Canton -> find('list', array('conditions' => array('OR' => array('Canton.can_nombre LIKE' => "%$query%", )), 'fields' => array('Canton.id')));
+
 			$conditions['OR']['Ciudad.id'] = $idsCiudades;
 			$conditions['OR']['Ciudad.canton_id'] = $idsCantones;
 		}
-		if(!empty($conditions)) {
+		if (!empty($conditions)) {
 			$this -> paginate = array('conditions' => $conditions);
 		}
-		
-		$ciudades = $this -> paginate();	
+
+		$ciudades = $this -> paginate();
 		$this -> set(compact('ciudades'));
 	}
 

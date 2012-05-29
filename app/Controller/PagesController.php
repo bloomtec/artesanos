@@ -32,21 +32,21 @@ App::uses('AppController', 'Controller');
 class PagesController extends AppController {
 
 	/**
-	 * Controller name
+	 * Nombre del controlador
 	 *
 	 * @var string
 	 */
 	public $name = 'Pages';
 
 	/**
-	 * Default helper
+	 * Helpers por defecto
 	 *
 	 * @var array
 	 */
 	public $helpers = array('Html', 'Session');
 
 	/**
-	 * This controller does not use a model
+	 * No se utiliza un modelo
 	 *
 	 * @var array
 	 */
@@ -58,9 +58,9 @@ class PagesController extends AppController {
 	}
 
 	/**
-	 * Displays a view
+	 * Muestra una vista
 	 *
-	 * @param mixed What page to display
+	 * @param mixed Página para mostrar
 	 * @return void
 	 */
 	public function display() {
@@ -84,11 +84,19 @@ class PagesController extends AppController {
 		$this -> set(compact('page', 'subpage', 'title_for_layout'));
 		$this -> render(implode('/', $path));
 	}
-
+	
+	/**
+	 * Página inicial de la aplicación
+	 * @return void
+	 */
 	public function lanzador() {
 		$this -> layout = 'login';
 	}
-
+	
+	/**
+	 * Formulario de inscripción vitrina
+	 * @return void
+	 */
 	public function formularioVitrina() {
 		$this -> layout = 'externas';
 		$this -> loadModel('Artesano');
@@ -134,7 +142,7 @@ class PagesController extends AppController {
 						}
 						break;
 					default :
-					//debug(Inflector::humanize($key));
+						//debug(Inflector::humanize($key));
 						$mensaje .= Inflector::humanize($key) . ": " . $value . " <br />";
 						break;
 				}
@@ -142,22 +150,21 @@ class PagesController extends AppController {
 			}
 			$mensaje .= "Productos: <br /> <ul>";
 			foreach ($this -> request -> data['Producto'] as $key => $value) {
-				if($value['nombre']){
-					$mensaje .= "<li> nombre: " . $value['nombre'] . ", Precio referencial: ".$value['precio_referencial'] .", Tiempo de entrega: ".$value['tiempo_de_entrega'] ."</li>";
-						if (!$value ['imagen_1']['error']) {
-							$attachments[$value['nombre']."_".$value ['imagen_1']['name']]
-							 = $value ['imagen_1']['tmp_name'];
-						}
-						if (!$value ['imagen_2']['error']) {
-							$attachments[$value['nombre']."_".$value ['imagen_2']['name']] = $value ['imagen_2']['tmp_name'];
-						}
-						if (!$value ['imagen_3']['error']) {
-							$attachments[$value['nombre']."_".$value ['imagen_3']['name']] = $value ['imagen_3']['tmp_name'];
-						}
+				if ($value['nombre']) {
+					$mensaje .= "<li> nombre: " . $value['nombre'] . ", Precio referencial: " . $value['precio_referencial'] . ", Tiempo de entrega: " . $value['tiempo_de_entrega'] . "</li>";
+					if (!$value['imagen_1']['error']) {
+						$attachments[$value['nombre'] . "_" . $value['imagen_1']['name']] = $value['imagen_1']['tmp_name'];
+					}
+					if (!$value['imagen_2']['error']) {
+						$attachments[$value['nombre'] . "_" . $value['imagen_2']['name']] = $value['imagen_2']['tmp_name'];
+					}
+					if (!$value['imagen_3']['error']) {
+						$attachments[$value['nombre'] . "_" . $value['imagen_3']['name']] = $value['imagen_3']['tmp_name'];
+					}
 				}
 			}
 			$mensaje .= "</ul>";
-		
+
 			$this -> loadModel('Configuracion');
 			$correos = $this -> Configuracion -> read(null, 1);
 			$correos = $correos['Configuracion']['con_correo_vitrina'];
@@ -187,14 +194,6 @@ class PagesController extends AppController {
 		$ramas = $this -> Artesano -> Calificacion -> Rama -> find('list');
 		$provincias = $this -> Artesano -> Calificacion -> Taller -> Provincia -> find('list');
 		$this -> set(compact('ramas', 'provincias'));
-	}
-
-	private function uploadIngresoEspecieFile($tmp_name = null, $filename = null) {
-		$this -> cleanupIngresoEspecieFiles();
-		if ($tmp_name && $filename) {
-			$url = 'files/uploads/especiesValoradas/' . $filename;
-			return move_uploaded_file($tmp_name, $url);
-		}
 	}
 
 }

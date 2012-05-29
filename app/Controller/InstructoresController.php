@@ -7,7 +7,7 @@
 class InstructoresController extends AppController {
 
 	/**
-	 * index method
+	 * Listado de instructores
 	 *
 	 * @return void
 	 */
@@ -25,9 +25,9 @@ class InstructoresController extends AppController {
 	}
 
 	/**
-	 * view method
+	 * Ver instructor
 	 *
-	 * @param string $id
+	 * @param int $id ID del instructor
 	 * @return void
 	 */
 	public function view($id = null) {
@@ -39,7 +39,7 @@ class InstructoresController extends AppController {
 	}
 
 	/**
-	 * add method
+	 * Agregar instructor
 	 *
 	 * @return void
 	 */
@@ -69,12 +69,12 @@ class InstructoresController extends AppController {
 	}
 
 	/**
-	 * edit method
+	 * Modificar instructor
 	 *
-	 * @param string $id
+	 * @param string $id ID del instructor
 	 * @return void
 	 */
-	public function edit($id = null) {
+	public function edit($id) {
 		$this -> Instructor -> id = $id;
 		if (!$this -> Instructor -> exists()) {
 			throw new NotFoundException(__('Instructor no válido'));
@@ -94,7 +94,7 @@ class InstructoresController extends AppController {
 		$estados_civiles = $this -> Instructor -> getValores(3);
 		$grados_de_estudio = $this -> Instructor -> getValores(4);
 		$sexos = $this -> Instructor -> getValores(5);
-		$especialidades = $this -> Instructor -> getValores(17); 
+		$especialidades = $this -> Instructor -> getValores(17);
 		$provincias = array(0 => 'Seleccione...');
 		// $provincias_tmp = $this -> Artesano -> Calificacion -> Taller -> Provincia -> find('list', array('conditions' => array('Provincia.id' => $provincias_con_inspectores)));
 		$provincias_tmp = $this -> Instructor -> Provincia -> find('list');
@@ -105,12 +105,12 @@ class InstructoresController extends AppController {
 	}
 
 	/**
-	 * delete method
+	 * Eliminar instructor
 	 *
-	 * @param string $id
+	 * @param int $id ID del instructor
 	 * @return void
 	 */
-	public function delete($id = null) {
+	public function delete($id) {
 		if (!$this -> request -> is('post')) {
 			throw new MethodNotAllowedException();
 		}
@@ -127,4 +127,3 @@ class InstructoresController extends AppController {
 	}
 
 }
- 

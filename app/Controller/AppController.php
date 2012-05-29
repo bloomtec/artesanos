@@ -34,11 +34,22 @@ App::uses('CakeEmail', 'Network/Email');
  * @link http://book.cakephp.org/view/957/The-App-Controller
  */
 class AppController extends Controller {
-
+	
+	/**
+	 * Definir que se utilicé el cache en todos los controladores
+	 */
 	public $cacheAction = true;
-
+	
+	/**
+	 * Componentes a utilizar en la aplicación
+	 */
 	public $components = array('Auth', 'Acl', 'Session');
 	
+	/**
+	 * Definir características que se requieren globalmente por todas las clases.
+	 * 
+	 * @return void
+	 */
 	public function beforeFilter() {
 		$this -> Auth -> authorize = array('Actions' => array('actionPath' => 'controllers', 'userModel' => 'Usuario'));
 		$this -> Auth -> authenticate = array('Form' => array('scope' => array('usu_activo' => 1), 'userModel' => 'Usuario', 'fields' => array('username' => 'usu_nombre_de_usuario', 'password' => 'usu_contrasena')));
@@ -46,7 +57,11 @@ class AppController extends Controller {
 		$this -> Auth -> loginRedirect = array('controller' => 'pages', 'action' => 'display', 'home');
 		$this -> Auth -> logoutRedirect = array('controller' => 'usuarios', 'action' => 'login');
 	}
-
+	
+	/**
+	 * Función genérica de exportar a CSV
+	 * @return void
+	 */
 	public function CSVExport() {
 		$this -> autoRender = false;
 		$model = $this -> modelClass;
@@ -135,9 +150,10 @@ class AppController extends Controller {
 	}
 
 	/**
-	 * @query	: el texto que se va a buscar
-	 * @fields	: arreglo que contiene los nombres de las columnas del modelo en los que se quiere buscar
-	 * 			  en caso de que no se defina, se toman todas las columnas
+	 * Filtro de busquedas
+	 *
+	 * @param string $query El texto que se va a buscar
+	 * @param array $fields Arreglo que contiene los nombres de las columnas del modelo en los que se quiere buscar en caso de que no se defina, se toman todas las columnas
 	 */
 	public function searchFilter($query = null, $fields = null) {
 		$conditions = array();

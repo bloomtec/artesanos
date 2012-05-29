@@ -6,13 +6,16 @@ App::uses('AppModel', 'Model');
  * @property Taller $Taller
  */
 class ProductosElaborado extends AppModel {
-	
+	/**
+	 * Comportamientos
+	 * @var array
+	 */
 	public $actsAs = array('Auditable');
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'taller_id' => array(
 			'numeric' => array(
@@ -27,12 +30,12 @@ class ProductosElaborado extends AppModel {
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
-
-/**
- * belongsTo associations
- *
- * @var array
- */
+	
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
 	public $belongsTo = array(
 		'Taller' => array(
 			'className' => 'Taller',

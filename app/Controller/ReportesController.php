@@ -7,6 +7,11 @@ App::uses('AppController', 'Controller');
  */
 class ReportesController extends AppController {
 	
+	/**
+	 * Reporte de artesanos
+	 * 
+	 * @return void
+	 */
 	public function reporteArtesanos() {
 		if ($this -> request -> is('post')) {
 			// Sección informe
@@ -88,6 +93,11 @@ class ReportesController extends AppController {
 		$this -> set(compact('ramas','provincias','tipos_de_discapacidad', 'nacionalidades', 'tipos_de_sangre', 'sexos', 'estados_civiles', 'grados_de_estudio'));
 	}
 	
+	/**
+	 * Reporte de calificaciones de un operador
+	 * 
+	 * @return void
+	 */
 	public function reporteCalificacionesOperador() {
 		if ($this -> request -> is('post')) {
 			// Sección informe
@@ -107,6 +117,11 @@ class ReportesController extends AppController {
 		}
 	}
 	
+	/**
+	 * Reporte de calificaciones por artesano
+	 * 
+	 * @return void
+	 */
 	public function reporteCalificacionesArtesano() {
 		if ($this -> request -> is('post')) {
 			// Sección informe
@@ -126,6 +141,11 @@ class ReportesController extends AppController {
 		}
 	}
 	
+	/**
+	 * Reporte de inspecciones
+	 * 
+	 * @return void
+	 */
 	public function reporteInspecciones() {
 		if ($this -> request -> is('post')) {
 			// Sección informe

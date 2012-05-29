@@ -8,21 +8,24 @@ App::uses('AppModel', 'Model');
  * @property Alumno $Alumno
  */
 class Curso extends AppModel {
-	
+	/**
+	 * Comportamientos
+	 * @var array
+	 */
 	public $actsAs = array('Auditable');
-/**
- * Display field
- *
- * @var string
- */
+	/**
+	 * Display field
+	 *
+	 * @var string
+	 */
 	public $displayField = 'cur_nombre';
 	
 	
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'solicitud_id' => array(
 			'notempty' => array(
@@ -168,12 +171,12 @@ class Curso extends AppModel {
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
-
-/**
- * belongsTo associations
- *
- * @var array
- */
+	
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
 	public $belongsTo = array(
 		'Solicitud' => array(
 			'className' => 'Solicitud',
@@ -242,11 +245,11 @@ class Curso extends AppModel {
 		),
 	);
 
-/**
- * hasAndBelongsToMany associations
- *
- * @var array
- */
+	/**
+	 * hasAndBelongsToMany associations
+	 *
+	 * @var array
+	 */
 	public $hasAndBelongsToMany = array(
 		'Alumno' => array(
 			'className' => 'Alumno',

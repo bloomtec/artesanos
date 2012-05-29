@@ -7,11 +7,21 @@ App::uses('AppController', 'Controller');
  */
 class ItemsController extends AppController {
 	
+	/**
+	 * Definir características que se requieren globalmente por esta clase.
+	 * 
+	 * @return void
+	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this -> Auth -> allow('getCantidad', 'getCantidadAsignada');
 	}
 	
+	/**
+	 * Obtener la cantidad de un item
+	 * @param int $item_id ID del ítem
+	 * @return Cantidad en JSON del ítem
+	 */
 	public function getCantidad($item_id = null) {
 		$this -> layout = 'ajax';
 		$cantidad = $this -> Item -> read('ite_cantidad', $item_id);
@@ -23,16 +33,10 @@ class ItemsController extends AppController {
 		exit(0);
 	}
 
-/*
-	public function indexSuministros() {
-		$this -> Item -> recursive = 0;
-		$this -> set('items', $this -> paginate(array('ite_is_activo_fijo' => false)));
-	}
-*/
 	/**
-	 * view method
+	 * Ver suministro
 	 *
-	 * @param string $id
+	 * @param int $id ID del suministro
 	 * @return void
 	 */
 	public function viewSuministro($id = null) {
@@ -50,39 +54,11 @@ class ItemsController extends AppController {
 			return move_uploaded_file($tmp_name, $url);
 		}
 	}
-
+	
 	/**
-	 * add method
-	 *
+	 * Agregar suministro
 	 * @return void
 	 */
-	
-	/*
-	public function agregarSuministro() {
-		if ($this -> request -> is('post')) {
-			// TODO : Tener en cuenta el tipo de item para este código!!!!
-			$max_id = $this -> Item -> query('SELECT MAX(`id`) FROM `items`');
-			$max_id = $max_id[0][0]['MAX(`id`)'];
-			if (!$max_id) {
-				$max_id = 1;
-			} else {
-				$max_id += 1;
-			}
-			$this -> request -> data['Item']['ite_codigo'] = 1000000 + $max_id;
-			// Asignar el campo de activo fijo
-			$this -> request -> data['Item']['ite_is_activo_fijo'] = false;
-			$this -> Item -> create();
-			if ($this -> Item -> save($this -> request -> data)) {
-				$this -> Session -> setFlash(__('Se registró el ítem'), 'crud/success');
-				$this -> redirect(array('action' => 'index'));
-			} else {
-				$this -> Session -> setFlash(__('No se pudo registrar el ítem. Por favor, intente de nuevo.'), 'crud/error');
-			}
-		}
-		$tiposDeItems = $this -> Item -> getValores(15);
-		$this -> set(compact('tiposDeItems'));
-	}
-*/
 	public function agregarSuministro() {
 		/**
 		 * falta el código que debe ser consecutivo acorde a los activos fijos o suministros
@@ -165,9 +141,9 @@ class ItemsController extends AppController {
 	}
 
 	/**
-	 * edit method
+	 * Modificar suministro
 	 *
-	 * @param string $id
+	 * @param int $id ID del suministro
 	 * @return void
 	 */
 	public function editSuministro($id = null) {
@@ -190,30 +166,7 @@ class ItemsController extends AppController {
 	}
 
 	/**
-	 * delete method
-	 *
-	 * @param string $id
-	 * @return void
-	 */
-	/*
-	public function deleteSuministro($id = null) {
-		if (!$this -> request -> is('post')) {
-			throw new MethodNotAllowedException();
-		}
-		$this -> Item -> id = $id;
-		if (!$this -> Item -> exists()) {
-			throw new NotFoundException(__('Ítem no válido'));
-		}
-		if ($this -> Item -> delete()) {
-			$this -> Session -> setFlash(__('Se eliminó el ítem'), 'crud/success');
-			$this -> redirect(array('action' => 'index'));
-		}
-		$this -> Session -> setFlash(__('No se eliminó el ítem'), 'crud/error');
-		$this -> redirect(array('action' => 'index'));
-	}
-*/
-	/**
-	 * index method
+	 * Listado de activos fijos
 	 *
 	 * @return void
 	 */
@@ -238,6 +191,9 @@ class ItemsController extends AppController {
 		$this -> set('items', $this -> paginate());
 	}
 
+	/**
+	 * Listado de suministros
+	 */
 	public function indexSuministros() {
 		$this -> Item -> recursive = 0;
 		$conditions = array();
@@ -259,12 +215,10 @@ class ItemsController extends AppController {
 		$this -> set('items', $this -> paginate());
 	}
 	
-	
-	
 	/**
-	 * view method
+	 * Ver activo fijo
 	 *
-	 * @param string $id
+	 * @param int $id ID del activo fijo
 	 * @return void
 	 */
 	public function viewActivoFijo($id = null) {
@@ -274,7 +228,11 @@ class ItemsController extends AppController {
 		}
 		$this -> set('item', $this -> Item -> read(null, $id));
 	}
-
+	
+	/**
+	 * Subir archivo relacionado con activos fijos
+	 * @return true o false acorde si se pudo guardar o no el archivo
+	 */
 	private function uploadActivoFijoFile($tmp_name = null, $filename = null) {
 		$this -> cleanupActivoFijoFiles();
 		if ($tmp_name && $filename) {
@@ -283,6 +241,10 @@ class ItemsController extends AppController {
 		}
 	}
 	
+	/**
+	 * Limpiar archivos no registrados en la BD
+	 * @return void
+	 */
 	private function cleanupActivoFijoFiles() {
 		$items = $this -> Item -> IngresosDeInventario -> find('all', array('conditions' => array('IngresosDeInventario.ing_is_activo_fijo' => true)));
 		$db_files = array();
@@ -308,7 +270,7 @@ class ItemsController extends AppController {
 	}
 
 	/**
-	 * add method
+	 * Agregar activo fijo
 	 *
 	 * @return void
 	 */
@@ -386,6 +348,11 @@ class ItemsController extends AppController {
 		$this -> set(compact('items', 'tiposDeItems', 'departamentos', 'personas', 'proveedores', 'provincias'));
 	}
 
+	/**
+	 * Dar de baja un activo fijo
+	 * @param int $activoFijoId ID del activo fijo
+	 * @return void
+	 */
 	public function darDeBajaActivoFijo($activoFijoId = null) {
 		if(!$activoFijoId) {
 			
@@ -415,7 +382,12 @@ class ItemsController extends AppController {
 		}
 		$this -> set(compact('item', 'cantidades'));
 	}
-	
+
+	/**
+	 * Asignar un activo fijo
+	 * @param int $activoFijoId ID del activo fijo
+	 * @return void
+	 */
 	public function asignarActivoFijo($activoFijoId = null) {
 		if(!$activoFijoId) {
 			
@@ -442,6 +414,11 @@ class ItemsController extends AppController {
 		$this -> set(compact('item', 'departamentos', 'cantidades'));
 	}
 	
+	/**
+	 * Desasignar activo fijo
+	 * @param int $activoFijoId ID del activo fijo
+	 * @return void
+	 */
 	public function desasignarActivoFijo($activoFijoId = null) {
 		if($activoFijoId) {
 			if($this -> request -> is('post')) {
@@ -473,7 +450,11 @@ class ItemsController extends AppController {
 			$this -> set(compact('personas'));
 		}
 	}
-	
+
+	/**
+	 * Traspaso de activos fijos
+	 * @return void
+	 */
 	public function traspasoActivoFijo() {
 		if($this -> request -> is('post')) {
 			$this -> Item -> ItemsPersona -> recursive = -1;
@@ -553,7 +534,12 @@ class ItemsController extends AppController {
 		$departamentos = $this -> Item -> getValores(14);
 		$this -> set(compact('departamentos', 'asignaciones'));
 	}
-	
+
+	/**
+	 * Obtener la cantidad asignada de un activo fijo
+	 * @param int $asignacion_id ID de la asignación
+	 * @return Array en JSON con la información
+	 */
 	public function getCantidadAsignada($asginacion_id = null) {
 		$this -> Item -> ItemsPersona -> recursive = -1;
 		$asignacion = $this -> Item -> ItemsPersona -> read(null, $asginacion_id);
@@ -565,6 +551,10 @@ class ItemsController extends AppController {
 		exit(0);
 	}
 
+	/**
+	 * Eliminar un suministro
+	 * @return void
+	 */
 	public function deleteSuministro() {
 		if ($this -> request -> is('post')) {
 			
@@ -626,13 +616,10 @@ class ItemsController extends AppController {
 		$this -> set(compact('items', 'departamentos', 'personas'));
 	}
 	
-
-
-
 	/**
-	 * edit method
+	 * Modificar activo fijo
 	 *
-	 * @param string $id
+	 * @param int $id ID del activo fijo
 	 * @return void
 	 */
 	public function editActivoFijo($id = null) {
@@ -655,9 +642,9 @@ class ItemsController extends AppController {
 	}
 
 	/**
-	 * delete method
+	 * Eliminar activo fijo
 	 *
-	 * @param string $id
+	 * @param int $id ID del activo fijo
 	 * @return void
 	 */
 	public function deleteActivoFijo($id = null) {
@@ -677,7 +664,7 @@ class ItemsController extends AppController {
 	}
 
 	/**
-	 * index method
+	 * Listado general de ítems
 	 *
 	 * @return void
 	 */
@@ -687,9 +674,9 @@ class ItemsController extends AppController {
 	}
 
 	/**
-	 * view method
+	 * Ver un ítem
 	 *
-	 * @param string $id
+	 * @param int $id ID del ítem
 	 * @return void
 	 */
 	public function view($id = null) {
@@ -702,7 +689,7 @@ class ItemsController extends AppController {
 	}
 
 	/**
-	 * add method
+	 * Agregar un ítem
 	 *
 	 * @return void
 	 */
@@ -736,9 +723,9 @@ class ItemsController extends AppController {
 	}
 
 	/**
-	 * edit method
+	 * Modificar un ítem
 	 *
-	 * @param string $id
+	 * @param int $id ID del ítem
 	 * @return void
 	 */
 	public function edit($id = null) {
@@ -761,9 +748,9 @@ class ItemsController extends AppController {
 	}
 
 	/**
-	 * delete method
+	 * Eliminar un ítem
 	 *
-	 * @param string $id
+	 * @param int $id ID del ítem
 	 * @return void
 	 */
 	public function delete($id = null) {

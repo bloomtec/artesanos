@@ -8,7 +8,7 @@ App::uses('AppController', 'Controller');
 class FacturasController extends AppController {
 
 	/**
-	 * index method
+	 * Listado de facturas
 	 *
 	 * @return void
 	 */
@@ -18,12 +18,12 @@ class FacturasController extends AppController {
 	}
 
 	/**
-	 * view method
+	 * Ver una factura
 	 *
-	 * @param string $id
+	 * @param int $id ID de la factura
 	 * @return void
 	 */
-	public function view($id = null) {
+	public function view($id) {
 		$this -> Factura -> id = $id;
 		if (!$this -> Factura -> exists()) {
 			throw new NotFoundException(__('Factura no válida'));
@@ -32,7 +32,7 @@ class FacturasController extends AppController {
 	}
 
 	/**
-	 * add method
+	 * Agregar factura
 	 *
 	 * @return void
 	 */
@@ -53,12 +53,12 @@ class FacturasController extends AppController {
 	}
 
 	/**
-	 * edit method
+	 * Modificar factura
 	 *
-	 * @param string $id
+	 * @param int $id ID de la factura
 	 * @return void
 	 */
-	public function edit($id = null) {
+	public function edit($id) {
 		$this -> Factura -> id = $id;
 		if (!$this -> Factura -> exists()) {
 			throw new NotFoundException(__('Factura no válida'));
@@ -80,9 +80,9 @@ class FacturasController extends AppController {
 	}
 
 	/**
-	 * delete method
+	 * Eliminar factura
 	 *
-	 * @param string $id
+	 * @param int $id ID de la factura
 	 * @return void
 	 */
 	public function delete($id = null) {

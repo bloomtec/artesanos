@@ -7,16 +7,21 @@ App::import('Helper', 'csv');
  * @property Curso $Curso
  */
 class CursosController extends AppController {
-
-	private function formatearValor($valor = null) {
+	
+	/**
+	 * Formatear un valor numérico
+	 * @param string $valor Valor a formatear
+	 * @return Valor formateado
+	 */
+	private function formatearValor($valor) {
 		$valor = str_replace('.', '', $valor);
 		$valor = str_replace(',', '.', $valor);
 		return $valor;
 	}
 
 	/**
-	 * index method
-	 *
+	 * Listado de cursos
+	 * @param string $pdf
 	 * @return void
 	 */
 	public function index($pdf = "") {
@@ -32,9 +37,9 @@ class CursosController extends AppController {
 	}
 
 	/**
-	 * view method
+	 * Ver un curso
 	 *
-	 * @param string $id
+	 * @param int $id ID del curso
 	 * @return void
 	 */
 	public function view($id = null) {
@@ -44,7 +49,13 @@ class CursosController extends AppController {
 		}
 		$this -> set('curso', $this -> Curso -> read(null, $id));
 	}
-
+	
+	/**
+	 * Guardar un archivo en el servidor
+	 * @param string $tmp_name Nombre temporal del archivo
+	 * @param string $filename Nombre del archivo
+	 * @return true o false acorde si se guarda o no el archivo
+	 */
 	private function uploadFile($tmp_name = null, $filename = null) {
 		$this -> cleanupFiles();
 		if ($tmp_name && $filename) {
@@ -52,7 +63,11 @@ class CursosController extends AppController {
 			return move_uploaded_file($tmp_name, $url);
 		}
 	}
-
+	
+	/**
+	 * Borrar archivos que ya no registran en la BD
+	 * @return void
+	 */
 	private function cleanupFiles() {
 		$documentos = $this -> Curso -> DocumentosCurso -> find('all');
 		$db_files = array();
@@ -79,49 +94,14 @@ class CursosController extends AppController {
 	}
 
 	/**
-	 * add method
+	 * Modificar un curso
 	 *
+	 * @param int $id ID del curso
 	 * @return void
 	 */
-	/*public function add() {
-		if ($this -> request -> is('post')) {
-			$this -> request -> data['Curso']['cur_costo'] = $this -> formatearValor($this -> request -> data['Curso']['cur_costo']);
-			$this -> Curso -> create();
-			if ($this -> Curso -> save($this -> request -> data)) {
-
-				foreach ($this -> request -> data['Documentos'] as $key => $documento) {
-					if (!empty($documento['name']) && !$documento['error']) {
-						$now = new DateTime('now');
-						$filename = $now -> format('Y-m-d_H-i-s') . '_' . str_replace(' ', '_', $documento['name']);
-						if ($this -> uploadFile($documento['tmp_name'], $filename)) {
-							$this -> Curso -> DocumentosCurso -> create();
-							$documento = array('DocumentosCurso' => array('curso_id' => $this -> Curso -> id, 'doc_name' => $documento['name'], 'doc_path' => 'files/uploads/cursos/' . $filename, 'is_documento_de_creacion' => 1, 'is_documento_de_cierre' => 0));
-							$this -> Curso -> DocumentosCurso -> save($documento);
-						}
-					}
-				}
-
-				$this -> Session -> setFlash(__('El curso ha sido creado'), 'crud/success');
-				$this -> redirect(array('action' => 'index'));
-			} else {
-				$this -> Session -> setFlash(__('No se pudo crear el curso. Por favor, intente de nuevo.'), 'crud/error');
-			}
-		}
-		$solicitudes = $this -> Curso -> Solicitud -> find('list');
-		$instructores = $this -> Curso -> Instructor -> find('list');
-		$alumnos = $this -> Curso -> Alumno -> find('list');
-		$this -> set(compact('solicitudes', 'instructores', 'alumnos'));
-	}*/
-
-	/**
-	 * edit method
-	 *
-	 * @param string $id
-	 * @return void
-	 */
-	public function edit($id = null) {
+	public function edit($id) {
 		$this -> Curso -> id = $id;
-		$curso = $this -> Curso -> read(null,$id);
+		$curso = $this -> Curso -> read(null, $id);
 		if (!$this -> Curso -> exists()) {
 			throw new NotFoundException(__('Curso no válido'));
 		}
@@ -140,11 +120,11 @@ class CursosController extends AppController {
 		}
 		//$solicitudes = $this -> Curso -> Solicitud -> find('list');
 		//debug($curso);
-		if(isset($curso['Solicitud']['juntas_provincial_id']) && !empty($curso['Solicitud']['juntas_provincial_id'])){
+		if (isset($curso['Solicitud']['juntas_provincial_id']) && !empty($curso['Solicitud']['juntas_provincial_id'])) {
 			$instructores = $this -> Curso -> Instructor -> find('list');
 		}
-		if(isset($curso['Solicitud']['centros_artesanal_id']) && !empty($curso['Solicitud']['centros_artesanal_id'])){
-			 $profesores = $this ->  Curso -> Profesor -> find('list',array('conditions'=>array('centros_artesanal_id'=>$curso['Solicitud']['centros_artesanal_id'])));
+		if (isset($curso['Solicitud']['centros_artesanal_id']) && !empty($curso['Solicitud']['centros_artesanal_id'])) {
+			$profesores = $this -> Curso -> Profesor -> find('list', array('conditions' => array('centros_artesanal_id' => $curso['Solicitud']['centros_artesanal_id'])));
 		}
 		$this -> Curso -> CursosAlumno -> bindModel(array('belongsTo' => array('Alumno')));
 		$losAlumnos = $this -> Curso -> CursosAlumno -> find('all', array('conditions' => array('curso_id' => $id)));
@@ -156,10 +136,15 @@ class CursosController extends AppController {
 		$grados_de_estudio = $this -> Alumno -> getValores(4);
 		$sexos = $this -> Alumno -> getValores(5);
 		$provincias = $this -> Curso -> Provincia -> find('list');
-		$this -> set(compact('curso','provincias', 'solicitudes', 'instructores','profesores','losAlumnos', 'nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos'));
+		$this -> set(compact('curso', 'provincias', 'solicitudes', 'instructores', 'profesores', 'losAlumnos', 'nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos'));
 	}
-
-	public function quitar($id = null) {
+	
+	/**
+	 * Sacar a un alumno de un curso
+	 * @param int $id ID de la relación que une el curso con el alumno
+	 * @return void
+	 */
+	public function quitar($id) {
 		$this -> Curso -> CursosAlumno -> id = $id;
 		if (!$this -> Curso -> CursosAlumno -> exists()) {
 			throw new NotFoundException(__('Curso no válido'));
@@ -171,8 +156,12 @@ class CursosController extends AppController {
 		$this -> Session -> setFlash(__('No se pudo borrar el alumno del curso'), 'crud/error');
 		$this -> redirect($this -> referer());
 	}
-
-	public function verAlumnos($id = null) {
+	
+	/**
+	 * Listado de alumnos de un curso
+	 * @param int $id ID del curso
+	 */
+	public function verAlumnos($id) {
 		$this -> Curso -> id = $id;
 		if (!$this -> Curso -> exists()) {
 			throw new NotFoundException(__('Curso no válido'));
@@ -183,8 +172,12 @@ class CursosController extends AppController {
 		$alumnos = $this -> Curso -> CursosAlumno -> find('all', array('conditions' => array('CursosAlumno.curso_id' => $id)));
 		$this -> set(compact('curso', 'alumnos'));
 	}
-
-	public function ingresarCalificaciones($id = null) {
+	
+	/**
+	 * Ingreso de calificaciones de un curso
+	 * @param int $id ID del curso
+	 */
+	public function ingresarCalificaciones($id) {
 		$this -> Curso -> id = $id;
 		if (!$this -> Curso -> exists()) {
 			throw new NotFoundException(__('Curso no válido'));
@@ -215,24 +208,29 @@ class CursosController extends AppController {
 
 	}
 
+	/**
+	 * Asignar un certificado a un alumno
+	 * @param int $alumnoCursoId ID de la relación alumnos y cursos
+	 * @return void
+	 */
 	public function certificado($alumnoCursoId = null) {
 		$this -> layout = "certificado";
-		$this -> Curso -> CursosAlumno -> bindModel(array('belongsTo' => array('Alumno','Curso')));
+		$this -> Curso -> CursosAlumno -> bindModel(array('belongsTo' => array('Alumno', 'Curso')));
 		$alumno = $this -> Curso -> CursosAlumno -> read(null, $alumnoCursoId);
-		
-		if ($alumno["CursosAlumno"]['cur_fecha_de_emision']==null or $alumno["CursosAlumno"]['cur_fecha_de_emision']=="0000-00-00 00:00:00")  {
-            $fecha = date('Y-m-d h:i:s', time());
-            $this->Curso->query("UPDATE cursos_alumnos SET cur_fecha_de_emision ='".$fecha."' WHERE id='".$alumno["CursosAlumno"]["id"]."'");
-            //Toco hacer el update de cur_fecha_de_emision con SQL porque este no funcionaba
-            /*$this->loadModel("CursosAlumno", true);
-		    $this -> CursosAlumno ->id = $alumno["CursosAlumno"]["id"];
-            $data["CursosAlumno"]['cur_fecha_de_emision'] = $fecha;
-            $this->CursosAlumno->save($data);*/
-            $fecha = date("F j, Y, g:i a",  strtotime($fecha));
-        } else {
+
+		if ($alumno["CursosAlumno"]['cur_fecha_de_emision'] == null or $alumno["CursosAlumno"]['cur_fecha_de_emision'] == "0000-00-00 00:00:00") {
+			$fecha = date('Y-m-d h:i:s', time());
+			$this -> Curso -> query("UPDATE cursos_alumnos SET cur_fecha_de_emision ='" . $fecha . "' WHERE id='" . $alumno["CursosAlumno"]["id"] . "'");
+			//Toco hacer el update de cur_fecha_de_emision con SQL porque este no funcionaba
+			/*$this->loadModel("CursosAlumno", true);
+			 $this -> CursosAlumno ->id = $alumno["CursosAlumno"]["id"];
+			 $data["CursosAlumno"]['cur_fecha_de_emision'] = $fecha;
+			 $this->CursosAlumno->save($data);*/
+			$fecha = date("F j, Y, g:i a", strtotime($fecha));
+		} else {
 			$fecha = date("F j, Y, g:i a", strtotime($alumno["CursosAlumno"]['cur_fecha_de_emision']));
 		}
-       
+
 		$fecha = explode(" ", str_replace(",", "", $fecha));
 		$meses = array("January" => "Enero", "February" => "Febrero", "March" => "Marzo", "April" => "Abril", "May" => "Mayo", "June" => "Junio", "July" => "Julio", "August" => "Agosto", "September" => "Septiembre", "October" => "Octubre", "November" => "Noviembre", "December" => "Diciembre");
 
@@ -242,24 +240,24 @@ class CursosController extends AppController {
 				break;
 			}
 		}
-        $this->loadModel("Instructor");  
-        $this->Instructor->recursive=-1;  
-        $instructor = $this->Instructor->find("list", array("conditions"=>array("Instructor.id"=>$alumno["Curso"]["instructor_id"])));
-        foreach($instructor as $instructor) {
-           $instructor = $instructor; 
-        }
-       
+		$this -> loadModel("Instructor");
+		$this -> Instructor -> recursive = -1;
+		$instructor = $this -> Instructor -> find("list", array("conditions" => array("Instructor.id" => $alumno["Curso"]["instructor_id"])));
+		foreach ($instructor as $instructor) {
+			$instructor = $instructor;
+		}
+
 		$fecha2 = $fecha[1] . " " . "de " . $fecha[0] . " del ";
 		$presidente = $this -> requestAction('/configuraciones/getValorConfiguracion/' . "con_presidente_de_la_junta");
 		$tecnico = $this -> requestAction('/configuraciones/getValorConfiguracion/' . "con_tecnico_en_capacitacion_y_calificacion");
 
-		$this -> set(compact('alumno', 'fecha', 'fecha2', 'presidente', 'tecnico','instructor'));
+		$this -> set(compact('alumno', 'fecha', 'fecha2', 'presidente', 'tecnico', 'instructor'));
 	}
 
 	/**
-	 * delete method
+	 * Eliminar curso
 	 *
-	 * @param string $id
+	 * @param int $id ID del curso
 	 * @return void
 	 */
 	public function delete($id = null) {
@@ -277,7 +275,11 @@ class CursosController extends AppController {
 		$this -> Session -> setFlash(__('No se pudo borrar el curso'), 'crud/error');
 		$this -> redirect(array('action' => 'index'));
 	}
-
+	
+	/**
+	 * Reporte de un curso
+	 * @return void
+	 */
 	function reporte() {
 		$this -> loadModel("JuntasProvincial", true);
 		$this -> loadModel("CentrosArtesanal", true);
@@ -362,12 +364,12 @@ class CursosController extends AppController {
 			$this -> Session -> write('numAlumnos', $numAlumnos);
 			$this -> set(compact('reporteCursos', 'reporte', 'numAlumnos'));
 		}
-		
+
 		$this -> set('fechaActual', date('Y-m-d', strtotime('now')));
 	}
 
 	/**
-	 * impReporte method
+	 * Imprimir reporte
 	 *
 	 * @return void
 	 */
@@ -382,7 +384,7 @@ class CursosController extends AppController {
 	}
 
 	/**
-	 * export_csv method
+	 * Exportar a CSV
 	 *
 	 * @return void
 	 */

@@ -6,11 +6,11 @@ App::uses('AppModel', 'Model');
  * @property Usuario $Usuario
  */
 class Auditoria extends AppModel {
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'usuario_id' => array(
 			'numeric' => array(
@@ -76,11 +76,11 @@ class Auditoria extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * belongsTo associations
- *
- * @var array
- */
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
 	public $belongsTo = array(
 		'Usuario' => array(
 			'className' => 'Usuario',

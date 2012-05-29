@@ -6,19 +6,22 @@ App::uses('AppModel', 'Model');
  * @property EspeciesValorada $EspeciesValorada
  */
 class IngresosEspecie extends AppModel {
-	
+	/**
+	 * Comportamientos
+	 * @var array
+	 */
 	public $actsAs = array('Auditable');
-/**
- * Display field
- *
- * @var string
- */
+	/**
+	 * Display field
+	 *
+	 * @var string
+	 */
 	public $displayField = 'id';
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'ing_fecha' => array(
 			'date' => array(
@@ -54,11 +57,11 @@ class IngresosEspecie extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * hasMany associations
- *
- * @var array
- */
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
 	public $hasMany = array(
 		'EspeciesValorada' => array(
 			'className' => 'EspeciesValorada',

@@ -7,10 +7,13 @@ App::import('Helper', 'csv');
  *
  * @property IngresosDeInventario $IngresosDeInventario
  */
-class EgresosDeInventariosController extends AppController {	
+class EgresosDeInventariosController extends AppController {
 	
-	   
-		public function reporteEgresosInventarios() {
+	/**
+	 * Reporte de egresos de inventarios
+	 * @return void
+	 */
+	public function reporteEgresosInventarios() {
 
 		$this -> loadModel('Item', true);
 		$this -> loadModel('EgresosDeInventariosItem', true);
@@ -29,9 +32,9 @@ class EgresosDeInventariosController extends AppController {
 
 		if ($this -> request -> is('post') or $pagina != false) {
 			$this -> Recursive = 0;
-		    $condiciones = array();
-			if ($pagina==false) {
-				
+			$condiciones = array();
+			if ($pagina == false) {
+
 				$idPersona = $this -> data['Reporte']['persona'];
 				$nomDepartamento = $this -> data['Reporte']['departamento'];
 				$idProducto = $this -> data['Reporte']['producto'];
@@ -39,7 +42,7 @@ class EgresosDeInventariosController extends AppController {
 				$fecha2 = $this -> data['Reporte']['fecha2'];
 
 				$conditions[] = array('EgresosDeInventario.egr_is_activo_fijo' => 1);
-				
+
 				if (!empty($nomDepartamento)) {
 					$idsPersonasDep = $this -> Persona -> find('list', array('fields' => array('id'), 'conditions' => array('Persona.per_departamento' => $nomDepartamento)));
 					$conditions[] = array('EgresosDeInventario.persona_id' => $idsPersonasDep);
@@ -99,18 +102,22 @@ class EgresosDeInventariosController extends AppController {
 			$lstDepartamentos = $this -> EgresosDeInventario -> getValores(14);
 			$this -> set(compact('lstPersonas', 'lstDepartamentos', 'lstProductos', 'reporte'));
 		}
-		
+
 		$this -> set('fechaActual', date('Y-m-d', strtotime('now')));
 	}
 
+	/**
+	 * Reporte de egreso de suministros
+	 * @return void
+	 */
 	public function reporteEgresosSuministros() {
 		$this -> loadModel('Item', true);
 		$this -> loadModel('EgresosDeInventariosItem', true);
 		$this -> loadModel('EgresosDeInventario', true);
 		$this -> loadModel('Persona', true);
-		
+
 		$reporte = false;
-		$pagina = ""; 
+		$pagina = "";
 
 		if (isset($this -> params['named']['page'])) {
 			$pagina = $this -> params['named']['page'];
@@ -123,7 +130,7 @@ class EgresosDeInventariosController extends AppController {
 		if ($this -> request -> is('post') or $pagina != false) {
 			$this -> Recursive = 0;
 			$conditions = array();
-			if ($pagina==false) {
+			if ($pagina == false) {
 				$idPersona = $this -> data['Reporte']['persona'];
 				$nomDepartamento = $this -> data['Reporte']['departamento'];
 				$idProducto = $this -> data['Reporte']['producto'];
@@ -131,7 +138,7 @@ class EgresosDeInventariosController extends AppController {
 				$fecha2 = $this -> data['Reporte']['fecha2'];
 
 				$conditions[] = array('EgresosDeInventario.egr_is_activo_fijo' => 0);
-				
+
 				if (!empty($nomDepartamento)) {
 					$idsPersonasDep = $this -> Persona -> find('list', array('fields' => array('id'), 'conditions' => array('Persona.per_departamento' => $nomDepartamento)));
 					$conditions[] = array('EgresosDeInventario.persona_id' => $idsPersonasDep);
@@ -190,22 +197,28 @@ class EgresosDeInventariosController extends AppController {
 			$lstDepartamentos = $this -> EgresosDeInventario -> getValores(14);
 			$this -> set(compact('lstPersonas', 'lstDepartamentos', 'lstProductos', 'reporte'));
 		}
-		
+
 		$this -> set('fechaActual', date('Y-m-d', strtotime('now')));
 	}
 
+	/**
+	 * Imprimir reporte
+	 * @return void
+	 */
 	function impReporte() {
 		$this -> layout = 'pdf2';
 		$reporteEgresos = $this -> Session -> read('reporte');
-		$nombre_archivo  = $this -> Session -> read('archivo');
+		$nombre_archivo = $this -> Session -> read('archivo');
 		//Tamaño de la fuente
 		$tamano = 5;
 		//$this -> Session -> delete('reporteIngresos');
 		$this -> set(compact('reporteEgresos', 'nombre_archivo', 'tamano'));
 	}
-
 	
-
+	/**
+	 * Exportar a CSV
+	 * @return void
+	 */
 	function export_csv() {
 
 		$this -> layout = "";
@@ -230,8 +243,8 @@ class EgresosDeInventariosController extends AppController {
 			$filas = array($reporteEgresos[$i]['EgresosDeInventario']['egr_codigo'], $reporteEgresos[$i]['Persona']['per_nombres'], $reporteEgresos[$i]['EgresosDeInventario']['egr_concepto_entrega'], $reporteEgresos[$i]['EgresosDeInventario']['egr_fecha_de_egreso'], $items);
 			$csv -> addRow($filas);
 		}
-		
-		$titulo =$reporteIngresos = $this -> Session -> read('archivo');
+
+		$titulo = $reporteIngresos = $this -> Session -> read('archivo');
 		$titulo = "csvEgresosInventarios_" . date("Y-m-d H:i:s", time()) . ".csv";
 		echo $csv -> render($titulo);
 	}

@@ -5,12 +5,15 @@ App::uses('AppModel', 'Model');
  *
  */
 class Archivo extends AppModel {
-	
+	/**
+	 * Comportamientos
+	 * @var array
+	 */
 	public $actsAs = array('Auditable');
-/**
- * Display field
- *
- * @var string
- */
+	/**
+	 * Display field
+	 *
+	 * @var string
+	 */
 	public $displayField = 'nombre';
 }

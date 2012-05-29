@@ -7,22 +7,33 @@ App::uses('AppController', 'Controller');
  */
 class ConfiguracionesController extends AppController {
 
+	/**
+	 * Definir características que se requieren globalmente por esta clase.
+	 *
+	 * @return void
+	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this -> Auth -> allow('getValorConfiguracion');
 	}
 
-	private function formatearValor($valor = null) {
+	/**
+	 * Formatear un valor numérico
+	 * @param string $valor Valor a formatear
+	 * @return Valor formateado
+	 */
+	private function formatearValor($valor) {
 		$valor = str_replace('.', '', $valor);
 		$valor = str_replace(',', '.', $valor);
 		return $valor;
 	}
 
-	public function beforeRender() {
-		//$this -> layout = "parametros";
-	}
-
-	public function getValorConfiguracion($valor = null) {
+	/**
+	 * Obtener el valor de una configuración
+	 * @param string $valor La configuración que cuyo valor se quiere obtener
+	 * @return El valor de la configuración
+	 */
+	public function getValorConfiguracion($valor) {
 		if ($valor) {
 			$valor_configuracion = $this -> Configuracion -> read($valor, 1);
 			return $valor_configuracion['Configuracion'][$valor];
@@ -32,23 +43,22 @@ class ConfiguracionesController extends AppController {
 	}
 
 	/**
-	 * index method
+	 * "Listado" de la configuracion
 	 *
 	 * @return void
 	 */
 	public function index() {
 		$this -> Configuracion -> recursive = 0;
 		$this -> set('configuracion', $this -> Configuracion -> read(null, 1));
-		
 	}
 
 	/**
-	 * edit method
+	 * Modificar la configuración
 	 *
-	 * @param string $id
+	 * @param int $id ID de la configuración
 	 * @return void
 	 */
-	public function edit($id = null) {
+	public function edit($id) {
 		$this -> Configuracion -> currentUsrId = $this -> Auth -> user('id');
 
 		$this -> Configuracion -> id = $id;
@@ -74,7 +84,7 @@ class ConfiguracionesController extends AppController {
 			$this -> request -> data['Configuracion']['con_capital_maximo_de_inversion'] = 100 * $this -> request -> data['Configuracion']['con_capital_maximo_de_inversion'];
 			$this -> request -> data['Configuracion']['con_salario_basico_unificado'] = 100 * $this -> request -> data['Configuracion']['con_salario_basico_unificado'];
 			$this -> request -> data['Configuracion']['con_calificacion_minima'] = 100 * $this -> request -> data['Configuracion']['con_calificacion_minima'];
-			$this -> request -> data['Configuracion']['con_calificacion_maxima'] =100 * $this -> request -> data['Configuracion']['con_calificacion_maxima'];
+			$this -> request -> data['Configuracion']['con_calificacion_maxima'] = 100 * $this -> request -> data['Configuracion']['con_calificacion_maxima'];
 			$this -> request -> data['Configuracion']['con_calificacion_para_aprobar_curso'] = 100 * $this -> request -> data['Configuracion']['con_calificacion_para_aprobar_curso'];
 			$this -> request -> data['Configuracion']['con_iva'] = 100 * $this -> request -> data['Configuracion']['con_iva'];
 		}

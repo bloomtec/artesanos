@@ -7,15 +7,29 @@ App::uses('AppController', 'Controller');
  */
 class ArtesanosController extends AppController {
 	
+	/**
+	 * Definir características que se requieren globalmente por esta clase.
+	 * 
+	 * @return void
+	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this -> Auth -> allow('add', 'agregarArtesano', 'datosCalificacion', 'verificarCedula', 'getID', 'validarCalificacion', 'setMultaPagada', 'getDatosPersonales');
 	}
-
+	
+	/**
+	 * Pruebas
+	 * @return void
+	 */
 	function pruebas() {
 		$this -> layout = "pdf";
 	}
-
+	
+	/**
+	 * Verificar cédula
+	 * @param string $cedula Cédula a verificar
+	 * @return true o false si se encuentra registrada la cédula
+	 */
 	public function verificarCedula($cedula = null) {
 		$this -> layout = 'ajax';
 		if ($cedula) {
@@ -29,8 +43,13 @@ class ArtesanosController extends AppController {
 		}
 		exit(0);
 	}
-
-	public function getID($id = null) {
+	
+	/**
+	 * Obtener la cédula de un artesano
+	 * @param int $id ID del artesano
+	 * @return La cédula del artesano
+	 */
+	public function getID($id) {
 		if ($id) {
 			$artesano = $this -> Artesano -> read(null, $id);
 			if (!empty($artesano)) {
@@ -43,17 +62,17 @@ class ArtesanosController extends AppController {
 		}
 	}
 
+	/**
+	 * Obtener la información de un artesano
+	 * @param string $documento El documento del artesano
+	 * @return Arreglo codificado en JSON con la info del artesano
+	 */
 	public function getDatosPersonales($documento = null) {
 		$this -> autoRender = false;
 		if ($documento) {
 			$this -> Artesano -> recursive = -1;
 			$artesano = $this -> Artesano -> findByArtCedula($documento);
 			if (!empty($artesano)) {
-				/*$calificacion = $artesano['Calificacion'][count($artesano['Calificacion']) - 1];
-				$this -> Artesano -> Calificacion -> DatosPersonal -> recursive = -1;
-				$datos_personales = $this -> Artesano -> Calificacion -> DatosPersonal -> findByCalificacionId($calificacion['id']);
-				$datos_personales['Artesano'] = $artesano['Artesano'];
-				echo json_encode($datos_personales);*/
 				echo json_encode($artesano);
 			} else {
 				return null;
@@ -65,7 +84,7 @@ class ArtesanosController extends AppController {
 	}
 
 	/**
-	 * index method
+	 * Listado de artesanos
 	 *
 	 * @return void
 	 */
@@ -99,7 +118,7 @@ class ArtesanosController extends AppController {
 					$artesanos[$key]['Artesano']['art_estado_calificacion'] = 'Deshabilitada';
 				}
 				$artesanos[$key]['Calificacion'] = $calificacion['Calificacion'];
-			}else{
+			} else {
 				$artesanos[$key]['Artesano']['art_estado_calificacion'] = 'No existe calificacion';
 			}
 		}
@@ -108,12 +127,12 @@ class ArtesanosController extends AppController {
 	}
 
 	/**
-	 * view method
+	 * Ver un artesano
 	 *
-	 * @param string $id
+	 * @param int $id ID del artesano
 	 * @return void
 	 */
-	public function view($id = null) {
+	public function view($id) {
 		$this -> Artesano -> id = $id;
 		if (!$this -> Artesano -> exists()) {
 			throw new NotFoundException(__('Artesano no válido'));
@@ -122,19 +141,19 @@ class ArtesanosController extends AppController {
 	}
 
 	/**
-	 * guardarCalificacion method
+	 * Guardar una calificación
 	 *
-	 * @param array $data
-	 * @param array $artesano
+	 * @param array $data Información a guardar
+	 * @return void
 	 */
 	private function guardarCalificacion($data = null) {
 		if ($data) {
 			// Guardar la calificacion
 			$calificacion = $this -> Artesano -> Calificacion -> read(null, $data['Calificacion']['id']);
-			foreach($data['Calificacion'] as $key => $value) {
+			foreach ($data['Calificacion'] as $key => $value) {
 				$calificacion['Calificacion'][$key] = $value;
 			}
-			
+
 			/**
 			 * Revisar campos del balance
 			 */
@@ -189,12 +208,12 @@ class ArtesanosController extends AppController {
 			if ($this -> Artesano -> Calificacion -> save($calificacion)) {
 				// Si hay especie valorada entonces ponerla como usada
 				$especieValorada = null;
-				if($calificacion['Calificacion']['tipos_de_calificacion_id'] == 1) {
+				if ($calificacion['Calificacion']['tipos_de_calificacion_id'] == 1) {
 					$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $calificacion['Calificacion']['artesano_id'] . '/' . Configure::read('edi_cal_normal'));
-				} elseif($calificacion['Calificacion']['tipos_de_calificacion_id'] == 2) {
+				} elseif ($calificacion['Calificacion']['tipos_de_calificacion_id'] == 2) {
 					$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $calificacion['Calificacion']['artesano_id'] . '/' . Configure::read('edi_cal_autonomo'));
 				}
-				if($especieValorada) {
+				if ($especieValorada) {
 					$especieValorada['EspeciesValorada']['se_uso'] = 1;
 					$this -> loadModel('EspeciesValorada');
 					$this -> EspeciesValorada -> save($especieValorada);
@@ -204,10 +223,10 @@ class ArtesanosController extends AppController {
 				$datos_personales['DatosPersonal'] = $this -> request -> data['DatosPersonal'];
 				if ($this -> Artesano -> Calificacion -> DatosPersonal -> save($datos_personales)) {
 					$this -> Artesano -> Calificacion -> recursive = -1;
-					$lacalificacion=$this -> Artesano -> Calificacion -> read('',$calificacion['Calificacion']['id']);
-					
-					if($lacalificacion['Calificacion']['cal_estado'] >= 0){
-						$this -> actualizarArtesano($datos_personales,$lacalificacion['Calificacion']['artesano_id']);	
+					$lacalificacion = $this -> Artesano -> Calificacion -> read('', $calificacion['Calificacion']['id']);
+
+					if ($lacalificacion['Calificacion']['cal_estado'] >= 0) {
+						$this -> actualizarArtesano($datos_personales, $lacalificacion['Calificacion']['artesano_id']);
 					}
 					$this -> Session -> setFlash(__('Los datos del artesano han sido registrados.'), 'crud/success');
 
@@ -326,7 +345,7 @@ class ArtesanosController extends AppController {
 				$this -> Session -> setFlash(__('Ha ocurrido un error al registrar la calificación del artesano. Por favor, intente de nuevo.'), 'crud/error');
 			}
 			// Asignar inspector a la calificacion (si quien modifica no es el inspector!)
-			if($this -> Auth -> user('rol_id') != 3) {
+			if ($this -> Auth -> user('rol_id') != 3) {
 				$this -> asignarInspector($calificacion['Calificacion']['id']);
 			}
 			// redirigir
@@ -336,11 +355,17 @@ class ArtesanosController extends AppController {
 		}
 	}
 
-	private function actualizarArtesano($datosPersonales,$artesanoId){
-		$artesano['Artesano']['id']=$artesanoId;
-		foreach($datosPersonales['DatosPersonal'] as $key=>$val){
-			if(strpos($key, 'dat_') === 0){
-				$artesano['Artesano'][str_replace('dat_', 'art_', $key)]=$val;
+	/**
+	 * Actualizar la info de un artesano
+	 * @param array $datosPersonales Información a guardar
+	 * @param int $artesanoId ID del artesano
+	 * @return void
+	 */
+	private function actualizarArtesano($datosPersonales, $artesanoId) {
+		$artesano['Artesano']['id'] = $artesanoId;
+		foreach ($datosPersonales['DatosPersonal'] as $key => $val) {
+			if (strpos($key, 'dat_') === 0) {
+				$artesano['Artesano'][str_replace('dat_', 'art_', $key)] = $val;
 			}
 		}
 		//debug($artesano);
@@ -348,10 +373,11 @@ class ArtesanosController extends AppController {
 	}
 
 	/**
-	 * crearCalificacion method
+	 * Crear una calificación de un artesano
 	 *
-	 * @param array $data
-	 * @param array $artesano
+	 * @param array $data Información a guardar
+	 * @param array $artesano Información del artesano
+	 * @return void
 	 */
 	private function crearCalificacion($data = null, $artesano = null) {
 		if ($data && $artesano) {
@@ -538,12 +564,12 @@ class ArtesanosController extends AppController {
 			// Asignar inspector a la calificacion
 			$this -> asignarInspector($calificacion['Calificacion']['id']);
 			$especieValorada = null;
-			if($calificacion['Calificacion']['tipos_de_calificacion_id'] == 1) {
+			if ($calificacion['Calificacion']['tipos_de_calificacion_id'] == 1) {
 				$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $artesano['Artesano']['id'] . '/' . Configure::read('cal_normal'));
-			} elseif($calificacion['Calificacion']['tipos_de_calificacion_id'] == 2) {
+			} elseif ($calificacion['Calificacion']['tipos_de_calificacion_id'] == 2) {
 				$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $artesano['Artesano']['id'] . '/' . Configure::read('cal_autonomo'));
 			}
-			if(!$especieValorada) {
+			if (!$especieValorada) {
 				$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $artesano['Artesano']['id'] . '/' . Configure::read('recal'));
 			}
 			$especieValorada['EspeciesValorada']['se_uso'] = 1;
@@ -556,12 +582,21 @@ class ArtesanosController extends AppController {
 		}
 	}
 
+	/**
+	 * Formatear un valor numérico
+	 * @param string $valor Valor a formatear
+	 * @return El valor formateado
+	 */
 	private function formatearValor($valor = null) {
 		$valor = str_replace('.', '', $valor);
 		$valor = str_replace(',', '.', $valor);
 		return $valor;
 	}
 
+	/**
+	 * Crear una calificación
+	 * @return void
+	 */
 	public function add() {
 		$this -> Artesano -> currentUsrId = $this -> Auth -> user('id');
 		//
@@ -706,6 +741,8 @@ class ArtesanosController extends AppController {
 
 	/**
 	 * Manejo de asignación de inspector a la última calificación creada
+	 * @param int $calificacion_id ID de la calificación
+	 * @return void
 	 */
 	private function asignarInspector($calificacion_id = null) {
 		$this -> autoRender = false;
@@ -785,59 +822,6 @@ class ArtesanosController extends AppController {
 				$calificacion['Calificacion']['cal_inspector_local'] = $inspector_asignado['InspectorLocal']['id'];
 				$calificacion['Calificacion']['cal_fecha_inspeccion_local'] = $fecha_inspeccion;
 				$this -> Artesano -> Calificacion -> save($calificacion);
-
-				/*
-				 // Obtener los inspectores del local
-				 $this -> Artesano -> Calificacion -> InspectorLocal -> recursive = -1;
-				 // $inspectores_local = $this -> Artesano -> Calificacion -> InspectorLocal -> find('all', array('conditions' => array('InspectorLocal.rol_id' => 3, 'InspectorLocal.sector_id' => $local['Local']['sector_id'])));
-
-				 if($inspectores_local) {
-				 $fecha_calificacion = explode(' ', $calificacion['Calificacion']['created']);
-				 $fecha_calificacion = $fecha_calificacion[0];
-				 $fecha_inspeccion_local = strtotime('+1 day', strtotime($fecha_calificacion));
-				 $fecha_inspeccion_local = date('Y-m-d', $fecha_inspeccion_local);
-
-				 $is_inspector_asignado = false;
-				 while (!$is_inspector_asignado) {
-				 foreach ($inspectores_local as $key => $value) {
-				 $inspecciones_inspector_fecha_propuesta = 0;
-				 $inspecciones_inspector_fecha_propuesta += $this -> Artesano -> Calificacion -> find(
-				 'count',
-				 array(
-				 'conditions' => array(
-				 'Calificacion.cal_inspector_taller' => $value['InspectorLocal']['id'],
-				 'Calificacion.cal_fecha_inspeccion_taller' => $fecha_inspeccion_local
-				 )
-				 )
-				 );
-				 $inspecciones_inspector_fecha_propuesta += $this -> Artesano -> Calificacion -> find(
-				 'count',
-				 array(
-				 'conditions' => array(
-				 'Calificacion.cal_inspector_local' => $value['InspectorLocal']['id'],
-				 'Calificacion.cal_fecha_inspeccion_local' => $fecha_inspeccion_local
-				 )
-				 )
-				 );
-				 if($inspecciones_inspector_fecha_propuesta < $value['InspectorLocal']['usu_inspecciones_por_dia']) {
-				 // Asignar el inspector
-				 $calificacion['Calificacion']['cal_inspector_local'] = $value['InspectorLocal']['id'];
-				 $calificacion['Calificacion']['cal_fecha_inspeccion_local'] = $fecha_inspeccion_local;
-				 if($this -> Artesano -> Calificacion -> save($calificacion)) {
-				 $is_inspector_asignado = true;
-				 break;
-				 }
-				 } else {
-				 // TODO : Algo por hacer si no se puede
-				 }
-				 }
-				 if(!$is_inspector_asignado) {
-				 $fecha_inspeccion_local = strtotime('+1 day', strtotime($fecha_inspeccion_local));
-				 $fecha_inspeccion_local = date('Y-m-d', $fecha_inspeccion_local);
-				 }
-				 }
-				 }
-				 */
 			} else {
 				// No hay local
 			}
@@ -845,9 +829,9 @@ class ArtesanosController extends AppController {
 	}
 
 	/**
-	 * edit method
+	 * Modificar un artesano
 	 *
-	 * @param string $id
+	 * @param int $id ID del artesano
 	 * @return void
 	 */
 	public function edit($id = null) {
@@ -868,11 +852,16 @@ class ArtesanosController extends AppController {
 		}
 	}
 	
-	function modificarCalificacion($calificacionId = null){
+	/**
+	 * Modificar una calificación
+	 * @param int $calificacionId ID de la calificación
+	 * @return void
+	 */
+	function modificarCalificacion($calificacionId = null) {
 		$calificacion = null;
-		if($calificacionId && $calificacion = $this -> Artesano -> Calificacion -> read(null, $calificacionId)) {
+		if ($calificacionId && $calificacion = $this -> Artesano -> Calificacion -> read(null, $calificacionId)) {
 			$tipo_especie = null;
-			if($calificacion['Calificacion']['tipos_de_calificacion_id'] == 1) {
+			if ($calificacion['Calificacion']['tipos_de_calificacion_id'] == 1) {
 				// normal
 				$tipo_especie = Configure::read('edi_cal_normal');
 			} else {
@@ -881,19 +870,19 @@ class ArtesanosController extends AppController {
 			}
 			$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $calificacion['Calificacion']['artesano_id'] . '/' . $tipo_especie);
 			$detener = false;
-			if(!($calificacion['Calificacion']['cal_estado'] >= 1) || !(!($calificacion['Calificacion']['cal_estado'] == 0) && !(!$especieValorada || $especieValorada['EspeciesValorada']['se_uso']))) {
-				if($calificacion['Calificacion']['cal_estado'] < 0) {
+			if (!($calificacion['Calificacion']['cal_estado'] >= 1) || !(!($calificacion['Calificacion']['cal_estado'] == 0) && !(!$especieValorada || $especieValorada['EspeciesValorada']['se_uso']))) {
+				if ($calificacion['Calificacion']['cal_estado'] < 0) {
 					$this -> Session -> setFlash('Esta calificación esta deshabilitada o negada');
 					$detener = true;
-				} elseif(!(!($calificacion['Calificacion']['cal_estado'] == 0) && !(!$especieValorada || $especieValorada['EspeciesValorada']['se_uso']))) {
-					if(!$calificacion['Calificacion']['cal_estado'] == 0) {
+				} elseif (!(!($calificacion['Calificacion']['cal_estado'] == 0) && !(!$especieValorada || $especieValorada['EspeciesValorada']['se_uso']))) {
+					if (!$calificacion['Calificacion']['cal_estado'] == 0) {
 						$this -> Session -> setFlash('La calificación ya no esta pendiente para calificar, verifique que se tiene la especie valorada correspondiente para modificar datos.');
 						$detener = true;
-					} elseif(!$especieValorada || !$especieValorada['EspeciesValorada']['se_uso']) {
+					} elseif (!$especieValorada || !$especieValorada['EspeciesValorada']['se_uso']) {
 						/*if($this -> Auth -> user('rol_id') != 3) {
-							$this -> Session -> setFlash('Solamente el inspector puede modificar datos en este punto (la calificación está pendiente de inspección)');
-							$detener = true;
-						}*/
+						 $this -> Session -> setFlash('Solamente el inspector puede modificar datos en este punto (la calificación está pendiente de inspección)');
+						 $detener = true;
+						 }*/
 					} else {
 						$this -> Session -> setFlash('=/');
 						$detener = true;
@@ -903,11 +892,11 @@ class ArtesanosController extends AppController {
 					$detener = true;
 				}
 			}
-			if($detener) {
+			if ($detener) {
 				$this -> redirect($this -> referer());
 			}
 		}
-		if($this -> request -> is('post')) {
+		if ($this -> request -> is('post')) {
 			foreach ($this -> request -> data['MateriasPrima'] as $key => $value) {
 				if (!$value['mat_cantidad'] || !$value['mat_tipo_de_materia_prima'] || !$value['mat_procedencia'] || !$value['mat_valor_comercial']) {
 					unset($this -> request -> data['MateriasPrima'][$key]);
@@ -1012,6 +1001,11 @@ class ArtesanosController extends AppController {
 		$this -> set(compact('provincias'));
 	}
 
+	/**
+	 * Obtener la información de una calificación
+	 * @param int $cal_id ID de la calificación
+	 * @return Arreglo codificado en JSON con la información de la calificación
+	 */
 	function datosCalificacion($cal_id = null) {
 		$this -> layout = "ajax";
 		$this -> Artesano -> Calificacion -> recursive = 2;
@@ -1035,6 +1029,11 @@ class ArtesanosController extends AppController {
 		exit(0);
 	}
 
+	/**
+	 * Validar una calificación
+	 *
+	 * @return Arreglo codificado en JSON con información de la validación
+	 */
 	function validarCalificacion() {
 		$this -> layout = "ajax";
 		$cedula = trim($_POST['cedula']);
@@ -1059,7 +1058,12 @@ class ArtesanosController extends AppController {
 	}
 
 	/**
+	 * Validaciones correspondientes a calificaciones normales
 	 * Tipo De Calificacion Normal :: 1
+	 * @param array $artesano Información del artesano
+	 * @param array $calificaciones Calificaciones actuales
+	 * @param int $rama_id ID de la rama seleccionada
+	 * @return Arreglo codificado en JSON con información de la validación
 	 */
 	private function validarCalificacionNormal($artesano, $calificaciones, $rama_id) {
 		$resultado_validacion = array();
@@ -1129,7 +1133,7 @@ class ArtesanosController extends AppController {
 							 * Se esta calificando como normal por primera vez
 							 */
 							$titulacion = $this -> requestAction('/titulaciones/verificarTituloRamaArtesano/' . $artesano['Artesano']['id'] . '/' . $calificaciones[0]['Calificacion']['rama_id']);
-							if(!empty($titulacion)) {
+							if (!empty($titulacion)) {
 								$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $artesano['Artesano']['id'] . '/' . Configure::read('cal_normal'));
 								if ($especieValorada && !$especieValorada['EspeciesValorada']['se_uso']) {
 									$resultado_validacion['Calificar'] = 1;
@@ -1140,7 +1144,7 @@ class ArtesanosController extends AppController {
 							} else {
 								$resultado_validacion['Calificar'] = 0;
 								$resultado_validacion['Mensaje'] = 'El artesano no tiene el titulo correspondiente para ser calificado como artesano normal';
-							}							
+							}
 						} else {// Error
 							$resultado_validacion['Mensaje'] = 'Tipo de calificación erronea';
 						}
@@ -1221,7 +1225,12 @@ class ArtesanosController extends AppController {
 	}
 
 	/**
+	 * Validaciones correspondientes a calificaciones autonomas
 	 * Tipo De Calificacion Autónomo :: 2
+	 * @param array $artesano Información del artesano
+	 * @param array $calificaciones Calificaciones actuales
+	 * @param int $rama_id ID de la rama seleccionada
+	 * @return Arreglo codificado en JSON con información de la validación
 	 */
 	private function validarCalificacionAutonomo($artesano, $calificaciones, $rama_id) {
 		$resultado_validacion = array();
@@ -1247,7 +1256,7 @@ class ArtesanosController extends AppController {
 		/**
 		 * ¿Hay un artesano registrado?
 		 */
-		if (!empty($artesano)) { // Si
+		if (!empty($artesano)) {// Si
 			/**
 			 * Como el artesano existe, verificar si ya tiene calificaciones previas.
 			 * ¿Tiene calificaciones previas?
@@ -1294,11 +1303,11 @@ class ArtesanosController extends AppController {
 						$resultado_validacion['Calificar'] = 1;
 					}
 				}
-			} else { // No
+			} else {// No
 				$resultado_validacion['Calificar'] = 1;
 				$resultado_validacion['Artesano'] = $artesano['Artesano'];
 			}
-		} else { // No EXISTE EL ARTESANO SE DEBE REGISTRAR PRIMERO
+		} else {// No EXISTE EL ARTESANO SE DEBE REGISTRAR PRIMERO
 			$resultado_validacion['Calificar'] = 1;
 		}
 
@@ -1320,9 +1329,9 @@ class ArtesanosController extends AppController {
 				unset($resultado_validacion['Mensaje']);
 			}
 		}
-		
+
 		/* validación de especie valorada */
-		if($resultado_validacion['Calificar']) {
+		if ($resultado_validacion['Calificar']) {
 			if (!$especieValorada || $especieValorada['EspeciesValorada']['se_uso']) {
 				// No se tiene la especie o esta ya esta usada
 				$resultado_validacion['Calificar'] = 0;
@@ -1334,6 +1343,11 @@ class ArtesanosController extends AppController {
 		echo json_encode($resultado_validacion);
 	}
 
+	/**
+	 * Verificación de fechas de expiración y demás de una calificación
+	 * @param date $fecha_expiracion Fecha de expiración a validar
+	 * @return Arreglo con información de la validación
+	 */
 	private function validarCalificacionObtenerFechas($fecha_expiracion) {
 
 		$fechas = array();
@@ -1351,7 +1365,7 @@ class ArtesanosController extends AppController {
 		$fecha_36_meses = strtotime('+36 month', strtotime($fecha_expiracion));
 		$fecha_36_meses = date('Y-m-d', $fecha_36_meses);
 		$fecha_36_meses = new DateTime($fecha_36_meses);
-		
+
 		$tmp_fecha_final = $fecha_expiracion;
 
 		// Fecha de expiración más treinta días habiles
@@ -1400,6 +1414,11 @@ class ArtesanosController extends AppController {
 		return $fechas;
 	}
 
+	/**
+	 * Verificar si una calificación esta activa o no
+	 * @param array $calificacion Arreglo con información de la calificación
+	 * @return true o false acorde acorde si está activa o no
+	 */
 	private function isCalificacionActive($calificacion = null) {
 		if ($calificacion && $calificacion['Calificacion']['cal_estado'] == 1) {
 			return true;
@@ -1408,6 +1427,11 @@ class ArtesanosController extends AppController {
 		}
 	}
 
+	/**
+	 * Asignar como paga una multa de una calificación
+	 * @param int $cal_id ID de la calificación
+	 * @return void
+	 */
 	public function setMultaPagada($cal_id = null) {
 		$this -> layout = 'ajax';
 		if ($cal_id) {
@@ -1417,11 +1441,15 @@ class ArtesanosController extends AppController {
 		}
 		exit(0);
 	}
-
+	
+	/**
+	 * Agregar un artesano
+	 * @return void
+	 */
 	public function agregarArtesano() {
 		if ($this -> request -> is('post')) {
-			if(isset($this -> request -> data['Artesano']['archivo'])) {
-				if(!$this -> request -> data['Artesano']['archivo']['error']) {
+			if (isset($this -> request -> data['Artesano']['archivo'])) {
+				if (!$this -> request -> data['Artesano']['archivo']['error']) {
 					App::uses('File', 'Utility');
 					$pathToFile = $this -> request -> data['Artesano']['archivo']['tmp_name'];
 					$file = new File($pathToFile, false, 0644);
@@ -1434,23 +1462,24 @@ class ArtesanosController extends AppController {
 					if ($data) {
 						$data = explode(chr(10), $data);
 						$tmpData = array();
-						foreach($data as $key => $value) {
-							if(!empty($value)) $tmpData[] = $value;
+						foreach ($data as $key => $value) {
+							if (!empty($value))
+								$tmpData[] = $value;
 						}
 						$data = $tmpData;
 						$delimiter = ',';
 						$headers = explode($delimiter, $data[0]);
 						unset($data[0]);
-						foreach($data as $key => $value) {
+						foreach ($data as $key => $value) {
 							$datosArtesano = explode($delimiter, $value);
 							$artesano = array('Artesano' => array());
-							for($i = 0; $i < count($headers); $i+=1) {
+							for ($i = 0; $i < count($headers); $i += 1) {
 								$artesano['Artesano'][$headers[$i]] = $datosArtesano[$i];
 							}
 							$tmpArtesano = $this -> Artesano -> find('first', array('conditions' => array('Artesano.art_cedula' => $artesano['Artesano']['art_cedula'])));
-							if(empty($tmpArtesano)) {
+							if (empty($tmpArtesano)) {
 								$this -> Artesano -> create();
-								if(!$this -> Artesano -> save($artesano)) {
+								if (!$this -> Artesano -> save($artesano)) {
 									$documento = $artesano['Artesano']['art_cedula'];
 									$this -> Session -> setFlash("Ocurrió un error al tratar de guardar la información del artesano con documento $documento.", 'crud/error');
 									$this -> redirect(array('action' => 'index'));
@@ -1460,12 +1489,12 @@ class ArtesanosController extends AppController {
 							}
 						}
 					}
-					if($registroCreado) {
+					if ($registroCreado) {
 						$this -> Session -> setFlash("Se registraron los artesanos.", 'crud/success');
 					} else {
 						$this -> Session -> setFlash("No se creó un nuevo registro.", 'crud/error');
-					}					
-					$this -> redirect(array('action' => 'index'));		
+					}
+					$this -> redirect(array('action' => 'index'));
 				} else {
 					$this -> Session -> setFlash(__('No seleccionó archivo alguno. Por favor, intente de nuevo.'), 'crud/error');
 				}
@@ -1486,10 +1515,13 @@ class ArtesanosController extends AppController {
 		$sexos = $this -> Artesano -> getValores(5);
 		$tipos_de_discapacidad = $this -> Artesano -> getValores(6);
 		$provincias = $this -> Artesano -> Provincia -> find('list');
-		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos', 'tipos_de_discapacidad','provincias'));
+		$this -> set(compact('nacionalidades', 'tipos_de_sangre', 'estados_civiles', 'grados_de_estudio', 'sexos', 'tipos_de_discapacidad', 'provincias'));
 	}
 
-	//Función para registrar el nuevo alumno
+	/**
+	 * Función para registrar el nuevo alumno
+	 * @return Mensaje en JSON con información de resultado 
+	 */
 	public function modalRegNuevoArtesano() {
 		//print_r($this->data);
 		$this -> autoRender = false;
@@ -1508,47 +1540,52 @@ class ArtesanosController extends AppController {
 		}
 	}
 	
-	function carnet($idArtesano=null){
-		$this -> layout = 'carnet';	
-		$this->loadModel("Calificacion", true);
-		$this->Calificacion->recursive=0;
-		$artesano = $this->Calificacion->find("all", array('conditions'=>array("Calificacion.artesano_id"=>$idArtesano)));
-		
-		$this->loadModel("Provincia");
-		$provincia = $this->Provincia->find("list", array("fields"=>array("pro_nombre"),"conditions"=>array("Provincia.id"=>$artesano[0]["Artesano"]["provincia_id"])));
-		
-		if(!empty($provincia)){
-			foreach($provincia as $pro){
+	/**
+	 * Expedir un carnet
+	 * @param int $idArtesano ID del artesano
+	 * @return void
+	 */
+	function carnet($idArtesano = null) {
+		$this -> layout = 'carnet';
+		$this -> loadModel("Calificacion", true);
+		$this -> Calificacion -> recursive = 0;
+		$artesano = $this -> Calificacion -> find("all", array('conditions' => array("Calificacion.artesano_id" => $idArtesano)));
+
+		$this -> loadModel("Provincia");
+		$provincia = $this -> Provincia -> find("list", array("fields" => array("pro_nombre"), "conditions" => array("Provincia.id" => $artesano[0]["Artesano"]["provincia_id"])));
+
+		if (!empty($provincia)) {
+			foreach ($provincia as $pro) {
 				$provincia = $pro;
 			}
 		} else {
 			$provincia = null;
 		}
-		
-		
-		$this->loadModel("Ciudad");
-		$ciudad = $this->Ciudad->find("list", array("fields"=>array("ciu_nombre"),"conditions"=>array("Ciudad.id"=>$artesano[0]["Artesano"]["ciudad_id"])));
-		
-		if(!empty($ciudad)){
-			foreach($ciudad as $ciu){
+
+		$this -> loadModel("Ciudad");
+		$ciudad = $this -> Ciudad -> find("list", array("fields" => array("ciu_nombre"), "conditions" => array("Ciudad.id" => $artesano[0]["Artesano"]["ciudad_id"])));
+
+		if (!empty($ciudad)) {
+			foreach ($ciudad as $ciu) {
 				$ciudad = $ciu;
 			}
 		} else {
 			$ciudad = null;
 		}
-		
+
 		//El carnet solo se expide a los artesanos calificados
-		$idRama = $this->Calificacion->find("list", array("fields"=>array("rama_id"),"conditions"=>array("Calificacion.artesano_id"=>$artesano[0]["Artesano"]["id"])));
-		$profesion = $this->Calificacion->Rama->find("list", array("fields"=>array("ram_nombre"), "conditions"=>array("Rama.id"=>$idRama)));
-		
-		if( !empty($profesion)){
-			foreach($profesion as $pro) {
+		$idRama = $this -> Calificacion -> find("list", array("fields" => array("rama_id"), "conditions" => array("Calificacion.artesano_id" => $artesano[0]["Artesano"]["id"])));
+		$profesion = $this -> Calificacion -> Rama -> find("list", array("fields" => array("ram_nombre"), "conditions" => array("Rama.id" => $idRama)));
+
+		if (!empty($profesion)) {
+			foreach ($profesion as $pro) {
 				$profesion = $pro;
 			}
 		} else {
 			$profesion = null;
 		}
 		$presidente = $this -> requestAction('/configuraciones/getValorConfiguracion/' . "con_presidente_de_la_junta");
-		$this -> set(compact('artesano','ciudad','provincia','presidente','profesion'));
+		$this -> set(compact('artesano', 'ciudad', 'provincia', 'presidente', 'profesion'));
 	}
+
 }

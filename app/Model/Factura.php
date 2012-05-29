@@ -9,19 +9,22 @@ App::uses('AppModel', 'Model');
  * @property VentasEspecie $VentasEspecie
  */
 class Factura extends AppModel {
-	
+	/**
+	 * Comportamientos
+	 * @var array
+	 */
 	public $actsAs = array('Auditable');
-/**
- * Display field
- *
- * @var string
- */
+	/**
+	 * Display field
+	 *
+	 * @var string
+	 */
 	public $displayField = 'fac_numero';
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'fac_numero' => array(
 			'notempty' => array(
@@ -75,11 +78,11 @@ class Factura extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * belongsTo associations
- *
- * @var array
- */
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
 	public $belongsTo = array(
 		'Provincia' => array(
 			'className' => 'Provincia',
@@ -104,11 +107,11 @@ class Factura extends AppModel {
 		)
 	);
 
-/**
- * hasMany associations
- *
- * @var array
- */
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
 	public $hasMany = array(
 		'VentasEspecie' => array(
 			'className' => 'VentasEspecie',

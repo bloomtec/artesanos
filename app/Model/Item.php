@@ -8,25 +8,28 @@ App::uses('AppModel', 'Model');
  * @property Persona $Persona
  */
 class Item extends AppModel {
-	
+	/**
+	 * Comportamientos
+	 * @var array
+	 */
 	public $actsAs = array('Auditable');
-/**
- * Use table
- *
- * @var mixed False or table name
- */
+	/**
+	 * Use table
+	 *
+	 * @var mixed False or table name
+	 */
 	public $useTable = 'items';
-/**
- * Display field
- *
- * @var string
- */
+	/**
+	 * Display field
+	 *
+	 * @var string
+	 */
 	public $displayField = 'ite_nombre';
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'ite_codigo' => array(
 			'notempty' => array(
@@ -62,11 +65,11 @@ class Item extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * hasAndBelongsToMany associations
- *
- * @var array
- */
+	/**
+	 * hasAndBelongsToMany associations
+	 *
+	 * @var array
+	 */
 	public $hasAndBelongsToMany = array(
 		'EgresosDeInventario' => array(
 			'className' => 'EgresosDeInventario',

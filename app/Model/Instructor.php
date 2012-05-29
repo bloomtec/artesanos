@@ -6,19 +6,29 @@ App::uses('AppModel', 'Model');
  * @property Curso $Curso
  */
 class Instructor extends AppModel {
-	
+	/**
+	 * Comportamientos
+	 * @var array
+	 */
 	public $actsAs = array('Auditable');
-	
+	/**
+	 * Campo para mostrar
+	 * @var string
+	 */
 	public $displayField = 'nombre_completo';
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $virtualFields=array(
 		'nombre_completo'=>'CONCAT(ins_nombres," ",ins_apellido_paterno," ",ins_apellido_materno )'
 	);
 	
+	/**
+	 * Validaciones
+	 * @var array
+	 */
 	public $validate = array(
 		'ins_nacionalidad' => array(
 			'notempty' => array(
@@ -137,11 +147,11 @@ class Instructor extends AppModel {
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
-/**
- * belongsTo associations
- *
- * @var array
- */
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
 	public $belongsTo = array(
 		'Provincia' => array(
 			'className' => 'Provincia',
@@ -165,11 +175,11 @@ class Instructor extends AppModel {
 			'order' => ''
 		)
 	);
-/**
- * hasMany associations
- *
- * @var array
- */
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
 	public $hasMany = array(
 		'Curso' => array(
 			'className' => 'Curso',

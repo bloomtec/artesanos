@@ -16,6 +16,10 @@ App::uses('AppModel', 'Model');
  */
 class Taller extends AppModel {
 	
+	/**
+	 * Comportamientos
+	 * @var array
+	 */
 	public $actsAs = array('Auditable');
 	/**
 	 * Validation rules
@@ -176,11 +180,11 @@ class Taller extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * belongsTo associations
- *
- * @var array
- */
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
 	public $belongsTo = array(
 		'Calificacion' => array(
 			'className' => 'Calificacion',
@@ -226,11 +230,11 @@ class Taller extends AppModel {
 		)
 	);
 
-/**
- * hasMany associations
- *
- * @var array
- */
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
 	public $hasMany = array(
 		'EquiposDeTrabajo' => array(
 			'className' => 'EquiposDeTrabajo',
@@ -274,11 +278,11 @@ class Taller extends AppModel {
 	);
 
 
-/**
- * hasAndBelongsToMany associations
- *
- * @var array
- */
+	/**
+	 * hasAndBelongsToMany associations
+	 *
+	 * @var array
+	 */
 	public $hasAndBelongsToMany = array(
 		'Trabajador' => array(
 			'className' => 'Trabajador',

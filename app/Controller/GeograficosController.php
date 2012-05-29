@@ -6,13 +6,9 @@ App::uses('AppController', 'Controller');
  * @property Configuracion $Configuracion
  */
 class GeograficosController extends AppController {
-	
-	public function beforeRender() {
-		//$this -> layout = "parametros";
-	}
 
 	/**
-	 * index method
+	 * Listado de las opciones geográficas
 	 *
 	 * @return void
 	 */

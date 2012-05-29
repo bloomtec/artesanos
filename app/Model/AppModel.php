@@ -32,7 +32,9 @@ App::uses('Model', 'Model');
  * @package       Cake.Model
  */
 class AppModel extends Model {
-	
+	/**
+	 * Funcion genérica para obtener valores de parámetros informativos
+	 */
 	public function getValores($param_id = null) {
 		$fetched_data = $this -> query(
 			"SELECT `id`,`val_nombre`

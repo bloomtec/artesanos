@@ -8,7 +8,7 @@ App::uses('AppController', 'Controller');
 class JuntasProvincialesController extends AppController {
 
 	/**
-	 * index method
+	 * Listado de juntas provinciales
 	 *
 	 * @return void
 	 */
@@ -18,12 +18,12 @@ class JuntasProvincialesController extends AppController {
 	}
 
 	/**
-	 * view method
+	 * Ver junta provincial
 	 *
-	 * @param string $id
+	 * @param int $id ID de la junta provincial
 	 * @return void
 	 */
-	public function view($id = null) {
+	public function view($id) {
 		$this -> JuntasProvincial -> id = $id;
 		if (!$this -> JuntasProvincial -> exists()) {
 			throw new NotFoundException(__('Junta provincial no valida'));
@@ -32,7 +32,7 @@ class JuntasProvincialesController extends AppController {
 	}
 
 	/**
-	 * add method
+	 * Agregar junta provincial
 	 *
 	 * @return void
 	 */
@@ -51,12 +51,12 @@ class JuntasProvincialesController extends AppController {
 	}
 
 	/**
-	 * edit method
+	 * Modificar junta provincial
 	 *
-	 * @param string $id
+	 * @param int $id ID de la junta provincial
 	 * @return void
 	 */
-	public function edit($id = null) {
+	public function edit($id) {
 		$this -> JuntasProvincial -> id = $id;
 		if (!$this -> JuntasProvincial -> exists()) {
 			throw new NotFoundException(__('Junta provincial no valida'));
@@ -76,12 +76,12 @@ class JuntasProvincialesController extends AppController {
 	}
 
 	/**
-	 * delete method
+	 * Eliminar junta provincial
 	 *
-	 * @param string $id
+	 * @param int $id ID de la junta provincial
 	 * @return void
 	 */
-	public function delete($id = null) {
+	public function delete($id) {
 		if (!$this -> request -> is('post')) {
 			throw new MethodNotAllowedException();
 		}

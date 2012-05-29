@@ -6,15 +6,21 @@ App::uses('AppModel', 'Model');
  * @property IngresosDeInventario $IngresosDeInventario
  */
 class Proveedor extends AppModel {
-/**
- * Display field
- *
- * @var string
- */
+	/**
+	 * Display field
+	 *
+	 * @var string
+	 */
 	public $displayField = 'pro_rut';
-	
+	/**
+	 * Comportamientos
+	 * @var array
+	 */
 	public $actsAs = array('Auditable');
-
+	/**
+	 * Campos virtuales
+	 * @var array
+	 */
 	public $virtualFields = array(
 			'datos_completos' => 'CONCAT(Proveedor.pro_rut, " - ", Proveedor.pro_nombre_razon_social)'
 		);
@@ -52,11 +58,11 @@ class Proveedor extends AppModel {
 			),
 		),
 	);
-/**
- * hasMany associations
- *
- * @var array
- */
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
 	public $hasMany = array(
 		'IngresosDeInventario' => array(
 			'className' => 'IngresosDeInventario',
