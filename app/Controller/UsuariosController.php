@@ -15,7 +15,7 @@ class UsuariosController extends AppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this -> Auth -> allow('logout', 'verificarAcceso', 'getNombre', 'getNombresYApellidos', 'modificarContrasena');
-		//$this -> Auth -> allow('inicializarAcl');
+		// $this -> Auth -> allow('inicializarAcl');
 	}
 
 	/**
@@ -894,9 +894,9 @@ class UsuariosController extends AppController {
 		// Limpiar ACO's
 		$this -> Usuario -> query('TRUNCATE TABLE acos;');
 		// Limpiar Auditorias
-		$this -> Usuario -> query('TRUNCATE TABLE auditorias;');
+		//$this -> Usuario -> query('TRUNCATE TABLE auditorias;');
 		// Limpiar Usuarios
-		$this -> Usuario -> query('TRUNCATE TABLE usuarios;');
+		//$this -> Usuario -> query('TRUNCATE TABLE usuarios;');
 
 		exec('/var/www/artesanos/app/Console/cake -app /var/www/artesanos/app/ AclExtras.AclExtras aco_sync');
 
@@ -926,16 +926,20 @@ class UsuariosController extends AppController {
 		$usuario = array();
 		$usuario['Usuario']['usu_nombre_de_usuario'] = 'admin';
 		$usuario['Usuario']['usu_contrasena'] = 'admin';
+		$usuario['Usuario']['usu_contrasena_confirmar'] = 'admin';
 		$usuario['Usuario']['usu_cedula'] = 'admin';
 		$usuario['Usuario']['usu_nombres_y_apellidos'] = 'admin';
 		$usuario['Usuario']['usu_activo'] = true;
 		$usuario['Usuario']['rol_id'] = 1;
-		$this -> Usuario -> save($usuario);
-
-		// tratando de arreglar lo del alias en la tabla aros
-		$id_usuario = $this -> Usuario -> id;
-		$alias_usuario = $usuario['Usuario']['usu_nombre_de_usuario'];
-		$this -> Usuario -> query("UPDATE `aros` SET `alias`='$alias_usuario' WHERE `model`='Usuario' AND `foreign_key`=$id_usuario");
+		
+		if($this -> Usuario -> save($usuario)) {
+			// tratando de arreglar lo del alias en la tabla aros
+			$id_usuario = $this -> Usuario -> id;
+			$alias_usuario = $usuario['Usuario']['usu_nombre_de_usuario'];
+			$this -> Usuario -> query("UPDATE `aros` SET `alias`='$alias_usuario' WHERE `model`='Usuario' AND `foreign_key`=$id_usuario");
+		} else {
+			debug($this -> Usuario -> invalidFields());
+		}
 
 		// Se permite acceso total a los administradores
 		$this -> Acl -> allow('Administrador', 'controllers');

@@ -1194,6 +1194,7 @@ class ArtesanosController extends AppController {
 			 * 14 => 14		-- 36+ meses
 			 */
 			$especieValorada = $this -> requestAction('/especies_valoradas/verificarEspecieArtesano/' . $artesano['Artesano']['id'] . '/' . $resultado_validacion['InfoFecha']['TipoEspecie']);
+			/** A petición de la JNDA se desactiva esta validación
 			if ($especieValorada && !$especieValorada['EspeciesValorada']['se_uso']) {
 				$resultado_validacion['Mensaje'] = 'Se paso del tiempo dado para la recalificación. Se tiene la especie valorada que corresponde.';
 				$resultado_validacion['Calificar'] = 1;
@@ -1210,6 +1211,7 @@ class ArtesanosController extends AppController {
 				}
 				$resultado_validacion['Calificar'] = 0;
 			}
+			 */
 
 		}
 
@@ -1331,13 +1333,14 @@ class ArtesanosController extends AppController {
 		}
 
 		/* validación de especie valorada */
+		/** A petición de la JNDA se desactiva esta validación
 		if ($resultado_validacion['Calificar']) {
 			if (!$especieValorada || $especieValorada['EspeciesValorada']['se_uso']) {
 				// No se tiene la especie o esta ya esta usada
 				$resultado_validacion['Calificar'] = 0;
 				$resultado_validacion['Mensaje'] = 'No se tiene la especie requerida para calificar como artesano autonomo';
 			}
-		}
+		}*/
 
 		// Hacer echo del resultado
 		echo json_encode($resultado_validacion);
